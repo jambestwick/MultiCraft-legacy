@@ -43,7 +43,9 @@ typedef enum {
 	jump_id,
 	crunch_id,
 	fly_id,
+#ifdef ENABLE_ANDROID_NOCLIP
 	noclip_id,
+#endif
 	fast_id,
 	debug_id,
 	chat_id,

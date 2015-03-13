@@ -39,7 +39,7 @@ using namespace irr::core;
 
 extern Settings *g_settings;
 
-const char** touchgui_button_imagenames = (const char*[]) {
+const char *touchgui_button_imagenames[] = {
 	"up_arrow.png",
 	"down_arrow.png",
 	"left_arrow.png",
@@ -49,7 +49,9 @@ const char** touchgui_button_imagenames = (const char*[]) {
 	"jump_btn.png",
 	"down.png",
 	"fly_btn.png",
+#ifdef ENABLE_ANDROID_NOCLIP
 	"noclip_btn.png",
+#endif
 	"fast_btn.png",
 	"debug_btn.png",
 	"chat_btn.png",
@@ -88,9 +90,11 @@ static irr::EKEY_CODE id2keycode(touch_gui_button_id id)
 		case fly_id:
 			key = "freemove";
 			break;
+#ifdef ENABLE_ANDROID_NOCLIP
 		case noclip_id:
 			key = "noclip";
 			break;
+#endif
 		case fast_id:
 			key = "fastmove";
 			break;
