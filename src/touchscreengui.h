@@ -58,7 +58,7 @@ typedef enum {
 #define MAX_TOUCH_COUNT 64
 #define BUTTON_REPEAT_DELAY 0.2f
 
-extern const char** touchgui_button_imagenames;
+extern const char *touchgui_button_imagenames[];
 
 class TouchScreenGUI
 {
