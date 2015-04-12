@@ -28,4 +28,3 @@ Further documentation
 This game is not finished
 --------------------------
 - Don't expect it to work as well as a finished game will.
-
