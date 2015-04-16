@@ -1029,9 +1029,13 @@ static inline void create_formspec_menu(GUIFormSpecMenu **cur_formspec,
 }
 
 #ifdef __ANDROID__
-#define SIZE_TAG "size[11,5.5]"
+#	define SIZE_TAG "size[11,5.5]"
+#	define PAUSE_MENU_SIZE_TAG "size[6,3.5]"
+#	define PAUSE_MENU_BUTTON_LEFT 1.5
 #else
-#define SIZE_TAG "size[11,5.5,true]" // Fixed size on desktop
+#	define SIZE_TAG "size[11,5.5,true]" // Fixed size on desktop
+#	define PAUSE_MENU_SIZE_TAG "size[11,5.5,true]" // Fixed size on desktop
+#	define PAUSE_MENU_BUTTON_LEFT 4
 #endif
 
 static void show_chat_menu(GUIFormSpecMenu **cur_formspec,
@@ -1083,19 +1087,19 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 		bool singleplayermode)
 {
 #ifdef __ANDROID__
-	std::string control_text = wide_to_narrow(wstrgettext("Default Controls:\n"
-				   "No menu visible:\n"
-				   "- single tap: button activate\n"
-				   "- double tap: place/use\n"
-				   "- slide finger: look around\n"
-				   "Menu/Inventory visible:\n"
-				   "- double tap (outside):\n"
-				   " -->close\n"
-				   "- touch stack, touch slot:\n"
-				   " --> move stack\n"
-				   "- touch&drag, tap 2nd finger\n"
-				   " --> place single item to slot\n"
-							     ));
+//	std::string control_text = wide_to_narrow(wstrgettext("Default Controls:\n"
+//				   "No menu visible:\n"
+//				   "- single tap: button activate\n"
+//				   "- double tap: place/use\n"
+//				   "- slide finger: look around\n"
+//				   "Menu/Inventory visible:\n"
+//				   "- double tap (outside):\n"
+//				   " -->close\n"
+//				   "- touch stack, touch slot:\n"
+//				   " --> move stack\n"
+//				   "- touch&drag, tap 2nd finger\n"
+//				   " --> place single item to slot\n"
+//							     ));
 #else
 	std::string control_text = wide_to_narrow(wstrgettext("Default Controls:\n"
 				   "- WASD: move\n"
@@ -1114,29 +1118,31 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 	float ypos = singleplayermode ? 0.5 : 0.1;
 	std::ostringstream os;
 
-	os << FORMSPEC_VERSION_STRING  << SIZE_TAG
-	   << "button_exit[4," << (ypos++) << ";3,0.5;btn_continue;"
+	os << FORMSPEC_VERSION_STRING  << PAUSE_MENU_SIZE_TAG
+	   << "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_continue;"
 	   << wide_to_narrow(wstrgettext("Continue"))     << "]";
 
 	if (!singleplayermode) {
-		os << "button_exit[4," << (ypos++) << ";3,0.5;btn_change_password;"
+		os << "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_change_password;"
 		   << wide_to_narrow(wstrgettext("Change Password")) << "]";
 	}
 
 #ifndef __ANDROID__
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_sound;"
+	os		<< "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_sound;"
 			<< wide_to_narrow(wstrgettext("Sound Volume")) << "]";
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_key_config;"
+	os		<< "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_key_config;"
 			<< wide_to_narrow(wstrgettext("Change Keys"))  << "]";
 #endif
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_menu;"
+	os		<< "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_exit_menu;"
 			<< wide_to_narrow(wstrgettext("Exit to Menu")) << "]";
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_os;"
+	os		<< "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_exit_os;"
 			<< wide_to_narrow(wstrgettext("Exit to OS"))   << "]"
+#ifndef __ANDROID__
 			<< "textarea[7.5,0.25;3.9,6.25;;" << control_text << ";]"
-			<< "textarea[0.4,0.25;3.5,6;;" << PROJECT_NAME "\n"
-			<< g_build_info << "\n"
+			<< "textarea[0.4,0.25;3.5,6;;" << "Minetest\n"
+			<< minetest_build_info << "\n"
 			<< "path_user = " << wrap_rows(porting::path_user, 20)
+#endif
 			<< "\n;]";
 
 	/* Create menu */
