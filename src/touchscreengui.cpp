@@ -260,11 +260,13 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 					m_screensize.X, m_screensize.Y - (button_size*1.5)),
 			L"fly", false, SLOW_BUTTON_REPEAT);
 
+#ifdef ENABLE_ANDROID_NOCLIP
 	/* init noclip button */
 	initButton(noclip_id,
 			rect<s32>(m_screensize.X - (0.75*button_size), 2.25*button_size,
 					m_screensize.X, 3*button_size),
 			L"clip", false, SLOW_BUTTON_REPEAT);
+#endif
 
 	/* init fast button */
 	initButton(fast_id,
