@@ -1139,8 +1139,8 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 			<< wide_to_narrow(wstrgettext("Exit to OS"))   << "]"
 #ifndef __ANDROID__
 			<< "textarea[7.5,0.25;3.9,6.25;;" << control_text << ";]"
-			<< "textarea[0.4,0.25;3.5,6;;" << "Minetest\n"
-			<< minetest_build_info << "\n"
+			<< "textarea[0.4,0.25;3.5,6;;" << PROJECT_NAME "\n"
+			<< g_build_info << "\n"
 			<< "path_user = " << wrap_rows(porting::path_user, 20)
 #endif
 			<< "\n;]";
