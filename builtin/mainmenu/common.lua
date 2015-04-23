@@ -31,6 +31,7 @@ local max_supp_proto = core.get_max_supp_proto()
 
 --------------------------------------------------------------------------------
 local function render_client_count(n)
+	n = tonumber(n)	
 	if n > 99 then
 		return '99+'
 	elseif n >= 0 then
@@ -66,13 +67,13 @@ function order_favorite_list(list)
 	--orders the favorite list after support
 	for i=1,#list,1 do
 		local fav = list[i]
-		if is_server_protocol_compat(fav.proto_min, fav.proto_max) then
+		if is_server_protocol_compat(tonumber(fav.proto_min), tonumber(fav.proto_max)) then
 			table.insert(res, fav)
 		end
 	end
 	for i=1,#list,1 do
 		local fav = list[i]
-		if not is_server_protocol_compat(fav.proto_min, fav.proto_max) then
+		if not is_server_protocol_compat(tonumber(fav.proto_min), tonumber(fav.proto_max)) then
 			table.insert(res, fav)
 		end
 	end
@@ -105,7 +106,7 @@ function render_favorite(spec,render_details)
 	end
 
 	local details = ""
-	local grey_out = not is_server_protocol_compat(spec.proto_max, spec.proto_min)
+	local grey_out = not is_server_protocol_compat(tonumber(spec.proto_max), tonumber(spec.proto_min))
 
 	if spec.clients ~= nil and spec.clients_max ~= nil then
 		local clients_color = ''
@@ -234,59 +235,59 @@ end
 --------------------------------------------------------------------------------
 function asyncOnlineFavourites()
 
-	menudata.favorites = {}
-	core.handle_async(
-		function(param)
-			return core.get_favorites("online")
-		end,
-		nil,
-		function(result)
-			if core.setting_getbool("public_serverlist") then
-				menudata.favorites = order_favorite_list(result)
-				core.event_handler("Refresh")
-			end
-		end
-		)
+    menudata.favorites = {}
+    core.handle_async(
+        function(param)
+            return core.get_favorites("online")
+        end,
+        nil,
+        function(result)
+            if core.setting_getbool("public_serverlist") then
+                menudata.favorites = order_favorite_list(result)
+                core.event_handler("Refresh")
+            end
+        end
+        )
 end
 
 --------------------------------------------------------------------------------
 function text2textlist(xpos,ypos,width,height,tl_name,textlen,text,transparency)
-	local textlines = core.splittext(text,textlen)
-	
-	local retval = "textlist[" .. xpos .. "," .. ypos .. ";"
-								.. width .. "," .. height .. ";"
-								.. tl_name .. ";"
-	
-	for i=1, #textlines, 1 do
-		textlines[i] = textlines[i]:gsub("\r","")
-		retval = retval .. core.formspec_escape(textlines[i]) .. ","
-	end
-	
-	retval = retval .. ";0;"
-	
-	if transparency then
-		retval = retval .. "true"
-	end
-	
-	retval = retval .. "]"
+    local textlines = core.splittext(text,textlen)
 
-	return retval
+    local retval = "textlist[" .. xpos .. "," .. ypos .. ";"
+                                .. width .. "," .. height .. ";"
+                                .. tl_name .. ";"
+
+    for i=1, #textlines, 1 do
+        textlines[i] = textlines[i]:gsub("\r","")
+        retval = retval .. core.formspec_escape(textlines[i]) .. ","
+    end
+
+    retval = retval .. ";0;"
+
+    if transparency then
+        retval = retval .. "true"
+    end
+
+    retval = retval .. "]"
+
+    return retval
 end
 
 --------------------------------------------------------------------------------
 function is_server_protocol_compat(proto_min, proto_max)
-	return not ((min_supp_proto > (proto_max or 24)) or (max_supp_proto < (proto_min or 13)))
+    return not ((min_supp_proto > (proto_max or 24)) or (max_supp_proto < (proto_min or 13)))
 end
 --------------------------------------------------------------------------------
 function is_server_protocol_compat_or_error(proto_min, proto_max)
-	if not is_server_protocol_compat(proto_min, proto_max) then
-		gamedata.errormessage = fgettext_ne("Protocol version mismatch, server " ..
-			((proto_min ~= proto_max) and "supports protocols between $1 and $2" or "enforces protocol version $1") ..
-			", we " ..
-			((min_supp_proto ~= max_supp_proto) and "support protocols between version $3 and $4." or "only support protocol version $3"),
-			proto_min or 13, proto_max or 24, min_supp_proto, max_supp_proto)
-		return false
-	end
+    if not is_server_protocol_compat(proto_min, proto_max) then
+        gamedata.errormessage = fgettext_ne("Protocol version mismatch, server " ..
+            ((proto_min ~= proto_max) and "supports protocols between $1 and $2" or "enforces protocol version $1") ..
+            ", we " ..
+            ((min_supp_proto ~= max_supp_proto) and "support protocols between version $3 and $4." or "only support protocol version $3"),
+            proto_min or 13, proto_max or 24, min_supp_proto, max_supp_proto)
+        return false
+    end
 
-	return true
+    return true
 end

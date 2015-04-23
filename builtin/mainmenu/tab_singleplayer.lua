@@ -18,31 +18,31 @@
 local function current_game()
 	local last_game_id = core.setting_get("menu_last_game")
 	local game, index = gamemgr.find_by_gameid(last_game_id)
-	
+
 	return game
 end
 
 local function singleplayer_refresh_gamebar()
-	
+
 	local old_bar = ui.find_by_name("game_button_bar")
-	
+
 	if old_bar ~= nil then
 		old_bar:delete()
 	end
 
 	local function game_buttonbar_button_handler(fields)
-		for key,value in pairs(fields) do
-			for j=1,#gamemgr.games,1 do
-				if ("game_btnbar_" .. gamemgr.games[j].id == key) then
-					mm_texture.update("singleplayer", gamemgr.games[j])
-					core.set_topleft_text(gamemgr.games[j].name)
-					core.setting_set("menu_last_game",gamemgr.games[j].id)
-					menudata.worldlist:set_filtercriteria(gamemgr.games[j].id)
-					return true
-				end
+	for key,value in pairs(fields) do
+		for j=1,#gamemgr.games,1 do
+			if ("game_btnbar_" .. gamemgr.games[j].id == key) then
+				mm_texture.update("singleplayer", gamemgr.games[j])
+				core.set_topleft_text(gamemgr.games[j].name)
+				core.setting_set("menu_last_game",gamemgr.games[j].id)
+				menudata.worldlist:set_filtercriteria(gamemgr.games[j].id)
+				return true
 			end
 		end
 	end
+end
 
 	local btnbar = buttonbar_create("game_button_bar",
 		game_buttonbar_button_handler,
@@ -50,20 +50,20 @@ local function singleplayer_refresh_gamebar()
 
 	for i=1,#gamemgr.games,1 do
 		local btn_name = "game_btnbar_" .. gamemgr.games[i].id
-		
+
 		local image = nil
 		local text = nil
 		local tooltip = core.formspec_escape(gamemgr.games[i].name)
-		
+
 		if gamemgr.games[i].menuicon_path ~= nil and
 			gamemgr.games[i].menuicon_path ~= "" then
 			image = core.formspec_escape(gamemgr.games[i].menuicon_path)
 		else
-		
+
 			local part1 = gamemgr.games[i].id:sub(1,5)
 			local part2 = gamemgr.games[i].id:sub(6,10)
 			local part3 = gamemgr.games[i].id:sub(11)
-			
+
 			text = part1 .. "\n" .. part2
 			if part3 ~= nil and
 				part3 ~= "" then
@@ -76,32 +76,42 @@ end
 
 local function get_formspec(tabview, name, tabdata)
 	local retval = ""
-	
+
 	local index = filterlist.get_current_index(menudata.worldlist,
 				tonumber(core.setting_get("mainmenu_last_selected_world"))
 				)
 
 	retval = retval ..
-			"button[4,4.15;2.6,0.5;world_delete;".. fgettext("Delete") .. "]" ..
-			"button[6.5,4.15;2.8,0.5;world_create;".. fgettext("New") .. "]" ..
-			"button[9.2,4.15;2.55,0.5;world_configure;".. fgettext("Configure") .. "]" ..
-			"button[8.5,4.95;3.25,0.5;play;".. fgettext("Play") .. "]" ..
+			"image_button[4,4.15;2.6,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete;".. fgettext("Delete") .. "]" ..
+			"image_button[6.5,4.15;2.8,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create;".. fgettext("New") .. "]" ..
+			"image_button[9.2,4.15;2.55,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_configure;".. fgettext("Configure") .. "]" ..
+			"image_button[8.5,4.95;3.25,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;play;".. fgettext("Play") .. "]" ..
 			"label[4,-0.25;".. fgettext("Select World:") .. "]"..
-			"checkbox[0.25,0.25;cb_creative_mode;".. fgettext("Creative Mode") .. ";" ..
+			"checkbox[0.25,0.15;cb_creative_mode;".. fgettext("Creative Mode") .. ";" ..
 			dump(core.setting_getbool("creative_mode")) .. "]"..
-			"checkbox[0.25,0.7;cb_enable_damage;".. fgettext("Enable Damage") .. ";" ..
+			"checkbox[0.25,0.6;cb_enable_damage;".. fgettext("Enable Damage") .. ";" ..
 			dump(core.setting_getbool("enable_damage")) .. "]"..
+			"image_button[0.25,1.3;0.58,0.55;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_checkf.png;b_single;;false;false]"..
+			"image_button[0.3,1.3;3,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_trans.png;btn_server;Local Server;false;false]"..
 			"textlist[4,0.25;7.5,3.7;sp_worlds;" ..
 			menu_render_worldlist() ..
 			";" .. index .. "]"
-	return retval
+	return 'size[12,5.2]'..retval
 end
 
 local function main_button_handler(this, fields, name, tabdata)
 
-	assert(name == "singleplayer")
+	name = "singleplayer"
 
 	local world_doubleclick = false
+
+	if fields["btn_server"]~=nil then
+		local single = create_tab_server(true)
+		single:set_parent(this.parent)
+		single:show()
+		this:hide()
+		return true
+	end
 
 	if fields["sp_worlds"] ~= nil then
 		local event = core.explode_textlist_event(fields["sp_worlds"])
@@ -150,13 +160,19 @@ local function main_button_handler(this, fields, name, tabdata)
 	if fields["cb_creative_mode"] then
 		core.setting_set("creative_mode", fields["cb_creative_mode"])
 		local selected = core.get_textlist_index("sp_worlds")
-		local filename = menudata.worldlist:get_list()[selected].path ..
-				DIR_DELIM .. "world.mt"
+		if selected then
+			local filename = menudata.worldlist:get_list()[selected].path ..
+					DIR_DELIM .. "world.mt"
 
-		local worldfile = Settings(filename)
-		worldfile:set("creative_mode", fields["cb_creative_mode"])
-		if not worldfile:write() then
-			core.log("error", "Failed to write world config file")
+			local test = io.open(filename)
+			if test then
+		               io.close(test)
+				local worldfile = Settings(filename)
+				worldfile:set("creative_mode", fields["cb_creative_mode"])
+				--  if not worldfile:write() then
+				--      core.log("error", "Failed to write world config file")
+				--  end
+			end
 		end
 		return true
 	end
@@ -164,13 +180,17 @@ local function main_button_handler(this, fields, name, tabdata)
 	if fields["cb_enable_damage"] then
 		core.setting_set("enable_damage", fields["cb_enable_damage"])
 		local selected = core.get_textlist_index("sp_worlds")
-		local filename = menudata.worldlist:get_list()[selected].path ..
-				DIR_DELIM .. "world.mt"
-
-		local worldfile = Settings(filename)
-		worldfile:set("enable_damage", fields["cb_enable_damage"])
-		if not worldfile:write() then
-			core.log("error", "Failed to write world config file")
+		if selected then
+			local filename = menudata.worldlist:get_list()[selected].path ..
+			DIR_DELIM .. "world.mt"
+			local test = io.open(filename)
+			if test then
+				local worldfile = Settings(filename)
+				worldfile:set("enable_damage", fields["cb_enable_damage"])
+				--if not worldfile:write() then
+				--core.log("error", "Failed to write world config file")
+				--end
+			end
 		end
 		return true
 	end
@@ -179,11 +199,11 @@ local function main_button_handler(this, fields, name, tabdata)
 		world_doubleclick or
 		fields["key_enter"] then
 		local selected = core.get_textlist_index("sp_worlds")
-		
+
 		if selected ~= nil then
 			gamedata.selected_world = menudata.worldlist:get_raw_index(selected)
 			gamedata.singleplayer   = true
-			
+
 			core.start()
 		end
 		return true
@@ -214,7 +234,7 @@ local function main_button_handler(this, fields, name, tabdata)
 				mm_texture.update("singleplayer",current_game())
 			end
 		end
-		
+
 		return true
 	end
 
@@ -224,7 +244,7 @@ local function main_button_handler(this, fields, name, tabdata)
 			local configdialog =
 				create_configure_world_dlg(
 						menudata.worldlist:get_raw_index(selected))
-			
+
 			if (configdialog ~= nil) then
 				configdialog:set_parent(this)
 				this:hide()
@@ -232,22 +252,22 @@ local function main_button_handler(this, fields, name, tabdata)
 				mm_texture.update("singleplayer",current_game())
 			end
 		end
-		
+
 		return true
 	end
 end
 
 local function on_change(type, old_tab, new_tab)
 	local buttonbar = ui.find_by_name("game_button_bar")
-	
+
 	if ( buttonbar == nil ) then
 		singleplayer_refresh_gamebar()
 		buttonbar = ui.find_by_name("game_button_bar")
 	end
-	
+
 	if (type == "ENTER") then
 		local game = current_game()
-		
+
 		if game then
 			menudata.worldlist:set_filtercriteria(game.id)
 			core.set_topleft_text(game.name)
@@ -270,3 +290,11 @@ tab_singleplayer = {
 	cbf_button_handler = main_button_handler,
 	on_change = on_change
 	}
+
+function create_tab_single()
+		local retval = dialog_create("singleplayer",
+										get_formspec,
+										main_button_handler,
+										nil)
+		return retval
+end

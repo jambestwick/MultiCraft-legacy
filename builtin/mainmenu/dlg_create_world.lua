@@ -60,8 +60,8 @@ local function create_world_formspec(dialogdata)
 		"textlist[4.2,3;5.8,2.3;games;" .. gamemgr.gamelist() ..
 		";" .. gameidx .. ";true]" ..
 
-		"button[5,5.5;2.6,0.5;world_create_confirm;" .. fgettext("Create") .. "]" ..
-		"button[7.5,5.5;2.8,0.5;world_create_cancel;" .. fgettext("Cancel") .. "]"
+		"image_button[5,5.5;2.6,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create_confirm;" .. fgettext("Create") .. "]" ..
+		"image_button[7.5,5.5;2.8,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create_cancel;" .. fgettext("Cancel") .. "]"
 		
 	if #gamemgr.games == 0 then
 		retval = retval .. "box[2,4;8,1;#ff8800]label[2.25,4;" ..

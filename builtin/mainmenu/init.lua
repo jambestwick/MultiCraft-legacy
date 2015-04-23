@@ -41,7 +41,6 @@ dofile(menupath .. DIR_DELIM .. "dlg_config_world.lua")
 dofile(menupath .. DIR_DELIM .. "tab_credits.lua")
 dofile(menupath .. DIR_DELIM .. "tab_mods.lua")
 dofile(menupath .. DIR_DELIM .. "tab_settings.lua")
-if PLATFORM ~= "Android" then
 	dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
 	dofile(menupath .. DIR_DELIM .. "dlg_delete_mod.lua")
 	dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
@@ -51,9 +50,6 @@ if PLATFORM ~= "Android" then
 	dofile(menupath .. DIR_DELIM .. "tab_singleplayer.lua")
 	dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
 	dofile(menupath .. DIR_DELIM .. "textures.lua")
-else
-	dofile(menupath .. DIR_DELIM .. "tab_simple_main.lua")
-end
 
 --------------------------------------------------------------------------------
 local function main_event_handler(tabview, event)
@@ -64,88 +60,129 @@ local function main_event_handler(tabview, event)
 end
 
 --------------------------------------------------------------------------------
+local function get_formspec2(tabview, name, tabdata)
+    local retval = ""
+    retval = retval .. "bgcolor[#00000000;false]"
+    retval = retval .. "image_button[2.5,3.4;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir) .. "menu_button.png;btn_show_multiplayer;" .. fgettext("Multiplayer") .. ";true;true;" .. minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,4.8;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    --retval = retval .. "image_button[8.5,4.8;1,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,6.2;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_exit;".. fgettext("Exit") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,2.0;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_singleplayer;".. fgettext("Singleplayer") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+
+    local si = core.get_screen_info()
+
+    local ydiv = si.window_height/5.2
+    local xdiv = si.window_width/12.5
+    local ratio = xdiv/ydiv
+    --print(xdiv..' x '..ydiv..' = '..ratio)
+
+    math.randomseed(os.time())
+    --local rnd = 'image['.. 12*ratio ..','.. 1 .. ';6,0.5;'..minetest.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,14))..'.png]'
+
+    return retval --.. rnd
+end
+
+--------------------------------------------------------------------------------
+
+local function main_button_handler2(tabview, fields, name, tabdata)
+    local index = ''
+    if fields["btn_show_singleplayer"] then  index = "singleplayer" end
+    if fields["btn_show_multiplayer"]  then  index = "multiplayer"  end
+    if fields["btn_show_options"]      then  index = "settings"     end
+    if fields["btn_show_help"]         then  index = "help"         end
+    if fields["btn_exit"] then core.close() end
+
+    if index == '' then return end
+    for name,def in pairs(tabview.tablist) do
+       local fs
+       if index == 'singleplayer' then
+          fs = create_tab_single(true)
+       elseif index == 'multiplayer' then
+          fs = create_tab_multiplayer()
+       elseif index == 'settings' then
+          fs = create_tab_settings(true)
+       end
+       if fs then
+          fs:set_parent(tabview.parent or tabview)
+          tabview:hide()
+          fs:show()
+       return true
+       end
+    end
+   return false
+end
+
+--------------------------------------------------------------------------------
+local function on_activate2(type,old_tab,new_tab)
+    if type == "LEAVE" then
+        return
+    end
+    if core.setting_getbool("public_serverlist") then
+        asyncOnlineFavourites()
+    else
+        menudata.favorites = core.get_favorites("local")
+    end
+    mm_texture.clear("header")
+    mm_texture.clear("footer")
+    core.set_clouds(false)
+    core.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
+
+
+end
+
+--------------------------------------------------------------------------------
+tab_main = {
+    name = "main",
+    caption = fgettext("Main"),
+    cbf_formspec = get_formspec2,
+    cbf_button_handler = main_button_handler2,
+    on_change = on_activate2
+    }
+
+--------------------------------------------------------------------------------
 local function init_globals()
-	-- Init gamedata
-	gamedata.worldindex = 0
+    -- Init gamedata
+    gamedata.worldindex = 0
 
+    menudata.worldlist = filterlist.create(
+        core.get_worlds,
+        compare_worlds,
+        -- Unique id comparison function
+        function(element, uid)
+            return element.name == uid
+        end,
+        -- Filter function
+        function(element, gameid)
+            return element.gameid == gameid
+        end
+    )
 
-	if PLATFORM ~= "Android" then
-		menudata.worldlist = filterlist.create(
-			core.get_worlds,
-			compare_worlds,
-			-- Unique id comparison function
-			function(element, uid)
-				return element.name == uid
-			end,
-			-- Filter function
-			function(element, gameid)
-				return element.gameid == gameid
-			end
-		)
+    menudata.worldlist:add_sort_mechanism("alphabetic", sort_worlds_alphabetic)
+    menudata.worldlist:set_sortmode("alphabetic")
 
-		menudata.worldlist:add_sort_mechanism("alphabetic", sort_worlds_alphabetic)
-		menudata.worldlist:set_sortmode("alphabetic")
+    if not core.setting_get("menu_last_game") then
+        local default_game = core.setting_get("default_game") or "magichet"
+        core.setting_set("menu_last_game", default_game )
+    end
 
-		if not core.setting_get("menu_last_game") then
-			local default_game = core.setting_get("default_game") or "minetest"
-			core.setting_set("menu_last_game", default_game )
-		end
+    mm_texture.init()
 
-		mm_texture.init()
-	else
-		local world_list = core.get_worlds()
-
-		local found_singleplayerworld = false
-
-		for i,world in pairs(world_list) do
-			if world.name == "singleplayerworld" then
-				found_singleplayerworld = true
-				gamedata.worldindex = i
-				break
-			end
-		end
-
-		if not found_singleplayerworld then
-			core.create_world("singleplayerworld", 1)
-
-			local world_list = core.get_worlds()
-
-			for i,world in pairs(world_list) do
-				if world.name == "singleplayerworld" then
-					gamedata.worldindex = i
-					break
-				end
-			end
-		end
-	end
 
 	-- Create main tabview
 	local tv_main = tabview_create("maintab",{x=12,y=5.2},{x=0,y=0})
-	if PLATFORM ~= "Android" then
-		tv_main:set_autosave_tab(true)
-	end
-	if PLATFORM ~= "Android" then
-		tv_main:add(tab_singleplayer)
-		tv_main:add(tab_multiplayer)
-		tv_main:add(tab_server)
-	else
-		tv_main:add(tab_simple_main)
-	end
+	tv_main:set_autosave_tab(false)
+	tv_main:add(tab_main)
+	tv_main:add(tab_singleplayer)
+	tv_main:add(tab_multiplayer)
+	tv_main:add(tab_server)
 	tv_main:add(tab_settings)
-	if PLATFORM ~= "Android" then
-		tv_main:add(tab_texturepacks)
-	end
+	tv_main:add(tab_texturepacks)
 	tv_main:add(tab_mods)
 	tv_main:add(tab_credits)
-
 	tv_main:set_global_event_handler(main_event_handler)
-
 	tv_main:set_fixed_size(false)
-
-	if not (PLATFORM == "Android") then
-		tv_main:set_tab(core.setting_get("maintab_LAST"))
-	end
-	ui.set_default("maintab")
+	ui.set_default("main")
 	tv_main:show()
 
 	-- Create modstore ui
@@ -158,7 +195,7 @@ local function init_globals()
 	ui.update()
 
 	core.sound_play("main_menu", true)
+
 end
 
 init_globals()
-

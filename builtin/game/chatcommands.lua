@@ -809,3 +809,4 @@ core.register_chatcommand("last-login", {
 		return false, "Last login time is unknown"
 	end,
 })
+

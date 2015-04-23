@@ -17,22 +17,25 @@
 
 --------------------------------------------------------------------------------
 local function get_formspec(tabview, name, tabdata)
-	
+
 	local index = menudata.worldlist:get_current_index(
 				tonumber(core.setting_get("mainmenu_last_selected_world"))
 				)
 
 	local retval =
-		"button[4,4.15;2.6,0.5;world_delete;" .. fgettext("Delete") .. "]" ..
-		"button[6.5,4.15;2.8,0.5;world_create;" .. fgettext("New") .. "]" ..
-		"button[9.2,4.15;2.55,0.5;world_configure;" .. fgettext("Configure") .. "]" ..
-		"button[8.5,4.95;3.25,0.5;start_server;" .. fgettext("Start Game") .. "]" ..
+		"image_button[4,4.15;2.6,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete;" .. fgettext("Delete") .. "]" ..
+		"image_button[6.5,4.15;2.8,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create;" .. fgettext("New") .. "]" ..
+		"image_button[9.2,4.15;2.55,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_configure;" .. fgettext("Configure") .. "]" ..
+		"image_button[8.5,4.95;3.25,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;start_server;" .. fgettext("Start Game") .. "]" ..
 		"label[4,-0.25;" .. fgettext("Select World:") .. "]" ..
-		"checkbox[0.25,0.25;cb_creative_mode;" .. fgettext("Creative Mode") .. ";" ..
+		"checkbox[0.25,0.15;cb_creative_mode;" .. fgettext("Creative Mode") .. ";" ..
 		dump(core.setting_getbool("creative_mode")) .. "]" ..
-		"checkbox[0.25,0.7;cb_enable_damage;" .. fgettext("Enable Damage") .. ";" ..
+		"checkbox[0.25,0.6;cb_enable_damage;" .. fgettext("Enable Damage") .. ";" ..
 		dump(core.setting_getbool("enable_damage")) .. "]" ..
-		"checkbox[0.25,1.15;cb_server_announce;" .. fgettext("Public") .. ";" ..
+		"image_button[0.25,1.3;0.58,0.55;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_checkf.png;b_single;;false;false]"..
+		"image_button[0.25,1.3;0.58,0.55;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_check.png;b_single;;false;false]"..
+		"image_button[0.3,1.3;3,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_trans.png;btn_single;Local Server;false;false]"..
+		"checkbox[0.25,1.6;cb_server_announce;" .. fgettext("Public") .. ";" ..
 		dump(core.setting_getbool("server_announce")) .. "]" ..
 		"label[0.25,2.2;" .. fgettext("Name/Password") .. "]" ..
 		"field[0.55,3.2;3.5,0.5;te_playername;;" ..
@@ -51,19 +54,27 @@ local function get_formspec(tabview, name, tabdata)
 			"field[0.55,5.2;3.5,0.5;te_serverport;" .. fgettext("Server Port") .. ";" ..
 			core.formspec_escape(core.setting_get("port")) .. "]"
 	end
-	
+
 	retval = retval ..
 		"textlist[4,0.25;7.5,3.7;srv_worlds;" ..
 		menu_render_worldlist() ..
 		";" .. index .. "]"
-	
-	return retval
+
+	return 'size[12,5.2]'..retval
 end
 
 --------------------------------------------------------------------------------
 local function main_button_handler(this, fields, name, tabdata)
 
 	local world_doubleclick = false
+
+	if fields["btn_single"]~=nil then
+		local single = create_tab_single(true)
+		single:set_parent(this.parent)
+		single:show()
+		this:hide()
+		return true
+	end
 
 	if fields["srv_worlds"] ~= nil then
 		local event = core.explode_textlist_event(fields["srv_worlds"])
@@ -159,7 +170,7 @@ local function main_button_handler(this, fields, name, tabdata)
 
 			--update last game
 			local world = menudata.worldlist:get_raw_element(gamedata.selected_world)
-			
+
 			local game,index = gamemgr.find_by_gameid(world.gameid)
 			core.setting_set("menu_last_game",game.id)
 			core.start()
@@ -190,7 +201,7 @@ local function main_button_handler(this, fields, name, tabdata)
 				this:hide()
 			end
 		end
-		
+
 		return true
 	end
 
@@ -200,7 +211,7 @@ local function main_button_handler(this, fields, name, tabdata)
 			local configdialog =
 				create_configure_world_dlg(
 						menudata.worldlist:get_raw_index(selected))
-			
+
 			if (configdialog ~= nil) then
 				configdialog:set_parent(this)
 				configdialog:show()
@@ -220,3 +231,11 @@ tab_server = {
 	cbf_button_handler = main_button_handler,
 	on_change = nil
 	}
+
+function create_tab_server()
+		local retval = dialog_create("server",
+										get_formspec,
+										main_button_handler,
+										nil)
+	return retval
+end

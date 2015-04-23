@@ -44,15 +44,15 @@ local function get_formspec(data)
 	if mod == nil then
 		mod = {name=""}
 	end
-	
-	retval = retval ..
-		"label[0,0.45;" .. fgettext("Mod:") .. "]" ..
-		"label[0.75,0.45;" .. mod.name .. "]" ..
-		"label[0,1;" .. fgettext("Depends:") .. "]" ..
-		"textlist[0,1.5;5,4.25;world_config_depends;" ..
-		modmgr.get_dependencies(mod.path) .. ";0]" ..
-		"button[9.25,6.35;2,0.5;btn_config_world_save;" .. fgettext("Save") .. "]" ..
-		"button[7.4,6.35;2,0.5;btn_config_world_cancel;" .. fgettext("Cancel") .. "]"
+
+    retval = retval ..
+        "label[0,0.45;" .. fgettext("Mod:") .. "]" ..
+        "label[0.75,0.45;" .. mod.name .. "]" ..
+        "label[0,1;" .. fgettext("Depends:") .. "]" ..
+        "textlist[0,1.5;5,4.25;world_config_depends;" ..
+        modmgr.get_dependencies(mod.path) .. ";0]" ..
+        "image_button[9.25,6.35;2,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_config_world_save;" .. fgettext("Save") .. "]" ..
+        "image_button[7.4,6.35;2,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_config_world_cancel;" .. fgettext("Cancel") .. "]"
 
 	if mod ~= nil and mod.name ~= "" and mod.typ ~= "game_mod" then
 		if mod.is_modpack then
@@ -68,9 +68,9 @@ local function get_formspec(data)
 			end
 
 			if all_enabled == false then
-				retval = retval .. "button[5.5,-0.125;2,0.5;btn_mp_enable;" .. fgettext("Enable MP") .. "]"
+				retval = retval .. "image_button[5.5,-0.125;2,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_enable;" .. fgettext("Enable MP") .. "]"
 			else
-				retval = retval .. "button[5.5,-0.125;2,0.5;btn_mp_disable;" .. fgettext("Disable MP") .. "]"
+				retval = retval .. "image_button[5.5,-0.125;2,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_disable;" .. fgettext("Disable MP") .. "]"
 			end
 		else
 			if mod.enabled then
@@ -82,7 +82,7 @@ local function get_formspec(data)
 	end
 
 	retval = retval ..
-		"button[8.5,-0.125;2.5,0.5;btn_all_mods;" .. fgettext("Enable all") .. "]" ..
+		"image_button[8.5,-0.125;2.5,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_all_mods;" .. fgettext("Enable all") .. "]" ..
 		"textlist[5.5,0.5;5.5,5.75;world_config_modlist;"
 
 	retval = retval .. modmgr.render_modlist(data.list)

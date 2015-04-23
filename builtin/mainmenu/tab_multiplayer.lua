@@ -17,8 +17,9 @@
 
 --------------------------------------------------------------------------------
 local function get_formspec(tabview, name, tabdata)
+if not tabdata then tabdata = {} end
 	local render_details = core.is_yes(core.setting_getbool("public_serverlist"))
-	
+
 	local retval =
 		"label[7.75,-0.15;" .. fgettext("Address / Port :") .. "]" ..
 		"label[7.75,1.05;" .. fgettext("Name / Password :") .. "]" ..
@@ -31,17 +32,17 @@ local function get_formspec(tabview, name, tabdata)
 
 	if not core.setting_getbool("public_serverlist") then
 		retval = retval ..
-		"button[8,4.9;2,0.5;btn_delete_favorite;" .. fgettext("Delete") .. "]"
+		"image_button[8,4.9;2,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_delete_favorite;" .. fgettext("Delete") .. "]"
 	end
 
 	retval = retval ..
-		"button[10,4.9;2,0.5;btn_mp_connect;" .. fgettext("Connect") .. "]" ..
+		"image_button[10,4.9;2,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_connect;" .. fgettext("Connect") .. "]" ..
 		"field[8,1.95;2.95,0.5;te_name;;" ..
 		core.formspec_escape(core.setting_get("name")) .. "]" ..
 		"pwdfield[10.78,1.95;1.77,0.5;te_pwd;]" ..
 		"box[7.73,2.35;4.3,2.28;#999999]" ..
 		"textarea[8.1,2.4;4.26,2.6;;"
-		
+
 	if tabdata.fav_selected ~= nil and
 		menudata.favorites[tabdata.fav_selected] ~= nil and
 		menudata.favorites[tabdata.fav_selected].description ~= nil then
@@ -84,11 +85,12 @@ local function get_formspec(tabview, name, tabdata)
 		retval = retval .. ";0]"
 	end
 
-	return retval
+	return 'size[12,5.2]'..retval
 end
 
 --------------------------------------------------------------------------------
 local function main_button_handler(tabview, fields, name, tabdata)
+if not tabdata then tabdata = {} end
 	if fields["te_name"] ~= nil then
 		gamedata.playername = fields["te_name"]
 		core.setting_set("name", fields["te_name"])
@@ -138,7 +140,7 @@ local function main_button_handler(tabview, fields, name, tabdata)
 
 				tabdata.fav_selected = event.row
 			end
-			
+
 			return true
 		end
 	end
@@ -157,13 +159,13 @@ local function main_button_handler(tabview, fields, name, tabdata)
 		else
 			fav_idx = 1
 		end
-		
+
 		if menudata.favorites == nil or
 			menudata.favorites[fav_idx] == nil then
 			tabdata.fav_selected = 0
 			return true
 		end
-	
+
 		local address = menudata.favorites[fav_idx].address
 		local port    = menudata.favorites[fav_idx].port
 
@@ -249,6 +251,9 @@ local function on_change(type,old_tab,new_tab)
 	else
 		menudata.favorites = core.get_favorites("local")
 	end
+		if type == "MenuQuit" then
+			return true
+		end
 end
 
 --------------------------------------------------------------------------------
@@ -257,5 +262,14 @@ tab_multiplayer = {
 	caption = fgettext("Client"),
 	cbf_formspec = get_formspec,
 	cbf_button_handler = main_button_handler,
-	on_change = on_change
+	--on_change = on_change
 	}
+
+function create_tab_multiplayer()
+		local retval = dialog_create("multiplayer",
+										get_formspec,
+										main_button_handler
+										--on_change
+										)
+	return retval
+end
