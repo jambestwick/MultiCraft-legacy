@@ -3515,14 +3515,24 @@ void Game::handlePointingAtNode(GameRunData *runData,
 		}
 	}
 
+	bool digging = false;
+
 	if (runData->nodig_delay_timer <= 0.0 && input->getLeftState()
 			&& client->checkPrivilege("interact")) {
 		handleDigging(runData, pointed, nodepos, playeritem_toolcap, dtime);
+		digging = true;
 	}
 
-	if ((input->getRightClicked() ||
-			runData->repeat_rightclick_timer >= m_repeat_right_click_time) &&
-			client->checkPrivilege("interact")) {
+	bool place = (input->getRightClicked() ||
+				  runData->repeat_rightclick_timer >= m_repeat_right_click_time) &&
+				  client->checkPrivilege("interact");
+
+#ifdef HAVE_TOUCHSCREENGUI
+	place &= !digging;
+	place |= input->getLeftReleased();
+#endif
+
+	if (place) {
 		runData->repeat_rightclick_timer = 0;
 		infostream << "Ground right-clicked" << std::endl;
 

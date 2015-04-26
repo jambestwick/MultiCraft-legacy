@@ -508,6 +508,24 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 				translated->MouseInput.Event        = EMIE_LMOUSE_LEFT_UP;
 				m_receiver->OnEvent(*translated);
 				delete translated;
+			} else if (!m_move_has_really_moved) {
+				SEvent* translated = new SEvent;
+				memset(translated,0,sizeof(SEvent));
+				translated->EventType               = EET_MOUSE_INPUT_EVENT;
+				translated->MouseInput.X            = m_move_downlocation.X;
+				translated->MouseInput.Y            = m_move_downlocation.Y;
+				translated->MouseInput.Shift        = false;
+				translated->MouseInput.Control      = false;
+				translated->MouseInput.ButtonStates = 0;
+				translated->MouseInput.Event        = EMIE_LMOUSE_LEFT_UP;
+				m_receiver->OnEvent(*translated);
+				delete translated;
+
+				m_shootline = m_device
+						->getSceneManager()
+						->getSceneCollisionManager()
+						->getRayFromScreenCoordinates(
+								v2s32(event.TouchInput.X,event.TouchInput.Y));
 			}
 			else {
 				/* do double tap detection */
