@@ -43,7 +43,9 @@ typedef enum {
 	jump_id,
 	crunch_id,
 	fly_id,
+#ifdef ENABLE_ANDROID_NOCLIP
 	noclip_id,
+#endif
 	fast_id,
 	debug_id,
 	chat_id,
@@ -56,7 +58,7 @@ typedef enum {
 #define MAX_TOUCH_COUNT 64
 #define BUTTON_REPEAT_DELAY 0.2f
 
-extern const char** touchgui_button_imagenames;
+extern const char *touchgui_button_imagenames[];
 
 class TouchScreenGUI
 {

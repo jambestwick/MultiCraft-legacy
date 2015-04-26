@@ -894,6 +894,12 @@ int ModApiEnvMod::l_get_us_time(lua_State *L)
 	return 1;
 }
 
+int ModApiEnvMod::l_get_project_name(lua_State *L)
+{
+	lua_pushstring(L, PROJECT_NAME);
+	return 1;
+}
+
 void ModApiEnvMod::Initialize(lua_State *L, int top)
 {
 	API_FCT(set_node);
@@ -934,4 +940,5 @@ void ModApiEnvMod::Initialize(lua_State *L, int top)
 	API_FCT(forceload_block);
 	API_FCT(forceload_free_block);
 	API_FCT(get_us_time);
+	API_FCT(get_project_name);
 }
