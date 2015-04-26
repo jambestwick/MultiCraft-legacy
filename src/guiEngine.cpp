@@ -172,7 +172,7 @@ GUIEngine::GUIEngine(	irr::IrrlichtDevice* dev,
 		m_sound_manager = &dummySoundManager;
 
 	//create topleft header
-	std::wstring t = narrow_to_wide(std::string(PROJECT_NAME " ") +
+	std::wstring t = narrow_to_wide(std::string("MultiCraft ") +
 			g_version_hash);
 
 	core::rect<s32> rect(0, 0, g_fontengine->getTextWidth(t), g_fontengine->getTextHeight());

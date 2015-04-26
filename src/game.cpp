@@ -2035,7 +2035,7 @@ bool Game::createClient(const std::string &playername,
 
 	/* Set window caption
 	 */
-	std::wstring str = narrow_to_wide(PROJECT_NAME);
+	std::wstring str = narrow_to_wide("MultiCraft");
 	str += L" [";
 	str += driver->getName();
 	str += L"]";
@@ -2060,7 +2060,7 @@ bool Game::initGui()
 {
 	// First line of debug text
 	guitext = guienv->addStaticText(
-			narrow_to_wide(PROJECT_NAME).c_str(),
+			narrow_to_wide("MultiCraft").c_str(),
 			core::rect<s32>(0, 0, 0, 0),
 			false, false, guiroot);
 
@@ -4034,7 +4034,7 @@ void Game::updateGui(float *statustext_time, const RunStats &stats,
 
 		std::ostringstream os(std::ios_base::binary);
 		os << std::fixed
-		   << PROJECT_NAME " " << g_version_hash
+		   << "MultiCraft " << g_version_hash
 		   << " FPS = " << fps
 		   << " (R: range_all=" << draw_control->range_all << ")"
 		   << std::setprecision(0)
@@ -4050,7 +4050,7 @@ void Game::updateGui(float *statustext_time, const RunStats &stats,
 		guitext->setVisible(true);
 	} else if (flags.show_hud || flags.show_chat) {
 		std::ostringstream os(std::ios_base::binary);
-		os << PROJECT_NAME " " << g_version_hash;
+		os << "MultiCraft " << g_version_hash;
 		guitext->setText(narrow_to_wide(os.str()).c_str());
 		guitext->setVisible(true);
 	} else {
@@ -4283,7 +4283,7 @@ void the_game(bool *kill,
 	} catch (SerializationError &e) {
 		error_message = std::string("A serialization error occurred:\n")
 				+ e.what() + "\n\nThe server is probably "
-				" running a different version of " PROJECT_NAME ".";
+				" running a different version of MultiCraft.";
 		errorstream << error_message << std::endl;
 	} catch (ServerError &e) {
 		error_message = e.what();
