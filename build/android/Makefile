@@ -19,8 +19,8 @@ GAMES_TO_COPY = minetest_game
 # Android Version code
 # Increase for each build!
 ################################################################################
-# Play Store actual version (16/03/15): 11
-ANDROID_VERSION_CODE = 12
+
+ANDROID_VERSION_CODE = 1
 
 ################################################################################
 # toolchain config for arm old processors

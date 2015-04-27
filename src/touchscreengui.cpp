@@ -39,7 +39,7 @@ using namespace irr::core;
 
 extern Settings *g_settings;
 
-const char** touchgui_button_imagenames = (const char*[]) {
+const char *touchgui_button_imagenames[] = {
 	"up_arrow.png",
 	"down_arrow.png",
 	"left_arrow.png",
@@ -49,7 +49,9 @@ const char** touchgui_button_imagenames = (const char*[]) {
 	"jump_btn.png",
 	"down.png",
 	"fly_btn.png",
+#ifdef ENABLE_ANDROID_NOCLIP
 	"noclip_btn.png",
+#endif
 	"fast_btn.png",
 	"debug_btn.png",
 	"chat_btn.png",
@@ -88,9 +90,11 @@ static irr::EKEY_CODE id2keycode(touch_gui_button_id id)
 		case fly_id:
 			key = "freemove";
 			break;
+#ifdef ENABLE_ANDROID_NOCLIP
 		case noclip_id:
 			key = "noclip";
 			break;
+#endif
 		case fast_id:
 			key = "fastmove";
 			break;
@@ -187,40 +191,53 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 			3 * button_size, m_screensize.Y);
 	/*
 	draw control pad
-	0 1 2
-	3 4 5
-	for now only 0, 1, 2, and 4 are used
+	0 3 6
+	1 4 7
+	2 5 8
 	*/
 	int number = 0;
-	for (int y = 0; y < 2; ++y)
+	for (int y = 0; y < 3; ++y)
 		for (int x = 0; x < 3; ++x, ++number) {
 			rect<s32> button_rect(
-					x * button_size, m_screensize.Y - button_size * (2 - y),
-					(x + 1) * button_size, m_screensize.Y - button_size * (1 - y)
+					y * button_size, m_screensize.Y - button_size * (3 - x),
+					(y + 1) * button_size, m_screensize.Y - button_size * (2 - x)
 			);
 			touch_gui_button_id id = after_last_element_id;
 			std::wstring caption;
 			switch (number) {
 			case 0:
+				break;
+			case 1:
 				id = left_id;
 				caption = L"<";
 				break;
-			case 1:
+			case 2:
+				break;
+			case 3:
 				id = forward_id;
 				caption = L"^";
 				break;
-			case 2:
-				id = right_id;
-				caption = L">";
-				break;
 			case 4:
+				id = jump_id;
+				caption = L"x";
+				break;
+			case 5:
 				id = backward_id;
 				caption = L"v";
 				break;
+			case 6:
+				break;
+			case 7:
+				id = right_id;
+				caption = L">";
+				break;
+			case 8:
+				break;
+
 			}
 			if (id != after_last_element_id) {
 				initButton(id, button_rect, caption, false);
-				}
+			}
 		}
 
 	/* init inventory button */
@@ -233,19 +250,11 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 			rect<s32>(2.5*button_size, m_screensize.Y - (button_size/2),
 					3*button_size, m_screensize.Y), L"drop", true);
 
-	/* init jump button */
-	initButton(jump_id,
+	/* init crunch button */
+	initButton(crunch_id,
 			rect<s32>(m_screensize.X-(1.75*button_size),
 					m_screensize.Y - (0.5*button_size),
 					m_screensize.X-(0.25*button_size),
-					m_screensize.Y),
-			L"x",false);
-
-	/* init crunch button */
-	initButton(crunch_id,
-			rect<s32>(m_screensize.X-(3.25*button_size),
-					m_screensize.Y - (0.5*button_size),
-					m_screensize.X-(1.75*button_size),
 					m_screensize.Y),
 			L"H",false);
 
@@ -256,11 +265,13 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 					m_screensize.X, m_screensize.Y - (button_size*1.5)),
 			L"fly", false, SLOW_BUTTON_REPEAT);
 
+#ifdef ENABLE_ANDROID_NOCLIP
 	/* init noclip button */
 	initButton(noclip_id,
 			rect<s32>(m_screensize.X - (0.75*button_size), 2.25*button_size,
 					m_screensize.X, 3*button_size),
 			L"clip", false, SLOW_BUTTON_REPEAT);
+#endif
 
 	/* init fast button */
 	initButton(fast_id,
@@ -497,6 +508,24 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 				translated->MouseInput.Event        = EMIE_LMOUSE_LEFT_UP;
 				m_receiver->OnEvent(*translated);
 				delete translated;
+			} else if (!m_move_has_really_moved) {
+				SEvent* translated = new SEvent;
+				memset(translated,0,sizeof(SEvent));
+				translated->EventType               = EET_MOUSE_INPUT_EVENT;
+				translated->MouseInput.X            = m_move_downlocation.X;
+				translated->MouseInput.Y            = m_move_downlocation.Y;
+				translated->MouseInput.Shift        = false;
+				translated->MouseInput.Control      = false;
+				translated->MouseInput.ButtonStates = 0;
+				translated->MouseInput.Event        = EMIE_LMOUSE_LEFT_UP;
+				m_receiver->OnEvent(*translated);
+				delete translated;
+
+				m_shootline = m_device
+						->getSceneManager()
+						->getSceneCollisionManager()
+						->getRayFromScreenCoordinates(
+								v2s32(event.TouchInput.X,event.TouchInput.Y));
 			}
 			else {
 				/* do double tap detection */

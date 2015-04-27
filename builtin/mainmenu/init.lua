@@ -77,7 +77,7 @@ local function get_formspec2(tabview, name, tabdata)
     --print(xdiv..' x '..ydiv..' = '..ratio)
 
     --math.randomseed(os.time())
-    print(math.floor(si.window_width/53.33)+1)
+   -- print(math.floor(si.window_width/53.33)+1)
     core.setting_set('font_size', tostring(math.floor(si.window_width/53.33)+0.5))
     --local rnd = 'image['.. 12*ratio ..','.. 1 .. ';6,0.5;'..minetest.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,14))..'.png]'
 
