@@ -22,7 +22,7 @@ local function get_formspec(tabview, name, tabdata)
 	local render_details = dump(core.setting_getbool("public_serverlist"))
 
 	retval = retval ..
-		"label[8,0.5;".. fgettext("Name/Password") .. "]" ..
+		"label[8,0.8;".. fgettext("Name/Password") .. "]" ..
 		"field[0.25,3.25;5.5,0.5;te_address;;" ..
 		core.formspec_escape(core.setting_get("address")) .."]" ..
 		"field[5.75,3.25;2.25,0.5;te_port;;" ..
@@ -35,7 +35,7 @@ local function get_formspec(tabview, name, tabdata)
 		"field[8.75,1.5;3.5,0.5;te_name;;" ..
 		core.formspec_escape(core.setting_get("name")) .."]" ..
 		"pwdfield[8.75,2.3;3.5,0.5;te_pwd;]"
-		
+
 	if render_details then
 		retval = retval .. "tablecolumns[" ..
 			"color,span=3;" ..

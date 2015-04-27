@@ -32,11 +32,11 @@ if not tabdata then tabdata = {} end
 
 	if not core.setting_getbool("public_serverlist") then
 		retval = retval ..
-		"image_button[8,4.9;2,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_delete_favorite;" .. fgettext("Delete") .. "]"
+		"image_button[8,4.9;2,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_delete_favorite;" .. fgettext("Delete") .. "]"
 	end
 
 	retval = retval ..
-		"image_button[10,4.9;2,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_connect;" .. fgettext("Connect") .. "]" ..
+		"image_button[10,4.9;2,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_connect;" .. fgettext("Connect") .. "]" ..
 		"field[8,1.95;2.95,0.5;te_name;;" ..
 		core.formspec_escape(core.setting_get("name")) .. "]" ..
 		"pwdfield[10.78,1.95;1.77,0.5;te_pwd;]" ..
@@ -85,7 +85,7 @@ if not tabdata then tabdata = {} end
 		retval = retval .. ";0]"
 	end
 
-	return 'size[12,5.2]'..retval
+	return 'size[12,5.4;false]'..retval
 end
 
 --------------------------------------------------------------------------------

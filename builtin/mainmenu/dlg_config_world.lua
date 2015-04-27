@@ -25,7 +25,7 @@ local function get_formspec(data)
 	local mod = data.list:get_list()[data.selected_mod]
 
 	local retval =
-		"size[11,6.5,true]" ..
+		"size[11,6.5,false]" ..
 		"label[0.5,-0.25;" .. fgettext("World:") .. "]" ..
 		"label[1.75,-0.25;" .. data.worldspec.name .. "]"
 
@@ -51,8 +51,8 @@ local function get_formspec(data)
         "label[0,1;" .. fgettext("Depends:") .. "]" ..
         "textlist[0,1.5;5,4.25;world_config_depends;" ..
         modmgr.get_dependencies(mod.path) .. ";0]" ..
-        "image_button[9.25,6.35;2,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_config_world_save;" .. fgettext("Save") .. "]" ..
-        "image_button[7.4,6.35;2,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_config_world_cancel;" .. fgettext("Cancel") .. "]"
+        "image_button[9.25,6.35;2,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_config_world_save;" .. fgettext("Save") .. "]" ..
+        "image_button[7.4,6.35;2,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_config_world_cancel;" .. fgettext("Cancel") .. "]"
 
 	if mod ~= nil and mod.name ~= "" and mod.typ ~= "game_mod" then
 		if mod.is_modpack then
@@ -68,9 +68,9 @@ local function get_formspec(data)
 			end
 
 			if all_enabled == false then
-				retval = retval .. "image_button[5.5,-0.125;2,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_enable;" .. fgettext("Enable MP") .. "]"
+				retval = retval .. "image_button[5.5,-0.125;2,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_enable;" .. fgettext("Enable MP") .. "]"
 			else
-				retval = retval .. "image_button[5.5,-0.125;2,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_disable;" .. fgettext("Disable MP") .. "]"
+				retval = retval .. "image_button[5.5,-0.125;2,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_disable;" .. fgettext("Disable MP") .. "]"
 			end
 		else
 			if mod.enabled then
@@ -82,7 +82,7 @@ local function get_formspec(data)
 	end
 
 	retval = retval ..
-		"image_button[8.5,-0.125;2.5,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_all_mods;" .. fgettext("Enable all") .. "]" ..
+		"image_button[8.5,-0.125;2.5,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_all_mods;" .. fgettext("Enable all") .. "]" ..
 		"textlist[5.5,0.5;5.5,5.75;world_config_modlist;"
 
 	retval = retval .. modmgr.render_modlist(data.list)
@@ -126,7 +126,7 @@ local function handle_buttons(this, fields)
 		if event.type == "DCL" then
 			enable_mod(this)
 		end
-		
+
 		return true
 	end
 
@@ -155,7 +155,7 @@ local function handle_buttons(this, fields)
 		if current == nil then
 			current = {}
 		end
-		
+
 		if fields["cb_hide_gamemods"] ~= nil then
 			if core.is_yes(fields["cb_hide_gamemods"]) then
 				current.hide_game = true
@@ -219,7 +219,7 @@ local function handle_buttons(this, fields)
 		if not worldfile:write() then
 			core.log("error", "Failed to write world config file")
 		end
-	
+
 		this:delete()
 		return true
 	end
@@ -262,14 +262,14 @@ function create_configure_world_dlg(worldidx)
 	if dlg.data.worldspec == nil then dlg:delete() return nil end
 
 	dlg.data.worldconfig = modmgr.get_worldconfig(dlg.data.worldspec.path)
-	
+
 	if dlg.data.worldconfig == nil or dlg.data.worldconfig.id == nil or
 			dlg.data.worldconfig.id == "" then
 
 		dlg:delete()
 		return nil
 	end
-	
+
 	dlg.data.list = filterlist.create(
 			modmgr.preparemodlist, --refresh
 			modmgr.comparemod, --compare

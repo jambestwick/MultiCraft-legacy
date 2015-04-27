@@ -75,9 +75,9 @@ local function dlg_confirm_reset_formspec(data)
 	local retval =
 		"size[8,3]" ..
 		"label[1,1;".. fgettext("Are you sure to reset your singleplayer world?") .. "]"..
-		"image_button[1,2;2.6,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_confirm;"..
+		"image_button[1,2;2.6,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_confirm;"..
 				fgettext("Yes") .. "]" ..
-		"image_button[4,2;2.8,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_cancel;"..
+		"image_button[4,2;2.8,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_cancel;"..
 				fgettext("No!!!") .. "]"
 	return retval
 end
@@ -209,10 +209,10 @@ local function formspec(tabview, name, tabdata)
 
 	if PLATFORM ~= "Android" then
 		tab_string = tab_string ..
-		"image_button[8,4.75;3.75,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_change_keys;".. fgettext("Change keys") .. "]"
+		"image_button[8,4.75;3.75,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_change_keys;".. fgettext("Change keys") .. "]"
 	else
 		tab_string = tab_string ..
-		"image_button[8,4.75;3.75,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_reset_singleplayer;".. fgettext("Reset singleplayer world") .. "]"
+		"image_button[8,4.75;3.75,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_reset_singleplayer;".. fgettext("Reset singleplayer world") .. "]"
 	end
 	tab_string = tab_string ..
 		"box[0,4.25;3.5,1.1;#999999]" ..
@@ -260,7 +260,7 @@ local function formspec(tabview, name, tabdata)
 				"textlist[8.33,2.7;4,1;;#888888" .. fgettext("Waving Leaves") .. ";0;true]" ..
 				"textlist[8.33,3.2;4,1;;#888888" .. fgettext("Waving Plants") .. ";0;true]"
 		end
-	return 'size[12,5.2]'..tab_string
+	return 'size[12,5.2,false]'..tab_string
 end
 
 --------------------------------------------------------------------------------

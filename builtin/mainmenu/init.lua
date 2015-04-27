@@ -61,8 +61,8 @@ end
 
 --------------------------------------------------------------------------------
 local function get_formspec2(tabview, name, tabdata)
-    local retval = ""
-    retval = retval .. "bgcolor[#00000000;false]"
+    local retval = 'size[12,5.2,false]'
+    retval = retval .. "bgcolor[#00000000;true]"
     retval = retval .. "image_button[2.5,3.4;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir) .. "menu_button.png;btn_show_multiplayer;" .. fgettext("Multiplayer") .. ";true;true;" .. minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
     retval = retval .. "image_button[2.5,4.8;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
     --retval = retval .. "image_button[8.5,4.8;1,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
@@ -76,7 +76,9 @@ local function get_formspec2(tabview, name, tabdata)
     local ratio = xdiv/ydiv
     --print(xdiv..' x '..ydiv..' = '..ratio)
 
-    math.randomseed(os.time())
+    --math.randomseed(os.time())
+    print(math.floor(si.window_width/53.33)+1)
+    core.setting_set('font_size', tostring(math.floor(si.window_width/53.33)+0.5))
     --local rnd = 'image['.. 12*ratio ..','.. 1 .. ';6,0.5;'..minetest.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,14))..'.png]'
 
     return retval --.. rnd
@@ -170,7 +172,7 @@ local function init_globals()
 
 
 	-- Create main tabview
-	local tv_main = tabview_create("maintab",{x=12,y=5.2},{x=0,y=0})
+	local tv_main = tabview_create("maintab",{x=12,y=5.2},{x=-1,y=0})
 	tv_main:set_autosave_tab(false)
 	tv_main:add(tab_main)
 	tv_main:add(tab_singleplayer)

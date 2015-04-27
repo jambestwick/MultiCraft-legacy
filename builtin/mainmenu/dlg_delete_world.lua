@@ -19,11 +19,11 @@
 local function delete_world_formspec(dialogdata)
 
 	local retval =
-		"size[12,6,true]" ..
+		"size[12,6,false]" ..
 		"label[2,2;" ..
 		fgettext("Delete World \"$1\"?", dialogdata.delete_name) .. "]"..
-		"image_button[3.5,4.2;2.6,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete_confirm;" .. fgettext("Yes").. "]" ..
-		"image_button[6,4.2;2.8,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete_cancel;" .. fgettext("No") .. "]"
+		"image_button[3.5,4.2;2.6,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete_confirm;" .. fgettext("Yes").. "]" ..
+		"image_button[6,4.2;2.8,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete_cancel;" .. fgettext("No") .. "]"
 	return retval
 end
 
@@ -38,12 +38,12 @@ local function delete_world_buttonhandler(this, fields)
 		this:delete()
 		return true
 	end
-	
+
 	if fields["world_delete_cancel"] then
 		this:delete()
 		return true
 	end
-	
+
 	return false
 end
 
@@ -59,6 +59,6 @@ function create_delete_world_dlg(name_to_del,index_to_del)
 					nil)
 	retval.data.delete_name  = name_to_del
 	retval.data.delete_index = index_to_del
-	
+
 	return retval
 end

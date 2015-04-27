@@ -82,21 +82,21 @@ local function get_formspec(tabview, name, tabdata)
 				)
 
 	retval = retval ..
-			"image_button[4,4.15;2.6,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete;".. fgettext("Delete") .. "]" ..
-			"image_button[6.5,4.15;2.8,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create;".. fgettext("New") .. "]" ..
-			"image_button[9.2,4.15;2.55,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_configure;".. fgettext("Configure") .. "]" ..
-			"image_button[8.5,4.95;3.25,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;play;".. fgettext("Play") .. "]" ..
+			"image_button[4,4.15;2.6,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete;".. fgettext("Delete") .. "]" ..
+			"image_button[6.5,4.15;2.8,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create;".. fgettext("New") .. "]" ..
+			"image_button[9.2,4.15;2.55,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_configure;".. fgettext("Configure") .. "]" ..
+			"image_button[8.5,4.95;3.25,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;play;".. fgettext("Play") .. "]" ..
 			"label[4,-0.25;".. fgettext("Select World:") .. "]"..
 			"checkbox[0.25,0.15;cb_creative_mode;".. fgettext("Creative Mode") .. ";" ..
 			dump(core.setting_getbool("creative_mode")) .. "]"..
 			"checkbox[0.25,0.6;cb_enable_damage;".. fgettext("Enable Damage") .. ";" ..
 			dump(core.setting_getbool("enable_damage")) .. "]"..
-			"image_button[0.25,1.3;0.58,0.55;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_checkf.png;b_single;;false;false]"..
-			"image_button[0.3,1.3;3,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_trans.png;btn_server;Local Server;false;false]"..
+			"image[0.25,1.3;0.58,0.55;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_checkf.png]"..
+			"image_button[0.8,1.3;3,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_trans.png;btn_server;Local Server;false;false]"..
 			"textlist[4,0.25;7.5,3.7;sp_worlds;" ..
 			menu_render_worldlist() ..
 			";" .. index .. "]"
-	return 'size[12,5.2]'..retval
+	return 'size[12,5.4;false]'..retval
 end
 
 local function main_button_handler(this, fields, name, tabdata)

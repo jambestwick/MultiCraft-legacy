@@ -32,13 +32,13 @@ local function create_world_formspec(dialogdata)
 		mglist = mglist .. v .. ","
 	end
 	mglist = mglist:sub(1, -2)
-	
+
 	local gameid = core.setting_get("menu_last_game")
-	
+
 	local game, gameidx = nil , 0
 	if gameid ~= nil then
 		game, gameidx = gamemgr.find_by_gameid(gameid)
-		
+
 		if gameidx == nil then
 			gameidx = 0
 		end
@@ -46,7 +46,7 @@ local function create_world_formspec(dialogdata)
 
 	current_seed = core.formspec_escape(current_seed)
 	local retval =
-		"size[12,6,true]" ..
+		"size[12,6,false]" ..
 		"label[2,0;" .. fgettext("World name") .. "]"..
 		"field[4.5,0.4;6,0.5;te_world_name;;]" ..
 
@@ -60,9 +60,9 @@ local function create_world_formspec(dialogdata)
 		"textlist[4.2,3;5.8,2.3;games;" .. gamemgr.gamelist() ..
 		";" .. gameidx .. ";true]" ..
 
-		"image_button[5,5.5;2.6,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create_confirm;" .. fgettext("Create") .. "]" ..
-		"image_button[7.5,5.5;2.8,0.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create_cancel;" .. fgettext("Cancel") .. "]"
-		
+		"image_button[5,5.5;2.6,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create_confirm;" .. fgettext("Create") .. "]" ..
+		"image_button[7.5,5.5;2.8,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create_cancel;" .. fgettext("Cancel") .. "]"
+
 	if #gamemgr.games == 0 then
 		retval = retval .. "box[2,4;8,1;#ff8800]label[2.25,4;" ..
 				fgettext("You have no subgames installed.") .. "]label[2.25,4.4;" ..
@@ -122,7 +122,7 @@ local function create_world_buttonhandler(this, fields)
 	if fields["games"] then
 		return true
 	end
-	
+
 	if fields["world_create_cancel"] then
 		this:delete()
 		return true
@@ -138,6 +138,6 @@ function create_create_world_dlg(update_worldlistfilter)
 					create_world_buttonhandler,
 					nil)
 	retval.update_worldlist_filter = update_worldlistfilter
-	
+
 	return retval
 end
