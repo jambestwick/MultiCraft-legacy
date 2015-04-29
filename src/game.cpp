@@ -1139,7 +1139,7 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 			<< wide_to_narrow(wstrgettext("Exit to OS"))   << "]"
 #ifndef __ANDROID__
 			<< "textarea[7.5,0.25;3.9,6.25;;" << control_text << ";]"
-			<< "textarea[0.4,0.25;3.5,6;;" << PROJECT_NAME "\n"
+			<< "textarea[0.4,0.25;3.5,6;;" << PROJECT_NAME_C "\n"
 			<< g_build_info << "\n"
 			<< "path_user = " << wrap_rows(porting::path_user, 20)
 #endif
@@ -1799,7 +1799,7 @@ void Game::run()
 				cam_view.camera_pitch) * cam_smoothing;
 		updatePlayerControl(cam_view);
 		step(&dtime);
-		processClientEvents(&cam_view, &runData.damage_flash);
+		processClientEvents(&cam_view_target, &runData.damage_flash);
 		updateCamera(&flags, draw_times.busy_time, dtime,
 				runData.time_from_last_punch);
 		updateSound(dtime);
@@ -2036,6 +2036,7 @@ bool Game::createClient(const std::string &playername,
 	/* Set window caption
 	 */
 	std::wstring str = narrow_to_wide("MultiCraft");
+
 	str += L" [";
 	str += driver->getName();
 	str += L"]";

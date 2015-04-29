@@ -32,7 +32,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "mainmenumanager.h"
 #include "irrlichttypes_extrabloated.h"
 #include "debug.h"
-#include "test.h"
+#include "unittest/test.h"
 #include "server.h"
 #include "filesys.h"
 #include "version.h"
@@ -347,7 +347,7 @@ static void print_allowed_options(const OptionList &allowed_options)
 
 static void print_version()
 {
-	dstream << PROJECT_NAME " " << g_version_hash << std::endl;
+	dstream << PROJECT_NAME_C " " << g_version_hash << std::endl;
 #ifndef SERVER
 	dstream << "Using Irrlicht " << IRRLICHT_SDK_VERSION << std::endl;
 #endif
