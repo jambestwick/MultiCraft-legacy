@@ -6,14 +6,14 @@ OS := $(shell uname)
 # GPROF = 1
 
 # build for build platform
-APP_PLATFORM = android-9
+APP_PLATFORM = android-16
 
 # paths used for timestaps, dependencys, tree config and libs
 PATHCFGFILE = path.cfg
 
 ROOT = $(shell pwd)
 
-GAMES_TO_COPY = minetest_game
+GAMES_TO_COPY = MultiCraft_game
 
 ################################################################################
 # Android Version code
@@ -111,7 +111,7 @@ OPENSSL_TIMESTAMP = $(OPENSSL_DIR)timestamp
 OPENSSL_TIMESTAMP_INT = $(ROOT)/deps/openssl_timestamp
 OPENSSL_URL = http://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
 
-CURL_VERSION = 7.41.0
+CURL_VERSION = 7.42.1
 CURL_DIR = $(ROOT)/deps/curl-$(CURL_VERSION)
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
@@ -546,10 +546,10 @@ curl_binary:
 		echo "curl sources missing, downloading...";                           \
 		mkdir -p ${ROOT}/deps;                                                 \
 		cd deps;                                                               \
-		wget http://curl.haxx.se/gknw.net/7.34.0/dist-android/curl-7.34.0-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz || exit 1;\
-		tar -xzf curl-7.34.0-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz || exit 1;\
-		mv curl-7.34.0-rtmp-ssh2-ssl-zlib-static-bin-android curl-${CURL_VERSION_BINARY};\
-		rm curl-7.34.0-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz;           \
+		wget http://curl.haxx.se/gknw.net/${CURL_VERSION}/dist-android/curl-${CURL_VERSION}-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz || exit 1;\
+		tar -xzf curl-${CURL_VERSION}-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz || exit 1;\
+		mv curl-${CURL_VERSION}-rtmp-ssh2-ssl-zlib-static-bin-android curl-${CURL_VERSION_BINARY};\
+		rm curl-${CURL_VERSION}-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz;           \
 	fi
 
 sqlite3_download: deps/${SQLITE3_FOLDER}/sqlite3.c
