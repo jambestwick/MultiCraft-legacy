@@ -1354,6 +1354,7 @@ struct GameRunData {
 	bool update_wielded_item_trigger;
 	bool reset_jump_timer;
 	float nodig_delay_timer;
+	float noplace_delay_timer;
 	float dig_time;
 	float dig_time_complete;
 	float repeat_rightclick_timer;
@@ -2338,6 +2339,9 @@ inline void Game::updateInteractTimers(GameRunData *runData, f32 dtime)
 
 	if (runData->object_hit_delay_timer >= 0)
 		runData->object_hit_delay_timer -= dtime;
+
+	if (runData->noplace_delay_timer >= 0)
+		runData->noplace_delay_timer -= dtime;
 
 	runData->time_from_last_punch += dtime;
 }
@@ -3524,13 +3528,16 @@ void Game::handlePointingAtNode(GameRunData *runData,
 		digging = true;
 	}
 
+#ifdef HAVE_TOUCHSCREENGUI
+	bool place = (input->getRightClicked() || input->getLeftReleased() ||
+				  runData->repeat_rightclick_timer >= m_repeat_right_click_time) &&
+				  client->checkPrivilege("interact");
+	place &= !digging;
+	place &= runData->noplace_delay_timer <= 0.0;
+#else
 	bool place = (input->getRightClicked() ||
 				  runData->repeat_rightclick_timer >= m_repeat_right_click_time) &&
 				  client->checkPrivilege("interact");
-
-#ifdef HAVE_TOUCHSCREENGUI
-	place &= !digging;
-	place |= input->getLeftReleased();
 #endif
 
 	if (place) {
@@ -3707,6 +3714,7 @@ void Game::handleDigging(GameRunData *runData,
 		client->setCrack(runData->dig_index, nodepos);
 	} else {
 		infostream << "Digging completed" << std::endl;
+		runData->noplace_delay_timer = 1.0;
 		client->interact(2, pointed);
 		client->setCrack(-1, v3s16(0, 0, 0));
 		bool is_valid_position;
