@@ -181,10 +181,13 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 {
 	assert(tsrc != 0);
 
-	u32 control_pad_size =
-			MYMIN((2 * m_screensize.Y) / 3,getMaxControlPadSize(density));
+	const u32 spacing = 17;
 
-	u32 button_size      = control_pad_size / 3;
+	u32 control_pad_size =
+			MYMIN((2 * m_screensize.Y + spacing * 2) / 3,
+	              getMaxControlPadSize(density));
+
+	u32 button_size      = control_pad_size / 3.5;
 	m_visible            = true;
 	m_texturesource      = tsrc;
 	m_control_pad_rect   = rect<s32>(0, m_screensize.Y - 3 * button_size,
@@ -196,11 +199,12 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 	2 5 8
 	*/
 	int number = 0;
+
 	for (int y = 0; y < 3; ++y)
 		for (int x = 0; x < 3; ++x, ++number) {
 			rect<s32> button_rect(
-					y * button_size, m_screensize.Y - button_size * (3 - x),
-					(y + 1) * button_size, m_screensize.Y - button_size * (2 - x)
+					y * (button_size) + spacing * y, m_screensize.Y - button_size * (3 - x ) - spacing * (3 - x),
+					(y + 1) * button_size + spacing * y, m_screensize.Y - button_size * (2 - x ) - spacing * (2 - x)
 			);
 			touch_gui_button_id id = after_last_element_id;
 			std::wstring caption;
