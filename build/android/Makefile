@@ -20,7 +20,7 @@ GAMES_TO_COPY = minetest_game
 # Increase for each build!
 ################################################################################
 
-ANDROID_VERSION_CODE = 101
+ANDROID_VERSION_CODE = 1
 
 ################################################################################
 # toolchain config for arm old processors
@@ -734,7 +734,7 @@ $(ROOT)/jni/src/android_version.h :
 	>> ${ROOT}/jni/src/android_version.h;                                      \
 	export GITHASH=$$(git rev-parse --short=8 HEAD);                           \
 	export GITTAG=$$(git describe --abbrev=0 --tags);                          \
-	echo "#define VERSION_GITHASH \"1.0.1-Android\""                           \
+	echo "#define VERSION_GITHASH \"1.0.1\""                                   \
 	>> ${ROOT}/jni/src/android_version.h;                                      \
 	echo "#define VERSION_STRING STR(VERSION_MAJOR)\".\"STR(VERSION_MINOR)\
 	\".\"STR(VERSION_PATCH)"                                                   \
