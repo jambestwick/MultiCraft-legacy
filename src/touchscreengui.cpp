@@ -174,24 +174,25 @@ void TouchScreenGUI::initButton(touch_gui_button_id id, rect<s32> button_rect,
 }
 
 static int getMaxControlPadSize(float density) {
-	return 200 * density * g_settings->getFloat("hud_scaling");
+	return 235 * density * g_settings->getFloat("hud_scaling");
 }
 
 void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 {
 	assert(tsrc != 0);
 
-	const u32 spacing = 17;
+	const u32 spacing = 7;
 
 	u32 control_pad_size =
 			MYMIN((2 * m_screensize.Y + spacing * 2) / 3,
 	              getMaxControlPadSize(density));
 
-	u32 button_size      = control_pad_size / 3.5;
+	u32 button_size      = (control_pad_size - spacing * 2 ) / 3;
 	m_visible            = true;
 	m_texturesource      = tsrc;
-	m_control_pad_rect   = rect<s32>(0, m_screensize.Y - 3 * button_size,
-			3 * button_size, m_screensize.Y);
+	m_control_pad_rect   = rect<s32>(
+	        spacing,                    m_screensize.Y - control_pad_size - spacing,
+			spacing + control_pad_size, m_screensize.Y - spacing);
 	/*
 	draw control pad
 	0 3 6
@@ -202,10 +203,14 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 
 	for (int y = 0; y < 3; ++y)
 		for (int x = 0; x < 3; ++x, ++number) {
-			rect<s32> button_rect(
-					y * (button_size) + spacing * y, m_screensize.Y - button_size * (3 - x ) - spacing * (3 - x),
-					(y + 1) * button_size + spacing * y, m_screensize.Y - button_size * (2 - x ) - spacing * (2 - x)
-			);
+			v2s32 tl;
+			tl.X = y * (button_size + spacing) + spacing;
+			tl.Y = m_screensize.Y - (button_size + spacing) * (3 - x);
+//			rect<s32> button_rect(
+//					y * (button_size) + spacing * y, m_screensize.Y - button_size * (3 - x ) - spacing * (3 - x),
+//					(y + 1) * button_size + spacing * y, m_screensize.Y - button_size * (2 - x ) - spacing * (2 - x)
+//			);
+			rect<s32> button_rect(tl.X, tl.Y, tl.X + button_size, tl.Y + button_size);
 			touch_gui_button_id id = after_last_element_id;
 			std::wstring caption;
 			switch (number) {
@@ -246,19 +251,25 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 
 	/* init inventory button */
 	initButton(inventory_id,
-			rect<s32>(0, m_screensize.Y - (button_size/2),
-					(button_size/2), m_screensize.Y), L"inv", true);
+			rect<s32>(m_screensize.X-(3*button_size),
+	                  m_screensize.Y - (0.5*button_size),
+				      m_screensize.X-(2.5*button_size),
+				      m_screensize.Y),
+	                  L"inv", true);
 
 	/* init drop button */
 	initButton(drop_id,
-			rect<s32>(2.5*button_size, m_screensize.Y - (button_size/2),
-					3*button_size, m_screensize.Y), L"drop", true);
+	           rect<s32>(m_screensize.X-(0.5*button_size),
+					   m_screensize.Y - (0.5*button_size),
+					   m_screensize.X-(0.0*button_size),
+					   m_screensize.Y),
+	        L"drop", true);
 
 	/* init crunch button */
 	initButton(crunch_id,
-			rect<s32>(m_screensize.X-(1.75*button_size),
+			rect<s32>(m_screensize.X-(2.25*button_size),
 					m_screensize.Y - (0.5*button_size),
-					m_screensize.X-(0.25*button_size),
+					m_screensize.X-(1.25*button_size),
 					m_screensize.Y),
 			L"H",false);
 
@@ -272,22 +283,24 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 #ifdef ENABLE_ANDROID_NOCLIP
 	/* init noclip button */
 	initButton(noclip_id,
-			rect<s32>(m_screensize.X - (0.75*button_size), 2.25*button_size,
-					m_screensize.X, 3*button_size),
+			rect<s32>(m_screensize.X - (0.75*button_size), m_screensize.Y - (3.75*button_size),
+					m_screensize.X, m_screensize.Y - (button_size*3)),
 			L"clip", false, SLOW_BUTTON_REPEAT);
 #endif
 
 	/* init fast button */
 	initButton(fast_id,
-			rect<s32>(m_screensize.X - (0.75*button_size), 1.5*button_size,
-					m_screensize.X, 2.25*button_size),
+			rect<s32>(m_screensize.X - (0.75*button_size), m_screensize.Y - (3*button_size),
+					  m_screensize.X, m_screensize.Y - (button_size*2.25)),
 			L"fast", false, SLOW_BUTTON_REPEAT);
 
+#ifndef NDEBUG
 	/* init debug button */
 	initButton(debug_id,
 			rect<s32>(m_screensize.X - (0.75*button_size), 0.75*button_size,
 					m_screensize.X, 1.5*button_size),
 			L"dbg", false, SLOW_BUTTON_REPEAT);
+#endif
 
 	/* init chat button */
 	initButton(chat_id,
@@ -297,14 +310,14 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 
 	/* init camera button */
 	initButton(camera_id,
-			rect<s32>(m_screensize.X - (1.5*button_size), 0,
-					m_screensize.X - (0.75*button_size), 0.75*button_size),
+			rect<s32>(0, 0,
+					0.75*button_size, 0.75*button_size),
 			L"cam", false, SLOW_BUTTON_REPEAT);
 
 	/* init rangeselect button */
 	initButton(range_id,
-			rect<s32>(m_screensize.X - (2.25*button_size), 0,
-					m_screensize.X - (1.5*button_size), 0.75*button_size),
+			rect<s32>(0.75 * button_size, 0,
+					  1.5  * button_size, 0.75*button_size),
 			L"far", false, SLOW_BUTTON_REPEAT);
 }
 

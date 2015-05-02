@@ -2346,7 +2346,6 @@ inline void Game::updateInteractTimers(GameRunData *runData, f32 dtime)
 	runData->time_from_last_punch += dtime;
 }
 
-
 /* returns false if game should exit, otherwise true
  */
 inline bool Game::checkConnection()
@@ -4058,10 +4057,14 @@ void Game::updateGui(float *statustext_time, const RunStats &stats,
 		guitext->setText(narrow_to_wide(os.str()).c_str());
 		guitext->setVisible(true);
 	} else if (flags.show_hud || flags.show_chat) {
+#ifdef ANDROID
+		guitext->setVisible(false);
+#else
 		std::ostringstream os(std::ios_base::binary);
 		os << "MultiCraft " << g_version_hash;
 		guitext->setText(narrow_to_wide(os.str()).c_str());
 		guitext->setVisible(true);
+#endif
 	} else {
 		guitext->setVisible(false);
 	}
