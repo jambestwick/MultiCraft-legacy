@@ -28,4 +28,4 @@ Further documentation
 This game is not finished
 --------------------------
 - Don't expect it to work as well as a finished game will.
-- Please report any bugs. When doing that, debug.txt is useful.
+
