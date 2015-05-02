@@ -206,10 +206,7 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 			v2s32 tl;
 			tl.X = y * (button_size + spacing) + spacing;
 			tl.Y = m_screensize.Y - (button_size + spacing) * (3 - x);
-//			rect<s32> button_rect(
-//					y * (button_size) + spacing * y, m_screensize.Y - button_size * (3 - x ) - spacing * (3 - x),
-//					(y + 1) * button_size + spacing * y, m_screensize.Y - button_size * (2 - x ) - spacing * (2 - x)
-//			);
+
 			rect<s32> button_rect(tl.X, tl.Y, tl.X + button_size, tl.Y + button_size);
 			touch_gui_button_id id = after_last_element_id;
 			std::wstring caption;
@@ -251,18 +248,18 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 
 	/* init inventory button */
 	initButton(inventory_id,
-			rect<s32>(m_screensize.X-(3*button_size),
-	                  m_screensize.Y - (0.5*button_size),
-				      m_screensize.X-(2.5*button_size),
-				      m_screensize.Y),
-	                  L"inv", true);
-
-	/* init drop button */
-	initButton(drop_id,
 	           rect<s32>(m_screensize.X-(0.5*button_size),
 					   m_screensize.Y - (0.5*button_size),
 					   m_screensize.X-(0.0*button_size),
 					   m_screensize.Y),
+	                  L"inv", true);
+
+	/* init drop button */
+	initButton(drop_id,
+	           rect<s32>(m_screensize.X-(3*button_size),
+	                     m_screensize.Y - (0.5*button_size),
+				         m_screensize.X-(2.5*button_size),
+				         m_screensize.Y),
 	        L"drop", true);
 
 	/* init crunch button */
@@ -276,22 +273,27 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 	/* init fly button */
 	initButton(fly_id,
 			rect<s32>(m_screensize.X - (0.75*button_size),
-					m_screensize.Y - (2.25*button_size),
-					m_screensize.X, m_screensize.Y - (button_size*1.5)),
+					m_screensize.Y - (3.25*button_size),
+					m_screensize.X,
+	                m_screensize.Y - (button_size*2.5)),
 			L"fly", false, SLOW_BUTTON_REPEAT);
 
 #ifdef ENABLE_ANDROID_NOCLIP
 	/* init noclip button */
 	initButton(noclip_id,
-			rect<s32>(m_screensize.X - (0.75*button_size), m_screensize.Y - (3.75*button_size),
-					m_screensize.X, m_screensize.Y - (button_size*3)),
+			rect<s32>(m_screensize.X - (0.75*button_size),
+					m_screensize.Y - (4.75*button_size),
+					m_screensize.X,
+					m_screensize.Y - (button_size*4)),
 			L"clip", false, SLOW_BUTTON_REPEAT);
 #endif
 
 	/* init fast button */
 	initButton(fast_id,
-			rect<s32>(m_screensize.X - (0.75*button_size), m_screensize.Y - (3*button_size),
-					  m_screensize.X, m_screensize.Y - (button_size*2.25)),
+			rect<s32>(m_screensize.X - (0.75*button_size),
+	                  m_screensize.Y - (4*button_size),
+					  m_screensize.X,
+	                  m_screensize.Y - (button_size*3.25)),
 			L"fast", false, SLOW_BUTTON_REPEAT);
 
 #ifndef NDEBUG

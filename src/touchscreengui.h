@@ -29,6 +29,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "game.h"
 #include "client/tile.h"
 
+//#define ENABLE_ANDROID_NOCLIP
+
 using namespace irr;
 using namespace irr::core;
 using namespace irr::gui;
