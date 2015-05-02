@@ -442,14 +442,18 @@ void Server::start(Address bind_addr)
 	// Start thread
 	m_thread->Start();
 
+#if 0
 	// ASCII art for the win!
 	actionstream
-	<<"        .__               __                   __   "<<std::endl
-	<<"  _____ |__| ____   _____/  |_  ____   _______/  |_ "<<std::endl
-	<<" /     \\|  |/    \\_/ __ \\   __\\/ __ \\ /  ___/\\   __\\"<<std::endl
-	<<"|  Y Y  \\  |   |  \\  ___/|  | \\  ___/ \\___ \\  |  |  "<<std::endl
-	<<"|__|_|  /__|___|  /\\___  >__|  \\___  >____  > |__|  "<<std::endl
-	<<"      \\/        \\/     \\/          \\/     \\/        "<<std::endl;
+		<< " __  __      _ _   _  ___           __ _   "			<< std::endl
+		<< "|  \\/  |_  _| | |_(_)/ __|_ _ __ _ / _| |_ "			<< std::endl
+		<< "| |\\/| | || | |  _| | (__| '_/ _` |  _|  _|"			<< std::endl
+		<< "|_|  |_|\\_,_|_|\\__|_|\\___|_| \\__,_|_|  \\__|"		<< std::endl
+	;
+#else
+	actionstream << "MultiCraft"									<< std::endl;
+#endif
+
 	actionstream<<"World at ["<<m_path_world<<"]"<<std::endl;
 	actionstream<<"Server for gameid=\""<<m_gamespec.id
 			<<"\" listening on "<<bind_addr.serializeString()<<":"
