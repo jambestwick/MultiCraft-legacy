@@ -2114,6 +2114,8 @@ void ClientEnvironment::step(float dtime)
 
 	f32 dtime_downcount = dtime;
 
+	free_move |= lplayer->in_liquid || lplayer->in_liquid_stable;
+
 	/*
 		Stuff that has a maximum time increment
 	*/
