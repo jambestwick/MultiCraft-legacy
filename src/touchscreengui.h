@@ -94,6 +94,8 @@ private:
 	std::map<int,irr::EKEY_CODE> m_hud_ids;
 	bool                    m_visible; // is the gui visible
 
+	rect<s32>				controlpadarea;
+
 	/* value in degree */
 	double                  m_camera_yaw;
 	double                  m_camera_pitch;

@@ -193,6 +193,7 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 	m_control_pad_rect   = rect<s32>(
 	        spacing,                    m_screensize.Y - control_pad_size - spacing,
 			spacing + control_pad_size, m_screensize.Y - spacing);
+
 	/*
 	draw control pad
 	0 3 6
@@ -482,6 +483,8 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 		else if (isHUDButton(event))
 		{
 			/* already handled in isHUDButton() */
+		} else if (m_control_pad_rect.isPointInside(v2s32(toadd.X, toadd.Y))) {
+			// ignore events inside the control pad not already handled
 		}
 		/* handle non button events */
 		else {
@@ -527,6 +530,8 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 				translated->MouseInput.Event        = EMIE_LMOUSE_LEFT_UP;
 				m_receiver->OnEvent(*translated);
 				delete translated;
+			} else if (m_control_pad_rect.isPointInside(v2s32(m_move_downlocation.X, m_move_downlocation.Y))) {
+				// ignore events inside the control pad not already handled
 			} else if (!m_move_has_really_moved) {
 				SEvent* translated = new SEvent;
 				memset(translated,0,sizeof(SEvent));
