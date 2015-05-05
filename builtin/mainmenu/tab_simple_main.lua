@@ -1,4 +1,4 @@
---Minetest
+--multicraft
 --Copyright (C) 2013 sapier
 --
 --This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,7 @@ local function get_formspec(tabview, name, tabdata)
 		render_details .. "]"
 
 	retval = retval ..
-		"image_button[8,2.5;4,1.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_connect;".. fgettext("Connect") .. "]" ..
+		"image_button[8,2.5;4,1.5;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_connect;".. fgettext("Connect") .. "]" ..
 		"field[8.75,1.5;3.5,0.5;te_name;;" ..
 		core.formspec_escape(core.setting_get("name")) .."]" ..
 		"pwdfield[8.75,2.3;3.5,0.5;te_pwd;]"
@@ -79,8 +79,8 @@ local function get_formspec(tabview, name, tabdata)
 		dump(core.setting_getbool("enable_damage")) .. "]"
 	-- buttons
 	retval = retval ..
-		"image_button[2.0,4.5;6,1.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_start_singleplayer;" .. fgettext("Start Singleplayer") .. "]" ..
-		"image_button[8.25,4.5;2.5,1.5;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_config_sp_world;" .. fgettext("Config mods") .. "]"
+		"image_button[2.0,4.5;6,1.5;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_start_singleplayer;" .. fgettext("Start Singleplayer") .. "]" ..
+		"image_button[8.25,4.5;2.5,1.5;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_config_sp_world;" .. fgettext("Config mods") .. "]"
 
 	return retval
 end

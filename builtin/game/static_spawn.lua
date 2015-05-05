@@ -1,4 +1,4 @@
--- Minetest: builtin/static_spawn.lua
+-- multicraft: builtin/static_spawn.lua
 
 local function warn_invalid_static_spawnpoint()
 	if core.setting_get("static_spawnpoint") and

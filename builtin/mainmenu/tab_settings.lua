@@ -1,4 +1,4 @@
---Minetest
+--multicraft
 --Copyright (C) 2013 sapier
 --
 --This program is free software; you can redistribute it and/or modify
@@ -75,9 +75,9 @@ local function dlg_confirm_reset_formspec(data)
 	local retval =
 		"size[8,3]" ..
 		"label[1,1;".. fgettext("Are you sure to reset your singleplayer world?") .. "]"..
-		"image_button[1,2;2.6,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_confirm;"..
+		"image_button[1,2;2.6,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_confirm;"..
 				fgettext("Yes") .. "]" ..
-		"image_button[4,2;2.8,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_cancel;"..
+		"image_button[4,2;2.8,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_cancel;"..
 				fgettext("No!!!") .. "]"
 	return retval
 end
@@ -202,17 +202,17 @@ local function formspec(tabview, name, tabdata)
 		"dropdown[3.85,2.6;3.85;dd_video_driver;"
 				.. driver_formspec_string .. ";" .. driver_current_idx .. "]" ..
 		"tooltip[dd_video_driver;" ..
-				fgettext("Restart minetest for driver change to take effect") .. "]" ..
+				fgettext("Restart multicraft for driver change to take effect") .. "]" ..
 		"box[7.75,0;4,4;#999999]" ..
 		"checkbox[8,0;cb_shaders;".. fgettext("Shaders") .. ";"
 				.. dump(core.setting_getbool("enable_shaders")) .. "]"
 
 	if PLATFORM ~= "Android" then
 		tab_string = tab_string ..
-		"image_button[8,4.75;3.75,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_change_keys;".. fgettext("Change keys") .. "]"
+		"image_button[8,4.75;3.75,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_change_keys;".. fgettext("Change keys") .. "]"
 	else
 		tab_string = tab_string ..
-		"image_button[8,4.75;3.75,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_reset_singleplayer;".. fgettext("Reset singleplayer world") .. "]"
+		"image_button[8,4.75;3.75,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_reset_singleplayer;".. fgettext("Reset singleplayer world") .. "]"
 	end
 	tab_string = tab_string ..
 		"box[0,4.25;3.5,1.1;#999999]" ..

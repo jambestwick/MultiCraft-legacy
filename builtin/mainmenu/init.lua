@@ -1,4 +1,4 @@
---Minetest
+--multicraft
 --Copyright (C) 2014 sapier
 --
 --This program is free software; you can redistribute it and/or modify
@@ -63,11 +63,11 @@ end
 local function get_formspec2(tabview, name, tabdata)
     local retval = 'size[12,5.2,false]'
     retval = retval .. "bgcolor[#00000000;true]"
-    retval = retval .. "image_button[2.5,3.4;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir) .. "menu_button.png;btn_show_multiplayer;" .. fgettext("Multiplayer") .. ";true;true;" .. minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[2.5,4.8;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    --retval = retval .. "image_button[8.5,4.8;1,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[2.5,6.2;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_exit;".. fgettext("Exit") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[2.5,2.0;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_singleplayer;".. fgettext("Singleplayer") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,3.4;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir) .. "menu_button.png;btn_show_multiplayer;" .. fgettext("Multiplayer") .. ";true;true;" .. multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,4.8;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    --retval = retval .. "image_button[8.5,4.8;1,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,6.2;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_exit;".. fgettext("Exit") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,2.0;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_singleplayer;".. fgettext("Singleplayer") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
 
     local si = core.get_screen_info()
 
@@ -80,7 +80,7 @@ local function get_formspec2(tabview, name, tabdata)
     --math.randomseed(os.time())
     print('Chosen font size: '.. math.floor(si.window_width/53.33)+0.5)
     core.setting_set('font_size', tostring(math.floor(si.window_width/53.33)+0.5))
-    --local rnd = 'image['.. 12*ratio ..','.. 1 .. ';6,0.5;'..minetest.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,14))..'.png]'
+    --local rnd = 'image['.. 12*ratio ..','.. 1 .. ';6,0.5;'..multicraft.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,14))..'.png]'
     print('----')
     print(retval)
     print('----')
@@ -130,8 +130,8 @@ local function on_activate2(type,old_tab,new_tab)
     mm_texture.clear("header")
     mm_texture.clear("footer")
     core.set_clouds(false)
-    core.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    core.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
 
 end

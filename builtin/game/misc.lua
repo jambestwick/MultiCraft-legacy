@@ -1,4 +1,4 @@
--- Minetest: builtin/misc.lua
+-- multicraft: builtin/misc.lua
 
 --
 -- Misc. API functions

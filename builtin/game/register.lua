@@ -1,4 +1,4 @@
--- Minetest: builtin/misc_register.lua
+-- multicraft: builtin/misc_register.lua
 
 --
 -- Make raw registration functions inaccessible to anyone except this file

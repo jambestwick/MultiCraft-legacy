@@ -1,4 +1,4 @@
--- Minetest: builtin/misc_helpers.lua
+-- multicraft: builtin/misc_helpers.lua
 
 --------------------------------------------------------------------------------
 function basic_dump(o)

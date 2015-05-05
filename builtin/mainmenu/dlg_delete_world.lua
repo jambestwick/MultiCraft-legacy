@@ -1,4 +1,4 @@
---Minetest
+--multicraft
 --Copyright (C) 2014 sapier
 --
 --This program is free software; you can redistribute it and/or modify
@@ -22,8 +22,8 @@ local function delete_world_formspec(dialogdata)
 		"size[12,6,false]" ..
 		"label[2,2;" ..
 		fgettext("Delete World \"$1\"?", dialogdata.delete_name) .. "]"..
-		"image_button[3.5,4.2;2.6,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete_confirm;" .. fgettext("Yes").. "]" ..
-		"image_button[6,4.2;2.8,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete_cancel;" .. fgettext("No") .. "]"
+		"image_button[3.5,4.2;2.6,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete_confirm;" .. fgettext("Yes").. "]" ..
+		"image_button[6,4.2;2.8,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete_cancel;" .. fgettext("No") .. "]"
 	return retval
 end
 

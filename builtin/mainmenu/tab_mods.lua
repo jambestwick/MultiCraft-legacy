@@ -1,4 +1,4 @@
---Minetest
+--multicraft
 --Copyright (C) 2014 sapier
 --
 --This program is free software; you can redistribute it and/or modify
@@ -36,7 +36,7 @@ local function get_formspec(tabview, name, tabdata)
 --		"label[0.8,4.2;" .. fgettext("Add mod:") .. "]" ..
 --		TODO Disabled due to upcoming release 0.4.8 and irrlicht messing up localization
 --		"image_button[0.75,4.85;1.8,0.5;btn_mod_mgr_install_local;".. fgettext("Local install") .. "]" ..
-		"image_button[0,4.85;5.25,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_modstore;".. fgettext("Online mod repository") .. "]"
+		"image_button[0,4.85;5.25,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_modstore;".. fgettext("Online mod repository") .. "]"
 
 	local selected_mod = nil
 
@@ -89,9 +89,9 @@ local function get_formspec(tabview, name, tabdata)
 
 		if selected_mod.is_modpack then
 			retval = retval .. ";0]" ..
-				"image_button[10,4.85;2,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mod_mgr_rename_modpack;" ..
+				"image_button[10,4.85;2,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mod_mgr_rename_modpack;" ..
 				fgettext("Rename") .. "]"
-			retval = retval .. "image_button[5.5,4.85;4.5,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mod_mgr_delete_mod;"
+			retval = retval .. "image_button[5.5,4.85;4.5,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mod_mgr_delete_mod;"
 				.. fgettext("Uninstall selected modpack") .. "]"
 		else
 			--show dependencies
@@ -102,7 +102,7 @@ local function get_formspec(tabview, name, tabdata)
 
 			retval = retval .. toadd .. ";0]"
 
-			retval = retval .. "image_button[5.5,4.85;4.5,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mod_mgr_delete_mod;"
+			retval = retval .. "image_button[5.5,4.85;4.5,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mod_mgr_delete_mod;"
 				.. fgettext("Uninstall selected mod") .. "]"
 		end
 	end

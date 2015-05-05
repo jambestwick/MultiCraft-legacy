@@ -1,4 +1,4 @@
---Minetest
+--multicraft
 --Copyright (C) 2014 sapier
 --
 --This program is free software; you can redistribute it and/or modify
@@ -60,17 +60,17 @@ local function create_world_formspec(dialogdata)
 		"textlist[4.2,3;5.8,2.3;games;" .. gamemgr.gamelist() ..
 		";" .. gameidx .. ";true]" ..
 
-		"image_button[5,5.5;2.6,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create_confirm;" .. fgettext("Create") .. "]" ..
-		"image_button[7.5,5.5;2.8,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create_cancel;" .. fgettext("Cancel") .. "]"
+		"image_button[5,5.5;2.6,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create_confirm;" .. fgettext("Create") .. "]" ..
+		"image_button[7.5,5.5;2.8,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create_cancel;" .. fgettext("Cancel") .. "]"
 
 	if #gamemgr.games == 0 then
 		retval = retval .. "box[2,4;8,1;#ff8800]label[2.25,4;" ..
 				fgettext("You have no subgames installed.") .. "]label[2.25,4.4;" ..
-				fgettext("Download one from minetest.net") .. "]"
+				fgettext("Download one from multicraft.net") .. "]"
 	elseif #gamemgr.games == 1 and gamemgr.games[1].id == "minimal" then
 		retval = retval .. "box[1.75,4;8.7,1;#ff8800]label[2,4;" ..
 				fgettext("Warning: The minimal development test is meant for developers.") .. "]label[2,4.4;" ..
-				fgettext("Download a subgame, such as minetest_game, from minetest.net") .. "]"
+				fgettext("Download a subgame, such as multicraft_game, from multicraft.net") .. "]"
 	end
 
 	return retval

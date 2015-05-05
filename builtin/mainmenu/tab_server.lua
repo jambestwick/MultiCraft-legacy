@@ -1,4 +1,4 @@
---Minetest
+--multicraft
 --Copyright (C) 2014 sapier
 --
 --This program is free software; you can redistribute it and/or modify
@@ -23,18 +23,18 @@ local function get_formspec(tabview, name, tabdata)
 				)
 
 	local retval =
-		"image_button[4,4.15;2.6,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete;" .. fgettext("Delete") .. "]" ..
-		"image_button[6.5,4.15;2.8,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create;" .. fgettext("New") .. "]" ..
-		"image_button[9.2,4.15;2.55,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_configure;" .. fgettext("Configure") .. "]" ..
-		"image_button[8.5,4.95;3.25,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;start_server;" .. fgettext("Start Game") .. "]" ..
+		"image_button[4,4.15;2.6,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete;" .. fgettext("Delete") .. "]" ..
+		"image_button[6.5,4.15;2.8,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create;" .. fgettext("New") .. "]" ..
+		"image_button[9.2,4.15;2.55,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_configure;" .. fgettext("Configure") .. "]" ..
+		"image_button[8.5,4.95;3.25,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;start_server;" .. fgettext("Start Game") .. "]" ..
 		"label[4,-0.25;" .. fgettext("Select World:") .. "]" ..
 		"checkbox[0.25,0.15;cb_creative_mode;" .. fgettext("Creative Mode") .. ";" ..
 		dump(core.setting_getbool("creative_mode")) .. "]" ..
 		"checkbox[0.25,0.6;cb_enable_damage;" .. fgettext("Enable Damage") .. ";" ..
 		dump(core.setting_getbool("enable_damage")) .. "]" ..
-		"image[0.25,1.3;0.58,0.55;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_checkf.png]"..
-		"image[0.25,1.3;0.58,0.55;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_check.png]"..
-		"image_button[0.8,1.3;3,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_trans.png;btn_single;Local Server;false;false]"..
+		"image[0.25,1.3;0.58,0.55;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_checkf.png]"..
+		"image[0.25,1.3;0.58,0.55;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_check.png]"..
+		"image_button[0.8,1.3;3,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_trans.png;btn_single;Local Server;false;false]"..
 		"checkbox[0.25,1.6;cb_server_announce;" .. fgettext("Public") .. ";" ..
 		dump(core.setting_getbool("server_announce")) .. "]" ..
 		"label[0.25,2.2;" .. fgettext("Name/Password") .. "]" ..

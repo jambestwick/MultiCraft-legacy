@@ -1,4 +1,4 @@
--- Minetest: builtin/game/mod_profiling.lua
+-- multicraft: builtin/game/mod_profiling.lua
 
 local mod_statistics = {}
 mod_statistics.step_total = 0

@@ -1,4 +1,4 @@
--- Minetest: builtin/deprecated.lua
+-- multicraft: builtin/deprecated.lua
 
 --
 -- Default material types

@@ -1,4 +1,4 @@
---Minetest
+--multicraft
 --Copyright (C) 2014 sapier
 --
 --This program is free software; you can redistribute it and/or modify
@@ -27,9 +27,9 @@ local function rename_modpack_formspec(dialogdata)
 		"field[4.5,1.4;6,0.5;te_modpack_name;;" ..
 		dialogdata.mod.name ..
 		"]" ..
-		"image_button[5,4.2;2.6,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_rename_modpack_confirm;"..
+		"image_button[5,4.2;2.6,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_rename_modpack_confirm;"..
 				fgettext("Accept") .. "]" ..
-		"image_button[7.5,4.2;2.8,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_rename_modpack_cancel;"..
+		"image_button[7.5,4.2;2.8,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_rename_modpack_cancel;"..
 				fgettext("Cancel") .. "]"
 
 	return retval

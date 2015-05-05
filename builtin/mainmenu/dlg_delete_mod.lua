@@ -1,4 +1,4 @@
---Minetest
+--multicraft
 --Copyright (C) 2014 sapier
 --
 --This program is free software; you can redistribute it and/or modify
@@ -24,8 +24,8 @@ local function delete_mod_formspec(dialogdata)
 	local retval =
 		"size[12.4,5,false]" ..
 		"field[1.75,1;10,3;;" .. fgettext("Are you sure you want to delete \"$1\"?", dialogdata.mod.name) ..  ";]"..
-		"image_button[4,4.2;1,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_delete_mod_confirm;" .. fgettext("Yes") .. "]" ..
-		"image_button[6.5,4.2;3,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_delete_mod_cancel;" .. fgettext("No of course not!") .. "]"
+		"image_button[4,4.2;1,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_delete_mod_confirm;" .. fgettext("Yes") .. "]" ..
+		"image_button[6.5,4.2;3,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_delete_mod_cancel;" .. fgettext("No of course not!") .. "]"
 
 	return retval
 end

@@ -1,4 +1,4 @@
---Minetest
+--multicraft
 --Copyright (C) 2014 sapier
 --
 --This program is free software; you can redistribute it and/or modify
@@ -87,7 +87,7 @@ local function init_globals()
         menudata.worldlist:set_sortmode("alphabetic")
 
         if not core.setting_get("menu_last_game") then
-            local default_game = core.setting_get("default_game") or "minetest"
+            local default_game = core.setting_get("default_game") or "multicraft"
             core.setting_set("menu_last_game", default_game )
         end
 

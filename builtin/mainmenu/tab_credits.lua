@@ -1,4 +1,4 @@
---Minetest
+--multicraft
 --Copyright (C) 2013 sapier
 --
 --This program is free software; you can redistribute it and/or modify
@@ -22,20 +22,20 @@ tab_credits = {
 	caption = fgettext("Credits"),
 	cbf_formspec = function (tabview, name, tabdata)
 			local logofile = defaulttexturedir .. "logo.png"
-			return "label[0.5,3.2;Minetest " .. core.get_version() .. "]" ..
-				"label[0.5,3.5;http://minetest.net]" ..
+			return "label[0.5,3.2;multicraft " .. core.get_version() .. "]" ..
+				"label[0.5,3.5;http://multicraft.net]" ..
 				"image[0.5,1;" .. core.formspec_escape(logofile) .. "]" ..
 				"textlist[3.5,-0.25;8.5,5.8;list_credits;" ..
 				"#FFFF00" .. fgettext("Core Developers") .."," ..
 				"Perttu Ahola (celeron55) <celeron55@gmail.com>,"..
-				"Ryan Kwolek (kwolekr) <kwolekr@minetest.net>,"..
-				"PilzAdam <pilzadam@minetest.net>," ..
+				"Ryan Kwolek (kwolekr) <kwolekr@multicraft.net>,"..
+				"PilzAdam <pilzadam@multicraft.net>," ..
 				"Lisa Milne (darkrose) <lisa@ltmnet.com>,"..
 				"Maciej Kasatkin (RealBadAngel) <mk@realbadangel.pl>,"..
 				"sfan5 <sfan5@live.de>,"..
 				"kahrl <kahrl@gmx.net>,"..
 				"sapier,"..
-				"ShadowNinja <shadowninja@minetest.net>,"..
+				"ShadowNinja <shadowninja@multicraft.net>,"..
 				"Nathanael Courant (Nore/Novatux) <nore@mesecons.net>,"..
 				"BlockMen,"..
 				"Craig Robbins (Zeno),"..
@@ -58,7 +58,7 @@ tab_credits = {
 				"dannydark <the_skeleton_of_a_child@yahoo.co.uk>,"..
 				"0gb.us <0gb.us@0gb.us>,"..
 				"proller <proler@gmail.com>,"..
-				"Ilya Zhuravlev (xyz) <xyz@minetest.net>,"..
+				"Ilya Zhuravlev (xyz) <xyz@multicraft.net>,"..
 				"Guiseppe Bilotta (Oblomov) <guiseppe.bilotta@gmail.com>,"..
 				"Jonathan Neuschafer <j.neuschaefer@gmx.net>,"..
 				"Nils Dagsson Moskopp (erlehmann) <nils@dieweltistgarnichtso.net>,"..
