@@ -1,9 +1,9 @@
 MultiCraft Open Sourse Project
 ========
 
-MultiCraft is an open source sandbox game inspired by [Minecraft](https://minecraft.net/).
+MultiCraft is an open source sandbox game inspired by [Minecraft] (https://minecraft.net/).
 
-MultiCraft is based on Minetest which is developed by a [number of contributors](https://github.com/minetest/minetest/graphs/contributors) from all over the globe.
+MultiCraft is based on Minetest which is developed by a [number of contributors] (https://github.com/minetest/minetest/graphs/contributors) from all over the globe.
 
 It aims to make the game fun while trading off some bits of perfectionism.
 
