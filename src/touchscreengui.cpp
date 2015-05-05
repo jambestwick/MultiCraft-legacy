@@ -249,25 +249,25 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 
 	/* init inventory button */
 	initButton(inventory_id,
-	           rect<s32>(m_screensize.X-(0.5*button_size),
-					   m_screensize.Y - (0.5*button_size),
+	           rect<s32>(m_screensize.X-(1.5*button_size),
+					   m_screensize.Y - (1.5*button_size),
 					   m_screensize.X-(0.0*button_size),
 					   m_screensize.Y),
 	                  L"inv", true);
 
 	/* init drop button */
 	initButton(drop_id,
-	           rect<s32>(m_screensize.X-(3*button_size),
+	           rect<s32>(m_screensize.X-(3.75*button_size),
 	                     m_screensize.Y - (0.5*button_size),
-				         m_screensize.X-(2.5*button_size),
+				         m_screensize.X-(3.25*button_size),
 				         m_screensize.Y),
 	        L"drop", true);
 
 	/* init crunch button */
 	initButton(crunch_id,
-			rect<s32>(m_screensize.X-(2.25*button_size),
+			rect<s32>(m_screensize.X-(3*button_size),
 					m_screensize.Y - (0.5*button_size),
-					m_screensize.X-(1.25*button_size),
+					m_screensize.X-(2*button_size),
 					m_screensize.Y),
 			L"H",false);
 
