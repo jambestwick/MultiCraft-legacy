@@ -43,8 +43,8 @@ void android_main(android_app *app)
 
 	try {
 		app_dummy();
-		char *argv[] = { (char*) "minetest" };
-		main(sizeof(argv) / sizeof(argv[0]), argv);
+		char argv[] = PROJECT_NAME;
+		retval = main(1, (char **)&argv);
 		}
 	catch(BaseException e) {
 		std::stringstream msg;
@@ -63,7 +63,7 @@ void android_main(android_app *app)
 
 	porting::cleanupAndroid();
 	errorstream << "Shutting down minetest." << std::endl;
-	exit(retval);
+	exit(0);
 }
 
 /* handler for finished message box input */

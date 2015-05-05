@@ -67,8 +67,11 @@ u32 getTime(TimePrecision prec) {
 
 ClientLauncher::~ClientLauncher()
 {
-	if (receiver)
+	if (receiver) {
+		if (device)
+			device->setEventReceiver(NULL);
 		delete receiver;
+	}
 
 	if (input)
 		delete input;
@@ -76,8 +79,10 @@ ClientLauncher::~ClientLauncher()
 	if (g_fontengine)
 		delete g_fontengine;
 
-	if (device)
+	if (device) {
+		device->closeDevice();
 		device->drop();
+	}
 }
 
 
