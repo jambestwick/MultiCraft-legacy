@@ -3,7 +3,7 @@
 -- License: MIT
 -- @copyright 2006-2997 Fabien Fleutot <metalua@gmail.com>
 -- @author Fabien Fleutot <metalua@gmail.com>
--- @author ShadowNinja <shadowninja@multicraft.net>
+-- @author ShadowNinja <shadowninja@minetest.net>
 --------------------------------------------------------------------------------
 
 --- Serialize an object into a source code string. This string, when passed as
