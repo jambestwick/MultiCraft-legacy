@@ -138,7 +138,7 @@ public:
 	{
 		shutdown_requested = true;
 #ifndef __ANDROID__
-		device->closeDevice();
+		porting::handleAndroidActivityEvents();
 #endif
 	}
 

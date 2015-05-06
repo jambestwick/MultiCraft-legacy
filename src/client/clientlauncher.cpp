@@ -34,6 +34,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "fontengine.h"
 #include "clientlauncher.h"
 
+#ifdef ANDROID
+	#include "porting_android.h"
+#endif
+
 /* mainmenumanager.h
  */
 gui::IGUIEnvironment *guienv = NULL;
@@ -190,6 +194,10 @@ bool ClientLauncher::run(GameParams &game_params, const Settings &cmd_args)
 		const wchar_t *text = wgettext("Main Menu");
 		device->setWindowCaption((narrow_to_wide("MultiCraft") + L" [" + text + L"]").c_str());
 		delete[] text;
+
+#ifdef ANDROID
+		porting::handleAndroidActivityEvents();
+#endif
 
 		try {	// This is used for catching disconnects
 
