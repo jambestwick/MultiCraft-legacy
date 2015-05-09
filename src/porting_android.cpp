@@ -65,6 +65,7 @@ void android_main(android_app *app)
 	porting::cleanupAndroid();
 	errorstream << "Shutting down minetest." << std::endl;
 
+	exit(0);
 }
 
 /* handler for finished message box input */
@@ -177,6 +178,7 @@ void cleanupAndroid()
 	JavaVM *jvm = app_global->activity->vm;
 	if (jvm)
 		jvm->DetachCurrentThread();
+	ANativeActivity_finish(app_global->activity);
 }
 
 void setExternalStorageDir(JNIEnv* lJNIEnv)
