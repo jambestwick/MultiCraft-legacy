@@ -637,23 +637,23 @@ assets : $(ASSETS_TIMESTAMP)
 	if [ $$REFRESH -ne 0 ] ; then                                              \
 	echo "assets changed, refreshing...";                                      \
 	$(MAKE) clean_assets;                                                      \
-	mkdir -p ${ROOT}/assets/Minetest;                                          \
-	cp ${ROOT}/../../minetest.conf.example ${ROOT}/assets/Minetest;            \
-	cp ${ROOT}/../../README.txt ${ROOT}/assets/Minetest;                       \
-	cp -r ${ROOT}/../../builtin ${ROOT}/assets/Minetest;                       \
-	cp -r ${ROOT}/../../client ${ROOT}/assets/Minetest;                        \
-	cp -r ${ROOT}/../../doc ${ROOT}/assets/Minetest;                           \
-	cp -r ${ROOT}/../../fonts ${ROOT}/assets/Minetest;                         \
-	mkdir ${ROOT}/assets/Minetest/games;                                       \
+	mkdir -p ${ROOT}/assets/MultiCraft;                                          \
+	cp ${ROOT}/../../minetest.conf.example ${ROOT}/assets/MultiCraft;            \
+	cp ${ROOT}/../../README.txt ${ROOT}/assets/MultiCraft;                       \
+	cp -r ${ROOT}/../../builtin ${ROOT}/assets/MultiCraft;                       \
+	cp -r ${ROOT}/../../client ${ROOT}/assets/MultiCraft;                        \
+	cp -r ${ROOT}/../../doc ${ROOT}/assets/MultiCraft;                           \
+	cp -r ${ROOT}/../../fonts ${ROOT}/assets/MultiCraft;                         \
+	mkdir ${ROOT}/assets/MultiCraft/games;                                       \
 	for game in ${GAMES_TO_COPY};                                              \
 	do                                                                         \
-	    cp -r ${ROOT}/../../games/$$game ${ROOT}/assets/Minetest/games/;       \
+	    cp -r ${ROOT}/../../games/$$game ${ROOT}/assets/MultiCraft/games/;       \
 	done;                                                                      \
-	cp -r ${ROOT}/../../mods ${ROOT}/assets/Minetest;                          \
-	cp -r ${ROOT}/../../po ${ROOT}/assets/Minetest;                            \
-	cp -r ${ROOT}/../../textures ${ROOT}/assets/Minetest;                      \
-	mkdir -p ${ROOT}/assets/Minetest/media;                                    \
-	cp -r ${IRRLICHT_DIR}/media/Shaders ${ROOT}/assets/Minetest/media;         \
+	cp -r ${ROOT}/../../mods ${ROOT}/assets/MultiCraft;                          \
+	cp -r ${ROOT}/../../po ${ROOT}/assets/MultiCraft;                            \
+	cp -r ${ROOT}/../../textures ${ROOT}/assets/MultiCraft;                      \
+	mkdir -p ${ROOT}/assets/MultiCraft/media;                                    \
+	cp -r ${IRRLICHT_DIR}/media/Shaders ${ROOT}/assets/MultiCraft/media;         \
 	cd ${ROOT}/assets ||  exit 1;                                              \
 	find . -name "timestamp" -exec rm {} \; ;                                  \
 	find . -name "*.blend" -exec rm {} \; ;                                    \
@@ -662,8 +662,9 @@ assets : $(ASSETS_TIMESTAMP)
 	find . -type d -path "*.svn" -exec rm -rf {} \; ;                          \
 	find . -type f -path "*.gitignore" -exec rm -rf {} \; ;                    \
 	ls -R | grep ":$$" | sed -e 's/:$$//' -e 's/\.//' -e 's/^\///' > "index.txt"; \
-	find Minetest >"filelist.txt";                                             \
+	find MultiCraft >"filelist.txt";                                             \
 	cp ${ROOT}/${ASSETS_TIMESTAMP} ${ROOT}/${ASSETS_TIMESTAMP}.old;            \
+	zip -r -q ${ROOT}/assets/Files.zip ${ROOT}/assets/MultiCraft/	           \
 	else                                                                       \
 		echo "nothing to be done for assets";                                  \
 	fi
