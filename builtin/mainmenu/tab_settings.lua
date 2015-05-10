@@ -202,17 +202,14 @@ local function formspec(tabview, name, tabdata)
 		"dropdown[3.85,2.6;3.85;dd_video_driver;"
 				.. driver_formspec_string .. ";" .. driver_current_idx .. "]" ..
 		"tooltip[dd_video_driver;" ..
-				fgettext("Restart multicraft for driver change to take effect") .. "]" ..
-		"box[7.75,0;4,4;#999999]" ..
-		"checkbox[8,0;cb_shaders;".. fgettext("Shaders") .. ";"
-				.. dump(core.setting_getbool("enable_shaders")) .. "]"
+				fgettext("Restart MultiCraft for driver change to take effect") .. "]"
 
 	if PLATFORM ~= "Android" then
 		tab_string = tab_string ..
 		"image_button[8,4.75;3.75,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_change_keys;".. fgettext("Change keys") .. "]"
 	else
 		tab_string = tab_string ..
-		"image_button[8,4.75;3.75,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_reset_singleplayer;".. fgettext("Reset singleplayer world") .. "]"
+		"image_button[3.75,5.5;3.95,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_reset_singleplayer;".. fgettext("Reset singleplayer world") .. "]"
 	end
 	tab_string = tab_string ..
 		"box[0,4.25;3.5,1.1;#999999]" ..
@@ -237,30 +234,7 @@ local function formspec(tabview, name, tabdata)
 				((tonumber(core.setting_get("touchscreen_threshold"))/10)+1) .. "]"
 	end
 
-	if core.setting_getbool("enable_shaders") then
-		tab_string = tab_string ..
-				"checkbox[8,0.5;cb_bumpmapping;".. fgettext("Bumpmapping") .. ";"
-						.. dump(core.setting_getbool("enable_bumpmapping")) .. "]"..
-				"checkbox[8,1.0;cb_generate_normalmaps;".. fgettext("Generate Normalmaps") .. ";"
-						.. dump(core.setting_getbool("generate_normalmaps")) .. "]"..
-				"checkbox[8,1.5;cb_parallax;".. fgettext("Parallax Occlusion") .. ";"
-						.. dump(core.setting_getbool("enable_parallax_occlusion")) .. "]"..
-				"checkbox[8,2.0;cb_waving_water;".. fgettext("Waving Water") .. ";"
-						.. dump(core.setting_getbool("enable_waving_water")) .. "]"..
-				"checkbox[8,2.5;cb_waving_leaves;".. fgettext("Waving Leaves") .. ";"
-						.. dump(core.setting_getbool("enable_waving_leaves")) .. "]"..
-				"checkbox[8,3.0;cb_waving_plants;".. fgettext("Waving Plants") .. ";"
-						.. dump(core.setting_getbool("enable_waving_plants")) .. "]"
-	else
-		tab_string = tab_string ..
-				"textlist[8.33,0.7;4,1;;#888888" .. fgettext("Bumpmapping") .. ";0;true]" ..
-				"textlist[8.33,1.2;4,1;;#888888" .. fgettext("Generate Normalmaps") .. ";0;true]" ..
-				"textlist[8.33,1.7;4,1;;#888888" .. fgettext("Parallax Occlusion") .. ";0;true]" ..
-				"textlist[8.33,2.2;4,1;;#888888" .. fgettext("Waving Water") .. ";0;true]" ..
-				"textlist[8.33,2.7;4,1;;#888888" .. fgettext("Waving Leaves") .. ";0;true]" ..
-				"textlist[8.33,3.2;4,1;;#888888" .. fgettext("Waving Plants") .. ";0;true]"
-		end
-	return 'size[12,5.2,false]'..tab_string
+	return 'size[7.70,6.2,false]'..tab_string
 end
 
 --------------------------------------------------------------------------------
