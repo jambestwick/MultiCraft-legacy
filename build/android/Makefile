@@ -654,6 +654,8 @@ assets : $(ASSETS_TIMESTAMP)
 	cp -r ${ROOT}/../../textures ${ROOT}/assets/MultiCraft;                      \
 	mkdir -p ${ROOT}/assets/MultiCraft/media;                                    \
 	cp -r ${IRRLICHT_DIR}/media/Shaders ${ROOT}/assets/MultiCraft/media;         \
+	echo "excluding PO files";		\
+	rm -r ${ROOT}/assets/MultiCraft/po;	\
 	cd ${ROOT}/assets ||  exit 1;                                              \
 	find . -name "timestamp" -exec rm {} \; ;                                  \
 	find . -name "*.blend" -exec rm {} \; ;                                    \
