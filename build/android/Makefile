@@ -664,9 +664,9 @@ assets : $(ASSETS_TIMESTAMP)
 	ls -R | grep ":$$" | sed -e 's/:$$//' -e 's/\.//' -e 's/^\///' > "index.txt"; \
 	find MultiCraft >"filelist.txt";                                             \
 	cp ${ROOT}/${ASSETS_TIMESTAMP} ${ROOT}/${ASSETS_TIMESTAMP}.old;            \
-	pushd ${ROOT}/assets/;		\
+	pushd ${ROOT}/assets/MultiCraft;		\
 	echo "Creating Files.zip";	\
-	zip -r -X -q Files.zip MultiCraft/*;	           \
+	zip -r -X -q ../Files.zip *;	           \
 	popd;							\
 	else                                                                       \
 		echo "nothing to be done for assets";                                  \

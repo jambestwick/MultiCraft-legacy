@@ -35,7 +35,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 	private ProgressDialog mProgressDialog;
 	private TextView mProgressTextView;
 	private String unzipLocation = Environment.getExternalStorageDirectory()
-			+ "/Minetest/";
+			+ "/MultiCraft/";
 	private File version;
 	private Utilities util;
 	private ProgressBar mProgressBar;
