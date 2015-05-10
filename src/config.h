@@ -13,7 +13,7 @@
 #if defined USE_CMAKE_CONFIG_H
 	#include "cmake_config.h"
 #elif defined (__ANDROID__) || defined (ANDROID)
-	#define PROJECT_NAME "multicraft"
+	#define PROJECT_NAME "MultiCraft"
 	#define PROJECT_NAME_C "MultiCraft"
 	#define STATIC_SHAREDIR ""
 	#include "android_version.h"
