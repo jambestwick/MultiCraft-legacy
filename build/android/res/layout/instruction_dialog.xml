@@ -12,6 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="4dip"
-        android:text="@string/app_description" />
+        android:text="@string/dialog_instruction" />
 
 </LinearLayout>

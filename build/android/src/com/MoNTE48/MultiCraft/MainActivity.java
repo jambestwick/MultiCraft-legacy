@@ -163,7 +163,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 	}
 
 	private void startBetweenActivity() {
-		showSpinnerDialog(R.string.starting);
+		showSpinnerDialog(R.string.loading);
 		new Thread(new Runnable() {
 			public void run() {
 				Intent intent = new Intent(MainActivity.this,

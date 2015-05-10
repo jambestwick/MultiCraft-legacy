@@ -42,8 +42,8 @@ public class UnzipService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		NotificationManager mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		Notification.Builder mBuilder = new Notification.Builder(this);
-		mBuilder.setContentTitle(getString(R.string.extract))
-				.setContentText(getString(R.string.unpack))
+		mBuilder.setContentTitle(getString(R.string.notification_title))
+				.setContentText(getString(R.string.notification_description))
 				.setSmallIcon(R.drawable.ic_launcher);
 		String file = intent.getStringExtra(EXTRA_KEY_IN_FILE);
 		String location = intent.getStringExtra(EXTRA_KEY_IN_LOCATION);

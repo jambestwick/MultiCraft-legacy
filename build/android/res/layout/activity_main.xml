@@ -21,7 +21,7 @@
         android:layout_above="@+id/PB1"
         android:layout_centerHorizontal="true"
         android:paddingBottom="16dp"
-        android:text="@string/starting"
+        android:text="@string/loading"
         android:textColor="#FFFFFF"
         android:textSize="24sp" />
 
