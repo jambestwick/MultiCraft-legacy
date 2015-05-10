@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- подготовка к запуску -->
+    <string name="loading">Загрузка&#8230;</string>
+    <string name="warning">Во время загрузки не закрывайте приложение. \nИгра запустится через несколько секунд&#8230;</string>
+    <string name="rm_old">Подготовка к обновлению&#8230;</string>
+    <string name="copy">Копирование&#8230;</string>
+    <string name="notification_title">Загрузка</string>
+    <string name="notification_description">Загрузка файлов игры&#8230;</string>
+
+    <!-- диалог оценки -->
+    <string name="rta_dialog_title">Оцените MultiCraft Beta —  Бесплатный Майнер!</string>
+    <string name="rate_title">Название</string>
+    <string name="rate_submit">Оценить</string>
+    <string name="rate_description">Описание</string>
+    <string name="sad">Очень жаль&#8230;</string>
+
+    <!-- диалог для слабых девайсов -->
+    <string name="memory_title">Внимание!</string>
+    <string name="memory_lags">Возможны лаги при игре. Пожалуйста, не оценивайте приложение плохо,\nтак как у вас слабый аппарат.</string>
+    <string name="memory_continue">Играть!</string>
+    <string name="memory_close">Закрыть</string>
+    <string name="memory_warning">У Вашего устройства недостаточно оперативной памяти для игры без лагов. Требуется более мощное устройство!</string>
+
+    <!-- диалог обновления -->
+    <string name="update_yes">Обновиться!</string>
+    <string name="update_no">Напомнить позже&#8230;</string>
+    <string name="update_ignore">Игнорировать</string>
+
+    <!-- инструкция -->
+    <string name="dialog_instruction">Привет! После загрузки игры нажмите Play.\nЧтобы поставить блок, быстро тапните 2 раза там, куда хотите его поставить!\nЧтобы разъединить блоки в инвентаре, возьмите блок в руку и одновременно прикоснитесь пальцами к двум ячейкам. Вставится половина стопки. Нажмите на другую ячейку и вставится вторая половина!</string>
+    <string name="ok">Понял</string>
+    <string name="forget">Не напоминать</string>
+
+    <!-- недостаточно места -->
+    <string name="not_enough_space">Недостаточно места для распаковки.\nОсвободите пространство на SD карте</string>
+    <string name="space_ok">OK</string>
+
+</resources>
