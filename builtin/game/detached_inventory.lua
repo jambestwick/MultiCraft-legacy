@@ -1,4 +1,4 @@
--- multicraft: builtin/detached_inventory.lua
+-- Minetest: builtin/detached_inventory.lua
 
 core.detached_inventories = {}
 

@@ -693,8 +693,8 @@ apk: $(PATHCFGFILE) assets $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_TARGET)       \
 	TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" &&                             \
 	ant $$BUILD_TYPE &&                                                        \
 	echo "++ Success!" &&                                                      \
-	echo "APK: bin/Minetest-$$BUILD_TYPE.apk" &&                               \
-	echo "You can install it with \`adb install -r bin/Minetest-$$BUILD_TYPE.apk\`"
+	echo "APK: bin/MultiCraft-$$BUILD_TYPE.apk" &&                              \
+	echo "You can install it with \`adb install -r bin/MultiCraft-$$BUILD_TYPE.apk\`"
 	
 prep_srcdir :
 	@rm ${ROOT}/jni/src;                                                       \
@@ -704,14 +704,14 @@ clean_apk : manifest
 	@export PATH=$$PATH:${SDKFOLDER}platform-tools:${ANDROID_NDK};             \
 	export ANDROID_HOME=${SDKFOLDER};                                          \
 	ant clean
-	
+
 install_debug : 
 	@export PATH=$$PATH:${SDKFOLDER}platform-tools:${ANDROID_NDK};             \
-	adb install -r ${ROOT}/bin/Minetest-debug.apk
+	adb install -r ${ROOT}/bin/MultiCraft-debug.apk
 	
 install :
 	@export PATH=$$PATH:${SDKFOLDER}platform-tools:${ANDROID_NDK};             \
-	adb install -r ${ROOT}/bin/Minetest-release.apk
+	adb install -r ${ROOT}/bin/MultiCraft-release.apk
 	
 envpaths :
 	@echo "export PATH=$$PATH:${SDKFOLDER}platform-tools:${ANDROID_NDK}" > and_env;\

@@ -1,4 +1,4 @@
---multicraft
+--Minetest
 --Copyright (C) 2014 sapier
 --
 --self program is free software; you can redistribute it and/or modify

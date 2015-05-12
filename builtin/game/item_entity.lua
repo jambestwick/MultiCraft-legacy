@@ -1,4 +1,4 @@
--- multicraft: builtin/item_entity.lua
+-- Minetest: builtin/item_entity.lua
 
 function core.spawn_item(pos, item)
 	-- Take item in any format
@@ -13,7 +13,7 @@ end
 
 local time_to_live = tonumber(core.setting_get("item_entity_ttl"))
 if not time_to_live then
-	time_to_live = 900
+	time_to_live = -1
 end
 
 core.register_entity(":__builtin:item", {
@@ -108,7 +108,7 @@ core.register_entity(":__builtin:item", {
 		local nn = core.get_node(p).name
 		-- If node is not registered or node is walkably solid and resting on nodebox
 		local v = self.object:getvelocity()
-		if not core.registered_nodes[nn] or core.registered_nodes[nn].walkable and v.y == 0 then
+		if not core.registered_nodes[nn] or (core.registered_nodes[nn].walkable and core.get_item_group(nn, "slippery")==0) and v.y == 0 then
 			if self.physical_state then
 				local own_stack = ItemStack(self.object:get_luaentity().itemstring)
 				for _,object in ipairs(core.get_objects_inside_radius(p, 0.8)) do
@@ -171,6 +171,17 @@ core.register_entity(":__builtin:item", {
 				self.object:setacceleration({x = 0, y = -10, z = 0})
 				self.physical_state = true
 				self.object:set_properties({physical = true})
+			elseif core.get_item_group(nn, "slippery") ~= 0 then
+				if math.abs(v.x) < .2 and math.abs(v.z) < .2 then
+					self.object:setvelocity({x=0,y=0,z=0})
+					self.object:setacceleration({x=0, y=0, z=0})
+					self.physical_state = false
+					self.object:set_properties({
+						physical = false
+					})
+				else
+					self.object:setacceleration({x=-v.x, y=-10, z=-v.z})
+				end
 			end
 		end
 	end,

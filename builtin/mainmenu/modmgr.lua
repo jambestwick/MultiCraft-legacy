@@ -1,4 +1,4 @@
---multicraft
+--Minetest
 --Copyright (C) 2013 sapier
 --
 --This program is free software; you can redistribute it and/or modify
@@ -195,16 +195,16 @@ function modmgr.identify_modname(modpath,filename)
 		while line~= nil do
 			local modname = nil
 
-			if line:find("multicraft.register_tool") then
+			if line:find("minetest.register_tool") then
 				modname = modmgr.parse_register_line(line)
 			end
 
-			if line:find("multicraft.register_craftitem") then
+			if line:find("minetest.register_craftitem") then
 				modname = modmgr.parse_register_line(line)
 			end
 
 
-			if line:find("multicraft.register_node") then
+			if line:find("minetest.register_node") then
 				modname = modmgr.parse_register_line(line)
 			end
 
@@ -321,10 +321,8 @@ function modmgr.get_worldconfig(worldpath)
 	for key,value in pairs(worldfile:to_table()) do
 		if key == "gameid" then
 			worldconfig.id = value
-		elseif key:sub(0, 9) == "load_mod_" then
-			worldconfig.global_mods[key] = core.is_yes(value)
 		else
-			worldconfig[key] = value
+			worldconfig.global_mods[key] = core.is_yes(value)
 		end
 	end
 

@@ -1,4 +1,4 @@
---multicraft
+--Minetest
 --Copyright (C) 2014 sapier
 --
 --This program is free software; you can redistribute it and/or modify
@@ -25,7 +25,7 @@ mt_color_dark_green = "#003300"
 local menupath = core.get_mainmenu_path()
 local basepath = core.get_builtin_path()
 defaulttexturedir = core.get_texturepath_share() .. DIR_DELIM .. "base" ..
-					DIR_DELIM .. "pack" .. DIR_DELIM
+                    DIR_DELIM .. "pack" .. DIR_DELIM
 
 dofile(basepath .. DIR_DELIM .. "common" .. DIR_DELIM .. "async_event.lua")
 dofile(basepath .. DIR_DELIM .. "common" .. DIR_DELIM .. "filterlist.lua")
@@ -41,57 +41,55 @@ dofile(menupath .. DIR_DELIM .. "dlg_config_world.lua")
 dofile(menupath .. DIR_DELIM .. "tab_credits.lua")
 dofile(menupath .. DIR_DELIM .. "tab_mods.lua")
 dofile(menupath .. DIR_DELIM .. "tab_settings.lua")
-	dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
-	dofile(menupath .. DIR_DELIM .. "dlg_delete_mod.lua")
-	dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
-	dofile(menupath .. DIR_DELIM .. "dlg_rename_modpack.lua")
-	dofile(menupath .. DIR_DELIM .. "tab_multiplayer.lua")
-	dofile(menupath .. DIR_DELIM .. "tab_server.lua")
-	dofile(menupath .. DIR_DELIM .. "tab_singleplayer.lua")
-	dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
-	dofile(menupath .. DIR_DELIM .. "textures.lua")
+dofile(menupath .. DIR_DELIM .. "tab_help.lua")
+    dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
+    dofile(menupath .. DIR_DELIM .. "dlg_delete_mod.lua")
+    dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
+    dofile(menupath .. DIR_DELIM .. "dlg_rename_modpack.lua")
+    dofile(menupath .. DIR_DELIM .. "dlg_add_server.lua")
+    dofile(menupath .. DIR_DELIM .. "tab_multiplayer.lua")
+    dofile(menupath .. DIR_DELIM .. "tab_server.lua")
+    dofile(menupath .. DIR_DELIM .. "tab_singleplayer.lua")
+    dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
+    dofile(menupath .. DIR_DELIM .. "textures.lua")
 
 --------------------------------------------------------------------------------
 local function main_event_handler(tabview, event)
-	if event == "MenuQuit" then
-		core.close()
-	end
-	return true
+    if event == "MenuQuit" then
+        core.close()
+    end
+
+    return true
 end
 
 --------------------------------------------------------------------------------
 local function get_formspec2(tabview, name, tabdata)
-    local retval = 'size[12,5.2,false]'
-    retval = retval .. "bgcolor[#00000000;true]"
-    retval = retval .. "image_button[2.5,3.4;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir) .. "menu_button.png;btn_show_multiplayer;" .. fgettext("Multiplayer") .. ";true;true;" .. multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[2.5,4.8;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    --retval = retval .. "image_button[8.5,4.8;1,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[2.5,6.2;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_exit;".. fgettext("Exit") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[2.5,2.0;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_singleplayer;".. fgettext("Singleplayer") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    local retval = ""
+    retval = retval .. "bgcolor[#00000000;false]"
+    retval = retval .. "image_button[2.5,3.4;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir) .. "menu_button.png;btn_show_multiplayer;" .. fgettext("Multiplayer") .. ";true;true;" .. minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,4.8;6,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[8.5,4.8;1,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,6.2;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_exit;".. fgettext("Exit") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,2.0;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_singleplayer;".. fgettext("Singleplayer") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
 
     local si = core.get_screen_info()
 
     local ydiv = si.window_height/5.2
     local xdiv = si.window_width/12.5
     local ratio = xdiv/ydiv
-    print('Width: '..si.window_width)
-    print('Height: '..si.window_height)
-    print(xdiv..' x '..ydiv..' = '..ratio)
-    --math.randomseed(os.time())
-    print('Chosen font size: '.. math.floor(si.window_width/53.33)+0.5)
-    core.setting_set('font_size', tostring(math.floor(si.window_width/53.33)+0.5))
-    --local rnd = 'image['.. 12*ratio ..','.. 1 .. ';6,0.5;'..multicraft.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,14))..'.png]'
-    print('----')
-    print(retval)
-    print('----')
-    return retval --.. rnd
+    --print(xdiv..' x '..ydiv..' = '..ratio)
+
+    math.randomseed(os.time())
+    local rnd = 'image['.. 12*ratio ..','.. 1 .. ';6,0.5;'..minetest.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,14))..'.png]'
+
+    return retval .. rnd
 end
 
 --------------------------------------------------------------------------------
 
 local function main_button_handler2(tabview, fields, name, tabdata)
     local index = ''
-    if fields["btn_show_singleplayer"] then  index = "singleplayer" end
+    if fields["btn_show_singleplayer"] then  index = "server"       end
     if fields["btn_show_multiplayer"]  then  index = "multiplayer"  end
     if fields["btn_show_options"]      then  index = "settings"     end
     if fields["btn_show_help"]         then  index = "help"         end
@@ -99,19 +97,17 @@ local function main_button_handler2(tabview, fields, name, tabdata)
 
     if index == '' then return end
     for name,def in pairs(tabview.tablist) do
-       local fs
-       if index == 'singleplayer' then
-          fs = create_tab_single(true)
-       elseif index == 'multiplayer' then
-          fs = create_tab_multiplayer()
-       elseif index == 'settings' then
-          fs = create_tab_settings(true)
-       end
-       if fs then
-          fs:set_parent(tabview.parent or tabview)
-          tabview:hide()
-          fs:show()
-       return true
+       if index == def.name then
+        local get_fs = function()
+           local retval = def.get_formspec(tabview, name, tabdata)
+           retval = 'size[12,5.2]'..retval
+           return retval
+        end
+        local dlg = dialog_create(def.name, get_fs, def.button_handler, def.on_change)
+        dlg:set_parent(tabview)
+        tabview:hide()
+        dlg:show()
+        return dlg
        end
     end
    return false
@@ -130,8 +126,8 @@ local function on_activate2(type,old_tab,new_tab)
     mm_texture.clear("header")
     mm_texture.clear("footer")
     core.set_clouds(false)
-    core.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    core.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
 
 end
@@ -174,32 +170,37 @@ local function init_globals()
     mm_texture.init()
 
 
-	-- Create main tabview
-	local tv_main = tabview_create("maintab",{x=12,y=5.2},{x=-1,y=0})
-	tv_main:set_autosave_tab(false)
-	tv_main:add(tab_main)
-	tv_main:add(tab_singleplayer)
-	tv_main:add(tab_multiplayer)
-	tv_main:add(tab_server)
-	tv_main:add(tab_settings)
-	tv_main:add(tab_texturepacks)
-	tv_main:add(tab_mods)
-	tv_main:add(tab_credits)
-	tv_main:set_global_event_handler(main_event_handler)
-	tv_main:set_fixed_size(false)
-	ui.set_default("main")
-	tv_main:show()
+    -- Create main tabview
+    local tv_main = tabview_create("maintab",{x=12,y=5.2},{x=0,y=0})
 
-	-- Create modstore ui
-	if PLATFORM == "Android" then
-		modstore.init({x=12, y=6}, 3, 2)
-	else
-		modstore.init({x=12, y=8}, 4, 3)
-	end
+    tv_main:set_autosave_tab(false)
+    --tv_main:add(tab_simple_main)
+    tv_main:add(tab_main)
+    tv_main:add(tab_singleplayer)
+    tv_main:add(tab_multiplayer)
+    tv_main:add(tab_server)
+    tv_main:add(tab_settings)
+    tv_main:add(tab_texturepacks)
+    tv_main:add(tab_mods)
+    tv_main:add(tab_help)
+    tv_main:add(tab_credits)
 
-	ui.update()
+    tv_main:set_global_event_handler(main_event_handler)
+    tv_main:set_fixed_size(false)
+    ui.set_default("main")
 
-	core.sound_play("main_menu", true)
+    tv_main:show()
+
+    -- Create modstore ui
+    if PLATFORM == "Android" then
+        modstore.init({x=12, y=6}, 3, 2)
+    else
+        modstore.init({x=12, y=8}, 4, 3)
+    end
+
+    ui.update()
+
+    core.sound_play("main_menu", true)
 
 end
 

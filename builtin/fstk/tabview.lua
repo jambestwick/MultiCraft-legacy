@@ -1,4 +1,4 @@
---multicraft
+--Minetest
 --Copyright (C) 2014 sapier
 --
 --self program is free software; you can redistribute it and/or modify
@@ -214,60 +214,60 @@ end
 
 --------------------------------------------------------------------------------
 local function show_tabview(self)
-    self.hidden=false
-
-    -- call for tab to enter
-    if self.tablist[self.last_tab_index].on_change ~= nil then
-        self.tablist[self.last_tab_index].on_change("ENTER",
-                nil,self.current_tab)
-    end
+	self.hidden=false
+	
+	-- call for tab to enter
+	if self.tablist[self.last_tab_index].on_change ~= nil then
+		self.tablist[self.last_tab_index].on_change("ENTER",
+				nil,self.current_tab)
+	end
 end
 
 local tabview_metatable = {
-    add                       = add_tab,
-    handle_buttons            = handle_buttons,
-    handle_events             = handle_events,
-    get_formspec              = get_formspec,
-    show                      = show_tabview,
-    hide                      = hide_tabview,
-    delete                    = function(self) ui.delete(self) end,
-    set_parent                = function(self,parent) self.parent = parent end,
-    set_autosave_tab          =
-            function(self,value) self.autosave_tab = value end,
-    set_tab                   = set_tab_by_name,
-    set_global_button_handler =
-            function(self,handler) self.glb_btn_handler = handler end,
-    set_global_event_handler =
-            function(self,handler) self.glb_evt_handler = handler end,
-    set_fixed_size =
-            function(self,state) self.fixed_size = state end,
-    tab_header = tab_header,
-    handle_tab_buttons = handle_tab_buttons
+	add                       = add_tab,
+	handle_buttons            = handle_buttons,
+	handle_events             = handle_events,
+	get_formspec              = get_formspec,
+	show                      = show_tabview,
+	hide                      = hide_tabview,
+	delete                    = function(self) ui.delete(self) end,
+	set_parent                = function(self,parent) self.parent = parent end,
+	set_autosave_tab          =
+			function(self,value) self.autosave_tab = value end,
+	set_tab                   = set_tab_by_name,
+	set_global_button_handler =
+			function(self,handler) self.glb_btn_handler = handler end,
+	set_global_event_handler =
+			function(self,handler) self.glb_evt_handler = handler end,
+	set_fixed_size =
+			function(self,state) self.fixed_size = state end,
+	tab_header = tab_header,
+	handle_tab_buttons = handle_tab_buttons
 }
 
 tabview_metatable.__index = tabview_metatable
 
 --------------------------------------------------------------------------------
 function tabview_create(name, size, tabheaderpos)
-    local self = {}
+	local self = {}
 
-    self.name     = name
-    self.type     = "toplevel"
-    self.width    = size.x
-    self.height   = size.y
-    self.header_x = tabheaderpos.x
-    self.header_y = tabheaderpos.y
+	self.name     = name
+	self.type     = "toplevel"
+	self.width    = size.x
+	self.height   = size.y
+	self.header_x = tabheaderpos.x
+	self.header_y = tabheaderpos.y
 
-    setmetatable(self, tabview_metatable)
+	setmetatable(self, tabview_metatable)
 
-    self.fixed_size     = true
-    self.hidden         = true
-    self.current_tab    = nil
-    self.last_tab_index = 1
-    self.tablist        = {}
+	self.fixed_size     = true
+	self.hidden         = true
+	self.current_tab    = nil
+	self.last_tab_index = 1
+	self.tablist        = {}
+	
+	self.autosave_tab   = false
 
-    self.autosave_tab   = false
-
-    ui.add(self)
-    return self
+	ui.add(self)
+	return self
 end

@@ -1,4 +1,4 @@
---multicraft
+--Minetest
 --Copyright (C) 2014 sapier
 --
 --This program is free software; you can redistribute it and/or modify
@@ -19,51 +19,51 @@
 
 local function rename_modpack_formspec(dialogdata)
 
-	dialogdata.mod = modmgr.global_mods:get_list()[dialogdata.selected]
+        dialogdata.mod = modmgr.global_mods:get_list()[dialogdata.selected]
 
-	local retval =
-		"size[12.4,5,false]" ..
-		"label[1.75,1;".. fgettext("Rename Modpack:") .. "]"..
-		"field[4.5,1.4;6,0.5;te_modpack_name;;" ..
-		dialogdata.mod.name ..
-		"]" ..
-		"image_button[5,4.2;2.6,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_rename_modpack_confirm;"..
-				fgettext("Accept") .. "]" ..
-		"image_button[7.5,4.2;2.8,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_rename_modpack_cancel;"..
-				fgettext("Cancel") .. "]"
+        local retval =
+                "size[12.4,5,true]" ..
+                "label[1.75,1;".. fgettext("Rename Modpack:") .. "]"..
+                "field[4.5,1.4;6,0.5;te_modpack_name;;" ..
+                dialogdata.mod.name ..
+                "]" ..
+                "image_button[5,4.2;2.6,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_rename_modpack_confirm;"..
+                                fgettext("Accept") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+                "image_button[7.5,4.2;2.8,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_rename_modpack_cancel;"..
+                                fgettext("Cancel") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
 
-	return retval
+        return retval
 end
 
 --------------------------------------------------------------------------------
 local function rename_modpack_buttonhandler(this, fields)
-	if fields["dlg_rename_modpack_confirm"] ~= nil then
-		local oldpath = core.get_modpath() .. DIR_DELIM .. this.data.mod.name
-		local targetpath = core.get_modpath() .. DIR_DELIM .. fields["te_modpack_name"]
-		core.copy_dir(oldpath,targetpath,false)
-		modmgr.refresh_globals()
-		modmgr.selected_mod = modmgr.global_mods:get_current_index(
-			modmgr.global_mods:raw_index_by_uid(fields["te_modpack_name"]))
+        if fields["dlg_rename_modpack_confirm"] ~= nil then
+                local oldpath = core.get_modpath() .. DIR_DELIM .. this.data.mod.name
+                local targetpath = core.get_modpath() .. DIR_DELIM .. fields["te_modpack_name"]
+                core.copy_dir(oldpath,targetpath,false)
+                modmgr.refresh_globals()
+                modmgr.selected_mod = modmgr.global_mods:get_current_index(
+                        modmgr.global_mods:raw_index_by_uid(fields["te_modpack_name"]))
 
-		this:delete()
-		return true
-	end
+                this:delete()
+                return true
+        end
 
-	if fields["dlg_rename_modpack_cancel"] then
-		this:delete()
-		return true
-	end
+        if fields["dlg_rename_modpack_cancel"] then
+                this:delete()
+                return true
+        end
 
-	return false
+        return false
 end
 
 --------------------------------------------------------------------------------
 function create_rename_modpack_dlg(selected_index)
 
-	local retval = dialog_create("dlg_delete_mod",
-					rename_modpack_formspec,
-					rename_modpack_buttonhandler,
-					nil)
-	retval.data.selected = selected_index
-	return retval
+        local retval = dialog_create("dlg_delete_mod",
+                                        rename_modpack_formspec,
+                                        rename_modpack_buttonhandler,
+                                        nil)
+        retval.data.selected = selected_index
+        return retval
 end
