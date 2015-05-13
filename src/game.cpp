@@ -3533,6 +3533,7 @@ void Game::handlePointingAtNode(GameRunData *runData,
 			&& client->checkPrivilege("interact")) {
 		handleDigging(runData, pointed, nodepos, playeritem_toolcap, dtime);
 		digging = true;
+		runData->noplace_delay_timer = 1.0;
 	}
 
 #ifdef HAVE_TOUCHSCREENGUI
