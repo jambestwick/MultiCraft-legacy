@@ -15,6 +15,9 @@ ROOT = $(shell pwd)
 
 GAMES_TO_COPY = MultiCraft_game
 
+# this string will be written to Files.zip in ver.txt
+VER_TEXT = 1.0.1
+
 ################################################################################
 # Android Version code
 # Increase for each build!
@@ -638,6 +641,7 @@ assets : $(ASSETS_TIMESTAMP)
 	echo "assets changed, refreshing...";                                      \
 	$(MAKE) clean_assets;                                                      \
 	mkdir -p ${ROOT}/assets/MultiCraft;                                          \
+	echo ${VER_TEXT} > ${ROOT}/assets/MultiCraft/ver.txt; \
 	cp ${ROOT}/../../minetest.conf.example ${ROOT}/assets/MultiCraft;            \
 	cp ${ROOT}/../../README.txt ${ROOT}/assets/MultiCraft;                       \
 	cp -r ${ROOT}/../../builtin ${ROOT}/assets/MultiCraft;                       \
