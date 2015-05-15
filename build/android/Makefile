@@ -127,8 +127,8 @@ FREETYPE_TIMESTAMP = $(FREETYPE_DIR)timestamp
 FREETYPE_TIMESTAMP_INT = $(ROOT)/deps/freetype_timestamp
 FREETYPE_URL_GIT = https://github.com/cdave1/freetype2-android
 
-SQLITE3_FOLDER = sqlite-amalgamation-3080704
-SQLITE3_URL = http://www.sqlite.org/2014/$(SQLITE3_FOLDER).zip
+SQLITE3_FOLDER = sqlite-amalgamation-3081001
+SQLITE3_URL = http://www.sqlite.org/2015/$(SQLITE3_FOLDER).zip
 
 ASSETS_ZIP = $(ROOT)/assets/Files.zip
 
