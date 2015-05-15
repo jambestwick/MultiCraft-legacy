@@ -125,7 +125,11 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("screenshot_path", ".");
 	settings->setDefault("view_bobbing_amount", "1.0");
 	settings->setDefault("fall_bobbing_amount", "0.0");
+#ifdef __ANDROID__
+	settings->setDefault("enable_3d_clouds", "false");
+#else
 	settings->setDefault("enable_3d_clouds", "true");
+#endif
 	settings->setDefault("cloud_height", "120");
 	settings->setDefault("cloud_radius", "12");
 	settings->setDefault("menu_clouds", "true");
@@ -140,9 +144,13 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("gui_scaling", "1.0");
 	settings->setDefault("gui_scaling_filter", "false");
 	settings->setDefault("gui_scaling_filter_txr2img", "true");
+#ifdef __ANDROID__
+	settings->setDefault("mouse_sensitivity", "0.05");
+#else
 	settings->setDefault("mouse_sensitivity", "0.2");
+#endif
 	settings->setDefault("enable_sound", "true");
-	settings->setDefault("sound_volume", "0.8");
+	settings->setDefault("sound_volume", "1");
 	settings->setDefault("desynchronize_mapblock_texture_animation", "true");
 	settings->setDefault("selectionbox_width","2");
 	settings->setDefault("hud_hotbar_max_width","1.0");
