@@ -7,21 +7,19 @@ tags
 *.orig
 *.rej
 
-## Files related to minetest development cycle
+## Files related to MultiCraft development cycle
 /*.patch
 
-## Non-static Minetest directories
+## Non-static MultiCraft directories
 /bin/
 /games/*
-!/games/minimal/
+!/games/MultiCraft_game/
 /cache/
 /textures/*
 !/textures/base/
 /sounds/
 /mods/*
-!/mods/minetest/
-/mods/minetest/*
-!/mods/minetest/mods_here.txt
+!/mods/mods_here.txt
 /worlds/
 /world/
 
