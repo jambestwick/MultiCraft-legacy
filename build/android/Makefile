@@ -130,8 +130,6 @@ FREETYPE_URL_GIT = https://github.com/cdave1/freetype2-android
 SQLITE3_FOLDER = sqlite-amalgamation-3081001
 SQLITE3_URL = http://www.sqlite.org/2015/$(SQLITE3_FOLDER).zip
 
-ASSETS_ZIP = $(ROOT)/assets/Files.zip
-
 -include $(PATHCFGFILE)
 
 #use interim target variable to switch leveldb on or off
@@ -676,6 +674,9 @@ assets : $(ASSETS_TIMESTAMP)
 	echo "Creating Files.zip";	\
 	zip -r -X -q ../Files.zip *;	           \
 	cd ${ROOT}/assets;							\
+	rm -r ${ROOT}/assets/MultiCraft; \
+	rm ${ROOT}/assets/index.txt; \
+	rm ${ROOT}/assets/filelist.txt; \
 	else                                                                       \
 		echo "nothing to be done for assets";                                  \
 	fi
@@ -683,7 +684,7 @@ assets : $(ASSETS_TIMESTAMP)
 clean_assets :
 	@$(RM) -r assets
 	
-apk: $(PATHCFGFILE) $(ASSETS_ZIP) $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_TARGET)       \
+apk: $(PATHCFGFILE) assets $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_TARGET)       \
 	$(OPENAL_LIB) $(OGG_LIB) prep_srcdir $(ROOT)/jni/src/android_version.h     \
 	sqlite3_download
 	@export NDEBUG=$$NDEBUG; $(MAKE) manifest;                                 \
