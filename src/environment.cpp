@@ -2115,7 +2115,7 @@ void ClientEnvironment::step(float dtime)
 	f32 dtime_downcount = dtime;
 
 	free_move |= (lplayer->in_liquid || lplayer->in_liquid_stable)
-					&& (fabs(lplayer->getSpeed().X) > .001 && fabs(lplayer->getSpeed().Y > 0.001));
+					&& (fabs(lplayer->getSpeed().X) > .1 || fabs(lplayer->getSpeed().Z > .1));
 
 	/*
 		Stuff that has a maximum time increment
