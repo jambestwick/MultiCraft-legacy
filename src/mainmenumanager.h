@@ -137,7 +137,7 @@ public:
 	virtual void exitToOS()
 	{
 		shutdown_requested = true;
-#ifndef __ANDROID__
+#ifdef __ANDROID__
 		porting::handleAndroidActivityEvents();
 #endif
 	}
