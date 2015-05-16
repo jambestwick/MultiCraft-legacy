@@ -249,9 +249,9 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 
 	/* init inventory button */
 	initButton(inventory_id,
-	           rect<s32>(m_screensize.X-(1.5*button_size),
-					   m_screensize.Y - (1.5*button_size),
-					   m_screensize.X-(0.0*button_size),
+	           rect<s32>(m_screensize.X-(button_size),
+					   m_screensize.Y - (button_size),
+					   m_screensize.X-(0.0 * button_size),
 					   m_screensize.Y),
 	                  L"inv", true);
 
