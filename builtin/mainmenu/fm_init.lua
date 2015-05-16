@@ -41,7 +41,7 @@ dofile(menupath .. DIR_DELIM .. "dlg_config_world.lua")
 dofile(menupath .. DIR_DELIM .. "tab_credits.lua")
 dofile(menupath .. DIR_DELIM .. "tab_mods.lua")
 dofile(menupath .. DIR_DELIM .. "tab_settings.lua")
-dofile(menupath .. DIR_DELIM .. "tab_help.lua")
+--dofile(menupath .. DIR_DELIM .. "tab_help.lua")
     dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
     dofile(menupath .. DIR_DELIM .. "dlg_delete_mod.lua")
     dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
@@ -67,8 +67,8 @@ local function get_formspec2(tabview, name, tabdata)
     local retval = ""
     retval = retval .. "bgcolor[#00000000;false]"
     retval = retval .. "image_button[2.5,3.4;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir) .. "menu_button.png;btn_show_multiplayer;" .. fgettext("Multiplayer") .. ";true;true;" .. minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[2.5,4.8;6,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[8.5,4.8;1,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,4.8;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    --retval = retval .. "image_button[8.5,4.8;1,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
     retval = retval .. "image_button[2.5,6.2;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_exit;".. fgettext("Exit") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
     retval = retval .. "image_button[2.5,2.0;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_singleplayer;".. fgettext("Singleplayer") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
 
@@ -92,7 +92,7 @@ local function main_button_handler2(tabview, fields, name, tabdata)
     if fields["btn_show_singleplayer"] then  index = "server"       end
     if fields["btn_show_multiplayer"]  then  index = "multiplayer"  end
     if fields["btn_show_options"]      then  index = "settings"     end
-    if fields["btn_show_help"]         then  index = "help"         end
+    --if fields["btn_show_help"]         then  index = "help"         end
     if fields["btn_exit"] then core.close() end
 
     if index == '' then return end
@@ -182,7 +182,7 @@ local function init_globals()
     tv_main:add(tab_settings)
     tv_main:add(tab_texturepacks)
     tv_main:add(tab_mods)
-    tv_main:add(tab_help)
+    --tv_main:add(tab_help)
     tv_main:add(tab_credits)
 
     tv_main:set_global_event_handler(main_event_handler)
