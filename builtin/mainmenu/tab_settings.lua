@@ -231,12 +231,10 @@ local function formspec(tabview, name, tabdata)
         end
 
         tab_string = tab_string ..
-        --"image_button[4,9.55;3.95,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_textures;".. fgettext("Texturepacks") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir)..
-		"image_button[8,9.55;3.95,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_textures;".. fgettext("Texturepacks") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir)..
+        "image_button[4,9.55;3.95,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_textures;".. fgettext("Texturepacks") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir)..
         "menu_button_b.png]"..
-        --"image_button[8,9.55;3.95,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_credits;".. fgettext("Credits") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-        --"image_button[12,9.55;4,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_cancel;".. fgettext("OK") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-		"image_button[12,9.55;4,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_cancel;".. fgettext("OK") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+        "image_button[8,9.55;3.95,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_credits;".. fgettext("Credits") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+        "image_button[12,9.55;4,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_cancel;".. fgettext("OK") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
 
 
         if PLATFORM == "Android" then
@@ -395,7 +393,7 @@ local function handle_settings_buttons(this, fields, tabname, tabdata)
 
     local index = ''
     if fields["btn_show_textures"] then  index = "texturepacks" end
-    -- if fields["btn_show_credits"]  then  index = "credits"      end
+    if fields["btn_show_credits"]  then  index = "credits"      end
 
     for name,def in pairs(this.parent.tablist) do
        if index == def.name then
