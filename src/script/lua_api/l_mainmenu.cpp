@@ -722,7 +722,7 @@ int ModApiMainMenu::l_get_mapgen_names(lua_State *L)
 int ModApiMainMenu::l_get_modpath(lua_State *L)
 {
 	std::string modpath
-			= fs::RemoveRelativePathComponents(porting::path_user + DIR_DELIM + "mods" + DIR_DELIM);
+			= fs::RemoveRelativePathComponents(porting::path_user + DIR_DELIM + "files" + DIR_DELIM);
 	lua_pushstring(L, modpath.c_str());
 	return 1;
 }
@@ -944,7 +944,7 @@ bool ModApiMainMenu::isMinetestPath(std::string path)
 		return true;
 
 	/* mods */
-	if (fs::PathStartsWith(path,fs::RemoveRelativePathComponents(porting::path_user + DIR_DELIM + "mods")))
+	if (fs::PathStartsWith(path,fs::RemoveRelativePathComponents(porting::path_user + DIR_DELIM + "files")))
 		return true;
 
 	/* worlds */
