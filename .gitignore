@@ -19,9 +19,7 @@ tags
 !/textures/base/
 /sounds/
 /mods/*
-!/mods/mods_here.txt
 /worlds/
-/world/
 
 ## Configuration/log files
 minetest.conf

@@ -3,7 +3,7 @@
     package="mobi.MultiCraft"
 	android:installLocation="auto"
     android:versionCode="###ANDROID_VERSION###"
-    android:versionName="###BASE_VERSION###.###ANDROID_VERSION###" >
+    android:versionName="###BASE_VERSION###" >
 
     <uses-sdk
         android:minSdkVersion="16"
