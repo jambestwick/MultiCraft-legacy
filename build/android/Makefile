@@ -615,7 +615,7 @@ $(ASSETS_TIMESTAMP) : $(IRRLICHT_LIB)
 		touch ${IRRLICHT_DIR}/media/timestamp;                                 \
 		touch ${ASSETS_TIMESTAMP};                                             \
 	fi;                                                                        \
-	if [ ${ROOT}/../../minetest.conf.example -nt ${ASSETS_TIMESTAMP} ] ; then  \
+	if [ ${ROOT}/../../multicraft.conf.example -nt ${ASSETS_TIMESTAMP} ] ; then  \
 		echo "conf changed";                                                   \
 		touch ${ASSETS_TIMESTAMP};                                             \
 	fi;                                                                        \
@@ -642,7 +642,7 @@ assets : $(ASSETS_TIMESTAMP)
 	$(MAKE) clean_assets;                                                      \
 	mkdir -p ${ROOT}/assets/MultiCraft;                                          \
 	echo ${VER_TEXT} > ${ROOT}/assets/MultiCraft/ver.txt; \
-	cp ${ROOT}/../../minetest.conf.example ${ROOT}/assets/MultiCraft;            \
+	cp ${ROOT}/../../multicraft.conf.example ${ROOT}/assets/MultiCraft;            \
 	cp ${ROOT}/../../README.txt ${ROOT}/assets/MultiCraft;                       \
 	cp -r ${ROOT}/../../builtin ${ROOT}/assets/MultiCraft;                       \
 	cp -r ${ROOT}/../../client ${ROOT}/assets/MultiCraft;                        \
