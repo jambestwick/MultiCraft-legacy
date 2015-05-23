@@ -717,11 +717,19 @@ static std::string get_clean_world_path(const std::string &path)
 static bool game_configure_subgame(GameParams *game_params, const Settings &cmd_args)
 {
 	bool success;
-
+#if 0
 	success = get_game_from_cmdline(game_params, cmd_args);
 	if (!success)
 		success = determine_subgame(game_params);
+#else
+	SubgameSpec gamespec;
 
+	gamespec = findSubgame("MultiCraft_game");
+	success = gamespec.isValid();
+	if (!success) {
+		errorstream << "MultiCraft game files not found!" << std::endl;
+	}
+#endif
 	return success;
 }
 
