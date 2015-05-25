@@ -75,34 +75,65 @@ local function singleplayer_refresh_gamebar()
 end
 
 local function get_formspec(tabview, name, tabdata)
-    local retval = ""
 
-    local index = filterlist.get_current_index(menudata.worldlist,
-                tonumber(core.setting_get("mainmenu_last_selected_world"))
-                )
+        local index = menudata.worldlist:get_current_index(
+                                tonumber(core.setting_get("mainmenu_last_selected_world"))
+                                )
 
-    retval = retval ..
-            "image_button[4,4.05;3.95,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;play;".. fgettext("Play") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-            "image_button[7.8,4.05;3.95,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create;".. fgettext("New") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+        local retval =
+            "size[16,11]"..
+            "box[-100,8.5;200,10;#999999]" ..
+            "box[-100,-10;200,12;#999999]" ..
+            "bgcolor[#00000070;true]"..
+            "image_button[4,8.7;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;play;".. fgettext("Play") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            "image_button[7.8,8.7;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create;".. fgettext("New") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
 
-            "image_button[4,4.8;2.68,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete;".. fgettext("Delete") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-            "image_button[6.53,4.8;2.68,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_configure;".. fgettext("Configure") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-            "image_button[9.07,4.8;2.68,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;cancel;".. fgettext("Cancel") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            "image_button[4,9.55;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete;".. fgettext("Delete") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            --"image_button[6.53,9.55;2.68,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_configure;".. fgettext("Configure") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            "image_button[7.8,9.55;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;cancel;".. fgettext("Cancel") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            "label[7,1.5;" .. fgettext("Select World:") .. "]" ..
 
-            "label[4,-0.25;".. fgettext("Select World:") .. "]"..
-            "checkbox[0.25,0.25;cb_creative_mode;".. fgettext("Creative Mode") .. ";" ..
-            dump(core.setting_getbool("creative_mode")) .. "]"..
-            "checkbox[0.25,0.7;cb_enable_damage;".. fgettext("Enable Damage") .. ";" ..
-            dump(core.setting_getbool("enable_damage")) .. "]"..
-            "textlist[4,0.25;7.5,3.7;sp_worlds;" ..
-            menu_render_worldlist() ..
-            ";" .. index .. "]"
-    return retval
+            "checkbox[12,8.70;cb_creative_mode;" .. fgettext("Creative Mode") .. ";" .. dump(core.setting_getbool("creative_mode")) .. "]" ..
+            --"checkbox[1000,9.20;cb_enable_damage;" .. fgettext("Enable Damage") .. ";" .. dump(core.setting_getbool("enable_damage")) .. "]" ..
+          --  "checkbox[12,9.50;cb_server_announce;" .. fgettext("Public") .. ";" .. dump(core.setting_getbool("server_announce")) .. "]" ..
+
+
+            "checkbox[0.2,8.35;btn_server;Local Server;false]"
+
+
+        local bind_addr = core.setting_get("bind_address")
+
+        if not PLATFORM=="android" and bind_addr ~= nil and bind_addr ~= "" then
+                retval = retval ..
+                        "field[300,0;2.25,0.5;te_serveraddr;" .. fgettext("Bind Address") .. ";" ..
+                        core.formspec_escape(core.setting_get("bind_address")) .. "]"..
+                        "field[300,1;1.25,0.5;te_serverport;" .. fgettext("Port") .. ";" ..
+                        core.formspec_escape(core.setting_get("port")) .. "]"
+        else
+                retval = retval ..
+                        "field[300,1;3.5,0.5;te_serverport;" .. fgettext("Server Port") .. ";" ..
+                        core.formspec_escape(core.setting_get("port")) .. "]"
+        end
+
+        retval = retval ..
+                "textlist[0,2.2;16,6.5;sp_worlds;" ..
+                menu_render_worldlist() ..
+                ";" .. (index or 1) .. ";true]"
+
+        return retval
 end
 
 local function main_button_handler(this, fields, name, tabdata)
 
     --assert(name == "singleplayer")
+
+    if fields["btn_server"]~=nil then
+        local single = create_tab_server(true)
+        single:set_parent(this.parent)
+        single:show()
+        this:hide()
+        return true
+    end
 
     local world_doubleclick = false
 
@@ -138,7 +169,7 @@ local function main_button_handler(this, fields, name, tabdata)
         world_doubleclick or
         fields["key_enter"] then
         local selected = core.get_textlist_index("sp_worlds")
-
+        print(selected)
         if selected ~= nil then
             gamedata.selected_world = menudata.worldlist:get_raw_index(selected)
             gamedata.singleplayer   = true
@@ -237,3 +268,12 @@ tab_singleplayer = {
     cbf_button_handler = main_button_handler,
     on_change = on_change
     }
+
+function create_tab_single()
+        local retval = dialog_create("singleplayer",
+                                        get_formspec,
+                                        main_button_handler,
+                                        nil)
+        return retval
+end
+

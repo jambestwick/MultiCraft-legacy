@@ -51,22 +51,22 @@ local function create_world_formspec(dialogdata)
                 "box[-100,8.5;200,10;#999999]" ..
                 "box[-100,-10;200,12;#999999]" ..
 
-                "label[4,3;" .. fgettext("World name") .. "]"..
-                "field[6.5,3.4;6,0.5;te_world_name;;]" ..
+                "label[4,4;" .. fgettext("World name") .. "]"..
+                "field[6.5,4.4;6,0.5;te_world_name;;]" ..
 
-                "label[4,4;" .. fgettext("Seed") .. "]"..
-                "field[6.5,4.4;6,0.5;te_seed;;".. current_seed .. "]" ..
+                "label[4,5;" .. fgettext("Seed") .. "]"..
+                "field[6.5,5.4;6,0.5;te_seed;;".. current_seed .. "]" ..
 
-                "label[4,5;" .. fgettext("Mapgen") .. "]"..
-                "dropdown[6.2,5;6.3;dd_mapgen;" .. mglist .. ";" .. selindex .. "]" ..
+             --   "label[4,5;" .. fgettext("Mapgen") .. "]"..
+             --   "dropdown[6.2,5;6.3;dd_mapgen;" .. mglist .. ";" .. selindex .. "]" ..
 
-                "label[4,6;" .. fgettext("Game") .. "]"..
-                "dropdown[6.2,6;6.3;games;" .. gamemgr.gamelist() ..
-                ";" .. gameidx .. "]" ..
+             --   "label[4,6;" .. fgettext("Game") .. "]"..
+                "dropdown[6000.2,6;6.3;games;" .. gamemgr.gamelist() ..
+                ";1]" ..
 
 
-        "image_button[8,9.55;3.95,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create_confirm;".. fgettext("Create") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-        "image_button[12,9.55;4,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create_cancel;".. fgettext("Cancel") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+        "image_button[8,9.55;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create_confirm;".. fgettext("Create") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+        "image_button[12,9.55;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create_cancel;".. fgettext("Cancel") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
 
         if #gamemgr.games == 0 then
                 retval = retval .. "box[4,7;8,1;#ff8800]label[4.25,7;" ..
@@ -105,7 +105,7 @@ local function create_world_buttonhandler(this, fields)
                         local message = nil
 
                         if not menudata.worldlist:uid_exists_raw(worldname) then
-                                core.setting_set("mg_name",fields["dd_mapgen"])
+                                core.setting_set("mg_name","v6")
                                 message = core.create_world(worldname,gameindex)
                         else
                                 message = fgettext("A world named \"$1\" already exists", worldname)

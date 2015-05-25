@@ -309,7 +309,7 @@ core.register_chatcommand("teleport", {
 			teleportee:setpos(p)
 			return true, "Teleporting to "..core.pos_to_string(p)
 		end
-		
+
 		local teleportee = nil
 		local p = nil
 		local target_name = nil
@@ -346,7 +346,7 @@ core.register_chatcommand("teleport", {
 			return true, "Teleporting " .. teleportee_name
 					.. " to " .. core.pos_to_string(p)
 		end
-		
+
 		local teleportee = nil
 		local p = nil
 		local teleportee_name = nil
@@ -368,7 +368,7 @@ core.register_chatcommand("teleport", {
 					.. " to " .. target_name
 					.. " at " .. core.pos_to_string(p)
 		end
-		
+
 		return false, 'Invalid parameters ("' .. param
 				.. '") or player not found (see /help teleport)'
 	end,
@@ -509,7 +509,6 @@ core.register_chatcommand("giveme", {
 		if not itemstring then
 			return false, "ItemString required"
 		end
-		core.stat_add("giveme", name)
 		return handle_give_command("/giveme", name, name, itemstring)
 	end,
 })
@@ -783,7 +782,6 @@ core.register_chatcommand("die", {
 			return
 		end
 		player:set_hp(0)
-		core.stat_add("suicide", name)
 	end,
 })
 

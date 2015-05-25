@@ -35,8 +35,8 @@ local function add_server_formspec(dialogdata)
                 "field[6.5,6.4;6,0.5;desc;;Added on ".. os.date() .."]" ..
 
 
-        "image_button[8,9.54;3.95,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;server_add_confirm;".. fgettext("Add") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-        "image_button[12,9.55;4,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;server_add_cancel;".. fgettext("Cancel") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+        "image_button[8,9.54;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;server_add_confirm;".. fgettext("Add") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+        "image_button[12,9.55;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;server_add_cancel;".. fgettext("Cancel") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
 
         return retval
 end
@@ -64,7 +64,7 @@ local function add_server_buttonhandler(this, fields)
                  --gamedata.errormessage = fgettext("Can't find serverlist_file! ("..path..')')
               end
            if favourites then
-              favourites = minetest.parse_json(favourites)
+              favourites = core.parse_json(favourites)
            else
                favourites = {["list"]={},}
            end
@@ -79,7 +79,7 @@ local function add_server_buttonhandler(this, fields)
                                            }
                           )
 
-              favourites = minetest.write_json(favourites)
+              favourites = core.write_json(favourites)
 
               --print(path)
               local output = io.open(path, "w")

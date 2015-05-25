@@ -66,11 +66,11 @@ end
 local function get_formspec2(tabview, name, tabdata)
     local retval = ""
     retval = retval .. "bgcolor[#00000000;false]"
-    retval = retval .. "image_button[2.5,3.4;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir) .. "menu_button.png;btn_show_multiplayer;" .. fgettext("Multiplayer") .. ";true;true;" .. minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[2.5,4.8;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    --retval = retval .. "image_button[8.5,4.8;1,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[2.5,6.2;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_exit;".. fgettext("Exit") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[2.5,2.0;7,1;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_singleplayer;".. fgettext("Singleplayer") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,3.4;7,1;"..core.formspec_escape(mm_texture.basetexturedir) .. "menu_button.png;btn_show_multiplayer;" .. fgettext("Multiplayer") .. ";true;true;" .. core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,4.8;7,1;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    --retval = retval .. "image_button[8.5,4.8;1,1;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,6.2;7,1;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_exit;".. fgettext("Exit") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,2.0;7,1;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_singleplayer;".. fgettext("Singleplayer") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
 
     local si = core.get_screen_info()
 
@@ -80,16 +80,16 @@ local function get_formspec2(tabview, name, tabdata)
     --print(xdiv..' x '..ydiv..' = '..ratio)
 
     math.randomseed(os.time())
-    local rnd = 'image['.. 12*ratio ..','.. 1 .. ';6,0.5;'..minetest.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,14))..'.png]'
+   -- local rnd = 'image['.. 12*ratio ..','.. 1 .. ';6,0.5;'..core.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,14))..'.png]'
 
-    return retval .. rnd
+    return retval --.. rnd
 end
 
 --------------------------------------------------------------------------------
 
 local function main_button_handler2(tabview, fields, name, tabdata)
     local index = ''
-    if fields["btn_show_singleplayer"] then  index = "server"       end
+    if fields["btn_show_singleplayer"] then  index = "singleplayer"       end
     if fields["btn_show_multiplayer"]  then  index = "multiplayer"  end
     if fields["btn_show_options"]      then  index = "settings"     end
     --if fields["btn_show_help"]         then  index = "help"         end
@@ -126,8 +126,8 @@ local function on_activate2(type,old_tab,new_tab)
     mm_texture.clear("header")
     mm_texture.clear("footer")
     core.set_clouds(false)
-    core.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
 
 end
