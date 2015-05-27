@@ -32,7 +32,7 @@
     <string name="update_ignore">Ignore</string>
 
     <!-- instruction dialog -->
-    <string name="dialog_instruction">Hello! After game loading select the world and press Play. \nTo put the block quickly tap 2 times where you want to put it on!\nTo split blocks inside inventory take the block and simultaneously touch the two cells. The first half will be inserted on first cell. Click on another cell for inserting second half!</string>
+    <string name="dialog_instruction">Hello! After game loading select the world and press Play. \nTo put a block tap on screen.\nTo destroy a block long tap on screen.</string>
     <string name="ok">Close</string>
     <string name="forget">Don\'t remind</string>
 
