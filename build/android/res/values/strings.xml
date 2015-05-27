@@ -13,27 +13,27 @@
 
     <!-- preparation for start -->
     <string name="loading">Loading&#8230;</string>
-    <string name="warning">Do not stop the application while it is unpacking or updating. The game will start in few seconds.&#8230;</string>
+    <string name="warning">When unpacking, do not wrap application.\nGame will start in few second&#8230;</string>
     <string name="rm_old">Preparing to update&#8230;</string>
     <string name="copy">Copying&#8230;</string>
-    <string name="notification_title">Downloading</string>
-    <string name="notification_description">Downloading game data&#8230;</string>
+    <string name="notification_title">Downloading MultiCraft</string>
+    <string name="notification_description">Less than 1 minute&#8230;</string>
 
     <!-- weak phone dialog -->
     <string name="memory_title">Warning!</string>
     <string name="memory_warning">Your device\'s memory is too low for seamless playing</string>
     <string name="memory_continue">Continue</string>
     <string name="memory_close">Close</string>
-    <string name="memory_lags">Lag is possible. Please don\'t rate this game badly.</string>
+    <string name="memory_lags">Lags are possible. Please don\'t rate this game badly.</string>
 
     <!-- update dialog -->
-    <string name="update_yes">An update is available!</string>
+    <string name="update_yes">Update now!</string>
     <string name="update_no">Remind me later&#8230;</string>
     <string name="update_ignore">Ignore</string>
 
     <!-- instruction dialog -->
-    <string name="dialog_instruction">Hello! After loading, select the world and press Play. \nTo place an item, tap and release where you want to put it (or quickly tap twice).\nTo split blocks inside inventory take the block and simultaneously touch the two cells; the first half will be inserted on first cell. Click on another cell for inserting the second half</string>
-    <string name="ok">Got it</string>
+    <string name="dialog_instruction">Hello! After game loading select the world and press Play. \nTo put the block quickly tap 2 times where you want to put it on!\nTo split blocks inside inventory take the block and simultaneously touch the two cells. The first half will be inserted on first cell. Click on another cell for inserting second half!</string>
+    <string name="ok">Close</string>
     <string name="forget">Don\'t remind</string>
 
     <!-- free space dialog -->

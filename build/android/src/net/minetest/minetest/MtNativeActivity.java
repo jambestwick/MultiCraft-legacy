@@ -1,8 +1,11 @@
 package net.minetest.minetest;
 
+import static com.MoNTE48.MultiCraft.PreferencesHelper.isShowHelp;
+
+import java.util.concurrent.ScheduledExecutorService;
+
 import android.app.NativeActivity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
@@ -14,14 +17,42 @@ import com.MoNTE48.RateME.RateThisApp;
 public class MtNativeActivity extends NativeActivity implements
 		IUtilitiesCallback {
 
+	private ScheduledExecutorService scheduler;
+	private int m_MessagReturnCode;
+	private String m_MessageReturnValue;
+	private Utilities util;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		init();
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 101) {
+			if (resultCode == RESULT_OK) {
+				String text = data.getStringExtra("text");
+				m_MessagReturnCode = 0;
+				m_MessageReturnValue = text;
+			} else {
+				m_MessagReturnCode = 1;
+			}
+		}
+	}
+
+	@Override
+	public void init() {
 		m_MessagReturnCode = -1;
 		m_MessageReturnValue = "";
 		RateThisApp.onStart(this);
+		util = new Utilities(MtNativeActivity.this);
 		startDialogs();
+	}
+
+	@Override
+	public void finishMe() {
+		finish();
 	}
 
 	private void startDialogs() {
@@ -29,13 +60,10 @@ public class MtNativeActivity extends NativeActivity implements
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				Utilities util = new Utilities(MtNativeActivity.this);
+
 				util.showHelpDialog();
-				SharedPreferences settings = MtNativeActivity.this
-						.getSharedPreferences(Utilities.PREFS_NAME, 0);
-				String skipMessage = settings.getString("skipMessage",
-						"NOT checked");
-				if ("checked".equalsIgnoreCase(skipMessage)) {
+
+				if (!isShowHelp()) {
 					if (RateThisApp.shouldShowRateDialog()) {
 						RateThisApp
 								.showRateDialogIfNeeded(MtNativeActivity.this);
@@ -87,19 +115,6 @@ public class MtNativeActivity extends NativeActivity implements
 		return getResources().getDisplayMetrics().heightPixels;
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 101) {
-			if (resultCode == RESULT_OK) {
-				String text = data.getStringExtra("text");
-				m_MessagReturnCode = 0;
-				m_MessageReturnValue = text;
-			} else {
-				m_MessagReturnCode = 1;
-			}
-		}
-	}
-
 	static {
 		System.loadLibrary("openal");
 		System.loadLibrary("ogg");
@@ -108,11 +123,4 @@ public class MtNativeActivity extends NativeActivity implements
 		System.loadLibrary("crypto");
 	}
 
-	private int m_MessagReturnCode;
-	private String m_MessageReturnValue;
-
-	@Override
-	public void init() {
-
-	}
 }

@@ -6,8 +6,8 @@
     <string name="warning">Во время загрузки не закрывайте приложение. \nИгра запустится через несколько секунд&#8230;</string>
     <string name="rm_old">Подготовка к обновлению&#8230;</string>
     <string name="copy">Копирование&#8230;</string>
-    <string name="notification_title">Загрузка</string>
-    <string name="notification_description">Загрузка файлов игры&#8230;</string>
+    <string name="notification_title">Загрузка MultiCraft</string>
+    <string name="notification_description">Осталось меньше минуты&#8230;</string>
 
     <!-- диалог оценки -->
     <string name="rta_dialog_title">Оцените MultiCraft Beta —  Бесплатный Майнер!</string>
@@ -30,7 +30,7 @@
 
     <!-- инструкция -->
     <string name="dialog_instruction">Привет! После загрузки игры нажмите Play.\nЧтобы поставить блок, быстро тапните 2 раза там, куда хотите его поставить!\nЧтобы разъединить блоки в инвентаре, возьмите блок в руку и одновременно прикоснитесь пальцами к двум ячейкам. Вставится половина стопки. Нажмите на другую ячейку и вставится вторая половина!</string>
-    <string name="ok">Понял</string>
+    <string name="ok">Закрыть</string>
     <string name="forget">Не напоминать</string>
 
     <!-- недостаточно места -->

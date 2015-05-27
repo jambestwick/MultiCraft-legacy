@@ -48,7 +48,6 @@ public class UnzipService extends IntentService {
 		String file = intent.getStringExtra(EXTRA_KEY_IN_FILE);
 		String location = intent.getStringExtra(EXTRA_KEY_IN_LOCATION);
 		// Displays the progress bar for the first time.
-		mBuilder.setProgress(100, 0, false);
 		int id = 1;
 		mNotifyManager.notify(id, mBuilder.build());
 		int per = 0;
@@ -71,8 +70,7 @@ public class UnzipService extends IntentService {
 						intentUpdate.addCategory(Intent.CATEGORY_DEFAULT);
 						intentUpdate.putExtra(EXTRA_KEY_UPDATE, progress);
 						sendBroadcast(intentUpdate);
-						mBuilder.setProgress(100, progress, false);
-						mNotifyManager.notify(id, mBuilder.build());
+//						mNotifyManager.notify(id, mBuilder.build());
 						FileOutputStream f_out = new FileOutputStream(location
 								+ ze.getName());
 						byte[] buffer = new byte[8192];
@@ -93,9 +91,6 @@ public class UnzipService extends IntentService {
 		} catch (IOException e) {
 			Log.e(TAG, e.getLocalizedMessage());
 		}
-		// mBuilder.setContentText(getString(R.string.complete));
-		// mBuilder.setProgress(0, 0, false);
-		// mNotifyManager.notify(id, mBuilder.build());
 		mNotifyManager.cancel(id);
 		Intent intentResponse = new Intent();
 		intentResponse.setAction(ACTION_MyIntentService);
