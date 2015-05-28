@@ -36,19 +36,20 @@ import com.winsontan520.wversionmanager.library.WVersionManager;
  * Helpful utilities used in MainActivity
  */
 public class Utilities {
+	private Button positive, negative;
+	private Dialog dialog;
+
 	public enum VERSIONS {
 		CURRENT, OLD
 	}
 
 	private final String TAG = Utilities.class.getName();
 	private Context mContext;
-	public static final String PREFS_NAME = "ShowFirstTime";
 
 	public final String STABLE_VER = "1.0.1";
 
 	/**
 	 * Callback for MainActivity init and finishMe methods
-	 *
 	 */
 	public interface IUtilitiesCallback {
 		void init();
@@ -63,17 +64,26 @@ public class Utilities {
 		callerActivity = (IUtilitiesCallback) activity;
 	}
 
+	private void dialogInit(int panel, int positiveBtn, int negativeBtn,
+			int messageText) {
+		dialog = new Dialog(mContext);
+		dialog.requestWindowFeature(panel);
+		dialog.setContentView(R.layout.dialog_template);
+		positive = (Button) dialog.findViewById(R.id.positive);
+		negative = (Button) dialog.findViewById(R.id.negative);
+		TextView message = (TextView) dialog.findViewById(R.id.message);
+		positive.setText(positiveBtn);
+		negative.setText(negativeBtn);
+		message.setText(messageText);
+		dialog.setCancelable(false);
+		dialog.getWindow().setBackgroundDrawable(
+				new ColorDrawable(R.color.semi_transparent));
+	}
+
 	@SuppressLint("InflateParams")
 	public void showHelpDialog() {
-		final Dialog dialog = new Dialog(mContext);
-		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dialog.setContentView(R.layout.dialog_template);
-		Button positive = (Button) dialog.findViewById(R.id.positive);
-		Button negative = (Button) dialog.findViewById(R.id.negative);
-		TextView message = (TextView) dialog.findViewById(R.id.message);
-		message.setText(R.string.dialog_instruction);
-		positive.setText(R.string.ok);
-		negative.setText(R.string.forget);
+		dialogInit(Window.FEATURE_NO_TITLE, R.string.ok, R.string.forget,
+				R.string.dialog_instruction);
 		positive.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -90,10 +100,7 @@ public class Utilities {
 				RateThisApp.showRateDialogIfNeeded(mContext);
 			}
 		});
-		dialog.setCancelable(false);
 		if (isShowHelp()) {
-			dialog.getWindow().setBackgroundDrawable(
-					new ColorDrawable(R.color.semi_transparent));
 			dialog.show();
 		}
 	}
@@ -113,15 +120,8 @@ public class Utilities {
 	}
 
 	public void showMemoryDialog() {
-		final Dialog dialog = new Dialog(mContext);
-		dialog.setContentView(R.layout.dialog_template);
-		dialog.setTitle(R.string.memory_title);
-		Button positive = (Button) dialog.findViewById(R.id.positive);
-		Button negative = (Button) dialog.findViewById(R.id.negative);
-		TextView message = (TextView) dialog.findViewById(R.id.message);
-		message.setText(R.string.memory_warning);
-		positive.setText(R.string.memory_continue);
-		negative.setText(R.string.memory_close);
+		dialogInit(Window.FEATURE_OPTIONS_PANEL, R.string.memory_continue,
+				R.string.memory_close, R.string.memory_warning);
 		positive.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -139,21 +139,12 @@ public class Utilities {
 				callerActivity.finishMe();
 			}
 		});
-		dialog.setCancelable(false);
-		dialog.getWindow().setBackgroundDrawable(
-				new ColorDrawable(R.color.semi_transparent));
 		dialog.show();
 	}
 
 	public void showNotEnoughSpaceDialog() {
-		final Dialog dialog = new Dialog(mContext);
-		dialog.setContentView(R.layout.dialog_template);
-		dialog.setTitle(R.string.memory_title);
-		Button positive = (Button) dialog.findViewById(R.id.positive);
-		Button negative = (Button) dialog.findViewById(R.id.negative);
-		TextView message = (TextView) dialog.findViewById(R.id.message);
-		message.setText(R.string.not_enough_space);
-		positive.setText(R.string.space_ok);
+		dialogInit(Window.FEATURE_OPTIONS_PANEL, R.string.space_ok,
+				R.string.memory_close, R.string.not_enough_space);
 		negative.setVisibility(View.GONE);
 		positive.setOnClickListener(new OnClickListener() {
 			@Override
@@ -164,10 +155,6 @@ public class Utilities {
 				callerActivity.init();
 			}
 		});
-
-		dialog.setCancelable(false);
-		dialog.getWindow().setBackgroundDrawable(
-				new ColorDrawable(R.color.semi_transparent));
 		dialog.show();
 	}
 
