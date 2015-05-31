@@ -1,5 +1,9 @@
 package com.MoNTE48.MultiCraft;
 
+import static com.MoNTE48.MultiCraft.PreferencesHelper.TAG_SHORTCUT_CREATED;
+import static com.MoNTE48.MultiCraft.PreferencesHelper.isCreateShortcut;
+import static com.MoNTE48.MultiCraft.PreferencesHelper.saveSettings;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,7 +18,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -28,7 +31,6 @@ import android.widget.TextView;
 import com.MoNTE48.MultiCraft.Utilities.IUtilitiesCallback;
 
 public class MainActivity extends Activity implements IUtilitiesCallback {
-	public static final String SHORTCUT_NAME = "shortcut";
 	private final String TAG = MainActivity.class.getName();
 	public final String FILES = "Files.zip";
 	public final String NOMEDIA = ".nomedia";
@@ -49,18 +51,13 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 		util = new Utilities(this);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		registerReceivers();
-		SharedPreferences settings = getSharedPreferences(SHORTCUT_NAME, 0);
-		boolean doNotExecute = settings.getBoolean("doNotExecute", false);
-		if (!doNotExecute)
-			addShortcut();
-
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
 		if (util.getTotalMemoryInMB() < 800 || util.getCoresCount() < 2) {
-			util.showMemoryDialog(MainActivity.this);
+			util.showMemoryDialog();
 		} else {
 			init();
 		}
@@ -80,10 +77,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 	}
 
 	private void addShortcut() {
-		SharedPreferences settings = getSharedPreferences(SHORTCUT_NAME, 0);
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putBoolean("doNotExecute", true);
-		editor.apply();
+		saveSettings(this, TAG_SHORTCUT_CREATED, false);
 		Intent shortcutIntent = new Intent(getApplicationContext(),
 				MainActivity.class);
 		shortcutIntent.setAction(Intent.ACTION_MAIN);
@@ -100,6 +94,9 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 
 	@SuppressWarnings("deprecation")
 	public void init() {
+		PreferencesHelper.loadSettings(this);
+		if (isCreateShortcut())
+			addShortcut();
 		mProgressTextView = (TextView) findViewById(R.id.progress_textView);
 		mProgressBar = (ProgressBar) findViewById(R.id.PB1);
 		Drawable draw;
@@ -114,6 +111,11 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 		createDirAndNoMedia();
 		version = new File(unzipLocation + "ver.txt");
 		checkVersion();
+	}
+
+	@Override
+	public void finishMe() {
+		finish();
 	}
 
 	private void registerReceivers() {
@@ -153,7 +155,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 						+ "games/MultiCraft II", unzipLocation + "tmp");
 				break;
 			case CURRENT:
-				startBetweenActivity();
+				startNativeActivity();
 				break;
 			}
 		} else {
@@ -162,7 +164,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 		}
 	}
 
-	private void startBetweenActivity() {
+	private void startNativeActivity() {
 		showSpinnerDialog(R.string.loading);
 		new Thread(new Runnable() {
 			public void run() {
@@ -197,7 +199,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 		public void onReceive(Context context, Intent intent) {
 			String result = intent.getStringExtra(UnzipService.EXTRA_KEY_OUT);
 			if ("Success".equals(result))
-				startBetweenActivity();
+				startNativeActivity();
 
 		}
 	}
@@ -279,7 +281,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 					Log.e(TAG, e.getMessage());
 				}
 			} else
-				util.showNotEnoughSpaceDialog(MainActivity.this);
+				util.showNotEnoughSpaceDialog();
 		}
 
 		private void copyAssets(String zipName) {
@@ -311,9 +313,9 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 
 	@Override
 	protected void onDestroy() {
+		super.onDestroy();
 		dismissProgressDialog();
 		unregisterReceiver(myBroadcastReceiver);
 		unregisterReceiver(myBroadcastReceiver_Update);
-		super.onDestroy();
 	}
 }

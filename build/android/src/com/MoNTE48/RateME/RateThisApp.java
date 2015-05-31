@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.RatingBar;
@@ -119,6 +120,8 @@ public class RateThisApp {
 						}
 					}
 				});
+		dialog.getWindow().setBackgroundDrawable(
+				new ColorDrawable(R.color.semi_transparent));
 		dialog.show();
 	}
 

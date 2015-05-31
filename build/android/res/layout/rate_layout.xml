@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/rta_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rta_dialog_title"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:text="@string/rta_dialog_title" />
 
     <RatingBar
         android:id="@+id/ratingBar"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
         android:numStars="5"
         android:stepSize="1.0" />
 
@@ -31,11 +31,11 @@
 
     <EditText
         android:layout_width="match_parent"
+        android:layout_height="64dp"
         android:clickable="false"
         android:cursorVisible="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:layout_height="64dp"
         android:hint="@string/rate_description" />
 
     <Button
@@ -43,8 +43,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:enabled="false"
         android:background="@android:color/transparent"
-        android:textColor="#00ced1"
-        android:text="@string/rate_submit" />
+        android:enabled="false"
+        android:text="@string/rate_submit"
+        android:textColor="#00ced1" />
+
 </LinearLayout>

@@ -1,5 +1,9 @@
 package com.MoNTE48.MultiCraft;
 
+import static com.MoNTE48.MultiCraft.PreferencesHelper.TAG_HELP_SHOWED;
+import static com.MoNTE48.MultiCraft.PreferencesHelper.isShowHelp;
+import static com.MoNTE48.MultiCraft.PreferencesHelper.saveSettings;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
@@ -11,16 +15,18 @@ import mobi.MultiCraft.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.MoNTE48.RateME.RateThisApp;
@@ -30,22 +36,25 @@ import com.winsontan520.wversionmanager.library.WVersionManager;
  * Helpful utilities used in MainActivity
  */
 public class Utilities {
+	private Button positive, negative;
+	private Dialog dialog;
+
 	public enum VERSIONS {
 		CURRENT, OLD
 	}
 
 	private final String TAG = Utilities.class.getName();
 	private Context mContext;
-	public static final String PREFS_NAME = "ShowFirstTime";
 
 	public final String STABLE_VER = "1.0.1";
 
 	/**
-	 * Callback for MainActivity init method
-	 *
+	 * Callback for MainActivity init and finishMe methods
 	 */
 	public interface IUtilitiesCallback {
 		void init();
+
+		void finishMe();
 	}
 
 	private IUtilitiesCallback callerActivity;
@@ -55,38 +64,45 @@ public class Utilities {
 		callerActivity = (IUtilitiesCallback) activity;
 	}
 
+	private void dialogInit(int panel, int positiveBtn, int negativeBtn,
+			int messageText) {
+		dialog = new Dialog(mContext);
+		dialog.requestWindowFeature(panel);
+		dialog.setContentView(R.layout.dialog_template);
+		positive = (Button) dialog.findViewById(R.id.positive);
+		negative = (Button) dialog.findViewById(R.id.negative);
+		TextView message = (TextView) dialog.findViewById(R.id.message);
+		positive.setText(positiveBtn);
+		negative.setText(negativeBtn);
+		message.setText(messageText);
+		dialog.setCancelable(false);
+		dialog.getWindow().setBackgroundDrawable(
+				new ColorDrawable(R.color.semi_transparent));
+	}
+
 	@SuppressLint("InflateParams")
 	public void showHelpDialog() {
-		LayoutInflater inflater = LayoutInflater.from(mContext);
-		View messageView = inflater.inflate(R.layout.instruction_dialog, null,
-				false);
-		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-		builder.setView(messageView);
-		builder.setPositiveButton(R.string.ok,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						RateThisApp.showRateDialogIfNeeded(mContext);
-					}
-				});
-		builder.setNegativeButton(R.string.forget,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						String checkBoxResult = "checked";
-						SharedPreferences settings = mContext
-								.getSharedPreferences(PREFS_NAME, 0);
-						SharedPreferences.Editor editor = settings.edit();
-						editor.putString("skipMessage", checkBoxResult);
-						editor.apply();
-						RateThisApp.showRateDialogIfNeeded(mContext);
-					}
-				});
-		SharedPreferences settings = mContext.getSharedPreferences(PREFS_NAME,
-				0);
-		String skipMessage = settings.getString("skipMessage", "NOT checked");
-		if (!"checked".equalsIgnoreCase(skipMessage))
-			builder.show();
+		dialogInit(Window.FEATURE_NO_TITLE, R.string.ok, R.string.forget,
+				R.string.dialog_instruction);
+		positive.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				RateThisApp.showRateDialogIfNeeded(mContext);
+			}
+		});
+		negative.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				saveSettings(mContext, TAG_HELP_SHOWED, false);
+				RateThisApp.showRateDialogIfNeeded(mContext);
+			}
+		});
+		if (isShowHelp()) {
+			dialog.show();
+		}
 	}
 
 	public void showVersionDialog() {
@@ -103,43 +119,43 @@ public class Utilities {
 				.getResources().getText(R.string.update_ignore));
 	}
 
-	public void showMemoryDialog(final Activity activity) {
-		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-		builder.setTitle(R.string.memory_title);
-		builder.setMessage(R.string.memory_warning);
-		builder.setPositiveButton(R.string.memory_continue,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						Toast.makeText(mContext, R.string.memory_lags,
-								Toast.LENGTH_SHORT).show();
-						callerActivity.init();
-					}
-				});
-		builder.setNegativeButton(R.string.memory_close,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						activity.finish();
-					}
-				});
-		builder.setCancelable(false);
-		builder.show();
+	public void showMemoryDialog() {
+		dialogInit(Window.FEATURE_OPTIONS_PANEL, R.string.memory_continue,
+				R.string.memory_close, R.string.memory_warning);
+		positive.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				Toast.makeText(mContext, R.string.memory_lags,
+						Toast.LENGTH_SHORT).show();
+				callerActivity.init();
+			}
+		});
+		negative.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				callerActivity.finishMe();
+			}
+		});
+		dialog.show();
 	}
 
-	public void showNotEnoughSpaceDialog(final Activity activity) {
-		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-		builder.setTitle(R.string.memory_title);
-		builder.setMessage(R.string.not_enough_space);
-		builder.setPositiveButton(R.string.space_ok,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						activity.finish();
-					}
-				});
-		builder.setCancelable(false);
-		builder.show();
+	public void showNotEnoughSpaceDialog() {
+		dialogInit(Window.FEATURE_OPTIONS_PANEL, R.string.space_ok,
+				R.string.memory_close, R.string.not_enough_space);
+		negative.setVisibility(View.GONE);
+		positive.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				Toast.makeText(mContext, R.string.memory_lags,
+						Toast.LENGTH_SHORT).show();
+				callerActivity.init();
+			}
+		});
+		dialog.show();
 	}
 
 	public long getTotalMemoryInMB() {
