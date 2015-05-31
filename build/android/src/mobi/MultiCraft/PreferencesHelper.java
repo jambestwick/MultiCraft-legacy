@@ -1,4 +1,4 @@
-package com.MoNTE48.MultiCraft;
+package mobi.MultiCraft;
 
 import android.content.Context;
 import android.content.SharedPreferences;

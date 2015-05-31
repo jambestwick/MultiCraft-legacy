@@ -1,8 +1,8 @@
-package com.MoNTE48.MultiCraft;
+package mobi.MultiCraft;
 
-import static com.MoNTE48.MultiCraft.PreferencesHelper.TAG_HELP_SHOWED;
-import static com.MoNTE48.MultiCraft.PreferencesHelper.isShowHelp;
-import static com.MoNTE48.MultiCraft.PreferencesHelper.saveSettings;
+import static mobi.MultiCraft.PreferencesHelper.TAG_HELP_SHOWED;
+import static mobi.MultiCraft.PreferencesHelper.isShowHelp;
+import static mobi.MultiCraft.PreferencesHelper.saveSettings;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,7 +29,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MoNTE48.RateME.RateThisApp;
+import mobi.MultiCraft.RateThisApp;
 import com.winsontan520.wversionmanager.library.WVersionManager;
 
 /**

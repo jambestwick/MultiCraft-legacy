@@ -1,4 +1,4 @@
-package com.MoNTE48.RateME;
+package mobi.MultiCraft;
 
 import java.util.Date;
 

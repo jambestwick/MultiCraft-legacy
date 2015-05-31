@@ -1,4 +1,4 @@
-package com.MoNTE48.MultiCraft;
+package mobi.MultiCraft;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,15 +19,15 @@ import android.util.Log;
 
 public class UnzipService extends IntentService {
 	public final String TAG = UnzipService.class.getSimpleName();
-	public static final String ACTION_MyIntentService = "com.MoNTE48.MultiCraft.RESPONSE";
-	public static final String ACTION_MyUpdate = "com.MoNTE48.MultiCraft.UPDATE";
+	public static final String ACTION_MyIntentService = "mobi.MultiCraft.RESPONSE";
+	public static final String ACTION_MyUpdate = "mobi.MultiCraft.UPDATE";
 	public static final String EXTRA_KEY_IN_FILE = "file";
 	public static final String EXTRA_KEY_IN_LOCATION = "location";
 	public static final String EXTRA_KEY_OUT = "EXTRA_OUT";
 	public static final String EXTRA_KEY_UPDATE = "EXTRA_UPDATE";
 
 	public UnzipService() {
-		super("com.MoNTE48.MultiCraft.UnzipService");
+		super("mobi.MultiCraft.UnzipService");
 	}
 
 	private void _dirChecker(String dir, String unzipLocation) {

@@ -1,8 +1,8 @@
-package com.MoNTE48.MultiCraft;
+package mobi.MultiCraft;
 
-import static com.MoNTE48.MultiCraft.PreferencesHelper.TAG_SHORTCUT_CREATED;
-import static com.MoNTE48.MultiCraft.PreferencesHelper.isCreateShortcut;
-import static com.MoNTE48.MultiCraft.PreferencesHelper.saveSettings;
+import static mobi.MultiCraft.PreferencesHelper.TAG_SHORTCUT_CREATED;
+import static mobi.MultiCraft.PreferencesHelper.isCreateShortcut;
+import static mobi.MultiCraft.PreferencesHelper.saveSettings;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import mobi.MultiCraft.R;
-import net.minetest.minetest.MtNativeActivity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -27,8 +26,7 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.MoNTE48.MultiCraft.Utilities.IUtilitiesCallback;
+import mobi.MultiCraft.Utilities.IUtilitiesCallback;
 
 public class MainActivity extends Activity implements IUtilitiesCallback {
 	private final String TAG = MainActivity.class.getName();
@@ -113,7 +111,6 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 		checkVersion();
 	}
 
-	@Override
 	public void finishMe() {
 		finish();
 	}
@@ -169,7 +166,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 		new Thread(new Runnable() {
 			public void run() {
 				Intent intent = new Intent(MainActivity.this,
-						MtNativeActivity.class);
+						MCNativeActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 						| Intent.FLAG_ACTIVITY_CLEAR_TASK);
 				startActivity(intent);

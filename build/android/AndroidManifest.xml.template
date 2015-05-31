@@ -23,9 +23,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/MTTheme" >
-
         <activity
-            android:name="com.MoNTE48.MultiCraft.MainActivity"
+            android:name="mobi.MultiCraft.MainActivity"
             android:screenOrientation="sensorLandscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="net.minetest.minetest.MtNativeActivity"
+            android:name="mobi.MultiCraft.MCNativeActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation|keyboard|keyboardHidden|navigation"
             android:excludeFromRecents="true"
@@ -49,12 +48,12 @@
                 android:value="minetest" />
         </activity>
         <activity
-            android:name="net.minetest.minetest.MinetestTextEntry"
+            android:name="mobi.MultiCraft.MultiCraftTextEntry"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.Transparent" />
 
         <service
-            android:name="com.MoNTE48.MultiCraft.UnzipService"
+            android:name="mobi.MultiCraft.UnzipService"
             android:enabled="true"
             android:exported="false" />
     </application>
