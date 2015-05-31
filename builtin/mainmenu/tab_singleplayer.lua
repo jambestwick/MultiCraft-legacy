@@ -266,7 +266,7 @@ tab_singleplayer = {
     caption = fgettext("Singleplayer"),
     cbf_formspec = get_formspec,
     cbf_button_handler = main_button_handler,
-    on_change = on_change
+    --on_change = on_change
     }
 
 function create_tab_single()

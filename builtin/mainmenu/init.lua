@@ -64,25 +64,16 @@ end
 
 --------------------------------------------------------------------------------
 local function get_formspec2(tabview, name, tabdata)
+    math.randomseed(os.time())
     local retval = ""
     retval = retval .. "bgcolor[#00000000;false]"
     retval = retval .. "image_button[2.5,3.4;7,1;"..core.formspec_escape(mm_texture.basetexturedir) .. "menu_button.png;btn_show_multiplayer;" .. fgettext("Multiplayer") .. ";true;true;" .. core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
     retval = retval .. "image_button[2.5,4.8;7,1;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
     --retval = retval .. "image_button[8.5,4.8;1,1;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
     retval = retval .. "image_button[2.5,6.2;7,1;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_exit;".. fgettext("Exit") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. 'image_button[6,-2;6.5,3;'..core.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,11))..".png;btn_ad;;true;false]"
     retval = retval .. "image_button[2.5,2.0;7,1;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_singleplayer;".. fgettext("Singleplayer") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-
-    local si = core.get_screen_info()
-
-    local ydiv = si.window_height/5.2
-    local xdiv = si.window_width/12.5
-    local ratio = xdiv/ydiv
-    --print(xdiv..' x '..ydiv..' = '..ratio)
-
-    math.randomseed(os.time())
-   -- local rnd = 'image['.. 12*ratio ..','.. 1 .. ';6,0.5;'..core.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,14))..'.png]'
-
-    return retval --.. rnd
+    return retval
 end
 
 --------------------------------------------------------------------------------
