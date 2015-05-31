@@ -27,27 +27,31 @@ local function get_formspec(tabview, name, tabdata)
             "box[-100,8.5;200,10;#999999]" ..
             "box[-100,-10;200,12;#999999]" ..
             "bgcolor[#00000070;true]"..
-            "image_button[4,8.7;3.95,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;start_server;".. fgettext("Play") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-            "image_button[7.8,8.7;3.95,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create;".. fgettext("New") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            "image_button[4,8.7;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;start_server;".. fgettext("Play") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            "image_button[7.8,8.7;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create;".. fgettext("New") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
 
-            "image_button[4,9.55;2.68,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete;".. fgettext("Delete") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-            "image_button[6.53,9.55;2.68,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_configure;".. fgettext("Configure") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-            "image_button[9.07,9.55;2.68,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;cancel;".. fgettext("Cancel") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            "image_button[4,9.55;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete;".. fgettext("Delete") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            --"image_button[6.53,9.55;2.68,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_configure;".. fgettext("Configure") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            "image_button[7.8,9.55;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;cancel;".. fgettext("Cancel") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
             "label[7,1.5;" .. fgettext("Select World:") .. "]" ..
 
             "checkbox[12,8.70;cb_creative_mode;" .. fgettext("Creative Mode") .. ";" .. dump(core.setting_getbool("creative_mode")) .. "]" ..
             --"checkbox[1000,9.20;cb_enable_damage;" .. fgettext("Enable Damage") .. ";" .. dump(core.setting_getbool("enable_damage")) .. "]" ..
             "checkbox[12,9.50;cb_server_announce;" .. fgettext("Public") .. ";" .. dump(core.setting_getbool("server_announce")) .. "]" ..
-            "label[0.2,8.55;" .. fgettext("Name/Password") .. "]" ..
-            "field[0.5,9.45;3.5,0.5;te_playername;;"
+
+            "checkbox[0.2,8.35;btn_single;Local Server;true]"..
+
+            "label[-0.25,9.15;Name]" ..
+            "field[1,9.45;3,0.5;te_playername;;"
 
         local nm = core.formspec_escape(core.setting_get("name"))
         if nm=='' then
-           nm='Wanderer'
+           nm='Player'
         end
         retval = retval ..
                  nm .. "]" ..
-                "pwdfield[0.5,10.15;3.5,0.5;te_passwd;]"
+                "label[-0.25,9.8;Pass]" ..
+                "pwdfield[1,10.15;3,0.5;te_passwd;]"
 
         local bind_addr = core.setting_get("bind_address")
 
@@ -76,6 +80,14 @@ local function main_button_handler(this, fields, name, tabdata)
 
         local world_doubleclick = false
 
+        if fields["btn_single"]~=nil then
+           local single = create_tab_single(true)
+           single:set_parent(this.parent)
+           single:show()
+           this:hide()
+           return true
+        end
+
         if fields["srv_worlds"] ~= nil then
                 local event = core.explode_textlist_event(fields["srv_worlds"])
 
@@ -102,7 +114,7 @@ local function main_button_handler(this, fields, name, tabdata)
                    bool = 'true'
                 end
                 core.setting_set("enable_damage", bool)
-                print(bool)
+--                print(bool)
                 return true
         end
 
@@ -202,3 +214,12 @@ tab_server = {
         cbf_button_handler = main_button_handler,
         on_change = nil
         }
+
+
+function create_tab_server()
+                local retval = dialog_create("server",
+                                                                                get_formspec,
+                                                                                main_button_handler,
+                                                                                nil)
+        return retval
+end

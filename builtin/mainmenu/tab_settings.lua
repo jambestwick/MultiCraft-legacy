@@ -73,10 +73,10 @@ local function dlg_confirm_reset_formspec(data)
         local retval =
                 "size[8,3]" ..
                 "label[1,1;".. fgettext("Are you sure to reset your singleplayer world?") .. "]"..
-                "image_button[1,2;2.6,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_confirm;"..
-                                fgettext("Yes") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-                "image_button[4,2;2.8,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_cancel;"..
-                                fgettext("No!!!") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                "image_button[1,2;2.6,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_confirm;"..
+                                fgettext("Yes") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+                "image_button[4,2;2.8,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_cancel;"..
+                                fgettext("No!!!") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
         return retval
 end
 
@@ -213,7 +213,7 @@ local function formspec(tabview, name, tabdata)
         "dropdown[5.85,5.1;3.85;dd_video_driver;"
                                 .. driver_formspec_string .. ";" .. driver_current_idx .. "]" ..
         "tooltip[dd_video_driver;" ..
-                fgettext("Restart minetest for driver change to take effect") .. "]"
+                fgettext("Restart multicraft for driver change to take effect") .. "]"
 
 
 
@@ -223,29 +223,29 @@ local function formspec(tabview, name, tabdata)
                 "box[9.75,2.5;5.25,4;#999999]"..
                 "checkbox[10,2.5;cb_shaders;".. fgettext("Shaders") .. ";"
                 .. dump(core.setting_getbool("enable_shaders")) .. "]"..
-                "image_button[0,9.55;4,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_change_keys;".. fgettext("Change keys") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"--..
---                "image_button[3.75,5;3.88,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_reset_singleplayer;".. fgettext("Reset singleplayer world") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                "image_button[0,9.55;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_change_keys;".. fgettext("Change keys") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"--..
+--                "image_button[3.75,5;3.88,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_reset_singleplayer;".. fgettext("Reset singleplayer world") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
         else
                 --tab_string = tab_string ..
---                "image_button[3.75,5;3.88,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_reset_singleplayer;".. fgettext("Reset singleplayer world") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+--                "image_button[3.75,5;3.88,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_reset_singleplayer;".. fgettext("Reset singleplayer world") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
         end
 
         tab_string = tab_string ..
-        "image_button[4,9.55;3.95,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_textures;".. fgettext("Texturepacks") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir)..
+        "image_button[4,9.55;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_textures;".. fgettext("Texturepacks") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir)..
         "menu_button_b.png]"..
-        "image_button[8,9.55;3.95,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_credits;".. fgettext("Credits") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-        "image_button[12,9.55;4,0.8;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_cancel;".. fgettext("OK") .. ";true;true;"..minetest.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+        "image_button[8,9.55;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_credits;".. fgettext("Credits") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+        "image_button[12,9.55;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_cancel;".. fgettext("OK") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
 
 
         if PLATFORM == "Android" then
                 tab_string = tab_string ..
                 "box[9.75,2.5;5.25,2.5;#999999]" ..
                 "checkbox[10,2.75;cb_touchscreen_target;".. fgettext("Touch free target") .. ";" .. dump(core.setting_getbool("touchtarget")) .. "]"..
-
-                "box[0.75,6.8;14.25,1.35;#999999]" ..
-                "label[1.5,6.8;" .. fgettext("GUI scale factor") .. "]"..
-                "scrollbar[1.0,7.2;13.75,0.7;sb_gui_scaling;horizontal;" .. gui_scale_to_scrollbar() .. "]" ..
-                "tooltip[sb_gui_scaling;" .. fgettext("Scaling factor applied to menu elements: ") .. dump(core.setting_get("gui_scaling")) .. "]"
+""
+          --      "box[0.75,6.8;14.25,1.35;#999999]" ..
+          --      "label[1.5,6.8;" .. fgettext("GUI scale factor") .. "]"..
+                --"scrollbar[1.0,7.2;13.75,0.7;sb_gui_scaling;horizontal;" .. gui_scale_to_scrollbar() .. "]" ..
+          --      "tooltip[sb_gui_scaling;" .. fgettext("Scaling factor applied to menu elements: ") .. dump(core.setting_get("gui_scaling")) .. "]"
 
               --  if core.setting_get("touchscreen_threshold") ~= nil then
                    tab_string = tab_string ..
@@ -253,12 +253,12 @@ local function formspec(tabview, name, tabdata)
                                 "dropdown[10,4.0;5.18;dd_touchthreshold;0,10,20,30,40,50;" .. ((tonumber(core.setting_get("touchscreen_threshold") or 20)/10)+1) .. "]"
               --  end
 
-        else
-            tab_string = tab_string ..
-                "box[0.75,6.8;14.25,1.35;#999999]" ..
-                "label[1.5,6.8;" .. fgettext("GUI scale factor") .. "]"..
-                "scrollbar[1.0,7.5;13.75,0.4;sb_gui_scaling;horizontal;" .. gui_scale_to_scrollbar() .. "]" ..
-                "tooltip[sb_gui_scaling;" .. fgettext("Scaling factor applied to menu elements: ") .. dump(core.setting_get("gui_scaling")) .. "]"
+        --else
+           -- tab_string = tab_string ..
+               -- "box[0.75,6.8;14.25,1.35;#999999]" ..
+               -- "label[1.5,6.8;" .. fgettext("GUI scale factor") .. "]"..
+               -- "scrollbar[1.0,7.5;13.75,0.4;sb_gui_scaling;horizontal;" .. gui_scale_to_scrollbar() .. "]" ..
+               -- "tooltip[sb_gui_scaling;" .. fgettext("Scaling factor applied to menu elements: ") .. dump(core.setting_get("gui_scaling")) .. "]"
         end
 
         if PLATFORM ~= "Android" then
