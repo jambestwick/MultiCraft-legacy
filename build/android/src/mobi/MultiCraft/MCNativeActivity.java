@@ -2,8 +2,6 @@ package mobi.MultiCraft;
 
 import static mobi.MultiCraft.PreferencesHelper.isShowHelp;
 
-import java.util.concurrent.ScheduledExecutorService;
-
 import mobi.MultiCraft.Utilities.IUtilitiesCallback;
 import android.app.NativeActivity;
 import android.content.Intent;
@@ -14,7 +12,6 @@ import android.view.WindowManager;
 public class MCNativeActivity extends NativeActivity implements
 		IUtilitiesCallback {
 
-	private ScheduledExecutorService scheduler;
 	private int m_MessagReturnCode;
 	private String m_MessageReturnValue;
 	private Utilities util;
