@@ -87,8 +87,8 @@ public:
 			}
 		}
 		if (event.EventType == irr::EET_LOG_TEXT_EVENT) {
-			dstream << std::string("Irrlicht log: ") + std::string(event.LogEvent.Text)
-			        << std::endl;
+			//dstream << std::string("Irrlicht log: ") + std::string(event.LogEvent.Text)
+			//        << std::endl;
 			return true;
 		}
 		/* always return false in order to continue processing events */
