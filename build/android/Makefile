@@ -659,12 +659,7 @@ $(ASSETS_TIMESTAMP) : $(IRRLICHT_LIB)
 	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
 		touch ${ROOT}/../../games/timestamp;                                   \
 		touch ${ASSETS_TIMESTAMP};                                             \
-	fi;                                                                        \
-	LAST_MODIF=$$(find ${ROOT}/../../mods -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
-	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
-		touch ${ROOT}/../../mods/timestamp;                                    \
-		touch ${ASSETS_TIMESTAMP};                                             \
-	fi;                                                                        \
+	fi;                                                                        \                                                                   \
 	LAST_MODIF=$$(find ${ROOT}/../../po -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
 	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
 		touch ${ROOT}/../../po/timestamp;                                      \
@@ -684,7 +679,7 @@ $(ASSETS_TIMESTAMP) : $(IRRLICHT_LIB)
 		echo "conf changed";                                                   \
 		touch ${ASSETS_TIMESTAMP};                                             \
 	fi;                                                                        \
-	if [ ${ROOT}/../../README.txt -nt ${ASSETS_TIMESTAMP} ] ; then             \
+	if [ ${ROOT}/../../README.md -nt ${ASSETS_TIMESTAMP} ] ; then             \
 		touch ${ASSETS_TIMESTAMP};                                             \
 	fi;                                                                        \
 	if [ ! -e $(ASSETS_TIMESTAMP) ] ; then                                     \
@@ -708,7 +703,7 @@ assets : $(ASSETS_TIMESTAMP)
 	mkdir -p ${ROOT}/assets/MultiCraft;                                          \
 	echo ${VER_TEXT} > ${ROOT}/assets/MultiCraft/ver.txt; \
 	cp ${ROOT}/../../multicraft.conf.example ${ROOT}/assets/MultiCraft;            \
-	cp ${ROOT}/../../README.txt ${ROOT}/assets/MultiCraft;                       \
+	cp ${ROOT}/../../README.md ${ROOT}/assets/MultiCraft;                       \
 	cp -r ${ROOT}/../../builtin ${ROOT}/assets/MultiCraft;                       \
 	cp -r ${ROOT}/../../client ${ROOT}/assets/MultiCraft;                        \
 	cp -r ${ROOT}/../../doc ${ROOT}/assets/MultiCraft;                           \
