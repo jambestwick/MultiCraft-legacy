@@ -718,7 +718,6 @@ assets : $(ASSETS_TIMESTAMP)
 	do                                                                         \
 	    cp -r ${ROOT}/../../games/$$game ${ROOT}/assets/MultiCraft/games/;       \
 	done;                                                                      \
-	cp -r ${ROOT}/../../mods ${ROOT}/assets/MultiCraft;                          \
 	cp -r ${ROOT}/../../po ${ROOT}/assets/MultiCraft;                            \
 	cp -r ${ROOT}/../../textures ${ROOT}/assets/MultiCraft;                      \
 	mkdir -p ${ROOT}/assets/MultiCraft/media;                                    \
