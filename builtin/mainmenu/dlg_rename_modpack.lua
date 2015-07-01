@@ -37,6 +37,10 @@ end
 
 --------------------------------------------------------------------------------
 local function rename_modpack_buttonhandler(this, fields)
+    core.set_clouds(false)
+    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+
         if fields["dlg_rename_modpack_confirm"] ~= nil then
                 local oldpath = core.get_modpath() .. DIR_DELIM .. this.data.mod.name
                 local targetpath = core.get_modpath() .. DIR_DELIM .. fields["te_modpack_name"]

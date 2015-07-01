@@ -111,6 +111,10 @@ end
 
 --------------------------------------------------------------------------------
 local function handle_buttons(tabview, fields, tabname, tabdata)
+    core.set_clouds(false)
+    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+
         if fields["modlist"] ~= nil then
                 local event = core.explode_textlist_event(fields["modlist"])
                 tabdata.selected_mod = event.index

@@ -119,6 +119,9 @@ end
 
 
 local function handle_buttons(this, fields)
+    core.set_clouds(false)
+    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         if fields["world_config_modlist"] ~= nil then
                 local event = core.explode_textlist_event(fields["world_config_modlist"])

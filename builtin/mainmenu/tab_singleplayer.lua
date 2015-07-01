@@ -34,8 +34,7 @@ local function singleplayer_refresh_gamebar()
         for key,value in pairs(fields) do
             for j=1,#gamemgr.games,1 do
                 if ("game_btnbar_" .. gamemgr.games[j].id == key) then
-                    mm_texture.update("singleplayer", gamemgr.games[j])
-                    --core.set_topleft_text(gamemgr.games[j].name)
+--                    mm_texture.update("singleplayer", gamemgr.games[j])
                     core.setting_set("menu_last_game",gamemgr.games[j].id)
                     menudata.worldlist:set_filtercriteria(gamemgr.games[j].id)
                     return true
@@ -124,6 +123,9 @@ local function get_formspec(tabview, name, tabdata)
 end
 
 local function main_button_handler(this, fields, name, tabdata)
+    core.set_clouds(false)
+    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
     --assert(name == "singleplayer")
 
@@ -155,13 +157,22 @@ local function main_button_handler(this, fields, name, tabdata)
         return true
     end
 
-    if fields["cb_creative_mode"] then
-        core.setting_set("creative_mode", fields["cb_creative_mode"])
-        return true
-    end
+        if fields["cb_creative_mode"] then
+                core.setting_set("creative_mode", fields["cb_creative_mode"])
+                local bool = fields["cb_creative_mode"]
+                if bool == 'true' then
+                   bool = 'false'
+                else
+                   bool = 'true'
+                end
+                core.setting_set("enable_damage", bool)
+                minetest.setting_save()
+                return true
+        end
 
     if fields["cb_enable_damage"] then
         core.setting_set("enable_damage", fields["cb_enable_damage"])
+        minetest.setting_save()
         return true
     end
 
@@ -169,7 +180,6 @@ local function main_button_handler(this, fields, name, tabdata)
         world_doubleclick or
         fields["key_enter"] then
         local selected = core.get_textlist_index("sp_worlds")
-        print(selected)
         if selected ~= nil then
             gamedata.selected_world = menudata.worldlist:get_raw_index(selected)
             gamedata.singleplayer   = true
@@ -184,7 +194,6 @@ local function main_button_handler(this, fields, name, tabdata)
         create_world_dlg:set_parent(this)
         this:hide()
         create_world_dlg:show()
-        mm_texture.update("singleplayer",current_game())
         return true
     end
 
@@ -201,7 +210,6 @@ local function main_button_handler(this, fields, name, tabdata)
                 delete_world_dlg:set_parent(this)
                 this:hide()
                 delete_world_dlg:show()
-                mm_texture.update("singleplayer",current_game())
             end
         end
 
@@ -219,7 +227,7 @@ local function main_button_handler(this, fields, name, tabdata)
                 configdialog:set_parent(this)
                 this:hide()
                 configdialog:show()
-                mm_texture.update("singleplayer",current_game())
+                --mm_texture.update("singleplayer",current_game())
             end
         end
 
@@ -249,14 +257,14 @@ local function on_change(type, old_tab, new_tab)
         if game then
             menudata.worldlist:set_filtercriteria(game.id)
             --core.set_topleft_text(game.name)
-            mm_texture.update("singleplayer",game)
+--            mm_texture.update("singleplayer",game)
         end
         buttonbar:show()
     else
         menudata.worldlist:set_filtercriteria(nil)
         buttonbar:hide()
         --core.set_topleft_text("")
-        mm_texture.update(new_tab,nil)
+        --mm_texture.update(new_tab,nil)
     end
 end
 

@@ -34,7 +34,6 @@ function mm_texture.update(tab,gamedetails)
     if gamedetails == nil then
         return
     end
-
     mm_texture.update_game(gamedetails)
 end
 

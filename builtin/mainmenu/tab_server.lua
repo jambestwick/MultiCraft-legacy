@@ -77,6 +77,9 @@ end
 
 --------------------------------------------------------------------------------
 local function main_button_handler(this, fields, name, tabdata)
+    core.set_clouds(false)
+    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         local world_doubleclick = false
 
@@ -114,7 +117,7 @@ local function main_button_handler(this, fields, name, tabdata)
                    bool = 'true'
                 end
                 core.setting_set("enable_damage", bool)
---                print(bool)
+                minetest.setting_save()
                 return true
         end
 

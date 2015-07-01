@@ -31,22 +31,23 @@ local function delete_world_formspec(dialogdata)
 end
 
 local function delete_world_buttonhandler(this, fields)
+    core.set_clouds(false)
+    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
         if fields["world_delete_confirm"] then
-
-                if this.data.delete_index > 0 and
-                        this.data.delete_index <= #menudata.worldlist:get_raw_list() then
-                        core.delete_world(this.data.delete_index)
-                        menudata.worldlist:refresh()
-                end
-                this:delete()
-                return true
+           if this.data.delete_index > 0 and
+              this.data.delete_index <= #menudata.worldlist:get_raw_list() then
+              core.delete_world(this.data.delete_index)
+              menudata.worldlist:refresh()
+           end
+           this:delete()
+           return true
         end
 
         if fields["world_delete_cancel"] then
-                this:delete()
-                return true
+           this:delete()
+           return true
         end
-
         return false
 end
 

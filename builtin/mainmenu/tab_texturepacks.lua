@@ -87,6 +87,10 @@ end
 
 --------------------------------------------------------------------------------
 local function main_button_handler(tabview, fields, name, tabdata)
+    core.set_clouds(false)
+    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+
 	if fields["TPs"] ~= nil then
 		local event = core.explode_textlist_event(fields["TPs"])
 		if event.type == "CHG" or event.type == "DCL" then

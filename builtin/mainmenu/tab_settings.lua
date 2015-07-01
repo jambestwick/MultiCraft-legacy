@@ -81,6 +81,9 @@ local function dlg_confirm_reset_formspec(data)
 end
 
 local function dlg_confirm_reset_btnhandler(this, fields, dialogdata)
+    core.set_clouds(false)
+    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         if fields["dlg_reset_singleplayer_confirm"] ~= nil then
                 local worldlist = core.get_worlds()

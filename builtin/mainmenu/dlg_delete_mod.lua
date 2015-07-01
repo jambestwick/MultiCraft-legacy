@@ -35,6 +35,10 @@ end
 
 --------------------------------------------------------------------------------
 local function delete_mod_buttonhandler(this, fields)
+    core.set_clouds(false)
+    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+
         if fields["dlg_delete_mod_confirm"] ~= nil then
 
                 if this.data.mod.path ~= nil and

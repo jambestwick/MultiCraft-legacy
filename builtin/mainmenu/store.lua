@@ -187,6 +187,10 @@ end
 --------------------------------------------------------------------------------
 -- @function [parent=#modstore] handle_buttons
 function modstore.handle_buttons(parent, fields, name, data)
+    core.set_clouds(false)
+    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+
 
         if fields["btn_modstore_page_up"] then
                 if modstore.current_list ~= nil and modstore.current_list.page > 0 then

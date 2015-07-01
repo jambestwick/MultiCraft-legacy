@@ -35,7 +35,7 @@ function modstore.init()
 
 	modstore.lastmodtitle = ""
 	modstore.last_search = ""
-	
+
 	modstore.searchlist = filterlist.create(
 		function()
 			if modstore.modlist_unsorted ~= nil and
@@ -57,18 +57,18 @@ function modstore.init()
 				return false
 			end
 			substring = substring:upper()
-			
+
 			if element.title ~= nil and
 				element.title:upper():find(substring) ~= nil then
 				return true
 			end
-			
+
 			if element.details ~= nil and
 				element.details.author ~= nil and
 				element.details.author:upper():find(substring) ~= nil then
 				return true
 			end
-			
+
 			if element.details ~= nil and
 				element.details.description ~= nil and
 				element.details.description:upper():find(substring) ~= nil then
@@ -102,15 +102,15 @@ function modstore.getsuccessfuldialog()
 	if modstore.lastmodentry ~= nil then
 		retval = retval .. "label[0,0.25;" .. fgettext("Successfully installed:") .. "]"
 		retval = retval .. "label[3,0.25;" .. modstore.lastmodentry.moddetails.title .. "]"
-	
-		
+
+
 		retval = retval .. "label[0,0.75;" .. fgettext("Shortname:") .. "]"
 		retval = retval .. "label[3,0.75;" .. core.formspec_escape(modstore.lastmodentry.moddetails.basename) .. "]"
 
 	end
 	retval = retval .. "button[2.5,1.5;1,0.5;btn_confirm_mod_successfull;" .. fgettext("ok") .. "]"
-				
-				
+
+
 	return retval
 end
 
@@ -165,6 +165,10 @@ end
 --------------------------------------------------------------------------------
 -- @function [parent=#modstore] handle_buttons
 function modstore.handle_buttons(current_tab,fields)
+    core.set_clouds(false)
+    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+
 
 	if fields["modstore_tab"] then
 		local index = tonumber(fields["modstore_tab"])
@@ -182,14 +186,14 @@ function modstore.handle_buttons(current_tab,fields)
 					data = filterlist.get_list(modstore.searchlist),
 				}
 			end
-			
+
 			return {
 					current_tab = modstore.tabnames[index],
 					is_dialog = true,
 					show_buttons = false
 			}
 		end
-		
+
 	end
 
 	if fields["btn_modstore_page_up"] then
@@ -244,8 +248,8 @@ function modstore.handle_buttons(current_tab,fields)
 			data = filterlist.get_list(modstore.searchlist),
 		}
 	end
-	
-	
+
+
 	if fields["btn_modstore_close"] then
 		return {
 			is_dialog = false,
@@ -253,7 +257,7 @@ function modstore.handle_buttons(current_tab,fields)
 			current_tab = core.setting_get("main_menu_tab")
 		}
 	end
-	
+
 	for key,value in pairs(fields) do
 		local foundat = key:find("btn_install_mod_")
 		if ( foundat == 1) then
@@ -265,15 +269,15 @@ function modstore.handle_buttons(current_tab,fields)
 					if modstore.lastmodtitle ~= "" then
 						modstore.lastmodtitle = modstore.lastmodtitle .. ", "
 					end
-	
+
 					modstore.lastmodtitle = modstore.lastmodtitle .. moddetails.title
-	
+
 					core.handle_async(
 						function(param)
-						
+
 							local fullurl = core.setting_get("modstore_download_url") ..
 											param.moddetails.download_url
-											
+
 							if param.version ~= nil then
 								local found = false
 								for i=1,#param.moddetails.versions, 1 do
@@ -283,7 +287,7 @@ function modstore.handle_buttons(current_tab,fields)
 										found = true
 									end
 								end
-								
+
 								if not found then
 									return {
 										moddetails = param.moddetails,
@@ -291,7 +295,7 @@ function modstore.handle_buttons(current_tab,fields)
 									}
 								end
 							end
-	
+
 							if core.download_file(fullurl,param.filename) then
 								return {
 									texturename = param.texturename,
@@ -319,7 +323,7 @@ function modstore.handle_buttons(current_tab,fields)
 							else
 								gamedata.errormessage = "Failed to download " .. result.moddetails.title
 							end
-	
+
 							if gamedata.errormessage == nil then
 								core.button_handler({btn_hidden_close_download=result})
 							else
@@ -327,7 +331,7 @@ function modstore.handle_buttons(current_tab,fields)
 							end
 						end
 					)
-	
+
 					return {
 						current_tab = "modstore_downloading",
 						is_dialog = true,
@@ -410,25 +414,25 @@ function modstore.getscreenshot(ypos,listentry)
 	if	listentry.details ~= nil and
 		(listentry.details.screenshot_url == nil or
 		listentry.details.screenshot_url == "") then
-		
+
 		if listentry.texturename == nil then
 			listentry.texturename = modstore.basetexturedir .. "no_screenshot.png"
 		end
-		
+
 		return "image[0,".. ypos .. ";3,2;" ..
 			core.formspec_escape(listentry.texturename) .. "]"
 	end
-	
+
 	if listentry.details ~= nil and
 		listentry.texturename == nil then
 		--make sure we don't download multiple times
 		listentry.texturename = "in progress"
-	
+
 		--prepare url and filename
 		local fullurl = core.setting_get("modstore_download_url") ..
 					listentry.details.screenshot_url
 		local filename = os.tempfolder() .. "_MID_" .. listentry.id
-		
+
 		--trigger download
 		core.handle_async(
 			--first param is downloadfct
@@ -468,7 +472,7 @@ function modstore.getscreenshot(ypos,listentry)
 		return "image[0,".. ypos .. ";3,2;" ..
 			core.formspec_escape(listentry.texturename) .. "]"
 	end
-	
+
 	return ""
 end
 
@@ -476,7 +480,7 @@ end
 --@function [parent=#modstore] getshortmodinfo
 function modstore.getshortmodinfo(ypos,listentry,details)
 	local retval = ""
-	
+
 	retval = retval .. "box[0," .. ypos .. ";11.4,1.75;#FFFFFF]"
 
 	--screenshot
@@ -490,13 +494,13 @@ function modstore.getshortmodinfo(ypos,listentry,details)
 	local descriptiony = ypos + 0.5
 	retval = retval .. "textarea[3," .. descriptiony .. ";6.5,1.55;;" ..
 		core.formspec_escape(details.description) .. ";]"
-		
+
 	--rating
 	local ratingy = ypos
 	retval = retval .."label[7," .. ratingy .. ";" ..
 					fgettext("Rating") .. ":]"
 	retval = retval .. "label[8.7," .. ratingy .. ";" .. details.rating .."]"
-	
+
 	--versions (IMPORTANT has to be defined AFTER rating)
 	if details.versions ~= nil and
 		#details.versions > 1 then
@@ -507,7 +511,7 @@ function modstore.getshortmodinfo(ypos,listentry,details)
 			if versions ~= "" then
 				versions = versions .. ","
 			end
-			
+
 			versions = versions .. details.versions[i].date:sub(1,10)
 		end
 		retval = retval .. versions .. ";1]"
@@ -524,7 +528,7 @@ function modstore.getshortmodinfo(ypos,listentry,details)
 			retval = retval .. fgettext("Install") .."]"
 		end
 	end
-	
+
 	return retval
 end
 
@@ -533,11 +537,11 @@ end
 function modstore.getmodlist(list,yoffset)
 
 	modstore.current_list = list
-	
+
 	if #list.data == 0 then
 		return ""
 	end
-	
+
 	if yoffset == nil then
 		yoffset = 0
 	end
@@ -578,13 +582,13 @@ function modstore.getmodlist(list,yoffset)
 		if details ~= nil then
 			local screenshot_ypos =
 				yoffset +(i-1 - (list.page * modstore.modsperpage))*1.9 +0.2
-				
+
 			retval = retval .. modstore.getshortmodinfo(screenshot_ypos,
 														list.data[i],
 														details)
 		end
 	end
-	
+
 	return retval .. scrollbar
 end
 
@@ -593,7 +597,7 @@ end
 function modstore.getsearchpage()
 	local retval = ""
 	local search = ""
-	
+
 	if modstore.last_search ~= nil then
 		search = modstore.last_search
 	end
@@ -602,7 +606,7 @@ function modstore.getsearchpage()
 		"button[9.5,0.2;2.5,0.5;btn_modstore_search;".. fgettext("Search") .. "]" ..
 		"field[0.5,0.5;9,0.5;te_modstore_search;;" .. search .. "]"
 
-	
+
 	--show 4 mods only
 	modstore.modsperpage = 4
 	retval = retval ..

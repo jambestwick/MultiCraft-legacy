@@ -79,6 +79,10 @@ end
 --------------------------------------------------------------------------------
 
 local function main_button_handler2(tabview, fields, name, tabdata)
+    core.set_clouds(false)
+    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+
     local index = ''
     if fields["btn_show_singleplayer"] then  index = "singleplayer"       end
     if fields["btn_show_multiplayer"]  then  index = "multiplayer"  end
