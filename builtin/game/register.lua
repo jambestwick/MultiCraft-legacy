@@ -435,34 +435,34 @@ core.registered_on_protection_violation, core.register_on_protection_violation =
 core.registered_on_item_eats, core.register_on_item_eat = make_registration()
 core.registered_on_punchplayers, core.register_on_punchplayer = make_registration()
 
-minetest.register_on_joinplayer(function(player)
-        if minetest.is_singleplayer() then
+core.register_on_joinplayer(function(player)
+        if core.is_singleplayer() then
                 return
         end
         local player_name =  player:get_player_name()
-        minetest.chat_send_all("*** " .. player_name .. " joined the game.")
+        core.chat_send_all("*** " .. player_name .. " joined the game.")
 end)
 
-minetest.register_on_dieplayer(function(player)
+core.register_on_dieplayer(function(player)
         local player_name =  player:get_player_name()
-        if minetest.is_singleplayer() then
+        if core.is_singleplayer() then
                 player_name = "You"
         end
 
         -- Idea from https://github.com/4Evergreen4/death_messages
         -- Death by lava
-        local nodename = minetest.get_node(player:getpos()).name
+        local nodename = core.get_node(player:getpos()).name
         if nodename == "default:lava_source" or nodename == "default:lava_flowing" then
-                minetest.chat_send_all(player_name .. " melted into a ball of fire.")
+                core.chat_send_all(player_name .. " melted into a ball of fire.")
         -- Death by drowning
         elseif nodename == "default:water_source" or nodename == "default:water_flowing" then
-                minetest.chat_send_all(player_name .. " ran out of air.")
+                core.chat_send_all(player_name .. " ran out of air.")
         --Death by fire
         elseif nodename == "fire:basic_flame" then
-                minetest.chat_send_all(player_name .. " burned up.")
+                core.chat_send_all(player_name .. " burned up.")
         --Death by something else
         else
-                minetest.chat_send_all(player_name .. " \vbb0000died.")
+                core.chat_send_all(player_name .. " \vbb0000died.")
         end
 
 end)

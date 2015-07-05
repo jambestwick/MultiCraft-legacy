@@ -5,7 +5,7 @@
 --
 
 function node_drop(np, remove_fast)
-			local n2 = minetest.get_node(np)
+			local n2 = core.get_node(np)
 			-- If it's not air or liquid, remove node and replace it with
 			-- it's drops
 			if n2.name ~= "air" and (not core.registered_nodes[n2.name] or

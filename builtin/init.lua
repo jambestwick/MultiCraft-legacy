@@ -10,8 +10,6 @@ print = core.debug
 math.randomseed(os.time())
 os.setlocale("C", "numeric")
 minetest = core
-freeminer = core
-magichet = core
 multicraft = core
 
 -- Load other files
