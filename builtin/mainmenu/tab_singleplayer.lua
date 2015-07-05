@@ -166,13 +166,13 @@ local function main_button_handler(this, fields, name, tabdata)
                    bool = 'true'
                 end
                 core.setting_set("enable_damage", bool)
-                minetest.setting_save()
+                multicraft.setting_save()
                 return true
         end
 
     if fields["cb_enable_damage"] then
         core.setting_set("enable_damage", fields["cb_enable_damage"])
-        minetest.setting_save()
+        multicraft.setting_save()
         return true
     end
 

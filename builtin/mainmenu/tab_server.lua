@@ -117,7 +117,7 @@ local function main_button_handler(this, fields, name, tabdata)
                    bool = 'true'
                 end
                 core.setting_set("enable_damage", bool)
-                minetest.setting_save()
+                multicraft.setting_save()
                 return true
         end
 
