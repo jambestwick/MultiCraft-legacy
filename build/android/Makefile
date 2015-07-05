@@ -114,7 +114,7 @@ OPENSSL_TIMESTAMP = $(OPENSSL_DIR)timestamp
 OPENSSL_TIMESTAMP_INT = $(ROOT)/deps/openssl_timestamp
 OPENSSL_URL = http://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
 
-CURL_VERSION = 7.42.1
+CURL_VERSION = 7.43.0
 CURL_DIR = $(ROOT)/deps/curl-$(CURL_VERSION)
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
@@ -134,7 +134,7 @@ FREETYPE_TIMESTAMP = $(FREETYPE_DIR)timestamp
 FREETYPE_TIMESTAMP_INT = $(ROOT)/deps/freetype_timestamp
 FREETYPE_URL_GIT = https://github.com/cdave1/freetype2-android
 
-SQLITE3_FOLDER = sqlite-amalgamation-3081001
+SQLITE3_FOLDER = sqlite-amalgamation-3081002
 SQLITE3_URL = http://www.sqlite.org/2015/$(SQLITE3_FOLDER).zip
 
 -include $(PATHCFGFILE)
@@ -706,7 +706,7 @@ assets : $(ASSETS_TIMESTAMP)
 	cp ${ROOT}/../../README.md ${ROOT}/assets/MultiCraft;                       \
 	cp -r ${ROOT}/../../builtin ${ROOT}/assets/MultiCraft;                       \
 	cp -r ${ROOT}/../../client ${ROOT}/assets/MultiCraft;                        \
-	cp -r ${ROOT}/../../doc ${ROOT}/assets/MultiCraft;                           \
+	#cp -r ${ROOT}/../../doc ${ROOT}/assets/MultiCraft;                           \
 	cp -r ${ROOT}/../../fonts ${ROOT}/assets/MultiCraft;                         \
 	mkdir ${ROOT}/assets/MultiCraft/games;                                       \
 	for game in ${GAMES_TO_COPY};                                              \
