@@ -30,7 +30,7 @@ function modstore.init()
 
 	modstore.modsperpage = 5
 
-	modstore.basetexturedir = core.get_texturepath() .. DIR_DELIM .. "base" ..
+	modstore.basetexturedir = multicraft.get_texturepath() .. DIR_DELIM .. "base" ..
 						DIR_DELIM .. "pack" .. DIR_DELIM
 
 	modstore.lastmodtitle = ""
@@ -105,7 +105,7 @@ function modstore.getsuccessfuldialog()
 
 
 		retval = retval .. "label[0,0.75;" .. fgettext("Shortname:") .. "]"
-		retval = retval .. "label[3,0.75;" .. core.formspec_escape(modstore.lastmodentry.moddetails.basename) .. "]"
+		retval = retval .. "label[3,0.75;" .. multicraft.formspec_escape(modstore.lastmodentry.moddetails.basename) .. "]"
 
 	end
 	retval = retval .. "button[2.5,1.5;1,0.5;btn_confirm_mod_successfull;" .. fgettext("ok") .. "]"
@@ -165,9 +165,9 @@ end
 --------------------------------------------------------------------------------
 -- @function [parent=#modstore] handle_buttons
 function modstore.handle_buttons(current_tab,fields)
-    core.set_clouds(false)
-    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    multicraft.set_clouds(false)
+    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
 
 	if fields["modstore_tab"] then
@@ -254,7 +254,7 @@ function modstore.handle_buttons(current_tab,fields)
 		return {
 			is_dialog = false,
 			show_buttons = true,
-			current_tab = core.setting_get("main_menu_tab")
+			current_tab = multicraft.setting_get("main_menu_tab")
 		}
 	end
 
@@ -272,17 +272,17 @@ function modstore.handle_buttons(current_tab,fields)
 
 					modstore.lastmodtitle = modstore.lastmodtitle .. moddetails.title
 
-					core.handle_async(
+					multicraft.handle_async(
 						function(param)
 
-							local fullurl = core.setting_get("modstore_download_url") ..
+							local fullurl = multicraft.setting_get("modstore_download_url") ..
 											param.moddetails.download_url
 
 							if param.version ~= nil then
 								local found = false
 								for i=1,#param.moddetails.versions, 1 do
 									if param.moddetails.versions[i].date:sub(1,10) == param.version then
-										fullurl = core.setting_get("modstore_download_url") ..
+										fullurl = multicraft.setting_get("modstore_download_url") ..
 														param.moddetails.versions[i].download_url
 										found = true
 									end
@@ -296,7 +296,7 @@ function modstore.handle_buttons(current_tab,fields)
 								end
 							end
 
-							if core.download_file(fullurl,param.filename) then
+							if multicraft.download_file(fullurl,param.filename) then
 								return {
 									texturename = param.texturename,
 									moddetails = param.moddetails,
@@ -325,9 +325,9 @@ function modstore.handle_buttons(current_tab,fields)
 							end
 
 							if gamedata.errormessage == nil then
-								core.button_handler({btn_hidden_close_download=result})
+								multicraft.button_handler({btn_hidden_close_download=result})
 							else
-								core.button_handler({btn_hidden_close_download={successfull=false}})
+								multicraft.button_handler({btn_hidden_close_download={successfull=false}})
 							end
 						end
 					)
@@ -353,9 +353,9 @@ function modstore.update_modlist()
 	modstore.modlist_unsorted.pagecount = 1
 	modstore.modlist_unsorted.page = 0
 
-	core.handle_async(
+	multicraft.handle_async(
 		function(param)
-			return core.get_modstore_list()
+			return multicraft.get_modstore_list()
 		end,
 		nil,
 		function(result)
@@ -372,7 +372,7 @@ function modstore.update_modlist()
 				end
 				modstore.modlist_unsorted.page = 0
 				modstore.fetchdetails()
-				core.event_handler("Refresh")
+				multicraft.event_handler("Refresh")
 			end
 		end
 	)
@@ -383,9 +383,9 @@ end
 function modstore.fetchdetails()
 
 	for i=1,#modstore.modlist_unsorted.data,1 do
-		core.handle_async(
+		multicraft.handle_async(
 		function(param)
-			param.details = core.get_modstore_details(tostring(param.modid))
+			param.details = multicraft.get_modstore_details(tostring(param.modid))
 			return param
 		end,
 		{
@@ -400,7 +400,7 @@ function modstore.fetchdetails()
 				modstore.modlist_unsorted.data[result.listindex].id ~= nil then
 
 				modstore.modlist_unsorted.data[result.listindex].details = result.details
-				core.event_handler("Refresh")
+				multicraft.event_handler("Refresh")
 			end
 		end
 		)
@@ -420,7 +420,7 @@ function modstore.getscreenshot(ypos,listentry)
 		end
 
 		return "image[0,".. ypos .. ";3,2;" ..
-			core.formspec_escape(listentry.texturename) .. "]"
+			multicraft.formspec_escape(listentry.texturename) .. "]"
 	end
 
 	if listentry.details ~= nil and
@@ -429,15 +429,15 @@ function modstore.getscreenshot(ypos,listentry)
 		listentry.texturename = "in progress"
 
 		--prepare url and filename
-		local fullurl = core.setting_get("modstore_download_url") ..
+		local fullurl = multicraft.setting_get("modstore_download_url") ..
 					listentry.details.screenshot_url
 		local filename = os.tempfolder() .. "_MID_" .. listentry.id
 
 		--trigger download
-		core.handle_async(
+		multicraft.handle_async(
 			--first param is downloadfct
 			function(param)
-				param.successfull = core.download_file(param.fullurl,param.filename)
+				param.successfull = multicraft.download_file(param.fullurl,param.filename)
 				return param
 			end,
 			--second parameter is data passed to async job
@@ -458,9 +458,9 @@ function modstore.getscreenshot(ypos,listentry)
 						end
 					end
 					if found then
-						core.event_handler("Refresh")
+						multicraft.event_handler("Refresh")
 					else
-						core.log("error","got screenshot but didn't find matching mod: " .. result.modid)
+						multicraft.log("error","got screenshot but didn't find matching mod: " .. result.modid)
 					end
 				end
 			end
@@ -470,7 +470,7 @@ function modstore.getscreenshot(ypos,listentry)
 	if listentry.texturename ~= nil and
 		listentry.texturename ~= "in progress" then
 		return "image[0,".. ypos .. ";3,2;" ..
-			core.formspec_escape(listentry.texturename) .. "]"
+			multicraft.formspec_escape(listentry.texturename) .. "]"
 	end
 
 	return ""
@@ -488,12 +488,12 @@ function modstore.getshortmodinfo(ypos,listentry,details)
 
 	--title + author
 	retval = retval .."label[2.75," .. ypos .. ";" ..
-		core.formspec_escape(details.title) .. " (" .. details.author .. ")]"
+		multicraft.formspec_escape(details.title) .. " (" .. details.author .. ")]"
 
 	--description
 	local descriptiony = ypos + 0.5
 	retval = retval .. "textarea[3," .. descriptiony .. ";6.5,1.55;;" ..
-		core.formspec_escape(details.description) .. ";]"
+		multicraft.formspec_escape(details.description) .. ";]"
 
 	--rating
 	local ratingy = ypos

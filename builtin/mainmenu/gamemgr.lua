@@ -61,7 +61,7 @@ end
 
 --------------------------------------------------------------------------------
 function gamemgr.update_gamelist()
-	gamemgr.games = core.get_games()
+	gamemgr.games = multicraft.get_games()
 end
 
 --------------------------------------------------------------------------------

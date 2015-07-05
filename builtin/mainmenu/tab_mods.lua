@@ -36,7 +36,7 @@ local function get_formspec(tabview, name, tabdata)
 --              "label[0.8,4.2;" .. fgettext("Add mod:") .. "]" ..
 --              TODO Disabled due to upcoming release 0.4.8 and irrlicht messing up localization
 --              "button[0.75,4.85;1.8,0.5;btn_mod_mgr_install_local;".. fgettext("Local install") .. "]" ..
-                "image_button[0,4.85;5.25,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_modstore;".. fgettext("Online mod repository") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                "image_button[0,4.85;5.25,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_modstore;".. fgettext("Online mod repository") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
 
         local selected_mod = nil
 
@@ -61,7 +61,7 @@ local function get_formspec(tabview, name, tabdata)
                 end
 
                 retval = retval
-                                .. "image[5.5,0;3,2;" .. core.formspec_escape(modscreenshot) .. "]"
+                                .. "image[5.5,0;3,2;" .. multicraft.formspec_escape(modscreenshot) .. "]"
                                 .. "label[8.25,0.6;" .. selected_mod.name .. "]"
 
                 local descriptionlines = nil
@@ -71,7 +71,7 @@ local function get_formspec(tabview, name, tabdata)
                 if error == nil then
                         local descriptiontext = descriptionfile:read("*all")
 
-                        descriptionlines = core.splittext(descriptiontext,42)
+                        descriptionlines = multicraft.splittext(descriptiontext,42)
                         descriptionfile:close()
                 else
                         descriptionlines = {}
@@ -83,16 +83,16 @@ local function get_formspec(tabview, name, tabdata)
                         "textlist[5.5,2.2;6.2,2.4;description;"
 
                 for i=1,#descriptionlines,1 do
-                        retval = retval .. core.formspec_escape(descriptionlines[i]) .. ","
+                        retval = retval .. multicraft.formspec_escape(descriptionlines[i]) .. ","
                 end
 
 
                 if selected_mod.is_modpack then
                         retval = retval .. ";0]" ..
-                                "image_button[10,4.85;2,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mod_mgr_rename_modpack;" ..
-                                fgettext("Rename") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-                        retval = retval .. "image_button[5.5,4.85;4.5,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mod_mgr_delete_mod;"
-                                .. fgettext("Uninstall selected modpack") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                                "image_button[10,4.85;2,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mod_mgr_rename_modpack;" ..
+                                fgettext("Rename") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                        retval = retval .. "image_button[5.5,4.85;4.5,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mod_mgr_delete_mod;"
+                                .. fgettext("Uninstall selected modpack") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
                 else
                         --show dependencies
 
@@ -102,8 +102,8 @@ local function get_formspec(tabview, name, tabdata)
 
                         retval = retval .. toadd .. ";0]"
 
-                        retval = retval .. "image_button[5.5,4.85;4.5,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mod_mgr_delete_mod;"
-                                .. fgettext("Uninstall selected mod") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                        retval = retval .. "image_button[5.5,4.85;4.5,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mod_mgr_delete_mod;"
+                                .. fgettext("Uninstall selected mod") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
                 end
         end
         return retval
@@ -111,18 +111,18 @@ end
 
 --------------------------------------------------------------------------------
 local function handle_buttons(tabview, fields, tabname, tabdata)
-    core.set_clouds(false)
-    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    multicraft.set_clouds(false)
+    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         if fields["modlist"] ~= nil then
-                local event = core.explode_textlist_event(fields["modlist"])
+                local event = multicraft.explode_textlist_event(fields["modlist"])
                 tabdata.selected_mod = event.index
                 return true
         end
 
         if fields["btn_mod_mgr_install_local"] ~= nil then
-                core.show_file_open_dialog("mod_mgt_open_dlg",fgettext("Select Mod File:"))
+                multicraft.show_file_open_dialog("mod_mgt_open_dlg",fgettext("Select Mod File:"))
                 return true
         end
 

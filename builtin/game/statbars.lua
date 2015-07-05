@@ -43,7 +43,7 @@ local function initialize_builtin_statbars(player)
 	end
 
 	if player:hud_get_flags().healthbar and
-			core.is_yes(core.setting_get("enable_damage")) then
+			multicraft.is_yes(multicraft.setting_get("enable_damage")) then
 		if hud_ids[name].id_healthbar == nil then
 			health_bar_definition.number = player:get_hp()
 			hud_ids[name].id_healthbar  = player:hud_add(health_bar_definition)
@@ -57,7 +57,7 @@ local function initialize_builtin_statbars(player)
 
 	if (player:get_breath() < 11) then
 		if player:hud_get_flags().breathbar and
-			core.is_yes(core.setting_get("enable_damage")) then
+			multicraft.is_yes(multicraft.setting_get("enable_damage")) then
 			if hud_ids[name].id_breathbar == nil then
 				hud_ids[name].id_breathbar = player:hud_add(breath_bar_definition)
 			end
@@ -123,7 +123,7 @@ local function player_event_handler(player,eventname)
 	return false
 end
 
-function core.hud_replace_builtin(name, definition)
+function multicraft.hud_replace_builtin(name, definition)
 
 	if definition == nil or
 		type(definition) ~= "table" or
@@ -135,7 +135,7 @@ function core.hud_replace_builtin(name, definition)
 		health_bar_definition = definition
 
 		for name,ids in pairs(hud_ids) do
-			local player = core.get_player_by_name(name)
+			local player = multicraft.get_player_by_name(name)
 			if  player and hud_ids[name].id_healthbar then
 				player:hud_remove(hud_ids[name].id_healthbar)
 				initialize_builtin_statbars(player)
@@ -148,7 +148,7 @@ function core.hud_replace_builtin(name, definition)
 		breath_bar_definition = definition
 
 		for name,ids in pairs(hud_ids) do
-			local player = core.get_player_by_name(name)
+			local player = multicraft.get_player_by_name(name)
 			if  player and hud_ids[name].id_breathbar then
 				player:hud_remove(hud_ids[name].id_breathbar)
 				initialize_builtin_statbars(player)
@@ -160,6 +160,6 @@ function core.hud_replace_builtin(name, definition)
 	return false
 end
 
-core.register_on_joinplayer(initialize_builtin_statbars)
-core.register_on_leaveplayer(cleanup_builtin_statbars)
-core.register_playerevent(player_event_handler)
+multicraft.register_on_joinplayer(initialize_builtin_statbars)
+multicraft.register_on_leaveplayer(cleanup_builtin_statbars)
+multicraft.register_playerevent(player_event_handler)

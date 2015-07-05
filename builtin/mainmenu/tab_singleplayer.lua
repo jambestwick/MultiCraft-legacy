@@ -16,7 +16,7 @@
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 local function current_game()
-    local last_game_id = core.setting_get("menu_last_game")
+    local last_game_id = multicraft.setting_get("menu_last_game")
     local game, index = gamemgr.find_by_gameid(last_game_id)
 
     return game
@@ -35,7 +35,7 @@ local function singleplayer_refresh_gamebar()
             for j=1,#gamemgr.games,1 do
                 if ("game_btnbar_" .. gamemgr.games[j].id == key) then
 --                    mm_texture.update("singleplayer", gamemgr.games[j])
-                    core.setting_set("menu_last_game",gamemgr.games[j].id)
+                    multicraft.setting_set("menu_last_game",gamemgr.games[j].id)
                     menudata.worldlist:set_filtercriteria(gamemgr.games[j].id)
                     return true
                 end
@@ -52,11 +52,11 @@ local function singleplayer_refresh_gamebar()
 
         local image = nil
         local text = nil
-        local tooltip = core.formspec_escape(gamemgr.games[i].name)
+        local tooltip = multicraft.formspec_escape(gamemgr.games[i].name)
 
         if gamemgr.games[i].menuicon_path ~= nil and
             gamemgr.games[i].menuicon_path ~= "" then
-            image = core.formspec_escape(gamemgr.games[i].menuicon_path)
+            image = multicraft.formspec_escape(gamemgr.games[i].menuicon_path)
         else
 
             local part1 = gamemgr.games[i].id:sub(1,5)
@@ -76,7 +76,7 @@ end
 local function get_formspec(tabview, name, tabdata)
 
         local index = menudata.worldlist:get_current_index(
-                                tonumber(core.setting_get("mainmenu_last_selected_world"))
+                                tonumber(multicraft.setting_get("mainmenu_last_selected_world"))
                                 )
 
         local retval =
@@ -84,34 +84,34 @@ local function get_formspec(tabview, name, tabdata)
             "box[-100,8.5;200,10;#999999]" ..
             "box[-100,-10;200,12;#999999]" ..
             "bgcolor[#00000070;true]"..
-            "image_button[4,8.7;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;play;".. fgettext("Play") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-            "image_button[7.8,8.7;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create;".. fgettext("New") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            "image_button[4,8.7;3.95,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;play;".. fgettext("Play") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            "image_button[7.8,8.7;3.95,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_create;".. fgettext("New") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
 
-            "image_button[4,9.55;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete;".. fgettext("Delete") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-            --"image_button[6.53,9.55;2.68,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_configure;".. fgettext("Configure") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-            "image_button[7.8,9.55;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;cancel;".. fgettext("Cancel") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            "image_button[4,9.55;3.95,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete;".. fgettext("Delete") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            --"image_button[6.53,9.55;2.68,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_configure;".. fgettext("Configure") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+            "image_button[7.8,9.55;3.95,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;cancel;".. fgettext("Cancel") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
             "label[7,1.5;" .. fgettext("Select World:") .. "]" ..
 
-            "checkbox[12,8.70;cb_creative_mode;" .. fgettext("Creative Mode") .. ";" .. dump(core.setting_getbool("creative_mode")) .. "]" ..
-            --"checkbox[1000,9.20;cb_enable_damage;" .. fgettext("Enable Damage") .. ";" .. dump(core.setting_getbool("enable_damage")) .. "]" ..
-          --  "checkbox[12,9.50;cb_server_announce;" .. fgettext("Public") .. ";" .. dump(core.setting_getbool("server_announce")) .. "]" ..
+            "checkbox[12,8.70;cb_creative_mode;" .. fgettext("Creative Mode") .. ";" .. dump(multicraft.setting_getbool("creative_mode")) .. "]" ..
+            --"checkbox[1000,9.20;cb_enable_damage;" .. fgettext("Enable Damage") .. ";" .. dump(multicraft.setting_getbool("enable_damage")) .. "]" ..
+          --  "checkbox[12,9.50;cb_server_announce;" .. fgettext("Public") .. ";" .. dump(multicraft.setting_getbool("server_announce")) .. "]" ..
 
 
             "checkbox[0.2,8.35;btn_server;Local Server;false]"
 
 
-        local bind_addr = core.setting_get("bind_address")
+        local bind_addr = multicraft.setting_get("bind_address")
 
         if not PLATFORM=="android" and bind_addr ~= nil and bind_addr ~= "" then
                 retval = retval ..
                         "field[300,0;2.25,0.5;te_serveraddr;" .. fgettext("Bind Address") .. ";" ..
-                        core.formspec_escape(core.setting_get("bind_address")) .. "]"..
+                        multicraft.formspec_escape(multicraft.setting_get("bind_address")) .. "]"..
                         "field[300,1;1.25,0.5;te_serverport;" .. fgettext("Port") .. ";" ..
-                        core.formspec_escape(core.setting_get("port")) .. "]"
+                        multicraft.formspec_escape(multicraft.setting_get("port")) .. "]"
         else
                 retval = retval ..
                         "field[300,1;3.5,0.5;te_serverport;" .. fgettext("Server Port") .. ";" ..
-                        core.formspec_escape(core.setting_get("port")) .. "]"
+                        multicraft.formspec_escape(multicraft.setting_get("port")) .. "]"
         end
 
         retval = retval ..
@@ -123,9 +123,9 @@ local function get_formspec(tabview, name, tabdata)
 end
 
 local function main_button_handler(this, fields, name, tabdata)
-    core.set_clouds(false)
-    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    multicraft.set_clouds(false)
+    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
     --assert(name == "singleplayer")
 
@@ -140,15 +140,15 @@ local function main_button_handler(this, fields, name, tabdata)
     local world_doubleclick = false
 
     if fields["sp_worlds"] ~= nil then
-        local event = core.explode_textlist_event(fields["sp_worlds"])
+        local event = multicraft.explode_textlist_event(fields["sp_worlds"])
 
         if event.type == "DCL" then
             world_doubleclick = true
         end
 
         if event.type == "CHG" then
-            core.setting_set("mainmenu_last_selected_world",
-                menudata.worldlist:get_raw_index(core.get_textlist_index("sp_worlds")))
+            multicraft.setting_set("mainmenu_last_selected_world",
+                menudata.worldlist:get_raw_index(multicraft.get_textlist_index("sp_worlds")))
             return true
         end
     end
@@ -158,33 +158,33 @@ local function main_button_handler(this, fields, name, tabdata)
     end
 
         if fields["cb_creative_mode"] then
-                core.setting_set("creative_mode", fields["cb_creative_mode"])
+                multicraft.setting_set("creative_mode", fields["cb_creative_mode"])
                 local bool = fields["cb_creative_mode"]
                 if bool == 'true' then
                    bool = 'false'
                 else
                    bool = 'true'
                 end
-                core.setting_set("enable_damage", bool)
-                core.setting_save()
+                multicraft.setting_set("enable_damage", bool)
+                multicraft.setting_save()
                 return true
         end
 
     if fields["cb_enable_damage"] then
-        core.setting_set("enable_damage", fields["cb_enable_damage"])
-        core.setting_save()
+        multicraft.setting_set("enable_damage", fields["cb_enable_damage"])
+        multicraft.setting_save()
         return true
     end
 
     if fields["play"] ~= nil or
         world_doubleclick or
         fields["key_enter"] then
-        local selected = core.get_textlist_index("sp_worlds")
+        local selected = multicraft.get_textlist_index("sp_worlds")
         if selected ~= nil then
             gamedata.selected_world = menudata.worldlist:get_raw_index(selected)
             gamedata.singleplayer   = true
 
-            core.start()
+            multicraft.start()
         end
         return true
     end
@@ -198,7 +198,7 @@ local function main_button_handler(this, fields, name, tabdata)
     end
 
     if fields["world_delete"] ~= nil then
-        local selected = core.get_textlist_index("sp_worlds")
+        local selected = multicraft.get_textlist_index("sp_worlds")
         if selected ~= nil and
             selected <= menudata.worldlist:size() then
             local world = menudata.worldlist:get_list()[selected]
@@ -217,7 +217,7 @@ local function main_button_handler(this, fields, name, tabdata)
     end
 
     if fields["world_configure"] ~= nil then
-        local selected = core.get_textlist_index("sp_worlds")
+        local selected = multicraft.get_textlist_index("sp_worlds")
         if selected ~= nil then
             local configdialog =
                 create_configure_world_dlg(
@@ -256,14 +256,14 @@ local function on_change(type, old_tab, new_tab)
 
         if game then
             menudata.worldlist:set_filtercriteria(game.id)
-            --core.set_topleft_text(game.name)
+            --multicraft.set_topleft_text(game.name)
 --            mm_texture.update("singleplayer",game)
         end
         buttonbar:show()
     else
         menudata.worldlist:set_filtercriteria(nil)
         buttonbar:hide()
-        --core.set_topleft_text("")
+        --multicraft.set_topleft_text("")
         --mm_texture.update(new_tab,nil)
     end
 end

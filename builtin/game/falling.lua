@@ -5,23 +5,23 @@
 --
 
 function node_drop(np, remove_fast)
-			local n2 = core.get_node(np)
+			local n2 = multicraft.get_node(np)
 			-- If it's not air or liquid, remove node and replace it with
 			-- it's drops
-			if n2.name ~= "air" and (not core.registered_nodes[n2.name] or
-					core.registered_nodes[n2.name].liquidtype == "none") then
-				core.remove_node(np, remove_fast)
-				if core.registered_nodes[n2.name].buildable_to == false then
+			if n2.name ~= "air" and (not multicraft.registered_nodes[n2.name] or
+					multicraft.registered_nodes[n2.name].liquidtype == "none") then
+				multicraft.remove_node(np, remove_fast)
+				if multicraft.registered_nodes[n2.name].buildable_to == false then
 					-- Add dropped items
-					local drops = core.get_node_drops(n2.name, "")
+					local drops = multicraft.get_node_drops(n2.name, "")
 					local _, dropped_item
 					for _, dropped_item in ipairs(drops) do
-						core.add_item(np, dropped_item)
+						multicraft.add_item(np, dropped_item)
 					end
 				end
 				-- Run script hook
 				local _, callback
-				for _, callback in ipairs(core.registered_on_dignodes) do
+				for _, callback in ipairs(multicraft.registered_on_dignodes) do
 					callback(np, n2, nil)
 				end
 			end
@@ -29,7 +29,7 @@ end
 
 local remove_fast = 0
 
-core.register_entity(":__builtin:falling_node", {
+multicraft.register_entity(":__builtin:falling_node", {
 	initial_properties = {
 		physical = true,
 		collide_with_objects = false,
@@ -51,9 +51,9 @@ core.register_entity(":__builtin:falling_node", {
 		end
 		local item_texture = nil
 		local item_type = ""
-		if core.registered_items[itemname] then
-			item_texture = core.registered_items[itemname].inventory_image
-			item_type = core.registered_items[itemname].type
+		if multicraft.registered_items[itemname] then
+			item_texture = multicraft.registered_items[itemname].inventory_image
+			item_type = multicraft.registered_items[itemname].type
 		end
 		local prop = {
 			is_visible = true,
@@ -78,12 +78,12 @@ core.register_entity(":__builtin:falling_node", {
 		-- Turn to actual sand when collides to ground or just move
 		local pos = self.object:getpos()
 		local bcp = {x=pos.x, y=pos.y-0.7, z=pos.z} -- Position of bottom center point
-		local bcn = core.get_node(bcp)
-		local bcd = core.registered_nodes[bcn.name]
+		local bcn = multicraft.get_node(bcp)
+		local bcd = multicraft.registered_nodes[bcn.name]
 		-- Note: walkable is in the node definition, not in item groups
 		if not bcd or
 				(bcd.walkable or
-				(core.get_item_group(self.node.name, "float") ~= 0 and
+				(multicraft.get_item_group(self.node.name, "float") ~= 0 and
 				bcd.liquidtype ~= "none")) then
 			if bcd and bcd.leveled and bcd.leveled > 0 and
 					bcn.name == self.node.name then
@@ -91,23 +91,23 @@ core.register_entity(":__builtin:falling_node", {
 				if addlevel == nil or addlevel <= 0 then
 					addlevel = bcd.leveled
 				end
-				if core.add_node_level(bcp, addlevel) == 0 then
+				if multicraft.add_node_level(bcp, addlevel) == 0 then
 					self.object:remove()
 					return
 				end
 			elseif bcd and bcd.buildable_to and
-					(core.get_item_group(self.node.name, "float") == 0 or
+					(multicraft.get_item_group(self.node.name, "float") == 0 or
 					bcd.liquidtype == "none") then
-				core.remove_node(bcp, remove_fast)
+				multicraft.remove_node(bcp, remove_fast)
 				return
 			end
 			local np = {x=bcp.x, y=bcp.y+1, z=bcp.z}
 			-- Check what's here
-			local n2 = core.get_node(np)
+			local n2 = multicraft.get_node(np)
 		-- remove node and replace it with it's drops
 				node_drop(np, remove_fast)
 			-- Create node and remove entity
-			core.add_node(np, self.node)
+			multicraft.add_node(np, self.node)
 			self.object:remove()
 			nodeupdate(np)
 			return
@@ -121,26 +121,26 @@ core.register_entity(":__builtin:falling_node", {
 })
 
 function spawn_falling_node(p, node)
-	local obj = core.add_entity(p, "__builtin:falling_node")
+	local obj = multicraft.add_entity(p, "__builtin:falling_node")
 	if not obj then return end
 	obj:get_luaentity():set_node(node)
 end
 
 function drop_attached_node(p)
-	local nn = core.get_node(p).name
-	core.remove_node(p, remove_fast)
-	for _,item in ipairs(core.get_node_drops(nn, "")) do
+	local nn = multicraft.get_node(p).name
+	multicraft.remove_node(p, remove_fast)
+	for _,item in ipairs(multicraft.get_node_drops(nn, "")) do
 		local pos = {
 			x = p.x + math.random()/2 - 0.25,
 			y = p.y + math.random()/2 - 0.25,
 			z = p.z + math.random()/2 - 0.25,
 		}
-		core.add_item(pos, item)
+		multicraft.add_item(pos, item)
 	end
 end
 
 function check_attached_node(p, n)
-	local def = core.registered_nodes[n.name]
+	local def = multicraft.registered_nodes[n.name]
 	local d = {x=0, y=0, z=0}
 	if def.paramtype2 == "wallmounted" then
 		if n.param2 == 0 then
@@ -160,8 +160,8 @@ function check_attached_node(p, n)
 		d.y = -1
 	end
 	local p2 = {x=p.x+d.x, y=p.y+d.y, z=p.z+d.z}
-	local nn = core.get_node(p2).name
-	local def2 = core.registered_nodes[nn]
+	local nn = multicraft.get_node(p2).name
+	local def2 = multicraft.registered_nodes[nn]
 	if def2 and not def2.walkable then
 		return false
 	end
@@ -173,30 +173,30 @@ end
 --
 
 function nodeupdate_single(p, delay)
-	local n = core.get_node(p)
-	if core.get_item_group(n.name, "falling_node") ~= 0 then
+	local n = multicraft.get_node(p)
+	if multicraft.get_item_group(n.name, "falling_node") ~= 0 then
 		local p_bottom = {x=p.x, y=p.y-1, z=p.z}
-		local n_bottom = core.get_node(p_bottom)
+		local n_bottom = multicraft.get_node(p_bottom)
 		-- Note: walkable is in the node definition, not in item groups
-		if core.registered_nodes[n_bottom.name] and
-				(core.get_item_group(n.name, "float") == 0 or
-					core.registered_nodes[n_bottom.name].liquidtype == "none") and
-				(n.name ~= n_bottom.name or (core.registered_nodes[n_bottom.name].leveled and
-					core.get_node_level(p_bottom) < core.get_node_max_level(p_bottom))) and
-				(not core.registered_nodes[n_bottom.name].walkable or
-					core.registered_nodes[n_bottom.name].buildable_to) then
+		if multicraft.registered_nodes[n_bottom.name] and
+				(multicraft.get_item_group(n.name, "float") == 0 or
+					multicraft.registered_nodes[n_bottom.name].liquidtype == "none") and
+				(n.name ~= n_bottom.name or (multicraft.registered_nodes[n_bottom.name].leveled and
+					multicraft.get_node_level(p_bottom) < multicraft.get_node_max_level(p_bottom))) and
+				(not multicraft.registered_nodes[n_bottom.name].walkable or
+					multicraft.registered_nodes[n_bottom.name].buildable_to) then
 			if delay then
-				core.after(0.1, nodeupdate_single, {x=p.x, y=p.y, z=p.z}, false)
+				multicraft.after(0.1, nodeupdate_single, {x=p.x, y=p.y, z=p.z}, false)
 			else
-				n.level = core.get_node_level(p)
-				core.remove_node(p, remove_fast)
+				n.level = multicraft.get_node_level(p)
+				multicraft.remove_node(p, remove_fast)
 				spawn_falling_node(p, n)
 				nodeupdate(p)
 			end
 		end
 	end
 
-	if core.get_item_group(n.name, "attached_node") ~= 0 then
+	if multicraft.get_item_group(n.name, "attached_node") ~= 0 then
 		if not check_attached_node(p, n) then
 			drop_attached_node(p)
 			nodeupdate(p)
@@ -226,9 +226,9 @@ end
 function on_placenode(p, node)
 	nodeupdate(p)
 end
-core.register_on_placenode(on_placenode)
+multicraft.register_on_placenode(on_placenode)
 
 function on_dignode(p, node)
 	nodeupdate(p)
 end
-core.register_on_dignode(on_dignode)
+multicraft.register_on_dignode(on_dignode)

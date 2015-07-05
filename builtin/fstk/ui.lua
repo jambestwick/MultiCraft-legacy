@@ -62,7 +62,7 @@ function ui.update()
 	if gamedata ~= nil and gamedata.errormessage ~= nil then
 		formspec = "size[12,3.2]" ..
 			"textarea[1,1;10,2;;ERROR: " ..
-			core.formspec_escape(gamedata.errormessage) ..
+			multicraft.formspec_escape(gamedata.errormessage) ..
 			";]"..
 			"button[4.5,2.5;3,0.5;btn_error_confirm;" .. fgettext("Ok") .. "]"
 	else
@@ -101,7 +101,7 @@ function ui.update()
 			formspec = ui.childlist[ui.default]:get_formspec()
 		end
 	end
-	core.update_formspec(formspec)
+	multicraft.update_formspec(formspec)
 end
 
 --------------------------------------------------------------------------------
@@ -145,7 +145,7 @@ end
 -- initialize callbacks
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-core.button_handler = function(fields)
+multicraft.button_handler = function(fields)
 	if fields["btn_error_confirm"] then
 		gamedata.errormessage = nil
 		ui.update()
@@ -158,7 +158,7 @@ core.button_handler = function(fields)
 end
 
 --------------------------------------------------------------------------------
-core.event_handler = function(event)
+multicraft.event_handler = function(event)
 	if ui.handle_events(event) then
 		ui.update()
 		return

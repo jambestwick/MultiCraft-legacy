@@ -23,36 +23,36 @@ local function get_formspec(tabview, name, tabdata)
                 "box[-100,-10;200,12;#999999]" ..
                 "bgcolor[#00000070;true]"..
 
-                "image_button[12,9.55;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;cancel;".. fgettext("Cancel") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+                "image_button[12,9.55;4,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;cancel;".. fgettext("Cancel") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
                 --"label[0,1.25;" .. fgettext("Address/Port") .. "]" ..
                 "field[1000.25,5.25;5.5,0.5;te_address;;" ..
-                core.formspec_escape(core.setting_get("address")) .. "]" ..
+                multicraft.formspec_escape(multicraft.setting_get("address")) .. "]" ..
                 "field[1005.75,5.25;2.25,0.5;te_port;;" ..
-                core.formspec_escape(core.setting_get("remote_port")) .. "]" ..
+                multicraft.formspec_escape(multicraft.setting_get("remote_port")) .. "]" ..
                 "checkbox[1000,3.6;cb_public_serverlist;" .. fgettext("Public Serverlist") .. ";" ..
-                dump(core.setting_getbool("public_serverlist")) .. "]"..
+                dump(multicraft.setting_getbool("public_serverlist")) .. "]"..
 
                 "label[7,1.5;" .. fgettext("Select Server:") .. "]" ..
-                "label[0,0.25;Address: "..core.formspec_escape(core.setting_get("address")) .. "]" ..
-                "label[0,0.75;Port: "..core.formspec_escape(core.setting_get("remote_port")) .. "]"
+                "label[0,0.25;Address: "..multicraft.formspec_escape(multicraft.setting_get("address")) .. "]" ..
+                "label[0,0.75;Port: "..multicraft.formspec_escape(multicraft.setting_get("remote_port")) .. "]"
 
 
-        --if not core.setting_getbool("public_serverlist") then
-        if (core.get_table_index("favourites") or 10000) <= #core.get_favorites("local") then
+        --if not multicraft.setting_getbool("public_serverlist") then
+        if (multicraft.get_table_index("favourites") or 10000) <= #multicraft.get_favorites("local") then
                 retval = retval ..
-                "image_button[4,9.55;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_delete_favorite;" .. fgettext("Delete") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                "image_button[4,9.55;4,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_delete_favorite;" .. fgettext("Delete") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
         else
                 retval = retval ..
-                "image_button[4,9.55;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;add_server;" .. fgettext("Add") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                "image_button[4,9.55;4,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;add_server;" .. fgettext("Add") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
         end
 
         retval = retval ..
-                "image_button[8,9.55;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_connect;" .. fgettext("Connect") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-                "image_button[3.2,9.55;0.8,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."server_flags_favourite.png;btn_mp_favour;;true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+                "image_button[8,9.55;3.95,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_connect;" .. fgettext("Connect") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+                "image_button[3.2,9.55;0.8,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."server_flags_favourite.png;btn_mp_favour;;true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
 
                 "label[8,8;" .. fgettext("Name") .. ":]" ..
                 "field[8.3,9;3.95,0.8;te_name;;" ..
-                core.formspec_escape(core.setting_get("name")) .. "]" ..
+                multicraft.formspec_escape(multicraft.setting_get("name")) .. "]" ..
                 "label[12,8;" .. fgettext("Password") .. ":]" ..
                 "pwdfield[12.3,9;4,0.8;te_pwd;]" ..
                 "textarea[9.3,0;2.5,3.0;;"
@@ -62,7 +62,7 @@ local function get_formspec(tabview, name, tabdata)
                 menudata.favorites[tabdata.fav_selected] ~= nil and
                 menudata.favorites[tabdata.fav_selected].description ~= nil then
                 retval = retval ..
-                        core.formspec_escape(menudata.favorites[tabdata.fav_selected].description,true)
+                        multicraft.formspec_escape(menudata.favorites[tabdata.fav_selected].description,true)
         end
 
         retval = retval ..
@@ -71,13 +71,13 @@ local function get_formspec(tabview, name, tabdata)
         --favourites
         local function image_column(tooltip, flagname)
                 local ret = "image," ..
-                        "tooltip=" .. core.formspec_escape(tooltip) .. ","
+                        "tooltip=" .. multicraft.formspec_escape(tooltip) .. ","
                         if flagname ~= 'favourite' then
-                           ret = ret .. "0=" .. core.formspec_escape(defaulttexturedir .. "blank.png") .. ","
+                           ret = ret .. "0=" .. multicraft.formspec_escape(defaulttexturedir .. "blank.png") .. ","
                         else
-                           ret = ret .. "0=" .. core.formspec_escape(defaulttexturedir .. "server_flags_" .. flagname .. "_off.png") .. ","
+                           ret = ret .. "0=" .. multicraft.formspec_escape(defaulttexturedir .. "server_flags_" .. flagname .. "_off.png") .. ","
                         end
-                        ret = ret .. "1=" .. core.formspec_escape(defaulttexturedir .. "server_flags_" .. flagname .. ".png")
+                        ret = ret .. "1=" .. multicraft.formspec_escape(defaulttexturedir .. "server_flags_" .. flagname .. ".png")
                 return ret
         end
         retval = retval .. "tablecolumns[" ..
@@ -118,9 +118,9 @@ end
 
 --------------------------------------------------------------------------------
 local function main_button_handler(tabview, fields, name, tabdata)
-    core.set_clouds(false)
-    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    multicraft.set_clouds(false)
+    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         if not tabdata then tabdata = {} end
 
@@ -134,11 +134,11 @@ local function main_button_handler(tabview, fields, name, tabdata)
 
         if fields["te_name"] ~= nil then
                 gamedata.playername = fields["te_name"]
-                core.setting_set("name", fields["te_name"])
+                multicraft.setting_set("name", fields["te_name"])
         end
 
         if fields["favourites"] ~= nil then
-                local event = core.explode_table_event(fields["favourites"])
+                local event = multicraft.explode_table_event(fields["favourites"])
                 if event.type == "DCL" then
                         if event.row <= #menudata.favorites then
                                 gamedata.address    = menudata.favorites[event.row].address
@@ -156,9 +156,9 @@ local function main_button_handler(tabview, fields, name, tabdata)
 
                                 if gamedata.address ~= nil and
                                         gamedata.port ~= nil then
-                                        core.setting_set("address",gamedata.address)
-                                        core.setting_set("remote_port",gamedata.port)
-                                        core.start()
+                                        multicraft.setting_set("address",gamedata.address)
+                                        multicraft.setting_set("remote_port",gamedata.port)
+                                        multicraft.start()
                                 end
                         end
                         return true
@@ -171,8 +171,8 @@ local function main_button_handler(tabview, fields, name, tabdata)
 
                                 if address ~= nil and
                                         port ~= nil then
-                                        core.setting_set("address",address)
-                                        core.setting_set("remote_port",port)
+                                        multicraft.setting_set("address",address)
+                                        multicraft.setting_set("remote_port",port)
                                 end
 
                                 tabdata.fav_selected = event.row
@@ -184,7 +184,7 @@ local function main_button_handler(tabview, fields, name, tabdata)
         if fields["key_up"] ~= nil or
                 fields["key_down"] ~= nil then
 
-                local fav_idx = core.get_table_index("favourites")
+                local fav_idx = multicraft.get_table_index("favourites")
 
                 if fav_idx ~= nil then
                         if fields["key_up"] ~= nil and fav_idx > 1 then
@@ -207,8 +207,8 @@ local function main_button_handler(tabview, fields, name, tabdata)
 
                 if address ~= nil and
                         port ~= nil then
-                        core.setting_set("address",address)
-                        core.setting_set("remote_port",port)
+                        multicraft.setting_set("address",address)
+                        multicraft.setting_set("remote_port",port)
                 end
 
                 tabdata.fav_selected = fav_idx
@@ -216,15 +216,15 @@ local function main_button_handler(tabview, fields, name, tabdata)
         end
 
         if fields["cb_public_serverlist"] ~= nil then
-                core.setting_set("public_serverlist", fields["cb_public_serverlist"])
+                multicraft.setting_set("public_serverlist", fields["cb_public_serverlist"])
                 asyncOnlineFavourites()
                 tabdata.fav_selected = nil
                 return true
         end
 
         if fields["btn_mp_favour"] ~= nil then
-           local current_favourite = core.get_table_index("favourites")
-           local path = core.get_modpath('')..'/../client/'..core.formspec_escape(core.setting_get("serverlist_file"))
+           local current_favourite = multicraft.get_table_index("favourites")
+           local path = multicraft.get_modpath('')..'/../client/'..multicraft.formspec_escape(multicraft.setting_get("serverlist_file"))
            local favourites
            if path then
               local input,err,errcode = io.open(path, "r")
@@ -235,7 +235,7 @@ local function main_button_handler(tabview, fields, name, tabdata)
                  --gamedata.errormessage = err..' ('..errcode..')'
               end
            if favourites then
-              favourites = core.parse_json(favourites)
+              favourites = multicraft.parse_json(favourites)
            else
                favourites = {["list"]={},}
            end
@@ -249,7 +249,7 @@ local function main_button_handler(tabview, fields, name, tabdata)
                                            }
                           )
 
-                          favourites = core.write_json(favourites)
+                          favourites = multicraft.write_json(favourites)
 
               local output,err,errcode = io.open(path, "w")
               if output then
@@ -264,16 +264,16 @@ local function main_button_handler(tabview, fields, name, tabdata)
         end
 
         if fields["btn_delete_favorite"] ~= nil then
-                local current_favourite = core.get_table_index("favourites")
+                local current_favourite = multicraft.get_table_index("favourites")
                 if current_favourite == nil then return end
-                if current_favourite > #core.get_favorites('offline') then return end
-                core.delete_favorite(current_favourite)
+                if current_favourite > #multicraft.get_favorites('offline') then return end
+                multicraft.delete_favorite(current_favourite)
                 tabdata.fav_selected = nil
                 asyncOnlineFavourites()
 
 
-                core.setting_set("address","")
-                core.setting_set("remote_port","30000")
+                multicraft.setting_set("address","")
+                multicraft.setting_set("remote_port","30000")
 
                 return true
         end
@@ -286,7 +286,7 @@ local function main_button_handler(tabview, fields, name, tabdata)
                 gamedata.address        = fields["te_address"]
                 gamedata.port           = fields["te_port"]
 
-                local fav_idx = core.get_table_index("favourites")
+                local fav_idx = multicraft.get_table_index("favourites")
                 if fav_idx ~= nil and fav_idx <= #menudata.favorites and
                         menudata.favorites[fav_idx].address == fields["te_address"] and
                         menudata.favorites[fav_idx].port    == fields["te_port"] then
@@ -297,10 +297,10 @@ local function main_button_handler(tabview, fields, name, tabdata)
 
                 gamedata.selected_world = 0
 
-                core.setting_set("address",    fields["te_address"])
-                core.setting_set("remote_port",fields["te_port"])
+                multicraft.setting_set("address",    fields["te_address"])
+                multicraft.setting_set("remote_port",fields["te_port"])
 
-                core.start()
+                multicraft.start()
                 return true
         end
 

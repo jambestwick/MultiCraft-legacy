@@ -28,23 +28,23 @@ local function delete_mod_formspec(dialogdata)
                 "box[-100,-10;200,12;#999999]" ..
                 "label[6.5,4.5;" ..
                 fgettext("Are you sure you want to delete \"$1\"?", dialogdata.mod.name) ..  ";]"..
-                "image_button[4,5.7;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_delete_mod_confirm;" .. fgettext("Yes").. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-                "image_button[8,5.7;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_delete_mod_cancel;" .. fgettext("No") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                "image_button[4,5.7;4,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_delete_mod_confirm;" .. fgettext("Yes").. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+                "image_button[8,5.7;4,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_delete_mod_cancel;" .. fgettext("No") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
         return retval
 end
 
 --------------------------------------------------------------------------------
 local function delete_mod_buttonhandler(this, fields)
-    core.set_clouds(false)
-    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    multicraft.set_clouds(false)
+    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         if fields["dlg_delete_mod_confirm"] ~= nil then
 
                 if this.data.mod.path ~= nil and
                         this.data.mod.path ~= "" and
-                        this.data.mod.path ~= core.get_modpath() then
-                        if not core.delete_dir(this.data.mod.path) then
+                        this.data.mod.path ~= multicraft.get_modpath() then
+                        if not multicraft.delete_dir(this.data.mod.path) then
                                 gamedata.errormessage = fgettext("Modmgr: failed to delete \"$1\"", this.data.mod.path)
                         end
                         modmgr.refresh_globals()

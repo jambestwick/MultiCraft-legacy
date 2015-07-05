@@ -17,7 +17,7 @@ function string.number_to_si(value, precision)
 end
 
 -- returns formspec with table of stats
-function core.stat_formspec(name)
+function multicraft.stat_formspec(name)
 	local stat_table = {
 		chat = "Messages",
 		craft = "Crafted",
@@ -35,7 +35,7 @@ function core.stat_formspec(name)
 	local formspec
 	local y = -.1
 
-	if core.is_singleplayer() then
+	if multicraft.is_singleplayer() then
 		-- collumns
 		local x = { .25, 1.8 }
 		formspec = "size[3.2,4.6]"
@@ -49,7 +49,7 @@ function core.stat_formspec(name)
 			formspec = formspec
 				.."label["..x[1]..","..y..";"..eng_name.."]"
 				.."label["..x[2]..","..y..";"
-				..string.number_to_si(core.stat_get("player|"..key.."|"..name)).."]"
+				..string.number_to_si(multicraft.stat_get("player|"..key.."|"..name)).."]"
 		end
 	else
 		-- collumns
@@ -66,9 +66,9 @@ function core.stat_formspec(name)
 			formspec = formspec
 				.."label["..x[1]..","..y..";"..eng_name.."]"
 				.."label["..x[2]..","..y..";"
-				..string.number_to_si(core.stat_get("player|"..key.."|"..name)).."]"
+				..string.number_to_si(multicraft.stat_get("player|"..key.."|"..name)).."]"
 				.."label["..x[3]..","..y..";"
-				..string.number_to_si(core.stat_get("total|"..key), 4).."]"
+				..string.number_to_si(multicraft.stat_get("total|"..key), 4).."]"
 		end
 	end
 	return formspec

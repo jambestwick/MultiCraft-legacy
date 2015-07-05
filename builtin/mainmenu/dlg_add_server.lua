@@ -35,16 +35,16 @@ local function add_server_formspec(dialogdata)
                 "field[6.5,6.4;6,0.5;desc;;Added on ".. os.date() .."]" ..
 
 
-        "image_button[8,9.54;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;server_add_confirm;".. fgettext("Add") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-        "image_button[12,9.55;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;server_add_cancel;".. fgettext("Cancel") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+        "image_button[8,9.54;3.95,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;server_add_confirm;".. fgettext("Add") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+        "image_button[12,9.55;4,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;server_add_cancel;".. fgettext("Cancel") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
 
         return retval
 end
 
 local function add_server_buttonhandler(this, fields)
-    core.set_clouds(false)
-    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    multicraft.set_clouds(false)
+    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         if fields["server_add_cancel"] then
                 this:delete()
@@ -56,7 +56,7 @@ local function add_server_buttonhandler(this, fields)
            if fields["address"] and fields["port"] then
 
 ----------------------
-           local path = core.get_modpath('')..'/../client/'..core.formspec_escape(core.setting_get("serverlist_file"))
+           local path = multicraft.get_modpath('')..'/../client/'..multicraft.formspec_escape(multicraft.setting_get("serverlist_file"))
            local favourites
            if path then
               local input = io.open(path, "r")
@@ -67,7 +67,7 @@ local function add_server_buttonhandler(this, fields)
                  --gamedata.errormessage = fgettext("Can't find serverlist_file! ("..path..')')
               end
            if favourites then
-              favourites = core.parse_json(favourites)
+              favourites = multicraft.parse_json(favourites)
            else
                favourites = {["list"]={},}
            end
@@ -82,7 +82,7 @@ local function add_server_buttonhandler(this, fields)
                                            }
                           )
 
-              favourites = core.write_json(favourites)
+              favourites = multicraft.write_json(favourites)
 
               --print(path)
               local output = io.open(path, "w")

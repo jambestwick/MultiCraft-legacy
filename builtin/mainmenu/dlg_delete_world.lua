@@ -25,19 +25,19 @@ local function delete_world_formspec(dialogdata)
                 "box[-100,-10;200,12;#999999]" ..
                 "label[6.5,4.5;" ..
                 fgettext("Delete World \"$1\"?", dialogdata.delete_name) .. "]"..
-                "image_button[4,5.7;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete_confirm;" .. fgettext("Yes").. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-                "image_button[8,5.7;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete_cancel;" .. fgettext("No") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                "image_button[4,5.7;4,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete_confirm;" .. fgettext("Yes").. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+                "image_button[8,5.7;4,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;world_delete_cancel;" .. fgettext("No") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
         return retval
 end
 
 local function delete_world_buttonhandler(this, fields)
-    core.set_clouds(false)
-    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    multicraft.set_clouds(false)
+    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
         if fields["world_delete_confirm"] then
            if this.data.delete_index > 0 and
               this.data.delete_index <= #menudata.worldlist:get_raw_list() then
-              core.delete_world(this.data.delete_index)
+              multicraft.delete_world(this.data.delete_index)
               menudata.worldlist:refresh()
            end
            this:delete()

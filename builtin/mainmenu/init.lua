@@ -22,9 +22,9 @@ mt_color_dark_green = "#003300"
 
 --for all other colors ask sfan5 to complete his work!
 
-local menupath = core.get_mainmenu_path()
-local basepath = core.get_builtin_path()
-defaulttexturedir = core.get_texturepath_share() .. DIR_DELIM .. "base" ..
+local menupath = multicraft.get_mainmenu_path()
+local basepath = multicraft.get_builtin_path()
+defaulttexturedir = multicraft.get_texturepath_share() .. DIR_DELIM .. "base" ..
                     DIR_DELIM .. "pack" .. DIR_DELIM
 
 dofile(basepath .. DIR_DELIM .. "common" .. DIR_DELIM .. "async_event.lua")
@@ -56,7 +56,7 @@ dofile(menupath .. DIR_DELIM .. "tab_settings.lua")
 --------------------------------------------------------------------------------
 local function main_event_handler(tabview, event)
     if event == "MenuQuit" then
-        core.close()
+        multicraft.close()
     end
 
     return true
@@ -67,28 +67,28 @@ local function get_formspec2(tabview, name, tabdata)
     math.randomseed(os.time())
     local retval = ""
     retval = retval .. "bgcolor[#00000000;false]"
-    retval = retval .. "image_button[2.5,3.4;7,1;"..core.formspec_escape(mm_texture.basetexturedir) .. "menu_button.png;btn_show_multiplayer;" .. fgettext("Multiplayer") .. ";true;true;" .. core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[2.5,4.8;7,1;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    --retval = retval .. "image_button[8.5,4.8;1,1;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[2.5,6.2;7,1;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_exit;".. fgettext("Exit") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. 'image_button[6,-2;6.5,3;'..core.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,11))..".png;btn_ad;;true;false]"
-    retval = retval .. "image_button[2.5,2.0;7,1;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_singleplayer;".. fgettext("Singleplayer") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,3.4;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir) .. "menu_button.png;btn_show_multiplayer;" .. fgettext("Multiplayer") .. ";true;true;" .. multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,4.8;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    --retval = retval .. "image_button[8.5,4.8;1,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. "image_button[2.5,6.2;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_exit;".. fgettext("Exit") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+    retval = retval .. 'image_button[6,-2;6.5,3;'..multicraft.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,11))..".png;btn_ad;;true;false]"
+    retval = retval .. "image_button[2.5,2.0;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_singleplayer;".. fgettext("Singleplayer") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
     return retval
 end
 
 --------------------------------------------------------------------------------
 
 local function main_button_handler2(tabview, fields, name, tabdata)
-    core.set_clouds(false)
-    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    multicraft.set_clouds(false)
+    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
     local index = ''
     if fields["btn_show_singleplayer"] then  index = "singleplayer"       end
     if fields["btn_show_multiplayer"]  then  index = "multiplayer"  end
     if fields["btn_show_options"]      then  index = "settings"     end
     --if fields["btn_show_help"]         then  index = "help"         end
-    if fields["btn_exit"] then core.close() end
+    if fields["btn_exit"] then multicraft.close() end
 
     if index == '' then return end
     for name,def in pairs(tabview.tablist) do
@@ -113,16 +113,16 @@ local function on_activate2(type,old_tab,new_tab)
     if type == "LEAVE" then
         return
     end
-    if core.setting_getbool("public_serverlist") then
+    if multicraft.setting_getbool("public_serverlist") then
         asyncOnlineFavourites()
     else
-        menudata.favorites = core.get_favorites("local")
+        menudata.favorites = multicraft.get_favorites("local")
     end
     mm_texture.clear("header")
     mm_texture.clear("footer")
-    core.set_clouds(false)
-    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    multicraft.set_clouds(false)
+    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
 
 end
@@ -142,7 +142,7 @@ local function init_globals()
     gamedata.worldindex = 0
 
     menudata.worldlist = filterlist.create(
-        core.get_worlds,
+        multicraft.get_worlds,
         compare_worlds,
         -- Unique id comparison function
         function(element, uid)
@@ -157,9 +157,9 @@ local function init_globals()
     menudata.worldlist:add_sort_mechanism("alphabetic", sort_worlds_alphabetic)
     menudata.worldlist:set_sortmode("alphabetic")
 
-    if not core.setting_get("menu_last_game") then
-        local default_game = core.setting_get("default_game") or "magichet"
-        core.setting_set("menu_last_game", default_game )
+    if not multicraft.setting_get("menu_last_game") then
+        local default_game = multicraft.setting_get("default_game") or "magichet"
+        multicraft.setting_set("menu_last_game", default_game )
     end
 
     mm_texture.init()
@@ -195,7 +195,7 @@ local function init_globals()
 
     ui.update()
 
-    core.sound_play("main_menu", true)
+    multicraft.sound_play("main_menu", true)
 
 end
 

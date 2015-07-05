@@ -4,19 +4,19 @@
 -- Chat command handler
 --
 
-core.chatcommands = {}
-function core.register_chatcommand(cmd, def)
+multicraft.chatcommands = {}
+function multicraft.register_chatcommand(cmd, def)
 	def = def or {}
 	def.params = def.params or ""
 	def.description = def.description or ""
 	def.privs = def.privs or {}
-	core.chatcommands[cmd] = def
+	multicraft.chatcommands[cmd] = def
 end
 
-if core.setting_getbool("mod_profiling") then
+if multicraft.setting_getbool("mod_profiling") then
 	local tracefct = profiling_print_log
 	profiling_print_log = nil
-	core.register_chatcommand("save_mod_profile",
+	multicraft.register_chatcommand("save_mod_profile",
 			{
 				params      = "",
 				description = "save mod profiling data to logfile " ..
@@ -26,23 +26,23 @@ if core.setting_getbool("mod_profiling") then
 			})
 end
 
-core.register_on_chat_message(function(name, message)
+multicraft.register_on_chat_message(function(name, message)
 	local cmd, param = string.match(message, "^/([^ ]+) *(.*)")
 	if not param then
 		param = ""
 	end
-	local cmd_def = core.chatcommands[cmd]
+	local cmd_def = multicraft.chatcommands[cmd]
 	if not cmd_def then
 		return false
 	end
-	local has_privs, missing_privs = core.check_player_privs(name, cmd_def.privs)
+	local has_privs, missing_privs = multicraft.check_player_privs(name, cmd_def.privs)
 	if has_privs then
 		local success, message = cmd_def.func(name, param)
 		if message then
-			core.chat_send_player(name, message)
+			multicraft.chat_send_player(name, message)
 		end
 	else
-		core.chat_send_player(name, "You don't have permission"
+		multicraft.chat_send_player(name, "You don't have permission"
 				.. " to run this command (missing privileges: "
 				.. table.concat(missing_privs, ", ") .. ")")
 	end
@@ -52,16 +52,16 @@ end)
 --
 -- Chat commands
 --
-core.register_chatcommand("me", {
+multicraft.register_chatcommand("me", {
 	params = "<action>",
 	description = "chat action (eg. /me orders a pizza)",
 	privs = {shout=true},
 	func = function(name, param)
-		core.chat_send_all("* " .. name .. " " .. param)
+		multicraft.chat_send_all("* " .. name .. " " .. param)
 	end,
 })
 
-core.register_chatcommand("help", {
+multicraft.register_chatcommand("help", {
 	privs = {},
 	params = "[all/privs/<cmd>]",
 	description = "Get help for commands or list privileges",
@@ -79,8 +79,8 @@ core.register_chatcommand("help", {
 		if param == "" then
 			local msg = ""
 			local cmds = {}
-			for cmd, def in pairs(core.chatcommands) do
-				if core.check_player_privs(name, def.privs) then
+			for cmd, def in pairs(multicraft.chatcommands) do
+				if multicraft.check_player_privs(name, def.privs) then
 					table.insert(cmds, cmd)
 				end
 			end
@@ -90,8 +90,8 @@ core.register_chatcommand("help", {
 					.. " or '/help all' to list everything."
 		elseif param == "all" then
 			local cmds = {}
-			for cmd, def in pairs(core.chatcommands) do
-				if core.check_player_privs(name, def.privs) then
+			for cmd, def in pairs(multicraft.chatcommands) do
+				if multicraft.check_player_privs(name, def.privs) then
 					table.insert(cmds, format_help_line(cmd, def))
 				end
 			end
@@ -99,14 +99,14 @@ core.register_chatcommand("help", {
 			return true, "Available commands:\n"..table.concat(cmds, "\n")
 		elseif param == "privs" then
 			local privs = {}
-			for priv, def in pairs(core.registered_privileges) do
+			for priv, def in pairs(multicraft.registered_privileges) do
 				table.insert(privs, priv .. ": " .. def.description)
 			end
 			table.sort(privs)
 			return true, "Available privileges:\n"..table.concat(privs, "\n")
 		else
 			local cmd = param
-			local def = core.chatcommands[cmd]
+			local def = multicraft.chatcommands[cmd]
 			if not def then
 				return false, "Command not available: "..cmd
 			else
@@ -116,42 +116,42 @@ core.register_chatcommand("help", {
 	end,
 })
 
-core.register_chatcommand("privs", {
+multicraft.register_chatcommand("privs", {
 	params = "<name>",
 	description = "print out privileges of player",
 	func = function(name, param)
 		param = (param ~= "" and param or name)
 		return true, "Privileges of " .. param .. ": "
-			.. core.privs_to_string(
-				core.get_player_privs(param), ' ')
+			.. multicraft.privs_to_string(
+				multicraft.get_player_privs(param), ' ')
 	end,
 })
-core.register_chatcommand("grant", {
+multicraft.register_chatcommand("grant", {
 	params = "<name> <privilege>|all",
 	description = "Give privilege to player",
 	func = function(name, param)
-		if not core.check_player_privs(name, {privs=true}) and
-				not core.check_player_privs(name, {basic_privs=true}) then
+		if not multicraft.check_player_privs(name, {privs=true}) and
+				not multicraft.check_player_privs(name, {basic_privs=true}) then
 			return false, "Your privileges are insufficient."
 		end
 		local grantname, grantprivstr = string.match(param, "([^ ]+) (.+)")
 		if not grantname or not grantprivstr then
 			return false, "Invalid parameters (see /help grant)"
-		elseif not core.auth_table[grantname] then
+		elseif not multicraft.auth_table[grantname] then
 			return false, "Player " .. grantname .. " does not exist."
 		end
-		local grantprivs = core.string_to_privs(grantprivstr)
+		local grantprivs = multicraft.string_to_privs(grantprivstr)
 		if grantprivstr == "all" then
-			grantprivs = core.registered_privileges
+			grantprivs = multicraft.registered_privileges
 		end
-		local privs = core.get_player_privs(grantname)
+		local privs = multicraft.get_player_privs(grantname)
 		local privs_unknown = ""
 		for priv, _ in pairs(grantprivs) do
 			if priv ~= "interact" and priv ~= "shout" and
-					not core.check_player_privs(name, {privs=true}) then
+					not multicraft.check_player_privs(name, {privs=true}) then
 				return false, "Your privileges are insufficient."
 			end
-			if not core.registered_privileges[priv] then
+			if not multicraft.registered_privileges[priv] then
 				privs_unknown = privs_unknown .. "Unknown privilege: " .. priv .. "\n"
 			end
 			privs[priv] = true
@@ -159,38 +159,38 @@ core.register_chatcommand("grant", {
 		if privs_unknown ~= "" then
 			return false, privs_unknown
 		end
-		core.set_player_privs(grantname, privs)
-		core.log("action", name..' granted ('..core.privs_to_string(grantprivs, ', ')..') privileges to '..grantname)
+		multicraft.set_player_privs(grantname, privs)
+		multicraft.log("action", name..' granted ('..multicraft.privs_to_string(grantprivs, ', ')..') privileges to '..grantname)
 		if grantname ~= name then
-			core.chat_send_player(grantname, name
+			multicraft.chat_send_player(grantname, name
 					.. " granted you privileges: "
-					.. core.privs_to_string(grantprivs, ' '))
+					.. multicraft.privs_to_string(grantprivs, ' '))
 		end
 		return true, "Privileges of " .. grantname .. ": "
-			.. core.privs_to_string(
-				core.get_player_privs(grantname), ' ')
+			.. multicraft.privs_to_string(
+				multicraft.get_player_privs(grantname), ' ')
 	end,
 })
-core.register_chatcommand("revoke", {
+multicraft.register_chatcommand("revoke", {
 	params = "<name> <privilege>|all",
 	description = "Remove privilege from player",
 	privs = {},
 	func = function(name, param)
-		if not core.check_player_privs(name, {privs=true}) and
-				not core.check_player_privs(name, {basic_privs=true}) then
+		if not multicraft.check_player_privs(name, {privs=true}) and
+				not multicraft.check_player_privs(name, {basic_privs=true}) then
 			return false, "Your privileges are insufficient."
 		end
 		local revoke_name, revoke_priv_str = string.match(param, "([^ ]+) (.+)")
 		if not revoke_name or not revoke_priv_str then
 			return false, "Invalid parameters (see /help revoke)"
-		elseif not core.auth_table[revoke_name] then
+		elseif not multicraft.auth_table[revoke_name] then
 			return false, "Player " .. revoke_name .. " does not exist."
 		end
-		local revoke_privs = core.string_to_privs(revoke_priv_str)
-		local privs = core.get_player_privs(revoke_name)
+		local revoke_privs = multicraft.string_to_privs(revoke_priv_str)
+		local privs = multicraft.get_player_privs(revoke_name)
 		for priv, _ in pairs(revoke_privs) do
 			if priv ~= "interact" and priv ~= "shout" and priv ~= "interact_extra" and
-					not core.check_player_privs(name, {privs=true}) then
+					not multicraft.check_player_privs(name, {privs=true}) then
 				return false, "Your privileges are insufficient."
 			end
 		end
@@ -201,22 +201,22 @@ core.register_chatcommand("revoke", {
 				privs[priv] = nil
 			end
 		end
-		core.set_player_privs(revoke_name, privs)
-		core.log("action", name..' revoked ('
-				..core.privs_to_string(revoke_privs, ', ')
+		multicraft.set_player_privs(revoke_name, privs)
+		multicraft.log("action", name..' revoked ('
+				..multicraft.privs_to_string(revoke_privs, ', ')
 				..') privileges from '..revoke_name)
 		if revoke_name ~= name then
-			core.chat_send_player(revoke_name, name
+			multicraft.chat_send_player(revoke_name, name
 					.. " revoked privileges from you: "
-					.. core.privs_to_string(revoke_privs, ' '))
+					.. multicraft.privs_to_string(revoke_privs, ' '))
 		end
 		return true, "Privileges of " .. revoke_name .. ": "
-			.. core.privs_to_string(
-				core.get_player_privs(revoke_name), ' ')
+			.. multicraft.privs_to_string(
+				multicraft.get_player_privs(revoke_name), ' ')
 	end,
 })
 
-core.register_chatcommand("setpassword", {
+multicraft.register_chatcommand("setpassword", {
 	params = "<name> <password>",
 	description = "set given password",
 	privs = {password=true},
@@ -231,23 +231,23 @@ core.register_chatcommand("setpassword", {
 		end
 		local actstr = "?"
 		if not raw_password then
-			core.set_player_password(toname, "")
+			multicraft.set_player_password(toname, "")
 			actstr = "cleared"
 		else
-			core.set_player_password(toname,
-					core.get_password_hash(toname,
+			multicraft.set_player_password(toname,
+					multicraft.get_password_hash(toname,
 							raw_password))
 			actstr = "set"
 		end
 		if toname ~= name then
-			core.chat_send_player(toname, "Your password was "
+			multicraft.chat_send_player(toname, "Your password was "
 					.. actstr .. " by " .. name)
 		end
 		return true, "Password of player \"" .. toname .. "\" " .. actstr
 	end,
 })
 
-core.register_chatcommand("clearpassword", {
+multicraft.register_chatcommand("clearpassword", {
 	params = "<name>",
 	description = "set empty password",
 	privs = {password=true},
@@ -256,22 +256,22 @@ core.register_chatcommand("clearpassword", {
 		if toname == "" then
 			return false, "Name field required"
 		end
-		core.set_player_password(toname, '')
+		multicraft.set_player_password(toname, '')
 		return true, "Password of player \"" .. toname .. "\" cleared"
 	end,
 })
 
-core.register_chatcommand("auth_reload", {
+multicraft.register_chatcommand("auth_reload", {
 	params = "",
 	description = "reload authentication data",
 	privs = {server=true},
 	func = function(name, param)
-		local done = core.auth_reload()
+		local done = multicraft.auth_reload()
 		return done, (done and "Done." or "Failed.")
 	end,
 })
 
-core.register_chatcommand("teleport", {
+multicraft.register_chatcommand("teleport", {
 	params = "<X>,<Y>,<Z> | <to_name> | <name> <X>,<Y>,<Z> | <name> <to_name>",
 	description = "teleport to given position",
 	privs = {teleport=true},
@@ -286,9 +286,9 @@ core.register_chatcommand("teleport", {
 			}
 			for _, d in ipairs(tries) do
 				local p = {x = pos.x+d.x, y = pos.y+d.y, z = pos.z+d.z}
-				local n = core.get_node_or_nil(p)
+				local n = multicraft.get_node_or_nil(p)
 				if n and n.name then
-					local def = core.registered_nodes[n.name]
+					local def = multicraft.registered_nodes[n.name]
 					if def and not def.walkable then
 						return p, true
 					end
@@ -303,19 +303,19 @@ core.register_chatcommand("teleport", {
 		p.x = tonumber(p.x)
 		p.y = tonumber(p.y)
 		p.z = tonumber(p.z)
-		teleportee = core.get_player_by_name(name)
+		teleportee = multicraft.get_player_by_name(name)
 		if teleportee and p.x and p.y and p.z then
 			teleportee:setpos(p)
-			return true, "Teleporting to "..core.pos_to_string(p)
+			return true, "Teleporting to "..multicraft.pos_to_string(p)
 		end
 
 		local teleportee = nil
 		local p = nil
 		local target_name = nil
 		target_name = param:match("^([^ ]+)$")
-		teleportee = core.get_player_by_name(name)
+		teleportee = multicraft.get_player_by_name(name)
 		if target_name then
-			local target = core.get_player_by_name(target_name)
+			local target = multicraft.get_player_by_name(target_name)
 			if target then
 				p = target:getpos()
 			end
@@ -324,10 +324,10 @@ core.register_chatcommand("teleport", {
 			p = find_free_position_near(p)
 			teleportee:setpos(p)
 			return true, "Teleporting to " .. target_name
-					.. " at "..core.pos_to_string(p)
+					.. " at "..multicraft.pos_to_string(p)
 		end
 
-		if not core.check_player_privs(name, {bring=true}) then
+		if not multicraft.check_player_privs(name, {bring=true}) then
 			return false, "You don't have permission to teleport other players (missing bring privilege)"
 		end
 
@@ -338,12 +338,12 @@ core.register_chatcommand("teleport", {
 				"^([^ ]+) +([%d.-]+)[, ] *([%d.-]+)[, ] *([%d.-]+)$")
 		p.x, p.y, p.z = tonumber(p.x), tonumber(p.y), tonumber(p.z)
 		if teleportee_name then
-			teleportee = core.get_player_by_name(teleportee_name)
+			teleportee = multicraft.get_player_by_name(teleportee_name)
 		end
 		if teleportee and p.x and p.y and p.z then
 			teleportee:setpos(p)
 			return true, "Teleporting " .. teleportee_name
-					.. " to " .. core.pos_to_string(p)
+					.. " to " .. multicraft.pos_to_string(p)
 		end
 
 		local teleportee = nil
@@ -352,10 +352,10 @@ core.register_chatcommand("teleport", {
 		local target_name = nil
 		teleportee_name, target_name = string.match(param, "^([^ ]+) +([^ ]+)$")
 		if teleportee_name then
-			teleportee = core.get_player_by_name(teleportee_name)
+			teleportee = multicraft.get_player_by_name(teleportee_name)
 		end
 		if target_name then
-			local target = core.get_player_by_name(target_name)
+			local target = multicraft.get_player_by_name(target_name)
 			if target then
 				p = target:getpos()
 			end
@@ -365,7 +365,7 @@ core.register_chatcommand("teleport", {
 			teleportee:setpos(p)
 			return true, "Teleporting " .. teleportee_name
 					.. " to " .. target_name
-					.. " at " .. core.pos_to_string(p)
+					.. " at " .. multicraft.pos_to_string(p)
 		end
 
 		return false, 'Invalid parameters ("' .. param
@@ -373,27 +373,27 @@ core.register_chatcommand("teleport", {
 	end,
 })
 
-core.register_chatcommand("set", {
+multicraft.register_chatcommand("set", {
 	params = "[-n] <name> <value> | <name>",
 	description = "set or read server configuration setting",
 	privs = {server=true},
 	func = function(name, param)
 		local arg, setname, setvalue = string.match(param, "(-[n]) ([^ ]+) (.+)")
 		if arg and arg == "-n" and setname and setvalue then
-			core.setting_set(setname, setvalue)
+			multicraft.setting_set(setname, setvalue)
 			return true, setname .. " = " .. setvalue
 		end
 		local setname, setvalue = string.match(param, "([^ ]+) (.+)")
 		if setname and setvalue then
-			if not core.setting_get(setname) then
+			if not multicraft.setting_get(setname) then
 				return false, "Failed. Use '/set -n <name> <value>' to create a new setting."
 			end
-			core.setting_set(setname, setvalue)
+			multicraft.setting_set(setname, setvalue)
 			return true, setname .. " = " .. setvalue
 		end
 		local setname = string.match(param, "([^ ]+)")
 		if setname then
-			local setvalue = core.setting_get(setname)
+			local setvalue = multicraft.setting_get(setname)
 			if not setvalue then
 				setvalue = "<not set>"
 			end
@@ -403,7 +403,7 @@ core.register_chatcommand("set", {
 	end,
 })
 
-core.register_chatcommand("deleteblocks", {
+multicraft.register_chatcommand("deleteblocks", {
 	params = "[here] [<pos1> <pos2>]",
 	description = "delete map blocks contained in area pos1 to pos2",
 	privs = {server=true},
@@ -411,9 +411,9 @@ core.register_chatcommand("deleteblocks", {
 		local p1 = {}
 		local p2 = {}
 		if param == "here" then
-			local player = core.get_player_by_name(name)
+			local player = multicraft.get_player_by_name(name)
 			if player == nil then
-				core.log("error", "player is nil")
+				multicraft.log("error", "player is nil")
 				return false, "Unable to get current position; player is nil"
 			end
 			p1 = player:getpos()
@@ -424,34 +424,34 @@ core.register_chatcommand("deleteblocks", {
 				return false, "Incorrect area format. Expected: (x1,y1,z1) (x2,y2,z2)"
 			end
 
-			p1 = core.string_to_pos(pos1 .. ")")
-			p2 = core.string_to_pos("(" .. pos2)
+			p1 = multicraft.string_to_pos(pos1 .. ")")
+			p2 = multicraft.string_to_pos("(" .. pos2)
 
 			if p1 == nil or p2 == nil then
 				return false, "Incorrect area format. Expected: (x1,y1,z1) (x2,y2,z2)"
 			end
 		end
 
-		if core.delete_area(p1, p2) then
+		if multicraft.delete_area(p1, p2) then
 			return true, "Successfully cleared area ranging from " ..
-				core.pos_to_string(p1, 1) .. " to " .. core.pos_to_string(p2, 1)
+				multicraft.pos_to_string(p1, 1) .. " to " .. multicraft.pos_to_string(p2, 1)
 		else
 			return false, "Failed to clear one or more blocks in area"
 		end
 	end,
 })
 
-core.register_chatcommand("mods", {
+multicraft.register_chatcommand("mods", {
 	params = "",
 	description = "List mods installed on the server",
 	privs = {},
 	func = function(name, param)
-		return true, table.concat(core.get_modnames(), ", ")
+		return true, table.concat(multicraft.get_modnames(), ", ")
 	end,
 })
 
 local function handle_give_command(cmd, giver, receiver, stackstring)
-	core.log("action", giver .. " invoked " .. cmd
+	multicraft.log("action", giver .. " invoked " .. cmd
 			.. ', stackstring="' .. stackstring .. '"')
 	local itemstack = ItemStack(stackstring)
 	if itemstack:is_empty() then
@@ -459,7 +459,7 @@ local function handle_give_command(cmd, giver, receiver, stackstring)
 	elseif not itemstack:is_known() then
 		return false, "Cannot give an unknown item"
 	end
-	local receiverref = core.get_player_by_name(receiver)
+	local receiverref = multicraft.get_player_by_name(receiver)
 	if receiverref == nil then
 		return false, receiver .. " is not a known player"
 	end
@@ -479,14 +479,14 @@ local function handle_give_command(cmd, giver, receiver, stackstring)
 		return true, ("%q %sadded to inventory.")
 				:format(stackstring, partiality)
 	else
-		core.chat_send_player(receiver, ("%q %sadded to inventory.")
+		multicraft.chat_send_player(receiver, ("%q %sadded to inventory.")
 				:format(stackstring, partiality))
 		return true, ("%q %sadded to %s's inventory.")
 				:format(stackstring, partiality, receiver)
 	end
 end
 
-core.register_chatcommand("give", {
+multicraft.register_chatcommand("give", {
 	params = "<name> <ItemString>",
 	description = "give item to player",
 	privs = {give=true},
@@ -499,7 +499,7 @@ core.register_chatcommand("give", {
 	end,
 })
 
-core.register_chatcommand("giveme", {
+multicraft.register_chatcommand("giveme", {
 	params = "<ItemString>",
 	description = "give item to yourself",
 	privs = {give=true},
@@ -512,7 +512,7 @@ core.register_chatcommand("giveme", {
 	end,
 })
 
-core.register_chatcommand("spawnentity", {
+multicraft.register_chatcommand("spawnentity", {
 	params = "<EntityName>",
 	description = "Spawn entity at your position",
 	privs = {give=true, interact=true},
@@ -521,27 +521,27 @@ core.register_chatcommand("spawnentity", {
 		if not entityname then
 			return false, "EntityName required"
 		end
-		core.log("action", ("/spawnentity invoked, entityname=%q")
+		multicraft.log("action", ("/spawnentity invoked, entityname=%q")
 				:format(entityname))
-		local player = core.get_player_by_name(name)
+		local player = multicraft.get_player_by_name(name)
 		if player == nil then
-			core.log("error", "Unable to spawn entity, player is nil")
+			multicraft.log("error", "Unable to spawn entity, player is nil")
 			return false, "Unable to spawn entity, player is nil"
 		end
 		local p = player:getpos()
 		p.y = p.y + 1
-		core.add_entity(p, entityname)
+		multicraft.add_entity(p, entityname)
 		return true, ("%q spawned."):format(entityname)
 	end,
 })
 
-core.register_chatcommand("pulverize", {
+multicraft.register_chatcommand("pulverize", {
 	params = "",
 	description = "Destroy item in hand",
 	func = function(name, param)
-		local player = core.get_player_by_name(name)
+		local player = multicraft.get_player_by_name(name)
 		if not player then
-			core.log("error", "Unable to pulverize, no player.")
+			multicraft.log("error", "Unable to pulverize, no player.")
 			return false, "Unable to pulverize, no player."
 		end
 		if player:get_wielded_item():is_empty() then
@@ -553,24 +553,24 @@ core.register_chatcommand("pulverize", {
 })
 
 -- Key = player name
-core.rollback_punch_callbacks = {}
+multicraft.rollback_punch_callbacks = {}
 
-core.register_on_punchnode(function(pos, node, puncher)
+multicraft.register_on_punchnode(function(pos, node, puncher)
 	local name = puncher:get_player_name()
-	if core.rollback_punch_callbacks[name] then
-		core.rollback_punch_callbacks[name](pos, node, puncher)
-		core.rollback_punch_callbacks[name] = nil
+	if multicraft.rollback_punch_callbacks[name] then
+		multicraft.rollback_punch_callbacks[name](pos, node, puncher)
+		multicraft.rollback_punch_callbacks[name] = nil
 	end
 end)
 
-core.register_chatcommand("rollback_check", {
+multicraft.register_chatcommand("rollback_check", {
 	params = "[<range>] [<seconds>] [limit]",
 	description = "Check who has last touched a node or near it,"
 			.. " max. <seconds> ago (default range=0,"
 			.. " seconds=86400=24h, limit=5)",
 	privs = {rollback=true},
 	func = function(name, param)
-		if not core.setting_getbool("enable_rollback_recording") then
+		if not multicraft.setting_getbool("enable_rollback_recording") then
 			return false, "Rollback functions are disabled."
 		end
 		local range, seconds, limit =
@@ -582,17 +582,17 @@ core.register_chatcommand("rollback_check", {
 			return false, "That limit is too high!"
 		end
 
-		core.rollback_punch_callbacks[name] = function(pos, node, puncher)
+		multicraft.rollback_punch_callbacks[name] = function(pos, node, puncher)
 			local name = puncher:get_player_name()
-			core.chat_send_player(name, "Checking " .. core.pos_to_string(pos) .. "...")
-			local actions = core.rollback_get_node_actions(pos, range, seconds, limit)
+			multicraft.chat_send_player(name, "Checking " .. multicraft.pos_to_string(pos) .. "...")
+			local actions = multicraft.rollback_get_node_actions(pos, range, seconds, limit)
 			if not actions then
-				core.chat_send_player(name, "Rollback functions are disabled")
+				multicraft.chat_send_player(name, "Rollback functions are disabled")
 				return
 			end
 			local num_actions = #actions
 			if num_actions == 0 then
-				core.chat_send_player(name, "Nobody has touched"
+				multicraft.chat_send_player(name, "Nobody has touched"
 						.. " the specified location in "
 						.. seconds .. " seconds")
 				return
@@ -600,10 +600,10 @@ core.register_chatcommand("rollback_check", {
 			local time = os.time()
 			for i = num_actions, 1, -1 do
 				local action = actions[i]
-				core.chat_send_player(name,
+				multicraft.chat_send_player(name,
 					("%s %s %s -> %s %d seconds ago.")
 						:format(
-							core.pos_to_string(action.pos),
+							multicraft.pos_to_string(action.pos),
 							action.actor,
 							action.oldnode.name,
 							action.newnode.name,
@@ -616,12 +616,12 @@ core.register_chatcommand("rollback_check", {
 	end,
 })
 
-core.register_chatcommand("rollback", {
+multicraft.register_chatcommand("rollback", {
 	params = "<player name> [<seconds>] | :<actor> [<seconds>]",
 	description = "revert actions of a player; default for <seconds> is 60",
 	privs = {rollback=true},
 	func = function(name, param)
-		if not core.setting_getbool("enable_rollback_recording") then
+		if not multicraft.setting_getbool("enable_rollback_recording") then
 			return false, "Rollback functions are disabled."
 		end
 		local target_name, seconds = string.match(param, ":([^ ]+) *(%d*)")
@@ -635,10 +635,10 @@ core.register_chatcommand("rollback", {
 			target_name = "player:"..player_name
 		end
 		seconds = tonumber(seconds) or 60
-		core.chat_send_player(name, "Reverting actions of "
+		multicraft.chat_send_player(name, "Reverting actions of "
 				.. target_name .. " since "
 				.. seconds .. " seconds.")
-		local success, log = core.rollback_revert_actions_by(
+		local success, log = multicraft.rollback_revert_actions_by(
 				target_name, seconds)
 		local response = ""
 		if #log > 100 then
@@ -654,25 +654,25 @@ core.register_chatcommand("rollback", {
 	end,
 })
 
-core.register_chatcommand("status", {
+multicraft.register_chatcommand("status", {
 	description = "Print server status",
 	func = function(name, param)
-		return true, core.get_server_status()
+		return true, multicraft.get_server_status()
 	end,
 })
 
-core.register_chatcommand("time", {
+multicraft.register_chatcommand("time", {
 	params = "<0..23>:<0..59> | <0..24000>",
 	description = "set time of day",
 	privs = {},
 	func = function(name, param)
 		if param == "" then
-			local current_time = math.floor(core.get_timeofday() * 1440)
+			local current_time = math.floor(multicraft.get_timeofday() * 1440)
 			local minutes = current_time % 60
 			local hour = (current_time - minutes) / 60
 			return true, ("Current time is %d:%02d"):format(hour, minutes)
 		end
-		local player_privs = core.get_player_privs(name)
+		local player_privs = multicraft.get_player_privs(name)
 		if not player_privs.settime then
 			return false, "You don't have permission to run this command " ..
 				"(missing privilege: settime)."
@@ -684,8 +684,8 @@ core.register_chatcommand("time", {
 				return false, "Invalid time."
 			end
 			-- Backward compatibility.
-			core.set_timeofday((new_time % 24000) / 24000)
-			core.log("action", name .. " sets time to " .. new_time)
+			multicraft.set_timeofday((new_time % 24000) / 24000)
+			multicraft.log("action", name .. " sets time to " .. new_time)
 			return true, "Time of day changed."
 		end
 		hour = tonumber(hour)
@@ -695,85 +695,85 @@ core.register_chatcommand("time", {
 		elseif minute < 0 or minute > 59 then
 			return false, "Invalid minute (must be between 0 and 59 inclusive)."
 		end
-		core.set_timeofday((hour * 60 + minute) / 1440)
-		core.log("action", name .. " sets time to " .. hour .. ":" .. minute)
+		multicraft.set_timeofday((hour * 60 + minute) / 1440)
+		multicraft.log("action", name .. " sets time to " .. hour .. ":" .. minute)
 		return true, "Time of day changed."
 	end,
 })
 
-core.register_chatcommand("shutdown", {
+multicraft.register_chatcommand("shutdown", {
 	description = "shutdown server",
 	privs = {server=true},
 	func = function(name, param)
-		core.log("action", name .. " shuts down server")
-		core.request_shutdown()
-		core.chat_send_all("*** Server shutting down (operator request).")
+		multicraft.log("action", name .. " shuts down server")
+		multicraft.request_shutdown()
+		multicraft.chat_send_all("*** Server shutting down (operator request).")
 	end,
 })
 
-core.register_chatcommand("ban", {
+multicraft.register_chatcommand("ban", {
 	params = "<name>",
 	description = "Ban IP of player",
 	privs = {ban=true},
 	func = function(name, param)
 		if param == "" then
-			return true, "Ban list: " .. core.get_ban_list()
+			return true, "Ban list: " .. multicraft.get_ban_list()
 		end
-		if not core.get_player_by_name(param) then
+		if not multicraft.get_player_by_name(param) then
 			return false, "No such player."
 		end
-		if not core.ban_player(param) then
+		if not multicraft.ban_player(param) then
 			return false, "Failed to ban player."
 		end
-		local desc = core.get_ban_description(param)
-		core.log("action", name .. " bans " .. desc .. ".")
+		local desc = multicraft.get_ban_description(param)
+		multicraft.log("action", name .. " bans " .. desc .. ".")
 		return true, "Banned " .. desc .. "."
 	end,
 })
 
-core.register_chatcommand("unban", {
+multicraft.register_chatcommand("unban", {
 	params = "<name/ip>",
 	description = "remove IP ban",
 	privs = {ban=true},
 	func = function(name, param)
-		if not core.unban_player_or_ip(param) then
+		if not multicraft.unban_player_or_ip(param) then
 			return false, "Failed to unban player/IP."
 		end
-		core.log("action", name .. " unbans " .. param)
+		multicraft.log("action", name .. " unbans " .. param)
 		return true, "Unbanned " .. param
 	end,
 })
 
-core.register_chatcommand("kick", {
+multicraft.register_chatcommand("kick", {
 	params = "<name> [reason]",
 	description = "kick a player",
 	privs = {kick=true},
 	func = function(name, param)
 		local tokick, reason = param:match("([^ ]+) (.+)")
 		tokick = tokick or param
-		if not core.kick_player(tokick, reason) then
+		if not multicraft.kick_player(tokick, reason) then
 			return false, "Failed to kick player " .. tokick
 		end
-		core.log("action", name .. " kicked " .. tokick)
+		multicraft.log("action", name .. " kicked " .. tokick)
 		return true, "Kicked " .. tokick
 	end,
 })
 
-core.register_chatcommand("clearobjects", {
+multicraft.register_chatcommand("clearobjects", {
 	description = "clear all objects in world",
 	privs = {server=true},
 	func = function(name, param)
-		core.log("action", name .. " clears all objects.")
-		core.chat_send_all("Clearing all objects.  This may take long."
+		multicraft.log("action", name .. " clears all objects.")
+		multicraft.chat_send_all("Clearing all objects.  This may take long."
 				.. "  You may experience a timeout.  (by "
 				.. name .. ")")
-		core.clear_objects()
-		core.log("action", "Object clearing done.")
-		core.chat_send_all("*** Cleared all objects.")
+		multicraft.clear_objects()
+		multicraft.log("action", "Object clearing done.")
+		multicraft.chat_send_all("*** Cleared all objects.")
 	end,
 })
 
-core.register_chatcommand("msg", {
+multicraft.register_chatcommand("msg", {
 	params = "<name> <message>",
 	description = "Send a private message",
 	privs = {shout=true},
@@ -782,23 +782,23 @@ core.register_chatcommand("msg", {
 		if not sendto then
 			return false, "Invalid usage, see /help msg."
 		end
-		if not core.get_player_by_name(sendto) then
+		if not multicraft.get_player_by_name(sendto) then
 			return false, "The player " .. sendto
 					.. " is not online."
 		end
-		core.log("action", "PM from " .. name .. " to " .. sendto
+		multicraft.log("action", "PM from " .. name .. " to " .. sendto
 				.. ": " .. message)
-		core.chat_send_player(sendto, "PM from " .. name .. ": "
+		multicraft.chat_send_player(sendto, "PM from " .. name .. ": "
 				.. message)
 		return true, "Message sent."
 	end,
 })
 
-core.register_chatcommand("die", {
+multicraft.register_chatcommand("die", {
 	params = "",
 	description = "Kills yourself.",
 	func = function(name, param)
-		local player = core.get_player_by_name(name)
+		local player = multicraft.get_player_by_name(name)
 		if not player then
 			return
 		end
@@ -806,14 +806,14 @@ core.register_chatcommand("die", {
 	end,
 })
 
-core.register_chatcommand("last-login", {
+multicraft.register_chatcommand("last-login", {
 	params = "[name]",
 	description = "Get the last login time of a player",
 	func = function(name, param)
 		if param == "" then
 			param = name
 		end
-		local pauth = core.get_auth_handler().get_auth(param)
+		local pauth = multicraft.get_auth_handler().get_auth(param)
 		if pauth and pauth.last_login then
 			-- Time in UTC, ISO 8601 format
 			return true, "Last login time was " ..
@@ -823,16 +823,16 @@ core.register_chatcommand("last-login", {
 	end,
 })
 
-core.register_chatcommand( "stat", {
+multicraft.register_chatcommand( "stat", {
 	params = "[name]",
 	description = "show in-game action statistics",
 	func = function(name, param)
 		if param == "" then
 			param = name
-		elseif not core.get_player_by_name(param) then
+		elseif not multicraft.get_player_by_name(param) then
 			return false, "No such player."
 		end
-		local formspec = core.stat_formspec(param)
-		core.show_formspec(name, 'stat', formspec)
+		local formspec = multicraft.stat_formspec(param)
+		multicraft.show_formspec(name, 'stat', formspec)
 	end
 })

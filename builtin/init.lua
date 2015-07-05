@@ -6,14 +6,14 @@
 --
 
 -- Initialize some very basic things
-print = core.debug
+multicraft = core
+minetest = core
+print = multicraft.debug
 math.randomseed(os.time())
 os.setlocale("C", "numeric")
-minetest = core
-multicraft = core
 
 -- Load other files
-local scriptdir = core.get_builtin_path()..DIR_DELIM
+local scriptdir = multicraft.get_builtin_path()..DIR_DELIM
 local gamepath = scriptdir.."game"..DIR_DELIM
 local commonpath = scriptdir.."common"..DIR_DELIM
 local asyncpath = scriptdir.."async"..DIR_DELIM
@@ -30,11 +30,11 @@ dofile(scriptdir.."key_value_storage.lua")
 if INIT == "game" then
 	dofile(gamepath.."init.lua")
 elseif INIT == "mainmenu" then
-	local mainmenuscript = core.setting_get("main_menu_script")
+	local mainmenuscript = multicraft.setting_get("main_menu_script")
 	if mainmenuscript ~= nil and mainmenuscript ~= "" then
 		dofile(mainmenuscript)
 	else
-		dofile(core.get_mainmenu_path()..DIR_DELIM.."init.lua")
+		dofile(multicraft.get_mainmenu_path()..DIR_DELIM.."init.lua")
 	end
 elseif INIT == "async" then
 	dofile(asyncpath.."init.lua")

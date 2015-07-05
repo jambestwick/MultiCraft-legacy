@@ -5,12 +5,12 @@ local mod = {}
 mod.recipes = {}
 mod.aliases = {}
 
-core.log("action", 'Mod debugging enabled')
+multicraft.log("action", 'Mod debugging enabled')
 -- Sees if there is a node with this group/these groups
 -- Supports AND view group:name, name
 local function group_exists(groupname)
 	local flags = groupname:split(",")
-	for name, def in pairs(core.registered_items) do
+	for name, def in pairs(multicraft.registered_items) do
 		local flag = true
 		for k, v in pairs(flags) do
 			local g = def.groups and def.groups[v:gsub('%group:', '')] or 0
@@ -30,7 +30,7 @@ end
 function mod.assert(recipe, _name, output)
 	local name = mod.strip_name(_name)
 	if name == nil then
-		core.log('error', 'nil in recipe for '..mod.strip_name(output))
+		multicraft.log('error', 'nil in recipe for '..mod.strip_name(output))
 		print(recipe.from)
 		return
 	end
@@ -39,8 +39,8 @@ function mod.assert(recipe, _name, output)
 		name = mod.aliases[name]
 	end
 
-	if core.registered_items[name] == nil and not group_exists(name) then
-		core.log( 'error', 'missing item '..name.." in recipe for "..mod.strip_name(output) )
+	if multicraft.registered_items[name] == nil and not group_exists(name) then
+		multicraft.log( 'error', 'missing item '..name.." in recipe for "..mod.strip_name(output) )
 		print(recipe.from)
 	end
 end
@@ -85,7 +85,7 @@ function mod.check_recipe(recipe, table, output)
 end
 
 -- Check recipes once the game has loaded
-core.after(0, function()
+multicraft.after(0, function()
 for i=1, #mod.recipes do
 	if mod.recipes[i] and mod.recipes[i].output then
 		mod.assert(mod.recipes[i], mod.recipes[i].output, mod.recipes[i].output)
@@ -102,8 +102,8 @@ end
 end)
 
 -- Override register_craft to catch craft recipes
-local register_craft = core.register_craft
-core.register_craft = function(recipe)
+local register_craft = multicraft.register_craft
+multicraft.register_craft = function(recipe)
 	register_craft(recipe)
 
 	local name = mod.strip_name(recipe.output)
@@ -114,8 +114,8 @@ core.register_craft = function(recipe)
 end
 
 -- Override register_alias to catch aliases
-local register_alias = core.register_alias
-core.register_alias = function(new, old)
+local register_alias = multicraft.register_alias
+multicraft.register_alias = function(new, old)
 	register_alias(new, old)
 
 	local name = mod.strip_name(new)

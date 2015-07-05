@@ -281,7 +281,7 @@ function cleanup_path(temppath)
 	return temppath
 end
 
-function core.formspec_escape(text)
+function multicraft.formspec_escape(text)
 	if text ~= nil then
 		text = string.gsub(text,"\\","\\\\")
 		text = string.gsub(text,"%]","\\]")
@@ -293,7 +293,7 @@ function core.formspec_escape(text)
 end
 
 
-function core.splittext(text,charlimit)
+function multicraft.splittext(text,charlimit)
 	local retval = {}
 
 	local current_idx = 1
@@ -354,29 +354,29 @@ if INIT == "game" then
 	local dirs1 = {9, 18, 7, 12}
 	local dirs2 = {20, 23, 22, 21}
 
-	function core.rotate_and_place(itemstack, placer, pointed_thing,
+	function multicraft.rotate_and_place(itemstack, placer, pointed_thing,
 				infinitestacks, orient_flags)
 		orient_flags = orient_flags or {}
 
-		local unode = core.get_node_or_nil(pointed_thing.under)
+		local unode = multicraft.get_node_or_nil(pointed_thing.under)
 		if not unode then
 			return
 		end
-		local undef = core.registered_nodes[unode.name]
+		local undef = multicraft.registered_nodes[unode.name]
 		if undef and undef.on_rightclick then
 			undef.on_rightclick(pointed_thing.under, unode, placer,
 					itemstack, pointed_thing)
 			return
 		end
 		local pitch = placer:get_look_pitch()
-		local fdir = core.dir_to_facedir(placer:get_look_dir())
+		local fdir = multicraft.dir_to_facedir(placer:get_look_dir())
 		local wield_name = itemstack:get_name()
 
 		local above = pointed_thing.above
 		local under = pointed_thing.under
 		local iswall = (above.y == under.y)
 		local isceiling = not iswall and (above.y < under.y)
-		local anode = core.get_node_or_nil(above)
+		local anode = multicraft.get_node_or_nil(above)
 		if not anode then
 			return
 		end
@@ -389,13 +389,13 @@ if INIT == "game" then
 			iswall = false
 		end
 
-		if core.is_protected(pos, placer:get_player_name()) then
-			core.record_protection_violation(pos,
+		if multicraft.is_protected(pos, placer:get_player_name()) then
+			multicraft.record_protection_violation(pos,
 					placer:get_player_name())
 			return
 		end
 
-		local ndef = core.registered_nodes[node.name]
+		local ndef = multicraft.registered_nodes[node.name]
 		if not ndef or not ndef.buildable_to then
 			return
 		end
@@ -414,22 +414,22 @@ if INIT == "game" then
 		end
 
 		if iswall then
-			core.set_node(pos, {name = wield_name,
+			multicraft.set_node(pos, {name = wield_name,
 					param2 = dirs1[fdir+1]})
 		elseif isceiling then
 			if orient_flags.force_facedir then
-				core.set_node(pos, {name = wield_name,
+				multicraft.set_node(pos, {name = wield_name,
 						param2 = 20})
 			else
-				core.set_node(pos, {name = wield_name,
+				multicraft.set_node(pos, {name = wield_name,
 						param2 = dirs2[fdir+1]})
 			end
 		else -- place right side up
 			if orient_flags.force_facedir then
-				core.set_node(pos, {name = wield_name,
+				multicraft.set_node(pos, {name = wield_name,
 						param2 = 0})
 			else
-				core.set_node(pos, {name = wield_name,
+				multicraft.set_node(pos, {name = wield_name,
 						param2 = fdir})
 			end
 		end
@@ -446,9 +446,9 @@ if INIT == "game" then
 --implies infinite stacks when performing a 6d rotation.
 --------------------------------------------------------------------------------
 
-	core.rotate_node = function(itemstack, placer, pointed_thing)
-		core.rotate_and_place(itemstack, placer, pointed_thing,
-		core.setting_getbool("creative_mode"), 
+	multicraft.rotate_node = function(itemstack, placer, pointed_thing)
+		multicraft.rotate_and_place(itemstack, placer, pointed_thing,
+		multicraft.setting_getbool("creative_mode"), 
 		{invert_wall = placer:get_player_control().sneak})
 		return itemstack
 	end
@@ -459,9 +459,9 @@ if INIT == "game" then
 -- them having to copy&paste the entire node definition.
 --------------------------------------------------------------------------------
 
-	function core.clone_node(name)
+	function multicraft.clone_node(name)
 		node2={}
-		node=core.registered_nodes[name]
+		node=multicraft.registered_nodes[name]
 		for k,v in pairs(node) do
 			node2[k]=v
 		end
@@ -472,25 +472,25 @@ end
 
 --------------------------------------------------------------------------------
 
-if minetest then
+if multicraft then
 	local dirs1 = { 9, 18, 7, 12 }
 	local dirs2 = { 20, 23, 22, 21 }
 
-	function core.rotate_and_place(itemstack, placer, pointed_thing, infinitestacks, orient_flags)
+	function multicraft.rotate_and_place(itemstack, placer, pointed_thing, infinitestacks, orient_flags)
 		orient_flags = orient_flags or {}
 
-		local node = core.get_node(pointed_thing.under)
-		if not core.registered_nodes[node.name]
-		   or not core.registered_nodes[node.name].on_rightclick then
+		local node = multicraft.get_node(pointed_thing.under)
+		if not multicraft.registered_nodes[node.name]
+		   or not multicraft.registered_nodes[node.name].on_rightclick then
 
 			local above = pointed_thing.above
 			local under = pointed_thing.under
 			local pitch = placer:get_look_pitch()
-			local pname = core.get_node(under).name
-			local node = core.get_node(above)
-			local fdir = core.dir_to_facedir(placer:get_look_dir())
+			local pname = multicraft.get_node(under).name
+			local node = multicraft.get_node(above)
+			local fdir = multicraft.dir_to_facedir(placer:get_look_dir())
 			local wield_name = itemstack:get_name()
-			local reg_node = core.registered_nodes[pname]
+			local reg_node = multicraft.registered_nodes[pname]
 
 			if not reg_node or not reg_node.on_rightclick then
 
@@ -504,7 +504,7 @@ if minetest then
 					iswall = false
 				end
 
-				reg_node = core.registered_nodes[core.get_node(pos1).name]
+				reg_node = multicraft.registered_nodes[multicraft.get_node(pos1).name]
 				if not reg_node or not reg_node.buildable_to then
 					return
 				end
@@ -523,18 +523,18 @@ if minetest then
 				end
 
 				if iswall then
-					core.add_node(pos1, {name = wield_name, param2 = dirs1[fdir+1] })
+					multicraft.add_node(pos1, {name = wield_name, param2 = dirs1[fdir+1] })
 				elseif isceiling then
 					if orient_flags.force_facedir then
-						core.add_node(pos1, {name = wield_name, param2 = 20 })
+						multicraft.add_node(pos1, {name = wield_name, param2 = 20 })
 					else
-						core.add_node(pos1, {name = wield_name, param2 = dirs2[fdir+1] })
+						multicraft.add_node(pos1, {name = wield_name, param2 = dirs2[fdir+1] })
 					end
 				else -- place right side up
 					if orient_flags.force_facedir then
-						core.add_node(pos1, {name = wield_name, param2 = 0 })
+						multicraft.add_node(pos1, {name = wield_name, param2 = 0 })
 					else
-						core.add_node(pos1, {name = wield_name, param2 = fdir })
+						multicraft.add_node(pos1, {name = wield_name, param2 = fdir })
 					end
 				end
 
@@ -544,7 +544,7 @@ if minetest then
 				end
 			end
 		else
-			core.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack)
+			multicraft.registered_nodes[node.name].on_rightclick(pointed_thing.under, node, placer, itemstack)
 		end
 	end
 
@@ -555,16 +555,16 @@ if minetest then
 --------------------------------------------------------------------------------
 
 
-	core.rotate_node = function(itemstack, placer, pointed_thing)
-		core.rotate_and_place(itemstack, placer, pointed_thing,
-				core.setting_getbool("creative_mode"),
+	multicraft.rotate_node = function(itemstack, placer, pointed_thing)
+		multicraft.rotate_and_place(itemstack, placer, pointed_thing,
+				multicraft.setting_getbool("creative_mode"),
 				{invert_wall = placer:get_player_control().sneak})
 		return itemstack
 	end
 end
 
 --------------------------------------------------------------------------------
-function core.explode_table_event(evt)
+function multicraft.explode_table_event(evt)
 	if evt ~= nil then
 		local parts = evt:split(":")
 		if #parts == 3 then
@@ -581,7 +581,7 @@ function core.explode_table_event(evt)
 end
 
 --------------------------------------------------------------------------------
-function core.explode_textlist_event(evt)
+function multicraft.explode_textlist_event(evt)
 	if evt ~= nil then
 		local parts = evt:split(":")
 		if #parts == 2 then
@@ -596,8 +596,8 @@ function core.explode_textlist_event(evt)
 end
 
 --------------------------------------------------------------------------------
-function core.explode_scrollbar_event(evt)
-	local retval = core.explode_textlist_event(evt)
+function multicraft.explode_scrollbar_event(evt)
+	local retval = multicraft.explode_textlist_event(evt)
 
 	retval.value = retval.index
 	retval.index = nil
@@ -606,7 +606,7 @@ function core.explode_scrollbar_event(evt)
 end
 
 --------------------------------------------------------------------------------
-function core.pos_to_string(pos, decimal_places)
+function multicraft.pos_to_string(pos, decimal_places)
 	local x = pos.x
 	local y = pos.y
 	local z = pos.z
@@ -619,7 +619,7 @@ function core.pos_to_string(pos, decimal_places)
 end
 
 --------------------------------------------------------------------------------
-function core.string_to_pos(value)
+function multicraft.string_to_pos(value)
 	if value == nil then
 		return nil
 	end
@@ -643,9 +643,9 @@ function core.string_to_pos(value)
 	return nil
 end
 
-assert(core.string_to_pos("10.0, 5, -2").x == 10)
-assert(core.string_to_pos("( 10.0, 5, -2)").z == -2)
-assert(core.string_to_pos("asd, 5, -2)") == nil)
+assert(multicraft.string_to_pos("10.0, 5, -2").x == 10)
+assert(multicraft.string_to_pos("( 10.0, 5, -2)").z == -2)
+assert(multicraft.string_to_pos("asd, 5, -2)") == nil)
 
 --------------------------------------------------------------------------------
 function table.copy(t, seen)
@@ -662,7 +662,7 @@ end
 -- mainmenu only functions
 --------------------------------------------------------------------------------
 if INIT == "mainmenu" then
-	function core.get_game(index)
+	function multicraft.get_game(index)
 		local games = game.get_games()
 
 		if index > 0 and index <= #games then
@@ -673,7 +673,7 @@ if INIT == "mainmenu" then
 	end
 
 	function fgettext_ne(text, ...)
-		text = core.gettext(text)
+		text = multicraft.gettext(text)
 		local arg = {n=select('#', ...), ...}
 		if arg.n >= 1 then
 			-- Insert positional parameters ($1, $2, ...)
@@ -698,6 +698,6 @@ if INIT == "mainmenu" then
 	end
 
 	function fgettext(text, ...)
-		return core.formspec_escape(fgettext_ne(text, ...))
+		return multicraft.formspec_escape(fgettext_ne(text, ...))
 	end
 end

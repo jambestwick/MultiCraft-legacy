@@ -17,7 +17,7 @@
 
 --------------------------------------------------------------------------------
 function get_mods(path,retval,modpack)
-	local mods = core.get_dir_list(path, true)
+	local mods = multicraft.get_dir_list(path, true)
 	
 	for i=1, #mods, 1 do
 		if mods[i]:sub(1,1) ~= "." then
@@ -57,8 +57,8 @@ function modmgr.extract(modfile)
 
         if tempfolder ~= nil and
             tempfolder ~= "" then
-            core.create_dir(tempfolder)
-            if core.extract_zip(modfile.name,tempfolder) then
+            multicraft.create_dir(tempfolder)
+            if multicraft.extract_zip(modfile.name,tempfolder) then
                 return tempfolder
             end
         end
@@ -93,7 +93,7 @@ function modmgr.getbasefolder(temppath)
 				}
 	end
 
-	local subdirs = core.get_dir_list(temppath, true)
+	local subdirs = multicraft.get_dir_list(temppath, true)
 
 	--only single mod or modpack allowed
 	if #subdirs ~= 1 then
@@ -194,16 +194,16 @@ function modmgr.identify_modname(modpath,filename)
         while line~= nil do
             local modname = nil
 
-            if line:find("core.register_tool") then
+            if line:find("multicraft.register_tool") then
                 modname = modmgr.parse_register_line(line)
             end
 
-            if line:find("core.register_craftitem") then
+            if line:find("multicraft.register_craftitem") then
                 modname = modmgr.parse_register_line(line)
             end
 
 
-            if line:find("core.register_node") then
+            if line:find("multicraft.register_node") then
                 modname = modmgr.parse_register_line(line)
             end
 
@@ -321,7 +321,7 @@ function modmgr.get_worldconfig(worldpath)
         if key == "gameid" then
             worldconfig.id = value
         else
-            worldconfig.global_mods[key] = core.is_yes(value)
+            worldconfig.global_mods[key] = multicraft.is_yes(value)
         end
     end
 
@@ -357,8 +357,8 @@ function modmgr.installmod(modfilename,basename)
         end
 
         if clean_path ~= nil then
-            local targetpath = core.get_modpath() .. DIR_DELIM .. clean_path
-            if not core.copy_dir(basefolder.path,targetpath) then
+            local targetpath = multicraft.get_modpath() .. DIR_DELIM .. clean_path
+            if not multicraft.copy_dir(basefolder.path,targetpath) then
                 gamedata.errormessage = fgettext("Failed to install $1 to $2", basename, targetpath)
             end
         else
@@ -379,14 +379,14 @@ function modmgr.installmod(modfilename,basename)
         end
 
         if targetfolder ~= nil and modmgr.isValidModname(targetfolder) then
-            local targetpath = core.get_modpath() .. DIR_DELIM .. targetfolder
-            core.copy_dir(basefolder.path,targetpath)
+            local targetpath = multicraft.get_modpath() .. DIR_DELIM .. targetfolder
+            multicraft.copy_dir(basefolder.path,targetpath)
         else
             gamedata.errormessage = fgettext("Install Mod: unable to find real modname for: $1", modfilename)
         end
     end
 
-    core.delete_dir(modpath)
+    multicraft.delete_dir(modpath)
 
     modmgr.refresh_globals()
 
@@ -400,7 +400,7 @@ function modmgr.preparemodlist(data)
     local game_mods = {}
 
     --read global mods
-    local modpath = core.get_modpath()
+    local modpath = multicraft.get_modpath()
 
     if modpath ~= nil and
         modpath ~= "" then
@@ -443,9 +443,9 @@ function modmgr.preparemodlist(data)
                 end
             end
             if element ~= nil then
-                element.enabled = core.is_yes(value)
+                element.enabled = multicraft.is_yes(value)
             else
-                core.log("info", "Mod: " .. key .. " " .. dump(value) .. " but not found")
+                multicraft.log("info", "Mod: " .. key .. " " .. dump(value) .. " but not found")
             end
         end
     end

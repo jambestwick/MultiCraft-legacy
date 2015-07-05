@@ -1,9 +1,9 @@
 -- Minetest: builtin/item_entity.lua
 
-function core.spawn_item(pos, item)
+function multicraft.spawn_item(pos, item)
 	-- Take item in any format
 	local stack = ItemStack(item)
-	local obj = core.add_entity(pos, "__builtin:item")
+	local obj = multicraft.add_entity(pos, "__builtin:item")
 	obj:get_luaentity():set_item(stack:to_string())
 	return obj
 end
@@ -11,12 +11,12 @@ end
 -- If item_entity_ttl is not set, enity will have default life time 
 -- Setting it to -1 disables the feature
 
-local time_to_live = tonumber(core.setting_get("item_entity_ttl"))
+local time_to_live = tonumber(multicraft.setting_get("item_entity_ttl"))
 if not time_to_live then
 	time_to_live = -1
 end
 
-core.register_entity(":__builtin:item", {
+multicraft.register_entity(":__builtin:item", {
 	initial_properties = {
 		hp_max = 1,
 		physical = true,
@@ -52,9 +52,9 @@ core.register_entity(":__builtin:item", {
 		end
 		local item_texture = nil
 		local item_type = ""
-		if core.registered_items[itemname] then
-			item_texture = core.registered_items[itemname].inventory_image
-			item_type = core.registered_items[itemname].type
+		if multicraft.registered_items[itemname] then
+			item_texture = multicraft.registered_items[itemname].inventory_image
+			item_type = multicraft.registered_items[itemname].type
 		end
 		local prop = {
 			is_visible = true,
@@ -68,7 +68,7 @@ core.register_entity(":__builtin:item", {
 	end,
 
 	get_staticdata = function(self)
-		return core.serialize({
+		return multicraft.serialize({
 			itemstring = self.itemstring,
 			always_collect = self.always_collect,
 			age = self.age
@@ -77,7 +77,7 @@ core.register_entity(":__builtin:item", {
 
 	on_activate = function(self, staticdata, dtime_s)
 		if string.sub(staticdata, 1, string.len("return")) == "return" then
-			local data = core.deserialize(staticdata)
+			local data = multicraft.deserialize(staticdata)
 			if data and type(data) == "table" then
 				self.itemstring = data.itemstring
 				self.always_collect = data.always_collect
@@ -155,7 +155,7 @@ core.register_entity(":__builtin:item", {
 		end
 		local p = self.object:getpos()
 		p.y = p.y - 0.5
-		local node = core.get_node_or_nil(p)
+		local node = multicraft.get_node_or_nil(p)
 		local in_unloaded = (node == nil)
 		if in_unloaded then
 			-- Don't infinetly fall into unloaded map
@@ -168,11 +168,11 @@ core.register_entity(":__builtin:item", {
 		local nn = node.name
 		-- If node is not registered or node is walkably solid and resting on nodebox
 		local v = self.object:getvelocity()
-		if not core.registered_nodes[nn] or (core.registered_nodes[nn].walkable and core.get_item_group(nn, "slippery")==0) and v.y == 0 then
+		if not multicraft.registered_nodes[nn] or (multicraft.registered_nodes[nn].walkable and multicraft.get_item_group(nn, "slippery")==0) and v.y == 0 then
 			if self.physical_state then
 				local own_stack = ItemStack(self.object:get_luaentity().itemstring)
 				-- Merge with close entities of the same item
-				for _, object in ipairs(core.get_objects_inside_radius(p, 0.8)) do
+				for _, object in ipairs(multicraft.get_objects_inside_radius(p, 0.8)) do
 					local obj = object:get_luaentity()
 					if obj and obj.name == "__builtin:item"
 							and obj.physical_state == false then
@@ -192,7 +192,7 @@ core.register_entity(":__builtin:item", {
 				self.object:setacceleration({x = 0, y = -10, z = 0})
 				self.physical_state = true
 				self.object:set_properties({physical = true})
-			elseif core.get_item_group(nn, "slippery") ~= 0 then
+			elseif multicraft.get_item_group(nn, "slippery") ~= 0 then
 				if math.abs(v.x) < .2 and math.abs(v.z) < .2 then
 					self.object:setvelocity({x=0,y=0,z=0})
 					self.object:setacceleration({x=0, y=0, z=0})

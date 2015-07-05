@@ -39,11 +39,11 @@ function render_favorite(spec,render_details)
         local text = ""
 
         if spec.name ~= nil then
-                text = text .. core.formspec_escape(spec.name:trim())
+                text = text .. multicraft.formspec_escape(spec.name:trim())
 
 --              if spec.description ~= nil and
---                      core.formspec_escape(spec.description):trim() ~= "" then
---                      text = text .. " (" .. core.formspec_escape(spec.description) .. ")"
+--                      multicraft.formspec_escape(spec.description):trim() ~= "" then
+--                      text = text .. " (" .. multicraft.formspec_escape(spec.description) .. ")"
 --              end
         else
                 if spec.address ~= nil then
@@ -108,8 +108,8 @@ end
 
 --------------------------------------------------------------------------------
 os.tempfolder = function()
-        if core.setting_get("TMPFolder") then
-                return core.setting_get("TMPFolder") .. DIR_DELIM .. "MT_" .. math.random(0,10000)
+        if multicraft.setting_get("TMPFolder") then
+                return multicraft.setting_get("TMPFolder") .. DIR_DELIM .. "MT_" .. math.random(0,10000)
         end
 
         local filetocheck = os.tmpname()
@@ -137,8 +137,8 @@ function menu_render_worldlist()
                         retval = retval ..","
                 end
 
-                retval = retval .. core.formspec_escape(v.name) ..
-                                        " \\[" .. core.formspec_escape(v.gameid) .. "\\]"
+                retval = retval .. multicraft.formspec_escape(v.name) ..
+                                        " \\[" .. multicraft.formspec_escape(v.gameid) .. "\\]"
         end
 
         return retval
@@ -148,22 +148,22 @@ end
 function menu_handle_key_up_down(fields,textlist,settingname)
 
         if fields["key_up"] then
-                local oldidx = core.get_textlist_index(textlist)
+                local oldidx = multicraft.get_textlist_index(textlist)
 
                 if oldidx ~= nil and oldidx > 1 then
                         local newidx = oldidx -1
-                        core.setting_set(settingname,
+                        multicraft.setting_set(settingname,
                                 menudata.worldlist:get_raw_index(newidx))
                 end
                 return true
         end
 
         if fields["key_down"] then
-                local oldidx = core.get_textlist_index(textlist)
+                local oldidx = multicraft.get_textlist_index(textlist)
 
                 if oldidx ~= nil and oldidx < menudata.worldlist:size() then
                         local newidx = oldidx + 1
-                        core.setting_set(settingname,
+                        multicraft.setting_set(settingname,
                                 menudata.worldlist:get_raw_index(newidx))
                 end
 
@@ -177,12 +177,12 @@ end
 function asyncOnlineFavourites()
 
         menudata.favorites = {}
-        core.handle_async(
+        multicraft.handle_async(
                 function(param)
-                      local ret = core.get_favorites("online")
-                      local num = core.get_favorites("local")
+                      local ret = multicraft.get_favorites("online")
+                      local num = multicraft.get_favorites("local")
                       local cou = 0
-                      for k,v in ipairs(core.get_favorites("local")) do
+                      for k,v in ipairs(multicraft.get_favorites("local")) do
                           cou = cou+1
                           table.insert(ret,cou,v)
                       end
@@ -191,14 +191,14 @@ function asyncOnlineFavourites()
                 nil,
                 function(result)
                    menudata.favorites = result
-                   core.event_handler("Refresh")
+                   multicraft.event_handler("Refresh")
                 end
                 )
 end
 
 --------------------------------------------------------------------------------
 function text2textlist(xpos,ypos,width,height,tl_name,textlen,text,transparency)
-        local textlines = core.splittext(text,textlen)
+        local textlines = multicraft.splittext(text,textlen)
 
         local retval = "textlist[" .. xpos .. "," .. ypos .. ";"
                                                                 .. width .. "," .. height .. ";"
@@ -206,7 +206,7 @@ function text2textlist(xpos,ypos,width,height,tl_name,textlen,text,transparency)
 
         for i=1, #textlines, 1 do
                 textlines[i] = textlines[i]:gsub("\r","")
-                retval = retval .. core.formspec_escape(textlines[i]) .. ","
+                retval = retval .. multicraft.formspec_escape(textlines[i]) .. ","
         end
 
         retval = retval .. ";0;"

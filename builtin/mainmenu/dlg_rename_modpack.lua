@@ -27,24 +27,24 @@ local function rename_modpack_formspec(dialogdata)
                 "field[4.5,1.4;6,0.5;te_modpack_name;;" ..
                 dialogdata.mod.name ..
                 "]" ..
-                "image_button[5,4.2;2.6,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_rename_modpack_confirm;"..
-                                fgettext("Accept") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-                "image_button[7.5,4.2;2.8,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_rename_modpack_cancel;"..
-                                fgettext("Cancel") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                "image_button[5,4.2;2.6,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_rename_modpack_confirm;"..
+                                fgettext("Accept") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+                "image_button[7.5,4.2;2.8,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_rename_modpack_cancel;"..
+                                fgettext("Cancel") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
 
         return retval
 end
 
 --------------------------------------------------------------------------------
 local function rename_modpack_buttonhandler(this, fields)
-    core.set_clouds(false)
-    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    multicraft.set_clouds(false)
+    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         if fields["dlg_rename_modpack_confirm"] ~= nil then
-                local oldpath = core.get_modpath() .. DIR_DELIM .. this.data.mod.name
-                local targetpath = core.get_modpath() .. DIR_DELIM .. fields["te_modpack_name"]
-                core.copy_dir(oldpath,targetpath,false)
+                local oldpath = multicraft.get_modpath() .. DIR_DELIM .. this.data.mod.name
+                local targetpath = multicraft.get_modpath() .. DIR_DELIM .. fields["te_modpack_name"]
+                multicraft.copy_dir(oldpath,targetpath,false)
                 modmgr.refresh_globals()
                 modmgr.selected_mod = modmgr.global_mods:get_current_index(
                         modmgr.global_mods:raw_index_by_uid(fields["te_modpack_name"]))

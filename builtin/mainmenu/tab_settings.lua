@@ -39,27 +39,27 @@ local mipmap = {
 }
 
 local function getFilterSettingIndex()
-        if (core.setting_get(filters[2][3]) == "true") then
+        if (multicraft.setting_get(filters[2][3]) == "true") then
                 return 3
         end
-        if (core.setting_get(filters[2][3]) == "false" and core.setting_get(filters[2][2]) == "true") then
+        if (multicraft.setting_get(filters[2][3]) == "false" and multicraft.setting_get(filters[2][2]) == "true") then
                 return 2
         end
         return 1
 end
 
 local function getMipmapSettingIndex()
-        if (core.setting_get(mipmap[2][3]) == "true") then
+        if (multicraft.setting_get(mipmap[2][3]) == "true") then
                 return 3
         end
-        if (core.setting_get(mipmap[2][3]) == "false" and core.setting_get(mipmap[2][2]) == "true") then
+        if (multicraft.setting_get(mipmap[2][3]) == "false" and multicraft.setting_get(mipmap[2][2]) == "true") then
                 return 2
         end
         return 1
 end
 
 local function video_driver_fname_to_name(selected_driver)
-        local video_drivers = core.get_video_drivers()
+        local video_drivers = multicraft.get_video_drivers()
 
         for i=1, #video_drivers do
                 if selected_driver == video_drivers[i].friendly_name then
@@ -73,20 +73,20 @@ local function dlg_confirm_reset_formspec(data)
         local retval =
                 "size[8,3]" ..
                 "label[1,1;".. fgettext("Are you sure to reset your singleplayer world?") .. "]"..
-                "image_button[1,2;2.6,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_confirm;"..
-                                fgettext("Yes") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-                "image_button[4,2;2.8,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_cancel;"..
-                                fgettext("No!!!") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                "image_button[1,2;2.6,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_confirm;"..
+                                fgettext("Yes") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+                "image_button[4,2;2.8,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;dlg_reset_singleplayer_cancel;"..
+                                fgettext("No!!!") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
         return retval
 end
 
 local function dlg_confirm_reset_btnhandler(this, fields, dialogdata)
-    core.set_clouds(false)
-    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    multicraft.set_clouds(false)
+    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         if fields["dlg_reset_singleplayer_confirm"] ~= nil then
-                local worldlist = core.get_worlds()
+                local worldlist = multicraft.get_worlds()
                 local found_singleplayerworld = false
 
                 for i=1,#worldlist,1 do
@@ -97,12 +97,12 @@ local function dlg_confirm_reset_btnhandler(this, fields, dialogdata)
                 end
 
                 if found_singleplayerworld then
-                        core.delete_world(gamedata.worldindex)
+                        multicraft.delete_world(gamedata.worldindex)
                 end
 
-                core.create_world("singleplayerworld", 1)
+                multicraft.create_world("singleplayerworld", 1)
 
-                worldlist = core.get_worlds()
+                worldlist = multicraft.get_worlds()
 
                 found_singleplayerworld = false
 
@@ -132,7 +132,7 @@ end
 
 local function gui_scale_to_scrollbar()
 
-        local current_value = tonumber(core.setting_get("gui_scaling"))
+        local current_value = tonumber(multicraft.setting_get("gui_scaling"))
 
         if (current_value == nil) or current_value < 0.25 then
                 return 0
@@ -165,8 +165,8 @@ local function scrollbar_to_gui_scale(value)
 end
 
 local function formspec(tabview, name, tabdata)
-        local video_drivers = core.get_video_drivers()
-        local current_video_driver = core.setting_get("video_driver"):lower()
+        local video_drivers = multicraft.get_video_drivers()
+        local current_video_driver = multicraft.setting_get("video_driver"):lower()
 
         local driver_formspec_string = ""
         local driver_current_idx = 0
@@ -191,19 +191,19 @@ local function formspec(tabview, name, tabdata)
 
                 "box[0.75,2.5;4.5,3.9;#999999]" ..
                 "checkbox[1.0,2.5;cb_smooth_lighting;".. fgettext("Smooth Lighting")
-                                .. ";".. dump(core.setting_getbool("smooth_lighting")) .. "]"..
+                                .. ";".. dump(multicraft.setting_getbool("smooth_lighting")) .. "]"..
                 "checkbox[1.0,3.0;cb_particles;".. fgettext("Enable Particles") .. ";"
-                                .. dump(core.setting_getbool("enable_particles"))       .. "]"..
+                                .. dump(multicraft.setting_getbool("enable_particles"))       .. "]"..
                 "checkbox[1.0,3.5;cb_3d_clouds;".. fgettext("3D Clouds") .. ";"
-                                .. dump(core.setting_getbool("enable_3d_clouds")) .. "]"..
+                                .. dump(multicraft.setting_getbool("enable_3d_clouds")) .. "]"..
                 "checkbox[1.0,4.0;cb_fancy_trees;".. fgettext("Fancy Trees") .. ";"
-                                .. dump(core.setting_getbool("new_style_leaves")) .. "]"..
+                                .. dump(multicraft.setting_getbool("new_style_leaves")) .. "]"..
                 "checkbox[1.0,4.5;cb_opaque_water;".. fgettext("Opaque Water") .. ";"
-                                .. dump(core.setting_getbool("opaque_water")) .. "]"..
+                                .. dump(multicraft.setting_getbool("opaque_water")) .. "]"..
                 "checkbox[1.0,5.0;cb_connected_glass;".. fgettext("Connected Glass") .. ";"
-                                .. dump(core.setting_getbool("connected_glass"))        .. "]"..
+                                .. dump(multicraft.setting_getbool("connected_glass"))        .. "]"..
                 "checkbox[1.0,5.5;cb_node_highlighting;".. fgettext("Node Highlighting") .. ";"
-                                .. dump(core.setting_getbool("enable_node_highlighting")) .. "]"..
+                                .. dump(multicraft.setting_getbool("enable_node_highlighting")) .. "]"..
 
 
         "box[5.5,2.5;4,3.45;#999999]" ..
@@ -225,35 +225,35 @@ local function formspec(tabview, name, tabdata)
                 tab_string = tab_string ..
                 "box[9.75,2.5;5.25,4;#999999]"..
                 "checkbox[10,2.5;cb_shaders;".. fgettext("Shaders") .. ";"
-                .. dump(core.setting_getbool("enable_shaders")) .. "]"..
-                "image_button[0,9.55;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_change_keys;".. fgettext("Change keys") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"--..
---                "image_button[3.75,5;3.88,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_reset_singleplayer;".. fgettext("Reset singleplayer world") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                .. dump(multicraft.setting_getbool("enable_shaders")) .. "]"..
+                "image_button[0,9.55;4,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_change_keys;".. fgettext("Change keys") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"--..
+--                "image_button[3.75,5;3.88,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_reset_singleplayer;".. fgettext("Reset singleplayer world") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
         else
                 --tab_string = tab_string ..
---                "image_button[3.75,5;3.88,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_reset_singleplayer;".. fgettext("Reset singleplayer world") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+--                "image_button[3.75,5;3.88,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_reset_singleplayer;".. fgettext("Reset singleplayer world") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
         end
 
         tab_string = tab_string ..
-        "image_button[4,9.55;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_textures;".. fgettext("Texturepacks") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir)..
+        "image_button[4,9.55;3.95,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_textures;".. fgettext("Texturepacks") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir)..
         "menu_button_b.png]"..
-        "image_button[8,9.55;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_credits;".. fgettext("Credits") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-        "image_button[12,9.55;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_cancel;".. fgettext("OK") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+        "image_button[8,9.55;3.95,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_credits;".. fgettext("Credits") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+        "image_button[12,9.55;4,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_cancel;".. fgettext("OK") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
 
 
         if PLATFORM == "Android" then
                 tab_string = tab_string ..
                 "box[9.75,2.5;5.25,2.5;#999999]" ..
-                "checkbox[10,2.75;cb_touchscreen_target;".. fgettext("Touch free target") .. ";" .. dump(core.setting_getbool("touchtarget")) .. "]"..
+                "checkbox[10,2.75;cb_touchscreen_target;".. fgettext("Touch free target") .. ";" .. dump(multicraft.setting_getbool("touchtarget")) .. "]"..
 ""
           --      "box[0.75,6.8;14.25,1.35;#999999]" ..
           --      "label[1.5,6.8;" .. fgettext("GUI scale factor") .. "]"..
                 --"scrollbar[1.0,7.2;13.75,0.7;sb_gui_scaling;horizontal;" .. gui_scale_to_scrollbar() .. "]" ..
-          --      "tooltip[sb_gui_scaling;" .. fgettext("Scaling factor applied to menu elements: ") .. dump(core.setting_get("gui_scaling")) .. "]"
+          --      "tooltip[sb_gui_scaling;" .. fgettext("Scaling factor applied to menu elements: ") .. dump(multicraft.setting_get("gui_scaling")) .. "]"
 
-              --  if core.setting_get("touchscreen_threshold") ~= nil then
+              --  if multicraft.setting_get("touchscreen_threshold") ~= nil then
                    tab_string = tab_string ..
                                 "label[10,3.5;" .. fgettext("Touchthreshold (px)") .. "]" ..
-                                "dropdown[10,4.0;5.18;dd_touchthreshold;0,10,20,30,40,50;" .. ((tonumber(core.setting_get("touchscreen_threshold") or 20)/10)+1) .. "]"
+                                "dropdown[10,4.0;5.18;dd_touchthreshold;0,10,20,30,40,50;" .. ((tonumber(multicraft.setting_get("touchscreen_threshold") or 20)/10)+1) .. "]"
               --  end
 
         --else
@@ -261,24 +261,24 @@ local function formspec(tabview, name, tabdata)
                -- "box[0.75,6.8;14.25,1.35;#999999]" ..
                -- "label[1.5,6.8;" .. fgettext("GUI scale factor") .. "]"..
                -- "scrollbar[1.0,7.5;13.75,0.4;sb_gui_scaling;horizontal;" .. gui_scale_to_scrollbar() .. "]" ..
-               -- "tooltip[sb_gui_scaling;" .. fgettext("Scaling factor applied to menu elements: ") .. dump(core.setting_get("gui_scaling")) .. "]"
+               -- "tooltip[sb_gui_scaling;" .. fgettext("Scaling factor applied to menu elements: ") .. dump(multicraft.setting_get("gui_scaling")) .. "]"
         end
 
         if PLATFORM ~= "Android" then
-           if core.setting_getbool("enable_shaders") then
+           if multicraft.setting_getbool("enable_shaders") then
                 tab_string = tab_string ..
                                 "checkbox[10,3.0;cb_bumpmapping;".. fgettext("Bumpmapping") .. ";"
-                                                .. dump(core.setting_getbool("enable_bumpmapping")) .. "]"..
+                                                .. dump(multicraft.setting_getbool("enable_bumpmapping")) .. "]"..
                                 "checkbox[10,3.5;cb_generate_normalmaps;".. fgettext("Generate Normalmaps") .. ";"
-                                                .. dump(core.setting_getbool("generate_normalmaps")) .. "]"..
+                                                .. dump(multicraft.setting_getbool("generate_normalmaps")) .. "]"..
                                 "checkbox[10,4.0;cb_parallax;".. fgettext("Parallax Occlusion") .. ";"
-                                                .. dump(core.setting_getbool("enable_parallax_occlusion")) .. "]"..
+                                                .. dump(multicraft.setting_getbool("enable_parallax_occlusion")) .. "]"..
                                 "checkbox[10,4.5;cb_waving_water;".. fgettext("Waving Water") .. ";"
-                                                .. dump(core.setting_getbool("enable_waving_water")) .. "]"..
+                                                .. dump(multicraft.setting_getbool("enable_waving_water")) .. "]"..
                                 "checkbox[10,5.0;cb_waving_leaves;".. fgettext("Waving Leaves") .. ";"
-                                                .. dump(core.setting_getbool("enable_waving_leaves")) .. "]"..
+                                                .. dump(multicraft.setting_getbool("enable_waving_leaves")) .. "]"..
                                 "checkbox[10,5.5;cb_waving_plants;".. fgettext("Waving Plants") .. ";"
-                                                .. dump(core.setting_getbool("enable_waving_plants")) .. "]"
+                                                .. dump(multicraft.setting_getbool("enable_waving_plants")) .. "]"
            else
                 tab_string = tab_string ..
                                 "textlist[10.3,3.2;4,1;;#888888" .. fgettext("Bumpmapping") .. ";0;true]" ..
@@ -295,91 +295,91 @@ end
 --------------------------------------------------------------------------------
 local function handle_settings_buttons(this, fields, tabname, tabdata)
         if fields["cb_fancy_trees"] then
-                core.setting_set("new_style_leaves", fields["cb_fancy_trees"])
+                multicraft.setting_set("new_style_leaves", fields["cb_fancy_trees"])
                 return true
         end
         if fields["cb_smooth_lighting"] then
-                core.setting_set("smooth_lighting", fields["cb_smooth_lighting"])
+                multicraft.setting_set("smooth_lighting", fields["cb_smooth_lighting"])
                 return true
         end
         if fields["cb_3d_clouds"] then
-                core.setting_set("enable_3d_clouds", fields["cb_3d_clouds"])
+                multicraft.setting_set("enable_3d_clouds", fields["cb_3d_clouds"])
                 return true
         end
         if fields["cb_opaque_water"] then
-                core.setting_set("opaque_water", fields["cb_opaque_water"])
+                multicraft.setting_set("opaque_water", fields["cb_opaque_water"])
                 return true
         end
         if fields["cb_mipmapping"] then
-                core.setting_set("mip_map", fields["cb_mipmapping"])
+                multicraft.setting_set("mip_map", fields["cb_mipmapping"])
                 return true
         end
         if fields["cb_anisotrophic"] then
-                core.setting_set("anisotropic_filter", fields["cb_anisotrophic"])
+                multicraft.setting_set("anisotropic_filter", fields["cb_anisotrophic"])
                 return true
         end
         if fields["cb_bilinear"] then
-                core.setting_set("bilinear_filter", fields["cb_bilinear"])
+                multicraft.setting_set("bilinear_filter", fields["cb_bilinear"])
                 return true
         end
         if fields["cb_trilinear"] then
-                core.setting_set("trilinear_filter", fields["cb_trilinear"])
+                multicraft.setting_set("trilinear_filter", fields["cb_trilinear"])
                 return true
         end
         if fields["cb_shaders"] then
-                if (core.setting_get("video_driver") == "direct3d8" or core.setting_get("video_driver") == "direct3d9") then
-                        core.setting_set("enable_shaders", "false")
+                if (multicraft.setting_get("video_driver") == "direct3d8" or multicraft.setting_get("video_driver") == "direct3d9") then
+                        multicraft.setting_set("enable_shaders", "false")
                         gamedata.errormessage = fgettext("To enable shaders the OpenGL driver needs to be used.")
                 else
-                        core.setting_set("enable_shaders", fields["cb_shaders"])
+                        multicraft.setting_set("enable_shaders", fields["cb_shaders"])
                 end
                 return true
         end
         if fields["cb_connected_glass"] then
-                core.setting_set("connected_glass", fields["cb_connected_glass"])
+                multicraft.setting_set("connected_glass", fields["cb_connected_glass"])
                 return true
         end
         if fields["cb_particles"] then
-                core.setting_set("enable_particles", fields["cb_particles"])
+                multicraft.setting_set("enable_particles", fields["cb_particles"])
                 return true
         end
         if fields["cb_bumpmapping"] then
-                core.setting_set("enable_bumpmapping", fields["cb_bumpmapping"])
+                multicraft.setting_set("enable_bumpmapping", fields["cb_bumpmapping"])
         end
         if fields["cb_generate_normalmaps"] then
-                core.setting_set("generate_normalmaps", fields["cb_generate_normalmaps"])
+                multicraft.setting_set("generate_normalmaps", fields["cb_generate_normalmaps"])
         end
         if fields["cb_parallax"] then
-                core.setting_set("enable_parallax_occlusion", fields["cb_parallax"])
+                multicraft.setting_set("enable_parallax_occlusion", fields["cb_parallax"])
                 return true
         end
         if fields["cb_waving_water"] then
-                core.setting_set("enable_waving_water", fields["cb_waving_water"])
+                multicraft.setting_set("enable_waving_water", fields["cb_waving_water"])
                 return true
         end
         if fields["cb_waving_leaves"] then
-                core.setting_set("enable_waving_leaves", fields["cb_waving_leaves"])
+                multicraft.setting_set("enable_waving_leaves", fields["cb_waving_leaves"])
         end
         if fields["cb_waving_plants"] then
-                core.setting_set("enable_waving_plants", fields["cb_waving_plants"])
+                multicraft.setting_set("enable_waving_plants", fields["cb_waving_plants"])
                 return true
         end
         if fields["btn_change_keys"] ~= nil then
-                core.show_keys_menu()
+                multicraft.show_keys_menu()
                 return true
         end
 
         if fields["sb_gui_scaling"] then
-                local event = core.explode_scrollbar_event(fields["sb_gui_scaling"])
+                local event = multicraft.explode_scrollbar_event(fields["sb_gui_scaling"])
 
                 if event.type == "CHG" then
                         local tosave = string.format("%.2f",scrollbar_to_gui_scale(event.value))
-                        core.setting_set("gui_scaling",tosave)
+                        multicraft.setting_set("gui_scaling",tosave)
                         return true
                 end
         end
         if fields["cb_touchscreen_target"] then
-                core.setting_set("touchtarget", fields["cb_touchscreen_target"])
+                multicraft.setting_set("touchtarget", fields["cb_touchscreen_target"])
                 return true
         end
         if fields["btn_reset_singleplayer"] then
@@ -417,43 +417,43 @@ local function handle_settings_buttons(this, fields, tabname, tabdata)
     local ddhandled = false
 
     if fields["dd_touchthreshold"] then
-        core.setting_set("touchscreen_threshold",fields["dd_touchthreshold"])
+        multicraft.setting_set("touchscreen_threshold",fields["dd_touchthreshold"])
         ddhandled = true
     end
 
     if fields["dd_video_driver"] then
-        core.setting_set("video_driver",
+        multicraft.setting_set("video_driver",
             video_driver_fname_to_name(fields["dd_video_driver"]))
         ddhandled = true
     end
     if fields["dd_filters"] == dd_filter_labels[1] then
-        core.setting_set("bilinear_filter", "false")
-        core.setting_set("trilinear_filter", "false")
+        multicraft.setting_set("bilinear_filter", "false")
+        multicraft.setting_set("trilinear_filter", "false")
         ddhandled = true
     end
     if fields["dd_filters"] == dd_filter_labels[2] then
-        core.setting_set("bilinear_filter", "true")
-        core.setting_set("trilinear_filter", "false")
+        multicraft.setting_set("bilinear_filter", "true")
+        multicraft.setting_set("trilinear_filter", "false")
         ddhandled = true
     end
     if fields["dd_filters"] == dd_filter_labels[3] then
-        core.setting_set("bilinear_filter", "false")
-        core.setting_set("trilinear_filter", "true")
+        multicraft.setting_set("bilinear_filter", "false")
+        multicraft.setting_set("trilinear_filter", "true")
         ddhandled = true
     end
     if fields["dd_mipmap"] == dd_mipmap_labels[1] then
-        core.setting_set("mip_map", "false")
-        core.setting_set("anisotropic_filter", "false")
+        multicraft.setting_set("mip_map", "false")
+        multicraft.setting_set("anisotropic_filter", "false")
         ddhandled = true
     end
     if fields["dd_mipmap"] == dd_mipmap_labels[2] then
-        core.setting_set("mip_map", "true")
-        core.setting_set("anisotropic_filter", "false")
+        multicraft.setting_set("mip_map", "true")
+        multicraft.setting_set("anisotropic_filter", "false")
         ddhandled = true
     end
     if fields["dd_mipmap"] == dd_mipmap_labels[3] then
-        core.setting_set("mip_map", "true")
-        core.setting_set("anisotropic_filter", "true")
+        multicraft.setting_set("mip_map", "true")
+        multicraft.setting_set("anisotropic_filter", "true")
         ddhandled = true
     end
 

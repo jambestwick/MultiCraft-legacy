@@ -145,14 +145,14 @@ end
 --------------------------------------------------------------------------------
 local function build_callback(log_id, fct)
 	return function( toregister )
-		local modname = core.get_current_modname()
+		local modname = multicraft.get_current_modname()
 		
 		fct(function(...)
-			local starttime = core.get_us_time()
+			local starttime = multicraft.get_us_time()
 			-- note maximum 10 return values are supported unless someone finds
 			-- a way to store a variable lenght return value list
 			local r0, r1, r2, r3, r4, r5, r6, r7, r8, r9 = toregister(...)
-			local delta = core.get_us_time() - starttime
+			local delta = multicraft.get_us_time() - starttime
 			mod_statistics.log_time(log_id, modname, delta)
 			return r0, r1, r2, r3, r4, r5, r6, r7, r8, r9
 			end
@@ -165,14 +165,14 @@ function profiling_print_log(cmd, filter)
 
 	print("Filter:" .. dump(filter))
 
-	core.log("action", "Values below show times/percentages per server step.")
-	core.log("action", "Following suffixes are used for entities:")
-	core.log("action", "\t#oa := on_activate, #os := on_step, #op := on_punch, #or := on_rightclick, #gs := get_staticdata")
-	core.log("action",
+	multicraft.log("action", "Values below show times/percentages per server step.")
+	multicraft.log("action", "Following suffixes are used for entities:")
+	multicraft.log("action", "\t#oa := on_activate, #os := on_step, #op := on_punch, #or := on_rightclick, #gs := get_staticdata")
+	multicraft.log("action",
 		string.format("%16s | %25s | %10s | %10s | %10s | %9s | %9s | %9s",
 		"modname", "type" , "min µs", "max µs", "avg µs", "min %", "max %", "avg %")
 	)
-	core.log("action",
+	multicraft.log("action",
 		"-----------------+---------------------------+-----------+" ..
 		"-----------+-----------+-----------+-----------+-----------")
 	for modname,statistics in pairs(mod_statistics.stats) do
@@ -183,7 +183,7 @@ function profiling_print_log(cmd, filter)
 					modname = "..." .. modname:sub(-13)
 				end
 			
-				core.log("action",
+				multicraft.log("action",
 					string.format("%16s | %25s | %9d | %9d | %9d | %9d | %9d | %9d",
 					modname,
 					" ",
@@ -194,7 +194,7 @@ function profiling_print_log(cmd, filter)
 					statistics.max_per,
 					statistics.avg_per)
 				)
-				if core.setting_getbool("detailed_profiling") then
+				if multicraft.setting_getbool("detailed_profiling") then
 					if statistics.types ~= nil then
 						for type,typestats in pairs(statistics.types) do
 						
@@ -202,7 +202,7 @@ function profiling_print_log(cmd, filter)
 								type = "..." .. type:sub(-22)
 							end
 						
-							core.log("action",
+							multicraft.log("action",
 								string.format(
 								"%16s | %25s | %9d | %9d | %9d | %9d | %9d | %9d",
 								" ",
@@ -220,12 +220,12 @@ function profiling_print_log(cmd, filter)
 			end
 		end
 	end
-		core.log("action",
+		multicraft.log("action",
 			"-----------------+---------------------------+-----------+" ..
 			"-----------+-----------+-----------+-----------+-----------")
 			
 	if filter == "" then
-		core.log("action",
+		multicraft.log("action",
 			string.format("%16s | %25s | %9d | %9d | %9d | %9d | %9d | %9d",
 			"total",
 			" ",
@@ -237,23 +237,23 @@ function profiling_print_log(cmd, filter)
 			mod_statistics.stats["total"].avg_per)
 		)
 	end
-	core.log("action", " ")
+	multicraft.log("action", " ")
 	
 	return true
 end
 
 --------------------------------------------------------------------------------
 local function initialize_profiling()
-	core.log("action", "Initialize tracing")
+	multicraft.log("action", "Initialize tracing")
 	
 	mod_statistics.entity_callbacks = {}
 	
 	-- first register our own globalstep handler
-	core.register_globalstep(mod_statistics.update_statistics)
+	multicraft.register_globalstep(mod_statistics.update_statistics)
 	
-	local rp_register_entity = core.register_entity
-	core.register_entity = function(name, prototype)
-		local modname = core.get_current_modname()
+	local rp_register_entity = multicraft.register_entity
+	multicraft.register_entity = function(name, prototype)
+		local modname = multicraft.get_current_modname()
 		local new_on_activate = nil
 		local new_on_step = nil
 		local new_on_punch = nil
@@ -264,9 +264,9 @@ local function initialize_profiling()
 			local cbid = name .. "#oa"
 			mod_statistics.entity_callbacks[cbid] = prototype.on_activate
 			new_on_activate = function(self, staticdata, dtime_s)
-				local starttime = core.get_us_time()
+				local starttime = multicraft.get_us_time()
 				mod_statistics.entity_callbacks[cbid](self, staticdata, dtime_s)
-				local delta = core.get_us_time() -starttime
+				local delta = multicraft.get_us_time() -starttime
 				mod_statistics.log_time(cbid, modname, delta)
 			end
 		end
@@ -275,9 +275,9 @@ local function initialize_profiling()
 			local cbid = name .. "#os"
 			mod_statistics.entity_callbacks[cbid] = prototype.on_step
 			new_on_step = function(self, dtime)
-				local starttime = core.get_us_time()
+				local starttime = multicraft.get_us_time()
 				mod_statistics.entity_callbacks[cbid](self, dtime)
-				local delta = core.get_us_time() -starttime
+				local delta = multicraft.get_us_time() -starttime
 				mod_statistics.log_time(cbid, modname, delta)
 			end
 		end
@@ -286,9 +286,9 @@ local function initialize_profiling()
 			local cbid = name .. "#op"
 			mod_statistics.entity_callbacks[cbid] = prototype.on_punch
 			new_on_punch = function(self, hitter)
-				local starttime = core.get_us_time()
+				local starttime = multicraft.get_us_time()
 				mod_statistics.entity_callbacks[cbid](self, hitter)
-				local delta = core.get_us_time() -starttime
+				local delta = multicraft.get_us_time() -starttime
 				mod_statistics.log_time(cbid, modname, delta)
 			end
 		end
@@ -297,9 +297,9 @@ local function initialize_profiling()
 			local cbid = name .. "#rc"
 			mod_statistics.entity_callbacks[cbid] = prototype.rightclick
 			new_rightclick = function(self, clicker)
-				local starttime = core.get_us_time()
+				local starttime = multicraft.get_us_time()
 				mod_statistics.entity_callbacks[cbid](self, clicker)
-				local delta = core.get_us_time() -starttime
+				local delta = multicraft.get_us_time() -starttime
 				mod_statistics.log_time(cbid, modname, delta)
 			end
 		end
@@ -308,9 +308,9 @@ local function initialize_profiling()
 			local cbid = name .. "#gs"
 			mod_statistics.entity_callbacks[cbid] = prototype.get_staticdata
 			new_get_staticdata = function(self)
-				local starttime = core.get_us_time()
+				local starttime = multicraft.get_us_time()
 				local retval = mod_statistics.entity_callbacks[cbid](self)
-				local delta = core.get_us_time() -starttime
+				local delta = multicraft.get_us_time() -starttime
 				mod_statistics.log_time(cbid, modname, delta)
 				return retval
 			end
@@ -330,10 +330,10 @@ local function initialize_profiling()
 		core[v] = build_callback(v, to_replace)
 	end
 	
-	local rp_register_abm = core.register_abm
-	core.register_abm = function(spec)
+	local rp_register_abm = multicraft.register_abm
+	multicraft.register_abm = function(spec)
 	
-		local modname = core.get_current_modname()
+		local modname = multicraft.get_current_modname()
 	
 		local replacement_spec = {
 			nodenames = spec.nodenames,
@@ -341,16 +341,16 @@ local function initialize_profiling()
 			interval  = spec.interval,
 			chance    = spec.chance,
 			action = function(pos, node, active_object_count, active_object_count_wider)
-				local starttime = core.get_us_time()
+				local starttime = multicraft.get_us_time()
 				spec.action(pos, node, active_object_count, active_object_count_wider)
-				local delta = core.get_us_time() - starttime
+				local delta = multicraft.get_us_time() - starttime
 				mod_statistics.log_time("abm", modname, delta)
 			end
 		}
 		rp_register_abm(replacement_spec)
 	end
 	
-	core.log("action", "Mod profiling initialized")
+	multicraft.log("action", "Mod profiling initialized")
 end
 
 initialize_profiling()

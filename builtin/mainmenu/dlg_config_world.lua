@@ -52,8 +52,8 @@ local function get_formspec(data)
                 "label[8,3;" .. fgettext("Depends:") .. "]" ..
                 "textlist[8,3.5;7,4.0;world_config_depends;" ..
                 modmgr.get_dependencies(mod.path) .. ";0]" ..
-                "image_button[8,9.55;3.95,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_config_world_save;" .. fgettext("Save") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
-                "image_button[12,9.55;4,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_config_world_cancel;".. fgettext("Cancel") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                "image_button[8,9.55;3.95,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_config_world_save;" .. fgettext("Save") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+                "image_button[12,9.55;4,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_config_world_cancel;".. fgettext("Cancel") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
 
         if mod ~= nil and mod.name ~= "" and mod.typ ~= "game_mod" then
                 if mod.is_modpack then
@@ -69,9 +69,9 @@ local function get_formspec(data)
                         end
 
                         if all_enabled == false then
-                                retval = retval .. "image_button[8,7.55;3.5,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_enable;" .. fgettext("Enable MP") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                                retval = retval .. "image_button[8,7.55;3.5,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_enable;" .. fgettext("Enable MP") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
                         else
-                                retval = retval .. "image_button[8,7.85;3.5,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_disable;" .. fgettext("Disable MP") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
+                                retval = retval .. "image_button[8,7.85;3.5,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_mp_disable;" .. fgettext("Disable MP") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
                         end
                 else
                         if mod.enabled then
@@ -83,7 +83,7 @@ local function get_formspec(data)
         end
 
         retval = retval ..
-                "image_button[11.75,7.55;3.5,0.8;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_all_mods;" .. fgettext("Enable all") .. ";true;true;"..core.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
+                "image_button[11.75,7.55;3.5,0.8;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_all_mods;" .. fgettext("Enable all") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"..
                 "textlist[1,3.5;6,4.0;world_config_modlist;"
                 --"textlist[5.5,0.5;5.5,5.75;world_config_modlist;"
 
@@ -119,14 +119,14 @@ end
 
 
 local function handle_buttons(this, fields)
-    core.set_clouds(false)
-    core.set_background("background",core.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    core.set_background("header",core.formspec_escape(mm_texture.basetexturedir)..'header.png')
+    multicraft.set_clouds(false)
+    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         if fields["world_config_modlist"] ~= nil then
-                local event = core.explode_textlist_event(fields["world_config_modlist"])
+                local event = multicraft.explode_textlist_event(fields["world_config_modlist"])
                 this.data.selected_mod = event.index
-                core.setting_set("world_config_selected_mod", event.index)
+                multicraft.setting_set("world_config_selected_mod", event.index)
 
                 if event.type == "DCL" then
                         enable_mod(this)
@@ -141,7 +141,7 @@ local function handle_buttons(this, fields)
         end
 
         if fields["cb_mod_enable"] ~= nil then
-                local toset = core.is_yes(fields["cb_mod_enable"])
+                local toset = multicraft.is_yes(fields["cb_mod_enable"])
                 enable_mod(this,toset)
                 return true
         end
@@ -162,26 +162,26 @@ local function handle_buttons(this, fields)
                 end
 
                 if fields["cb_hide_gamemods"] ~= nil then
-                        if core.is_yes(fields["cb_hide_gamemods"]) then
+                        if multicraft.is_yes(fields["cb_hide_gamemods"]) then
                                 current.hide_game = true
                                 this.data.hide_gamemods = true
-                                core.setting_set("world_config_hide_gamemods", "true")
+                                multicraft.setting_set("world_config_hide_gamemods", "true")
                         else
                                 current.hide_game = false
                                 this.data.hide_gamemods = false
-                                core.setting_set("world_config_hide_gamemods", "false")
+                                multicraft.setting_set("world_config_hide_gamemods", "false")
                         end
                 end
 
                 if fields["cb_hide_mpcontent"] ~= nil then
-                        if core.is_yes(fields["cb_hide_mpcontent"]) then
+                        if multicraft.is_yes(fields["cb_hide_mpcontent"]) then
                                 current.hide_modpackcontents = true
                                 this.data.hide_modpackcontents = true
-                                core.setting_set("world_config_hide_modpackcontents", "true")
+                                multicraft.setting_set("world_config_hide_modpackcontents", "true")
                         else
                                 current.hide_modpackcontents = false
                                 this.data.hide_modpackcontents = false
-                                core.setting_set("world_config_hide_modpackcontents", "false")
+                                multicraft.setting_set("world_config_hide_modpackcontents", "false")
                         end
                 end
 
@@ -220,7 +220,7 @@ local function handle_buttons(this, fields)
                 end
 
                 if not worldfile:write() then
-                        core.log("error", "Failed to write world config file")
+                        multicraft.log("error", "Failed to write world config file")
                 end
 
                 this:delete()
@@ -254,14 +254,14 @@ function create_configure_world_dlg(worldidx)
                                         handle_buttons,
                                         nil)
 
-        dlg.data.hide_gamemods = core.setting_getbool("world_config_hide_gamemods")
-        dlg.data.hide_modpackcontents = core.setting_getbool("world_config_hide_modpackcontents")
-        dlg.data.selected_mod = tonumber(core.setting_get("world_config_selected_mod"))
+        dlg.data.hide_gamemods = multicraft.setting_getbool("world_config_hide_gamemods")
+        dlg.data.hide_modpackcontents = multicraft.setting_getbool("world_config_hide_modpackcontents")
+        dlg.data.selected_mod = tonumber(multicraft.setting_get("world_config_selected_mod"))
         if dlg.data.selected_mod == nil then
                 dlg.data.selected_mod = 0
         end
 
-        dlg.data.worldspec = core.get_worlds()[worldidx]
+        dlg.data.worldspec = multicraft.get_worlds()[worldidx]
         if dlg.data.worldspec == nil then dlg:delete() return nil end
 
         dlg.data.worldconfig = modmgr.get_worldconfig(dlg.data.worldspec.path)
