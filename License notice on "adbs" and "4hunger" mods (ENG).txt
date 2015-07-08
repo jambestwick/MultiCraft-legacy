@@ -1,0 +1,16 @@
+There are two mods within MultiCraft licensed under CC BY-NC-SA 4.0 (https://creativecommons.org/licenses/by-nc-sa/4.0/): "adbs" and "4hunger".
+Those mods are the intellectual property of 4aiman (4aiman@inbox.ru) and by no means are free (as in freedom) or open-source software.
+To fully understand your rights consult the license (the link is given above).
+While the CC BY-NC-SA 4.0 license forbids any kind of commercial usage by default, 4aiman holds the right to give his permission to neglect that restriction.
+
+Thus being said, 4aiman had explicitly granted the right to commercially use "adbs" and "4hunger" mods to Maksim Gamarnik (a.k.a. MoNTE48, MoNTE48@mail.ua) on the following terms:
+- Maksim Gamarnik can use current version of "adbs" and "4hunger" mods for commercial purposes in any Minetest or Freeminer related projects - both existing and those which are yet to come;
+- The exception mentioned above also applies to any organization with Maksim Gamarnik as it's leader/head.
+- The exception mentioned above cease to apply in case any changes to any part of "adbs" or "4hunger" are to be made by any other person than 4aiman;
+- The exception mentioned above does not apply to Maksim Gamarnik's or his organization's (organisations') customers.
+- Maksim Gamarnik holds no right to grant anyone else the right to use any part of "adbs" or "4hunger" mods commercially.
+
+All questions concerning 4aiman's rights and protection of those should be directed to 4aiman via e-mail message in the first place.
+4aiman has explicitly mentioned that he does not want anyone to "protect" his rights until he will express that intention by himself.
+Thus, any person or organization convinced in the fact of the 4aiman's rights infringement should consult with him in the first place.
+Note, that in the case 4aiman won't be properly notified and won't express his willingness (due to any reason) to cooperate with anyone who wants to protect 4aiman's rights, the actions of that "4aiman's rights defender" may well be interpreted as a slander against Maksim Gamarnik and/or 4aiman himself.
