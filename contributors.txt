@@ -1,0 +1,201 @@
++------------+----------------------------------+
+| Сommits #  |  Contributor                     |
++------------+----------------------------------+
+|  1719      |  Perttu Ahola                    |
+|   372      |  kwolekr                         |
+|   292      |  sapier                          |
+|   212      |  Kahrl                           |
+|   192      |  PilzAdam                        |
+|   185      |  Nils Dagsson Moskopp            |
+|   176      |  ShadowNinja                     |
+|   112      |  Loic Blot                       |
+|   108      |  Craig Robbins                   |
+|    97      |  Giuseppe Bilotta                |
+|    81      |  RealBadAngel                    |
+|    81      |  sfan5                           |
+|    65      |  proller                         |
+|    63      |  paramat                         |
+|    59      |  Ilya Zhuravlev                  |
+|    56      |  BlockMen                        |
+|    54      |  est31                           |
+|    52      |  OttoLidenbrock                  |
+|    44      |  Constantin Wenger               |
+|    34      |  Novatux                         |
+|    30      |  Maksim Gamarnik                 |
+|    30      |  MirceaKitsune                   |
+|    29      |  Ciaran Gultnieks                |
+|    28      |  SmallJoker                      |
+|    27      |  Diego Martínez                  |
+|    22      |  4aiman                          |
+|    21      |  darkrose                        |
+|    19      |  Weblate                         |
+|    18      |  JacobF                          |
+|    15      |  Calinou                         |
+|    15      |  Jürgen Doser                    |
+|    15      |  Matthew I                       |
+|    13      |  Shen Zheyu                      |
+|    11      |  Jeija                           |
+|    10      |  Aaron Suen                      |
+|    10      |  Anton Tsyganenko                |
+|    10      |  Mark Holmquist                  |
+|    10      |  MetaDucky                       |
+|    10      |  gregorycu                       |
+|    10      |  ngosang                         |
+|    10      |  rubenwardy                      |
+|    10      |  teddydestodes                   |
+|     9      |  Esteban I. Ruiz Moreno          |
+|     9      |  Rui                             |
+|     8      |  0gb.us                          |
+|     8      |  Felix Krause                    |
+|     8      |  Francizca Rodriguez             |
+|     8      |  Jonathan Neuschäfer             |
+|     7      |  Mitori Itoshiki                 |
+|     7      |  Selat                           |
+|     7      |  Zeg9                            |
+|     6      |  Chynggyz Jumaliev               |
+|     6      |  DannyDark                       |
+|     6      |  Dmitry Marakasov                |
+|     6      |  Frederico Guimarães             |
+|     6      |  Kodexky                         |
+|     6      |  Pavel Puchkin                   |
+|     6      |  Sebastian Rühl                  |
+|     6      |  manuel duarte                   |
+|     5      |  Jakub Vaněk                     |
+|     5      |  Lord James                      |
+|     5      |  Marco gonzalez                  |
+|     5      |  Vanessa Ezekowitz               |
+|     4      |  Cyriaque Skrapits               |
+|     4      |  Juhani Numminen                 |
+|     4      |  Markus Koschany                 |
+|     4      |  Pavel Elagin                    |
+|     4      |  TeTpaAka                        |
+|     4      |  TriBlade9                       |
+|     4      |  Weedy                           |
+|     4      |  Zefram                          |
+|     4      |  khonkhortisan                   |
+|     4      |  nerzhul                         |
+|     4      |  q66                             |
+|     3      |  Andreas Zwinkau                 |
+|     3      |  Bektur Mambetov                 |
+|     3      |  Heisenberg CZE                  |
+|     3      |  Kevin Ott                       |
+|     3      |  King Artur                      |
+|     3      |  Ner'zhul                        |
+|     3      |  Pablo Lezaeta                   |
+|     3      |  Wuzzy                           |
+|     3      |  fz72                            |
+|     3      |  kilbith                         |
+|     3      |  obneq                           |
+|     3      |  stujones11                      |
+|     3      |  unknown                         |
+|     2      |  4Evergreen4                     |
+|     2      |  David Gumberg                   |
+|     2      |  Dêivan Ortiz Munhoz             |
+|     2      |  Fabio Luongo                    |
+|     2      |  Ilya Pavlov                     |
+|     2      |  Jabo Babo                       |
+|     2      |  Jiří Procházka                  |
+|     2      |  Jonas Kriaučiūnas               |
+|     2      |  L JJ                            |
+|     2      |  LS-Steeef                       |
+|     2      |  LeMagnesium                     |
+|     2      |  Mahmut Elmas                    |
+|     2      |  Megaf                           |
+|     2      |  Mitchell Ward                   |
+|     2      |  MrLoom                          |
+|     2      |  Muhammad Rifqi Priyo Susanto    |
+|     2      |  Petr Hála                       |
+|     2      |  Ragnar Laud                     |
+|     2      |  Robert Arkenin                  |
+|     2      |  Rutger NL                       |
+|     2      |  Sasikaa Lacikaa                 |
+|     2      |  Sergey Gilfanov                 |
+|     2      |  Sokomine                        |
+|     2      |  Thomas Lauro                    |
+|     2      |  Tomona Nanase                   |
+|     2      |  Vladimir a                      |
+|     2      |  hasufell                        |
+|     2      |  jeanpatrick.guerrero@gmail.com  |
+|     2      |  srifqi                          |
+|     1      |  (@U-Exp)                        |
+|     1      |  ?????? ????????                 |
+|     1      |  Anthony                         |
+|     1      |  Anton                           |
+|     1      |  AntonBoch1244                   |
+|     1      |  Artem Sinkevich                 |
+|     1      |  Bad-Command                     |
+|     1      |  Brandon                         |
+|     1      |  Brent Hull                      |
+|     1      |  Casimir                         |
+|     1      |  Christophe Piveteau             |
+|     1      |  Chyngyz Dzhumaliev              |
+|     1      |  Craig Davison                   |
+|     1      |  Cy                              |
+|     1      |  Daniel Ziolkowski               |
+|     1      |  Dany Cuartiella                 |
+|     1      |  David Thompson                  |
+|     1      |  Dániel Varga                    |
+|     1      |  Enki                            |
+|     1      |  FessWolf                        |
+|     1      |  Frantisek Simorda               |
+|     1      |  Garrosh                         |
+|     1      |  Jay Arndt                       |
+|     1      |  Jonathon Anderson               |
+|     1      |  Joshua Beck                     |
+|     1      |  João Farias                     |
+|     1      |  KodexKy                         |
+|     1      |  Kyle                            |
+|     1      |  Leonardo Costa                  |
+|     1      |  Mario Barrera                   |
+|     1      |  Markus Lehmann                  |
+|     1      |  Martin Doege                    |
+|     1      |  Matthew Bekkema                 |
+|     1      |  Me Moala                        |
+|     1      |  Miguel Almeida                  |
+|     1      |  Mikaela Suomalainen             |
+|     1      |  Mukul Sati                      |
+|     1      |  Mushiden                        |
+|     1      |  Nicola Spanti                   |
+|     1      |  Oleg Matveev                    |
+|     1      |  PenguinDad                      |
+|     1      |  Rafael Reilova                  |
+|     1      |  Rui914                          |
+|     1      |  Rune Biskopstö Christensen      |
+|     1      |  Russ                            |
+|     1      |  Ryan Newell                     |
+|     1      |  Sindre Tellevik                 |
+|     1      |  Splizard                        |
+|     1      |  Stefan Beller                   |
+|     1      |  Steven Smith                    |
+|     1      |  Tomas Brod                      |
+|     1      |  Vincent Heuken                  |
+|     1      |  William Strealy                 |
+|     1      |  William Teder                   |
+|     1      |  Wolfgang Fellger                |
+|     1      |  Wouters Dorian                  |
+|     1      |  Yaman                           |
+|     1      |  Zeno-                           |
+|     1      |  b p                             |
+|     1      |  bcnjr5                          |
+|     1      |  berkut                          |
+|     1      |  c h                             |
+|     1      |  donat_b                         |
+|     1      |  dvere                           |
+|     1      |  eduardojsm                      |
+|     1      |  fairiestoy                      |
+|     1      |  fishyWET                        |
+|     1      |  hdastwb                         |
+|     1      |  jordan4ibanez                   |
+|     1      |  mahmutelmas06                   |
+|     1      |  mich1                           |
+|     1      |  mimilus                         |
+|     1      |  onkrot                          |
+|     1      |  pandoro almascarpone            |
+|     1      |  poet-nohit                      |
+|     1      |  sruz25                          |
+|     1      |  sub reptice                     |
+|     1      |  tenplus1                        |
+|     1      |  v c                             |
+|     1      |  yuqian wang                     |
+|     1      |  Сергей Голубев                  |
++------------+----------------------------------+
