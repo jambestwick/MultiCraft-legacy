@@ -3,28 +3,14 @@ MultiCraft Open Sourse Project
 
 MultiCraft is an open source sandbox game inspired by [Minecraft](https://minecraft.net/).
 
-MultiCraft is based on Minetest which is developed by a [number of contributors](https://github.com/minetest/minetest/graphs/contributors) from all over the globe. MultiCraft is developed by a number of contributors too.
+MultiCraft is developed by a [number of contributors](blob/master/contributors.txt).
 
 It aims to make the game fun while trading off some bits of perfectionism.
 
 Copyright (c) 2014-2015 Maksim Gamarnik [MoNTE48] <MoNTE48@mail.ua> & MultiCraft Developement Team.
 
-In case you downloaded the source code:
----------------------------------------
-If you downloaded the Minetest Engine source code in which this file is
-contained, you probably want to download the minetest_game project too:
-  https://github.com/MultiCraftProject/MultiCraft_game
-See the README.txt in it.
+The engine and the game is licensed under LGPLv3. Resources games licensed under CC-BY-SA 3.0, unless otherwise stated.
+Mods adbs and 4hunger licensed under CC BY-SA-NC 4.0 on exclusive terms (see [License notice](blob/master/License%20notice%20on%20"adbs"%20and%20"4hunger"%20mods%20(ENG).txt)
 
-Further documentation
-----------------------
-- Website: http://minetest.net/
-- Wiki: http://wiki.minetest.net/
-- Developer wiki: http://dev.minetest.net/
-- Forum: http://forum.minetest.net/
-- Github: https://github.com/minetest/minetest/
-- doc/ directory of source distribution
-
-This game is not finished
---------------------------
-- Don't expect it to work as well as a finished game will.
+You can help in the development. But you should always publish your source code after any changes.
+Before any use of source code MultiCraft or any part of you should be familiar with [LGPL-3.0](blob/master/doc/LGPL-3.0.md) and [License notice](blob/master/License%20notice%20on%20"adbs"%20and%20"4hunger"%20mods%20(ENG).txt)
