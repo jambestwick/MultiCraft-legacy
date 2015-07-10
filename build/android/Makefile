@@ -26,20 +26,7 @@ VER_TEXT = 1.0.1
 ANDROID_VERSION_CODE = 1
 
 ################################################################################
-# toolchain config for arm old processors
-################################################################################
-#TARGET_HOST = arm-linux
-#TARGET_ABI = armeabi
-#TARGET_LIBDIR = armeabi
-#TARGET_TOOLCHAIN = arm-linux-androideabi-
-#TARGET_CFLAGS_ADDON = -mfloat-abi=softfp -mfpu=vfp
-#TARGET_ARCH = arm
-#CROSS_PREFIX = arm-linux-androideabi-
-#COMPILER_VERSION = 4.8
-#HAVE_LEVELDB = 1
-
-################################################################################
-# toolchain config for arm new processors
+# toolchain config for ARMv7 processors
 ################################################################################
 TARGET_HOST = arm-linux
 TARGET_ABI = armeabi-v7a-hard
@@ -55,19 +42,7 @@ COMPILER_VERSION = 4.9
 HAVE_LEVELDB = 1
 
 ################################################################################
-# toolchain config for little endian mips
-################################################################################
-#TARGET_HOST = mipsel-linux
-#TARGET_ABI = mips
-#TARGET_LIBDIR = mips
-#TARGET_TOOLCHAIN = mipsel-linux-android-
-#TARGET_ARCH = mips32
-#CROSS_PREFIX = mipsel-linux-android-
-#COMPILER_VERSION = 4.8
-#HAVE_LEVELDB = 0
-
-################################################################################
-# toolchain config for x86
+# toolchain config for x86 processors
 ################################################################################
 #TARGET_HOST = x86-linux
 #TARGET_ABI = x86
@@ -79,6 +54,7 @@ HAVE_LEVELDB = 1
 #HAVE_LEVELDB = 1
 
 ################################################################################
+
 ASSETS_TIMESTAMP = deps/assets_timestamp
 
 LEVELDB_DIR = $(ROOT)/deps/leveldb/

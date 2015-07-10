@@ -1,18 +1,15 @@
 #    This file is read by default from:
-#    ../minetest.conf
-#    ../../minetest.conf
+#    ../multicraft.conf
+#    ../../multicraft.conf
 #    Any other path can be chosen by passing the path as a parameter
-#    to the program, eg. "minetest.exe --config ../minetest.conf.example".
+#    to the program, eg. "multicraft.exe --config ../multicraft.conf.example".
 
 #    By default, all the settings are commented and not functional.
 #    Uncomment settings by removing the preceding #.
 
-#    Further documentation:
-#    http://wiki.minetest.net/
-
 #    NOTE: This file might not be up-to-date, refer to the
 #    defaultsettings.cpp file for an up-to-date list:
-#    https://github.com/minetest/minetest/blob/master/src/defaultsettings.cpp
+#    src/defaultsettings.cpp
 
 #    A vim command to convert most of defaultsettings.cpp to conf file format:
 #    :'<,'>s/\tsettings->setDefault("\([^"]*\)", "\([^"]*\)");.*/#\1 = \2/g
@@ -311,13 +308,13 @@
 #    Bind address
 #bind_address =
 #    Name of server
-#server_name = Minetest server
+#server_name = MultiCraft server
 #    Description of server
 #server_description = mine here
 #    Domain name of server
-#server_address = game.minetest.net
+#server_address = game.MultiCraft.mobi
 #    Homepage of server
-#server_url = http://minetest.net
+#server_url = http://MultiCraft.mobi
 #    Automaticaly report to masterserver
 #server_announce = 0
 #    Announce to this masterserver.
@@ -326,7 +323,7 @@
 #    World directory (everything in the world is stored here)
 #map-dir = /custom/world
 #    Message of the Day
-#motd = Welcome to this awesome Minetest server!
+#motd = Welcome to this awesome MultiCraft server!
 #    Maximum number of players connected simultaneously
 #max_users = 15
 #    Set to true to disallow old clients from connecting
