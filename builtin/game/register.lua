@@ -462,7 +462,7 @@ multicraft.register_on_dieplayer(function(player)
                 multicraft.chat_send_all(player_name .. " burned up.")
         --Death by something else
         else
-                multicraft.chat_send_all(player_name .. " \vbb0000died.")
+                multicraft.chat_send_all(player_name .. " died.")
         end
 
 end)

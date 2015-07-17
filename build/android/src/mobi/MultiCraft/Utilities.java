@@ -109,7 +109,7 @@ public class Utilities {
 		WVersionManager versionManager = new WVersionManager(
 				(Activity) mContext);
 		versionManager
-				.setVersionContentUrl("http://185.61.149.209/ver/MC2.txt");
+				.setVersionContentUrl("http://MultiCraft.mobi/ver/MultiCraft.txt");
 		versionManager.checkVersion();
 		versionManager.setUpdateNowLabel((String) mContext.getResources()
 				.getText(R.string.update_yes));

@@ -149,7 +149,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 			switch (util.compareVersions(version)) {
 			case OLD:
 				new DeleteTask().execute(unzipLocation + "cache", unzipLocation
-						+ "games/MultiCraft II", unzipLocation + "tmp");
+						+ "games/MultiCraft", unzipLocation + "tmp");
 				break;
 			case CURRENT:
 				startNativeActivity();
@@ -157,7 +157,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 			}
 		} else {
 			new DeleteTask().execute(unzipLocation + "cache", unzipLocation
-					+ "games/MultiCraft II", unzipLocation + "tmp");
+					+ "games/MultiCraft", unzipLocation + "tmp");
 		}
 	}
 
