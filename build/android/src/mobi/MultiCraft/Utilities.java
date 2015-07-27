@@ -203,9 +203,10 @@ public class Utilities {
 		return line.equals(STABLE_VER);
 	}
 
+	@SuppressLint("DefaultLocale")
 	public boolean getCPUArch() {
 		String arch = System.getProperty("os.arch");
-		return !arch.matches(".*arm.*");
+		return !arch.toLowerCase().matches(".*arm.*");
 	}
 
 }
