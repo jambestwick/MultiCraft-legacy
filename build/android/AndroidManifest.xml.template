@@ -25,6 +25,7 @@
         android:theme="@style/MCTheme" >
         <activity
             android:name="mobi.MultiCraft.MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="sensorLandscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +36,7 @@
         <activity
             android:name="mobi.MultiCraft.MCNativeActivity"
             android:clearTaskOnLaunch="true"
-            android:configChanges="orientation|keyboard|keyboardHidden|navigation"
+            android:configChanges="orientation|keyboard|keyboardHidden|navigation|screenSize"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape" >

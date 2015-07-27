@@ -5,12 +5,16 @@ import static mobi.MultiCraft.PreferencesHelper.isCreateShortcut;
 import static mobi.MultiCraft.PreferencesHelper.saveSettings;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Locale;
 
-import mobi.MultiCraft.R;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -34,9 +38,8 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 	public final String NOMEDIA = ".nomedia";
 	private ProgressDialog mProgressDialog;
 	private TextView mProgressTextView;
-	private String unzipLocation = Environment.getExternalStorageDirectory()
-			+ "/MultiCraft/";
 	private File version;
+	private String unzipLocation = Environment.getExternalStorageDirectory() + "/MultiCraft/";
 	private Utilities util;
 	private ProgressBar mProgressBar;
 	private MyBroadcastReceiver myBroadcastReceiver;
@@ -54,11 +57,29 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (util.getTotalMemoryInMB() < 800 || util.getCoresCount() < 2) {
+		if (util.getTotalMemoryInMB() < 800 || util.getCoresCount() < 2 || util.getCPUArch()) {
 			util.showMemoryDialog();
 		} else {
 			init();
 		}
+	}
+
+	private void createLangFile() {
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(unzipLocation + "lang.txt", "UTF-8");
+			if ("Russian".equals(Locale.getDefault().getDisplayLanguage())) {
+				writer.println("ru");
+			} else {
+				writer.println("en");
+			}
+			writer.close();
+		} catch (FileNotFoundException e) {
+			Log.e("WTF", e.getLocalizedMessage());
+		} catch (UnsupportedEncodingException e) {
+			Log.e("WTF", e.getLocalizedMessage());
+		}
+
 	}
 
 	private void createDirAndNoMedia() {
@@ -76,20 +97,18 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 
 	private void addShortcut() {
 		saveSettings(this, TAG_SHORTCUT_CREATED, false);
-		Intent shortcutIntent = new Intent(getApplicationContext(),
-				MainActivity.class);
+		Intent shortcutIntent = new Intent(getApplicationContext(), MainActivity.class);
 		shortcutIntent.setAction(Intent.ACTION_MAIN);
 		Intent addIntent = new Intent();
 		addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-		addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME,
-				getString(R.string.app_name));
+		addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.app_name));
 		addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-				Intent.ShortcutIconResource.fromContext(
-						getApplicationContext(), R.drawable.ic_launcher));
+				Intent.ShortcutIconResource.fromContext(getApplicationContext(), R.drawable.ic_launcher));
 		addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
 		getApplicationContext().sendBroadcast(addIntent);
 	}
 
+	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	public void init() {
 		PreferencesHelper.loadSettings(this);
@@ -99,8 +118,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 		mProgressBar = (ProgressBar) findViewById(R.id.PB1);
 		Drawable draw;
 		if (Build.VERSION.SDK_INT > 21) {
-			draw = getResources().getDrawable(R.drawable.custom_progress_bar,
-					null);
+			draw = getResources().getDrawable(R.drawable.custom_progress_bar, null);
 		} else {
 			draw = getResources().getDrawable(R.drawable.custom_progress_bar);
 		}
@@ -108,6 +126,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 		mProgressBar.setProgressDrawable(draw);
 		createDirAndNoMedia();
 		version = new File(unzipLocation + "ver.txt");
+		createLangFile();
 		checkVersion();
 	}
 
@@ -115,15 +134,31 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 		finish();
 	}
 
+	private void checkVersion() {
+		if (version.exists()) {
+			if (util.isCurrent(version))
+				startNativeActivity();
+			else
+				startDeletion();
+
+		} else {
+			startDeletion();
+		}
+	}
+
+	private void startDeletion() {
+		new DeleteTask().execute(unzipLocation + "cache", unzipLocation + "games", unzipLocation + "builtin",
+				unzipLocation + "fonts", unzipLocation + "debug.txt");
+
+	}
+
 	private void registerReceivers() {
 		myBroadcastReceiver = new MyBroadcastReceiver();
 		myBroadcastReceiver_Update = new MyBroadcastReceiver_Update();
-		IntentFilter intentFilter = new IntentFilter(
-				UnzipService.ACTION_MyIntentService);
+		IntentFilter intentFilter = new IntentFilter(UnzipService.ACTION_MyIntentService);
 		intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(myBroadcastReceiver, intentFilter);
-		IntentFilter intentFilter_update = new IntentFilter(
-				UnzipService.ACTION_MyUpdate);
+		IntentFilter intentFilter_update = new IntentFilter(UnzipService.ACTION_MyUpdate);
 		intentFilter_update.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(myBroadcastReceiver_Update, intentFilter_update);
 	}
@@ -144,31 +179,12 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 		}
 	}
 
-	private void checkVersion() {
-		if (version.exists()) {
-			switch (util.compareVersions(version)) {
-			case OLD:
-				new DeleteTask().execute(unzipLocation + "cache", unzipLocation
-						+ "games/MultiCraft", unzipLocation + "tmp");
-				break;
-			case CURRENT:
-				startNativeActivity();
-				break;
-			}
-		} else {
-			new DeleteTask().execute(unzipLocation + "cache", unzipLocation
-					+ "games/MultiCraft", unzipLocation + "tmp");
-		}
-	}
-
 	private void startNativeActivity() {
 		showSpinnerDialog(R.string.loading);
 		new Thread(new Runnable() {
 			public void run() {
-				Intent intent = new Intent(MainActivity.this,
-						MCNativeActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-						| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+				Intent intent = new Intent(MainActivity.this, MCNativeActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 				startActivity(intent);
 				if (isFinishing())
 					return;
@@ -184,8 +200,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 		// Start MyIntentService
 		Intent intentMyIntentService = new Intent(this, UnzipService.class);
 		intentMyIntentService.putExtra(UnzipService.EXTRA_KEY_IN_FILE, file);
-		intentMyIntentService.putExtra(UnzipService.EXTRA_KEY_IN_LOCATION,
-				unzipLocation);
+		intentMyIntentService.putExtra(UnzipService.EXTRA_KEY_IN_LOCATION, unzipLocation);
 		startService(intentMyIntentService);
 
 	}
@@ -254,7 +269,6 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			showSpinnerDialog(R.string.copy);
 		}
 
 		@Override
@@ -267,13 +281,9 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 
 		@Override
 		protected void onPostExecute(String result) {
-			if (isFinishing())
-				return;
-			dismissProgressDialog();
 			if (util.getAvailableSpaceInMB() > 30) {
 				try {
-					startUnzipService(Environment.getExternalStorageDirectory()
-							+ "/" + zipName);
+					startUnzipService(Environment.getExternalStorageDirectory() + "/" + zipName);
 				} catch (IOException e) {
 					Log.e(TAG, e.getMessage());
 				}
@@ -286,9 +296,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 			OutputStream out;
 			try {
 				in = getAssets().open(zipName);
-				out = new FileOutputStream(
-						Environment.getExternalStorageDirectory() + "/"
-								+ zipName);
+				out = new FileOutputStream(Environment.getExternalStorageDirectory() + "/" + zipName);
 				copyFile(in, out);
 				in.close();
 				out.flush();
@@ -298,8 +306,7 @@ public class MainActivity extends Activity implements IUtilitiesCallback {
 			}
 		}
 
-		private void copyFile(InputStream in, OutputStream out)
-				throws IOException {
+		private void copyFile(InputStream in, OutputStream out) throws IOException {
 			byte[] buffer = new byte[1024];
 			int read;
 			while ((read = in.read(buffer)) != -1) {

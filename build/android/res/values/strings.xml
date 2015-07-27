@@ -20,7 +20,7 @@
     <string name="notification_description">Less than 1 minute&#8230;</string>
 
     <!-- weak phone dialog -->
-    <string name="memory_warning">Your device\'s memory is too low for seamless playing</string>
+    <string name="memory_warning">Your device\'s memory is too low for seamless playing or\n game is not compatible with your CPU</string>
     <string name="memory_continue">Continue</string>
     <string name="memory_close">Close</string>
     <string name="memory_lags">Lags are possible. Please don\'t rate this game badly.</string>

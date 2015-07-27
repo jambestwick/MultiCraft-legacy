@@ -11,7 +11,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-import mobi.MultiCraft.R;
+import com.winsontan520.wversionmanager.library.WVersionManager;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -29,23 +30,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import mobi.MultiCraft.RateThisApp;
-import com.winsontan520.wversionmanager.library.WVersionManager;
-
 /**
  * Helpful utilities used in MainActivity
  */
 public class Utilities {
 	private Button positive, negative;
 	private Dialog dialog;
-
-	public enum VERSIONS {
-		CURRENT, OLD
-	}
-
-	private final String TAG = Utilities.class.getName();
 	private Context mContext;
-
 	public final String STABLE_VER = "1.0.1";
 
 	/**
@@ -64,8 +55,7 @@ public class Utilities {
 		callerActivity = (IUtilitiesCallback) activity;
 	}
 
-	private void dialogInit(int panel, int positiveBtn, int negativeBtn,
-			int messageText) {
+	private void dialogInit(int panel, int positiveBtn, int negativeBtn, int messageText) {
 		dialog = new Dialog(mContext);
 		dialog.requestWindowFeature(panel);
 		dialog.setContentView(R.layout.dialog_template);
@@ -76,23 +66,13 @@ public class Utilities {
 		negative.setText(negativeBtn);
 		message.setText(messageText);
 		dialog.setCancelable(false);
-		dialog.getWindow().setBackgroundDrawable(
-				new ColorDrawable(R.color.semi_transparent));
+		dialog.getWindow().setBackgroundDrawable(new ColorDrawable(R.color.semi_transparent));
 	}
 
 	@SuppressLint("InflateParams")
 	public void showHelpDialog() {
-		dialogInit(Window.FEATURE_NO_TITLE, R.string.ok, R.string.forget,
-				R.string.dialog_instruction);
+		dialogInit(Window.FEATURE_NO_TITLE, R.string.ok, R.string.forget, R.string.dialog_instruction);
 		positive.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-				RateThisApp.showRateDialogIfNeeded(mContext);
-			}
-		});
-		negative.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				dialog.dismiss();
@@ -100,34 +80,29 @@ public class Utilities {
 				RateThisApp.showRateDialogIfNeeded(mContext);
 			}
 		});
+		negative.setVisibility(View.GONE);
 		if (isShowHelp()) {
 			dialog.show();
 		}
 	}
 
 	public void showVersionDialog() {
-		WVersionManager versionManager = new WVersionManager(
-				(Activity) mContext);
-		versionManager
-				.setVersionContentUrl("http://MultiCraft.mobi/ver/MultiCraft.txt");
+		WVersionManager versionManager = new WVersionManager((Activity) mContext);
+		versionManager.setVersionContentUrl("http://MultiCraft.mobi/ver/MultiCraft.txt");
 		versionManager.checkVersion();
-		versionManager.setUpdateNowLabel((String) mContext.getResources()
-				.getText(R.string.update_yes));
-		versionManager.setRemindMeLaterLabel((String) mContext.getResources()
-				.getText(R.string.update_no));
-		versionManager.setIgnoreThisVersionLabel((String) mContext
-				.getResources().getText(R.string.update_ignore));
+		versionManager.setUpdateNowLabel((String) mContext.getResources().getText(R.string.update_yes));
+		versionManager.setRemindMeLaterLabel((String) mContext.getResources().getText(R.string.update_no));
+		versionManager.setIgnoreThisVersionLabel((String) mContext.getResources().getText(R.string.update_ignore));
 	}
 
 	public void showMemoryDialog() {
-		dialogInit(Window.FEATURE_OPTIONS_PANEL, R.string.memory_continue,
-				R.string.memory_close, R.string.memory_warning);
+		dialogInit(Window.FEATURE_OPTIONS_PANEL, R.string.memory_continue, R.string.memory_close,
+				R.string.memory_warning);
 		positive.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				dialog.dismiss();
-				Toast.makeText(mContext, R.string.memory_lags,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, R.string.memory_lags, Toast.LENGTH_SHORT).show();
 				callerActivity.init();
 			}
 		});
@@ -143,15 +118,13 @@ public class Utilities {
 	}
 
 	public void showNotEnoughSpaceDialog() {
-		dialogInit(Window.FEATURE_OPTIONS_PANEL, R.string.space_ok,
-				R.string.memory_close, R.string.not_enough_space);
+		dialogInit(Window.FEATURE_OPTIONS_PANEL, R.string.space_ok, R.string.memory_close, R.string.not_enough_space);
 		negative.setVisibility(View.GONE);
 		positive.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				dialog.dismiss();
-				Toast.makeText(mContext, R.string.memory_lags,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, R.string.memory_lags, Toast.LENGTH_SHORT).show();
 				callerActivity.init();
 			}
 		});
@@ -161,8 +134,7 @@ public class Utilities {
 	public long getTotalMemoryInMB() {
 		long initial_memory;
 		if (Build.VERSION.SDK_INT > 17) {
-			ActivityManager actManager = (ActivityManager) mContext
-					.getSystemService(Context.ACTIVITY_SERVICE);
+			ActivityManager actManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
 			ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
 			actManager.getMemoryInfo(memInfo);
 			initial_memory = memInfo.totalMem;
@@ -173,8 +145,7 @@ public class Utilities {
 
 			try {
 				FileReader localFileReader = new FileReader(str1);
-				BufferedReader localBufferedReader = new BufferedReader(
-						localFileReader, 8192);
+				BufferedReader localBufferedReader = new BufferedReader(localFileReader, 8192);
 				str2 = localBufferedReader.readLine();// meminfo
 				arrayOfString = str2.split("\\s+");
 				// total Memory
@@ -203,40 +174,38 @@ public class Utilities {
 		}
 	}
 
+	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	public long getAvailableSpaceInMB() {
 		final long SIZE_KB = 1024L;
 		final long SIZE_MB = SIZE_KB * SIZE_KB;
 		long availableSpace;
-		StatFs stat = new StatFs(Environment.getExternalStorageDirectory()
-				.getPath());
+		StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
 		if (Build.VERSION.SDK_INT > 17) {
-			availableSpace = stat.getAvailableBlocksLong()
-					* stat.getBlockSizeLong();
+			availableSpace = stat.getAvailableBlocksLong() * stat.getBlockSizeLong();
 		} else {
-			availableSpace = (long) stat.getAvailableBlocks()
-					* (long) stat.getBlockSize();
+			availableSpace = (long) stat.getAvailableBlocks() * (long) stat.getBlockSize();
 		}
 		return availableSpace / SIZE_MB;
 	}
 
-	public VERSIONS compareVersions(File file) {
-		VERSIONS result;
+	@SuppressWarnings("resource")
+	public boolean isCurrent(File file) {
 		String line = null;
 		try {
 			line = new BufferedReader(new FileReader(file)).readLine();
 		} catch (IOException e) {
-			Log.e(TAG, e.getMessage());
+			Log.e("WTF", e.getMessage());
 		}
-
 		if (line == null) {
 			line = "-999";
 		}
-		if (line.equals(STABLE_VER)) {
-			result = VERSIONS.CURRENT;
-		} else
-			result = VERSIONS.OLD;
-		return result;
+		return line.equals(STABLE_VER);
+	}
+
+	public boolean getCPUArch() {
+		String arch = System.getProperty("os.arch");
+		return !arch.matches(".*arm.*");
 	}
 
 }
