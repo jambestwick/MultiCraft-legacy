@@ -82,8 +82,6 @@ end
 
 local function dlg_confirm_reset_btnhandler(this, fields, dialogdata)
     multicraft.set_clouds(false)
-    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         if fields["dlg_reset_singleplayer_confirm"] ~= nil then
                 local worldlist = multicraft.get_worlds()

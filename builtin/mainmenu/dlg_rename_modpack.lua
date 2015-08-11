@@ -38,8 +38,6 @@ end
 --------------------------------------------------------------------------------
 local function rename_modpack_buttonhandler(this, fields)
     multicraft.set_clouds(false)
-    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         if fields["dlg_rename_modpack_confirm"] ~= nil then
                 local oldpath = multicraft.get_modpath() .. DIR_DELIM .. this.data.mod.name

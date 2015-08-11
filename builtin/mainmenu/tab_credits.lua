@@ -85,9 +85,6 @@ tab_credits = {
                         end,
         cbf_button_handler = function(tabview, fields, name, tabdata)
     multicraft.set_clouds(false)
-    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
-
                if fields["btn_cancel"] ~= nil then
                   tabview:hide()
                   tabview.parent:show()

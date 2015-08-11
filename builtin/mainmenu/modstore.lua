@@ -166,9 +166,6 @@ end
 -- @function [parent=#modstore] handle_buttons
 function modstore.handle_buttons(current_tab,fields)
     multicraft.set_clouds(false)
-    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
-
 
 	if fields["modstore_tab"] then
 		local index = tonumber(fields["modstore_tab"])

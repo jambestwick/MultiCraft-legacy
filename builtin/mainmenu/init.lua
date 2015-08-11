@@ -79,10 +79,6 @@ end
 --------------------------------------------------------------------------------
 
 local function main_button_handler2(tabview, fields, name, tabdata)
-    multicraft.set_clouds(false)
-    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
-
     local index = ''
     if fields["btn_show_singleplayer"] then  index = "singleplayer"       end
     if fields["btn_show_multiplayer"]  then  index = "multiplayer"  end
@@ -121,10 +117,8 @@ local function on_activate2(type,old_tab,new_tab)
     mm_texture.clear("header")
     mm_texture.clear("footer")
     multicraft.set_clouds(false)
-    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.jpeg')
     multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
-
-
 end
 
 --------------------------------------------------------------------------------
