@@ -71,7 +71,7 @@ local function get_formspec2(tabview, name, tabdata)
     retval = retval .. "image_button[2.5,4.8;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
     --retval = retval .. "image_button[8.5,4.8;1,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
     retval = retval .. "image_button[2.5,6.2;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_exit;".. fgettext("Exit") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. 'image_button[6,-2;6.5,3;'..multicraft.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,11))..".png;btn_ad;;true;false]"
+    retval = retval .. 'image_button[0,-2;6.5,3;'..multicraft.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,11))..".png;btn_ad;;true;false]"
     retval = retval .. "image_button[2.5,2.0;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_singleplayer;".. fgettext("Singleplayer") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
     return retval
 end
