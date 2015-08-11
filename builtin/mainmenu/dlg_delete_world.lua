@@ -32,8 +32,6 @@ end
 
 local function delete_world_buttonhandler(this, fields)
     multicraft.set_clouds(false)
-    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
         if fields["world_delete_confirm"] then
            if this.data.delete_index > 0 and
               this.data.delete_index <= #menudata.worldlist:get_raw_list() then

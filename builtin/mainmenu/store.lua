@@ -188,9 +188,6 @@ end
 -- @function [parent=#modstore] handle_buttons
 function modstore.handle_buttons(parent, fields, name, data)
     multicraft.set_clouds(false)
-    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
-
 
         if fields["btn_modstore_page_up"] then
                 if modstore.current_list ~= nil and modstore.current_list.page > 0 then

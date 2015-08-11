@@ -36,8 +36,6 @@ end
 --------------------------------------------------------------------------------
 local function delete_mod_buttonhandler(this, fields)
     multicraft.set_clouds(false)
-    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         if fields["dlg_delete_mod_confirm"] ~= nil then
 

@@ -43,8 +43,6 @@ end
 
 local function add_server_buttonhandler(this, fields)
     multicraft.set_clouds(false)
-    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         if fields["server_add_cancel"] then
                 this:delete()

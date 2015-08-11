@@ -120,9 +120,6 @@ end
 
 local function handle_buttons(this, fields)
     multicraft.set_clouds(false)
-    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
-
         if fields["world_config_modlist"] ~= nil then
                 local event = multicraft.explode_textlist_event(fields["world_config_modlist"])
                 this.data.selected_mod = event.index

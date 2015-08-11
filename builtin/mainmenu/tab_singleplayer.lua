@@ -124,9 +124,6 @@ end
 
 local function main_button_handler(this, fields, name, tabdata)
     multicraft.set_clouds(false)
-    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
-
     --assert(name == "singleplayer")
 
     if fields["btn_server"]~=nil then

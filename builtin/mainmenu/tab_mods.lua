@@ -112,8 +112,6 @@ end
 --------------------------------------------------------------------------------
 local function handle_buttons(tabview, fields, tabname, tabdata)
     multicraft.set_clouds(false)
-    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.png')
-    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
         if fields["modlist"] ~= nil then
                 local event = multicraft.explode_textlist_event(fields["modlist"])
