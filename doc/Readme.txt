@@ -51,7 +51,7 @@ $user  = ~/.minetest
 OS X:
 $bin   = Contents/MacOS
 $share = Contents/Resources
-$user  = Contents/User OR ~/Library/Application Support/minetest
+$user  = Contents/User OR ~/Library/Application Support/MultiCraft
 
 World directory
 ----------------
@@ -61,8 +61,8 @@ World directory
 Configuration file:
 -------------------
 - Default location:
-    $user/minetest.conf
-- It is created by Minetest when it is ran the first time.
+    $user/MultiCraft.conf
+- It is created by MultiCraft when it is ran the first time.
 - A specific file can be specified on the command line:
 	--config <path-to-file>
 
@@ -82,23 +82,13 @@ This is an example for installing git on Debian/Ubuntu:
 $ sudo apt-get install git-core
 
 Download source (this is the URL to the latest of source repository, which might not work at all times) using git:
-$ git clone --depth 1 https://github.com/minetest/minetest.git
-$ cd minetest
-
-Download minetest_game (otherwise only the "Minimal development test" game is available) using git:
-$ git clone --depth 1 https://github.com/minetest/minetest_game.git games/minetest_game
+$ git clone --depth 1 https://github.com/MultiCraft/MultiCraft.git
+$ cd MultiCraft
 
 Download source, without using git:
-$ wget https://github.com/minetest/minetest/archive/master.tar.gz
+$ wget https://github.com/MultiCraft/MultiCraft/archive/master.tar.gz
 $ tar xf master.tar.gz
-$ cd minetest-master
-
-Download minetest_game, without using git:
-$ cd games/
-$ wget https://github.com/minetest/minetest_game/archive/master.tar.gz
-$ tar xf master.tar.gz
-$ mv minetest_game-master minetest_game
-$ cd ..
+$ cd MultiCraft-master
 
 Build a version that runs directly from the source directory:
 $ cmake . -DRUN_IN_PLACE=TRUE
@@ -121,8 +111,8 @@ CMake options
 -------------
 General options:
 
-BUILD_CLIENT        - Build Minetest client
-BUILD_SERVER        - Build Minetest server
+BUILD_CLIENT        - Build MultiCraft client
+BUILD_SERVER        - Build MultiCraft server
 CMAKE_BUILD_TYPE    - Type of build (Release vs. Debug)
     Release         - Release build
     Debug           - Debug build
@@ -139,7 +129,7 @@ ENABLE_SOUND        - Build with OpenAL, libogg & libvorbis; in-game Sounds
 ENABLE_LUAJIT       - Build with LuaJIT (much faster than non-JIT Lua)
 RUN_IN_PLACE        - Create a portable install (worlds, settings etc. in current directory)
 USE_GPROF           - Enable profiling using GProf
-VERSION_EXTRA       - Text to append to version (e.g. VERSION_EXTRA=foobar -> Minetest 0.4.9-foobar)
+VERSION_EXTRA       - Text to append to version (e.g. VERSION_EXTRA=foobar -> MultiCraft 0.1-foobar)
 
 Library specific options:
 
@@ -194,7 +184,6 @@ ZLIB_LIBRARY                    - path to libz.a/libz.so/zlibwapi.lib
 Compiling on Windows:
 ---------------------
 - This section is outdated. In addition to what is described here:
-  - In addition to minetest, you need to download minetest_game.
   - If you wish to have sound support, you need libogg, libvorbis and libopenal
 
 - You need:
@@ -212,8 +201,7 @@ Compiling on Windows:
 	* Optional: gettext library and tools:
 		http://gnuwin32.sourceforge.net/downlinks/gettext.php
 		- This is used for other UI languages. Feel free to leave it out.
-	* And, of course, Minetest:
-		http://minetest.net/download
+
 - Steps:
 	- Select a directory called DIR hereafter in which you will operate.
 	- Make sure you have CMake and a compiler installed.
@@ -228,7 +216,7 @@ Compiling on Windows:
 		- zlib-1.2.5.tar.gz
 		- zlib125dll.zip
 		- irrlicht-1.7.1.zip
-		- 110214175330.zip (or whatever, this is the minetest source)
+		- 110214175330.zip (or whatever, this is the MultiCraft source)
 		+ zlib-1.2.5
 			- zlib.h
 			+ win32
@@ -245,14 +233,14 @@ Compiling on Windows:
 			+bin
 			+include
 			+lib
-		+ minetest
+		+ MultiCraft
 			+ src
 			+ doc
 			- CMakeLists.txt
 			...
 	-----------------
 	- Start up the CMake GUI
-	- Select "Browse Source..." and select DIR/minetest
+	- Select "Browse Source..." and select DIR/MultiCraft
 	- Now, if using MSVC:
 		- Select "Browse Build..." and select DIR/minetest-build
 	- Else if using MinGW:
@@ -301,7 +289,7 @@ Compiling on Windows:
 		- You should now have a working game with the executable in
 			DIR/minetest/bin/minetest.exe
 
-Windows releases of minetest are built using a bat script like this:
+Windows releases of MultiCraft are built using a bat script like this:
 --------------------------------------------------------------------
 
 set sourcedir=%CD%
