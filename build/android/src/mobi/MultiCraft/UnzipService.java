@@ -43,11 +43,9 @@ public class UnzipService extends IntentService {
 		NotificationManager mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		Notification.Builder mBuilder = new Notification.Builder(this);
 		mBuilder.setContentTitle(getString(R.string.notification_title))
-				.setContentText(getString(R.string.notification_description))
-				.setSmallIcon(R.drawable.ic_launcher);
+				.setContentText(getString(R.string.notification_description)).setSmallIcon(R.drawable.update);
 		String file = intent.getStringExtra(EXTRA_KEY_IN_FILE);
 		String location = intent.getStringExtra(EXTRA_KEY_IN_LOCATION);
-		// Displays the progress bar for the first time.
 		int id = 1;
 		mNotifyManager.notify(id, mBuilder.build());
 		int per = 0;
@@ -70,9 +68,7 @@ public class UnzipService extends IntentService {
 						intentUpdate.addCategory(Intent.CATEGORY_DEFAULT);
 						intentUpdate.putExtra(EXTRA_KEY_UPDATE, progress);
 						sendBroadcast(intentUpdate);
-//						mNotifyManager.notify(id, mBuilder.build());
-						FileOutputStream f_out = new FileOutputStream(location
-								+ ze.getName());
+						FileOutputStream f_out = new FileOutputStream(location + ze.getName());
 						byte[] buffer = new byte[8192];
 						int len;
 						while ((len = zin.read(buffer)) != -1) {

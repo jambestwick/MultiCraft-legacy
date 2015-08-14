@@ -1,26 +1,21 @@
 package mobi.MultiCraft;
 
-import static mobi.MultiCraft.PreferencesHelper.isShowHelp;
-
-import mobi.MultiCraft.Utilities.IUtilitiesCallback;
 import android.app.NativeActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.WindowManager;
 
-public class MCNativeActivity extends NativeActivity implements
-		IUtilitiesCallback {
+public class MCNativeActivity extends NativeActivity {
 
 	private int m_MessagReturnCode;
 	private String m_MessageReturnValue;
-	private Utilities util;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		init();
+		m_MessagReturnCode = -1;
+		m_MessageReturnValue = "";
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -35,50 +30,10 @@ public class MCNativeActivity extends NativeActivity implements
 		}
 	}
 
-	@Override
-	public void init() {
-		m_MessagReturnCode = -1;
-		m_MessageReturnValue = "";
-		RateThisApp.onStart(this);
-		util = new Utilities(MCNativeActivity.this);
-		startDialogs();
-	}
-
-	@Override
-	public void finishMe() {
-		finish();
-	}
-
-	private void startDialogs() {
-		final Handler handler = new Handler();
-		handler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-
-				util.showHelpDialog();
-
-				if (!isShowHelp()) {
-					if (RateThisApp.shouldShowRateDialog()) {
-						RateThisApp
-								.showRateDialogIfNeeded(MCNativeActivity.this);
-					} else
-						util.showVersionDialog();
-				}
-			}
-		}, 1000);
-
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-	}
-
 	public void copyAssets() {
 	}
 
-	public void showDialog(String acceptButton, String hint, String current,
-			int editType) {
+	public void showDialog(String acceptButton, String hint, String current, int editType) {
 		Intent intent = new Intent(this, MultiCraftTextEntry.class);
 		Bundle params = new Bundle();
 		params.putString("acceptButton", acceptButton);

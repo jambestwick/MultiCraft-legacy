@@ -2,7 +2,6 @@ package mobi.MultiCraft;
 
 import java.util.Date;
 
-import mobi.MultiCraft.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -22,12 +21,12 @@ import android.widget.Toast;
  */
 public class RateThisApp {
 	private static final String TAG = RateThisApp.class.getSimpleName();
-	private static final String GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=";
 	private static final String PREF_NAME = "RateThisApp";
+	private static final String GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=";
 	private static final String KEY_INSTALL_DATE = "rta_install_date";
 	private static final String KEY_LAUNCH_TIMES = "rta_launch_times";
 	private static final String KEY_OPT_OUT = "rta_opt_out";
-
+	private static IDialogHelperCallback callerActivity;
 	private static Date mInstallDate = new Date();
 	private static int mLaunchTimes = 0;
 	private static boolean mOptOut = false;
@@ -51,8 +50,7 @@ public class RateThisApp {
 	 * It is better to call this API in onStart() of the launcher activity.
 	 */
 	public static void onStart(Context context) {
-		SharedPreferences pref = context.getSharedPreferences(PREF_NAME,
-				Context.MODE_PRIVATE);
+		SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 		Editor editor = pref.edit();
 		// If it is the first launch, save the date in shared preference.
 		if (pref.getLong(KEY_INSTALL_DATE, 0) == 0L) {
@@ -67,18 +65,12 @@ public class RateThisApp {
 		log("Launch times; " + launchTimes);
 
 		editor.apply();
-
+		callerActivity = (IDialogHelperCallback) context;
 		mInstallDate = new Date(pref.getLong(KEY_INSTALL_DATE, 0));
 		mLaunchTimes = pref.getInt(KEY_LAUNCH_TIMES, 0);
 		mOptOut = pref.getBoolean(KEY_OPT_OUT, false);
 
 		printStatus(context);
-	}
-
-	public static void showRateDialogIfNeeded(final Context context) {
-		if (shouldShowRateDialog()) {
-			showRateDialog(context);
-		}
 	}
 
 	public static boolean shouldShowRateDialog() {
@@ -93,41 +85,38 @@ public class RateThisApp {
 		}
 	}
 
-	public static void showRateDialog(final Context context) {
+	public static Dialog showRateDialog(final Context context, final int bitMask) {
 		// custom dialog
 		final Dialog dialog = new Dialog(context);
 		dialog.setContentView(R.layout.rate_layout);
 		dialog.setTitle(R.string.rta_dialog_title);
 
 		RatingBar ratingBar = (RatingBar) dialog.findViewById(R.id.ratingBar);
-		ratingBar
-				.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-					@Override
-					public void onRatingChanged(RatingBar ratingBar,
-							float rating, boolean fromUser) {
-						if (rating > 3) {
-							dialog.dismiss();
-							String appPackage = context.getPackageName();
-							Intent intent = new Intent(Intent.ACTION_VIEW, Uri
-									.parse(GOOGLE_PLAY + appPackage));
-							context.startActivity(intent);
-							setOptOut(context, true);
-						} else {
-							Toast.makeText(context, R.string.sad,
-									Toast.LENGTH_LONG).show();
-							dialog.dismiss();
-							clearSharedPreferences(context);
-						}
-					}
-				});
-		dialog.getWindow().setBackgroundDrawable(
-				new ColorDrawable(R.color.semi_transparent));
-		dialog.show();
+		ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+			@Override
+			public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+				if (rating > 3) {
+					dialog.dismiss();
+					String appPackage = context.getPackageName();
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY + appPackage));
+					context.startActivity(intent);
+					setOptOut(context, true);
+					callerActivity.exit();
+				} else {
+					Toast.makeText(context, R.string.sad, Toast.LENGTH_LONG).show();
+					dialog.dismiss();
+					clearSharedPreferences(context);
+					callerActivity.showDialogTree(bitMask);
+				}
+			}
+		});
+		dialog.getWindow().setBackgroundDrawable(new ColorDrawable(R.color.semi_transparent));
+		// dialog.show();
+		return dialog;
 	}
 
 	private static void clearSharedPreferences(Context context) {
-		SharedPreferences pref = context.getSharedPreferences(PREF_NAME,
-				Context.MODE_PRIVATE);
+		SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 		Editor editor = pref.edit();
 		editor.remove(KEY_INSTALL_DATE);
 		editor.remove(KEY_LAUNCH_TIMES);
@@ -135,16 +124,14 @@ public class RateThisApp {
 	}
 
 	private static void setOptOut(final Context context, boolean optOut) {
-		SharedPreferences pref = context.getSharedPreferences(PREF_NAME,
-				Context.MODE_PRIVATE);
+		SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 		Editor editor = pref.edit();
 		editor.putBoolean(KEY_OPT_OUT, optOut);
 		editor.apply();
 	}
 
 	private static void printStatus(final Context context) {
-		SharedPreferences pref = context.getSharedPreferences(PREF_NAME,
-				Context.MODE_PRIVATE);
+		SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 		log("*** RateThisApp Status ***");
 		log("Install Date: " + new Date(pref.getLong(KEY_INSTALL_DATE, 0)));
 		log("Launch Times: " + pref.getInt(KEY_LAUNCH_TIMES, 0));

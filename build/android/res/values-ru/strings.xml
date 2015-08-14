@@ -19,9 +19,9 @@
     <!-- диалог для слабых девайсов -->
     <string name="memory_title">Внимание!</string>
     <string name="memory_lags">Возможны лаги при игре. Пожалуйста, не оценивайте приложение плохо,\nтак как у вас слабый аппарат.</string>
-    <string name="memory_continue">Играть!</string>
+    <string name="memory_continue">Понял</string>
     <string name="memory_close">Закрыть</string>
-    <string name="memory_warning">У Вашего устройства недостаточно оперативной памяти для игры без лагов. Требуется более мощное устройство!\nЛибо игра несовместима с вашим типом процессора</string>
+    <string name="memory_warning">У Вашего устройства недостаточно оперативной памяти для игры без лагов. Требуется более мощное устройство!</string>
 
     <!-- диалог обновления -->
     <string name="update_yes">Обновиться!</string>
@@ -36,5 +36,8 @@
     <!-- недостаточно места -->
     <string name="not_enough_space">Недостаточно места для распаковки.\nОсвободите пространство на SD карте</string>
     <string name="space_ok">OK</string>
+
+    <!-- диалог CPU -->
+    <string name="cpu_warning">Игра несовместима с вашим типом процессора</string>
 
 </resources>
