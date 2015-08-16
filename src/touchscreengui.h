@@ -44,14 +44,14 @@ typedef enum {
 	drop_id,
 	jump_id,
 	crunch_id,
-	fly_id,
 #ifdef ENABLE_ANDROID_NOCLIP
+	fly_id,
 	noclip_id,
-#endif
 	fast_id,
+#endif
 	debug_id,
 	chat_id,
-	camera_id,
+//	camera_id,
 	range_id,
 	after_last_element_id
 } touch_gui_button_id;

@@ -16,7 +16,7 @@ ROOT = $(shell pwd)
 GAMES_TO_COPY = MultiCraft_game
 
 # this string will be written to Files.zip in ver.txt
-VER_TEXT = 1.0.1
+VER_TEXT = 1.0.2
 
 ################################################################################
 # Android Version code
@@ -82,7 +82,7 @@ IRRLICHT_TIMESTAMP = $(IRRLICHT_DIR)timestamp
 IRRLICHT_TIMESTAMP_INT = $(ROOT)/deps/irrlicht_timestamp
 IRRLICHT_URL_SVN = http://svn.code.sf.net/p/irrlicht/code/branches/ogl-es/
 
-OPENSSL_VERSION = 1.0.1l
+OPENSSL_VERSION = 1.0.1p
 OPENSSL_BASEDIR = openssl-$(OPENSSL_VERSION)
 OPENSSL_DIR = $(ROOT)/deps/$(OPENSSL_BASEDIR)/
 OPENSSL_LIB = $(OPENSSL_DIR)/libssl.so.1.0.0
@@ -90,7 +90,7 @@ OPENSSL_TIMESTAMP = $(OPENSSL_DIR)timestamp
 OPENSSL_TIMESTAMP_INT = $(ROOT)/deps/openssl_timestamp
 OPENSSL_URL = http://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
 
-CURL_VERSION = 7.43.0
+CURL_VERSION = 7.44.0
 CURL_DIR = $(ROOT)/deps/curl-$(CURL_VERSION)
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
@@ -102,7 +102,7 @@ GMP_DIR = $(ROOT)/deps/gmp-$(GMP_VERSION)
 GMP_LIB = $(GMP_DIR)/usr/lib/libgmp.so
 GMP_TIMESTAMP = $(GMP_DIR)/timestamp
 GMP_TIMESTAMP_INT = $(ROOT)/deps/gmp_timestamp
-GMP_URL_HTTP = https://gmplib.org/download/gmp/gmp-$(GMP_VERSION).tar.bz2
+GMP_URL_HTTP = https://gmplib.org/download/gmp/gmp-$(GMP_VERSION)a.tar.bz2
 
 FREETYPE_DIR = $(ROOT)/deps/freetype2-android/
 FREETYPE_LIB = $(FREETYPE_DIR)/Android/obj/local/$(TARGET_ABI)/libfreetype2-static.a
@@ -110,7 +110,7 @@ FREETYPE_TIMESTAMP = $(FREETYPE_DIR)timestamp
 FREETYPE_TIMESTAMP_INT = $(ROOT)/deps/freetype_timestamp
 FREETYPE_URL_GIT = https://github.com/cdave1/freetype2-android
 
-SQLITE3_FOLDER = sqlite-amalgamation-3081002
+SQLITE3_FOLDER = sqlite-amalgamation-3081101
 SQLITE3_URL = http://www.sqlite.org/2015/$(SQLITE3_FOLDER).zip
 
 -include $(PATHCFGFILE)
@@ -550,8 +550,8 @@ gmp_download :
 		mkdir -p ${ROOT}/deps;                                             \
 		cd deps;                                                           \
 		wget ${GMP_URL_HTTP} || exit 1;                                    \
-		tar -xjf gmp-${GMP_VERSION}.tar.bz2 || exit 1;                     \
-		rm gmp-${GMP_VERSION}.tar.bz2;                                     \
+		tar -xjf gmp-${GMP_VERSION}a.tar.bz2 || exit 1;                     \
+		rm gmp-${GMP_VERSION}a.tar.bz2;                                     \
 		ln -s gmp-${GMP_VERSION} gmp;                                      \
 	fi
 

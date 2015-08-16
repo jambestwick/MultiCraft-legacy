@@ -68,7 +68,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("3d_mode", "none");
 	settings->setDefault("3d_paralax_strength", "0.025");
 	settings->setDefault("aux1_descends", "false");
-	settings->setDefault("doubletap_jump", "false");
+	settings->setDefault("doubletap_jump", "true");
 	settings->setDefault("always_fly_fast", "true");
 	settings->setDefault("directional_colored_fog", "true");
 	settings->setDefault("tooltip_show_delay", "400");
@@ -87,9 +87,16 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("show_debug", "true");
 	#endif
 
-	settings->setDefault("wanted_fps", "30");
+#ifdef __ANDROID__
+	settings->setDefault("wanted_fps", "15");
+	settings->setDefault("fps_max", "30");
+	settings->setDefault("pause_fps_max", "10");
+#else
+	settings->setDefault("wanted_fps", "20");
 	settings->setDefault("fps_max", "60");
-	settings->setDefault("pause_fps_max", "20");
+	settings->setDefault("pause_fps_max", "15");
+#endif
+
 	// A bit more than the server will send around the player, to make fog blend well
 	settings->setDefault("viewing_range_nodes_max", "240");
 	settings->setDefault("viewing_range_nodes_min", "35");
@@ -101,7 +108,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("vsync", "false");
 	settings->setDefault("address", "");
 	settings->setDefault("random_input", "false");
-	settings->setDefault("client_unload_unused_data_timeout", "600");
+	settings->setDefault("client_unload_unused_data_timeout", "300");
 	settings->setDefault("enable_fog", "true");
 	settings->setDefault("fov", "72");
 	settings->setDefault("view_bobbing", "true");
@@ -124,7 +131,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_clouds", "true");
 	settings->setDefault("screenshot_path", ".");
 	settings->setDefault("view_bobbing_amount", "1.0");
-	settings->setDefault("fall_bobbing_amount", "0.0");
+	settings->setDefault("fall_bobbing_amount", "1.0");
 #ifdef __ANDROID__
 	settings->setDefault("enable_3d_clouds", "false");
 #else
@@ -132,7 +139,7 @@ void set_default_settings(Settings *settings)
 #endif
 	settings->setDefault("cloud_height", "120");
 	settings->setDefault("cloud_radius", "12");
-	settings->setDefault("menu_clouds", "true");
+	settings->setDefault("menu_clouds", "false");
 	settings->setDefault("opaque_water", "false");
 	settings->setDefault("console_color", "(0,0,0)");
 	settings->setDefault("console_alpha", "200");
@@ -161,7 +168,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("bilinear_filter", "false");
 	settings->setDefault("trilinear_filter", "false");
 	settings->setDefault("texture_clean_transparent", "false");
-	settings->setDefault("texture_min_size", "64");
+	settings->setDefault("texture_min_size", "32");
 	settings->setDefault("preload_item_visuals", "false");
 	settings->setDefault("enable_bumpmapping", "false");
 	settings->setDefault("enable_parallax_occlusion", "false");
@@ -341,9 +348,9 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("emergequeue_limit_generate", "8");
 	settings->setDefault("preload_item_visuals", "false");
 
-	settings->setDefault("viewing_range_nodes_max", "50");
-	settings->setDefault("viewing_range_nodes_min", "20");
-	settings->setDefault("inventory_image_hack", "false");
+	settings->setDefault("viewing_range_nodes_max", "75");
+	settings->setDefault("viewing_range_nodes_min", "25");
+	settings->setDefault("inventory_image_hack", "true");
 
 	//check for device with small screen
 	float x_inches = ((double) porting::getDisplaySize().X /
