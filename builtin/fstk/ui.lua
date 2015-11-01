@@ -3,7 +3,7 @@
 --
 --self program is free software; you can redistribute it and/or modify
 --it under the terms of the GNU Lesser General Public License as published by
---the Free Software Foundation; either version 3.0 of the License, or
+--the Free Software Foundation; either version 2.1 of the License, or
 --(at your option) any later version.
 --
 --self program is distributed in the hope that it will be useful,
@@ -62,7 +62,7 @@ function ui.update()
 	if gamedata ~= nil and gamedata.errormessage ~= nil then
 		formspec = "size[12,3.2]" ..
 			"textarea[1,1;10,2;;ERROR: " ..
-			multicraft.formspec_escape(gamedata.errormessage) ..
+			core.formspec_escape(gamedata.errormessage) ..
 			";]"..
 			"button[4.5,2.5;3,0.5;btn_error_confirm;" .. fgettext("Ok") .. "]"
 	else
@@ -101,7 +101,7 @@ function ui.update()
 			formspec = ui.childlist[ui.default]:get_formspec()
 		end
 	end
-	multicraft.update_formspec(formspec)
+	core.update_formspec(formspec)
 end
 
 --------------------------------------------------------------------------------
@@ -109,7 +109,7 @@ function ui.handle_buttons(fields)
 
 	if fields["btn_error_confirm"] then
 		gamedata.errormessage = nil
-		menu.update()
+		update_menu()
 		return
 	end
 
@@ -145,7 +145,7 @@ end
 -- initialize callbacks
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-multicraft.button_handler = function(fields)
+core.button_handler = function(fields)
 	if fields["btn_error_confirm"] then
 		gamedata.errormessage = nil
 		ui.update()
@@ -158,7 +158,7 @@ multicraft.button_handler = function(fields)
 end
 
 --------------------------------------------------------------------------------
-multicraft.event_handler = function(event)
+core.event_handler = function(event)
 	if ui.handle_events(event) then
 		ui.update()
 		return

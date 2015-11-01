@@ -3,7 +3,7 @@
 --
 --This program is free software; you can redistribute it and/or modify
 --it under the terms of the GNU Lesser General Public License as published by
---the Free Software Foundation; either version 3.0 of the License, or
+--the Free Software Foundation; either version 2.1 of the License, or
 --(at your option) any later version.
 --
 --This program is distributed in the hope that it will be useful,
@@ -36,7 +36,7 @@ local function render_texture_pack_list(list)
 				retval = retval ..","
 			end
 
-			retval = retval .. multicraft.formspec_escape(v)
+			retval = retval .. core.formspec_escape(v)
 		end
 	end
 
@@ -45,12 +45,13 @@ end
 
 --------------------------------------------------------------------------------
 local function get_formspec(tabview, name, tabdata)
+	
 	local retval = "label[4,-0.25;".. fgettext("Select texture pack:") .. "]"..
 			"textlist[4,0.25;7.5,5.0;TPs;"
 
-	local current_texture_path = multicraft.setting_get("texture_path")
-	local list = filter_texture_pack_list(multicraft.get_dir_list(multicraft.get_texturepath(), true))
-	local index = tonumber(multicraft.setting_get("mainmenu_last_selected_TP"))
+	local current_texture_path = core.setting_get("texture_path")
+	local list = filter_texture_pack_list(core.get_dir_list(core.get_texturepath(), true))
+	local index = tonumber(core.setting_get("mainmenu_last_selected_TP"))
 
 	if index == nil then index = 1 end
 
@@ -81,27 +82,25 @@ local function get_formspec(tabview, name, tabdata)
 	return	retval ..
 			render_texture_pack_list(list) ..
 			";" .. index .. "]" ..
-			"image[0.25,0.25;4.0,3.7;"..multicraft.formspec_escape(screenfile or no_screenshot).."]"..
-			"textarea[0.6,3.25;3.7,1.5;;"..multicraft.formspec_escape(infotext or "")..";]"
+			"image[0.25,0.25;4.0,3.7;"..core.formspec_escape(screenfile or no_screenshot).."]"..
+			"textarea[0.6,3.25;3.7,1.5;;"..core.formspec_escape(infotext or "")..";]"
 end
 
 --------------------------------------------------------------------------------
 local function main_button_handler(tabview, fields, name, tabdata)
-    multicraft.set_clouds(false)
-
 	if fields["TPs"] ~= nil then
-		local event = multicraft.explode_textlist_event(fields["TPs"])
+		local event = core.explode_textlist_event(fields["TPs"])
 		if event.type == "CHG" or event.type == "DCL" then
-			local index = multicraft.get_textlist_index("TPs")
-			multicraft.setting_set("mainmenu_last_selected_TP",
+			local index = core.get_textlist_index("TPs")
+			core.setting_set("mainmenu_last_selected_TP",
 				index)
-			local list = filter_texture_pack_list(multicraft.get_dir_list(multicraft.get_texturepath(), true))
-			local current_index = multicraft.get_textlist_index("TPs")
+			local list = filter_texture_pack_list(core.get_dir_list(core.get_texturepath(), true))
+			local current_index = core.get_textlist_index("TPs")
 			if current_index ~= nil and #list >= current_index then
-				local new_path = multicraft.get_texturepath()..DIR_DELIM..list[current_index]
+				local new_path = core.get_texturepath()..DIR_DELIM..list[current_index]
 				if list[current_index] == "None" then new_path = "" end
 
-				multicraft.setting_set("texture_path", new_path)
+				core.setting_set("texture_path", new_path)
 			end
 		end
 		return true

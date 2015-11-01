@@ -3,7 +3,7 @@
 --
 --This program is free software; you can redistribute it and/or modify
 --it under the terms of the GNU Lesser General Public License as published by
---the Free Software Foundation; either version 3.0 of the License, or
+--the Free Software Foundation; either version 2.1 of the License, or
 --(at your option) any later version.
 --
 --This program is distributed in the hope that it will be useful,
@@ -22,10 +22,10 @@ mt_color_dark_green = "#003300"
 
 --for all other colors ask sfan5 to complete his work!
 
-local menupath = multicraft.get_mainmenu_path()
-local basepath = multicraft.get_builtin_path()
-defaulttexturedir = multicraft.get_texturepath_share() .. DIR_DELIM .. "base" ..
-                    DIR_DELIM .. "pack" .. DIR_DELIM
+local menupath = core.get_mainmenu_path()
+local basepath = core.get_builtin_path()
+defaulttexturedir = core.get_texturepath_share() .. DIR_DELIM .. "base" ..
+					DIR_DELIM .. "pack" .. DIR_DELIM
 
 dofile(basepath .. DIR_DELIM .. "common" .. DIR_DELIM .. "async_event.lua")
 dofile(basepath .. DIR_DELIM .. "common" .. DIR_DELIM .. "filterlist.lua")
@@ -41,156 +41,124 @@ dofile(menupath .. DIR_DELIM .. "dlg_config_world.lua")
 dofile(menupath .. DIR_DELIM .. "tab_credits.lua")
 dofile(menupath .. DIR_DELIM .. "tab_mods.lua")
 dofile(menupath .. DIR_DELIM .. "tab_settings.lua")
---dofile(menupath .. DIR_DELIM .. "tab_help.lua")
-    dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
-    dofile(menupath .. DIR_DELIM .. "dlg_delete_mod.lua")
-    dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
-    dofile(menupath .. DIR_DELIM .. "dlg_rename_modpack.lua")
-    dofile(menupath .. DIR_DELIM .. "dlg_add_server.lua")
-    dofile(menupath .. DIR_DELIM .. "tab_multiplayer.lua")
-    dofile(menupath .. DIR_DELIM .. "tab_server.lua")
-    dofile(menupath .. DIR_DELIM .. "tab_singleplayer.lua")
-    dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
-    dofile(menupath .. DIR_DELIM .. "textures.lua")
+if PLATFORM ~= "Android" then
+	dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
+	dofile(menupath .. DIR_DELIM .. "dlg_delete_mod.lua")
+	dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
+	dofile(menupath .. DIR_DELIM .. "dlg_rename_modpack.lua")
+	dofile(menupath .. DIR_DELIM .. "tab_multiplayer.lua")
+	dofile(menupath .. DIR_DELIM .. "tab_server.lua")
+	dofile(menupath .. DIR_DELIM .. "tab_singleplayer.lua")
+	dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
+	dofile(menupath .. DIR_DELIM .. "textures.lua")
+else
+	dofile(menupath .. DIR_DELIM .. "tab_simple_main.lua")
+end
 
 --------------------------------------------------------------------------------
 local function main_event_handler(tabview, event)
-    if event == "MenuQuit" then
-        multicraft.close()
-    end
-
-    return true
+	if event == "MenuQuit" then
+		core.close()
+	end
+	return true
 end
-
---------------------------------------------------------------------------------
-local function get_formspec2(tabview, name, tabdata)
-    math.randomseed(os.time())
-    local retval = ""
-    retval = retval .. "bgcolor[#00000000;false]"
-    retval = retval .. "image_button[2.5,3.4;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir) .. "menu_button.png;btn_show_multiplayer;" .. fgettext("Multiplayer") .. ";true;true;" .. multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[2.5,4.8;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_options;"..      fgettext("Options") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    --retval = retval .. "image_button[8.5,4.8;1,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_help;?;true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. "image_button[2.5,6.2;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_exit;".. fgettext("Exit") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    retval = retval .. 'image_button[0,-2;6.5,3;'..multicraft.formspec_escape(mm_texture.basetexturedir)..'ad_label'..tostring(math.random(1,11))..".png;btn_ad;;true;false]"
-    retval = retval .. "image_button[2.5,2.0;7,1;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button.png;btn_show_singleplayer;".. fgettext("Singleplayer") .. ";true;true;"..multicraft.formspec_escape(mm_texture.basetexturedir).."menu_button_b.png]"
-    return retval
-end
-
---------------------------------------------------------------------------------
-
-local function main_button_handler2(tabview, fields, name, tabdata)
-    local index = ''
-    if fields["btn_show_singleplayer"] then  index = "singleplayer"       end
-    if fields["btn_show_multiplayer"]  then  index = "multiplayer"  end
-    if fields["btn_show_options"]      then  index = "settings"     end
-    --if fields["btn_show_help"]         then  index = "help"         end
-    if fields["btn_exit"] then multicraft.close() end
-
-    if index == '' then return end
-    for name,def in pairs(tabview.tablist) do
-       if index == def.name then
-        local get_fs = function()
-           local retval = def.get_formspec(tabview, name, tabdata)
-           retval = 'size[12,5.2]'..retval
-           return retval
-        end
-        local dlg = dialog_create(def.name, get_fs, def.button_handler, def.on_change)
-        dlg:set_parent(tabview)
-        tabview:hide()
-        dlg:show()
-        return dlg
-       end
-    end
-   return false
-end
-
---------------------------------------------------------------------------------
-local function on_activate2(type,old_tab,new_tab)
-    if type == "LEAVE" then
-        return
-    end
-    if multicraft.setting_getbool("public_serverlist") then
-        asyncOnlineFavourites()
-    else
-        menudata.favorites = multicraft.get_favorites("local")
-    end
-    mm_texture.clear("header")
-    mm_texture.clear("footer")
-    multicraft.set_clouds(false)
-    multicraft.set_background("background",multicraft.formspec_escape(mm_texture.basetexturedir)..'background.jpeg')
-    multicraft.set_background("header",multicraft.formspec_escape(mm_texture.basetexturedir)..'header.png')
-end
-
---------------------------------------------------------------------------------
-tab_main = {
-    name = "main",
-    caption = fgettext("Main"),
-    cbf_formspec = get_formspec2,
-    cbf_button_handler = main_button_handler2,
-    on_change = on_activate2
-    }
 
 --------------------------------------------------------------------------------
 local function init_globals()
-    -- Init gamedata
-    gamedata.worldindex = 0
-
-    menudata.worldlist = filterlist.create(
-        multicraft.get_worlds,
-        compare_worlds,
-        -- Unique id comparison function
-        function(element, uid)
-            return element.name == uid
-        end,
-        -- Filter function
-        function(element, gameid)
-            return element.gameid == gameid
-        end
-    )
-
-    menudata.worldlist:add_sort_mechanism("alphabetic", sort_worlds_alphabetic)
-    menudata.worldlist:set_sortmode("alphabetic")
-
-    if not multicraft.setting_get("menu_last_game") then
-        local default_game = multicraft.setting_get("default_game") or "magichet"
-        multicraft.setting_set("menu_last_game", default_game )
-    end
-
-    mm_texture.init()
+	-- Init gamedata
+	gamedata.worldindex = 0
 
 
-    -- Create main tabview
-    local tv_main = tabview_create("maintab",{x=12,y=5.2},{x=0,y=0})
+	if PLATFORM ~= "Android" then
+		menudata.worldlist = filterlist.create(
+			core.get_worlds,
+			compare_worlds,
+			-- Unique id comparison function
+			function(element, uid)
+				return element.name == uid
+			end,
+			-- Filter function
+			function(element, gameid)
+				return element.gameid == gameid
+			end
+		)
 
-    tv_main:set_autosave_tab(false)
-    --tv_main:add(tab_simple_main)
-    tv_main:add(tab_main)
-    tv_main:add(tab_singleplayer)
-    tv_main:add(tab_multiplayer)
-    tv_main:add(tab_server)
-    tv_main:add(tab_settings)
-    tv_main:add(tab_texturepacks)
-    tv_main:add(tab_mods)
-    --tv_main:add(tab_help)
-    tv_main:add(tab_credits)
+		menudata.worldlist:add_sort_mechanism("alphabetic", sort_worlds_alphabetic)
+		menudata.worldlist:set_sortmode("alphabetic")
 
-    tv_main:set_global_event_handler(main_event_handler)
-    tv_main:set_fixed_size(false)
-    ui.set_default("main")
+		if not core.setting_get("menu_last_game") then
+			local default_game = core.setting_get("default_game") or "minetest"
+			core.setting_set("menu_last_game", default_game )
+		end
 
-    tv_main:show()
+		mm_texture.init()
+	else
+		local world_list = core.get_worlds()
 
-    -- Create modstore ui
-    if PLATFORM == "Android" then
-        modstore.init({x=12, y=6}, 3, 2)
-    else
-        modstore.init({x=12, y=8}, 4, 3)
-    end
+		local found_singleplayerworld = false
 
-    ui.update()
+		for i,world in pairs(world_list) do
+			if world.name == "singleplayerworld" then
+				found_singleplayerworld = true
+				gamedata.worldindex = i
+				break
+			end
+		end
 
-    multicraft.sound_play("main_menu", true)
+		if not found_singleplayerworld then
+			core.create_world("singleplayerworld", 1)
 
+			local world_list = core.get_worlds()
+
+			for i,world in pairs(world_list) do
+				if world.name == "singleplayerworld" then
+					gamedata.worldindex = i
+					break
+				end
+			end
+		end
+	end
+
+	-- Create main tabview
+	local tv_main = tabview_create("maintab",{x=12,y=5.2},{x=0,y=0})
+	if PLATFORM ~= "Android" then
+		tv_main:set_autosave_tab(true)
+	end
+	if PLATFORM ~= "Android" then
+		tv_main:add(tab_singleplayer)
+		tv_main:add(tab_multiplayer)
+		tv_main:add(tab_server)
+	else
+		tv_main:add(tab_simple_main)
+	end
+	tv_main:add(tab_settings)
+	if PLATFORM ~= "Android" then
+		tv_main:add(tab_texturepacks)
+	end
+	tv_main:add(tab_mods)
+	tv_main:add(tab_credits)
+
+	tv_main:set_global_event_handler(main_event_handler)
+
+	tv_main:set_fixed_size(false)
+
+	if not (PLATFORM == "Android") then
+		tv_main:set_tab(core.setting_get("maintab_LAST"))
+	end
+	ui.set_default("maintab")
+	tv_main:show()
+
+	-- Create modstore ui
+	if PLATFORM == "Android" then
+		modstore.init({x=12, y=6}, 3, 2)
+	else
+		modstore.init({x=12, y=8}, 4, 3)
+	end
+
+	ui.update()
+
+	core.sound_play("main_menu", true)
 end
 
 init_globals()
+

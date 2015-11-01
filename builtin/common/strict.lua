@@ -4,6 +4,11 @@
 local WARN_INIT = false
 
 
+function core.global_exists(name)
+	return rawget(_G, name) ~= nil
+end
+
+
 local function warn(message)
 	print(os.date("%H:%M:%S: WARNING: ")..message)
 end
@@ -30,8 +35,8 @@ function meta:__newindex(name, value)
 		declared[name] = true
 	end
 	-- Ignore mod namespaces
-	if WARN_INIT and (not multicraft.get_current_modname or
-			name ~= multicraft.get_current_modname()) then
+	if WARN_INIT and (not core.get_current_modname or
+			name ~= core.get_current_modname()) then
 		warn(("Global variable %q created at %s.")
 			:format(name, desc))
 	end
