@@ -14,8 +14,8 @@ PATHCFGFILE = path.cfg
 ROOT = $(shell pwd)
 
 # this string will be written to Files.zip in ver.txt
-VER_TEXT = 1.0.2
-GAMES_TO_COPY =
+VER_TEXT = 1.1
+GAMES_TO_COPY = MultiCraft_game
 MODS_TO_COPY =
 
 
@@ -34,7 +34,7 @@ VERSION_PATCH := $(shell cat $(ROOT)/../../CMakeLists.txt | \
 ANDROID_VERSION_CODE = 1
 
 ################################################################################
-# toolchain config for ARMv7 processors
+# toolchain config for arm new processors
 ################################################################################
 TARGET_HOST = arm-linux
 TARGET_ABI = armeabi-v7a
@@ -48,7 +48,7 @@ COMPILER_VERSION = 4.9
 HAVE_LEVELDB = 0
 
 ################################################################################
-# toolchain config for x86 processors
+# toolchain config for x86
 ################################################################################
 #TARGET_HOST = x86-linux
 #TARGET_ABI = x86
@@ -60,7 +60,6 @@ HAVE_LEVELDB = 0
 #HAVE_LEVELDB = 1
 
 ################################################################################
-
 ASSETS_TIMESTAMP = deps/assets_timestamp
 
 LEVELDB_DIR = $(ROOT)/deps/leveldb/
@@ -103,12 +102,12 @@ CURL_TIMESTAMP = $(CURL_DIR)/timestamp
 CURL_TIMESTAMP_INT = $(ROOT)/deps/curl_timestamp
 CURL_URL_HTTP = http://curl.haxx.se/download/curl-${CURL_VERSION}.tar.bz2
 
-GMP_VERSION = 6.0.0
+GMP_VERSION = 6.1.0
 GMP_DIR = $(ROOT)/deps/gmp-$(GMP_VERSION)
 GMP_LIB = $(GMP_DIR)/usr/lib/libgmp.so
 GMP_TIMESTAMP = $(GMP_DIR)/timestamp
 GMP_TIMESTAMP_INT = $(ROOT)/deps/gmp_timestamp
-GMP_URL_HTTP = https://gmplib.org/download/gmp/gmp-$(GMP_VERSION)a.tar.bz2
+GMP_URL_HTTP = https://gmplib.org/download/gmp/gmp-$(GMP_VERSION).tar.bz2
 
 FREETYPE_DIR = $(ROOT)/deps/freetype2-android/
 FREETYPE_LIB = $(FREETYPE_DIR)/Android/obj/local/$(TARGET_ABI)/libfreetype2-static.a
@@ -608,10 +607,11 @@ curl_binary:
 		echo "curl binary missing, downloading...";                           \
 		mkdir -p ${ROOT}/deps;                                                 \
 		cd deps;                                                               \
-		wget http://curl.haxx.se/gknw.net/${CURL_VERSION}/dist-android/curl-${CURL_VERSION}-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz || exit 1;\
-		tar -xzf curl-${CURL_VERSION}-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz || exit 1;\
-		mv curl-${CURL_VERSION}-rtmp-ssh2-ssl-zlib-static-bin-android curl-${CURL_VERSION_BINARY};\
-		rm curl-${CURL_VERSION}-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz;           \
+		wget http://curl.haxx.se/gknw.net/7.34.0/dist-android/curl-7.34.0-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz || exit 1;\
+		tar -xzf curl-7.34.0-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz || exit 1;\
+		mv curl-7.34.0-rtmp-ssh2-ssl-zlib-static-bin-android curl-${CURL_VERSION_BINARY};\
+		rm curl-7.34.0-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz;           \
+                              \
 	fi
 
 $(GMP_TIMESTAMP) : gmp_download
@@ -626,63 +626,8 @@ gmp_download :
 		mkdir -p ${ROOT}/deps;                                             \
 		cd deps;                                                           \
 		wget ${GMP_URL_HTTP} || exit 1;                                    \
-		tar -xjf gmp-${GMP_VERSION}a.tar.bz2 || exit 1;                     \
-		rm gmp-${GMP_VERSION}a.tar.bz2;                                     \
-		ln -s gmp-${GMP_VERSION} gmp;                                      \
-	fi
-
-gmp : $(GMP_LIB)
-
-$(GMP_LIB): $(GMP_TIMESTAMP)
-	@REFRESH=0;                                                                \
-	if [ ! -e ${GMP_TIMESTAMP_INT} ] ; then                                    \
-		REFRESH=1;                                                         \
-	fi;                                                                        \
-	if [ ! -e ${GMP_LIB} ] ; then                                              \
-		REFRESH=1;                                                         \
-	fi;                                                                        \
-	if [ ${GMP_TIMESTAMP} -nt ${GMP_TIMESTAMP_INT} ] ; then                    \
-		REFRESH=1;                                                         \
-	fi;                                                                        \
-	if [ $$REFRESH -ne 0 ] ; then                                              \
-	mkdir -p ${GMP_DIR};                                                       \
-	export PATH="$${PATH}:${SDKFOLDER}/platform-tools:${ANDROID_NDK}";         \
-	echo "changed timestamp for gmp detected building...";                     \
-	cd deps/gmp-${GMP_VERSION};                                                \
-	export CROSS_PREFIX=${CROSS_PREFIX};                                       \
-	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-gmp;                              \
-	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}${COMPILER_VERSION}                         \
-	--install-dir=$${TOOLCHAIN};                                               \
-	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
-	export CC=${CROSS_PREFIX}gcc;                                              \
-	export CXX=${CROSS_PREFIX}g++;                                             \
-	export LIBGMP_LDFLAGS="-avoid-version";                                    \
-	export LIBGMPXX_LDFLAGS="-avoid-version";                                  \
-	./configure --disable-static --host=${TARGET_HOST} --prefix=/usr;          \
-	$(MAKE) install DESTDIR=/${GMP_DIR} || exit 1;                             \
-	touch ${GMP_TIMESTAMP};                                                    \
-	touch ${GMP_TIMESTAMP_INT};                                                \
-	$(RM) -rf $${TOOLCHAIN};                                                   \
-	else                                                                       \
-		echo "nothing to be done for gmp";                                 \
-	fi
-
-
-$(GMP_TIMESTAMP) : gmp_download
-	@LAST_MODIF=$$(find ${GMP_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
-	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
-		touch ${GMP_TIMESTAMP};                                            \
-	fi
-
-gmp_download :
-	@if [ ! -d "${GMP_DIR}" ] ; then                                           \
-		echo "gmp sources missing, downloading...";                        \
-		mkdir -p ${ROOT}/deps;                                             \
-		cd deps;                                                           \
-		wget ${GMP_URL_HTTP} || exit 1;                                    \
-		tar -xjf gmp-${GMP_VERSION}a.tar.bz2 || exit 1;                     \
-		rm gmp-${GMP_VERSION}a.tar.bz2;                                     \
+		tar -xjf gmp-${GMP_VERSION}.tar.bz2 || exit 1;                     \
+		rm gmp-${GMP_VERSION}.tar.bz2;                                     \
 		ln -s gmp-${GMP_VERSION} gmp;                                      \
 	fi
 
@@ -780,8 +725,8 @@ assets : $(ASSETS_TIMESTAMP)
 	echo "assets changed, refreshing...";                                      \
 	$(MAKE) clean_assets;                                                      \
 	mkdir -p ${ROOT}/assets/Minetest;                                          \
-	cp ${ROOT}/../../minetest.conf.example ${ROOT}/assets/Minetest;            \
-	cp ${ROOT}/../../README.txt ${ROOT}/assets/Minetest;                       \
+	cp ${ROOT}/../../multicraft.conf.example ${ROOT}/assets/Minetest;            \
+	cp ${ROOT}/../../README.md ${ROOT}/assets/Minetest;                       \
 	cp -r ${ROOT}/../../builtin ${ROOT}/assets/Minetest;                       \
 	cp -r ${ROOT}/../../client ${ROOT}/assets/Minetest;                        \
 	cp -r ${ROOT}/../../doc ${ROOT}/assets/Minetest;                           \
@@ -806,13 +751,13 @@ assets : $(ASSETS_TIMESTAMP)
 	find . -type d -path "*.svn" -exec rm -rf {} \; ;                          \
 	find . -type f -path "*.gitignore" -exec rm -rf {} \; ;                    \
 	ls -R | grep ":$$" | sed -e 's/:$$//' -e 's/\.//' -e 's/^\///' > "index.txt"; \
-	find MultiCraft >"filelist.txt";                                             \
+	find Minetest >"filelist.txt";                                             \
 	cp ${ROOT}/${ASSETS_TIMESTAMP} ${ROOT}/${ASSETS_TIMESTAMP}.old;            \
 	cd ${ROOT}/assets/MultiCraft;		\
 	echo "Creating Files.zip";	\
 	zip -r -X -q ../Files.zip *;	           \
 	cd ${ROOT}/assets;							\
-	rm -r ${ROOT}/assets/MultiCraft; \
+	rm -r ${ROOT}/assets/MultiCraft_game; \
 	rm ${ROOT}/assets/index.txt; \
 	rm ${ROOT}/assets/filelist.txt; \
 	else                                                                       \

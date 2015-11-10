@@ -47,8 +47,9 @@ typedef enum {
 #ifdef ENABLE_ANDROID_NOCLIP
 	fly_id,
 	noclip_id,
-#endif
 	fast_id,
+#endif
+	minimap_id,
 	debug_id,
 	chat_id,
 //	camera_id,

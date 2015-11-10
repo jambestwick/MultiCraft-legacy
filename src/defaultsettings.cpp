@@ -343,11 +343,15 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("emergequeue_limit_diskonly", "8");
 	settings->setDefault("emergequeue_limit_generate", "8");
 	settings->setDefault("preload_item_visuals", "false");
-	settings->setDefault("viewing_range_nodes_max", "100");
-	settings->setDefault("viewing_range_nodes_min", "25");
+	settings->setDefault("viewing_range_nodes_max", "75");
+	settings->setDefault("viewing_range_nodes_min", "10");
+	settings->setDefault("enable_node_highlighting", "true");
 	settings->setDefault("inventory_image_hack", "true");
+	settings->setDefault("minimap_double_scan_height", "false");
 	settings->setDefault("mouse_sensitivity", "0.05");
 	settings->setDefault("enable_3d_clouds", "false");
+	settings->setDefault("max_block_send_distance", "5");
+	settings->setDefault("max_block_generate_distance", "3");
 	settings->setDefault("wanted_fps", "20");
 	settings->setDefault("fps_max", "35");
 	settings->setDefault("pause_fps_max", "10");

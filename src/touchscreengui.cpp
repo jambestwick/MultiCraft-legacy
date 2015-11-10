@@ -52,7 +52,7 @@ const char *touchgui_button_imagenames[] = {
 	"fly_btn.png",
 	"noclip_btn.png",
 #endif
-	"fast_btn.png",
+	"minimap_btn.png",
 	"debug_btn.png",
 	"chat_btn.png",
 //	"camera_btn.png",
@@ -94,8 +94,11 @@ static irr::EKEY_CODE id2keycode(touch_gui_button_id id)
 		case noclip_id:
 			key = "noclip";
 			break;
-#endif
 		case fast_id:
+			key = "minimap";
+			break;
+#endif
+		case minimap_id:
 			key = "minimap";
 			break;
 		case debug_id:
@@ -287,8 +290,6 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 					m_screensize.X,
 					m_screensize.Y - (button_size*4)),
 			L"clip", false, SLOW_BUTTON_REPEAT);
-
-#endif
 	/* init fast button */
 	initButton(fast_id,
 			rect<s32>(m_screensize.X - (0.75*button_size),
@@ -296,6 +297,14 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 					  m_screensize.X,
 	                  m_screensize.Y - (button_size*3.25)),
 			L"fast", false, SLOW_BUTTON_REPEAT);
+#endif
+	/* init minimap button */
+	initButton(minimap_id,
+			rect<s32>(m_screensize.X - (0.75*button_size),
+	                  m_screensize.Y - (4*button_size),
+					  m_screensize.X,
+	                  m_screensize.Y - (button_size*3.25)),
+			L"minimap", false, SLOW_BUTTON_REPEAT);
 #ifndef NDEBUG
 	/* init debug button */
 	initButton(debug_id,
