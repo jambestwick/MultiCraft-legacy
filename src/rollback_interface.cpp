@@ -155,7 +155,7 @@ bool RollbackAction::applyRevert(Map *map, InventoryManager *imgr, IGameDef *gam
 				} else {
 					NodeMetadata *meta = map->getNodeMetadata(p);
 					if (!meta) {
-						meta = new NodeMetadata(gamedef);
+						meta = new NodeMetadata(gamedef->idef());
 						if (!map->setNodeMetadata(p, meta)) {
 							delete meta;
 							infostream << "RollbackAction::applyRevert(): "
@@ -210,6 +210,7 @@ bool RollbackAction::applyRevert(Map *map, InventoryManager *imgr, IGameDef *gam
 					<< inventory_index << " too large in "
 					<< "inventory list \"" << inventory_list << "\" in "
 					<< inventory_location << std::endl;
+				return false;
 			}
 			// If item was added, take away item, otherwise add removed item
 			if (inventory_add) {

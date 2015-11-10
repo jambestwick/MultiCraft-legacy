@@ -3,7 +3,7 @@
 --
 --This program is free software; you can redistribute it and/or modify
 --it under the terms of the GNU Lesser General Public License as published by
---the Free Software Foundation; either version 2.1 of the License, or
+--the Free Software Foundation; either version 3.0 of the License, or
 --(at your option) any later version.
 --
 --This program is distributed in the hope that it will be useful,
@@ -36,7 +36,10 @@ local function get_formspec(tabview, name, tabdata)
 --		"label[0.8,4.2;" .. fgettext("Add mod:") .. "]" ..
 --		TODO Disabled due to upcoming release 0.4.8 and irrlicht messing up localization
 --		"button[0.75,4.85;1.8,0.5;btn_mod_mgr_install_local;".. fgettext("Local install") .. "]" ..
-		"button[0,4.85;5.25,0.5;btn_modstore;".. fgettext("Online mod repository") .. "]"
+
+--		TODO Disabled due to service being offline, and not likely to come online again, in this form
+--		"button[0,4.85;5.25,0.5;btn_modstore;".. fgettext("Online mod repository") .. "]"
+		""
 
 	local selected_mod = nil
 

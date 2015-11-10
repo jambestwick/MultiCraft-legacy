@@ -3,7 +3,7 @@
 --
 --This program is free software; you can redistribute it and/or modify
 --it under the terms of the GNU Lesser General Public License as published by
---the Free Software Foundation; either version 2.1 of the License, or
+--the Free Software Foundation; either version 3.0 of the License, or
 --(at your option) any later version.
 --
 --This program is distributed in the hope that it will be useful,
@@ -224,17 +224,23 @@ function menu_handle_key_up_down(fields,textlist,settingname)
 
 			configure_selected_world_params(newidx)
 		end
-		
+
 		return true
 	end
-	
+
 	return false
 end
 
 --------------------------------------------------------------------------------
 function asyncOnlineFavourites()
 
-	menudata.favorites = {}
+	if not menudata.public_known then
+		menudata.public_known = {{
+			name = fgettext("Loading..."),
+			description = fgettext_ne("Try reenabling public serverlist and check your internet connection.")
+		}}
+	end
+	menudata.favorites = menudata.public_known
 	core.handle_async(
 		function(param)
 			return core.get_favorites("online")
@@ -242,51 +248,100 @@ function asyncOnlineFavourites()
 		nil,
 		function(result)
 			if core.setting_getbool("public_serverlist") then
-				menudata.favorites = order_favorite_list(result)
+				local favs = order_favorite_list(result)
+				if favs[1] then
+					menudata.public_known = favs
+					menudata.favorites = menudata.public_known
+				end
 				core.event_handler("Refresh")
 			end
 		end
-		)
+	)
 end
 
 --------------------------------------------------------------------------------
 function text2textlist(xpos,ypos,width,height,tl_name,textlen,text,transparency)
 	local textlines = core.splittext(text,textlen)
-	
+
 	local retval = "textlist[" .. xpos .. "," .. ypos .. ";"
 								.. width .. "," .. height .. ";"
 								.. tl_name .. ";"
-	
+
 	for i=1, #textlines, 1 do
 		textlines[i] = textlines[i]:gsub("\r","")
 		retval = retval .. core.formspec_escape(textlines[i]) .. ","
 	end
-	
+
 	retval = retval .. ";0;"
-	
+
 	if transparency then
 		retval = retval .. "true"
 	end
-	
+
 	retval = retval .. "]"
 
 	return retval
 end
 
 --------------------------------------------------------------------------------
-function is_server_protocol_compat(proto_min, proto_max)
-	return not ((min_supp_proto > (proto_max or 24)) or (max_supp_proto < (proto_min or 13)))
+function is_server_protocol_compat(server_proto_min, server_proto_max)
+	return not ((min_supp_proto > (server_proto_max or 24)) or (max_supp_proto < (server_proto_min or 13)))
 end
 --------------------------------------------------------------------------------
-function is_server_protocol_compat_or_error(proto_min, proto_max)
-	if not is_server_protocol_compat(proto_min, proto_max) then
-		gamedata.errormessage = fgettext_ne("Protocol version mismatch, server " ..
-			((proto_min ~= proto_max) and "supports protocols between $1 and $2" or "enforces protocol version $1") ..
-			", we " ..
-			((min_supp_proto ~= max_supp_proto) and "support protocols between version $3 and $4." or "only support protocol version $3"),
-			proto_min or 13, proto_max or 24, min_supp_proto, max_supp_proto)
+function is_server_protocol_compat_or_error(server_proto_min, server_proto_max)
+	if not is_server_protocol_compat(server_proto_min, server_proto_max) then
+		local server_prot_ver_info
+		local client_prot_ver_info
+		if server_proto_min ~= server_proto_max then
+			server_prot_ver_info = fgettext_ne("Server supports protocol versions between $1 and $2. ",
+				server_proto_min or 13, server_proto_max or 24)
+		else
+			server_prot_ver_info = fgettext_ne("Server enforces protocol version $1. ",
+				server_proto_min or 13)
+		end
+		if min_supp_proto ~= max_supp_proto then
+			client_prot_ver_info= fgettext_ne("We support protocol versions between version $1 and $2.",
+				min_supp_proto, max_supp_proto)
+		else
+			client_prot_ver_info = fgettext_ne("We only support protocol version $1.", min_supp_proto)
+		end
+		gamedata.errormessage = fgettext_ne("Protocol version mismatch. ")
+			.. server_prot_ver_info
+			.. client_prot_ver_info
 		return false
 	end
 
 	return true
+end
+--------------------------------------------------------------------------------
+function menu_worldmt(selected, setting, value)
+	local world = menudata.worldlist:get_list()[selected]
+	if world then
+		local filename = world.path .. DIR_DELIM .. "world.mt"
+		local world_conf = Settings(filename)
+
+		if value ~= nil then
+			if not world_conf:write() then
+				core.log("error", "Failed to write world config file")
+			end
+			world_conf:set(setting, value)
+			world_conf:write()
+		else
+			return world_conf:get(setting)
+		end
+	else
+		return nil
+	end
+end
+
+function menu_worldmt_legacy(selected)
+	local modes_names = {"creative_mode", "enable_damage", "server_announce"}
+	for _, mode_name in pairs(modes_names) do
+		local mode_val = menu_worldmt(selected, mode_name)
+		if mode_val ~= nil then
+			core.setting_set(mode_name, mode_val)
+		else
+			menu_worldmt(selected, mode_name, core.setting_get(mode_name))
+		end
+	end
 end

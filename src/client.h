@@ -23,7 +23,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "network/connection.h"
 #include "environment.h"
 #include "irrlichttypes_extrabloated.h"
-#include "jthread/jmutex.h"
+#include "threading/mutex.h"
 #include <ostream>
 #include <map>
 #include <set>
@@ -48,6 +48,8 @@ struct MapDrawControl;
 class MtEventManager;
 struct PointedThing;
 class Database;
+class Mapper;
+struct MinimapMapblock;
 
 struct QueuedMeshUpdate
 {
@@ -87,14 +89,14 @@ public:
 
 	u32 size()
 	{
-		JMutexAutoLock lock(m_mutex);
+		MutexAutoLock lock(m_mutex);
 		return m_queue.size();
 	}
 
 private:
 	std::vector<QueuedMeshUpdate*> m_queue;
 	std::set<v3s16> m_urgents;
-	JMutex m_mutex;
+	Mutex m_mutex;
 };
 
 struct MeshUpdateResult
@@ -111,22 +113,21 @@ struct MeshUpdateResult
 	}
 };
 
-class MeshUpdateThread : public JThread
+class MeshUpdateThread : public UpdateThread
 {
-public:
-
-	MeshUpdateThread(IGameDef *gamedef):
-		m_gamedef(gamedef)
-	{
-	}
-
-	void * Thread();
-
+private:
 	MeshUpdateQueue m_queue_in;
 
-	MutexedQueue<MeshUpdateResult> m_queue_out;
+protected:
+	virtual void doUpdate();
 
-	IGameDef *m_gamedef;
+public:
+
+	MeshUpdateThread() : UpdateThread("Mesh") {}
+
+	void enqueueUpdate(v3s16 p, MeshMakeData *data,
+			bool ack_block_to_server, bool urgent);
+	MutexedQueue<MeshUpdateResult> m_queue_out;
 
 	v3s16 m_camera_offset;
 };
@@ -483,6 +484,8 @@ public:
 	bool accessDenied()
 	{ return m_access_denied; }
 
+	bool reconnectRequested() { return m_access_denied_reconnect; }
+
 	std::string accessDeniedReason()
 	{ return m_access_denied_reason; }
 
@@ -493,6 +496,9 @@ public:
 	bool mediaReceived()
 	{ return m_media_downloader == NULL; }
 
+	u8 getProtoVersion()
+	{ return m_proto_ver; }
+
 	float mediaReceiveProgress();
 
 	void afterContentReceived(IrrlichtDevice *device);
@@ -500,6 +506,12 @@ public:
 	float getRTT(void);
 	float getCurRate(void);
 	float getAvgRate(void);
+
+	Mapper* getMapper ()
+	{ return m_mapper; }
+
+	bool isMinimapDisabledByServer()
+	{ return m_minimap_disabled_by_server; }
 
 	// IGameDef interface
 	virtual IItemDefManager* getItemDefManager();
@@ -580,10 +592,18 @@ private:
 	ParticleManager m_particle_manager;
 	con::Connection m_con;
 	IrrlichtDevice *m_device;
+	Mapper *m_mapper;
+	bool m_minimap_disabled_by_server;
 	// Server serialization version
 	u8 m_server_ser_ver;
+
 	// Used version of the protocol with server
+	// Values smaller than 25 only mean they are smaller than 25,
+	// and aren't accurate. We simply just don't know, because
+	// the server didn't send the version back then.
+	// If 0, server init hasn't been received yet.
 	u8 m_proto_ver;
+
 	u16 m_playeritem;
 	bool m_inventory_updated;
 	Inventory *m_inventory_from_server;
@@ -617,6 +637,7 @@ private:
 
 
 	bool m_access_denied;
+	bool m_access_denied_reconnect;
 	std::string m_access_denied_reason;
 	std::queue<ClientEvent> m_client_event_queue;
 	bool m_itemdef_received;
@@ -661,6 +682,8 @@ private:
 	// TODO: Add callback to update these when g_settings changes
 	bool m_cache_smooth_lighting;
 	bool m_cache_enable_shaders;
+
+	DISABLE_CLASS_COPY(Client);
 };
 
 #endif // !CLIENT_HEADER

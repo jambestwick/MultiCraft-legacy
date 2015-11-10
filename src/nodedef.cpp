@@ -65,7 +65,7 @@ void NodeBox::serialize(std::ostream &os, u16 protocol_version) const
 		writeU16(os, fixed.size());
 		for(std::vector<aabb3f>::const_iterator
 				i = fixed.begin();
-				i != fixed.end(); i++)
+				i != fixed.end(); ++i)
 		{
 			writeV3F1000(os, i->MinEdge);
 			writeV3F1000(os, i->MaxEdge);
@@ -120,7 +120,9 @@ void NodeBox::deSerialize(std::istream &is)
 
 void TileDef::serialize(std::ostream &os, u16 protocol_version) const
 {
-	if(protocol_version >= 17)
+	if (protocol_version >= 26)
+		writeU8(os, 2);
+	else if (protocol_version >= 17)
 		writeU8(os, 1);
 	else
 		writeU8(os, 0);
@@ -129,8 +131,12 @@ void TileDef::serialize(std::ostream &os, u16 protocol_version) const
 	writeU16(os, animation.aspect_w);
 	writeU16(os, animation.aspect_h);
 	writeF1000(os, animation.length);
-	if(protocol_version >= 17)
+	if (protocol_version >= 17)
 		writeU8(os, backface_culling);
+	if (protocol_version >= 26) {
+		writeU8(os, tileable_horizontal);
+		writeU8(os, tileable_vertical);
+	}
 }
 
 void TileDef::deSerialize(std::istream &is)
@@ -141,9 +147,14 @@ void TileDef::deSerialize(std::istream &is)
 	animation.aspect_w = readU16(is);
 	animation.aspect_h = readU16(is);
 	animation.length = readF1000(is);
-	if(version >= 1)
+	if (version >= 1)
 		backface_culling = readU8(is);
+	if (version >= 2) {
+		tileable_horizontal = readU8(is);
+		tileable_vertical = readU8(is);
+	}
 }
+
 
 /*
 	SimpleSoundSpec serialization
@@ -183,6 +194,7 @@ void ContentFeatures::reset()
 	solidness = 2;
 	visual_solidness = 0;
 	backface_culling = true;
+
 #endif
 	has_on_construct = false;
 	has_on_destruct = false;
@@ -202,6 +214,7 @@ void ContentFeatures::reset()
 #ifndef SERVER
 	for(u32 i = 0; i < 24; i++)
 		mesh_ptr[i] = NULL;
+	minimap_color = video::SColor(0, 0, 0, 0);
 #endif
 	visual_scale = 1.0;
 	for(u32 i = 0; i < 6; i++)
@@ -253,7 +266,7 @@ void ContentFeatures::serialize(std::ostream &os, u16 protocol_version) const
 	os<<serializeString(name);
 	writeU16(os, groups.size());
 	for(ItemGroupList::const_iterator
-			i = groups.begin(); i != groups.end(); i++){
+			i = groups.begin(); i != groups.end(); ++i){
 		os<<serializeString(i->first);
 		writeS16(os, i->second);
 	}
@@ -640,7 +653,7 @@ content_t CNodeDefManager::set(const std::string &name, const ContentFeatures &d
 
 	// Don't allow redefining ignore (but allow air and unknown)
 	if (name == "ignore") {
-		infostream << "NodeDefManager: WARNING: Ignoring "
+		warningstream << "NodeDefManager: Ignoring "
 			"CONTENT_IGNORE redefinition"<<std::endl;
 		return CONTENT_IGNORE;
 	}
@@ -650,7 +663,7 @@ content_t CNodeDefManager::set(const std::string &name, const ContentFeatures &d
 		// Get new id
 		id = allocateId();
 		if (id == CONTENT_IGNORE) {
-			infostream << "NodeDefManager: WARNING: Absolute "
+			warningstream << "NodeDefManager: Absolute "
 				"limit reached" << std::endl;
 			return CONTENT_IGNORE;
 		}
@@ -696,7 +709,7 @@ void CNodeDefManager::updateAliases(IItemDefManager *idef)
 	std::set<std::string> all = idef->getAll();
 	m_name_id_mapping_with_aliases.clear();
 	for (std::set<std::string>::iterator
-			i = all.begin(); i != all.end(); i++) {
+			i = all.begin(); i != all.end(); ++i) {
 		std::string name = *i;
 		std::string convert_to = idef->getAlias(name);
 		content_t id;
@@ -766,7 +779,6 @@ void CNodeDefManager::applyTextureOverrides(const std::string &override_filepath
 	}
 }
 
-
 void CNodeDefManager::updateTextures(IGameDef *gamedef,
 	void (*progress_callback)(void *progress_args, u32 progress, u32 max_progress),
 	void *progress_callback_args)
@@ -774,20 +786,20 @@ void CNodeDefManager::updateTextures(IGameDef *gamedef,
 #ifndef SERVER
 	infostream << "CNodeDefManager::updateTextures(): Updating "
 		"textures in node definitions" << std::endl;
-
 	ITextureSource *tsrc = gamedef->tsrc();
 	IShaderSource *shdsrc = gamedef->getShaderSource();
 	scene::ISceneManager* smgr = gamedef->getSceneManager();
 	scene::IMeshManipulator* meshmanip = smgr->getMeshManipulator();
 
 	bool new_style_water           = g_settings->getBool("new_style_water");
-	bool new_style_leaves          = g_settings->getBool("new_style_leaves");
 	bool connected_glass           = g_settings->getBool("connected_glass");
 	bool opaque_water              = g_settings->getBool("opaque_water");
 	bool enable_shaders            = g_settings->getBool("enable_shaders");
 	bool enable_bumpmapping        = g_settings->getBool("enable_bumpmapping");
 	bool enable_parallax_occlusion = g_settings->getBool("enable_parallax_occlusion");
 	bool enable_mesh_cache         = g_settings->getBool("enable_mesh_cache");
+	bool enable_minimap            = g_settings->getBool("enable_minimap");
+	std::string leaves_style       = g_settings->get("leaves_style");
 
 	bool use_normal_texture = enable_shaders &&
 		(enable_bumpmapping || enable_parallax_occlusion);
@@ -796,6 +808,10 @@ void CNodeDefManager::updateTextures(IGameDef *gamedef,
 
 	for (u32 i = 0; i < size; i++) {
 		ContentFeatures *f = &m_content_features[i];
+
+		// minimap pixel color - the average color of a texture
+		if (enable_minimap && f->tiledef[0].name != "")
+			f->minimap_color = tsrc->getTextureAverageColor(f->tiledef[0].name);
 
 		// Figure out the actual tiles to use
 		TileDef tiledef[6];
@@ -856,8 +872,16 @@ void CNodeDefManager::updateTextures(IGameDef *gamedef,
 			f->visual_solidness = 1;
 			break;
 		case NDT_ALLFACES_OPTIONAL:
-			if (new_style_leaves) {
+			if (leaves_style == "fancy") {
 				f->drawtype = NDT_ALLFACES;
+				f->solidness = 0;
+				f->visual_solidness = 1;
+			} else if (leaves_style == "simple") {
+				for (u32 j = 0; j < 6; j++) {
+					if (f->tiledef_special[j].name != "")
+						tiledef[j].name = f->tiledef_special[j].name;
+				}
+				f->drawtype = NDT_GLASSLIKE;
 				f->solidness = 0;
 				f->visual_solidness = 1;
 			} else {
@@ -984,9 +1008,11 @@ void CNodeDefManager::fillTileAttribs(ITextureSource *tsrc, TileSpec *tile,
 	tile->alpha         = alpha;
 	tile->material_type = material_type;
 
-	// Normal texture
-	if (use_normal_texture)
+	// Normal texture and shader flags texture
+	if (use_normal_texture) {
 		tile->normal_texture = tsrc->getNormalTexture(tiledef->name);
+	}
+	tile->flags_texture = tsrc->getShaderFlagsTexture(tile->normal_texture ? true : false);
 
 	// Material flags
 	tile->material_flags = 0;
@@ -994,6 +1020,10 @@ void CNodeDefManager::fillTileAttribs(ITextureSource *tsrc, TileSpec *tile,
 		tile->material_flags |= MATERIAL_FLAG_BACKFACE_CULLING;
 	if (tiledef->animation.type == TAT_VERTICAL_FRAMES)
 		tile->material_flags |= MATERIAL_FLAG_ANIMATION_VERTICAL_FRAMES;
+	if (tiledef->tileable_horizontal)
+		tile->material_flags |= MATERIAL_FLAG_TILEABLE_HORIZONTAL;
+	if (tiledef->tileable_vertical)
+		tile->material_flags |= MATERIAL_FLAG_TILEABLE_VERTICAL;
 
 	// Animation parameters
 	int frame_count = 1;
@@ -1026,6 +1056,7 @@ void CNodeDefManager::fillTileAttribs(ITextureSource *tsrc, TileSpec *tile,
 			frame.texture = tsrc->getTextureForMesh(os.str(), &frame.texture_id);
 			if (tile->normal_texture)
 				frame.normal_texture = tsrc->getNormalTexture(os.str());
+			frame.flags_texture = tile->flags_texture;
 			tile->frames[i] = frame;
 		}
 	}
@@ -1081,12 +1112,12 @@ void CNodeDefManager::deSerialize(std::istream &is)
 
 		// Check error conditions
 		if (i == CONTENT_IGNORE || i == CONTENT_AIR || i == CONTENT_UNKNOWN) {
-			infostream << "NodeDefManager::deSerialize(): WARNING: "
+			warningstream << "NodeDefManager::deSerialize(): "
 				"not changing builtin node " << i << std::endl;
 			continue;
 		}
 		if (f.name == "") {
-			infostream << "NodeDefManager::deSerialize(): WARNING: "
+			warningstream << "NodeDefManager::deSerialize(): "
 				"received empty name" << std::endl;
 			continue;
 		}
@@ -1094,7 +1125,7 @@ void CNodeDefManager::deSerialize(std::istream &is)
 		// Ignore aliases
 		u16 existing_id;
 		if (m_name_id_mapping.getId(f.name, existing_id) && i != existing_id) {
-			infostream << "NodeDefManager::deSerialize(): WARNING: "
+			warningstream << "NodeDefManager::deSerialize(): "
 				"already defined with different ID: " << f.name << std::endl;
 			continue;
 		}
@@ -1131,7 +1162,7 @@ void ContentFeatures::serializeOld(std::ostream &os, u16 protocol_version) const
 		os<<serializeString(name);
 		writeU16(os, groups.size());
 		for (ItemGroupList::const_iterator
-				i = groups.begin(); i != groups.end(); i++) {
+				i = groups.begin(); i != groups.end(); ++i) {
 			os<<serializeString(i->first);
 			writeS16(os, i->second);
 		}
@@ -1179,7 +1210,7 @@ void ContentFeatures::serializeOld(std::ostream &os, u16 protocol_version) const
 		os<<serializeString(name);
 		writeU16(os, groups.size());
 		for (ItemGroupList::const_iterator
-			i = groups.begin(); i != groups.end(); i++) {
+			i = groups.begin(); i != groups.end(); ++i) {
 				os<<serializeString(i->first);
 				writeS16(os, i->second);
 		}

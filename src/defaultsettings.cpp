@@ -33,6 +33,7 @@ void set_default_settings(Settings *settings)
 	// Client stuff
 	settings->setDefault("remote_port", "30000");
 	settings->setDefault("keymap_forward", "KEY_KEY_W");
+	settings->setDefault("keymap_autorun", "");
 	settings->setDefault("keymap_backward", "KEY_KEY_S");
 	settings->setDefault("keymap_left", "KEY_KEY_A");
 	settings->setDefault("keymap_right", "KEY_KEY_D");
@@ -43,6 +44,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("keymap_special1", "KEY_KEY_E");
 	settings->setDefault("keymap_chat", "KEY_KEY_T");
 	settings->setDefault("keymap_cmd", "/");
+	settings->setDefault("keymap_minimap", "KEY_F9");
 	settings->setDefault("keymap_console", "KEY_F10");
 	settings->setDefault("keymap_rangeselect", "KEY_KEY_R");
 	settings->setDefault("keymap_freemove", "KEY_KEY_K");
@@ -57,7 +59,7 @@ void set_default_settings(Settings *settings)
 #if DEBUG
 			"KEY_F4");
 #else
-			"none");
+			"");
 #endif
 	settings->setDefault("keymap_toggle_debug", "KEY_F5");
 	settings->setDefault("keymap_toggle_profiler", "KEY_F6");
@@ -86,20 +88,13 @@ void set_default_settings(Settings *settings)
 	#else
 	settings->setDefault("show_debug", "true");
 	#endif
-
-#ifdef __ANDROID__
-	settings->setDefault("wanted_fps", "15");
-	settings->setDefault("fps_max", "30");
-	settings->setDefault("pause_fps_max", "10");
-#else
 	settings->setDefault("wanted_fps", "20");
 	settings->setDefault("fps_max", "60");
 	settings->setDefault("pause_fps_max", "15");
-#endif
-
 	// A bit more than the server will send around the player, to make fog blend well
 	settings->setDefault("viewing_range_nodes_max", "240");
 	settings->setDefault("viewing_range_nodes_min", "35");
+	settings->setDefault("map_generation_limit", "31000");
 	settings->setDefault("screenW", "800");
 	settings->setDefault("screenH", "600");
 	settings->setDefault("fullscreen", "false");
@@ -108,12 +103,13 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("vsync", "false");
 	settings->setDefault("address", "");
 	settings->setDefault("random_input", "false");
-	settings->setDefault("client_unload_unused_data_timeout", "300");
+	settings->setDefault("client_unload_unused_data_timeout", "600");
+	settings->setDefault("client_mapblock_limit", "5000");
 	settings->setDefault("enable_fog", "true");
 	settings->setDefault("fov", "72");
 	settings->setDefault("view_bobbing", "true");
 	settings->setDefault("new_style_water", "false");
-	settings->setDefault("new_style_leaves", "true");
+	settings->setDefault("leaves_style", "fancy");
 	settings->setDefault("connected_glass", "false");
 	settings->setDefault("smooth_lighting", "true");
 	settings->setDefault("display_gamma", "1.8");
@@ -132,11 +128,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("screenshot_path", ".");
 	settings->setDefault("view_bobbing_amount", "1.0");
 	settings->setDefault("fall_bobbing_amount", "1.0");
-#ifdef __ANDROID__
-	settings->setDefault("enable_3d_clouds", "false");
-#else
 	settings->setDefault("enable_3d_clouds", "true");
-#endif
 	settings->setDefault("cloud_height", "120");
 	settings->setDefault("cloud_radius", "12");
 	settings->setDefault("menu_clouds", "false");
@@ -151,11 +143,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("gui_scaling", "1.0");
 	settings->setDefault("gui_scaling_filter", "false");
 	settings->setDefault("gui_scaling_filter_txr2img", "true");
-#ifdef __ANDROID__
 	settings->setDefault("mouse_sensitivity", "0.05");
-#else
-	settings->setDefault("mouse_sensitivity", "0.2");
-#endif
 	settings->setDefault("enable_sound", "true");
 	settings->setDefault("sound_volume", "1");
 	settings->setDefault("desynchronize_mapblock_texture_animation", "true");
@@ -175,8 +163,10 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("generate_normalmaps", "false");
 	settings->setDefault("normalmaps_strength", "0.6");
 	settings->setDefault("normalmaps_smooth", "1");
-	settings->setDefault("parallax_occlusion_scale", "0.06");
-	settings->setDefault("parallax_occlusion_bias", "0.03");
+	settings->setDefault("parallax_occlusion_mode", "1");
+	settings->setDefault("parallax_occlusion_iterations", "4");
+	settings->setDefault("parallax_occlusion_scale", "0.08");
+	settings->setDefault("parallax_occlusion_bias", "0.04");
 	settings->setDefault("enable_waving_water", "false");
 	settings->setDefault("water_wave_height", "1.0");
 	settings->setDefault("water_wave_length", "20.0");
@@ -187,7 +177,11 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_shaders", "true");
 	settings->setDefault("repeat_rightclick_time", "0.25");
 	settings->setDefault("enable_particles", "true");
-	settings->setDefault("enable_mesh_cache", "true");
+	settings->setDefault("enable_mesh_cache", "false");
+
+	settings->setDefault("enable_minimap", "true");
+	settings->setDefault("minimap_shape_round", "true");
+	settings->setDefault("minimap_double_scan_height", "true");
 
 	settings->setDefault("curl_timeout", "5000");
 	settings->setDefault("curl_parallel_limit", "8");
@@ -251,6 +245,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("default_privs", "interact, shout");
 	settings->setDefault("player_transfer_distance", "0");
 	settings->setDefault("enable_pvp", "true");
+	settings->setDefault("vertical_spawn_range", "16");
 	settings->setDefault("disallow_empty_password", "false");
 	settings->setDefault("disable_anticheat", "false");
 	settings->setDefault("enable_rollback_recording", "false");
@@ -259,6 +254,10 @@ void set_default_settings(Settings *settings)
 #else
 	settings->setDefault("deprecated_lua_api_handling", "log");
 #endif
+
+	settings->setDefault("kick_msg_shutdown", "Server shutting down.");
+	settings->setDefault("kick_msg_crash", "This server has experienced an internal error. You will now be disconnected.");
+	settings->setDefault("ask_reconnect_on_crash", "false");
 
 	settings->setDefault("profiler_print_interval", "0");
 	settings->setDefault("enable_mapgen_debug_info", "false");
@@ -273,7 +272,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("max_clearobjects_extra_loaded_blocks", "4096");
 	settings->setDefault("time_send_interval", "5");
 	settings->setDefault("time_speed", "72");
-	settings->setDefault("year_days", "30");
 	settings->setDefault("server_unload_unused_data_timeout", "29");
 	settings->setDefault("max_objects_per_block", "49");
 	settings->setDefault("server_map_save_interval", "5.3");
@@ -282,7 +280,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("dedicated_server_step", "0.1");
 	settings->setDefault("ignore_world_load_errors", "false");
 	settings->setDefault("remote_media", "");
-	settings->setDefault("debug_log_level", "2");
+	settings->setDefault("debug_log_level", "action");
 	settings->setDefault("emergequeue_limit_total", "256");
 	settings->setDefault("emergequeue_limit_diskonly", "32");
 	settings->setDefault("emergequeue_limit_generate", "32");
@@ -315,7 +313,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("chunksize", "5");
 	settings->setDefault("mg_flags", "dungeons");
 	settings->setDefault("mgv6_spflags", "jungles, snowbiomes");
-	settings->setDefault("enable_floating_dungeons", "true");
 
 	// IPv6
 	settings->setDefault("enable_ipv6", "true");
@@ -343,15 +340,17 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("TMPFolder","/sdcard/" PROJECT_NAME_C "/tmp/");
 	settings->setDefault("touchscreen_threshold","20");
 	settings->setDefault("smooth_lighting", "false");
-	settings->setDefault("max_simultaneous_block_sends_per_client", "3");
 	settings->setDefault("emergequeue_limit_diskonly", "8");
 	settings->setDefault("emergequeue_limit_generate", "8");
 	settings->setDefault("preload_item_visuals", "false");
-
-	settings->setDefault("viewing_range_nodes_max", "75");
+	settings->setDefault("viewing_range_nodes_max", "100");
 	settings->setDefault("viewing_range_nodes_min", "25");
 	settings->setDefault("inventory_image_hack", "true");
-
+	settings->setDefault("mouse_sensitivity", "0.05");
+	settings->setDefault("enable_3d_clouds", "false");
+	settings->setDefault("wanted_fps", "20");
+	settings->setDefault("fps_max", "35");
+	settings->setDefault("pause_fps_max", "10");
 	//check for device with small screen
 	float x_inches = ((double) porting::getDisplaySize().X /
 			(160 * porting::getDisplayDensity()));

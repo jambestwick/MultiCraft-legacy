@@ -51,8 +51,8 @@ const char *touchgui_button_imagenames[] = {
 #ifdef ENABLE_ANDROID_NOCLIP
 	"fly_btn.png",
 	"noclip_btn.png",
-	"fast_btn.png",
 #endif
+	"fast_btn.png",
 	"debug_btn.png",
 	"chat_btn.png",
 //	"camera_btn.png",
@@ -94,10 +94,10 @@ static irr::EKEY_CODE id2keycode(touch_gui_button_id id)
 		case noclip_id:
 			key = "noclip";
 			break;
-		case fast_id:
-			key = "fastmove";
-			break;
 #endif
+		case fast_id:
+			key = "minimap";
+			break;
 		case debug_id:
 			key = "toggle_debug";
 			break;
@@ -288,7 +288,7 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 					m_screensize.Y - (button_size*4)),
 			L"clip", false, SLOW_BUTTON_REPEAT);
 
-
+#endif
 	/* init fast button */
 	initButton(fast_id,
 			rect<s32>(m_screensize.X - (0.75*button_size),
@@ -296,7 +296,6 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc, float density)
 					  m_screensize.X,
 	                  m_screensize.Y - (button_size*3.25)),
 			L"fast", false, SLOW_BUTTON_REPEAT);
-#endif
 #ifndef NDEBUG
 	/* init debug button */
 	initButton(debug_id,
@@ -364,7 +363,7 @@ bool TouchScreenGUI::isHUDButton(const SEvent &event)
 {
 	// check if hud item is pressed
 	for (std::map<int,rect<s32> >::iterator iter = m_hud_rects.begin();
-			iter != m_hud_rects.end(); iter++) {
+			iter != m_hud_rects.end(); ++iter) {
 		if (iter->second.isPointInside(
 				v2s32(event.TouchInput.X,
 						event.TouchInput.Y)
@@ -565,7 +564,7 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 		}
 
 		for (std::vector<id_status>::iterator iter = m_known_ids.begin();
-				iter != m_known_ids.end(); iter++) {
+				iter != m_known_ids.end(); ++iter) {
 			if (iter->id == event.TouchInput.ID) {
 				m_known_ids.erase(iter);
 				break;
@@ -646,7 +645,7 @@ void TouchScreenGUI::handleChangedButton(const SEvent &event)
 			continue;
 		}
 		for(std::vector<int>::iterator iter = m_buttons[i].ids.begin();
-				iter != m_buttons[i].ids.end(); iter++) {
+				iter != m_buttons[i].ids.end(); ++iter) {
 
 			if (event.TouchInput.ID == *iter) {
 

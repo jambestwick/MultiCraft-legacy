@@ -20,7 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "player.h"
 
 #include <fstream>
-#include "jthread/jmutexautolock.h"
+#include "threading/mutex_auto_lock.h"
 #include "util/numeric.h"
 #include "hud.h"
 #include "constants.h"
@@ -44,6 +44,7 @@ Player::Player(IGameDef *gamedef, const char *name):
 	hp(PLAYER_MAX_HP),
 	hurt_tilt_timer(0),
 	hurt_tilt_strength(0),
+	protocol_version(0),
 	peer_id(PEER_ID_INEXISTENT),
 	keyPressed(0),
 // protected
@@ -71,9 +72,11 @@ Player::Player(IGameDef *gamedef, const char *name):
 		//"image[1,0.6;1,2;player.png]"
 		"list[current_player;main;0,3.5;8,4;]"
 		"list[current_player;craft;3,0;3,3;]"
+		"listring[]"
 		"list[current_player;craftpreview;7,1;1,1;]";
 
-	// Initialize movement settings at default values, so movement can work if the server fails to send them
+	// Initialize movement settings at default values, so movement can work
+	// if the server fails to send them
 	movement_acceleration_default   = 3    * BS;
 	movement_acceleration_air       = 2    * BS;
 	movement_acceleration_fast      = 10   * BS;
@@ -95,9 +98,10 @@ Player::Player(IGameDef *gamedef, const char *name):
 	physics_override_sneak        = true;
 	physics_override_sneak_glitch = true;
 
-	hud_flags = HUD_FLAG_HOTBAR_VISIBLE | HUD_FLAG_HEALTHBAR_VISIBLE |
-			 HUD_FLAG_CROSSHAIR_VISIBLE | HUD_FLAG_WIELDITEM_VISIBLE |
-			 HUD_FLAG_BREATHBAR_VISIBLE;
+	hud_flags =
+		HUD_FLAG_HOTBAR_VISIBLE    | HUD_FLAG_HEALTHBAR_VISIBLE |
+		HUD_FLAG_CROSSHAIR_VISIBLE | HUD_FLAG_WIELDITEM_VISIBLE |
+		HUD_FLAG_BREATHBAR_VISIBLE | HUD_FLAG_MINIMAP_VISIBLE;
 
 	hud_hotbar_itemcount = HUD_HOTBAR_ITEMCOUNT_DEFAULT;
 }
@@ -118,31 +122,12 @@ void Player::accelerateHorizontal(v3f target_speed, f32 max_increase)
 	f32 dl = d_wanted.getLength();
 	if(dl > max_increase)
 		dl = max_increase;
-	
+
 	v3f d = d_wanted.normalize() * dl;
 
 	m_speed.X += d.X;
 	m_speed.Z += d.Z;
 
-#if 0 // old code
-	if(m_speed.X < target_speed.X - max_increase)
-		m_speed.X += max_increase;
-	else if(m_speed.X > target_speed.X + max_increase)
-		m_speed.X -= max_increase;
-	else if(m_speed.X < target_speed.X)
-		m_speed.X = target_speed.X;
-	else if(m_speed.X > target_speed.X)
-		m_speed.X = target_speed.X;
-
-	if(m_speed.Z < target_speed.Z - max_increase)
-		m_speed.Z += max_increase;
-	else if(m_speed.Z > target_speed.Z + max_increase)
-		m_speed.Z -= max_increase;
-	else if(m_speed.Z < target_speed.Z)
-		m_speed.Z = target_speed.Z;
-	else if(m_speed.Z > target_speed.Z)
-		m_speed.Z = target_speed.Z;
-#endif
 }
 
 // Vertical acceleration (Y), X and Z directions are ignored
@@ -159,16 +144,6 @@ void Player::accelerateVertical(v3f target_speed, f32 max_increase)
 
 	m_speed.Y += d_wanted;
 
-#if 0 // old code
-	if(m_speed.Y < target_speed.Y - max_increase)
-		m_speed.Y += max_increase;
-	else if(m_speed.Y > target_speed.Y + max_increase)
-		m_speed.Y -= max_increase;
-	else if(m_speed.Y < target_speed.Y)
-		m_speed.Y = target_speed.Y;
-	else if(m_speed.Y > target_speed.Y)
-		m_speed.Y = target_speed.Y;
-#endif
 }
 
 v3s16 Player::getLightPosition() const
@@ -242,7 +217,7 @@ void Player::deSerialize(std::istream &is, std::string playername)
 
 u32 Player::addHud(HudElement *toadd)
 {
-	JMutexAutoLock lock(m_mutex);
+	MutexAutoLock lock(m_mutex);
 
 	u32 id = getFreeHudID();
 
@@ -256,7 +231,7 @@ u32 Player::addHud(HudElement *toadd)
 
 HudElement* Player::getHud(u32 id)
 {
-	JMutexAutoLock lock(m_mutex);
+	MutexAutoLock lock(m_mutex);
 
 	if (id < hud.size())
 		return hud[id];
@@ -266,7 +241,7 @@ HudElement* Player::getHud(u32 id)
 
 HudElement* Player::removeHud(u32 id)
 {
-	JMutexAutoLock lock(m_mutex);
+	MutexAutoLock lock(m_mutex);
 
 	HudElement* retval = NULL;
 	if (id < hud.size()) {
@@ -278,7 +253,7 @@ HudElement* Player::removeHud(u32 id)
 
 void Player::clearHud()
 {
-	JMutexAutoLock lock(m_mutex);
+	MutexAutoLock lock(m_mutex);
 
 	while(!hud.empty()) {
 		delete hud.back();

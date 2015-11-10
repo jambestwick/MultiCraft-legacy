@@ -21,7 +21,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <algorithm>
 #include <sstream>
 #include <IFileSystem.h>
-#include "jthread/jmutexautolock.h"
+#include "threading/mutex_auto_lock.h"
 #include "util/auth.h"
 #include "util/directiontables.h"
 #include "util/pointedthing.h"
@@ -34,6 +34,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "porting.h"
 #include "mapblock_mesh.h"
 #include "mapblock.h"
+#include "minimap.h"
 #include "settings.h"
 #include "profiler.h"
 #include "gettext.h"
@@ -81,11 +82,11 @@ MeshUpdateQueue::MeshUpdateQueue()
 
 MeshUpdateQueue::~MeshUpdateQueue()
 {
-	JMutexAutoLock lock(m_mutex);
+	MutexAutoLock lock(m_mutex);
 
 	for(std::vector<QueuedMeshUpdate*>::iterator
 			i = m_queue.begin();
-			i != m_queue.end(); i++)
+			i != m_queue.end(); ++i)
 	{
 		QueuedMeshUpdate *q = *i;
 		delete q;
@@ -97,11 +98,11 @@ MeshUpdateQueue::~MeshUpdateQueue()
 */
 void MeshUpdateQueue::addBlock(v3s16 p, MeshMakeData *data, bool ack_block_to_server, bool urgent)
 {
-	DSTACK(__FUNCTION_NAME);
+	DSTACK(FUNCTION_NAME);
 
 	assert(data);	// pre-condition
 
-	JMutexAutoLock lock(m_mutex);
+	MutexAutoLock lock(m_mutex);
 
 	if(urgent)
 		m_urgents.insert(p);
@@ -112,7 +113,7 @@ void MeshUpdateQueue::addBlock(v3s16 p, MeshMakeData *data, bool ack_block_to_se
 	*/
 	for(std::vector<QueuedMeshUpdate*>::iterator
 			i = m_queue.begin();
-			i != m_queue.end(); i++)
+			i != m_queue.end(); ++i)
 	{
 		QueuedMeshUpdate *q = *i;
 		if(q->p == p)
@@ -138,14 +139,14 @@ void MeshUpdateQueue::addBlock(v3s16 p, MeshMakeData *data, bool ack_block_to_se
 
 // Returned pointer must be deleted
 // Returns NULL if queue is empty
-QueuedMeshUpdate * MeshUpdateQueue::pop()
+QueuedMeshUpdate *MeshUpdateQueue::pop()
 {
-	JMutexAutoLock lock(m_mutex);
+	MutexAutoLock lock(m_mutex);
 
 	bool must_be_urgent = !m_urgents.empty();
 	for(std::vector<QueuedMeshUpdate*>::iterator
 			i = m_queue.begin();
-			i != m_queue.end(); i++)
+			i != m_queue.end(); ++i)
 	{
 		QueuedMeshUpdate *q = *i;
 		if(must_be_urgent && m_urgents.count(q->p) == 0)
@@ -161,35 +162,21 @@ QueuedMeshUpdate * MeshUpdateQueue::pop()
 	MeshUpdateThread
 */
 
-void * MeshUpdateThread::Thread()
+void MeshUpdateThread::enqueueUpdate(v3s16 p, MeshMakeData *data,
+		bool ack_block_to_server, bool urgent)
 {
-	ThreadStarted();
+	m_queue_in.addBlock(p, data, ack_block_to_server, urgent);
+	deferUpdate();
+}
 
-	log_register_thread("MeshUpdateThread");
-
-	DSTACK(__FUNCTION_NAME);
-
-	BEGIN_DEBUG_EXCEPTION_HANDLER
-
-	porting::setThreadName("MeshUpdateThread");
-
-	while(!StopRequested())
-	{
-		QueuedMeshUpdate *q = m_queue_in.pop();
-		if(q == NULL)
-		{
-			sleep_ms(3);
-			continue;
-		}
+void MeshUpdateThread::doUpdate()
+{
+	QueuedMeshUpdate *q;
+	while ((q = m_queue_in.pop())) {
 
 		ScopeProfiler sp(g_profiler, "Client: Mesh making");
 
 		MapBlockMesh *mesh_new = new MapBlockMesh(q->data, m_camera_offset);
-		if(mesh_new->getMesh()->getMeshBufferCount() == 0)
-		{
-			delete mesh_new;
-			mesh_new = NULL;
-		}
 
 		MeshUpdateResult r;
 		r.p = q->p;
@@ -200,10 +187,6 @@ void * MeshUpdateThread::Thread()
 
 		delete q;
 	}
-
-	END_DEBUG_EXCEPTION_HANDLER(errorstream)
-
-	return NULL;
 }
 
 /*
@@ -234,7 +217,7 @@ Client::Client(
 	m_nodedef(nodedef),
 	m_sound(sound),
 	m_event(event),
-	m_mesh_update_thread(this),
+	m_mesh_update_thread(),
 	m_env(
 		new ClientMap(this, this, control,
 			device->getSceneManager()->getRootSceneNode(),
@@ -245,7 +228,9 @@ Client::Client(
 	m_particle_manager(&m_env),
 	m_con(PROTOCOL_ID, 512, CONNECTION_TIMEOUT, ipv6, this),
 	m_device(device),
+	m_minimap_disabled_by_server(false),
 	m_server_ser_ver(SER_FMT_VER_INVALID),
+	m_proto_ver(0),
 	m_playeritem(0),
 	m_inventory_updated(false),
 	m_inventory_from_server(NULL),
@@ -260,6 +245,7 @@ Client::Client(
 	m_chosen_auth_mech(AUTH_MECHANISM_NONE),
 	m_auth_data(NULL),
 	m_access_denied(false),
+	m_access_denied_reconnect(false),
 	m_itemdef_received(false),
 	m_nodedef_received(false),
 	m_media_downloader(new ClientMediaDownloader()),
@@ -274,6 +260,7 @@ Client::Client(
 	// Add local player
 	m_env.addPlayer(new LocalPlayer(this, playername));
 
+	m_mapper = new Mapper(device, this);
 	m_cache_save_interval = g_settings->getU16("server_map_save_interval");
 
 	m_cache_smooth_lighting = g_settings->getBool("smooth_lighting");
@@ -283,7 +270,7 @@ Client::Client(
 void Client::Stop()
 {
 	//request all client managed threads to stop
-	m_mesh_update_thread.Stop();
+	m_mesh_update_thread.stop();
 	// Save local server map
 	if (m_localdb) {
 		infostream << "Local map saving ended." << std::endl;
@@ -294,7 +281,7 @@ void Client::Stop()
 bool Client::isShutdown()
 {
 
-	if (!m_mesh_update_thread.IsRunning()) return true;
+	if (!m_mesh_update_thread.isRunning()) return true;
 
 	return false;
 }
@@ -303,9 +290,9 @@ Client::~Client()
 {
 	m_con.Disconnect();
 
-	m_mesh_update_thread.Stop();
-	m_mesh_update_thread.Wait();
-	while(!m_mesh_update_thread.m_queue_out.empty()) {
+	m_mesh_update_thread.stop();
+	m_mesh_update_thread.wait();
+	while (!m_mesh_update_thread.m_queue_out.empty()) {
 		MeshUpdateResult r = m_mesh_update_thread.m_queue_out.pop_frontNoEx();
 		delete r.mesh;
 	}
@@ -314,27 +301,29 @@ Client::~Client()
 	delete m_inventory_from_server;
 
 	// Delete detached inventories
-	for(std::map<std::string, Inventory*>::iterator
+	for (std::map<std::string, Inventory*>::iterator
 			i = m_detached_inventories.begin();
-			i != m_detached_inventories.end(); i++){
+			i != m_detached_inventories.end(); ++i) {
 		delete i->second;
 	}
 
 	// cleanup 3d model meshes on client shutdown
 	while (m_device->getSceneManager()->getMeshCache()->getMeshCount() != 0) {
-		scene::IAnimatedMesh * mesh =
+		scene::IAnimatedMesh *mesh =
 			m_device->getSceneManager()->getMeshCache()->getMeshByIndex(0);
 
 		if (mesh != NULL)
 			m_device->getSceneManager()->getMeshCache()->removeMesh(mesh);
 	}
+
+	delete m_mapper;
 }
 
 void Client::connect(Address address,
 		const std::string &address_name,
 		bool is_local_server)
 {
-	DSTACK(__FUNCTION_NAME);
+	DSTACK(FUNCTION_NAME);
 
 	initLocalMapSaving(address, address_name, is_local_server);
 
@@ -344,7 +333,7 @@ void Client::connect(Address address,
 
 void Client::step(float dtime)
 {
-	DSTACK(__FUNCTION_NAME);
+	DSTACK(FUNCTION_NAME);
 
 	// Limit a bit
 	if(dtime > 2.0)
@@ -433,8 +422,9 @@ void Client::step(float dtime)
 		ScopeProfiler sp(g_profiler, "Client: map timer and unload");
 		std::vector<v3s16> deleted_blocks;
 		m_env.getMap().timerUpdate(map_timer_and_unload_dtime,
-				g_settings->getFloat("client_unload_unused_data_timeout"),
-				&deleted_blocks);
+			g_settings->getFloat("client_unload_unused_data_timeout"),
+			g_settings->getS32("client_mapblock_limit"),
+			&deleted_blocks);
 
 		/*
 			Send info to server
@@ -537,27 +527,42 @@ void Client::step(float dtime)
 	*/
 	{
 		int num_processed_meshes = 0;
-		while(!m_mesh_update_thread.m_queue_out.empty())
+		while (!m_mesh_update_thread.m_queue_out.empty())
 		{
 			num_processed_meshes++;
+
+			MinimapMapblock *minimap_mapblock = NULL;
+			bool do_mapper_update = true;
+
 			MeshUpdateResult r = m_mesh_update_thread.m_queue_out.pop_frontNoEx();
 			MapBlock *block = m_env.getMap().getBlockNoCreateNoEx(r.p);
-			if(block) {
+			if (block) {
 				// Delete the old mesh
-				if(block->mesh != NULL)
-				{
-					// TODO: Remove hardware buffers of meshbuffers of block->mesh
+				if (block->mesh != NULL) {
 					delete block->mesh;
 					block->mesh = NULL;
 				}
 
-				// Replace with the new mesh
-				block->mesh = r.mesh;
+				if (r.mesh) {
+					minimap_mapblock = r.mesh->moveMinimapMapblock();
+					if (minimap_mapblock == NULL)
+						do_mapper_update = false;
+				}
+
+				if (r.mesh && r.mesh->getMesh()->getMeshBufferCount() == 0) {
+					delete r.mesh;
+				} else {
+					// Replace with the new mesh
+					block->mesh = r.mesh;
+				}
 			} else {
 				delete r.mesh;
 			}
 
-			if(r.ack_block_to_server) {
+			if (do_mapper_update)
+				m_mapper->addBlock(r.p, minimap_mapblock);
+
+			if (r.ack_block_to_server) {
 				/*
 					Acknowledge block
 					[0] u8 count
@@ -567,7 +572,7 @@ void Client::step(float dtime)
 			}
 		}
 
-		if(num_processed_meshes > 0)
+		if (num_processed_meshes > 0)
 			g_profiler->graphAdd("num_processed_meshes", num_processed_meshes);
 	}
 
@@ -613,7 +618,7 @@ void Client::step(float dtime)
 	{
 		for(std::map<int, u16>::iterator
 				i = m_sounds_to_objects.begin();
-				i != m_sounds_to_objects.end(); i++)
+				i != m_sounds_to_objects.end(); ++i)
 		{
 			int client_id = i->first;
 			u16 object_id = i->second;
@@ -638,7 +643,7 @@ void Client::step(float dtime)
 				i != m_sounds_server_to_client.end();) {
 			s32 server_id = i->first;
 			int client_id = i->second;
-			i++;
+			++i;
 			if(!m_sound->soundExists(client_id)) {
 				m_sounds_server_to_client.erase(server_id);
 				m_sounds_client_to_server.erase(client_id);
@@ -742,14 +747,19 @@ bool Client::loadMedia(const std::string &data, const std::string &filename)
 // Virtual methods from con::PeerHandler
 void Client::peerAdded(con::Peer *peer)
 {
-	infostream<<"Client::peerAdded(): peer->id="
-			<<peer->id<<std::endl;
+	infostream << "Client::peerAdded(): peer->id="
+			<< peer->id << std::endl;
 }
 void Client::deletingPeer(con::Peer *peer, bool timeout)
 {
-	infostream<<"Client::deletingPeer(): "
+	infostream << "Client::deletingPeer(): "
 			"Server Peer is getting deleted "
-			<<"(timeout="<<timeout<<")"<<std::endl;
+			<< "(timeout=" << timeout << ")" << std::endl;
+
+	if (timeout) {
+		m_access_denied = true;
+		m_access_denied_reason = gettext("Connection timed out.");
+	}
 }
 
 /*
@@ -814,7 +824,7 @@ void Client::initLocalMapSaving(const Address &address,
 
 void Client::ReceiveAll()
 {
-	DSTACK(__FUNCTION_NAME);
+	DSTACK(FUNCTION_NAME);
 	u32 start_ms = porting::getTimeMs();
 	for(;;)
 	{
@@ -840,7 +850,7 @@ void Client::ReceiveAll()
 
 void Client::Receive()
 {
-	DSTACK(__FUNCTION_NAME);
+	DSTACK(FUNCTION_NAME);
 	NetworkPacket pkt;
 	m_con.Receive(&pkt);
 	ProcessData(&pkt);
@@ -857,7 +867,7 @@ inline void Client::handleCommand(NetworkPacket* pkt)
 */
 void Client::ProcessData(NetworkPacket *pkt)
 {
-	DSTACK(__FUNCTION_NAME);
+	DSTACK(FUNCTION_NAME);
 
 	ToClientCommand command = (ToClientCommand) pkt->getCommand();
 	u32 sender_peer_id = pkt->getPeerId();
@@ -880,6 +890,7 @@ void Client::ProcessData(NetworkPacket *pkt)
 	if (command >= TOCLIENT_NUM_MSG_TYPES) {
 		infostream << "Client: Ignoring unknown command "
 			<< command << std::endl;
+		return;
 	}
 
 	/*
@@ -966,6 +977,7 @@ void Client::deleteAuthData()
 		case AUTH_MECHANISM_NONE:
 			break;
 	}
+	m_chosen_auth_mech = AUTH_MECHANISM_NONE;
 }
 
 
@@ -1047,12 +1059,13 @@ void Client::startAuth(AuthMechanism chosen_auth_mechanism)
 				m_password.length(), NULL, NULL);
 			char *bytes_A = 0;
 			size_t len_A = 0;
-			srp_user_start_authentication((struct SRPUser *) m_auth_data,
-				NULL, NULL, 0, (unsigned char **) &bytes_A, &len_A);
+			SRP_Result res = srp_user_start_authentication(
+				(struct SRPUser *) m_auth_data, NULL, NULL, 0,
+				(unsigned char **) &bytes_A, &len_A);
+			FATAL_ERROR_IF(res != SRP_OK, "Creating local SRP user failed.");
 
 			NetworkPacket resp_pkt(TOSERVER_SRP_BYTES_A, 0);
 			resp_pkt << std::string(bytes_A, len_A) << based_on;
-			free(bytes_A);
 			Send(&resp_pkt);
 			break;
 		}
@@ -1095,7 +1108,7 @@ void Client::sendRemovedSounds(std::vector<s32> &soundList)
 	pkt << (u16) (server_ids & 0xFFFF);
 
 	for(std::vector<s32>::iterator i = soundList.begin();
-			i != soundList.end(); i++)
+			i != soundList.end(); ++i)
 		pkt << *i;
 
 	Send(&pkt);
@@ -1200,7 +1213,7 @@ void Client::sendChangePassword(const std::string &oldpassword,
 
 void Client::sendDamage(u8 damage)
 {
-	DSTACK(__FUNCTION_NAME);
+	DSTACK(FUNCTION_NAME);
 
 	NetworkPacket pkt(TOSERVER_DAMAGE, sizeof(u8));
 	pkt << damage;
@@ -1209,7 +1222,7 @@ void Client::sendDamage(u8 damage)
 
 void Client::sendBreath(u16 breath)
 {
-	DSTACK(__FUNCTION_NAME);
+	DSTACK(FUNCTION_NAME);
 
 	NetworkPacket pkt(TOSERVER_BREATH, sizeof(u16));
 	pkt << breath;
@@ -1218,7 +1231,7 @@ void Client::sendBreath(u16 breath)
 
 void Client::sendRespawn()
 {
-	DSTACK(__FUNCTION_NAME);
+	DSTACK(FUNCTION_NAME);
 
 	NetworkPacket pkt(TOSERVER_RESPAWN, 0);
 	Send(&pkt);
@@ -1226,7 +1239,7 @@ void Client::sendRespawn()
 
 void Client::sendReady()
 {
-	DSTACK(__FUNCTION_NAME);
+	DSTACK(FUNCTION_NAME);
 
 	NetworkPacket pkt(TOSERVER_CLIENT_READY,
 			1 + 1 + 1 + 1 + 2 + sizeof(char) * strlen(g_version_hash));
@@ -1260,7 +1273,7 @@ void Client::sendPlayerPos()
 
 	u16 our_peer_id;
 	{
-		//JMutexAutoLock lock(m_con_mutex); //bulk comment-out
+		//MutexAutoLock lock(m_con_mutex); //bulk comment-out
 		our_peer_id = m_con.GetPeerID();
 	}
 
@@ -1592,7 +1605,7 @@ void Client::addUpdateMeshTask(v3s16 p, bool ack_to_server, bool urgent)
 	}
 
 	// Add task to queue
-	m_mesh_update_thread.m_queue_in.addBlock(p, data, ack_to_server, urgent);
+	m_mesh_update_thread.enqueueUpdate(p, data, ack_to_server, urgent);
 }
 
 void Client::addUpdateMeshTaskWithEdge(v3s16 blockpos, bool ack_to_server, bool urgent)
@@ -1784,7 +1797,7 @@ void Client::afterContentReceived(IrrlichtDevice *device)
 
 	// Start mesh update thread after setting up content definitions
 	infostream<<"- Starting mesh update thread"<<std::endl;
-	m_mesh_update_thread.Start();
+	m_mesh_update_thread.start();
 
 	m_state = LC_Ready;
 	sendReady();

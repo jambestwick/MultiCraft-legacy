@@ -98,7 +98,7 @@ bool ClientLauncher::run(GameParams &game_params, const Settings &cmd_args)
 	if (list_video_modes)
 		return print_video_modes();
 
-	if (!init_engine(game_params.log_level)) {
+	if (!init_engine()) {
 		errorstream << "Could not initialize game engine." << std::endl;
 		return false;
 	}
@@ -177,8 +177,9 @@ bool ClientLauncher::run(GameParams &game_params, const Settings &cmd_args)
 	ChatBackend chat_backend;
 
 	// If an error occurs, this is set to something by menu().
-	// It is then displayed before	the menu shows on the next call to menu()
+	// It is then displayed before the menu shows on the next call to menu()
 	std::string error_message;
+	bool reconnect_requested = false;
 
 	bool first_loop = true;
 
@@ -192,7 +193,7 @@ bool ClientLauncher::run(GameParams &game_params, const Settings &cmd_args)
 	{
 		// Set the window caption
 		const wchar_t *text = wgettext("Main Menu");
-		device->setWindowCaption((narrow_to_wide("MultiCraft") + L" [" + text + L"]").c_str());
+		device->setWindowCaption((utf8_to_wide(PROJECT_NAME_C) + L" [" + text + L"]").c_str());
 		delete[] text;
 
 #ifdef ANDROID
@@ -210,7 +211,8 @@ bool ClientLauncher::run(GameParams &game_params, const Settings &cmd_args)
 			*/
 			guiroot = guienv->addStaticText(L"", core::rect<s32>(0, 0, 10000, 10000));
 
-			bool game_has_run = launch_game(error_message, game_params, cmd_args);
+			bool game_has_run = launch_game(error_message, reconnect_requested,
+				game_params, cmd_args);
 
 			// If skip_main_menu, we only want to startup once
 			if (skip_main_menu && !first_loop)
@@ -246,6 +248,7 @@ bool ClientLauncher::run(GameParams &game_params, const Settings &cmd_args)
 			receiver->m_touchscreengui = new TouchScreenGUI(device, receiver);
 			g_touchscreengui = receiver->m_touchscreengui;
 #endif
+
 			the_game(
 				kill,
 				random_input,
@@ -258,6 +261,7 @@ bool ClientLauncher::run(GameParams &game_params, const Settings &cmd_args)
 				current_port,
 				error_message,
 				chat_backend,
+				&reconnect_requested,
 				gamespec,
 				simple_singleplayer_mode
 			);
@@ -330,22 +334,24 @@ void ClientLauncher::init_args(GameParams &game_params, const Settings &cmd_args
 			|| cmd_args.getFlag("random-input");
 }
 
-bool ClientLauncher::init_engine(int log_level)
+bool ClientLauncher::init_engine()
 {
 	receiver = new MyEventReceiver();
-	create_engine_device(log_level);
+	create_engine_device();
 	return device != NULL;
 }
 
 bool ClientLauncher::launch_game(std::string &error_message,
-		GameParams &game_params, const Settings &cmd_args)
+		bool reconnect_requested, GameParams &game_params,
+		const Settings &cmd_args)
 {
 	// Initialize menu data
 	MainMenuData menudata;
-	menudata.address      = address;
-	menudata.name         = playername;
-	menudata.port         = itos(game_params.socket_port);
-	menudata.errormessage = error_message;
+	menudata.address                         = address;
+	menudata.name                            = playername;
+	menudata.port                            = itos(game_params.socket_port);
+	menudata.script_data.errormessage        = error_message;
+	menudata.script_data.reconnect_requested = reconnect_requested;
 
 	error_message.clear();
 
@@ -392,11 +398,11 @@ bool ClientLauncher::launch_game(std::string &error_message,
 		}
 	}
 
-	if (!menudata.errormessage.empty()) {
+	if (!menudata.script_data.errormessage.empty()) {
 		/* The calling function will pass this back into this function upon the
 		 * next iteration (if any) causing it to be displayed by the GUI
 		 */
-		error_message = menudata.errormessage;
+		error_message = menudata.script_data.errormessage;
 		return false;
 	}
 
@@ -462,7 +468,7 @@ bool ClientLauncher::launch_game(std::string &error_message,
 
 		if (game_params.game_spec.isValid() &&
 				game_params.game_spec.id != worldspec.gameid) {
-			errorstream << "WARNING: Overriding gamespec from \""
+			warningstream << "Overriding gamespec from \""
 			            << worldspec.gameid << "\" to \""
 			            << game_params.game_spec.id << "\"" << std::endl;
 			gamespec = game_params.game_spec;
@@ -507,20 +513,8 @@ void ClientLauncher::main_menu(MainMenuData *menudata)
 	smgr->clear();	/* leave scene manager in a clean state */
 }
 
-bool ClientLauncher::create_engine_device(int log_level)
+bool ClientLauncher::create_engine_device()
 {
-	static const irr::ELOG_LEVEL irr_log_level[5] = {
-		ELL_NONE,
-		ELL_ERROR,
-		ELL_WARNING,
-		ELL_INFORMATION,
-#if (IRRLICHT_VERSION_MAJOR == 1 && IRRLICHT_VERSION_MINOR < 8)
-		ELL_INFORMATION
-#else
-		ELL_DEBUG
-#endif
-	};
-
 	// Resolution selection
 	bool fullscreen = g_settings->getBool("fullscreen");
 	u16 screenW = g_settings->getU16("screenW");
@@ -568,10 +562,6 @@ bool ClientLauncher::create_engine_device(int log_level)
 	device = createDeviceEx(params);
 
 	if (device) {
-		// Map our log level to irrlicht engine one.
-		ILogger* irr_logger = device->getLogger();
-		irr_logger->setLogLevel(irr_log_level[log_level]);
-
 		porting::initIrrlicht(device);
 	}
 
@@ -658,14 +648,14 @@ void ClientLauncher::speed_tests()
 		infostream << "Around 5000/ms should do well here." << std::endl;
 		TimeTaker timer("Testing mutex speed");
 
-		JMutex m;
+		Mutex m;
 		u32 n = 0;
 		u32 i = 0;
 		do {
 			n += 10000;
 			for (; i < n; i++) {
-				m.Lock();
-				m.Unlock();
+				m.lock();
+				m.unlock();
 			}
 		}
 		// Do at least 10ms

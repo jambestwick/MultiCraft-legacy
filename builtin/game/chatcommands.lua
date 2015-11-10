@@ -10,6 +10,7 @@ function core.register_chatcommand(cmd, def)
 	def.params = def.params or ""
 	def.description = def.description or ""
 	def.privs = def.privs or {}
+	def.mod_origin = core.get_current_modname() or "??"
 	core.chatcommands[cmd] = def
 end
 
@@ -37,6 +38,7 @@ core.register_on_chat_message(function(name, message)
 	end
 	local has_privs, missing_privs = core.check_player_privs(name, cmd_def.privs)
 	if has_privs then
+		core.set_last_run_mod(cmd_def.mod_origin)
 		local success, message = cmd_def.func(name, param)
 		if message then
 			core.chat_send_player(name, message)
@@ -48,6 +50,27 @@ core.register_on_chat_message(function(name, message)
 	end
 	return true  -- Handled chat message
 end)
+
+-- Parses a "range" string in the format of "here (number)" or
+-- "(x1, y1, z1) (x2, y2, z2)", returning two position vectors
+local function parse_range_str(player_name, str)
+	local p1, p2
+	local args = str:split(" ")
+
+	if args[1] == "here" then
+		p1, p2 = core.get_player_radius_area(player_name, tonumber(args[2]))
+		if p1 == nil then
+			return false, "Unable to get player " .. player_name .. " position"
+		end
+	else
+		p1, p2 = core.string_to_area(str)
+		if p1 == nil then
+			return false, "Incorrect area format. Expected: (x1,y1,z1) (x2,y2,z2)"
+		end
+	end
+
+	return p1, p2
+end
 
 --
 -- Chat commands
@@ -189,7 +212,7 @@ core.register_chatcommand("revoke", {
 		local revoke_privs = core.string_to_privs(revoke_priv_str)
 		local privs = core.get_player_privs(revoke_name)
 		for priv, _ in pairs(revoke_privs) do
-			if priv ~= "interact" and priv ~= "shout" and priv ~= "interact_extra" and
+			if priv ~= "interact" and priv ~= "shout" and
 					not core.check_player_privs(name, {privs=true}) then
 				return false, "Your privileges are insufficient."
 			end
@@ -413,40 +436,31 @@ core.register_chatcommand("set", {
 	end,
 })
 
+core.register_chatcommand("emergeblocks", {
+	params = "(here [radius]) | (<pos1> <pos2>)",
+	description = "starts loading (or generating, if inexistent) map blocks "
+		.. "contained in area pos1 to pos2",
+	privs = {server=true},
+	func = function(name, param)
+		local p1, p2 = parse_range_str(name, param)
+		if p1 == false then
+			return false, p2
+		end
+
+		core.emerge_area(p1, p2)
+		return true, "Started emerge of area ranging from " ..
+			core.pos_to_string(p1, 1) .. " to " .. core.pos_to_string(p2, 1)
+	end,
+})
+
 core.register_chatcommand("deleteblocks", {
 	params = "(here [radius]) | (<pos1> <pos2>)",
 	description = "delete map blocks contained in area pos1 to pos2",
 	privs = {server=true},
 	func = function(name, param)
-		local p1 = {}
-		local p2 = {}
-		local args = param:split(" ")
-		if args[1] == "here" then
-			local player = core.get_player_by_name(name)
-			if player == nil then
-				core.log("error", "player is nil")
-				return false, "Unable to get current position; player is nil"
-			end
-			p1 = player:getpos()
-			p2 = p1
-
-			if #args >= 2 then
-				local radius = tonumber(args[2]) or 0
-				p1 = vector.add(p1, radius)
-				p2 = vector.subtract(p2, radius)
-			end
-		else
-			local pos1, pos2 = unpack(param:split(") ("))
-			if pos1 == nil or pos2 == nil then
-				return false, "Incorrect area format. Expected: (x1,y1,z1) (x2,y2,z2)"
-			end
-
-			p1 = core.string_to_pos(pos1 .. ")")
-			p2 = core.string_to_pos("(" .. pos2)
-
-			if p1 == nil or p2 == nil then
-				return false, "Incorrect area format. Expected: (x1,y1,z1) (x2,y2,z2)"
-			end
+		local p1, p2 = parse_range_str(name, param)
+		if p1 == false then
+			return false, p2
 		end
 
 		if core.delete_area(p1, p2) then
@@ -530,22 +544,29 @@ core.register_chatcommand("giveme", {
 })
 
 core.register_chatcommand("spawnentity", {
-	params = "<EntityName>",
-	description = "Spawn entity at your position",
+	params = "<EntityName> [<X>,<Y>,<Z>]",
+	description = "Spawn entity at given (or your) position",
 	privs = {give=true, interact=true},
 	func = function(name, param)
-		local entityname = string.match(param, "(.+)$")
+		local entityname, p = string.match(param, "^([^ ]+) *(.*)$")
 		if not entityname then
 			return false, "EntityName required"
 		end
-		core.log("action", ("/spawnentity invoked, entityname=%q")
-				:format(entityname))
+		core.log("action", ("%s invokes /spawnentity, entityname=%q")
+				:format(name, entityname))
 		local player = core.get_player_by_name(name)
 		if player == nil then
 			core.log("error", "Unable to spawn entity, player is nil")
 			return false, "Unable to spawn entity, player is nil"
 		end
-		local p = player:getpos()
+		if p == "" then
+			p = player:getpos()
+		else
+			p = core.string_to_pos(p)
+			if p == nil then
+				return false, "Invalid parameters ('" .. param .. "')"
+			end
+		end
 		p.y = p.y + 1
 		core.add_entity(p, entityname)
 		return true, ("%q spawned."):format(entityname)
@@ -689,7 +710,7 @@ core.register_chatcommand("time", {
 			local hour = (current_time - minutes) / 60
 			return true, ("Current time is %d:%02d"):format(hour, minutes)
 		end
-		local player_privs = minetest.get_player_privs(name)
+		local player_privs = core.get_player_privs(name)
 		if not player_privs.settime then
 			return false, "You don't have permission to run this command " ..
 				"(missing privilege: settime)."
@@ -713,7 +734,7 @@ core.register_chatcommand("time", {
 			return false, "Invalid minute (must be between 0 and 59 inclusive)."
 		end
 		core.set_timeofday((hour * 60 + minute) / 1440)
-		core.log("action", name .. " sets time to " .. hour .. ":" .. minute)
+		core.log("action", ("%s sets time to %d:%02d"):format(name, hour, minute))
 		return true, "Time of day changed."
 	end,
 })

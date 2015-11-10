@@ -145,7 +145,7 @@ void ItemDefinition::serialize(std::ostream &os, u16 protocol_version) const
 	os<<serializeString(tool_capabilities_s);
 	writeU16(os, groups.size());
 	for(std::map<std::string, int>::const_iterator
-			i = groups.begin(); i != groups.end(); i++){
+			i = groups.begin(); i != groups.end(); ++i){
 		os<<serializeString(i->first);
 		writeS16(os, i->second);
 	}
@@ -241,7 +241,7 @@ public:
 	{
 
 #ifndef SERVER
-		m_main_thread = get_current_thread_id();
+		m_main_thread = thr_get_current_thread_id();
 #endif
 		clear();
 	}
@@ -261,7 +261,7 @@ public:
 #endif
 		for (std::map<std::string, ItemDefinition*>::iterator iter =
 				m_item_definitions.begin(); iter != m_item_definitions.end();
-				iter ++) {
+				++iter) {
 			delete iter->second;
 		}
 		m_item_definitions.clear();
@@ -317,7 +317,7 @@ public:
 				<<name<<"\""<<std::endl;
 
 		// This is not thread-safe
-		sanity_check(get_current_thread_id() == m_main_thread);
+		sanity_check(thr_is_current_thread(m_main_thread));
 
 		// Skip if already in cache
 		ClientCached *cc = NULL;
@@ -448,7 +448,7 @@ public:
 		if(cc)
 			return cc;
 
-		if(get_current_thread_id() == m_main_thread)
+		if(thr_is_current_thread(m_main_thread))
 		{
 			return createClientCachedDirect(name, gamedef);
 		}
@@ -500,7 +500,7 @@ public:
 	{
 		for(std::map<std::string, ItemDefinition*>::const_iterator
 				i = m_item_definitions.begin();
-				i != m_item_definitions.end(); i++)
+				i != m_item_definitions.end(); ++i)
 		{
 			delete i->second;
 		}

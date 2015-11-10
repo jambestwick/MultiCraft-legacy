@@ -57,13 +57,15 @@ struct collisionMoveResult
 	bool collides;
 	bool collides_xz;
 	bool standing_on_unloaded;
+	bool standing_on_object;
 	std::vector<CollisionInfo> collisions;
 
 	collisionMoveResult():
 		touching_ground(false),
 		collides(false),
 		collides_xz(false),
-		standing_on_unloaded(false)
+		standing_on_unloaded(false),
+		standing_on_object(false)
 	{}
 };
 
@@ -74,15 +76,6 @@ collisionMoveResult collisionMoveSimple(Environment *env,IGameDef *gamedef,
 		v3f &pos_f, v3f &speed_f,
 		v3f &accel_f,ActiveObject* self=0,
 		bool collideWithObjects=true);
-
-#if 0
-// This doesn't seem to work and isn't used
-// Moves using as many iterations as needed
-collisionMoveResult collisionMovePrecise(Map *map, IGameDef *gamedef,
-		f32 pos_max_d, const aabb3f &box_0,
-		f32 stepheight, f32 dtime,
-		v3f &pos_f, v3f &speed_f, v3f &accel_f);
-#endif
 
 // Helper function:
 // Checks for collision of a moving aabbox with a static aabbox

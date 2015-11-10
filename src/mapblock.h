@@ -31,6 +31,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "nodetimer.h"
 #include "modifiedstate.h"
 #include "util/numeric.h" // getContainerPos
+#include "settings.h"
 
 class Map;
 class NodeMetadataList;
@@ -258,7 +259,7 @@ public:
 
 	inline v3s16 getPosRelative()
 	{
-		return m_pos * MAP_BLOCKSIZE;
+		return m_pos_relative;
 	}
 
 	inline core::aabbox3d<s16> getBox()
@@ -503,7 +504,7 @@ public:
 
 	// These don't write or read version by itself
 	// Set disk to true for on-disk format, false for over-the-network format
-	// Precondition: version >= SER_FMT_CLIENT_VER_LOWEST
+	// Precondition: version >= SER_FMT_VER_LOWEST_WRITE
 	void serialize(std::ostream &os, u8 version, bool disk);
 	// If disk == true: In addition to doing other things, will add
 	// unknown blocks from id-name mapping to wndef
@@ -563,6 +564,14 @@ private:
 	Map *m_parent;
 	// Position in blocks on parent
 	v3s16 m_pos;
+
+	/* This is the precalculated m_pos_relative value
+	* This caches the value, improving performance by removing 3 s16 multiplications
+	* at runtime on each getPosRelative call
+	* For a 5 minutes runtime with valgrind this removes 3 * 19M s16 multiplications
+	* The gain can be estimated in Release Build to 3 * 100M multiply operations for 5 mins
+	*/
+	v3s16 m_pos_relative;
 
 	IGameDef *m_gamedef;
 
@@ -628,15 +637,28 @@ private:
 
 typedef std::vector<MapBlock*> MapBlockVect;
 
+inline bool objectpos_over_limit(v3f p)
+{
+	const static float map_gen_limit_bs = MYMIN(MAX_MAP_GENERATION_LIMIT,
+		g_settings->getU16("map_generation_limit")) * BS;
+	return (p.X < -map_gen_limit_bs
+		|| p.X >  map_gen_limit_bs
+		|| p.Y < -map_gen_limit_bs
+		|| p.Y >  map_gen_limit_bs
+		|| p.Z < -map_gen_limit_bs
+		|| p.Z >  map_gen_limit_bs);
+}
+
 inline bool blockpos_over_limit(v3s16 p)
 {
-	return
-	  (p.X < -MAP_GENERATION_LIMIT / MAP_BLOCKSIZE
-	|| p.X >  MAP_GENERATION_LIMIT / MAP_BLOCKSIZE
-	|| p.Y < -MAP_GENERATION_LIMIT / MAP_BLOCKSIZE
-	|| p.Y >  MAP_GENERATION_LIMIT / MAP_BLOCKSIZE
-	|| p.Z < -MAP_GENERATION_LIMIT / MAP_BLOCKSIZE
-	|| p.Z >  MAP_GENERATION_LIMIT / MAP_BLOCKSIZE);
+	const static u16 map_gen_limit = MYMIN(MAX_MAP_GENERATION_LIMIT,
+		g_settings->getU16("map_generation_limit"));
+	return (p.X < -map_gen_limit / MAP_BLOCKSIZE
+			|| p.X >  map_gen_limit / MAP_BLOCKSIZE
+			|| p.Y < -map_gen_limit / MAP_BLOCKSIZE
+			|| p.Y >  map_gen_limit / MAP_BLOCKSIZE
+			|| p.Z < -map_gen_limit / MAP_BLOCKSIZE
+			|| p.Z >  map_gen_limit / MAP_BLOCKSIZE);
 }
 
 /*
@@ -673,4 +695,3 @@ inline void getNodeSectorPosWithOffset(const v2s16 &p, v2s16 &block, v2s16 &offs
 std::string analyze_block(MapBlock *block);
 
 #endif
-

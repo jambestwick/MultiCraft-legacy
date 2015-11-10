@@ -60,32 +60,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	#include <unistd.h>
 	#include <stdint.h> //for uintptr_t
 
-#if (defined(linux) || defined(__linux) || defined(__GNU__)) && !defined(_GNU_SOURCE)
+	#if (defined(linux) || defined(__linux) || defined(__GNU__)) && !defined(_GNU_SOURCE)
 		#define _GNU_SOURCE
 	#endif
 
-	#include <sched.h>
-
-	#ifdef __FreeBSD__
-		#include <pthread_np.h>
-		typedef cpuset_t cpu_set_t;
-	#elif defined(__sun) || defined(sun)
-		#include <sys/types.h>
-		#include <sys/processor.h>
-	#elif defined(_AIX)
-		#include <sys/processor.h>
-	#elif __APPLE__
-		#include <mach/mach_init.h>
-		#include <mach/thread_policy.h>
-	#endif
-
 	#define sleep_ms(x) usleep(x*1000)
-
-	#define THREAD_PRIORITY_LOWEST       0
-	#define THREAD_PRIORITY_BELOW_NORMAL 1
-	#define THREAD_PRIORITY_NORMAL       2
-	#define THREAD_PRIORITY_ABOVE_NORMAL 3
-	#define THREAD_PRIORITY_HIGHEST      4
 #endif
 
 #ifdef _MSC_VER
@@ -129,6 +108,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	#include <CoreFoundation/CoreFoundation.h>
 #endif
 
+#ifndef _WIN32 // Posix
+	#include <sys/time.h>
+	#include <time.h>
+	#if defined(__MACH__) && defined(__APPLE__)
+		#include <mach/clock.h>
+		#include <mach/mach.h>
+	#endif
+#endif
+
 namespace porting
 {
 
@@ -155,30 +143,20 @@ extern std::string path_share;
 extern std::string path_user;
 
 /*
+	Path to gettext locale files
+*/
+extern std::string path_locale;
+
+/*
 	Get full path of stuff in data directory.
 	Example: "stone.png" -> "../data/stone.png"
 */
 std::string getDataPath(const char *subpath);
 
 /*
-	Initialize path_share and path_user.
+	Initialize path_*.
 */
 void initializePaths();
-
-/*
-	Get number of online processors in the system.
-*/
-int getNumberOfProcessors();
-
-/*
-	Set a thread's affinity to a particular processor.
-*/
-bool threadBindToProcessor(threadid_t tid, int pnumber);
-
-/*
-	Set a thread's priority.
-*/
-bool threadSetPriority(threadid_t tid, int prio);
 
 /*
 	Return system information
@@ -194,10 +172,6 @@ void initIrrlicht(irr::IrrlichtDevice * );
 	Overflow can occur at any value higher than 10000000.
 */
 #ifdef _WIN32 // Windows
-#ifndef _WIN32_WINNT
-	#define _WIN32_WINNT 0x0501
-#endif
-	#include <windows.h>
 
 	inline u32 getTimeS()
 	{
@@ -226,12 +200,6 @@ void initIrrlicht(irr::IrrlichtDevice * );
 	}
 
 #else // Posix
-#include <sys/time.h>
-#include <time.h>
-#if defined(__MACH__) && defined(__APPLE__)
-#include <mach/clock.h>
-#include <mach/mach.h>
-#endif
 
 	inline u32 getTimeS()
 	{
@@ -311,59 +279,6 @@ inline u32 getDeltaMs(u32 old_time_ms, u32 new_time_ms)
 	}
 }
 
-#if defined(linux) || defined(__linux)
-	#include <sys/prctl.h>
-
-	inline void setThreadName(const char *name) {
-		/* It would be cleaner to do this with pthread_setname_np,
-		 * which was added to glibc in version 2.12, but some major
-		 * distributions are still runing 2.11 and previous versions.
-		 */
-		prctl(PR_SET_NAME, name);
-	}
-#elif defined(__FreeBSD__) || defined(__OpenBSD__)
-	#include <pthread.h>
-	#include <pthread_np.h>
-
-	inline void setThreadName(const char *name) {
-		pthread_set_name_np(pthread_self(), name);
-	}
-#elif defined(__NetBSD__)
-	#include <pthread.h>
-
-	inline void setThreadName(const char *name) {
-		pthread_setname_np(pthread_self(), name);
-	}
-#elif defined(_MSC_VER)
-	typedef struct tagTHREADNAME_INFO {
-		DWORD dwType; // must be 0x1000
-		LPCSTR szName; // pointer to name (in user addr space)
-		DWORD dwThreadID; // thread ID (-1=caller thread)
-		DWORD dwFlags; // reserved for future use, must be zero
-	} THREADNAME_INFO;
-
-	inline void setThreadName(const char *name) {
-		THREADNAME_INFO info;
-		info.dwType = 0x1000;
-		info.szName = name;
-		info.dwThreadID = -1;
-		info.dwFlags = 0;
-		__try {
-			RaiseException(0x406D1388, 0, sizeof(info) / sizeof(DWORD), (ULONG_PTR *) &info);
-		} __except (EXCEPTION_CONTINUE_EXECUTION) {}
-	}
-#elif defined(__APPLE__)
-	#include <pthread.h>
-
-	inline void setThreadName(const char *name) {
-		pthread_setname_np(name);
-	}
-#elif defined(_WIN32) || defined(__GNU__)
-	inline void setThreadName(const char* name) {}
-#else
-	#warning "Unrecognized platform, thread names will not be available."
-	inline void setThreadName(const char* name) {}
-#endif
 
 #ifndef SERVER
 float getDisplayDensity();

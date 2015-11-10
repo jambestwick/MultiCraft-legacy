@@ -21,21 +21,29 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "cpp_api/s_internal.h"
 #include "common/c_converter.h"
 
-void ScriptApiMainMenu::setMainMenuErrorMessage(std::string errormessage)
+void ScriptApiMainMenu::setMainMenuData(MainMenuDataForScript *data)
 {
 	SCRIPTAPI_PRECHECKHEADER
 
 	lua_getglobal(L, "gamedata");
 	int gamedata_idx = lua_gettop(L);
 	lua_pushstring(L, "errormessage");
-	lua_pushstring(L, errormessage.c_str());
+	if (!data->errormessage.empty()) {
+		lua_pushstring(L, data->errormessage.c_str());
+	} else {
+		lua_pushnil(L);
+	}
 	lua_settable(L, gamedata_idx);
+	setboolfield(L, gamedata_idx, "reconnect_requested",
+		data->reconnect_requested);
 	lua_pop(L, 1);
 }
 
 void ScriptApiMainMenu::handleMainMenuEvent(std::string text)
 {
 	SCRIPTAPI_PRECHECKHEADER
+
+	int error_handler = PUSH_ERROR_HANDLER(L);
 
 	// Get handler function
 	lua_getglobal(L, "core");
@@ -49,13 +57,15 @@ void ScriptApiMainMenu::handleMainMenuEvent(std::string text)
 
 	// Call it
 	lua_pushstring(L, text.c_str());
-	if (lua_pcall(L, 1, 0, m_errorhandler))
-		scriptError();
+	PCALL_RES(lua_pcall(L, 1, 0, error_handler));
+	lua_pop(L, 1);  // Pop error handler
 }
 
 void ScriptApiMainMenu::handleMainMenuButtons(const StringMap &fields)
 {
 	SCRIPTAPI_PRECHECKHEADER
+
+	int error_handler = PUSH_ERROR_HANDLER(L);
 
 	// Get handler function
 	lua_getglobal(L, "core");
@@ -79,7 +89,7 @@ void ScriptApiMainMenu::handleMainMenuButtons(const StringMap &fields)
 	}
 
 	// Call it
-	if (lua_pcall(L, 1, 0, m_errorhandler))
-		scriptError();
+	PCALL_RES(lua_pcall(L, 1, 0, error_handler));
+	lua_pop(L, 1);  // Pop error handler
 }
 

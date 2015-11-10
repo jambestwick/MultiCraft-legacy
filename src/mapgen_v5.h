@@ -1,6 +1,7 @@
 /*
 Minetest
-Copyright (C) 2010-2013 kwolekr, Ryan Kwolek <kwolekr@minetest.net>
+Copyright (C) 2010-2015 kwolekr, Ryan Kwolek <kwolekr@minetest.net>
+Copyright (C) 2010-2015 paramat, Matt Gregory
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -22,11 +23,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "mapgen.h"
 
-#define LARGE_CAVE_DEPTH -256
-#define BIOMEGEN_BASE_V5 -192
-
-/////////////////// Mapgen V5 flags
-//#define MGV5_   0x01
+#define MGV5_LARGE_CAVE_DEPTH -256
 
 class BiomeManager;
 
@@ -70,8 +67,11 @@ public:
 	Noise *noise_cave1;
 	Noise *noise_cave2;
 	Noise *noise_ground;
+
 	Noise *noise_heat;
 	Noise *noise_humidity;
+	Noise *noise_heat_blend;
+	Noise *noise_humidity_blend;
 
 	content_t c_stone;
 	content_t c_water_source;

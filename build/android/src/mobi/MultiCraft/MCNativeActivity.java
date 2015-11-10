@@ -48,6 +48,8 @@ public class MCNativeActivity extends NativeActivity {
 
 	public static native void putMessageBoxResult(String text);
 
+
+	/* ugly code to workaround putMessageBoxResult not beeing found */
 	public int getDialogState() {
 		return m_MessagReturnCode;
 	}
@@ -69,6 +71,21 @@ public class MCNativeActivity extends NativeActivity {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent data) {
+		if (requestCode == 101) {
+			if (resultCode == RESULT_OK) {
+				String text = data.getStringExtra("text");
+				m_MessagReturnCode = 0;
+				m_MessageReturnValue = text;
+			}
+			else {
+				m_MessagReturnCode = 1;
+			}
+		}
+	}
+
 	static {
 		System.loadLibrary("openal");
 		System.loadLibrary("ogg");
@@ -76,10 +93,13 @@ public class MCNativeActivity extends NativeActivity {
 		System.loadLibrary("ssl");
 		System.loadLibrary("crypto");
 		System.loadLibrary("gmp");
-
+		System.loadLibrary("iconv");
 		// We don't have to load libminetest.so ourselves,
 		// but if we do, we get nicer logcat errors when
 		// loading fails.
 		System.loadLibrary("minetest");
 	}
+
+	private int m_MessagReturnCode;
+	private String m_MessageReturnValue;
 }

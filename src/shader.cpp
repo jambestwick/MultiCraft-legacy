@@ -328,7 +328,7 @@ private:
 	// The first position contains a dummy shader.
 	std::vector<ShaderInfo> m_shaderinfo_cache;
 	// The former container is behind this mutex
-	JMutex m_shaderinfo_cache_mutex;
+	Mutex m_shaderinfo_cache_mutex;
 
 	// Queued shader fetches (to be processed by the main thread)
 	RequestQueue<std::string, u32, u8, u8> m_get_shader_queue;
@@ -367,7 +367,7 @@ ShaderSource::ShaderSource(IrrlichtDevice *device):
 
 	m_shader_callback = new ShaderCallback(this, "default");
 
-	m_main_thread = get_current_thread_id();
+	m_main_thread = thr_get_current_thread_id();
 
 	// Add a dummy ShaderInfo as the first index, named ""
 	m_shaderinfo_cache.push_back(ShaderInfo());
@@ -379,7 +379,7 @@ ShaderSource::ShaderSource(IrrlichtDevice *device):
 ShaderSource::~ShaderSource()
 {
 	for (std::vector<IShaderConstantSetter*>::iterator iter = m_global_setters.begin();
-			iter != m_global_setters.end(); iter++) {
+			iter != m_global_setters.end(); ++iter) {
 		delete *iter;
 	}
 	m_global_setters.clear();
@@ -397,7 +397,7 @@ u32 ShaderSource::getShader(const std::string &name,
 		Get shader
 	*/
 
-	if(get_current_thread_id() == m_main_thread){
+	if (thr_is_current_thread(m_main_thread)) {
 		return getShaderIdDirect(name, material_type, drawtype);
 	} else {
 		/*errorstream<<"getShader(): Queued: name=\""<<name<<"\""<<std::endl;*/
@@ -456,7 +456,7 @@ u32 ShaderSource::getShaderIdDirect(const std::string &name,
 	/*
 		Calling only allowed from main thread
 	*/
-	if(get_current_thread_id() != m_main_thread){
+	if (!thr_is_current_thread(m_main_thread)) {
 		errorstream<<"ShaderSource::getShaderIdDirect() "
 				"called not from main thread"<<std::endl;
 		return 0;
@@ -469,7 +469,7 @@ u32 ShaderSource::getShaderIdDirect(const std::string &name,
 		Add shader to caches (add dummy shaders too)
 	*/
 
-	JMutexAutoLock lock(m_shaderinfo_cache_mutex);
+	MutexAutoLock lock(m_shaderinfo_cache_mutex);
 
 	u32 id = m_shaderinfo_cache.size();
 	m_shaderinfo_cache.push_back(info);
@@ -483,7 +483,7 @@ u32 ShaderSource::getShaderIdDirect(const std::string &name,
 
 ShaderInfo ShaderSource::getShaderInfo(u32 id)
 {
-	JMutexAutoLock lock(m_shaderinfo_cache_mutex);
+	MutexAutoLock lock(m_shaderinfo_cache_mutex);
 
 	if(id >= m_shaderinfo_cache.size())
 		return ShaderInfo();
@@ -504,14 +504,14 @@ void ShaderSource::insertSourceShader(const std::string &name_of_shader,
 			"name_of_shader=\""<<name_of_shader<<"\", "
 			"filename=\""<<filename<<"\""<<std::endl;*/
 
-	sanity_check(get_current_thread_id() == m_main_thread);
+	sanity_check(thr_is_current_thread(m_main_thread));
 
 	m_sourcecache.insert(name_of_shader, filename, program, true);
 }
 
 void ShaderSource::rebuildShaders()
 {
-	JMutexAutoLock lock(m_shaderinfo_cache_mutex);
+	MutexAutoLock lock(m_shaderinfo_cache_mutex);
 
 	/*// Oh well... just clear everything, they'll load sometime.
 	m_shaderinfo_cache.clear();
@@ -680,47 +680,62 @@ ShaderInfo generate_shader(std::string name, u8 material_type, u8 drawtype,
 	shaders_header += itos(drawtype);
 	shaders_header += "\n";
 
-	if (g_settings->getBool("generate_normalmaps")){
-		shaders_header += "#define GENERATE_NORMALMAPS\n";
-		shaders_header += "#define NORMALMAPS_STRENGTH ";
-		shaders_header += ftos(g_settings->getFloat("normalmaps_strength"));
-		shaders_header += "\n";
-		float sample_step;
-		int smooth = (int)g_settings->getFloat("normalmaps_smooth");
-		switch (smooth){
-		case 0:
-			sample_step = 0.0078125; // 1.0 / 128.0
-			break;
-		case 1:
-			sample_step = 0.00390625; // 1.0 / 256.0
-			break;
-		case 2:
-			sample_step = 0.001953125; // 1.0 / 512.0
-			break;
-		default:
-			sample_step = 0.0078125;
-			break;
-		}
-		shaders_header += "#define SAMPLE_STEP ";
-		shaders_header += ftos(sample_step);
-		shaders_header += "\n";
+	if (g_settings->getBool("generate_normalmaps")) {
+		shaders_header += "#define GENERATE_NORMALMAPS 1\n";
+	} else {
+		shaders_header += "#define GENERATE_NORMALMAPS 0\n";
 	}
+	shaders_header += "#define NORMALMAPS_STRENGTH ";
+	shaders_header += ftos(g_settings->getFloat("normalmaps_strength"));
+	shaders_header += "\n";
+	float sample_step;
+	int smooth = (int)g_settings->getFloat("normalmaps_smooth");
+	switch (smooth){
+	case 0:
+		sample_step = 0.0078125; // 1.0 / 128.0
+		break;
+	case 1:
+		sample_step = 0.00390625; // 1.0 / 256.0
+		break;
+	case 2:
+		sample_step = 0.001953125; // 1.0 / 512.0
+		break;
+	default:
+		sample_step = 0.0078125;
+		break;
+	}
+	shaders_header += "#define SAMPLE_STEP ";
+	shaders_header += ftos(sample_step);
+	shaders_header += "\n";
 
 	if (g_settings->getBool("enable_bumpmapping"))
 		shaders_header += "#define ENABLE_BUMPMAPPING\n";
 
 	if (g_settings->getBool("enable_parallax_occlusion")){
+		int mode = g_settings->getFloat("parallax_occlusion_mode");
+		float scale = g_settings->getFloat("parallax_occlusion_scale");
+		float bias = g_settings->getFloat("parallax_occlusion_bias");
+		int iterations = g_settings->getFloat("parallax_occlusion_iterations");
 		shaders_header += "#define ENABLE_PARALLAX_OCCLUSION\n";
+		shaders_header += "#define PARALLAX_OCCLUSION_MODE ";
+		shaders_header += itos(mode);
+		shaders_header += "\n";
 		shaders_header += "#define PARALLAX_OCCLUSION_SCALE ";
-		shaders_header += ftos(g_settings->getFloat("parallax_occlusion_scale"));
+		shaders_header += ftos(scale);
 		shaders_header += "\n";
 		shaders_header += "#define PARALLAX_OCCLUSION_BIAS ";
-		shaders_header += ftos(g_settings->getFloat("parallax_occlusion_bias"));
+		shaders_header += ftos(bias);
+		shaders_header += "\n";
+		shaders_header += "#define PARALLAX_OCCLUSION_ITERATIONS ";
+		shaders_header += itos(iterations);
 		shaders_header += "\n";
 	}
 
+	shaders_header += "#define USE_NORMALMAPS ";
 	if (g_settings->getBool("enable_bumpmapping") || g_settings->getBool("enable_parallax_occlusion"))
-		shaders_header += "#define USE_NORMALMAPS\n";
+		shaders_header += "1\n";
+	else
+		shaders_header += "0\n";
 
 	if (g_settings->getBool("enable_waving_water")){
 		shaders_header += "#define ENABLE_WAVING_WATER 1\n";
@@ -755,7 +770,6 @@ ShaderInfo generate_shader(std::string name, u8 material_type, u8 drawtype,
 		vertex_program = shaders_header + vertex_program;
 	if(geometry_program != "")
 		geometry_program = shaders_header + geometry_program;
-
 	// Call addHighLevelShaderMaterial() or addShaderMaterial()
 	const c8* vertex_program_ptr = 0;
 	const c8* pixel_program_ptr = 0;

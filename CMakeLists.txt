@@ -54,7 +54,7 @@ endif()
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 
-# This is done here so that relative search paths are more reasnable
+# This is done here so that relative search paths are more reasonable
 find_package(Irrlicht)
 
 
@@ -171,14 +171,14 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/fonts" DESTINATION "${SHAREDIR}")
 install(FILES "README.txt" DESTINATION "${DOCDIR}")
 install(FILES "doc/lua_api.txt" DESTINATION "${DOCDIR}")
 install(FILES "doc/menu_lua_api.txt" DESTINATION "${DOCDIR}")
-install(FILES "doc/mapformat.txt" DESTINATION "${DOCDIR}")
+install(FILES "doc/world_format.txt" DESTINATION "${DOCDIR}")
 install(FILES "multicraft.conf.example" DESTINATION "${EXAMPLE_CONF_DIR}")
 
 if(UNIX AND NOT APPLE)
 	install(FILES "doc/minetest.6" "doc/minetestserver.6" DESTINATION "${MANDIR}/man6")
 	install(FILES "misc/minetest.desktop" DESTINATION "${XDG_APPS_DIR}")
 	install(FILES "misc/minetest.appdata.xml" DESTINATION "${APPDATADIR}")
-	install(FILES "misc/minetest-icon.svg" DESTINATION "${ICONDIR}/hicolor/scalable/apps")
+	install(FILES "misc/minetest.svg" DESTINATION "${ICONDIR}/hicolor/scalable/apps")
 endif()
 
 if(APPLE)

@@ -79,7 +79,7 @@ Camera::Camera(scene::ISceneManager* smgr, MapDrawControl& draw_control,
 
 	m_camera_mode(CAMERA_MODE_FIRST)
 {
-	//dstream<<__FUNCTION_NAME<<std::endl;
+	//dstream<<FUNCTION_NAME<<std::endl;
 
 	// note: making the camera node a child of the player node
 	// would lead to unexpected behaviour, so we don't do that.
@@ -95,7 +95,6 @@ Camera::Camera(scene::ISceneManager* smgr, MapDrawControl& draw_control,
 	m_wieldnode = new WieldMeshSceneNode(m_wieldmgr->getRootSceneNode(), m_wieldmgr, -1, false);
 	m_wieldnode->setItem(ItemStack(), m_gamedef);
 	m_wieldnode->drop(); // m_wieldmgr grabbed it
-	m_wieldlightnode = m_wieldmgr->addLightSceneNode(NULL, v3f(0.0, 50.0, 0.0));
 
 	/* TODO: Add a callback function so these can be updated when a setting
 	 *       changes.  At this point in time it doesn't matter (e.g. /set
@@ -162,55 +161,37 @@ void Camera::step(f32 dtime)
 	{
 		//f32 offset = dtime * m_view_bobbing_speed * 0.035;
 		f32 offset = dtime * m_view_bobbing_speed * 0.030;
-		if (m_view_bobbing_state == 2)
-		{
-#if 0
+		if (m_view_bobbing_state == 2) {
 			// Animation is getting turned off
-			if (m_view_bobbing_anim < 0.5)
+			if (m_view_bobbing_anim < 0.25) {
 				m_view_bobbing_anim -= offset;
-			else
-				m_view_bobbing_anim += offset;
-			if (m_view_bobbing_anim <= 0 || m_view_bobbing_anim >= 1)
-			{
-				m_view_bobbing_anim = 0;
-				m_view_bobbing_state = 0;
-			}
-#endif
-#if 1
-			// Animation is getting turned off
-			if(m_view_bobbing_anim < 0.25)
-			{
-				m_view_bobbing_anim -= offset;
-			} else if(m_view_bobbing_anim > 0.75) {
+			} else if (m_view_bobbing_anim > 0.75) {
 				m_view_bobbing_anim += offset;
 			}
-			if(m_view_bobbing_anim < 0.5)
-			{
+
+			if (m_view_bobbing_anim < 0.5) {
 				m_view_bobbing_anim += offset;
-				if(m_view_bobbing_anim > 0.5)
+				if (m_view_bobbing_anim > 0.5)
 					m_view_bobbing_anim = 0.5;
 			} else {
 				m_view_bobbing_anim -= offset;
-				if(m_view_bobbing_anim < 0.5)
+				if (m_view_bobbing_anim < 0.5)
 					m_view_bobbing_anim = 0.5;
 			}
-			if(m_view_bobbing_anim <= 0 || m_view_bobbing_anim >= 1 ||
-					fabs(m_view_bobbing_anim - 0.5) < 0.01)
-			{
+
+			if (m_view_bobbing_anim <= 0 || m_view_bobbing_anim >= 1 ||
+					fabs(m_view_bobbing_anim - 0.5) < 0.01) {
 				m_view_bobbing_anim = 0;
 				m_view_bobbing_state = 0;
 			}
-#endif
 		}
-		else
-		{
+		else {
 			float was = m_view_bobbing_anim;
 			m_view_bobbing_anim = my_modf(m_view_bobbing_anim + offset);
 			bool step = (was == 0 ||
 					(was < 0.5f && m_view_bobbing_anim >= 0.5f) ||
 					(was > 0.5f && m_view_bobbing_anim <= 0.5f));
-			if(step)
-			{
+			if(step) {
 				MtEvent *e = new SimpleTriggerEvent("ViewBobbingStep");
 				m_gamedef->event()->put(e);
 			}
@@ -469,11 +450,7 @@ void Camera::update(LocalPlayer* player, f32 frametime, f32 busytime,
 	m_wieldnode->setPosition(wield_position);
 	m_wieldnode->setRotation(wield_rotation);
 
-	// Shine light upon the wield mesh
-	video::SColor black(255,0,0,0);
-	m_wieldmgr->setAmbientLight(player->light_color.getInterpolated(black, 0.7));
-	m_wieldlightnode->getLightData().DiffuseColor = player->light_color.getInterpolated(black, 0.3);
-	m_wieldlightnode->setPosition(v3f(30+5*sin(2*player->getYaw()*M_PI/180), -50, 0));
+	m_wieldnode->setColor(player->light_color);
 
 	// Render distance feedback loop
 	updateViewingRange(frametime, busytime);
@@ -483,7 +460,7 @@ void Camera::update(LocalPlayer* player, f32 frametime, f32 busytime,
 	// start (or continue) the view bobbing animation.
 	v3f speed = player->getSpeed();
 	const bool movement_XZ = hypot(speed.X, speed.Z) > BS;
-	const bool movement_Y = abs(speed.Y) > BS;
+	const bool movement_Y = fabs(speed.Y) > BS;
 
 	const bool walking = movement_XZ && player->touching_ground;
 	const bool swimming = (movement_XZ || player->swimming_vertical) && player->in_liquid;
@@ -517,7 +494,7 @@ void Camera::updateViewingRange(f32 frametime_in, f32 busytime_in)
 		return;
 	m_frametime_counter = 0.2; // Same as ClientMap::updateDrawList interval
 
-	/*dstream<<__FUNCTION_NAME
+	/*dstream<<FUNCTION_NAME
 			<<": Collected "<<m_added_frames<<" frames, total of "
 			<<m_added_busytime<<"s."<<std::endl;
 
