@@ -493,7 +493,7 @@ private:
 			color(color)
 		{}
 	};
-	std::vector<Piece> m_log;
+	std::deque<Piece> m_log;
 public:
 	u32 m_log_max_size;
 
@@ -516,7 +516,7 @@ public:
 	{
 		std::map<std::string, Meta> m_meta;
 
-		for (std::vector<Piece>::const_iterator k = m_log.begin();
+		for (std::deque<Piece>::const_iterator k = m_log.begin();
 				k != m_log.end(); ++k) {
 			const Piece &piece = *k;
 
@@ -604,7 +604,7 @@ public:
 			float lastscaledvalue = 0.0;
 			bool lastscaledvalue_exists = false;
 
-			for (std::vector<Piece>::const_iterator j = m_log.begin();
+			for (std::deque<Piece>::const_iterator j = m_log.begin();
 					j != m_log.end(); ++j) {
 				const Piece &piece = *j;
 				float value = 0;
@@ -1694,10 +1694,6 @@ Game::Game() :
 
 #ifdef __ANDROID__
 	m_cache_hold_aux1 = false;	// This is initialised properly later
-#endif
-
-#ifdef __ANDROID__
-	m_cache_hold_aux1 = false;  // This is initialised properly later
 #endif
 
 }
@@ -3717,8 +3713,12 @@ void Game::handlePointingAtNode(GameRunData *runData,
 						SimpleSoundSpec();
 
 				if (playeritem_def.node_placement_prediction == "" ||
-						nodedef_manager->get(map.getNodeNoEx(nodepos)).rightclickable)
+						nodedef_manager->get(map.getNodeNoEx(nodepos)).rightclickable) {
 					client->interact(3, pointed); // Report to server
+				} else {
+					soundmaker->m_player_rightpunch_sound =
+						playeritem_def.sound_place_failed;
+				}
 			}
 		}
 	}

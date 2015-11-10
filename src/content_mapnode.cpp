@@ -166,3 +166,4 @@ void content_mapnode_get_name_id_mapping(NameIdMapping *nimap)
 	nimap->set(CONTENT_IGNORE, "ignore");
 	nimap->set(CONTENT_AIR, "air");
 }
+

@@ -16,6 +16,7 @@ public class MCNativeActivity extends NativeActivity {
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		m_MessagReturnCode = -1;
 		m_MessageReturnValue = "";
+
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -30,10 +31,13 @@ public class MCNativeActivity extends NativeActivity {
 		}
 	}
 
+
 	public void copyAssets() {
 	}
 
-	public void showDialog(String acceptButton, String hint, String current, int editType) {
+	public void showDialog(String acceptButton, String hint, String current,
+			int editType) {
+
 		Intent intent = new Intent(this, MultiCraftTextEntry.class);
 		Bundle params = new Bundle();
 		params.putString("acceptButton", acceptButton);
@@ -47,7 +51,6 @@ public class MCNativeActivity extends NativeActivity {
 	}
 
 	public static native void putMessageBoxResult(String text);
-
 
 	/* ugly code to workaround putMessageBoxResult not beeing found */
 	public int getDialogState() {
@@ -94,6 +97,7 @@ public class MCNativeActivity extends NativeActivity {
 		System.loadLibrary("crypto");
 		System.loadLibrary("gmp");
 		System.loadLibrary("iconv");
+
 		// We don't have to load libminetest.so ourselves,
 		// but if we do, we get nicer logcat errors when
 		// loading fails.

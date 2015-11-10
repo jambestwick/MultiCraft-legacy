@@ -28,6 +28,7 @@ extern "C" {
 }
 
 #include "irrlichttypes.h"
+#include "threads.h"
 #include "threading/mutex.h"
 #include "threading/mutex_auto_lock.h"
 #include "common/c_types.h"
@@ -52,12 +53,6 @@ extern "C" {
 
 #define setOriginFromTable(index) \
 	setOriginFromTableRaw(index, __FUNCTION__)
-
-#define SCRIPT_MOD_NAME_FIELD "current_mod_name"
-// MUST be an invalid mod name so that mods can't
-// use that name to bypass security!
-#define BUILTIN_MOD_NAME "*builtin*"
-
 
 class Server;
 class Environment;
@@ -117,7 +112,8 @@ protected:
 	std::string     m_last_run_mod;
 	bool            m_secure;
 #ifdef SCRIPTAPI_LOCK_DEBUG
-	bool            m_locked;
+	int             m_lock_recursion_count;
+	threadid_t      m_owning_thread;
 #endif
 
 private:

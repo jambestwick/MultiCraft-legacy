@@ -30,7 +30,6 @@ VERSION_PATCH := $(shell cat $(ROOT)/../../CMakeLists.txt | \
 # Android Version code
 # Increase for each build!
 ################################################################################
-
 ANDROID_VERSION_CODE = 1
 
 ################################################################################

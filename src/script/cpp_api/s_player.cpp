@@ -194,3 +194,7 @@ ScriptApiPlayer::~ScriptApiPlayer()
 {
 }
 
+ScriptApiPlayer::~ScriptApiPlayer()
+{
+}
+

@@ -62,9 +62,6 @@ Clouds::Clouds(
 	g_settings->registerChangedCallback("enable_3d_clouds",
 		&cloud_3d_setting_changed, this);
 
-	m_cloud_radius_i = g_settings->getU16("cloud_radius");
-
-	m_enable_3d = g_settings->getBool("enable_3d_clouds");
 
 	m_box = core::aabbox3d<f32>(-BS*1000000,m_cloud_y-BS,-BS*1000000,
 			BS*1000000,m_cloud_y+BS,BS*1000000);
