@@ -568,8 +568,6 @@ void Server::AsyncRunStep(bool initial_step)
 		m_env->getMap().timerUpdate(map_timer_and_unload_dtime,
 			g_settings->getFloat("server_unload_unused_data_timeout"),
 			U32_MAX);
-<<<<<<< HEAD
-=======
 	}
 
 	/*
@@ -586,7 +584,6 @@ void Server::AsyncRunStep(bool initial_step)
 		}
 		m_admin_chat->outgoing_queue.push_back(
 			new ChatEventTimeInfo(m_env->getGameTime(), m_env->getTimeOfDay()));
->>>>>>> f3ac2517ea585d31d176070be25adf8a68624c87
 	}
 
 	/*
@@ -2957,17 +2954,12 @@ void Server::notifyPlayer(const char *name, const std::wstring &msg)
 	if (!m_env)
 		return;
 
-<<<<<<< HEAD
-	Player *player = m_env->getPlayer(name);
-	if (!player)
-=======
 	if (m_admin_nick == name && !m_admin_nick.empty()) {
 		m_admin_chat->outgoing_queue.push_back(new ChatEventChat("", msg));
 	}
 
 	Player *player = m_env->getPlayer(name);
 	if (!player) {
->>>>>>> f3ac2517ea585d31d176070be25adf8a68624c87
 		return;
 	}
 
@@ -3549,8 +3541,4 @@ void dedicated_server_loop(Server &server, bool &kill)
 			}
 		}
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f3ac2517ea585d31d176070be25adf8a68624c87

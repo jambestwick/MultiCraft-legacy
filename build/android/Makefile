@@ -752,15 +752,14 @@ assets : $(ASSETS_TIMESTAMP)
 	ls -R | grep ":$$" | sed -e 's/:$$//' -e 's/\.//' -e 's/^\///' > "index.txt"; \
 	find Minetest >"filelist.txt";                                             \
 	cp ${ROOT}/${ASSETS_TIMESTAMP} ${ROOT}/${ASSETS_TIMESTAMP}.old;            \
-	cd ${ROOT}/assets/MultiCraft;		\
-	echo "Creating Files.zip";	\
-	zip -r -X -q ../Files.zip *;	           \
-	cd ${ROOT}/assets;							\
-	rm -r ${ROOT}/assets/MultiCraft_game; \
-	rm ${ROOT}/assets/index.txt; \
-	rm ${ROOT}/assets/filelist.txt; \
-	else                                                                       \
-		echo "nothing to be done for assets";                                  \
+	cd ${ROOT}/assets/Minetest;						   \
+	echo "Creating Files.zip";						   \
+	zip -r -X -q ../Files.zip *;						   \
+	cd ${ROOT}/assets;							   \
+	rm ${ROOT}/assets/index.txt;						   \
+	rm ${ROOT}/assets/filelist.txt;						   \
+	else									   \
+		echo "nothing to be done for assets";                              \
 	fi
 
 clean_assets :

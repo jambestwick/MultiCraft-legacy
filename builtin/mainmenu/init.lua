@@ -3,7 +3,7 @@
 --
 --This program is free software; you can redistribute it and/or modify
 --it under the terms of the GNU Lesser General Public License as published by
---the Free Software Foundation; either version 3.0 of the License, or
+--the Free Software Foundation; either version 2.1 of the License, or
 --(at your option) any later version.
 --
 --This program is distributed in the hope that it will be useful,
@@ -41,19 +41,15 @@ dofile(menupath .. DIR_DELIM .. "dlg_config_world.lua")
 dofile(menupath .. DIR_DELIM .. "tab_credits.lua")
 dofile(menupath .. DIR_DELIM .. "tab_mods.lua")
 dofile(menupath .. DIR_DELIM .. "tab_settings.lua")
-if PLATFORM ~= "Android" then
-	dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
-	dofile(menupath .. DIR_DELIM .. "dlg_delete_mod.lua")
-	dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
-	dofile(menupath .. DIR_DELIM .. "dlg_rename_modpack.lua")
-	dofile(menupath .. DIR_DELIM .. "tab_multiplayer.lua")
-	dofile(menupath .. DIR_DELIM .. "tab_server.lua")
-	dofile(menupath .. DIR_DELIM .. "tab_singleplayer.lua")
-	dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
-	dofile(menupath .. DIR_DELIM .. "textures.lua")
-else
-	dofile(menupath .. DIR_DELIM .. "tab_simple_main.lua")
-end
+dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
+dofile(menupath .. DIR_DELIM .. "dlg_delete_mod.lua")
+dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
+dofile(menupath .. DIR_DELIM .. "dlg_rename_modpack.lua")
+dofile(menupath .. DIR_DELIM .. "tab_multiplayer.lua")
+dofile(menupath .. DIR_DELIM .. "tab_server.lua")
+dofile(menupath .. DIR_DELIM .. "tab_singleplayer.lua")
+dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
+dofile(menupath .. DIR_DELIM .. "textures.lua")
 
 --------------------------------------------------------------------------------
 local function main_event_handler(tabview, event)
@@ -68,8 +64,6 @@ local function init_globals()
 	-- Init gamedata
 	gamedata.worldindex = 0
 
-
-	if PLATFORM ~= "Android" then
 		menudata.worldlist = filterlist.create(
 			core.get_worlds,
 			compare_worlds,
@@ -87,64 +81,29 @@ local function init_globals()
 		menudata.worldlist:set_sortmode("alphabetic")
 
 		if not core.setting_get("menu_last_game") then
-			local default_game = core.setting_get("default_game") or "minetest"
+			local default_game = core.setting_get("default_game") or "PixelCraft"
 			core.setting_set("menu_last_game", default_game )
 		end
 
 		mm_texture.init()
-	else
-		local world_list = core.get_worlds()
-
-		local found_singleplayerworld = false
-
-		for i,world in pairs(world_list) do
-			if world.name == "singleplayerworld" then
-				found_singleplayerworld = true
-				gamedata.worldindex = i
-				break
-			end
-		end
-
-		if not found_singleplayerworld then
-			core.create_world("singleplayerworld", 1)
-
-			local world_list = core.get_worlds()
-
-			for i,world in pairs(world_list) do
-				if world.name == "singleplayerworld" then
-					gamedata.worldindex = i
-					break
-				end
-			end
-		end
-	end
 
 	-- Create main tabview
 	local tv_main = tabview_create("maintab",{x=12,y=5.2},{x=0,y=0})
-	if PLATFORM ~= "Android" then
-		tv_main:set_autosave_tab(true)
-	end
-	if PLATFORM ~= "Android" then
-		tv_main:add(tab_singleplayer)
-		tv_main:add(tab_multiplayer)
-		tv_main:add(tab_server)
-	else
-		tv_main:add(tab_simple_main)
-	end
-	tv_main:add(tab_settings)
-	if PLATFORM ~= "Android" then
-		tv_main:add(tab_texturepacks)
-	end
-	tv_main:add(tab_mods)
+--	tv_main:set_autosave_tab(true)
+
+	tv_main:add(tab_singleplayer)
+	tv_main:add(tab_multiplayer)
+	tv_main:add(tab_server)
+--	tv_main:add(tab_settings)
+--	tv_main:add(tab_texturepacks)
+--  tv_main:add(tab_mods)
 	tv_main:add(tab_credits)
 
 	tv_main:set_global_event_handler(main_event_handler)
 
 	tv_main:set_fixed_size(false)
 
-	if not (PLATFORM == "Android") then
-		tv_main:set_tab(core.setting_get("maintab_LAST"))
-	end
+--	tv_main:set_tab(core.setting_get("maintab_LAST"))
 	ui.set_default("maintab")
 	tv_main:show()
 
@@ -158,6 +117,12 @@ local function init_globals()
 	ui.update()
 
 	core.sound_play("main_menu", true)
+
+    mm_texture.clear("header")
+    mm_texture.clear("footer")
+    minetest.set_clouds(false)
+    minetest.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    --minetest.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
 end
 
 init_globals()

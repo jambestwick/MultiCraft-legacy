@@ -3,7 +3,7 @@
 --
 --This program is free software; you can redistribute it and/or modify
 --it under the terms of the GNU Lesser General Public License as published by
---the Free Software Foundation; either version 3.0 of the License, or
+--the Free Software Foundation; either version 2.1 of the License, or
 --(at your option) any later version.
 --
 --This program is distributed in the hope that it will be useful,
@@ -18,8 +18,14 @@
 
 local function delete_world_formspec(dialogdata)
 
+	mm_texture.clear("header")
+    mm_texture.clear("footer")
+    minetest.set_clouds(false)
+    minetest.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    --minetest.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
+
 	local retval =
-		"size[12,6,true]" ..
+		"size[12,6]" ..
 		"label[2,2;" ..
 		fgettext("Delete World \"$1\"?", dialogdata.delete_name) .. "]"..
 		"button[3.5,4.2;2.6,0.5;world_delete_confirm;" .. fgettext("Yes").. "]" ..

@@ -3,7 +3,7 @@
 --
 --This program is free software; you can redistribute it and/or modify
 --it under the terms of the GNU Lesser General Public License as published by
---the Free Software Foundation; either version 3.0 of the License, or
+--the Free Software Foundation; either version 2.1 of the License, or
 --(at your option) any later version.
 --
 --This program is distributed in the hope that it will be useful,
@@ -17,6 +17,13 @@
 
 --------------------------------------------------------------------------------
 local function get_formspec(tabview, name, tabdata)
+
+	mm_texture.clear("header")
+    mm_texture.clear("footer")
+    minetest.set_clouds(false)
+    minetest.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    --minetest.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
+	
 	local render_details = core.is_yes(core.setting_getbool("public_serverlist"))
 	
 	local retval =

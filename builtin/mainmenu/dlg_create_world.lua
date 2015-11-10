@@ -3,7 +3,7 @@
 --
 --This program is free software; you can redistribute it and/or modify
 --it under the terms of the GNU Lesser General Public License as published by
---the Free Software Foundation; either version 3.0 of the License, or
+--the Free Software Foundation; either version 2.1 of the License, or
 --(at your option) any later version.
 --
 --This program is distributed in the hope that it will be useful,
@@ -16,6 +16,14 @@
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 local function create_world_formspec(dialogdata)
+
+	mm_texture.clear("header")
+    mm_texture.clear("footer")
+    minetest.set_clouds(false)
+    minetest.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    --minetest.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
+
+
 	local mapgens = core.get_mapgen_names()
 
 	local current_seed = core.setting_get("fixed_map_seed") or ""
@@ -46,22 +54,22 @@ local function create_world_formspec(dialogdata)
 
 	current_seed = core.formspec_escape(current_seed)
 	local retval =
-		"size[12,6,true]" ..
+		"size[12,3]" ..
 		"label[2,0;" .. fgettext("World name") .. "]"..
 		"field[4.5,0.4;6,0.5;te_world_name;;]" ..
 
 		"label[2,1;" .. fgettext("Seed") .. "]"..
 		"field[4.5,1.4;6,0.5;te_seed;;".. current_seed .. "]" ..
 
-		"label[2,2;" .. fgettext("Mapgen") .. "]"..
-		"dropdown[4.2,2;6.3;dd_mapgen;" .. mglist .. ";" .. selindex .. "]" ..
+		--"label[2,2;" .. fgettext("Mapgen") .. "]"..
+		--"dropdown[4.2,2;6.3;dd_mapgen;" .. mglist .. ";" .. selindex .. "]" ..
 
-		"label[2,3;" .. fgettext("Game") .. "]"..
-		"textlist[4.2,3;5.8,2.3;games;" .. gamemgr.gamelist() ..
-		";" .. gameidx .. ";true]" ..
+		--"label[2,3;" .. fgettext("Game") .. "]"..
+		"dropdown[6000.2,6;6.3;games;" .. gamemgr.gamelist() ..
+                ";1]" ..
 
-		"button[5,5.5;2.6,0.5;world_create_confirm;" .. fgettext("Create") .. "]" ..
-		"button[7.5,5.5;2.8,0.5;world_create_cancel;" .. fgettext("Cancel") .. "]"
+		"button[5,2.6;2.6,0.5;world_create_confirm;" .. fgettext("Create") .. "]" ..
+		"button[7.5,2.6;2.8,0.5;world_create_cancel;" .. fgettext("Cancel") .. "]"
 		
 	if #gamemgr.games == 0 then
 		retval = retval .. "box[2,4;8,1;#ff8800]label[2.25,4;" ..
@@ -79,11 +87,21 @@ end
 
 local function create_world_buttonhandler(this, fields)
 
+	if fields["world_create_cancel"] then
+                this:delete()
+                return true
+        end
+
 	if fields["world_create_confirm"] or
 		fields["key_enter"] then
 
 		local worldname = fields["te_world_name"]
-		local gameindex = core.get_textlist_index("games")
+		local gameindex
+                for i,item in ipairs(gamemgr.games) do
+                    if item.name == fields["games"] then
+                       gameindex = i
+                    end
+                end
 
 		if gameindex ~= nil and
 			worldname ~= "" then
@@ -93,7 +111,7 @@ local function create_world_buttonhandler(this, fields)
 			core.setting_set("fixed_map_seed", fields["te_seed"])
 
 			if not menudata.worldlist:uid_exists_raw(worldname) then
-				core.setting_set("mg_name",fields["dd_mapgen"])
+				core.setting_set("mg_name","v6")
 				message = core.create_world(worldname,gameindex)
 			else
 				message = fgettext("A world named \"$1\" already exists", worldname)
@@ -105,7 +123,7 @@ local function create_world_buttonhandler(this, fields)
 				core.setting_set("menu_last_game",gamemgr.games[gameindex].id)
 				if this.data.update_worldlist_filter then
 					menudata.worldlist:set_filtercriteria(gamemgr.games[gameindex].id)
-					mm_texture.update("singleplayer", gamemgr.games[gameindex].id)
+					--mm_texture.update("singleplayer", gamemgr.games[gameindex].id)
 				end
 				menudata.worldlist:refresh()
 				core.setting_set("mainmenu_last_selected_world",
@@ -122,11 +140,7 @@ local function create_world_buttonhandler(this, fields)
 	if fields["games"] then
 		return true
 	end
-	
-	if fields["world_create_cancel"] then
-		this:delete()
-		return true
-	end
+
 
 	return false
 end
