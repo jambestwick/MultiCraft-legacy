@@ -5,7 +5,7 @@ Copyright (C) 2010-2015 paramat, Matt Gregory
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation; either version 3.0 of the License, or
+the Free Software Foundation; either version 2.1 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
@@ -28,7 +28,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "content_sao.h"
 #include "nodedef.h"
 #include "voxelalgorithms.h"
-#include "profiler.h" // For TimeTaker
+//#include "profiler.h" // For TimeTaker
 #include "settings.h" // For g_settings
 #include "emerge.h"
 #include "dungeongen.h"
@@ -41,7 +41,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 
 FlagDesc flagdesc_mapgen_fractal[] = {
-	{"julia", MGFRACTAL_JULIA},
 	{NULL,    0}
 };
 
@@ -59,23 +58,20 @@ MapgenFractal::MapgenFractal(int mapgenid, MapgenParams *params, EmergeManager *
 	this->ystride = csize.X;
 	this->zstride = csize.X * (csize.Y + 2);
 
-	this->biomemap        = new u8[csize.X * csize.Z];
-	this->heightmap       = new s16[csize.X * csize.Z];
-	this->heatmap         = NULL;
-	this->humidmap        = NULL;
+	this->biomemap  = new u8[csize.X * csize.Z];
+	this->heightmap = new s16[csize.X * csize.Z];
+	this->heatmap   = NULL;
+	this->humidmap  = NULL;
 
 	MapgenFractalParams *sp = (MapgenFractalParams *)params->sparams;
 	this->spflags = sp->spflags;
 
-	this->m_iterations = sp->m_iterations;
-	this->m_scale = sp->m_scale;
-	this->m_offset = sp->m_offset;
-	this->m_slice_w = sp->m_slice_w;
+	this->formula    = sp->formula;
+	this->iterations = sp->iterations;
+	this->scale      = sp->scale;
+	this->offset     = sp->offset;
+	this->slice_w    = sp->slice_w;
 
-	this->j_iterations = sp->j_iterations;
-	this->j_scale = sp->j_scale;
-	this->j_offset = sp->j_offset;
-	this->j_slice_w = sp->j_slice_w;
 	this->julia_x = sp->julia_x;
 	this->julia_y = sp->julia_y;
 	this->julia_z = sp->julia_z;
@@ -145,15 +141,12 @@ MapgenFractalParams::MapgenFractalParams()
 {
 	spflags = 0;
 
-	m_iterations = 9;  // Mandelbrot set only
-	m_scale = v3f(1024.0, 256.0, 1024.0);
-	m_offset = v3f(1.75, 0.0, 0.0);
-	m_slice_w = 0.0;
+	formula = 1;
+	iterations = 11;
+	scale = v3f(4096.0, 1024.0, 4096.0);
+	offset = v3f(1.79, 0.0, 0.0);
+	slice_w = 0.0;
 
-	j_iterations = 9;  // Julia set only
-	j_scale = v3f(2048.0, 512.0, 2048.0);
-	j_offset = v3f(0.0, 1.0, 0.0);
-	j_slice_w = 0.0;
 	julia_x = 0.33;
 	julia_y = 0.33;
 	julia_z = 0.33;
@@ -170,15 +163,12 @@ void MapgenFractalParams::readParams(const Settings *settings)
 {
 	settings->getFlagStrNoEx("mgfractal_spflags", spflags, flagdesc_mapgen_fractal);
 
-	settings->getU16NoEx("mgfractal_m_iterations", m_iterations);
-	settings->getV3FNoEx("mgfractal_m_scale", m_scale);
-	settings->getV3FNoEx("mgfractal_m_offset", m_offset);
-	settings->getFloatNoEx("mgfractal_m_slice_w", m_slice_w);
+	settings->getU16NoEx("mgfractal_formula", formula);
+	settings->getU16NoEx("mgfractal_iterations", iterations);
+	settings->getV3FNoEx("mgfractal_scale", scale);
+	settings->getV3FNoEx("mgfractal_offset", offset);
+	settings->getFloatNoEx("mgfractal_slice_w", slice_w);
 
-	settings->getU16NoEx("mgfractal_j_iterations", j_iterations);
-	settings->getV3FNoEx("mgfractal_j_scale", j_scale);
-	settings->getV3FNoEx("mgfractal_j_offset", j_offset);
-	settings->getFloatNoEx("mgfractal_j_slice_w", j_slice_w);
 	settings->getFloatNoEx("mgfractal_julia_x", julia_x);
 	settings->getFloatNoEx("mgfractal_julia_y", julia_y);
 	settings->getFloatNoEx("mgfractal_julia_z", julia_z);
@@ -195,15 +185,12 @@ void MapgenFractalParams::writeParams(Settings *settings) const
 {
 	settings->setFlagStr("mgfractal_spflags", spflags, flagdesc_mapgen_fractal, U32_MAX);
 
-	settings->setU16("mgfractal_m_iterations", m_iterations);
-	settings->setV3F("mgfractal_m_scale", m_scale);
-	settings->setV3F("mgfractal_m_offset", m_offset);
-	settings->setFloat("mgfractal_m_slice_w", m_slice_w);
+	settings->setU16("mgfractal_formula", formula);
+	settings->setU16("mgfractal_iterations", iterations);
+	settings->setV3F("mgfractal_scale", scale);
+	settings->setV3F("mgfractal_offset", offset);
+	settings->setFloat("mgfractal_slice_w", slice_w);
 
-	settings->setU16("mgfractal_j_iterations", j_iterations);
-	settings->setV3F("mgfractal_j_scale", j_scale);
-	settings->setV3F("mgfractal_j_offset", j_offset);
-	settings->setFloat("mgfractal_j_slice_w", j_slice_w);
 	settings->setFloat("mgfractal_julia_x", julia_x);
 	settings->setFloat("mgfractal_julia_y", julia_y);
 	settings->setFloat("mgfractal_julia_z", julia_z);
@@ -248,7 +235,7 @@ void MapgenFractal::makeChunk(BlockMakeData *data)
 	this->generating = true;
 	this->vm   = data->vmanip;
 	this->ndef = data->nodedef;
-	TimeTaker t("makeChunk");
+	//TimeTaker t("makeChunk");
 
 	v3s16 blockpos_min = data->blockpos_min;
 	v3s16 blockpos_max = data->blockpos_max;
@@ -322,7 +309,8 @@ void MapgenFractal::makeChunk(BlockMakeData *data)
 	}
 
 	// Generate the registered decorations
-	m_emerge->decomgr->placeAllDecos(this, blockseed, node_min, node_max);
+	if (flags & MG_DECORATIONS)
+		m_emerge->decomgr->placeAllDecos(this, blockseed, node_min, node_max);
 
 	// Generate the registered ores
 	m_emerge->oremgr->placeAllOres(this, blockseed, node_min, node_max);
@@ -330,7 +318,7 @@ void MapgenFractal::makeChunk(BlockMakeData *data)
 	// Sprinkle some dust on top after everything else was generated
 	dustTopNodes();
 
-	printf("makeChunk: %dms\n", t.stop());
+	//printf("makeChunk: %dms\n", t.stop());
 
 	updateLiquid(&data->transforming_liquid, full_node_min, full_node_max);
 
@@ -380,34 +368,53 @@ bool MapgenFractal::getFractalAtPoint(s16 x, s16 y, s16 z)
 {
 	float cx, cy, cz, cw, ox, oy, oz, ow;
 
-	if (spflags & MGFRACTAL_JULIA) {  // Julia set
+	if (formula % 2 == 0) {  // Julia sets, formula = 2, 4, 6, 8
 		cx = julia_x;
 		cy = julia_y;
 		cz = julia_z;
 		cw = julia_w;
-		ox = (float)x / j_scale.X - j_offset.X;
-		oy = (float)y / j_scale.Y - j_offset.Y;
-		oz = (float)z / j_scale.Z - j_offset.Z;
-		ow = j_slice_w;
-	} else {  // Mandelbrot set
-		cx = (float)x / m_scale.X - m_offset.X;
-		cy = (float)y / m_scale.Y - m_offset.Y;
-		cz = (float)z / m_scale.Z - m_offset.Z;
-		cw = m_slice_w;
+		ox = (float)x / scale.X - offset.X;
+		oy = (float)y / scale.Y - offset.Y;
+		oz = (float)z / scale.Z - offset.Z;
+		ow = slice_w;
+	} else {  // Mandelbrot sets, formula = 1, 3, 5, 7
+		cx = (float)x / scale.X - offset.X;
+		cy = (float)y / scale.Y - offset.Y;
+		cz = (float)z / scale.Z - offset.Z;
+		cw = slice_w;
 		ox = 0.0f;
 		oy = 0.0f;
 		oz = 0.0f;
 		ow = 0.0f;
 	}
 
-	u16 iterations = spflags & MGFRACTAL_JULIA ? j_iterations : m_iterations;
-
 	for (u16 iter = 0; iter < iterations; iter++) {
-		// 4D "Roundy" Mandelbrot set
-		float nx = ox * ox - oy * oy - oz * oz - ow * ow + cx;
-		float ny = 2.0f * (ox * oy + oz * ow) + cy;
-		float nz = 2.0f * (ox * oz + oy * ow) + cz;
-		float nw = 2.0f * (ox * ow + oy * oz) + cw;
+		float nx = 0.0f;
+		float ny = 0.0f;
+		float nz = 0.0f;
+		float nw = 0.0f;
+
+		if (formula == 1 || formula == 2) {  // 4D "Roundy" Mandelbrot/Julia Set
+			nx = ox * ox - oy * oy - oz * oz - ow * ow + cx;
+			ny = 2.0f * (ox * oy + oz * ow) + cy;
+			nz = 2.0f * (ox * oz + oy * ow) + cz;
+			nw = 2.0f * (ox * ow + oy * oz) + cw;
+		} else if (formula == 3 || formula == 4) {  // 4D "Squarry" Mandelbrot/Julia Set
+			nx = ox * ox - oy * oy - oz * oz - ow * ow + cx;
+			ny = 2.0f * (ox * oy + oz * ow) + cy;
+			nz = 2.0f * (ox * oz + oy * ow) + cz;
+			nw = 2.0f * (ox * ow - oy * oz) + cw;
+		} else if (formula == 5 || formula == 6) {  // 4D "Mandy Cousin" Mandelbrot/Julia Set
+			nx = ox * ox - oy * oy - oz * oz + ow * ow + cx;
+			ny = 2.0f * (ox * oy + oz * ow) + cy;
+			nz = 2.0f * (ox * oz + oy * ow) + cz;
+			nw = 2.0f * (ox * ow + oy * oz) + cw;
+		} else if (formula == 7 || formula == 8) {  // 4D "Variation" Mandelbrot/Julia Set
+			nx = ox * ox - oy * oy - oz * oz - ow * ow + cx;
+			ny = 2.0f * (ox * oy + oz * ow) + cy;
+			nz = 2.0f * (ox * oz - oy * ow) + cz;
+			nw = 2.0f * (ox * ow + oy * oz) + cw;
+		}
 
 		if (nx * nx + ny * ny + nz * nz + nw * nw > 4.0f)
 			return false;

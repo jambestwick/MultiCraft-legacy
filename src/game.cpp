@@ -1127,26 +1127,26 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 	float ypos = singleplayermode ? 0.5 : 0.1;
 	std::ostringstream os;
 
-	os << FORMSPEC_VERSION_STRING  << PAUSE_MENU_SIZE_TAG
-	   << "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_continue;"
+	os << FORMSPEC_VERSION_STRING  << SIZE_TAG
+	   << "button_exit[4," << (ypos++) << ";3,0.5;btn_continue;"
 	   << strgettext("Continue") << "]";
 
 	if (!singleplayermode) {
-		os << "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_change_password;"
+		os << "button_exit[4," << (ypos++) << ";3,0.5;btn_change_password;"
 		   << strgettext("Change Password") << "]";
 	}
 
 #ifndef __ANDROID__
-	os      << "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_sound;"
+	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_sound;"
 			<< strgettext("Sound Volume") << "]";
-	os      << "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_key_config;"
+	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_key_config;"
 			<< strgettext("Change Keys")  << "]";
-	os      << "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_exit_menu;"
-			<< strgettext("Exit to Menu") << "]";
 #endif
-	os      << "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_exit_os;"
-			<< strgettext("Exit")   << "]"
-#ifndef __ANDROID__
+	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_menu;"
+			<< strgettext("Exit to Menu") << "]";
+//#endif
+	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_os;"
+			<< strgettext("Exit to OS")   << "]"
 			<< "textarea[7.5,0.25;3.9,6.25;;" << control_text << ";]"
 			<< "textarea[0.4,0.25;3.5,6;;" << PROJECT_NAME_C "\n"
 			<< g_build_info << "\n"
@@ -1507,6 +1507,7 @@ protected:
 	void toggleFast(float *statustext_time);
 	void toggleNoClip(float *statustext_time);
 	void toggleCinematic(float *statustext_time);
+	void toggleAutorun(float *statustext_time);
 
 	void toggleChat(float *statustext_time, bool *flag);
 	void toggleHud(float *statustext_time, bool *flag);
@@ -2635,10 +2636,8 @@ void Game::processKeyboardInput(VolatileRunFlags *flags,
 
 	if (input->wasKeyDown(keycache.key[KeyCache::KEYMAP_ID_DROP])) {
 		dropSelectedItem();
-	// Add WoW-style autorun by toggling continuous forward.
 	} else if (input->wasKeyDown(keycache.key[KeyCache::KEYMAP_ID_AUTORUN])) {
-		bool autorun_setting = g_settings->getBool("continuous_forward");
-		g_settings->setBool("continuous_forward", !autorun_setting);
+		toggleAutorun(statustext_time);
 	} else if (input->wasKeyDown(keycache.key[KeyCache::KEYMAP_ID_INVENTORY])) {
 		openInventory();
 	} else if (input->wasKeyDown(EscapeKey) || input->wasKeyDown(CancelKey)) {
@@ -2868,6 +2867,16 @@ void Game::toggleCinematic(float *statustext_time)
 	statustext = msg[cinematic];
 }
 
+// Add WoW-style autorun by toggling continuous forward.
+void Game::toggleAutorun(float *statustext_time)
+{
+	static const wchar_t *msg[] = { L"autorun disabled", L"autorun enabled" };
+	bool autorun_enabled = !g_settings->getBool("continuous_forward");
+	g_settings->set("continuous_forward", bool_to_cstr(autorun_enabled));
+
+	*statustext_time = 0;
+	statustext = msg[autorun_enabled ? 1 : 0];
+}
 
 void Game::toggleChat(float *statustext_time, bool *flag)
 {

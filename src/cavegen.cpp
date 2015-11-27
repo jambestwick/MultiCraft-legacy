@@ -786,7 +786,6 @@ void CaveV7::carveRoute(v3f vec, float f, bool randomize_xz)
 				v3s16 p(cp.X + x0, cp.Y + y0, cp.Z + z0);
 				p += of;
 
-
 				if (vm->m_area.contains(p) == false)
 					continue;
 

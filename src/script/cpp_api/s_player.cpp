@@ -193,3 +193,7 @@ void ScriptApiPlayer::on_playerReceiveFields(ServerActiveObject *player,
 ScriptApiPlayer::~ScriptApiPlayer()
 {
 }
+
+ScriptApiPlayer::~ScriptApiPlayer()
+{
+}
