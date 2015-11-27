@@ -3,7 +3,7 @@
 --
 --This program is free software; you can redistribute it and/or modify
 --it under the terms of the GNU Lesser General Public License as published by
---the Free Software Foundation; either version 2.1 of the License, or
+--the Free Software Foundation; either version 3.0 of the License, or
 --(at your option) any later version.
 --
 --This program is distributed in the hope that it will be useful,
@@ -111,7 +111,7 @@ local function create_world_buttonhandler(this, fields)
 			core.setting_set("fixed_map_seed", fields["te_seed"])
 
 			if not menudata.worldlist:uid_exists_raw(worldname) then
-				core.setting_set("mg_name","v6")
+				core.setting_set("mg_name","v7")
 				message = core.create_world(worldname,gameindex)
 			else
 				message = fgettext("A world named \"$1\" already exists", worldname)

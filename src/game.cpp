@@ -1110,7 +1110,7 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 //                 " --> place single item to slot\n"
 //                               ));
 #else
-	std::string control_text = wide_to_narrow(wstrgettext("Default Controls:\n"
+	std::string control_text = strgettext("Default Controls:\n"
 				   "- WASD: move\n"
 				   "- Space: jump/climb\n"
 				   "- Shift: sneak/go down\n"
@@ -1121,7 +1121,7 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 				   "- Mouse right: place/use\n"
 				   "- Mouse wheel: select item\n"
 				   "- T: chat\n"
-								 ));
+								 );
 #endif
 
 	float ypos = singleplayermode ? 0.5 : 0.1;
@@ -1141,11 +1141,11 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 			<< strgettext("Sound Volume") << "]";
 	os      << "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_key_config;"
 			<< strgettext("Change Keys")  << "]";
-#endif
 	os      << "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_exit_menu;"
 			<< strgettext("Exit to Menu") << "]";
+#endif
 	os      << "button_exit[" << PAUSE_MENU_BUTTON_LEFT << "," << (ypos++) << ";3,0.5;btn_exit_os;"
-			<< strgettext("Exit to OS")   << "]"
+			<< strgettext("Exit")   << "]"
 #ifndef __ANDROID__
 			<< "textarea[7.5,0.25;3.9,6.25;;" << control_text << ";]"
 			<< "textarea[0.4,0.25;3.5,6;;" << PROJECT_NAME_C "\n"

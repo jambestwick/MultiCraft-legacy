@@ -49,7 +49,7 @@ typedef enum {
 	noclip_id,
 	fast_id,
 #endif
-	minimap_id,
+//	minimap_id,
 	debug_id,
 	chat_id,
 //	camera_id,

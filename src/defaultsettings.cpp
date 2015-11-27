@@ -308,7 +308,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("liquid_update", "1.0");
 
 	//mapgen stuff
-	settings->setDefault("mg_name", "v6");
+	settings->setDefault("mg_name", "v7");
 	settings->setDefault("water_level", "1");
 	settings->setDefault("chunksize", "5");
 	settings->setDefault("mg_flags", "dungeons");
@@ -336,24 +336,24 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("fullscreen", "true");
 	settings->setDefault("enable_particles", "false");
 	settings->setDefault("video_driver", "ogles1");
+	//settings->setDefault("touchtarget", "false");
 	settings->setDefault("touchtarget", "true");
 	settings->setDefault("TMPFolder","/sdcard/" PROJECT_NAME_C "/tmp/");
 	settings->setDefault("touchscreen_threshold","20");
 	settings->setDefault("smooth_lighting", "false");
 	settings->setDefault("emergequeue_limit_diskonly", "8");
 	settings->setDefault("emergequeue_limit_generate", "8");
+	settings->setDefault("max_block_generate_distance", "3");
 	settings->setDefault("preload_item_visuals", "false");
-	settings->setDefault("viewing_range_nodes_max", "75");
-	settings->setDefault("viewing_range_nodes_min", "10");
+	settings->setDefault("viewing_range_nodes_max", "50");
+	settings->setDefault("viewing_range_nodes_min", "5");
 	settings->setDefault("enable_node_highlighting", "true");
 	settings->setDefault("inventory_image_hack", "true");
 	settings->setDefault("minimap_double_scan_height", "false");
 	settings->setDefault("mouse_sensitivity", "0.05");
 	settings->setDefault("enable_3d_clouds", "false");
-	settings->setDefault("max_block_send_distance", "5");
-	settings->setDefault("max_block_generate_distance", "3");
 	settings->setDefault("wanted_fps", "20");
-	settings->setDefault("fps_max", "35");
+	settings->setDefault("fps_max", "30");
 	settings->setDefault("pause_fps_max", "10");
 	//check for device with small screen
 	float x_inches = ((double) porting::getDisplaySize().X /
