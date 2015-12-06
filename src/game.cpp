@@ -1141,12 +1141,12 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 			<< strgettext("Sound Volume") << "]";
 	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_key_config;"
 			<< strgettext("Change Keys")  << "]";
-#endif
 	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_menu;"
 			<< strgettext("Exit to Menu") << "]";
-//#endif
+#endif
 	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_os;"
-			<< strgettext("Exit to OS")   << "]"
+			<< strgettext("Exit")   << "]"
+#ifndef __ANDROID__			
 			<< "textarea[7.5,0.25;3.9,6.25;;" << control_text << ";]"
 			<< "textarea[0.4,0.25;3.5,6;;" << PROJECT_NAME_C "\n"
 			<< g_build_info << "\n"
@@ -2636,6 +2636,7 @@ void Game::processKeyboardInput(VolatileRunFlags *flags,
 
 	if (input->wasKeyDown(keycache.key[KeyCache::KEYMAP_ID_DROP])) {
 		dropSelectedItem();
+	// Add WoW-style autorun by toggling continuous forward.
 	} else if (input->wasKeyDown(keycache.key[KeyCache::KEYMAP_ID_AUTORUN])) {
 		toggleAutorun(statustext_time);
 	} else if (input->wasKeyDown(keycache.key[KeyCache::KEYMAP_ID_INVENTORY])) {
