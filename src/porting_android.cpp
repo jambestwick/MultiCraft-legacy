@@ -216,6 +216,45 @@ static std::string getAndroidPath(jclass cls, jobject obj, jclass cls_File,
 	return javaStringToUTF8(js_path);
 }
 
+static std::string javaStringToUTF8(jstring js)
+{
+	std::string str;
+	// Get string as a UTF-8 c-string
+	const char *c_str = jnienv->GetStringUTFChars(js, NULL);
+	// Save it
+	str = c_str;
+	// And free the c-string
+	jnienv->ReleaseStringUTFChars(js, c_str);
+	return str;
+}
+
+// Calls static method if obj is NULL
+static std::string getAndroidPath(jclass cls, jobject obj, jclass cls_File,
+		jmethodID mt_getAbsPath, const char *getter)
+{
+	// Get getter method
+	jmethodID mt_getter;
+	if (obj)
+		mt_getter = jnienv->GetMethodID(cls, getter,
+				"()Ljava/io/File;");
+	else
+		mt_getter = jnienv->GetStaticMethodID(cls, getter,
+				"()Ljava/io/File;");
+
+	// Call getter
+	jobject ob_file;
+	if (obj)
+		ob_file = jnienv->CallObjectMethod(obj, mt_getter);
+	else
+		ob_file = jnienv->CallStaticObjectMethod(cls, mt_getter);
+
+	// Call getAbsolutePath
+	jstring js_path = (jstring) jnienv->CallObjectMethod(ob_file,
+			mt_getAbsPath);
+
+	return javaStringToUTF8(js_path);
+}
+
 void initializePathsAndroid()
 {
 	// Get Environment class
@@ -230,8 +269,8 @@ void initializePathsAndroid()
 			cls_File, mt_getAbsPath, "getCacheDir");
 	path_storage = getAndroidPath(cls_Env, NULL, cls_File, mt_getAbsPath,
 			"getExternalStorageDirectory");
-	path_user    = path_storage + DIR_DELIM + PROJECT_NAME_C;
-	path_share   = path_storage + DIR_DELIM + PROJECT_NAME_C;
+	path_user    = path_storage + DIR_DELIM + "Android/data/net.MultiCraft.Official/Files";
+	path_share   = path_storage + DIR_DELIM + "Android/data/net.MultiCraft.Official/Files";
 
 	migrateCachePath();
 }

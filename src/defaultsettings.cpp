@@ -308,8 +308,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("liquid_update", "1.0");
 
 	//mapgen stuff
-	settings->setDefault("mg_name", "v7");
-	//settings->setDefault("mg_name", "v6");
+	settings->setDefault("mg_name", "v6");
 	settings->setDefault("water_level", "1");
 	settings->setDefault("chunksize", "5");
 	settings->setDefault("mg_flags", "dungeons");
@@ -337,9 +336,8 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("fullscreen", "true");
 	settings->setDefault("enable_particles", "false");
 	settings->setDefault("video_driver", "ogles1");
-	//settings->setDefault("touchtarget", "false");
 	settings->setDefault("touchtarget", "true");
-	settings->setDefault("TMPFolder","/sdcard/" PROJECT_NAME_C "/tmp/");
+	settings->setDefault("TMPFolder","/sdcard/Android/data/net.MultiCraft.Official/tmp/");
 	settings->setDefault("touchscreen_threshold","20");
 	settings->setDefault("smooth_lighting", "false");
 	settings->setDefault("emergequeue_limit_diskonly", "8");
