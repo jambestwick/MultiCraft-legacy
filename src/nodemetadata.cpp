@@ -230,3 +230,4 @@ std::string NodeMetadata::resolveString(const std::string &str,
 	}
 	return str;
 }
+

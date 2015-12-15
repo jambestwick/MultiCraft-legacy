@@ -27,7 +27,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 class MapgenV5;
 class MapgenV6;
 class MapgenV7;
-class MapgenFractal;
 
 class CaveV5 {
 public:

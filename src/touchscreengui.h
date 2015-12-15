@@ -49,7 +49,7 @@ typedef enum {
 	noclip_id,
 	fast_id,
 #endif
-	minimap_id,
+//	minimap_id,
 	debug_id,
 	chat_id,
 //	camera_id,
@@ -94,7 +94,6 @@ private:
 	std::map<int,rect<s32> > m_hud_rects;
 	std::map<int,irr::EKEY_CODE> m_hud_ids;
 	bool                    m_visible; // is the gui visible
-
 	rect<s32>				controlpadarea;
 
 	/* value in degree */

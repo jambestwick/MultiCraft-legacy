@@ -337,7 +337,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_particles", "false");
 	settings->setDefault("video_driver", "ogles1");
 	settings->setDefault("touchtarget", "true");
-	settings->setDefault("TMPFolder","/sdcard/Android/data/net.MultiCraft.Official/tmp/");
+	settings->setDefault("TMPFolder","/sdcard/tmp/");
 	settings->setDefault("touchscreen_threshold","20");
 	settings->setDefault("smooth_lighting", "false");
 	settings->setDefault("emergequeue_limit_diskonly", "8");
@@ -348,7 +348,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("viewing_range_nodes_min", "5");
 	settings->setDefault("enable_node_highlighting", "true");
 	settings->setDefault("inventory_image_hack", "true");
-	settings->setDefault("minimap_double_scan_height", "false");
+	//settings->setDefault("minimap_double_scan_height", "false");
 	settings->setDefault("mouse_sensitivity", "0.05");
 	settings->setDefault("enable_3d_clouds", "false");
 	settings->setDefault("wanted_fps", "20");
@@ -363,6 +363,7 @@ void set_default_settings(Settings *settings)
 	else if (x_inches < 4.5) {
 		settings->setDefault("hud_scaling", "0.7");
 	}
+	settings->setDefault("gui_scaling", "1.1");
 	settings->setDefault("curl_verify_cert","false");
 #else
 	settings->setDefault("screen_dpi", "72");
