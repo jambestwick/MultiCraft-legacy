@@ -459,6 +459,73 @@ void TouchScreenGUI::ButtonEvent(touch_gui_button_id button,
 	delete translated;
 }
 
+void TouchScreenGUI::handleReleaseEvent(int evt_id)
+{
+	touch_gui_button_id button = getButtonID(evt_id);
+
+	/* handle button events */
+	if (button != after_last_element_id) {
+		ButtonEvent(button, evt_id, false);
+	}
+	/* handle hud button events */
+	else if (isReleaseHUDButton(evt_id)) {
+		/* nothing to do here */
+	}
+	/* handle the point used for moving view */
+	else if (evt_id == m_move_id) {
+		m_move_id = -1;
+
+		/* if this pointer issued a mouse event issue symmetric release here */
+		if (m_move_sent_as_mouse_event) {
+			SEvent* translated = new SEvent;
+			memset(translated,0,sizeof(SEvent));
+			translated->EventType               = EET_MOUSE_INPUT_EVENT;
+			translated->MouseInput.X            = m_move_downlocation.X;
+			translated->MouseInput.Y            = m_move_downlocation.Y;
+			translated->MouseInput.Shift        = false;
+			translated->MouseInput.Control      = false;
+			translated->MouseInput.ButtonStates = 0;
+			translated->MouseInput.Event        = EMIE_LMOUSE_LEFT_UP;
+			m_receiver->OnEvent(*translated);
+			delete translated;
+	} else if (m_control_pad_rect.isPointInside(v2s32(m_move_downlocation.X, m_move_downlocation.Y))) {
+ 			// ignore events inside the control pad not already handled
+	} else if (!m_move_has_really_moved) {
+			SEvent* translated = new SEvent;
+			memset(translated,0,sizeof(SEvent));
+			translated->EventType               = EET_MOUSE_INPUT_EVENT;
+			translated->MouseInput.X            = m_move_downlocation.X;
+			translated->MouseInput.Y            = m_move_downlocation.Y;
+			translated->MouseInput.Shift        = false;
+			translated->MouseInput.Control      = false;
+			translated->MouseInput.ButtonStates = 0;
+			translated->MouseInput.Event        = EMIE_LMOUSE_LEFT_UP;
+			m_receiver->OnEvent(*translated);
+			delete translated;
+			doubleTapDetection();
+			m_shootline = m_device
+						->getSceneManager()
+						->getSceneCollisionManager()
+						->getRayFromScreenCoordinates(
+								v2s32(m_move_downlocation.X,m_move_downlocation.Y));
+		}
+	}
+	else {
+		infostream
+			<< "TouchScreenGUI::translateEvent released unknown button: "
+			<< evt_id << std::endl;
+	}
+
+	for (std::vector<id_status>::iterator iter = m_known_ids.begin();
+			iter != m_known_ids.end(); ++iter) {
+		if (iter->id == evt_id) {
+			m_known_ids.erase(iter);
+			break;
+		}
+	}
+}
+
+
 void TouchScreenGUI::translateEvent(const SEvent &event)
 {
 	if (!m_visible) {
@@ -513,70 +580,7 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 	}
 	else if (event.TouchInput.Event == ETIE_LEFT_UP) {
 		verbosestream << "Up event for pointerid: " << event.TouchInput.ID << std::endl;
-
-		touch_gui_button_id button = getButtonID(event.TouchInput.ID);
-
-		/* handle button events */
-		if (button != after_last_element_id) {
-			ButtonEvent(button,event.TouchInput.ID,false);
-		}
-		/* handle hud button events */
-		else if (isReleaseHUDButton(event.TouchInput.ID)) {
-			/* nothing to do here */
-		}
-		/* handle the point used for moving view */
-		else if (event.TouchInput.ID == m_move_id) {
-			m_move_id = -1;
-
-			/* if this pointer issued a mouse event issue symmetric release here */
-			if (m_move_sent_as_mouse_event) {
-				SEvent* translated = new SEvent;
-				memset(translated,0,sizeof(SEvent));
-				translated->EventType               = EET_MOUSE_INPUT_EVENT;
-				translated->MouseInput.X            = m_move_downlocation.X;
-				translated->MouseInput.Y            = m_move_downlocation.Y;
-				translated->MouseInput.Shift        = false;
-				translated->MouseInput.Control      = false;
-				translated->MouseInput.ButtonStates = 0;
-				translated->MouseInput.Event        = EMIE_LMOUSE_LEFT_UP;
-				m_receiver->OnEvent(*translated);
-				delete translated;
-			} else if (m_control_pad_rect.isPointInside(v2s32(m_move_downlocation.X, m_move_downlocation.Y))) {
-				// ignore events inside the control pad not already handled
-			} else if (!m_move_has_really_moved) {
-				SEvent* translated = new SEvent;
-				memset(translated,0,sizeof(SEvent));
-				translated->EventType               = EET_MOUSE_INPUT_EVENT;
-				translated->MouseInput.X            = m_move_downlocation.X;
-				translated->MouseInput.Y            = m_move_downlocation.Y;
-				translated->MouseInput.Shift        = false;
-				translated->MouseInput.Control      = false;
-				translated->MouseInput.ButtonStates = 0;
-				translated->MouseInput.Event        = EMIE_LMOUSE_LEFT_UP;
-				m_receiver->OnEvent(*translated);
-				delete translated;
-doubleTapDetection();
-				m_shootline = m_device
-						->getSceneManager()
-						->getSceneCollisionManager()
-						->getRayFromScreenCoordinates(
-								v2s32(event.TouchInput.X,event.TouchInput.Y));
-			}
-
-		}
-		else {
-			infostream
-				<< "TouchScreenGUI::translateEvent released unknown button: "
-				<< event.TouchInput.ID << std::endl;
-		}
-
-		for (std::vector<id_status>::iterator iter = m_known_ids.begin();
-				iter != m_known_ids.end(); ++iter) {
-			if (iter->id == event.TouchInput.ID) {
-				m_known_ids.erase(iter);
-				break;
-			}
-		}
+		handleReleaseEvent(event.TouchInput.ID);
 	}
 	else {
 		assert(event.TouchInput.Event == ETIE_MOVED);
@@ -826,14 +830,28 @@ void TouchScreenGUI::Toggle(bool visible)
 			btn->guibutton->setVisible(visible);
 		}
 	}
+
+	/* clear all active buttons */
+	if (!visible) {
+		while (m_known_ids.size() > 0) {
+			handleReleaseEvent(m_known_ids.begin()->id);
+		}
+	}
+
 }
 
 void TouchScreenGUI::Hide()
 {
+	if (!m_visible)
+		return;
+
 	Toggle(false);
 }
 
 void TouchScreenGUI::Show()
 {
+	if (m_visible)
+		return;
+
 	Toggle(true);
 }

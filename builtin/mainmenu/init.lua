@@ -121,7 +121,7 @@ local function init_globals()
     mm_texture.clear("header")
     mm_texture.clear("footer")
     minetest.set_clouds(false)
-    minetest.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    minetest.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.jpg')
     --minetest.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
 end
 

@@ -172,8 +172,7 @@ GUIEngine::GUIEngine(	irr::IrrlichtDevice* dev,
 		m_sound_manager = &dummySoundManager;
 
 	//create topleft header
-	//std::wstring t = utf8_to_wide(std::string(PROJECT_NAME_C " ") +
-			//g_version_hash);
+	std::wstring t = utf8_to_wide(std::string(""));
 
 	core::rect<s32> rect(0, 0, g_fontengine->getTextWidth(t), g_fontengine->getTextHeight());
 	rect += v2s32(4, 0);

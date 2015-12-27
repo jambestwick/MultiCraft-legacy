@@ -20,7 +20,7 @@ local function create_world_formspec(dialogdata)
 	mm_texture.clear("header")
     mm_texture.clear("footer")
     minetest.set_clouds(false)
-    minetest.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.png')
+    minetest.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.jpg')
     --minetest.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
 
 
@@ -111,7 +111,7 @@ local function create_world_buttonhandler(this, fields)
 			core.setting_set("fixed_map_seed", fields["te_seed"])
 
 			if not menudata.worldlist:uid_exists_raw(worldname) then
-				core.setting_set("mg_name","v7")
+				core.setting_set("mg_name","v6")
 				message = core.create_world(worldname,gameindex)
 			else
 				message = fgettext("A world named \"$1\" already exists", worldname)

@@ -245,7 +245,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("default_privs", "interact, shout");
 	settings->setDefault("player_transfer_distance", "0");
 	settings->setDefault("enable_pvp", "true");
-	settings->setDefault("vertical_spawn_range", "16");
+	settings->setDefault("vertical_spawn_range", "128");
 	settings->setDefault("disallow_empty_password", "false");
 	settings->setDefault("disable_anticheat", "false");
 	settings->setDefault("enable_rollback_recording", "false");
@@ -340,8 +340,8 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("TMPFolder","/sdcard/tmp/");
 	settings->setDefault("touchscreen_threshold","20");
 	settings->setDefault("smooth_lighting", "false");
-	settings->setDefault("emergequeue_limit_diskonly", "8");
-	settings->setDefault("emergequeue_limit_generate", "8");
+	settings->setDefault("emergequeue_limit_diskonly", "4");
+	settings->setDefault("emergequeue_limit_generate", "4");
 	settings->setDefault("max_block_generate_distance", "3");
 	settings->setDefault("preload_item_visuals", "false");
 	settings->setDefault("viewing_range_nodes_max", "50");

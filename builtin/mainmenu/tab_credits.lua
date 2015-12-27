@@ -21,7 +21,7 @@ tab_credits = {
 	name = "credits",
 	caption = fgettext("Credits"),
 	cbf_formspec = function (tabview, name, tabdata)
-			local logofile = defaulttexturedir .. "logo.png"
+			local logofile = defaulttexturedir .. "smoke_puff.png"
 			return "label[0.5,3.2;Minetest " .. core.get_version() .. "]" ..
 				"label[0.5,3.5;http://minetest.net]" ..
 				"image[0.5,1;" .. core.formspec_escape(logofile) .. "]" ..

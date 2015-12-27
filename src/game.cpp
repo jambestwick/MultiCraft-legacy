@@ -2580,7 +2580,17 @@ void Game::processUserInput(VolatileRunFlags *flags,
 			|| noMenuActive() == false
 			|| guienv->hasFocus(gui_chat_console)) {
 		input->clear();
+#ifdef HAVE_TOUCHSCREENGUI
+		g_touchscreengui->Hide();
+#endif
 	}
+#ifdef HAVE_TOUCHSCREENGUI
+	else if (g_touchscreengui) {
+		/* on touchscreengui step may generate own input events which ain't
+		 * what we want in case we just did clear them */
+		g_touchscreengui->step(dtime);
+	}
+#endif
 
 	if (!guienv->hasFocus(gui_chat_console) && gui_chat_console->isOpen()) {
 		gui_chat_console->closeConsoleAtOnce();
@@ -2589,13 +2599,6 @@ void Game::processUserInput(VolatileRunFlags *flags,
 	// Input handler step() (used by the random input generator)
 	input->step(dtime);
 
-#ifdef HAVE_TOUCHSCREENGUI
-
-	if (g_touchscreengui) {
-		g_touchscreengui->step(dtime);
-	}
-
-#endif
 #ifdef __ANDROID__
 
 	if (current_formspec != 0)
@@ -4219,13 +4222,11 @@ void Game::updateGui(float *statustext_time, const RunStats &stats,
 		guitext->setVisible(true);
 	} else if (flags.show_hud || flags.show_chat) {
 #ifdef ANDROID
-		u16 fps = 1.0 / stats.dtime_jitter.avg;
 		std::ostringstream os(std::ios_base::binary);
 		os << std::setprecision(1) << std::fixed
-		   << "FPS = " << fps
-		   << " (" << (player_position.X / BS)
-		   << ", " << (player_position.Y / BS)
-		   << ", " << (player_position.Z / BS)
+		   << "(X: " << (player_position.X / BS)
+		   << ", Y: " << (player_position.Y / BS)
+		   << ", Z: " << (player_position.Z / BS)
 		   << ")";
 		guitext->setText(utf8_to_wide(os.str()).c_str());
 		guitext->setVisible(true);
@@ -4234,6 +4235,7 @@ void Game::updateGui(float *statustext_time, const RunStats &stats,
 		os << PROJECT_NAME_C " " << g_version_hash;
 		guitext->setText(utf8_to_wide(os.str()).c_str());
 		guitext->setVisible(true);
+#endif
 	} else {
 		guitext->setVisible(false);
 	}

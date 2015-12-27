@@ -13,12 +13,6 @@ PATHCFGFILE = path.cfg
 
 ROOT = $(shell pwd)
 
-# this string will be written to Files.zip in ver.txt
-VER_TEXT = 1.1
-GAMES_TO_COPY = MultiCraft_game
-MODS_TO_COPY =
-
-
 VERSION_MAJOR := $(shell cat $(ROOT)/../../CMakeLists.txt | \
 	grep ^set\(VERSION_MAJOR\ | sed 's/)/ /' | cut -f2 -d' ')
 VERSION_MINOR := $(shell cat $(ROOT)/../../CMakeLists.txt | \
@@ -87,7 +81,7 @@ IRRLICHT_TIMESTAMP = $(IRRLICHT_DIR)timestamp
 IRRLICHT_TIMESTAMP_INT = $(ROOT)/deps/irrlicht_timestamp
 IRRLICHT_URL_SVN = http://svn.code.sf.net/p/irrlicht/code/branches/ogl-es@$(IRRLICHT_REVISION)
 
-OPENSSL_VERSION = 1.0.1p
+OPENSSL_VERSION = 1.0.2e
 OPENSSL_BASEDIR = openssl-$(OPENSSL_VERSION)
 OPENSSL_DIR = $(ROOT)/deps/$(OPENSSL_BASEDIR)/
 OPENSSL_LIB = $(OPENSSL_DIR)/libssl.so.1.0.0
@@ -144,7 +138,7 @@ endif
 	$(ASSETS_TIMESTAMP) $(LEVELDB_TIMESTAMP) \
 	$(OPENAL_TIMESTAMP) $(OGG_TIMESTAMP) \
 	$(IRRLICHT_TIMESTAMP) $(CURL_TIMESTAMP) \
-	$(OPENSSL_TIMESTAMP) curl_binary \
+	$(OPENSSL_TIMESTAMP) \
 	$(ROOT)/jni/src/android_version.h \
 	$(ROOT)/jni/src/android_version_githash.h
 
@@ -205,7 +199,7 @@ openal_download :
 openal : $(OPENAL_LIB)
 
 $(OPENAL_LIB): $(OPENAL_TIMESTAMP)
-	@REFRESH=0;                                                                \
+	+ @REFRESH=0;                                                                \
 	if [ ! -e ${OPENAL_TIMESTAMP_INT} ] ; then                                 \
 		REFRESH=1;                                                             \
 	fi;                                                                        \
@@ -250,7 +244,7 @@ ogg_download :
 ogg : $(OGG_LIB)
 
 $(OGG_LIB): $(OGG_TIMESTAMP)
-	@REFRESH=0;                                                                \
+	+ @REFRESH=0;                                                                \
 	if [ ! -e ${OGG_TIMESTAMP_INT} ] ; then                                    \
 		echo "${OGG_TIMESTAMP_INT} doesn't exist";                             \
 		REFRESH=1;                                                             \
@@ -295,7 +289,7 @@ openssl_download :
 
 openssl : $(OPENSSL_LIB)
 
-$(OPENSSL_LIB): $(OPENSSL_TIMESTAMP)
+$(OPENSSL_LIB): $(OPENSSL_TIMESTAMP) $(GMP_LIB)
 	@REFRESH=0;                                                                \
 	if [ ! -e ${OPENSSL_TIMESTAMP_INT} ] ; then                                \
 		echo "${OPENSSL_TIMESTAMP_INT} doesn't exist";                         \
@@ -313,7 +307,8 @@ $(OPENSSL_LIB): $(OPENSSL_TIMESTAMP)
 	--toolchain=${TARGET_TOOLCHAIN}${COMPILER_VERSION}                         \
 	--install-dir=$${TOOLCHAIN};                                               \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
-	CC=${CROSS_PREFIX}gcc ./Configure android-${TARGET_ARCH} no-idea no-seed -no-sha0 -DL_ENDIAN;\
+	CC=${CROSS_PREFIX}gcc ./Configure enable-gmp -DL_ENDIAN -I${GMP_DIR} -L${GMP_DIR}/usr/lib android-${TARGET_ARCH};\
+	CC=${CROSS_PREFIX}gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST} make depend;     \
 	CC=${CROSS_PREFIX}gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST} make build_libs; \
 	touch ${OPENSSL_TIMESTAMP};                                                \
 	touch ${OPENSSL_TIMESTAMP_INT};                                            \
@@ -395,7 +390,7 @@ freetype_download :
 freetype : $(FREETYPE_LIB)
 
 $(FREETYPE_LIB) : $(FREETYPE_TIMESTAMP)
-	@REFRESH=0;                                                                \
+	+ @REFRESH=0;                                                                \
 	if [ ! -e ${FREETYPE_TIMESTAMP_INT} ] ; then                               \
 		REFRESH=1;                                                             \
 	fi;                                                                        \
@@ -423,6 +418,7 @@ $(FREETYPE_LIB) : $(FREETYPE_TIMESTAMP)
 
 clean_freetype :
 	$(RM) -rf ${FREETYPE_DIR}
+
 
 $(ICONV_TIMESTAMP) : iconv_download
 	@LAST_MODIF=$$(find ${ICONV_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
@@ -511,7 +507,7 @@ $(IRRLICHT_TIMESTAMP) : irrlicht_download
 irrlicht : $(IRRLICHT_LIB)
 
 $(IRRLICHT_LIB): $(IRRLICHT_TIMESTAMP) $(FREETYPE_LIB)
-	@REFRESH=0;                                                                \
+	+ @REFRESH=0;                                                                \
 	if [ ! -e ${IRRLICHT_TIMESTAMP_INT} ] ; then                               \
 		REFRESH=1;                                                             \
 	fi;                                                                        \
@@ -585,7 +581,7 @@ $(CURL_LIB): $(CURL_TIMESTAMP) $(OPENSSL_LIB)
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
 	export CPPFLAGS="$${CPPFLAGS} -I${OPENSSL_DIR}/include                     \
-	-L${OPENSSL_DIR} ${TARGET_CFLAGS_ADDON}";                                  \
+	${TARGET_CFLAGS_ADDON}";                                                   \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
 	export LDFLAGS="$${LDFLAGS} -L${OPENSSL_DIR} ${TARGET_LDFLAGS_ADDON}";     \
 	./configure --host=${TARGET_HOST} --disable-shared --enable-static --with-ssl;  \
@@ -600,18 +596,6 @@ $(CURL_LIB): $(CURL_TIMESTAMP) $(OPENSSL_LIB)
 clean_curl :
 	$(RM) -rf deps/curl-${CURL_VERSION}                                        \
 	$(RM) -f deps/curl
-
-
-curl_binary:
-	@if [ ! -d "deps/curl-${CURL_VERSION_BINARY}" ] ; then                     \
-		echo "curl binary missing, downloading...";                           \
-		mkdir -p ${ROOT}/deps;                                                 \
-		cd deps;                                                               \
-		wget http://curl.haxx.se/gknw.net/7.34.0/dist-android/curl-7.34.0-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz || exit 1;\
-		tar -xzf curl-7.34.0-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz || exit 1;\
-		mv curl-7.34.0-rtmp-ssh2-ssl-zlib-static-bin-android curl-${CURL_VERSION_BINARY};\
-		rm curl-7.34.0-rtmp-ssh2-ssl-zlib-static-bin-android.tar.gz;           \
-	fi
 
 $(GMP_TIMESTAMP) : gmp_download
 	@LAST_MODIF=$$(find ${GMP_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
@@ -723,25 +707,14 @@ assets : $(ASSETS_TIMESTAMP)
 	if [ $$REFRESH -ne 0 ] ; then                                              \
 	echo "assets changed, refreshing...";                                      \
 	$(MAKE) clean_assets;                                                      \
-	mkdir -p ${ROOT}/assets/Minetest;                                          \
-	cp ${ROOT}/../../multicraft.conf.example ${ROOT}/assets/Minetest;            \
-	cp ${ROOT}/../../README.md ${ROOT}/assets/Minetest;                       \
-	cp -r ${ROOT}/../../builtin ${ROOT}/assets/Minetest;                       \
-	cp -r ${ROOT}/../../client ${ROOT}/assets/Minetest;                        \
-	cp -r ${ROOT}/../../doc ${ROOT}/assets/Minetest;                           \
-	cp -r ${ROOT}/../../fonts ${ROOT}/assets/Minetest;                         \
-	mkdir ${ROOT}/assets/Minetest/games;                                       \
-	for game in ${GAMES_TO_COPY}; do                                           \
-	    cp -r ${ROOT}/../../games/$$game ${ROOT}/assets/Minetest/games/;       \
-	done;                                                                      \
-	mkdir ${ROOT}/assets/Minetest/mods;                                        \
-	for mod in ${MODS_TO_COPY}; do                                             \
-	    cp -r ${ROOT}/../../mods/$$mod ${ROOT}/assets/Minetest/mods/;          \
-	done;                                                                      \
-	cp -r ${ROOT}/../../po ${ROOT}/assets/Minetest;                            \
-	cp -r ${ROOT}/../../textures ${ROOT}/assets/Minetest;                      \
-	mkdir -p ${ROOT}/assets/Minetest/media;                                    \
-	cp -r ${IRRLICHT_DIR}/media/Shaders ${ROOT}/assets/Minetest/media;         \
+	mkdir -p ${ROOT}/assets/MultiCraft;                                          \
+	cp ${ROOT}/../../multicraft.conf.example ${ROOT}/assets/MultiCraft;            \
+	cp ${ROOT}/../../README.md ${ROOT}/assets/MultiCraft;                       \
+	cp -r ${ROOT}/../../builtin ${ROOT}/assets/MultiCraft;                       \
+	mkdir ${ROOT}/assets/MultiCraft/fonts;                                       \
+	cp -r ${ROOT}/../../fonts/*.ttf ${ROOT}/assets/MultiCraft/fonts/;            \
+	cp -r ${ROOT}/../../games ${ROOT}/assets/MultiCraft;                        \
+	cp -r ${ROOT}/../../textures ${ROOT}/assets/MultiCraft;                       \
 	cd ${ROOT}/assets ||  exit 1;                                              \
 	find . -name "timestamp" -exec rm {} \; ;                                  \
 	find . -name "*.blend" -exec rm {} \; ;                                    \
@@ -750,14 +723,10 @@ assets : $(ASSETS_TIMESTAMP)
 	find . -type d -path "*.svn" -exec rm -rf {} \; ;                          \
 	find . -type f -path "*.gitignore" -exec rm -rf {} \; ;                    \
 	ls -R | grep ":$$" | sed -e 's/:$$//' -e 's/\.//' -e 's/^\///' > "index.txt"; \
-	find Minetest >"filelist.txt";                                             \
+	find MultiCraft >"filelist.txt";                                             \
 	cp ${ROOT}/${ASSETS_TIMESTAMP} ${ROOT}/${ASSETS_TIMESTAMP}.old;            \
-	cd ${ROOT}/assets/Minetest;						   \
 	echo "Creating Files.zip";						   \
-	zip -r -X -q ../Files.zip *;						   \
-	cd ${ROOT}/assets;							   \
-	rm ${ROOT}/assets/index.txt;						   \
-	rm ${ROOT}/assets/filelist.txt;						   \
+	zip -r Files.zip MultiCraft;						   \
 	else									   \
 		echo "nothing to be done for assets";                              \
 	fi
@@ -779,10 +748,9 @@ apk: $(PATHCFGFILE) assets $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(GMP_LIB) $
 	TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                    \
 	TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                                  \
 	TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" &&                             \
-	ant $$BUILD_TYPE &&                                                        \
-	echo "++ Success!" &&                                                      \
-	echo "APK: bin/MultiCraft-$$BUILD_TYPE.apk" &&                               \
-	echo "You can install it with \`adb install -r bin/MultiCraft-$$BUILD_TYPE.apk\`"
+#	ant $$BUILD_TYPE &&                                                        \
+	echo "	Success! =)"                                                \
+#	echo "APK: bin/MultiCraft-$$BUILD_TYPE.apk" &&                               \
 
 prep_srcdir :
 	@if [ ! -e ${ROOT}/jni/src ]; then                                         \
