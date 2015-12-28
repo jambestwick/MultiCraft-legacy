@@ -7,18 +7,10 @@
 #    ../multicraft.conf
 #    ../../multicraft.conf
 #    Any other path can be chosen by passing the path as a parameter
-#    to the program, eg. "multicraft.exe --config ../multicraft.conf.example".
+#    to the program, eg. "minetest.exe --config ../multicraft.conf.example".
 
-#    By default, all the settings are commented and not functional.
-#    Uncomment settings by removing the preceding #.
-
-#    NOTE: This file might not be up-to-date, refer to the
-#    defaultsettings.cpp file for an up-to-date list:
-#    src/defaultsettings.cpp
-
-#    A vim command to convert most of defaultsettings.cpp to conf file format:
-#    :'<,'>s/\tsettings->setDefault("\([^"]*\)", "\([^"]*\)");.*/#\1 = \2/g
-#    Note: Some of the settings are implemented in Lua.
+#    Further documentation:
+#    http://wiki.minetest.net/
 
 #
 # Client
@@ -262,7 +254,7 @@
 
 #    URL to the server list displayed in the Multiplayer Tab.
 #    type: string
-# serverlist_url = servers.multicraft.net
+# serverlist_url = servers.minetest.net
 
 #    File in client/serverlist/ that contains your favorite servers displayed in the Multiplayer Tab.
 #    type: string
@@ -703,7 +695,7 @@
 
 #    Name of the server, to be displayed when players join and in the serverlist.
 #    type: string
-# server_name = multicraft server
+# server_name = Minetest server
 
 #    Description of server, to be displayed when players join and in the serverlist.
 #    type: string
@@ -711,20 +703,20 @@
 
 #    Domain name of server, to be displayed in the serverlist.
 #    type: string
-# server_address = game.multicraft.net
+# server_address = game.minetest.net
 
 #    Homepage of server, to be displayed in the serverlist.
 #    type: string
-# server_url = http://multicraft.net
+# server_url = http://minetest.net
 
 #    Automaticaly report to the serverlist.
 #    type: bool
 # server_announce = false
 
 #    Announce to this serverlist.
-#    If you want to announce your ipv6 address, use  serverlist_url = v6.servers.multicraft.net.
+#    If you want to announce your ipv6 address, use  serverlist_url = v6.servers.minetest.net.
 #    type: string
-# serverlist_url = servers.multicraft.net
+# serverlist_url = servers.minetest.net
 
 ## Network
 
@@ -782,7 +774,7 @@
 #    Default game when creating a new world.
 #    This will be overridden when creating a world from the main menu.
 #    type: string
-# default_game = multicraft
+# default_game = minetest
 
 #    Message of the day displayed to players connecting.
 #    type: string
@@ -1008,7 +1000,7 @@
 
 #    Name of map generator to be used when creating a new world.
 #    Creating a world in the main menu will override this.
-#    type: enum values: v5, v6, v7, singlenode
+#    type: enum values: v5, v6, v7, flat, fractal, singlenode
 # mg_name = v6
 
 #    Water surface level of the world.
@@ -1029,11 +1021,12 @@
 # map_generation_limit = 31000
 
 #    Global map generation attributes.
+#    In Mapgen v6 the 'decorations' flag controls all decorations except trees
+#    and junglegrass, in all other mapgens this flag controls all decorations.
 #    Flags that are not specified in the flag string are not modified from the default.
 #    Flags starting with "no" are used to explicitly disable them.
-#    'trees' and 'flat' flags only have effect in mgv6.
-#    type: flags possible values: trees, caves, dungeons, light, flat, notrees, nocaves, nodungeons, nolight, noflat
-# mg_flags = trees,caves,dungeons,light
+#    type: flags possible values: caves, dungeons, light, decorations, nocaves, nodungeons, nolight, nodecorations
+# mg_flags = caves,dungeons,light,decorations
 
 ### Advanced
 
@@ -1097,14 +1090,14 @@
 
 #### Mapgen v6
 
-#    Map generation attributes specific to Mapgen V6.
+#    Map generation attributes specific to Mapgen v6.
 #    When snowbiomes are enabled jungles are enabled and the jungles flag is ignored.
 #    Flags that are not specified in the flag string are not modified from the default.
 #    Flags starting with "no" are used to explicitly disable them.
-#    type: flags possible values: jungles, biomeblend, mudflow, snowbiomes, nojungles, nobiomeblend, nomudflow, nosnowbiomes
-# mgv6_spflags = jungles,biomeblend,mudflow,snowbiomes
+#    type: flags possible values: jungles, biomeblend, mudflow, snowbiomes, flat, trees, nojungles, nobiomeblend, nomudflow, nosnowbiomes, noflat, notrees
+# mgv6_spflags = jungles,biomeblend,mudflow,snowbiomes,trees
 
-#    Controls size of deserts and beaches in Mapgen V6.
+#    Controls size of deserts and beaches in Mapgen v6.
 #    When snowbiomes are enabled 'mgv6_freq_desert' is ignored.
 #    type: float
 # mgv6_freq_desert = 0.45
@@ -1147,7 +1140,7 @@
 
 #### Mapgen v7
 
-#    Map generation attributes specific to Mapgen V7.
+#    Map generation attributes specific to Mapgen v7.
 #    'ridges' are the rivers.
 #    Flags that are not specified in the flag string are not modified from the default.
 #    Flags starting with "no" are used to explicitly disable them.
@@ -1241,20 +1234,30 @@
 
 #### Mapgen fractal
 
-#    Choice of 8 4-dimensional fractals.
-#    1 = "Roundy" mandelbrot set.
-#    2 = "Roundy" julia set.
-#    3 = "Squarry" mandelbrot set.
-#    4 = "Squarry" julia set.
-#    5 = "Mandy Cousin" mandelbrot set.
-#    6 = "Mandy Cousin" julia set.
-#    7 = "Variation" mandelbrot set.
-#    8 = "Variation" julia set.
-#    type: int min: 1 max: 8
-# mgfractal_formula = 1
+#    Choice of 18 fractals from 9 formulas.
+#    1 = 4D "Roundy" mandelbrot set.
+#    2 = 4D "Roundy" julia set.
+#    3 = 4D "Squarry" mandelbrot set.
+#    4 = 4D "Squarry" julia set.
+#    5 = 4D "Mandy Cousin" mandelbrot set.
+#    6 = 4D "Mandy Cousin" julia set.
+#    7 = 4D "Variation" mandelbrot set.
+#    8 = 4D "Variation" julia set.
+#    9 = 3D "Mandelbrot/Mandelbar" mandelbrot set.
+#    10 = 3D "Mandelbrot/Mandelbar" julia set.
+#    11 = 3D "Christmas Tree" mandelbrot set.
+#    12 = 3D "Christmas Tree" julia set.
+#    13 = 3D "Mandelbulb" mandelbrot set.
+#    14 = 3D "Mandelbulb" julia set.
+#    15 = 3D "Cosine Mandelbulb" mandelbrot set.
+#    16 = 3D "Cosine Mandelbulb" julia set.
+#    17 = 4D "Mandelbulb" mandelbrot set.
+#    18 = 4D "Mandelbulb" julia set.
+#    type: int min: 1 max: 18
+# mgfractal_fractal = 1
 
 #    Iterations of the recursive function.
-#    Controls scale of finest detail.
+#    Controls the amount of fine detail.
 #    type: int
 # mgfractal_iterations = 11
 
@@ -1262,36 +1265,37 @@
 #    type: v3f
 # mgfractal_scale = (4096.0, 1024.0, 4096.0)
 
-#    (X,Y,Z) offset of fractal from world centre.
+#    (X,Y,Z) offset of fractal from world centre in units of 'scale'.
 #    Used to move a suitable spawn area of low land close to (0, 0).
-#    The default is suitable for mandelbrot sets, it needs to be edited for julia sets,
-#    do this by greatly reducing 'scale' and setting 'offset' initially to (0, 0, 0).
+#    The default is suitable for mandelbrot sets, it needs to be edited for julia sets.
 #    Range roughly -2 to 2. Multiply by 'scale' for offset in nodes.
 #    type: v3f
 # mgfractal_offset = (1.79, 0.0, 0.0)
 
-#    W co-ordinate of the generated 3D slice of the 4D shape.
-#    Alters the generated 3D shape.
+#    W co-ordinate of the generated 3D slice of a 4D fractal.
+#    Determines which 3D slice of the 4D shape is generated.
+#    Has no effect on 3D fractals.
 #    Range roughly -2 to 2.
 #    type: float
 # mgfractal_slice_w = 0.0
 
-#    Julia set only: X value determining the 4D shape.
+#    Julia set only: X component of hypercomplex constant determining julia shape.
 #    Range roughly -2 to 2.
 #    type: float
 # mgfractal_julia_x = 0.33
 
-#    Julia set only: Y value determining the 4D shape.
+#    Julia set only: Y component of hypercomplex constant determining julia shape.
 #    Range roughly -2 to 2.
 #    type: float
 # mgfractal_julia_y = 0.33
 
-#    Julia set only: Z value determining the 4D shape.
+#    Julia set only: Z component of hypercomplex constant determining julia shape.
 #    Range roughly -2 to 2.
 #    type: float
 # mgfractal_julia_z = 0.33
 
-#    Julia set only: W value determining the 4D shape.
+#    Julia set only: W component of hypercomplex constant determining julia shape.
+#    Has no effect on 3D fractals.
 #    Range roughly -2 to 2.
 #    type: float
 # mgfractal_julia_w = 0.33
@@ -1383,16 +1387,10 @@
 # main_menu_mod_mgr = 1
 
 #    type: string
-# modstore_download_url = https://forum.multicraft.net/media/
+# modstore_download_url = https://forum.minetest.net/media/
 
 #    type: string
-# modstore_listmods_url = https://forum.multicraft.net/mmdb/mods/
+# modstore_listmods_url = https://forum.minetest.net/mmdb/mods/
 
 #    type: string
-# modstore_details_url = https://forum.multicraft.net/mmdb/mod/*/
-
-#    Prevent mods from doing insecure things like running shell commands.
-#secure.enable_security = false
-#    Comma-separated list of trusted mods that are allowed to access insecure
-#    functions even when mod security is on (via request_insecure_environment()).
-#secure.trusted_mods =
+# modstore_details_url = https://forum.minetest.net/mmdb/mod/*/
