@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" translatable="false">MultiCraft</string>
+    <string name="ver" translatable="false">1.0.1</string>
+
+    <!-- preparation for start -->
+
+    <string name="rm_old">Preparing to update&#8230;</string>
+    <string name="copy">Copying&#8230;</string>
+    <string name="notification_title">Downloading MultiCraft</string>
+    <string name="notification_description">Less than 1 minute&#8230;</string>
+    <string name="ok">Close</string>
+
+    <!-- free space dialog -->
+    <string name="not_enough_space">Not enough space for unzipping.\nPlease free some space on the SD card</string>
+    <string name="space_ok">OK</string>
+
+    <!-- permission block -->
+    <string name="explain">SnowCraft needs permission for writing its files to SD card.</string>
+    <string name="permission_available_storage">Storage Permission has been granted. Game can now be launched.</string>
+    <string name="permissions_not_granted">Permissions were not granted</string>
+	<string name="name">Cyrillic is not supported</string>
+</resources>
