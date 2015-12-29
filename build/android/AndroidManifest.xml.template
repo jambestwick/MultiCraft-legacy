@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="mobi.MultiCraft"
+    package="net.MultiCraft.Official"
 	android:installLocation="auto"
     android:versionCode="###ANDROID_VERSION###"
     android:versionName="###BASE_VERSION###" >
 
     <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="22" />
+        android:targetSdkVersion="23" />
 
     <supports-screens android:smallScreens="false" />
 
@@ -35,7 +35,8 @@
             android:name="mobi.MultiCraft.MCNativeActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|navigation|screenSize"
             android:launchMode="singleTask"
-            android:screenOrientation="sensorLandscape" >
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/Theme.Transparent" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
