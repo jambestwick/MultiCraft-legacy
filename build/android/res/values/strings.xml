@@ -17,7 +17,7 @@
     <string name="space_ok">OK</string>
 
     <!-- permission block -->
-    <string name="explain">SnowCraft needs permission for writing its files to SD card.</string>
+    <string name="explain">MultiCraft needs permission for writing its files to SD card.</string>
     <string name="permission_available_storage">Storage Permission has been granted. Game can now be launched.</string>
     <string name="permissions_not_granted">Permissions were not granted</string>
 	<string name="name">Cyrillic is not supported</string>
