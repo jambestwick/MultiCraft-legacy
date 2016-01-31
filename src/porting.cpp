@@ -163,6 +163,8 @@ bool detectMSVCBuildDir(const std::string &path)
 {
 	const char *ends[] = {
 		"bin\\Release",
+		"bin\\MinSizeRel",
+		"bin\\RelWithDebInfo",
 		"bin\\Debug",
 		"bin\\Build",
 		NULL
@@ -527,6 +529,7 @@ void initializePaths()
 		path_share = execpath;
 		path_user  = execpath;
 	}
+	path_cache = path_user + DIR_DELIM + "cache";
 #else
 	infostream << "Using system-wide paths (NOT RUN_IN_PLACE)" << std::endl;
 
@@ -536,16 +539,16 @@ void initializePaths()
 	// Initialize path_cache
 	// First try $XDG_CACHE_HOME/PROJECT_NAME
 	const char *cache_dir = getenv("XDG_CACHE_HOME");
+	const char *home_dir = getenv("HOME");
 	if (cache_dir) {
 		path_cache = std::string(cache_dir) + DIR_DELIM + PROJECT_NAME;
-	} else {
+	} else if (home_dir) {
 		// Then try $HOME/.cache/PROJECT_NAME
-		const char *home_dir = getenv("HOME");
-		if (home_dir) {
-			path_cache = std::string(home_dir) + DIR_DELIM + ".cache"
-				+ DIR_DELIM + PROJECT_NAME;
-		}
-		// If neither works, leave it at $PATH_USER/cache
+		path_cache = std::string(home_dir) + DIR_DELIM + ".cache"
+			+ DIR_DELIM + PROJECT_NAME;
+	} else {
+		// If neither works, use $PATH_USER/cache
+		path_cache = path_user + DIR_DELIM + "cache";
 	}
 	// Migrate cache folder to new location if possible
 	migrateCachePath();
