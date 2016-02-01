@@ -217,8 +217,8 @@ void initializePathsAndroid()
 			cls_File, mt_getAbsPath, "getCacheDir");
 	path_storage = getAndroidPath(cls_Env, NULL, cls_File, mt_getAbsPath,
 			"getExternalStorageDirectory");
-	path_user    = path_storage + DIR_DELIM + "Android/data/ua.MultiCraft/Files";
-	path_share   = path_storage + DIR_DELIM + "Android/data/ua.MultiCraft/Files";
+	path_user    = path_storage + DIR_DELIM + "Android/data/mobi.MultiCraft/Files";
+	path_share   = path_storage + DIR_DELIM + "Android/data/mobi.MultiCraft/Files";
 
 	migrateCachePath();
 }

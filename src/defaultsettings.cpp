@@ -150,6 +150,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("selectionbox_width","2");
 	settings->setDefault("hud_hotbar_max_width","1.0");
 	settings->setDefault("enable_local_map_saving", "false");
+	settings->setDefault("screen_dpi", "72");
 
 	settings->setDefault("mip_map", "false");
 	settings->setDefault("anisotropic_filter", "false");
@@ -181,7 +182,7 @@ void set_default_settings(Settings *settings)
 
 	settings->setDefault("enable_minimap", "true");
 	settings->setDefault("minimap_shape_round", "true");
-	settings->setDefault("minimap_double_scan_height", "true");
+	settings->setDefault("minimap_double_scan_height", "false");
 
 	settings->setDefault("curl_timeout", "5000");
 	settings->setDefault("curl_parallel_limit", "8");
@@ -334,7 +335,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("screenH", "0");
 	settings->setDefault("enable_shaders", "false");
 	settings->setDefault("fullscreen", "true");
-	settings->setDefault("enable_particles", "false");
 	settings->setDefault("video_driver", "ogles1");
 	settings->setDefault("touchtarget", "true");
 	settings->setDefault("TMPFolder","/sdcard/tmp/");
@@ -348,25 +348,18 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("viewing_range_nodes_min", "5");
 	settings->setDefault("enable_node_highlighting", "true");
 	settings->setDefault("inventory_image_hack", "true");
-	//settings->setDefault("minimap_double_scan_height", "false");
 	settings->setDefault("mouse_sensitivity", "0.05");
 	settings->setDefault("enable_3d_clouds", "false");
-	settings->setDefault("wanted_fps", "20");
-	settings->setDefault("fps_max", "30");
+	settings->setDefault("wanted_fps", "25");
+	settings->setDefault("fps_max", "35");
 	settings->setDefault("pause_fps_max", "10");
-	//check for device with small screen
 	float x_inches = ((double) porting::getDisplaySize().X /
 			(160 * porting::getDisplayDensity()));
-	if (x_inches  < 3.5) {
-		settings->setDefault("hud_scaling", "0.6");
-	}
-	else if (x_inches < 4.5) {
+	if (x_inches < 4.5) {
 		settings->setDefault("hud_scaling", "0.7");
 	}
 	settings->setDefault("gui_scaling", "1.1");
 	settings->setDefault("curl_verify_cert","false");
-#else
-	settings->setDefault("screen_dpi", "72");
 #endif
 }
 

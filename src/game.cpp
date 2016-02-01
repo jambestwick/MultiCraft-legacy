@@ -1123,7 +1123,7 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 	float ypos = singleplayermode ? 0.5 : 0.1;
 	std::ostringstream os;
 
-	os << FORMSPEC_VERSION_STRING  << SIZE_TAG
+	os << FORMSPEC_VERSION_STRING  << PAUSE_MENU_SIZE_TAG
 	   << "button_exit[4," << (ypos++) << ";3,0.5;btn_continue;"
 	   << strgettext("Continue") << "]";
 

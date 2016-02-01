@@ -71,7 +71,7 @@ public:
 
 	void translateEvent(const SEvent &event);
 
-	void init(ISimpleTextureSource* tsrc,float density);
+	void init(ISimpleTextureSource* tsrc);
 
 	double getYaw() { return m_camera_yaw; }
 	double getPitch() { return m_camera_pitch; }
@@ -148,13 +148,16 @@ private:
 	std::vector<id_status> m_known_ids;
 
 	/* handle a button event */
-	void ButtonEvent(touch_gui_button_id bID, int eventID, bool action);
+	void handleButtonEvent(touch_gui_button_id bID, int eventID, bool action);
 
 	/* handle pressed hud buttons */
 	bool isHUDButton(const SEvent &event);
 
 	/* handle released hud buttons */
 	bool isReleaseHUDButton(int eventID);
+	
+	/* get size of regular gui control button */
+	int getGuiButtonSize();
 
 	/* handle double taps */
 	bool doubleTapDetection();
