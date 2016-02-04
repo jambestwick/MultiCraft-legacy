@@ -33,7 +33,7 @@ TARGET_HOST = arm-linux
 TARGET_ABI = armeabi-v7a
 TARGET_LIBDIR = armeabi-v7a
 TARGET_TOOLCHAIN = arm-linux-androideabi-
-TARGET_CFLAGS_ADDON = -mfloat-abi=softfp -mfpu=vfpv3
+TARGET_CFLAGS_ADDON = -mfloat-abi=softfp -mfpu=vfpv3 -O3
 TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 TARGET_ARCH = armv7
 CROSS_PREFIX = arm-linux-androideabi-
@@ -50,7 +50,7 @@ HAVE_LEVELDB = 0
 #CROSS_PREFIX = i686-linux-android-
 #TARGET_ARCH = x86
 #COMPILER_VERSION = 4.8
-#HAVE_LEVELDB = 1
+#HAVE_LEVELDB = 0
 
 ################################################################################
 ASSETS_TIMESTAMP = deps/assets_timestamp
@@ -193,7 +193,7 @@ openal_download :
 		echo "openal sources missing, downloading...";                         \
 		mkdir -p ${ROOT}/deps;                                                 \
 		cd ${ROOT}/deps ;                                                      \
-		git clone ${OPENAL_URL_GIT} && git checkout 2d0320a || exit 1;                                 \
+		git clone ${OPENAL_URL_GIT} || exit 1;                                 \
 	fi
 
 openal : $(OPENAL_LIB)
@@ -337,7 +337,7 @@ leveldb_download :
 	fi
 
 leveldb : $(LEVELDB_LIB)
-
+ifeq ($(HAVE_LEVELDB),1)
 $(LEVELDB_LIB): $(LEVELDB_TIMESTAMP)
 	@REFRESH=0;                                                                \
 	if [ ! -e ${LEVELDB_TIMESTAMP_INT} ] ; then                                \
@@ -369,6 +369,7 @@ $(LEVELDB_LIB): $(LEVELDB_TIMESTAMP)
 	else                                                                       \
 		echo "nothing to be done for leveldb";                                 \
 	fi
+endif
 
 clean_leveldb :
 	$(RM) -rf deps/leveldb
