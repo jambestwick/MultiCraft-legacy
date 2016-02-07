@@ -41,7 +41,6 @@ gtags.files
 !/mods/minetest/
 /mods/minetest/*
 !/mods/minetest/mods_here.txt
-/worlds
 /world/
 
 ## Configuration/log files
