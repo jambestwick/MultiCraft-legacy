@@ -81,7 +81,7 @@ local function init_globals()
 		menudata.worldlist:set_sortmode("alphabetic")
 
 		if not core.setting_get("menu_last_game") then
-			local default_game = core.setting_get("default_game") or "PixelCraft"
+			local default_game = core.setting_get("default_game") or "default"
 			core.setting_set("menu_last_game", default_game )
 		end
 
