@@ -40,40 +40,56 @@ using namespace irr::core;
 extern Settings *g_settings;
 
 const char *touchgui_button_imagenames[] = {
-	"up_arrow.png",
-	"down_arrow.png",
-	"left_arrow.png",
-	"right_arrow.png",
-	"inventory_btn.png",
-	"drop_btn.png",
-	"jump_btn.png",
+	"up_one.png",
+	"up_two.png",
+	"up_three.png",
+	"down_one.png",
+	"down_two.png",
+	"down_three.png",
+	"left.png",
+	"right.png",
+	"inventory.png",
+	"drop.png",
+	"jump.png",
 	"down.png",
-#ifdef ENABLE_ANDROID_NOCLIP
+/*#ifdef ENABLE_ANDROID_NOCLIP
 	"fly_btn.png",
 	"noclip_btn.png",
-#endif
+#endif*/
 //	"minimap_btn.png",
-	"debug_btn.png",
-	"chat_btn.png",
-//	"camera_btn.png",
-	"rangeview_btn.png"
+//	"debug_btn.png",
+	"chat.png",
+//	"camera.png",
+	"rangeview.png"
 };
 
 static irr::EKEY_CODE id2keycode(touch_gui_button_id id)
 {
 	std::string key = "";
 	switch (id) {
-		case forward_id:
+		case forward_one:
 			key = "forward";
+			break;
+		case forward_two:
+			key = "forward";
+			break;
+		case forward_three:
+			key = "forward";
+			break;
+		case backward_one:
+			key = "backward";
+			break;
+		case backward_two:
+			key = "backward";
+			break;
+		case backward_three:
+			key = "backward";
 			break;
 		case left_id:
 			key = "left";
 			break;
 		case right_id:
 			key = "right";
-			break;
-		case backward_id:
-			key = "backward";
 			break;
 		case inventory_id:
 			key = "inventory";
@@ -87,7 +103,7 @@ static irr::EKEY_CODE id2keycode(touch_gui_button_id id)
 		case crunch_id:
 			key = "sneak";
 			break;
-#ifdef ENABLE_ANDROID_NOCLIP
+/*#ifdef ENABLE_ANDROID_NOCLIP
 		case fly_id:
 			key = "freemove";
 			break;
@@ -98,16 +114,16 @@ static irr::EKEY_CODE id2keycode(touch_gui_button_id id)
 			key = "fast";
 			break;
 #endif
-/*		case minimap_id:
+		case minimap_id:
 			key = "minimap";
-			break;*/
+			break;
 		case debug_id:
 			key = "toggle_debug";
-			break;
+			break;*/
 		case chat_id:
 			key = "chat";
 			break;
-/*		case camera_id:
+		/*case camera_id:
 			key = "camera_mode";
 			break;*/
 		case range_id:
@@ -177,7 +193,7 @@ void TouchScreenGUI::initButton(touch_gui_button_id id, rect<s32> button_rect,
 }
 
 static int getMaxControlPadSize(float density) {
-	return 235 * density * g_settings->getFloat("hud_scaling");
+	return 220 * density * g_settings->getFloat("hud_scaling");
 }
 
 int TouchScreenGUI::getGuiButtonSize()
@@ -192,18 +208,16 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 {
 	assert(tsrc != 0);
 
-	const u32 spacing = 7;
-
 	u32 control_pad_size =
-			MYMIN((2 * m_screensize.Y + spacing * 2) / 3,
+			MYMIN((2 * m_screensize.Y) / 3,
 	              getMaxControlPadSize(porting::getDisplayDensity()));
 
 	u32 button_size      = getGuiButtonSize();
 	m_visible            = true;
 	m_texturesource      = tsrc;
 	m_control_pad_rect   = rect<s32>(
-	        spacing,                    m_screensize.Y - control_pad_size - spacing,
-			spacing + control_pad_size, m_screensize.Y - spacing);
+	        0,                    m_screensize.Y - control_pad_size,
+			0 + control_pad_size, m_screensize.Y);
 
 	/*
 	draw control pad
@@ -211,45 +225,54 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 	1 4 7
 	2 5 8
 	*/
+	
 	int number = 0;
 
 	for (int y = 0; y < 3; ++y)
 		for (int x = 0; x < 3; ++x, ++number) {
 			v2s32 tl;
-			tl.X = y * (button_size + spacing) + spacing;
-			tl.Y = m_screensize.Y - (button_size + spacing) * (3 - x);
+			tl.X = y * button_size;
+			tl.Y = m_screensize.Y - button_size * (3 - x);
 
 			rect<s32> button_rect(tl.X, tl.Y, tl.X + button_size, tl.Y + button_size);
 			touch_gui_button_id id = after_last_element_id;
 			std::wstring caption;
 			switch (number) {
 			case 0:
+				id = forward_one;
+				caption = L"^";
+				break;
+			case 3:
+				id = forward_two;
+				caption = L"^";
+				break;
+			case 6:
+				id = forward_three;
+				caption = L"^";
 				break;
 			case 1:
 				id = left_id;
 				caption = L"<";
 				break;
-			case 2:
-				break;
-			case 3:
-				id = forward_id;
-				caption = L"^";
-				break;
 			case 4:
 				id = jump_id;
 				caption = L"x";
 				break;
-			case 5:
-				id = backward_id;
+			case 2:
+				id = backward_one;
 				caption = L"v";
 				break;
-			case 6:
+			case 5:
+				id = backward_two;
+				caption = L"v";
+				break;
+			case 8:
+				id = backward_three;
+				caption = L"v";
 				break;
 			case 7:
 				id = right_id;
 				caption = L">";
-				break;
-			case 8:
 				break;
 
 			}
@@ -262,28 +285,28 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 	initButton(inventory_id,
 	           rect<s32>(m_screensize.X-(button_size),
 					   m_screensize.Y - (button_size),
-					   m_screensize.X-(0.0 * button_size),
+					   m_screensize.X,
 					   m_screensize.Y),
 	                  L"inv", true);
 
 	/* init drop button */
 	initButton(drop_id,
-	           rect<s32>(0,
-	                     m_screensize.Y - (0.5*button_size),
-				         (0.5*button_size),
-				         m_screensize.Y),
-	        L"drop", true);
+	           rect<s32>(m_screensize.X-(0.75*button_size),
+					   m_screensize.Y-(3.5*button_size),
+					   m_screensize.X,
+					   m_screensize.Y-(2.75*button_size)),
+			L"drop", true);
 
 	/* init crunch button */
 	initButton(crunch_id,
 			rect<s32>(m_screensize.X-(2.2*button_size),
-					m_screensize.Y - (0.5*button_size),
+					m_screensize.Y-(0.5*button_size),
 					m_screensize.X-(1.2*button_size),
 					m_screensize.Y),
 			L"H",false);
 
-#ifdef ENABLE_ANDROID_NOCLIP
-	/* init fly button */
+/*#ifdef ENABLE_ANDROID_NOCLIP
+	 // init fly button 
 	initButton(fly_id,
 			rect<s32>(m_screensize.X - (0.75*button_size),
 					m_screensize.Y - (3.25*button_size),
@@ -291,21 +314,21 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 	                m_screensize.Y - (button_size*2.5)),
 			L"fly", false, SLOW_BUTTON_REPEAT);
 
-	/* init noclip button */
+	// init noclip button 
 	initButton(noclip_id,
 			rect<s32>(m_screensize.X - (0.75*button_size),
 					m_screensize.Y - (4.75*button_size),
 					m_screensize.X,
 					m_screensize.Y - (button_size*4)),
 			L"clip", false, SLOW_BUTTON_REPEAT);
-	/* init fast button */
+	// init fast button 
 	initButton(fast_id,
 			rect<s32>(m_screensize.X - (0.75*button_size),
 	                  m_screensize.Y - (4*button_size),
 					  m_screensize.X,
 	                  m_screensize.Y - (button_size*3.25)),
 			L"fast", false, SLOW_BUTTON_REPEAT);
-#endif
+#endif*/
 	/* init minimap button 
 	initButton(minimap_id,
 			rect<s32>(m_screensize.X - (0.75*button_size),
@@ -313,13 +336,13 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 					  m_screensize.X,
 	                  m_screensize.Y - (button_size*3.25)),
 			L"minimap", false, SLOW_BUTTON_REPEAT);*/
-#ifndef NDEBUG
+/*#ifndef NDEBUG
 	/* init debug button */
-	initButton(debug_id,
+	/*initButton(debug_id,
 			rect<s32>(m_screensize.X - (0.75*button_size), 0.75*button_size,
 					m_screensize.X, 1.5*button_size),
 			L"dbg", false, SLOW_BUTTON_REPEAT);
-#endif
+#endif*/
 
 	/* init chat button */
 	initButton(chat_id,

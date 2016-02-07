@@ -129,14 +129,14 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("view_bobbing_amount", "1.0");
 	settings->setDefault("fall_bobbing_amount", "1.0");
 	settings->setDefault("enable_3d_clouds", "true");
-	settings->setDefault("cloud_height", "120");
+	settings->setDefault("cloud_height", "180");
 	settings->setDefault("cloud_radius", "12");
 	settings->setDefault("menu_clouds", "false");
 	settings->setDefault("opaque_water", "false");
 	settings->setDefault("console_color", "(0,0,0)");
 	settings->setDefault("console_alpha", "200");
 	settings->setDefault("selectionbox_color", "(0,0,0)");
-	settings->setDefault("enable_node_highlighting", "false");
+	settings->setDefault("enable_node_highlighting", "true");
 	settings->setDefault("crosshair_color", "(255,255,255)");
 	settings->setDefault("crosshair_alpha", "255");
 	settings->setDefault("hud_scaling", "1.0");
@@ -150,7 +150,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("selectionbox_width","2");
 	settings->setDefault("hud_hotbar_max_width","1.0");
 	settings->setDefault("enable_local_map_saving", "false");
-	settings->setDefault("screen_dpi", "72");
 
 	settings->setDefault("mip_map", "false");
 	settings->setDefault("anisotropic_filter", "false");
@@ -201,7 +200,7 @@ void set_default_settings(Settings *settings)
 
 #if USE_FREETYPE
 	settings->setDefault("freetype", "true");
-	settings->setDefault("font_path", porting::getDataPath("fonts" DIR_DELIM "liberationsans.ttf"));
+	settings->setDefault("font_path", porting::getDataPath("fonts" DIR_DELIM "basis33.ttf"));
 	settings->setDefault("font_shadow", "1");
 	settings->setDefault("font_shadow_alpha", "128");
 	settings->setDefault("mono_font_path", porting::getDataPath("fonts" DIR_DELIM "liberationmono.ttf"));
@@ -234,7 +233,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("max_packets_per_iteration","1024");
 	settings->setDefault("port", "30000");
 	settings->setDefault("bind_address", "");
-	settings->setDefault("default_game", "MultiCraft_game");
+	settings->setDefault("default_game", "default");
 	settings->setDefault("motd", "");
 	settings->setDefault("max_users", "15");
 	settings->setDefault("strict_protocol_version_checking", "false");
@@ -285,7 +284,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("emergequeue_limit_total", "256");
 	settings->setDefault("emergequeue_limit_diskonly", "32");
 	settings->setDefault("emergequeue_limit_generate", "32");
-	settings->setDefault("num_emerge_threads", "1");
+	settings->setDefault("num_emerge_threads", "2");
 	settings->setDefault("secure.enable_security", "false");
 	settings->setDefault("secure.trusted_mods", "");
 
@@ -340,26 +339,32 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("TMPFolder","/sdcard/tmp/");
 	settings->setDefault("touchscreen_threshold","20");
 	settings->setDefault("smooth_lighting", "false");
-	settings->setDefault("emergequeue_limit_diskonly", "4");
-	settings->setDefault("emergequeue_limit_generate", "4");
+	settings->setDefault("emergequeue_limit_diskonly", "8");
+	settings->setDefault("emergequeue_limit_generate", "8");
 	settings->setDefault("max_block_generate_distance", "3");
 	settings->setDefault("preload_item_visuals", "false");
 	settings->setDefault("viewing_range_nodes_max", "50");
 	settings->setDefault("viewing_range_nodes_min", "5");
-	settings->setDefault("enable_node_highlighting", "true");
 	settings->setDefault("inventory_image_hack", "true");
 	settings->setDefault("mouse_sensitivity", "0.05");
 	settings->setDefault("enable_3d_clouds", "false");
 	settings->setDefault("wanted_fps", "25");
 	settings->setDefault("fps_max", "35");
 	settings->setDefault("pause_fps_max", "10");
-	float x_inches = ((double) porting::getDisplaySize().X /
-			(160 * porting::getDisplayDensity()));
-	if (x_inches < 4.5) {
-		settings->setDefault("hud_scaling", "0.7");
-	}
+	settings->setDefault("max_objects_per_block", "32");
+	settings->setDefault("sqlite_synchronous", "1");
+	settings->setDefault("screen_dpi", "72");
 	settings->setDefault("gui_scaling", "1.1");
 	settings->setDefault("curl_verify_cert","false");
+	//check for device with small screen
+	float x_inches = ((double) porting::getDisplaySize().X /
+			(160 * porting::getDisplayDensity()));
+	if (x_inches  < 3.5) {
+		settings->setDefault("hud_scaling", "0.6");
+	}
+	else if (x_inches < 5) {
+		settings->setDefault("hud_scaling", "0.7");
+	}
 #endif
 }
 

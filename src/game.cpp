@@ -1035,7 +1035,7 @@ static inline void create_formspec_menu(GUIFormSpecMenu **cur_formspec,
 
 #ifdef __ANDROID__
 #   define SIZE_TAG "size[11,5.5]"
-#   define PAUSE_MENU_SIZE_TAG "size[6,3.5]"
+#   define PAUSE_MENU_SIZE_TAG "size[5,3.5]"
 #   define PAUSE_MENU_BUTTON_LEFT 1.5
 #else
 #   define SIZE_TAG "size[11,5.5,true]" // Fixed size on desktop
@@ -1124,23 +1124,23 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 	std::ostringstream os;
 
 	os << FORMSPEC_VERSION_STRING  << PAUSE_MENU_SIZE_TAG
-	   << "button_exit[4," << (ypos++) << ";3,0.5;btn_continue;"
+	   << "button_exit[1," << (ypos++) << ";3,0.5;btn_continue;"
 	   << strgettext("Continue") << "]";
 
 	if (!singleplayermode) {
-		os << "button_exit[4," << (ypos++) << ";3,0.5;btn_change_password;"
+		os << "button_exit[1," << (ypos++) << ";3,0.5;btn_change_password;"
 		   << strgettext("Change Password") << "]";
 	}
 
 #ifndef __ANDROID__
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_sound;"
+	os		<< "button_exit[1," << (ypos++) << ";3,0.5;btn_sound;"
 			<< strgettext("Sound Volume") << "]";
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_key_config;"
+	os		<< "button_exit[1," << (ypos++) << ";3,0.5;btn_key_config;"
 			<< strgettext("Change Keys")  << "]";
 #endif
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_menu;"
+	os		<< "button_exit[1," << (ypos++) << ";3,0.5;btn_exit_menu;"
 			<< strgettext("Exit to Menu") << "]";
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_os;"
+	os		<< "button_exit[1," << (ypos++) << ";3,0.5;btn_exit_os;"
 			<< strgettext("Close game")   << "]"
 #ifndef __ANDROID__			
 			<< "textarea[7.5,0.25;3.9,6.25;;" << control_text << ";]"
@@ -2809,7 +2809,7 @@ void Game::openConsole()
 
 void Game::toggleFreeMove(float *statustext_time)
 {
-	static const wchar_t *msg[] = { L"free_move disabled", L"free_move enabled" };
+	static const wchar_t *msg[] = { L"Fly mode disabled", L"Fly mode enabled" };
 
 	bool free_move = !g_settings->getBool("free_move");
 	g_settings->set("free_move", bool_to_cstr(free_move));
@@ -2830,7 +2830,7 @@ void Game::toggleFreeMoveAlt(float *statustext_time, float *jump_timer)
 
 void Game::toggleFast(float *statustext_time)
 {
-	static const wchar_t *msg[] = { L"fast_move disabled", L"fast_move enabled" };
+	static const wchar_t *msg[] = { L"Fast move disabled", L"Fast move enabled" };
 	bool fast_move = !g_settings->getBool("fast_move");
 	g_settings->set("fast_move", bool_to_cstr(fast_move));
 

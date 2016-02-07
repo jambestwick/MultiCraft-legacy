@@ -27,13 +27,13 @@ VERSION_PATCH := $(shell cat $(ROOT)/../../CMakeLists.txt | \
 ANDROID_VERSION_CODE = 1
 
 ################################################################################
-# toolchain config for arm new processors
+# toolchain config for ARMv7
 ################################################################################
 TARGET_HOST = arm-linux
 TARGET_ABI = armeabi-v7a
 TARGET_LIBDIR = armeabi-v7a
 TARGET_TOOLCHAIN = arm-linux-androideabi-
-TARGET_CFLAGS_ADDON = -mfloat-abi=softfp -mfpu=vfpv3 -O3
+TARGET_CFLAGS_ADDON = -mfloat-abi=softfp -mfpu=vfpv3 -Ofast
 TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 TARGET_ARCH = armv7
 CROSS_PREFIX = arm-linux-androideabi-

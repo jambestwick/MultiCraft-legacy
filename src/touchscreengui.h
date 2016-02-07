@@ -36,8 +36,12 @@ using namespace irr::core;
 using namespace irr::gui;
 
 typedef enum {
-	forward_id = 0,
-	backward_id,
+	forward_one = 0,
+	forward_two,
+	forward_three,
+	backward_one,
+	backward_two,
+	backward_three,
 	left_id,
 	right_id,
 	inventory_id,
@@ -50,7 +54,7 @@ typedef enum {
 	fast_id,
 #endif
 //	minimap_id,
-	debug_id,
+//	debug_id,
 	chat_id,
 //	camera_id,
 	range_id,
