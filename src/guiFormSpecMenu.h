@@ -143,7 +143,6 @@ class GUIFormSpecMenu : public GUIModalMenu
 		{
 		}
 		ImageDrawSpec(const std::string &a_name,
-				v2s32 a_pos, v2s32 a_geom):
 				const std::string &a_item_name,
 				const v2s32 &a_pos, const v2s32 &a_geom):
 			name(a_name),
@@ -503,4 +502,3 @@ public:
 };
 
 #endif
-

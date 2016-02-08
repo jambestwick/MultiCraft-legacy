@@ -2200,8 +2200,7 @@ void GUIFormSpecMenu::drawList(const ListDrawSpec &s, int phase,
 			(hovering ? IT_ROT_HOVERED : IT_ROT_NONE);
 
 		if (phase == 0) {
-			if (hovering) 
-				
+			if (hovering) {
 				item_hovered = true;
 				driver->draw2DRectangle(m_slotbg_h, rect, &AbsoluteClippingRect);
 			} else {
@@ -2242,7 +2241,6 @@ void GUIFormSpecMenu::drawList(const ListDrawSpec &s, int phase,
 				drawItemStack(driver, m_font, item,
 					rect, &AbsoluteClippingRect, m_gamedef,
 					rotation_kind);
-						rect, &AbsoluteClippingRect, m_gamedef);
 			}
 
 			// Draw tooltip
@@ -2456,7 +2454,7 @@ void GUIFormSpecMenu::drawMenu()
 	if (!item_hovered) {
 		drawItemStack(driver, m_font, ItemStack(),
 			core::rect<s32>(v2s32(0, 0), v2s32(0, 0)),
-			NULL, m_gamedef, false, true, false);
+			NULL, m_gamedef, IT_ROT_HOVERED);
 	}
 
 /* TODO find way to show tooltips on touchscreen */
@@ -2978,7 +2976,7 @@ bool GUIFormSpecMenu::preprocessEvent(const SEvent& event)
 		else if (event.TouchInput.touchedCount == 2) {
 			dont_send_event = true;
 		}
-		else if (event.TouchInput.touchedCount > 4) {
+		else if (event.TouchInput.touchedCount > 5) {
 			errorstream
 			<< "GUIFormSpecMenu::preprocessEvent to many multitouch events "
 			<< event.TouchInput.touchedCount << " ignoring them" << std::endl;
