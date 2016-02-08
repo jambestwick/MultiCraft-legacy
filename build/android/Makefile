@@ -1,6 +1,4 @@
-# build options
-
-OS := $(shell uname)
+################################################################################
 
 # compile with GPROF
 # GPROF = 1
@@ -11,29 +9,19 @@ APP_PLATFORM = android-16
 # paths used for timestaps, dependencys, tree config and libs
 PATHCFGFILE = path.cfg
 
-ROOT = $(shell pwd)
-
-VERSION_MAJOR := $(shell cat $(ROOT)/../../CMakeLists.txt | \
-	grep ^set\(VERSION_MAJOR\ | sed 's/)/ /' | cut -f2 -d' ')
-VERSION_MINOR := $(shell cat $(ROOT)/../../CMakeLists.txt | \
-	grep ^set\(VERSION_MINOR\ | sed 's/)/ /' | cut -f2 -d' ')
-VERSION_PATCH := $(shell cat $(ROOT)/../../CMakeLists.txt | \
-	grep ^set\(VERSION_PATCH\ | sed 's/)/ /' | cut -f2 -d' ')
-
-################################################################################
 # Android Version code
-# Increase for each build!
-################################################################################
 ANDROID_VERSION_CODE = 1
 
 ################################################################################
 # toolchain config for ARMv7
 ################################################################################
+
 TARGET_HOST = arm-linux
+TARGET_HOST2 = arm-linux
 TARGET_ABI = armeabi-v7a
 TARGET_LIBDIR = armeabi-v7a
 TARGET_TOOLCHAIN = arm-linux-androideabi-
-TARGET_CFLAGS_ADDON = -mfloat-abi=softfp -mfpu=vfpv3 -Ofast
+TARGET_CFLAGS_ADDON = -mfloat-abi=softfp -Ofast
 TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 TARGET_ARCH = armv7
 CROSS_PREFIX = arm-linux-androideabi-
@@ -41,18 +29,39 @@ COMPILER_VERSION = 4.9
 HAVE_LEVELDB = 0
 
 ################################################################################
-# toolchain config for x86
+# toolchain config for ARMv8
 ################################################################################
-#TARGET_HOST = x86-linux
-#TARGET_ABI = x86
-#TARGET_LIBDIR = x86
-#TARGET_TOOLCHAIN = x86-
-#CROSS_PREFIX = i686-linux-android-
-#TARGET_ARCH = x86
-#COMPILER_VERSION = 4.8
-#HAVE_LEVELDB = 0
+
+# TARGET_HOST = aarch64-linux
+# TARGET_HOST2 = arm-linux
+# TARGET_ABI = arm64-v8a
+# TARGET_LIBDIR = arm64-v8a
+# TARGET_TOOLCHAIN = aarch64-linux-android-
+# TARGET_CFLAGS_ADDON = -Ofast
+# TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
+# TARGET_ARCH = arm64
+# CROSS_PREFIX = aarch64-linux-android-
+# COMPILER_VERSION = 4.9
+# HAVE_LEVELDB = 0
 
 ################################################################################
+# toolchain config for x86
+################################################################################
+
+# TARGET_HOST = x86-linux
+# TARGET_HOST2 = x86-linux
+# TARGET_ABI = x86
+# TARGET_LIBDIR = x86
+# TARGET_TOOLCHAIN = x86-
+# TARGET_CFLAGS_ADDON = -Ofast
+# TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
+# TARGET_ARCH = x86
+# CROSS_PREFIX = i686-linux-android-
+# COMPILER_VERSION = 4.9
+# HAVE_LEVELDB = 0
+
+################################################################################
+
 ASSETS_TIMESTAMP = deps/assets_timestamp
 
 LEVELDB_DIR = $(ROOT)/deps/leveldb/
@@ -89,7 +98,7 @@ OPENSSL_TIMESTAMP = $(OPENSSL_DIR)timestamp
 OPENSSL_TIMESTAMP_INT = $(ROOT)/deps/openssl_timestamp
 OPENSSL_URL = http://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
 
-CURL_VERSION = 7.47.0
+CURL_VERSION = 7.47.1
 CURL_DIR = $(ROOT)/deps/curl-$(CURL_VERSION)
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
@@ -118,6 +127,19 @@ ICONV_URL_HTTP = http://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).t
 
 SQLITE3_FOLDER = sqlite-amalgamation-3100200
 SQLITE3_URL = http://www.sqlite.org/2016/$(SQLITE3_FOLDER).zip
+
+################################################################################
+
+OS := $(shell uname)
+
+ROOT = $(shell pwd)
+
+VERSION_MAJOR := $(shell cat $(ROOT)/../../CMakeLists.txt | \
+	grep ^set\(VERSION_MAJOR\ | sed 's/)/ /' | cut -f2 -d' ')
+VERSION_MINOR := $(shell cat $(ROOT)/../../CMakeLists.txt | \
+	grep ^set\(VERSION_MINOR\ | sed 's/)/ /' | cut -f2 -d' ')
+VERSION_PATCH := $(shell cat $(ROOT)/../../CMakeLists.txt | \
+	grep ^set\(VERSION_PATCH\ | sed 's/)/ /' | cut -f2 -d' ')
 
 -include $(PATHCFGFILE)
 
@@ -284,7 +306,6 @@ openssl_download :
 		wget ${OPENSSL_URL} || exit 1;                                         \
 		tar -xzf ${OPENSSL_BASEDIR}.tar.gz;                                    \
 		cd ${OPENSSL_BASEDIR};                                                 \
-		patch -p1 < ../../openssl_arch.patch;                                  \
 	fi
 
 openssl : $(OPENSSL_LIB)
@@ -468,7 +489,7 @@ $(ICONV_LIB) : $(ICONV_TIMESTAMP)
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	./configure --host=${TARGET_HOST} || exit 1;                               \
+	./configure --host=${TARGET_HOST2} || exit 1;                               \
 	sed -i 's/LIBICONV_VERSION_INFO) /LIBICONV_VERSION_INFO) -avoid-version /g' lib/Makefile; \
 	grep "iconv_LDFLAGS" src/Makefile;                                         \
 	$(MAKE) -s || exit 1;                                                      \
