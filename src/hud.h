@@ -137,7 +137,8 @@ private:
 	void drawItems(v2s32 upperleftpos, s32 itemcount, s32 offset,
 		InventoryList *mainlist, u16 selectitem, u16 direction);
 
-	void drawItem(const ItemStack &item, const core::rect<s32>& rect, bool selected);
+	void drawItem(const ItemStack &item, const core::rect<s32>& rect,
+		bool selected);
 
 	v2u32 m_screensize;
 	v2s32 m_displaycenter;
@@ -146,13 +147,20 @@ private:
 	video::SColor hbar_colors[4];
 };
 
+enum ItemRotationKind {
+	IT_ROT_SELECTED,
+	IT_ROT_HOVERED,
+	IT_ROT_DRAGGED,
+	IT_ROT_NONE, // Must be last, also serves as number
+};
+
 void drawItemStack(video::IVideoDriver *driver,
 		gui::IGUIFont *font,
 		const ItemStack &item,
 		const core::rect<s32> &rect,
 		const core::rect<s32> *clip,
-		IGameDef *gamedef);
-
+		IGameDef *gamedef,
+		ItemRotationKind rotation_kind);
 
 #endif
 
