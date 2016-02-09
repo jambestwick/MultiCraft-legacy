@@ -193,7 +193,7 @@ void TouchScreenGUI::initButton(touch_gui_button_id id, rect<s32> button_rect,
 }
 
 static int getMaxControlPadSize(float density) {
-	return 220 * density * g_settings->getFloat("hud_scaling");
+	return 230 * density * g_settings->getFloat("hud_scaling");
 }
 
 int TouchScreenGUI::getGuiButtonSize()

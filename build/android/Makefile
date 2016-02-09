@@ -18,11 +18,12 @@ ANDROID_VERSION_CODE = 1
 
 TARGET_HOST = arm-linux
 TARGET_HOST2 = arm-linux
-TARGET_ABI = armeabi-v7a
+TARGET_ABI = armeabi-v7a-hard
 TARGET_LIBDIR = armeabi-v7a
 TARGET_TOOLCHAIN = arm-linux-androideabi-
-TARGET_CFLAGS_ADDON = -mfloat-abi=softfp -Ofast
+TARGET_CFLAGS_ADDON = -D_NDK_MATH_NO_SOFTFP=1 -mfloat-abi=hard -Ofast -march=armv7-a
 TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
+TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch -lm_hard
 TARGET_ARCH = armv7
 CROSS_PREFIX = arm-linux-androideabi-
 COMPILER_VERSION = 4.9

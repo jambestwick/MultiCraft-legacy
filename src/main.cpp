@@ -719,10 +719,10 @@ static bool game_configure_subgame(GameParams *game_params, const Settings &cmd_
 #else
 	SubgameSpec gamespec;
 
-	gamespec = findSubgame("MultiCraft_game");
+	gamespec = findSubgame("default");
 	success = gamespec.isValid();
 	if (!success) {
-		errorstream << "MultiCraft game files not found!" << std::endl;
+		errorstream << "Game files not found!" << std::endl;
 	}
 #endif
 	return success;

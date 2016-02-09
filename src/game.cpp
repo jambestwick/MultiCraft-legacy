@@ -1073,11 +1073,9 @@ static inline void create_formspec_menu(GUIFormSpecMenu **cur_formspec,
 #ifdef __ANDROID__
 #   define SIZE_TAG "size[11,5.5]"
 #   define PAUSE_MENU_SIZE_TAG "size[5,3.5]"
-#   define PAUSE_MENU_BUTTON_LEFT 1.5
 #else
 #   define SIZE_TAG "size[11,5.5,true]" // Fixed size on desktop
 #   define PAUSE_MENU_SIZE_TAG "size[11,5.5,true]" // Fixed size on desktop
-#   define PAUSE_MENU_BUTTON_LEFT 4
 #endif
 
 static void show_chat_menu(GUIFormSpecMenu **cur_formspec,
