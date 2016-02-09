@@ -36,12 +36,12 @@ include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := ogg
-LOCAL_SRC_FILES := deps/libvorbis-libogg-android/libs/$(TARGET_LIBDIR)/libogg.so
+LOCAL_SRC_FILES := deps/libogg/src/.libs/libogg.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := vorbis
-LOCAL_SRC_FILES := deps/libvorbis-libogg-android/libs/$(TARGET_LIBDIR)/libvorbis.so
+LOCAL_SRC_FILES := deps/libvorbis/lib/.libs/libvorbis.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
@@ -106,7 +106,8 @@ LOCAL_C_INCLUDES :=                               \
 		deps/freetype/include                     \
 		deps/curl/include                         \
 		deps/openal/include                       \
-		deps/libvorbis-libogg-android/jni/include \
+		deps/libogg/include                       \
+		deps/libvorbis/include                    \
 		deps/gmp/usr/include                      \
 		deps/leveldb/include                      \
 		deps/sqlite/
