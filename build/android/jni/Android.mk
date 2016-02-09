@@ -21,7 +21,7 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := freetype
-LOCAL_SRC_FILES := deps/freetype2-android/Android/obj/local/$(TARGET_ARCH_ABI)/libfreetype2-static.a
+LOCAL_SRC_FILES := deps/freetype/objs/.libs/libfreetype.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
@@ -103,7 +103,7 @@ LOCAL_C_INCLUDES :=                               \
 		jni/src/cguittfont                        \
 		deps/irrlicht/include                     \
 		deps/libiconv/include                     \
-		deps/freetype2-android/include            \
+		deps/freetype/include                     \
 		deps/curl/include                         \
 		deps/openal-soft/jni/OpenAL/include       \
 		deps/libvorbis-libogg-android/jni/include \
