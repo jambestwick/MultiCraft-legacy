@@ -45,6 +45,11 @@ LOCAL_SRC_FILES := deps/libvorbis/lib/.libs/libvorbis.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := vorbisfile
+LOCAL_SRC_FILES := deps/libvorbis/lib/.libs/libvorbisfile.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := gmp
 LOCAL_SRC_FILES := deps/gmp/usr/lib/libgmp.so
 include $(PREBUILT_SHARED_LIBRARY)
@@ -359,7 +364,7 @@ LOCAL_SRC_FILES += \
 # JSONCPP
 LOCAL_SRC_FILES += jni/src/json/jsoncpp.cpp
 
-LOCAL_SHARED_LIBRARIES := iconv openal ogg vorbis gmp
+LOCAL_SHARED_LIBRARIES := iconv openal ogg vorbis vorbisfile gmp
 LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl ssl crypto android_native_app_glue $(PROFILER_LIBS)
 
 ifeq ($(HAVE_LEVELDB), 1)

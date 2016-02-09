@@ -388,11 +388,11 @@ $(VORBIS_LIB): $(VORBIS_TIMESTAMP)
 	export OBJDUMP=${CROSS_PREFIX}objdump;                                        \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                     \
 	CC=${CROSS_PREFIX}gcc ./configure --host=${TARGET_HOST} --target=${TARGET_HOST} \
-		--build=x86_64-linux --with-sysroot="${TOOLCHAIN}" \
-		--with-ogg-libraries="${VORBIS_DIR}/../libogg/src/.libs" \
+		--build=x86_64-linux --with-sysroot="${TOOLCHAIN}"                    \
+		--with-ogg-libraries="${VORBIS_DIR}/../libogg/src/.libs"              \
 		--with-ogg-includes="${VORBIS_DIR}/../libogg/include" OGG_CFLAGS="${VORBIS_DIR}/../libogg" \
-		--prefix="${TOOLCHAIN}" || exit 1;       \
-	$(MAKE) -s || exit 1;                                                         \
+		--prefix="${TOOLCHAIN}" || exit 1;                                    \
+	CC=${CROSS_PREFIX}gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST}-vorbis make || exit 1; \
 	touch ${VORBIS_TIMESTAMP};                                                    \
 	touch ${VORBIS_TIMESTAMP_INT};                                                \
 	$(RM) -rf $${TOOLCHAIN};                                                      \
