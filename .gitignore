@@ -22,29 +22,18 @@ tags
 !tags/
 gtags.files
 
-## Files related to MultiCraft development cycle
-/*.patch
 # GNU Patch reject file
 *.rej
 
 
 ## Non-static MultiCraft directories or symlinks to these
 /bin/
-/games/*
-!/games/MultiCraft_game/
 /cache
 /textures/*
 !/textures/base/
 /screenshots
-/sounds
-/mods/*
-!/mods/minetest/
-/mods/minetest/*
-!/mods/minetest/mods_here.txt
-/world/
 
 ## Configuration/log files
-minetest.conf
 debug.txt
 
 ## Doxygen files
