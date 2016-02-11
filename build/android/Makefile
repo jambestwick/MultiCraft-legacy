@@ -358,9 +358,9 @@ vorbis_download :
 		ln -s libvorbis-${VORBIS_VERSION} libvorbis;                              \
 	fi
 
-vorbis : $(VORBIS_LIB) $(OGG_LIB)
+vorbis : $(VORBIS_LIB)
 
-$(VORBIS_LIB): $(VORBIS_TIMESTAMP)
+$(VORBIS_LIB): $(VORBIS_TIMESTAMP) $(OGG_LIB)
 	@REFRESH=0;                                                                   \
 	if [ ! -e ${VORBIS_TIMESTAMP_INT} ] ; then                                    \
 		echo "${VORBIS_TIMESTAMP_INT} doesn't exist";                             \
