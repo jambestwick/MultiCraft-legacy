@@ -15,7 +15,6 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import net.MultiCraft.Official.R;
 
 public class UnzipService extends IntentService {
 	public final String TAG = UnzipService.class.getSimpleName();

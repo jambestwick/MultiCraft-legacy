@@ -13,6 +13,16 @@ public class MCNativeActivity extends NativeActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    Log.e("WTF", e.getLocalizedMessage());
+                }
+            }
+        }, 2000);
 		m_MessagReturnCode = -1;
 		m_MessageReturnValue = "";
 	}
