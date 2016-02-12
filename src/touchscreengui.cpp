@@ -287,7 +287,7 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 					   m_screensize.Y - (button_size),
 					   m_screensize.X,
 					   m_screensize.Y),
-	                  L"inv", true);
+	                  L"inv", false, SLOW_BUTTON_REPEAT);
 
 	/* init drop button */
 	initButton(drop_id,
@@ -295,7 +295,7 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 					   m_screensize.Y/2-(1.75*button_size),
 					   m_screensize.X,
 					   m_screensize.Y/2-(1*button_size)),
-			L"drop", true);
+			L"drop", false, SLOW_BUTTON_REPEAT);
 
 	/* init crunch button */
 	initButton(crunch_id,
@@ -303,7 +303,7 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 					m_screensize.Y-(0.5*button_size),
 					m_screensize.X-(1.2*button_size),
 					m_screensize.Y),
-			L"H",false);
+			L"H", false, SLOW_BUTTON_REPEAT);
 
 /*#ifdef ENABLE_ANDROID_NOCLIP
 	 // init fly button 
@@ -348,7 +348,7 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 	initButton(chat_id,
 			rect<s32>(m_screensize.X - (0.75*button_size), 0,
 					m_screensize.X, 0.75*button_size),
-			L"Chat", true);
+			L"Chat", false, SLOW_BUTTON_REPEAT);
 
 	/* init camera button 
 	initButton(camera_id,
@@ -643,7 +643,7 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 					s32 dy = Y - m_pointerpos[event.TouchInput.ID].Y;
 
 					/* adapt to similar behaviour as pc screen */
-					double d         = g_settings->getFloat("mouse_sensitivity") *4;
+					double d         = g_settings->getFloat("mouse_sensitivity") ;
 					double old_yaw   = m_camera_yaw;
 					double old_pitch = m_camera_pitch;
 

@@ -145,7 +145,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("gui_scaling", "1.0");
 	settings->setDefault("gui_scaling_filter", "false");
 	settings->setDefault("gui_scaling_filter_txr2img", "true");
-	settings->setDefault("mouse_sensitivity", "0.05");
+	settings->setDefault("mouse_sensitivity", "0.1");
 	settings->setDefault("enable_sound", "true");
 	settings->setDefault("sound_volume", "1");
 	settings->setDefault("desynchronize_mapblock_texture_animation", "true");
@@ -179,7 +179,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_shaders", "true");
 	settings->setDefault("repeat_rightclick_time", "0.25");
 	settings->setDefault("enable_particles", "true");
-	settings->setDefault("enable_mesh_cache", "false");
+	settings->setDefault("enable_mesh_cache", "true");
 
 	settings->setDefault("enable_minimap", "true");
 	settings->setDefault("minimap_shape_round", "true");
@@ -348,7 +348,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("viewing_range_nodes_max", "50");
 	settings->setDefault("viewing_range_nodes_min", "5");
 	settings->setDefault("inventory_image_hack", "true");
-	settings->setDefault("mouse_sensitivity", "0.05");
 	settings->setDefault("enable_3d_clouds", "false");
 	settings->setDefault("wanted_fps", "25");
 	settings->setDefault("fps_max", "35");
