@@ -31,7 +31,7 @@ include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := openal
-LOCAL_SRC_FILES := deps/openal/build/libopenal.so
+LOCAL_SRC_FILES := deps/openal-soft/libs/$(TARGET_LIBDIR)/libopenal.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
@@ -42,11 +42,6 @@ include $(PREBUILT_SHARED_LIBRARY)
 include $(CLEAR_VARS)
 LOCAL_MODULE := vorbis
 LOCAL_SRC_FILES := deps/libvorbis-libogg-android/libs/$(TARGET_LIBDIR)/libvorbis.so
-include $(PREBUILT_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := vorbisfile
-LOCAL_SRC_FILES := deps/libvorbis/lib/.libs/libvorbisfile.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
@@ -110,7 +105,7 @@ LOCAL_C_INCLUDES :=                               \
 		deps/libiconv/include                     \
 		deps/freetype/include                     \
 		deps/curl/include                         \
-		deps/openal/include                       \
+		deps/openal-soft/jni/OpenAL/include       \
 		deps/libvorbis-libogg-android/jni/include \
 		deps/gmp/usr/include                      \
 		deps/leveldb/include                      \
@@ -363,7 +358,7 @@ LOCAL_SRC_FILES += \
 # JSONCPP
 LOCAL_SRC_FILES += jni/src/json/jsoncpp.cpp
 
-LOCAL_SHARED_LIBRARIES := iconv openal ogg vorbis vorbisfile gmp
+LOCAL_SHARED_LIBRARIES := iconv openal ogg vorbis gmp
 LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl ssl crypto android_native_app_glue $(PROFILER_LIBS)
 
 ifeq ($(HAVE_LEVELDB), 1)
