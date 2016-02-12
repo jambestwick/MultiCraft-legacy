@@ -60,7 +60,7 @@ LOCAL_SRC_FILES := deps/openssl/libcrypto.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := minetest
+LOCAL_MODULE := multicraft
 
 LOCAL_CPP_FEATURES += exceptions
 
@@ -80,7 +80,8 @@ LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_      \
 ifndef NDEBUG
 LOCAL_CFLAGS += -g -D_DEBUG -O0 -fno-omit-frame-pointer
 else
-LOCAL_CFLAGS += -O3
+LOCAL_CFLAGS += -D_NDK_MATH_NO_SOFTFP=1 -mfloat-abi=hard -O3 -march=armv7-a
+# ToDo - disable for x86?
 endif
 
 ifdef GPROF

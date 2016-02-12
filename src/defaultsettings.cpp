@@ -329,6 +329,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("high_precision_fpu", "true");
 
 	settings->setDefault("language", "");
+	settings->setDefault("mainmenu_last_selected_world", "1");
 
 #ifdef __ANDROID__
 	settings->setDefault("screenW", "0");

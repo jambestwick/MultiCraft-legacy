@@ -188,7 +188,7 @@ std::vector<SubgameSpec> getAvailableGames()
 	return specs;
 }
 
-#define LEGACY_GAMEID "minetest"
+#define LEGACY_GAMEID "default"
 
 bool getWorldExists(const std::string &world_path)
 {
@@ -213,7 +213,7 @@ std::string getWorldGameId(const std::string &world_path, bool can_be_legacy)
 		return "";
 	// The "mesetint" gameid has been discarded
 	if(conf.get("gameid") == "mesetint")
-		return "minetest";
+		return "default";
 	return conf.get("gameid");
 }
 

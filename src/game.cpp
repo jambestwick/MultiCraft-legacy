@@ -1071,11 +1071,9 @@ static inline void create_formspec_menu(GUIFormSpecMenu **cur_formspec,
 }
 
 #ifdef __ANDROID__
-#   define SIZE_TAG "size[11,5.5]"
-#   define PAUSE_MENU_SIZE_TAG "size[5,3.5]"
+#define SIZE_TAG "size[11,5.5]"
 #else
-#   define SIZE_TAG "size[11,5.5,true]" // Fixed size on desktop
-#   define PAUSE_MENU_SIZE_TAG "size[11,5.5,true]" // Fixed size on desktop
+#define SIZE_TAG "size[11,5.5,true]" // Fixed size on desktop
 #endif
 
 static void show_chat_menu(GUIFormSpecMenu **cur_formspec,
@@ -1126,41 +1124,13 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 		IWritableTextureSource *tsrc, IrrlichtDevice *device,
 		bool singleplayermode)
 {
-#ifdef __ANDROID__
-//  std::string control_text = wide_to_narrow(wstrgettext("Default Controls:\n"
-//                 "No menu visible:\n"
-//                 "- single tap: button activate\n"
-//                 "- double tap: place/use\n"
-//                 "- slide finger: look around\n"
-//                 "Menu/Inventory visible:\n"
-//                 "- double tap (outside):\n"
-//                 " -->close\n"
-//                 "- touch stack, touch slot:\n"
-//                 " --> move stack\n"
-//                 "- touch&drag, tap 2nd finger\n"
-//                 " --> place single item to slot\n"
-//                               ));
-#else
-	std::string control_text = strgettext("Default Controls:\n"
-				   "- WASD: move\n"
-				   "- Space: jump/climb\n"
-				   "- Shift: sneak/go down\n"
-				   "- Q: drop item\n"
-				   "- I: inventory\n"
-				   "- Mouse: turn/look\n"
-				   "- Mouse left: dig/punch\n"
-				   "- Mouse right: place/use\n"
-				   "- Mouse wheel: select item\n"
-				   "- T: chat\n"
-								 );
-#endif
 
 	float ypos = singleplayermode ? 0.5 : 0.1;
 	std::ostringstream os;
-
-	os << FORMSPEC_VERSION_STRING  << PAUSE_MENU_SIZE_TAG
-	   << "button_exit[1," << (ypos++) << ";3,0.5;btn_continue;"
-	   << strgettext("Continue") << "]";
+	os << FORMSPEC_VERSION_STRING  << SIZE_TAG
+		<< "bgcolor[#00000060;true]"
+		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_continue;"
+		<< strgettext("Continue") << "]";
 
 	if (!singleplayermode) {
 		os << "button_exit[1," << (ypos++) << ";3,0.5;btn_change_password;"
@@ -1168,21 +1138,15 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 	}
 
 #ifndef __ANDROID__
-	os		<< "button_exit[1," << (ypos++) << ";3,0.5;btn_sound;"
+	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_sound;"
 			<< strgettext("Sound Volume") << "]";
-	os		<< "button_exit[1," << (ypos++) << ";3,0.5;btn_key_config;"
+	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_key_config;"
 			<< strgettext("Change Keys")  << "]";
 #endif
-	os		<< "button_exit[1," << (ypos++) << ";3,0.5;btn_exit_menu;"
+	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_menu;"
 			<< strgettext("Exit to Menu") << "]";
-	os		<< "button_exit[1," << (ypos++) << ";3,0.5;btn_exit_os;"
+	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_os;"
 			<< strgettext("Close game")   << "]"
-#ifndef __ANDROID__			
-			<< "textarea[7.5,0.25;3.9,6.25;;" << control_text << ";]"
-			<< "textarea[0.4,0.25;3.5,6;;" << PROJECT_NAME_C "\n"
-			<< g_build_info << "\n"
-			<< "path_user = " << wrap_rows(porting::path_user, 20)
-#endif
 			<< "\n;]";
 
 	/* Create menu */
@@ -3700,17 +3664,11 @@ void Game::handlePointingAtNode(GameRunData *runData,
 		runData->noplace_delay_timer = 1.0;
 	}
 
-#ifdef HAVE_TOUCHSCREENGUI
 	bool place = (input->getRightClicked() || input->getLeftReleased() ||
 				  runData->repeat_rightclick_timer >= m_repeat_right_click_time) &&
 				  client->checkPrivilege("interact");
 	place &= !digging;
 	place &= runData->noplace_delay_timer <= 0.0;
-#else
-	bool place = (input->getRightClicked() ||
-				  runData->repeat_rightclick_timer >= m_repeat_right_click_time) &&
-				  client->checkPrivilege("interact");
-#endif
 
 	if (place) {
 		runData->repeat_rightclick_timer = 0;
