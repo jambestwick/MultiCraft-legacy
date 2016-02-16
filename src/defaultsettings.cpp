@@ -357,14 +357,18 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("screen_dpi", "72");
 	settings->setDefault("gui_scaling", "1.1");
 	settings->setDefault("curl_verify_cert","false");
+	settings->setDefault("mouse_sensitivity", "0.15");
+	settings->setDefault("hud_scaling", "0.9");
 	//check for device with small screen
 	float x_inches = ((double) porting::getDisplaySize().X /
 			(160 * porting::getDisplayDensity()));
-	if (x_inches  < 3.5) {
-		settings->setDefault("hud_scaling", "0.6");
+	if (x_inches < 3.5) {
+		settings->setDefault("hud_scaling", "0.55");
+		settings->setDefault("mouse_sensitivity", "0.1");
 	}
-	else if (x_inches < 5) {
-		settings->setDefault("hud_scaling", "0.7");
+	else if (x_inches < 5.5) {
+		settings->setDefault("hud_scaling", "0.65");
+		settings->setDefault("mouse_sensitivity", "0.1");
 	}
 #endif
 }

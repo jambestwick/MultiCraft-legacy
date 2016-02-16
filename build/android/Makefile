@@ -127,7 +127,7 @@ ICONV_TIMESTAMP = $(ICONV_DIR)timestamp
 ICONV_TIMESTAMP_INT = $(ROOT)/deps/iconv_timestamp
 ICONV_URL_HTTP = http://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
 
-SQLITE3_FOLDER = sqlite-amalgamation-3100200
+SQLITE3_FOLDER = sqlite-amalgamation-3110000
 SQLITE3_URL = http://www.sqlite.org/2016/$(SQLITE3_FOLDER).zip
 
 ################################################################################
@@ -538,6 +538,7 @@ irrlicht_download :
 		patch -p1 < ../../irrlicht-touchcount.patch || exit 1;                 \
 		patch -p1 < ../../irrlicht-back_button.patch || exit 1;                \
 		patch -p1 < ../../irrlicht-texturehack.patch || exit 1;                \
+		patch -p1 < ../../irrlicht-optimization.patch || exit 1;                \
 	fi
 
 $(IRRLICHT_TIMESTAMP) : irrlicht_download
