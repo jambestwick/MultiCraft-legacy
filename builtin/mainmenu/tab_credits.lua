@@ -23,7 +23,7 @@ tab_credits = {
 	cbf_formspec = function (tabview, name, tabdata)
 			local logofile = defaulttexturedir .. "smoke_puff.png"
 			return "label[0.5,3.2;MultiCraft " .. core.get_version() .. "]" ..
-				"label[0.5,3.5;Open Sourse Project]" ..
+				"label[0.5,3.5;Open Source Project]" ..
 				"image[0.5,1;" .. core.formspec_escape(logofile) .. "]" ..
 				"tablecolumns[color;text]" ..
 				"tableoptions[background=#00000000;highlight=#00000000;border=false]" ..
