@@ -26,7 +26,7 @@ TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch -lm_hard
 TARGET_ARCH = armv7
 CROSS_PREFIX = arm-linux-androideabi-
-COMPILER_VERSION = 4.9
+COMPILER_VERSION = clang3.6
 HAVE_LEVELDB = 0
 
 ################################################################################
