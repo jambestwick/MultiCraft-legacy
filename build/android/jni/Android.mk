@@ -80,8 +80,9 @@ LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_      \
 ifndef NDEBUG
 LOCAL_CFLAGS += -g -D_DEBUG -O0 -fno-omit-frame-pointer
 else
-LOCAL_CFLAGS += -D_NDK_MATH_NO_SOFTFP=1 -mfloat-abi=hard -Ofast -fno-fast-math -march=armv7-a -Wl,--gc-sections
-# ToDo - disable for x86?
+LOCAL_CFLAGS += -mhard-float -march=armv7-a -D_NDK_MATH_NO_SOFTFP=1 -Ofast -fno-fast-math -Wl,--gc-sections
+LOCAL_LDFLAGS  = -Wl,--no-warn-mismatch -lm_hard
+# ToDo - disable for x86!
 endif
 
 ifdef GPROF

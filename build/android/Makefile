@@ -21,12 +21,12 @@ TARGET_HOST2 = arm-linux
 TARGET_ABI = armeabi-v7a-hard
 TARGET_LIBDIR = armeabi-v7a
 TARGET_TOOLCHAIN = arm-linux-androideabi-
-TARGET_CFLAGS_ADDON = -D_NDK_MATH_NO_SOFTFP=1 -mfloat-abi=hard -Ofast -march=armv7-a -Wl,--gc-sections
+TARGET_CFLAGS_ADDON = -mhard-float -march=armv7-a -D_NDK_MATH_NO_SOFTFP=1 -Ofast
 TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch -lm_hard
 TARGET_ARCH = armv7
 CROSS_PREFIX = arm-linux-androideabi-
-COMPILER_VERSION = clang3.6
+COMPILER_VERSION = 4.9
 HAVE_LEVELDB = 0
 
 ################################################################################
