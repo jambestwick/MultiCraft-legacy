@@ -1,4 +1,4 @@
-MultiCraft Open Sourse Project
+MultiCraft Open Source Project
 ========
 
 MultiCraft is an Open Source sandbox game inspired by [Minecraft](https://minecraft.net/).
