@@ -1136,7 +1136,7 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 		<< strgettext("Continue") << "]";
 
 	if (!singleplayermode) {
-		os << "button_exit[1," << (ypos++) << ";3,0.5;btn_change_password;"
+		os << "button_exit[4," << (ypos++) << ";3,0.5;btn_change_password;"
 		   << strgettext("Change Password") << "]";
 	}
 

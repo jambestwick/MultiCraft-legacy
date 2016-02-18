@@ -1,4 +1,4 @@
-Minetest Android port
+MultiCraft Android version
 =====================
 Date: 2015 12 16
 
@@ -128,3 +128,9 @@ Other things that may be nice to know
   e.g.:
 
   > make clean_irrlicht
+  
+
+After compiling you need to archive files in assets into three zips - Files.zip, games.zip and worlds.zip. 
+games.zip must contain "games" folder.
+worlds.zip must contain "worlds" folder and "multicraf.conf" text file.
+Finally, remaining files must be packed into Files.zip.

@@ -1,7 +1,7 @@
-/** @mainpage The Minetest engine internal documentation
+/** @mainpage The MultiCraft engine internal documentation
 
-Welcome to the Minetest engine Doxygen documentation site!\n
-This page documents the internal structure of the Minetest engine's C++ code.\n
+Welcome to the MultiCraft engine Doxygen documentation site!\n
+This page documents the internal structure of the MultiCraft engine's C++ code.\n
 Use the tree view at the left to navigate.
 
 */

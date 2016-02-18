@@ -1,5 +1,14 @@
-License of Minetest textures and sounds
----------------------------------------
+MultiCraft Open Source Project:
+
+LGPLv3.0+, CC-BY-SA 3.0 and a little bit proprietary textures. The list in the file nearby.
+You can use these textures without restriction within MultiCraft Project.
+You can not use them in another project.
+They are an integral part of this project and created exclusively for him.
+
+
+--- --- ---
+
+License of Minetest textures and sounds:
 
 This applies to textures and sounds contained in the main Minetest
 distribution.
@@ -12,17 +21,11 @@ Authors of media files
 Everything not listed in here:
 Copyright (C) 2010-2012 celeron55, Perttu Ahola <celeron55@gmail.com>
 
-BlockMen:
-  textures/base/pack/menuheader.png
 
 erlehmann:
-  misc/minetest-icon-24x24.png
-  misc/minetest-icon.ico
   misc/minetest.svg
-  textures/base/pack/logo.png
 
-License of Minetest source code
--------------------------------
+License of Minetest source code:
 
 Minetest
 Copyright (C) 2010-2013 celeron55, Perttu Ahola <celeron55@gmail.com>
@@ -41,8 +44,9 @@ You should have received a copy of the GNU Lesser General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-﻿Irrlicht
----------------
+
+
+Irrlicht:
 
 This program uses the Irrlicht Engine. http://irrlicht.sourceforge.net/
 
@@ -99,9 +103,9 @@ Vattic's Terms:
 	- If I decide I don't want you using stuff from the pack then that is final. This will only be the case in unusual circumstances.
 	- These guidelines can be changed at any time.
 
+--- --- ---
 
-JThread
----------------
+JThread:
 
 This program uses the JThread library. License for JThread follows:
 
@@ -125,8 +129,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE.
 
-Lua
----------------
+--- --- ---
+
+Lua:
 
 Lua is licensed under the terms of the MIT license reproduced below.
 This means that Lua is free software and can be used for both academic
@@ -154,8 +159,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-Fonts
----------------
+--- --- ---
+
+Fonts:
 
 DejaVu Sans Mono:
 
@@ -191,14 +197,8 @@ DroidSansFallback:
   See the License for the specific language governing permissions and
   limitations under the License.
   
-  
-basis33 is a fixed-width bitmap font for programming and text editing, which contains Latin, Cyrillic, Greek and Hebrew characters. 
+basis33
 
-It’s designed by Manchson basing on Latin-only font Proggy Clean by Tristan Grimmer.
- 
-basis33 is free/libre software, you are welcome to redistribute and/or modify it under the terms of MIT/Expat license; see LICENSE for details.
-
-  
   The MIT License (MIT)
 
 Copyright (c) 2004, 2005 Tristan Grimmer
@@ -221,3 +221,35 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+--- --- ---
+
+Mod "Dungeon Loot" [dungeon_loot]
+=================================
+Copyright (c) 2015 BlockMen <blockmen2015@gmail.com>
+and Amoeba <amoeba@iki.fi>
+
+In MultiCraft Project this code has been changed:
+I changed the drop in a few lines.
+
+=================================
+
+Copyright (c) 2015 BlockMen <blockmen2015@gmail.com>
+
+This software is provided 'as-is', without any express or implied warranty. In no
+event will the authors be held liable for any damages arising from the use of
+this software.
+
+Permission is granted to anyone to use this software for any purpose, including
+commercial applications, and to alter it and redistribute it freely, subject to the
+following restrictions:
+
+
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software in a
+product, an acknowledgment in the product documentation is required.
+
+2. Altered source versions must be plainly marked as such, and must not
+be misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source distribution.

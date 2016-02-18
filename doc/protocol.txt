@@ -1,4 +1,4 @@
-Minetest protocol (incomplete, early draft):
+MultiCraft protocol (incomplete, early draft):
 Updated 2011-06-18
 
 A custom protocol over UDP.
