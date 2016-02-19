@@ -64,7 +64,7 @@ xgettext --package-name=MultiCraft \
 # Now iterate on all languages and create the po file if missing, or update it
 # if it exists already
 for lang in $langs ; do # note the missing quotes around $langs
-	pofile=po/$lang/MultiCraft.po
+	pofile=po/$lang/minetest.po
 	if test -e $pofile; then
 		echo "[$lang]: updating strings"
 		msgmerge --update --sort-by-file $pofile $potfile

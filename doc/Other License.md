@@ -1,14 +1,15 @@
 MultiCraft Open Source Project:
+=================================
 
 LGPLv3.0+, CC-BY-SA 3.0 and a little bit proprietary textures. The list in the file nearby.
 You can use these textures without restriction within MultiCraft Project.
 You can not use them in another project.
 They are an integral part of this project and created exclusively for him.
 
-
 --- --- ---
 
 License of Minetest textures and sounds:
+=================================
 
 This applies to textures and sounds contained in the main Minetest
 distribution.
@@ -16,8 +17,8 @@ distribution.
 Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
 http://creativecommons.org/licenses/by-sa/3.0/
 
-Authors of media files
------------------------
+Authors of media files:
+=================================
 Everything not listed in here:
 Copyright (C) 2010-2012 celeron55, Perttu Ahola <celeron55@gmail.com>
 
@@ -26,6 +27,7 @@ erlehmann:
   misc/minetest.svg
 
 License of Minetest source code:
+=================================
 
 Minetest
 Copyright (C) 2010-2013 celeron55, Perttu Ahola <celeron55@gmail.com>
@@ -45,8 +47,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
-
 Irrlicht:
+=================================
 
 This program uses the Irrlicht Engine. http://irrlicht.sourceforge.net/
 
@@ -72,8 +74,8 @@ it freely, subject to the following restrictions:
       distribution.
 
 
-License of media (textures and sounds)
---------------------------------------
+License of media (textures and sounds):
+=================================
 Copyright (C) 2013 Vattic
 
 http://www.minecraftforum.net/topic/72747-/
@@ -106,6 +108,7 @@ Vattic's Terms:
 --- --- ---
 
 JThread:
+=================================
 
 This program uses the JThread library. License for JThread follows:
 
@@ -132,6 +135,7 @@ IN THE SOFTWARE.
 --- --- ---
 
 Lua:
+=================================
 
 Lua is licensed under the terms of the MIT license reproduced below.
 This means that Lua is free software and can be used for both academic
@@ -162,6 +166,7 @@ THE SOFTWARE.
 --- --- ---
 
 Fonts:
+=================================
 
 DejaVu Sans Mono:
 
@@ -197,7 +202,7 @@ DroidSansFallback:
   See the License for the specific language governing permissions and
   limitations under the License.
   
-basis33
+basis33:
 
   The MIT License (MIT)
 
@@ -232,7 +237,6 @@ and Amoeba <amoeba@iki.fi>
 In MultiCraft Project this code has been changed:
 I changed the drop in a few lines.
 
-=================================
 
 Copyright (c) 2015 BlockMen <blockmen2015@gmail.com>
 
@@ -244,7 +248,6 @@ Permission is granted to anyone to use this software for any purpose, including
 commercial applications, and to alter it and redistribute it freely, subject to the
 following restrictions:
 
-
 1. The origin of this software must not be misrepresented; you must not
 claim that you wrote the original software. If you use this software in a
 product, an acknowledgment in the product documentation is required.
@@ -253,3 +256,5 @@ product, an acknowledgment in the product documentation is required.
 be misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source distribution.
+
+--- --- ---
