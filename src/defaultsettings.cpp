@@ -99,6 +99,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("screenH", "600");
 	settings->setDefault("fullscreen", "false");
 	settings->setDefault("fullscreen_bpp", "24");
+	settings->setDefault("screen_dpi", "72");
 	settings->setDefault("fsaa", "0");
 	settings->setDefault("vsync", "false");
 	settings->setDefault("address", "");
@@ -354,7 +355,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("pause_fps_max", "10");
 	settings->setDefault("max_objects_per_block", "32");
 	settings->setDefault("sqlite_synchronous", "1");
-	settings->setDefault("screen_dpi", "72");
 	settings->setDefault("gui_scaling", "1.1");
 	settings->setDefault("curl_verify_cert","false");
 	settings->setDefault("mouse_sensitivity", "0.15");

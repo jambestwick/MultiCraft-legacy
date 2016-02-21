@@ -1,18 +1,11 @@
 #!/bin/bash
 set -e
 
-dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-if [ $# -ne 1 ]; then
-	echo "Usage: $0 <build directory>"
-	exit 1
-fi
-builddir=$1
-mkdir -p $builddir
-builddir="$( cd "$builddir" && pwd )"
+builddir="$( pwd )"
 packagedir=$builddir/packages
 libdir=$builddir/libs
 
-toolchain_file=$dir/toolchain_mingw64.cmake
+toolchain_file=$builddir/toolchain_mingw64.cmake
 irrlicht_version=1.8.1
 ogg_version=1.3.1
 vorbis_version=1.3.4
@@ -68,25 +61,10 @@ cd $libdir
 [ -d luajit ] || unzip -o $packagedir/luajit-$luajit_version.zip -d luajit
 [ -d leveldb ] || unzip -o $packagedir/libleveldb-$leveldb_version.zip -d leveldb
 
-# Get minetest
+# Get MultiCraft
 cd $builddir
-if [ ! "x$EXISTING_MINETEST_DIR" = "x" ]; then
-	ln -s $EXISTING_MINETEST_DIR minetest
-else
-	[ -d minetest ] && (cd minetest && git pull) || (git clone https://github.com/minetest/minetest)
-fi
-cd minetest
-git_hash=`git show | head -c14 | tail -c7`
-
-# Get minetest_game
-cd games
-if [ "x$NO_MINETEST_GAME" = "x" ]; then
-	[ -d minetest_game ] && (cd minetest_game && git pull) || (git clone https://github.com/minetest/minetest_game)
-fi
-cd ../..
 
 # Build the thing
-cd minetest
 [ -d _build ] && rm -Rf _build/
 mkdir _build
 cd _build
@@ -151,6 +129,6 @@ cmake .. \
 	-DGETTEXT_INCLUDE_DIR=$libdir/gettext/include \
 	-DGETTEXT_LIBRARY=$libdir/gettext/lib/libintl.dll.a
 
-make package -j2
+make package -j8
 
 # EOF
