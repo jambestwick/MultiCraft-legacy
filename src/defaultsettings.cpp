@@ -88,12 +88,10 @@ void set_default_settings(Settings *settings)
 	#else
 	settings->setDefault("show_debug", "true");
 	#endif
-	settings->setDefault("wanted_fps", "20");
+
 	settings->setDefault("fps_max", "60");
 	settings->setDefault("pause_fps_max", "15");
-	// A bit more than the server will send around the player, to make fog blend well
-	settings->setDefault("viewing_range_nodes_max", "240");
-	settings->setDefault("viewing_range_nodes_min", "35");
+	settings->setDefault("viewing_range", "100");
 	settings->setDefault("map_generation_limit", "31000");
 	settings->setDefault("screenW", "800");
 	settings->setDefault("screenH", "600");
@@ -159,7 +157,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("trilinear_filter", "false");
 	settings->setDefault("texture_clean_transparent", "false");
 	settings->setDefault("texture_min_size", "32");
-	settings->setDefault("preload_item_visuals", "false");
 	settings->setDefault("tone_mapping", "false");
 	settings->setDefault("enable_bumpmapping", "false");
 	settings->setDefault("enable_parallax_occlusion", "false");
@@ -289,6 +286,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("num_emerge_threads", "1");
 	settings->setDefault("secure.enable_security", "false");
 	settings->setDefault("secure.trusted_mods", "");
+	settings->setDefault("secure.http_mods", "");
 
 	// physics stuff
 	settings->setDefault("movement_acceleration_default", "3");
@@ -345,12 +343,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("emergequeue_limit_diskonly", "8");
 	settings->setDefault("emergequeue_limit_generate", "8");
 	settings->setDefault("max_block_generate_distance", "3");
-	settings->setDefault("preload_item_visuals", "false");
-	settings->setDefault("viewing_range_nodes_max", "50");
-	settings->setDefault("viewing_range_nodes_min", "5");
-	settings->setDefault("inventory_image_hack", "true");
 	settings->setDefault("enable_3d_clouds", "false");
-	settings->setDefault("wanted_fps", "25");
 	settings->setDefault("fps_max", "35");
 	settings->setDefault("pause_fps_max", "10");
 	settings->setDefault("max_objects_per_block", "32");
@@ -359,6 +352,9 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("curl_verify_cert","false");
 	settings->setDefault("mouse_sensitivity", "0.15");
 	settings->setDefault("hud_scaling", "0.9");
+	settings->setDefault("viewing_range", "40");
+	settings->setDefault("inventory_image_hack", "true");
+
 	//check for device with small screen
 	float x_inches = ((double) porting::getDisplaySize().X /
 			(160 * porting::getDisplayDensity()));
