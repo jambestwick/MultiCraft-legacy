@@ -41,6 +41,7 @@ dofile(menupath .. DIR_DELIM .. "dlg_config_world.lua")
 dofile(menupath .. DIR_DELIM .. "tab_credits.lua")
 dofile(menupath .. DIR_DELIM .. "tab_mods.lua")
 dofile(menupath .. DIR_DELIM .. "tab_settings.lua")
+dofile(menupath .. DIR_DELIM .. "dlg_settings_advanced.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_delete_mod.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
@@ -89,21 +90,26 @@ local function init_globals()
 
 	-- Create main tabview
 	local tv_main = tabview_create("maintab",{x=12,y=5.2},{x=0,y=0})
---	tv_main:set_autosave_tab(true)
-
+	if PLATFORM ~= "Android" then
+		tv_main:set_autosave_tab(true)
+	end
 	tv_main:add(tab_singleplayer)
 	tv_main:add(tab_multiplayer)
 	tv_main:add(tab_server)
---	tv_main:add(tab_settings)
---	tv_main:add(tab_texturepacks)
---  tv_main:add(tab_mods)
+	if PLATFORM ~= "Android" then
+		tv_main:add(tab_settings)
+		tv_main:add(tab_texturepacks)
+		tv_main:add(tab_mods)
+	end
 	tv_main:add(tab_credits)
 
 	tv_main:set_global_event_handler(main_event_handler)
 
 	tv_main:set_fixed_size(false)
 
---	tv_main:set_tab(core.setting_get("maintab_LAST"))
+	if not (PLATFORM == "Android") then
+		tv_main:set_tab(core.setting_get("maintab_LAST"))
+	end
 	ui.set_default("maintab")
 	tv_main:show()
 
@@ -118,12 +124,11 @@ local function init_globals()
 
 	core.sound_play("main_menu", true)
 
-    mm_texture.clear("header")
-    mm_texture.clear("footer")
-    minetest.set_clouds(false)
-    minetest.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.jpg')
-    --minetest.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
+	mm_texture.clear("header")
+	mm_texture.clear("footer")
+	minetest.set_clouds(false)
+	minetest.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.jpg')
+	--minetest.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
 end
 
 init_globals()
-
