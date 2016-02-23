@@ -99,7 +99,7 @@ local function init_globals()
 	if PLATFORM ~= "Android" then
 		tv_main:add(tab_settings)
 		tv_main:add(tab_texturepacks)
-		tv_main:add(tab_mods)
+		--tv_main:add(tab_mods)
 	end
 	tv_main:add(tab_credits)
 
@@ -122,7 +122,7 @@ local function init_globals()
 
 	ui.update()
 
-	core.sound_play("main_menu", true)
+	core.sound_play("main_menu", false)
 
 	mm_texture.clear("header")
 	mm_texture.clear("footer")

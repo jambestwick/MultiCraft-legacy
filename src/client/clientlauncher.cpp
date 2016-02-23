@@ -410,7 +410,7 @@ bool ClientLauncher::launch_game(std::string &error_message,
 	// If using simple singleplayer mode, override
 	if (simple_singleplayer_mode) {
 		assert(skip_main_menu == false);
-		current_playername = "singleplayer";
+		current_playername = "Player";
 		current_password = "";
 		current_address = "";
 		current_port = myrand_range(49152, 65535);

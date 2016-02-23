@@ -753,14 +753,14 @@ assets : $(ASSETS_TIMESTAMP)
 	if [ $$REFRESH -ne 0 ] ; then                                              \
 	echo "assets changed, refreshing...";                                      \
 	$(MAKE) clean_assets;                                                      \
-	mkdir -p ${ROOT}/assets/MultiCraft;                                          \
-	cp ${ROOT}/../../multicraft.conf.example ${ROOT}/assets/MultiCraft;            \
-	cp ${ROOT}/../../README.md ${ROOT}/assets/MultiCraft;                       \
-	cp -r ${ROOT}/../../builtin ${ROOT}/assets/MultiCraft;                       \
-	mkdir ${ROOT}/assets/MultiCraft/fonts;                                       \
-	cp -r ${ROOT}/../../fonts/*.ttf ${ROOT}/assets/MultiCraft/fonts/;            \
-	cp -r ${ROOT}/../../games ${ROOT}/assets/MultiCraft;                        \
-	cp -r ${ROOT}/../../textures ${ROOT}/assets/MultiCraft;                       \
+	mkdir -p ${ROOT}/assets/MultiCraft;                                        \
+	cp ${ROOT}/../../multicraft.conf.example ${ROOT}/assets/MultiCraft;        \
+	cp ${ROOT}/../../README.md ${ROOT}/assets/MultiCraft;                      \
+	cp -r ${ROOT}/../../builtin ${ROOT}/assets/MultiCraft;                     \
+	mkdir ${ROOT}/assets/MultiCraft/fonts;                                     \
+	cp -r ${ROOT}/../../fonts/basis33.ttf ${ROOT}/assets/MultiCraft/fonts/;    \
+	cp -r ${ROOT}/../../games ${ROOT}/assets/MultiCraft;                       \
+	cp -r ${ROOT}/../../textures ${ROOT}/assets/MultiCraft;                    \
 	cd ${ROOT}/assets ||  exit 1;                                              \
 	find . -name "timestamp" -exec rm {} \; ;                                  \
 	find . -name "*.blend" -exec rm {} \; ;                                    \
@@ -769,7 +769,7 @@ assets : $(ASSETS_TIMESTAMP)
 	find . -type d -path "*.svn" -exec rm -rf {} \; ;                          \
 	find . -type f -path "*.gitignore" -exec rm -rf {} \; ;                    \
 	ls -R | grep ":$$" | sed -e 's/:$$//' -e 's/\.//' -e 's/^\///' > "index.txt"; \
-	find MultiCraft >"filelist.txt";                                             \
+	find MultiCraft >"filelist.txt";                                           \
 	cp ${ROOT}/${ASSETS_TIMESTAMP} ${ROOT}/${ASSETS_TIMESTAMP}.old;            \
 	echo "Creating Files.zip";						   \
 	zip -r Files.zip MultiCraft;						   \

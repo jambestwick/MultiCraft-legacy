@@ -204,15 +204,15 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("font_shadow", "1");
 	settings->setDefault("font_shadow_alpha", "128");
 	settings->setDefault("mono_font_path", porting::getDataPath("fonts" DIR_DELIM "liberationmono.ttf"));
-	settings->setDefault("fallback_font_path", porting::getDataPath("fonts" DIR_DELIM "DroidSansFallbackFull.ttf"));
+	settings->setDefault("fallback_font_path", porting::getDataPath("fonts" DIR_DELIM "DroidSansFallback.ttf"));
 
 	settings->setDefault("fallback_font_shadow", "1");
 	settings->setDefault("fallback_font_shadow_alpha", "128");
 
 	std::stringstream fontsize;
-	fontsize << TTF_DEFAULT_FONT_SIZE;
+	fontsize << DEFAULT_FONT_SIZE;
 
-	settings->setDefault("font_size", fontsize.str());
+	settings->setDefault("font_size", "16");
 	settings->setDefault("mono_font_size", fontsize.str());
 	settings->setDefault("fallback_font_size", fontsize.str());
 #else
@@ -342,9 +342,9 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("smooth_lighting", "false");
 	settings->setDefault("emergequeue_limit_diskonly", "8");
 	settings->setDefault("emergequeue_limit_generate", "8");
-	settings->setDefault("max_block_generate_distance", "3");
+	settings->setDefault("max_block_generate_distance", "2");
 	settings->setDefault("enable_3d_clouds", "false");
-	settings->setDefault("fps_max", "35");
+	settings->setDefault("fps_max", "40");
 	settings->setDefault("pause_fps_max", "10");
 	settings->setDefault("max_objects_per_block", "32");
 	settings->setDefault("sqlite_synchronous", "1");
@@ -355,6 +355,8 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("viewing_range", "25");
 	settings->setDefault("inventory_image_hack", "false");
 	settings->setDefault("doubletap_jump", "true");
+	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
+	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");
 
 	//check for device with small screen
 	float x_inches = ((double) porting::getDisplaySize().X /
@@ -362,10 +364,12 @@ void set_default_settings(Settings *settings)
 	if (x_inches < 3.5) {
 		settings->setDefault("hud_scaling", "0.55");
 		settings->setDefault("mouse_sensitivity", "0.1");
+		settings->setDefault("font_size","12");
 	}
 	else if (x_inches < 5.5) {
 		settings->setDefault("hud_scaling", "0.65");
 		settings->setDefault("mouse_sensitivity", "0.1");
+		settings->setDefault("font_size","14");
 	}
 #endif
 }

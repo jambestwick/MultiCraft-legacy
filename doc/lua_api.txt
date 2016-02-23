@@ -3825,7 +3825,7 @@ Definition tables
     --  ^ vertical: if true faces player using y axis only
         texture = "image.png",
     --  ^ Uses texture (string)
-        playername = "singleplayer"
+        playername = "Player"
     --  ^ optional, if specified spawns particle only on the player's client
     }
 
@@ -3854,7 +3854,7 @@ Definition tables
     --  ^ vertical: if true faces player using y axis only
         texture = "image.png",
     --  ^ Uses texture (string)
-        playername = "singleplayer"
+        playername = "Player"
     --  ^ Playername is optional, if specified spawns particle only on the player's client
     }
 

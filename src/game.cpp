@@ -2624,7 +2624,7 @@ void Game::processUserInput(VolatileRunFlags *flags,
 #endif
 
 	// Increase timer for double tap of "keymap_jump"
-	if (m_cache_doubletap_jump && runData->jump_timer <= 0.2)
+	if (m_cache_doubletap_jump && runData->jump_timer <= 0.15)
 		runData->jump_timer += dtime;
 
 	processKeyboardInput(
@@ -2834,7 +2834,7 @@ void Game::toggleFreeMove(float *statustext_time)
 
 void Game::toggleFreeMoveAlt(float *statustext_time, float *jump_timer)
 {
-	if (m_cache_doubletap_jump && *jump_timer < 0.2f)
+	if (m_cache_doubletap_jump && *jump_timer < 0.15f)
 		toggleFreeMove(statustext_time);
 }
 

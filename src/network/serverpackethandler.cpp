@@ -185,8 +185,8 @@ void Server::handleCommand_Init(NetworkPacket* pkt)
 
 	std::string legacyPlayerNameCasing = playerName;
 
-	if (!isSingleplayer() && strcasecmp(playername, "singleplayer") == 0) {
-		actionstream << "Server: Player with the name \"singleplayer\" "
+	if (!isSingleplayer() && strcasecmp(playername, "Player") == 0) {
+		actionstream << "Server: Player with the name \"Player\" "
 				<< "tried to connect from " << addr_s << std::endl;
 		DenyAccess(pkt->getPeerId(), SERVER_ACCESSDENIED_WRONG_NAME);
 		return;
@@ -475,8 +475,8 @@ void Server::handleCommand_Init_Legacy(NetworkPacket* pkt)
 		return;
 	}
 
-	if (!isSingleplayer() && strcasecmp(playername, "singleplayer") == 0) {
-		actionstream << "Server: Player with the name \"singleplayer\" "
+	if (!isSingleplayer() && strcasecmp(playername, "Player") == 0) {
+		actionstream << "Server: Player with the name \"Player\" "
 				<< "tried to connect from " << addr_s << std::endl;
 		DenyAccess_Legacy(pkt->getPeerId(), L"Name is not allowed");
 		return;

@@ -34,9 +34,9 @@ local function get_formspec(tabview, name, tabdata)
 			"button[3.5,4.5;2.6,0.5;world_delete;".. fgettext("Delete") .. "]" ..
 			"button[6,4.5;2.8,0.5;world_create;".. fgettext("New") .. "]" ..
 			"button[8.7,4.5;3.30,0.5;play;".. fgettext("Play") .. "]" ..
-			"checkbox[0.25,4;cb_creative_mode;".. fgettext("Creative Mode") .. ";" ..
+			"checkbox[0.0,4;cb_creative_mode;".. fgettext("Creative Inventory") .. ";" ..
 			dump(core.setting_getbool("creative_mode")) .. "]"..
-			"checkbox[0.25,4.5;cb_enable_damage;".. fgettext("Enable Damage") .. ";" ..
+			"checkbox[0.0,4.5;cb_enable_damage;".. fgettext("Survival Mode") .. ";" ..
 			dump(core.setting_getbool("enable_damage")) .. "]"..
 			"textlist[0,0;11.75,3.7;sp_worlds;" ..
 			menu_render_worldlist() ..
@@ -108,7 +108,7 @@ local function main_button_handler(this, fields, name, tabdata)
 		create_world_dlg:set_parent(this)
 		this:hide()
 		create_world_dlg:show()
-		mm_texture.update("singleplayer",current_game())
+		--mm_texture.update("singleplayer",current_game())
 		return true
 	end
 
@@ -125,7 +125,7 @@ local function main_button_handler(this, fields, name, tabdata)
 				delete_world_dlg:set_parent(this)
 				this:hide()
 				delete_world_dlg:show()
-				mm_texture.update("singleplayer",current_game())
+				--mm_texture.update("singleplayer",current_game())
 			end
 		end
 		
@@ -143,7 +143,7 @@ local function main_button_handler(this, fields, name, tabdata)
 				configdialog:set_parent(this)
 				this:hide()
 				configdialog:show()
-				mm_texture.update("singleplayer",current_game())
+				--mm_texture.update("singleplayer",current_game())
 			end
 		end
 		

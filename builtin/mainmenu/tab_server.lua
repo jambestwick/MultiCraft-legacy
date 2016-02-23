@@ -34,9 +34,9 @@ local function get_formspec(tabview, name, tabdata)
 		"button[9.2,4.15;2.55,0.5;world_configure;" .. fgettext("Configure") .. "]" ..
 		"button[8.5,4.95;3.25,0.5;start_server;" .. fgettext("Start Game") .. "]" ..
 		"label[4,-0.25;" .. fgettext("Select World:") .. "]" ..
-		"checkbox[0.25,0.25;cb_creative_mode;" .. fgettext("Creative Mode") .. ";" ..
+		"checkbox[0.25,0.25;cb_creative_mode;" .. fgettext("Creative Inventory") .. ";" ..
 		dump(core.setting_getbool("creative_mode")) .. "]" ..
-		"checkbox[0.25,0.7;cb_enable_damage;" .. fgettext("Enable Damage") .. ";" ..
+		"checkbox[0.25,0.7;cb_enable_damage;" .. fgettext("Survival Mode") .. ";" ..
 		dump(core.setting_getbool("enable_damage")) .. "]" ..
 		"checkbox[0.25,1.15;cb_server_announce;" .. fgettext("Public") .. ";" ..
 		dump(core.setting_getbool("server_announce")) .. "]" ..
