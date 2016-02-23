@@ -70,7 +70,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("3d_mode", "none");
 	settings->setDefault("3d_paralax_strength", "0.025");
 	settings->setDefault("aux1_descends", "false");
-	settings->setDefault("doubletap_jump", "true");
+	settings->setDefault("doubletap_jump", "false");
 	settings->setDefault("always_fly_fast", "true");
 	settings->setDefault("directional_colored_fog", "true");
 	settings->setDefault("tooltip_show_delay", "400");
@@ -333,8 +333,8 @@ void set_default_settings(Settings *settings)
 #ifdef __ANDROID__
 	settings->setDefault("screenW", "0");
 	settings->setDefault("screenH", "0");
-	settings->setDefault("enable_shaders", "false");
 	settings->setDefault("fullscreen", "true");
+	settings->setDefault("enable_shaders", "false");
 	settings->setDefault("video_driver", "ogles1");
 	settings->setDefault("touchtarget", "true");
 	settings->setDefault("TMPFolder","/sdcard/tmp/");
@@ -352,8 +352,9 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("curl_verify_cert","false");
 	settings->setDefault("mouse_sensitivity", "0.15");
 	settings->setDefault("hud_scaling", "0.9");
-	settings->setDefault("viewing_range", "40");
-	settings->setDefault("inventory_image_hack", "true");
+	settings->setDefault("viewing_range", "25");
+	settings->setDefault("inventory_image_hack", "false");
+	settings->setDefault("doubletap_jump", "true");
 
 	//check for device with small screen
 	float x_inches = ((double) porting::getDisplaySize().X /
