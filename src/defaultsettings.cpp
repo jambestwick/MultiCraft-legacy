@@ -177,7 +177,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_shaders", "true");
 	settings->setDefault("repeat_rightclick_time", "0.25");
 	settings->setDefault("enable_particles", "true");
-	settings->setDefault("enable_mesh_cache", "true");
+	settings->setDefault("enable_mesh_cache", "false");
 
 	settings->setDefault("enable_minimap", "true");
 	settings->setDefault("minimap_shape_round", "true");
@@ -362,12 +362,12 @@ void set_default_settings(Settings *settings)
 	float x_inches = ((double) porting::getDisplaySize().X /
 			(160 * porting::getDisplayDensity()));
 	if (x_inches < 3.5) {
-		settings->setDefault("hud_scaling", "0.55");
+		settings->setDefault("hud_scaling", "0.5");
 		settings->setDefault("mouse_sensitivity", "0.1");
 		settings->setDefault("font_size","12");
 	}
 	else if (x_inches < 5.5) {
-		settings->setDefault("hud_scaling", "0.65");
+		settings->setDefault("hud_scaling", "0.6");
 		settings->setDefault("mouse_sensitivity", "0.1");
 		settings->setDefault("font_size","14");
 	}
