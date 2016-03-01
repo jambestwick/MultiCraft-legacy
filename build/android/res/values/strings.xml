@@ -2,8 +2,8 @@
 <resources>
 
     <string name="app_name" translatable="false">MultiCraft</string>
-    <string name="ver" translatable="false">1.0.1</string>
-
+    <string name="ver" translatable="false">1.1.1</string>
+    <string name="google_app_id" translatable="false">312077575425</string>
     <!-- preparation for start -->
 
     <string name="rm_old">Preparing to update&#8230;</string>
@@ -13,12 +13,11 @@
     <string name="ok">Close</string>
 
     <!-- free space dialog -->
-    <string name="not_enough_space">Not enough space for unzipping.\nPlease free some space on the SD card</string>
+    <string name="not_enough_space">Not enough space for unzipping.\nPlease free some space on the device memory!</string>
     <string name="space_ok">OK</string>
 
     <!-- permission block -->
     <string name="explain">MultiCraft needs permission for writing its files to SD card.</string>
     <string name="permission_available_storage">Storage Permission has been granted. Game can now be launched.</string>
     <string name="permissions_not_granted">Permissions were not granted</string>
-	<string name="name">Cyrillic is not supported</string>
 </resources>

@@ -57,6 +57,23 @@ public class MainActivity extends Activity {
     private ProgressBar mProgressBar;
     private Utilities util;
     private boolean isCopyOld = false;
+    private BroadcastReceiver myReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int progress = intent.getIntExtra(UnzipService.ACTION_PROGRESS, 0);
+            if (progress >= 0) {
+                mProgressBar.setVisibility(View.VISIBLE);
+                mProgressBar.setProgress(progress);
+            } else {
+                util.createNomedia();
+                if (isCopyOld) {
+                    new CopyFolderTask().execute(new String[]{oldWorldLocation, newWorldLocation}, new String[]{oldGamesLocation, newGamesLocation});
+                } else {
+                    runGame();
+                }
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,24 +188,6 @@ public class MainActivity extends Activity {
         startService(intentMyIntentService);
 
     }
-
-    private BroadcastReceiver myReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int progress = intent.getIntExtra(UnzipService.ACTION_PROGRESS, 0);
-            if (progress >= 0) {
-                mProgressBar.setVisibility(View.VISIBLE);
-                mProgressBar.setProgress(progress);
-            } else {
-                util.createNomedia();
-                if (isCopyOld) {
-                    new CopyFolderTask().execute(new String[]{oldWorldLocation, newWorldLocation}, new String[]{oldGamesLocation, newGamesLocation});
-                } else {
-                    runGame();
-                }
-            }
-        }
-    };
 
     private class DeleteTask extends AsyncTask<String, Void, Void> {
         String location;

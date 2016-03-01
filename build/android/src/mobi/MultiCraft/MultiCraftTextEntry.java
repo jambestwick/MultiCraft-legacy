@@ -13,25 +13,21 @@ import android.widget.EditText;
 
 
 public class MultiCraftTextEntry extends Activity {
-    public AlertDialog mTextInputDialog;
-    public EditText mTextInputWidget;
-
     private final int MultiLineTextInput = 1;
     private final int SingleLinePasswordInput = 3;
+    public AlertDialog mTextInputDialog;
+    public EditText mTextInputWidget;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getIntent().getExtras();
         String acceptButton = b.getString("EnterButton");
-        // String hint = b.getString("hint");
-        String hint = getString(R.string.name);
         String current = b.getString("current");
         int editType = b.getInt("editType");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         mTextInputWidget = new EditText(this);
-        mTextInputWidget.setHint(hint);
         mTextInputWidget.setText(current);
         mTextInputWidget.setMinWidth(300);
         if (editType == SingleLinePasswordInput) {
