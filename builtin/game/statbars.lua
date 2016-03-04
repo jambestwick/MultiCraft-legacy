@@ -3,7 +3,7 @@ local health_bar_definition =
 {
 	hud_elem_type = "statbar",
 	position = { x=0.5, y=1 },
-	text = "heart.png",
+	text = "server_flags_damage.png",
 	number = 20,
 	direction = 0,
 	size = { x=24, y=24 },
@@ -14,7 +14,7 @@ local breath_bar_definition =
 {
 	hud_elem_type = "statbar",
 	position = { x=0.5, y=1 },
-	text = "bubble.png",
+	text = "halo.png",
 	number = 20,
 	direction = 0,
 	size = { x=24, y=24 },

@@ -7,13 +7,6 @@ LOCAL_MODULE := Irrlicht
 LOCAL_SRC_FILES := deps/irrlicht/lib/Android/libIrrlicht.a
 include $(PREBUILT_STATIC_LIBRARY)
 
-ifeq ($(HAVE_LEVELDB), 1)
-	include $(CLEAR_VARS)
-	LOCAL_MODULE := LevelDB
-	LOCAL_SRC_FILES := deps/leveldb/libleveldb.a
-	include $(PREBUILT_STATIC_LIBRARY)
-endif
-
 include $(CLEAR_VARS)
 LOCAL_MODULE := curl
 LOCAL_SRC_FILES := deps/curl/lib/.libs/libcurl.a
@@ -26,12 +19,12 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := iconv
-LOCAL_SRC_FILES := deps/libiconv/lib/.libs/libiconv.so
-include $(PREBUILT_SHARED_LIBRARY)
+LOCAL_SRC_FILES := deps/libiconv/lib/.libs/libiconv.a
+include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := openal
-LOCAL_SRC_FILES := deps/openal-soft/libs/$(TARGET_LIBDIR)/libopenal.so
+LOCAL_SRC_FILES := deps/openal-soft/android/libs/$(TARGET_LIBDIR)/libopenal.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
@@ -60,6 +53,11 @@ LOCAL_SRC_FILES := deps/openssl/libcrypto.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := luajit
+LOCAL_SRC_FILES := deps/luajit/src/libluajit.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := multicraft
 
 LOCAL_CPP_FEATURES += exceptions
@@ -73,7 +71,6 @@ LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_      \
 				-DUSE_CURL=1                  \
 				-DUSE_SOUND=1                 \
 				-DUSE_FREETYPE=1              \
-				-DUSE_LEVELDB=$(HAVE_LEVELDB) \
 				$(GPROF_DEF)                  \
 				-pipe -fstrict-aliasing
 
@@ -81,8 +78,8 @@ ifndef NDEBUG
 LOCAL_CFLAGS += -g -D_DEBUG -O0 -fno-omit-frame-pointer
 else
 
-LOCAL_CFLAGS += -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mfloat-abi=hard -march=armv7-a -Ofast -fno-fast-math
-LOCAL_LDFLAGS = -Wl,--no-warn-mismatch -lm_hard
+LOCAL_CFLAGS += -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mfloat-abi=hard -march=armv7-a -Ofast -fno-fast-math -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves
+LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
 # ToDo - disable for x86!
 
 endif
@@ -92,9 +89,6 @@ PROFILER_LIBS := android-ndk-profiler
 LOCAL_CFLAGS += -pg
 endif
 
-# LOCAL_CFLAGS += -fsanitize=address
-# LOCAL_LDFLAGS += -fsanitize=address
-
 ifeq ($(TARGET_ARCH_ABI),x86)
 LOCAL_CFLAGS += -fno-stack-protector
 endif
@@ -102,18 +96,17 @@ endif
 LOCAL_C_INCLUDES :=                               \
 		jni/src jni/src/sqlite                    \
 		jni/src/script                            \
-		jni/src/lua/src                           \
 		jni/src/json                              \
 		jni/src/cguittfont                        \
 		deps/irrlicht/include                     \
 		deps/libiconv/include                     \
 		deps/freetype/include                     \
 		deps/curl/include                         \
-		deps/openal-soft/jni/OpenAL/include       \
+		deps/openal-soft/include                  \
 		deps/libvorbis-libogg-android/jni/include \
 		deps/gmp/usr/include                      \
-		deps/leveldb/include                      \
-		deps/sqlite/
+		deps/sqlite/                              \
+		deps/luajit/src
 
 LOCAL_SRC_FILES :=                                \
 		jni/src/areastore.cpp                     \
@@ -256,7 +249,6 @@ LOCAL_SRC_FILES :=                                \
 		jni/src/unittest/test_voxelalgorithms.cpp \
 		jni/src/unittest/test_voxelmanipulator.cpp \
 		jni/src/touchscreengui.cpp                \
-		jni/src/database-leveldb.cpp              \
 		jni/src/settings.cpp                      \
 		jni/src/wieldmesh.cpp                     \
 		jni/src/client/clientlauncher.cpp         \
@@ -317,39 +309,6 @@ LOCAL_SRC_FILES +=                                \
 LOCAL_SRC_FILES +=                                \
 		jni/src/cguittfont/xCGUITTFont.cpp
 
-# lua
-LOCAL_SRC_FILES +=                                \
-		jni/src/lua/src/lapi.c                    \
-		jni/src/lua/src/lauxlib.c                 \
-		jni/src/lua/src/lbaselib.c                \
-		jni/src/lua/src/lcode.c                   \
-		jni/src/lua/src/ldblib.c                  \
-		jni/src/lua/src/ldebug.c                  \
-		jni/src/lua/src/ldo.c                     \
-		jni/src/lua/src/ldump.c                   \
-		jni/src/lua/src/lfunc.c                   \
-		jni/src/lua/src/lgc.c                     \
-		jni/src/lua/src/linit.c                   \
-		jni/src/lua/src/liolib.c                  \
-		jni/src/lua/src/llex.c                    \
-		jni/src/lua/src/lmathlib.c                \
-		jni/src/lua/src/lmem.c                    \
-		jni/src/lua/src/loadlib.c                 \
-		jni/src/lua/src/lobject.c                 \
-		jni/src/lua/src/lopcodes.c                \
-		jni/src/lua/src/loslib.c                  \
-		jni/src/lua/src/lparser.c                 \
-		jni/src/lua/src/lstate.c                  \
-		jni/src/lua/src/lstring.c                 \
-		jni/src/lua/src/lstrlib.c                 \
-		jni/src/lua/src/ltable.c                  \
-		jni/src/lua/src/ltablib.c                 \
-		jni/src/lua/src/ltm.c                     \
-		jni/src/lua/src/lundump.c                 \
-		jni/src/lua/src/lvm.c                     \
-		jni/src/lua/src/lzio.c                    \
-		jni/src/lua/src/print.c
-
 # SQLite3
 LOCAL_SRC_FILES += deps/sqlite/sqlite3.c
 
@@ -363,12 +322,9 @@ LOCAL_SRC_FILES += \
 # JSONCPP
 LOCAL_SRC_FILES += jni/src/json/jsoncpp.cpp
 
-LOCAL_SHARED_LIBRARIES := iconv openal ogg vorbis gmp
-LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl ssl crypto android_native_app_glue $(PROFILER_LIBS)
+LOCAL_SHARED_LIBRARIES := openal ogg vorbis gmp
+LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl ssl crypto iconv luajit android_native_app_glue $(PROFILER_LIBS)
 
-ifeq ($(HAVE_LEVELDB), 1)
-	LOCAL_STATIC_LIBRARIES += LevelDB
-endif
 LOCAL_LDLIBS := -lEGL -llog -lGLESv1_CM -lGLESv2 -lz -landroid
 
 include $(BUILD_SHARED_LIBRARY)

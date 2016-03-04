@@ -5,8 +5,8 @@
  LOCAL_CFLAGS += -g -D_DEBUG
  else
 -LOCAL_CFLAGS += -fexpensive-optimizations -O3
-+LOCAL_CFLAGS += -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mfloat-abi=hard -march=armv7-a -Ofast
-+LOCAL_LDFLAGS = -Wl,--no-warn-mismatch -lm_hard
++LOCAL_CFLAGS += -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mfloat-abi=hard -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves
++LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
  endif
  
  LOCAL_C_INCLUDES := ../../../include

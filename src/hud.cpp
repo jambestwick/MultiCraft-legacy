@@ -469,7 +469,7 @@ void Hud::drawHotbar(u16 playeritem) {
 	if ((player->hud_flags & HUD_FLAG_HEALTHBAR_VISIBLE)) {
 		drawStatbar(v2s32(floor(0.5 * (float)m_screensize.X + 0.5),
 			floor(1 * (float) m_screensize.Y + 0.5)),
-			HUD_CORNER_UPPER, 0, "heart.png",
+			HUD_CORNER_UPPER, 0, "server_flags_damage.png",
 			player->hp, v2s32((-10*24)-25,-(48+24+10)), v2s32(24,24));
 	}
 
@@ -477,7 +477,7 @@ void Hud::drawHotbar(u16 playeritem) {
 			(player->getBreath() < 11)) {
 		drawStatbar(v2s32(floor(0.5 * (float)m_screensize.X + 0.5),
 			floor(1 * (float) m_screensize.Y + 0.5)),
-			HUD_CORNER_UPPER, 0, "bubble.png",
+			HUD_CORNER_UPPER, 0, "halo.png",
 			player->getBreath(), v2s32(25,-(48+24+10)), v2s32(24,24));
 	}
 	////////////////////////////////////////////////////////////////////////////
