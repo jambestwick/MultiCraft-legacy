@@ -82,7 +82,7 @@ IRRLICHT_TIMESTAMP = $(IRRLICHT_DIR)/timestamp
 IRRLICHT_TIMESTAMP_INT = $(ROOT)/deps/irrlicht_timestamp
 IRRLICHT_URL_HTTP = https://github.com/zaki/irrlicht/archive/$(IRRLICHT_COMMIT).zip
 
-OPENSSL_VERSION = 1.0.2f
+OPENSSL_VERSION = 1.0.2g
 OPENSSL_DIR = $(ROOT)/deps/openssl
 OPENSSL_LIB = $(OPENSSL_DIR)/libssl.so.1.0.0
 OPENSSL_TIMESTAMP = $(OPENSSL_DIR)/timestamp
@@ -117,7 +117,7 @@ ICONV_TIMESTAMP = $(ICONV_DIR)/timestamp
 ICONV_TIMESTAMP_INT = $(ROOT)/deps/iconv_timestamp
 ICONV_URL_HTTP = http://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
 
-SQLITE3_VERSION= 3110000
+SQLITE3_VERSION= 3110100
 SQLITE3_DIR = $(ROOT)/deps/sqlite-amalgamation-$(SQLITE3_VERSION)
 SQLITE3_URL = http://www.sqlite.org/2016/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 

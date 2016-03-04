@@ -292,7 +292,7 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 	/* init drop button */
 	initButton(drop_id,
 	           rect<s32>(m_screensize.X-(0.75*button_size),
-					   m_screensize.Y/2-(1.75*button_size),
+					   m_screensize.Y/2-(1.5*button_size),
 					   m_screensize.X,
 					   m_screensize.Y/2-(0.75*button_size)),
 			L"drop", false, SLOW_BUTTON_REPEAT);
