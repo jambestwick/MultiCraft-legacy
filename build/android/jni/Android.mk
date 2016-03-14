@@ -78,10 +78,9 @@ ifndef NDEBUG
 LOCAL_CFLAGS += -g -D_DEBUG -O0 -fno-omit-frame-pointer
 else
 
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a-hard)
 LOCAL_CFLAGS += -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mfloat-abi=hard -march=armv7-a -Ofast -fno-fast-math -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
-# ToDo - disable for x86!
-
 endif
 
 ifdef GPROF
@@ -109,7 +108,6 @@ LOCAL_C_INCLUDES :=                               \
 		deps/luajit/src
 
 LOCAL_SRC_FILES :=                                \
-		jni/src/areastore.cpp                     \
 		jni/src/ban.cpp                           \
 		jni/src/camera.cpp                        \
 		jni/src/cavegen.cpp                       \
@@ -218,6 +216,7 @@ LOCAL_SRC_FILES :=                                \
 		jni/src/version.cpp                       \
 		jni/src/voxel.cpp                         \
 		jni/src/voxelalgorithms.cpp               \
+		jni/src/util/areastore.cpp                \
 		jni/src/util/auth.cpp                     \
 		jni/src/util/base64.cpp                   \
 		jni/src/util/directiontables.cpp          \
