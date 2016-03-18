@@ -24,8 +24,8 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := openal
-LOCAL_SRC_FILES := deps/openal-soft/android/libs/$(TARGET_LIBDIR)/libopenal.so
-include $(PREBUILT_SHARED_LIBRARY)
+LOCAL_SRC_FILES := deps/openal-soft/android/obj/local/$(APP_ABI)/libopenal.a
+include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := ogg
@@ -81,6 +81,8 @@ else
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a-hard)
 LOCAL_CFLAGS += -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mfloat-abi=hard -march=armv7-a -Ofast -fno-fast-math -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
+endif
+
 endif
 
 ifdef GPROF
@@ -321,10 +323,10 @@ LOCAL_SRC_FILES += \
 # JSONCPP
 LOCAL_SRC_FILES += jni/src/json/jsoncpp.cpp
 
-LOCAL_SHARED_LIBRARIES := openal ogg vorbis gmp
-LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl ssl crypto iconv luajit android_native_app_glue $(PROFILER_LIBS)
+LOCAL_SHARED_LIBRARIES := ogg vorbis gmp
+LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl ssl crypto iconv luajit openal android_native_app_glue $(PROFILER_LIBS)
 
-LOCAL_LDLIBS := -lEGL -llog -lGLESv1_CM -lGLESv2 -lz -landroid
+LOCAL_LDLIBS := -lEGL -llog -lGLESv1_CM -lGLESv2 -lz -landroid -lOpenSLES
 
 include $(BUILD_SHARED_LIBRARY)
 

@@ -346,7 +346,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("emergequeue_limit_generate", "8");
 	settings->setDefault("max_block_generate_distance", "2");
 	settings->setDefault("enable_3d_clouds", "false");
-	settings->setDefault("fps_max", "40");
+	settings->setDefault("fps_max", "45");
 	settings->setDefault("pause_fps_max", "10");
 	settings->setDefault("max_objects_per_block", "20");
 	settings->setDefault("sqlite_synchronous", "1");
@@ -360,22 +360,24 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("active_block_range", "1");
     settings->setDefault("chunksize", "3");
 
-//check for device with small screen
+    // check for device with small screen
 	float x_inches = ((double) porting::getDisplaySize().X /
 			(160 * porting::getDisplayDensity()));
 	if (x_inches < 3.5) {
 		settings->setDefault("hud_scaling", "0.5");
+		settings->setDefault("gui_scaling", "1.0");
 	}
-	else if (x_inches < 5.5) {
+	if (x_inches < 6.0) {
 		settings->setDefault("hud_scaling", "0.6");
 	}
-	else if (x_inches > 5.5) {
+		else
+	{
 		settings->setDefault("hud_scaling", "0.9");
 		settings->setDefault("mouse_sensitivity", "0.15");
 	}
 
 	std::stringstream anddroidfontsize;
-	anddroidfontsize << DEFAULT_FONT_SIZE / 3 * x_inches;
+	anddroidfontsize << DEFAULT_FONT_SIZE / 2.9 * x_inches;
 	settings->setDefault("font_size", anddroidfontsize.str());
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");

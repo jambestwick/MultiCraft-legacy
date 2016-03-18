@@ -41,7 +41,9 @@ dofile(menupath .. DIR_DELIM .. "dlg_config_world.lua")
 dofile(menupath .. DIR_DELIM .. "tab_credits.lua")
 dofile(menupath .. DIR_DELIM .. "tab_mods.lua")
 dofile(menupath .. DIR_DELIM .. "tab_settings.lua")
-dofile(menupath .. DIR_DELIM .. "dlg_settings_advanced.lua")
+if not (PLATFORM == "Android") then
+	dofile(menupath .. DIR_DELIM .. "dlg_settings_advanced.lua")
+end
 dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_delete_mod.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")

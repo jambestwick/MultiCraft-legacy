@@ -4,13 +4,14 @@
 # GPROF = 1
 
 # build for build platform
-APP_PLATFORM = android-16
+APP_PLATFORM     = android-19
 
 # paths used for timestaps, dependencys, tree config and libs
 PATHCFGFILE = path.cfg
 
-# Android Version code
 ANDROID_VERSION_CODE = 1
+
+COMPILER_VERSION = 4.9
 
 ################################################################################
 # toolchain config for ARMv7
@@ -26,7 +27,6 @@ TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
 TARGET_ARCH = armv7
 CROSS_PREFIX = arm-linux-androideabi-
-COMPILER_VERSION = 4.9
 
 ################################################################################
 # toolchain config for ARMv8
@@ -39,9 +39,8 @@ COMPILER_VERSION = 4.9
 # TARGET_TOOLCHAIN = aarch64-linux-android-
 # TARGET_CFLAGS_ADDON = -Ofast
 # TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
-# TARGET_ARCH = arm64
+# TARGET_ARCH = aarch64
 # CROSS_PREFIX = aarch64-linux-android-
-# COMPILER_VERSION = 4.9
 
 ################################################################################
 # toolchain config for x86
@@ -56,17 +55,17 @@ COMPILER_VERSION = 4.9
 # TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 # TARGET_ARCH = x86
 # CROSS_PREFIX = i686-linux-android-
-# COMPILER_VERSION = 4.9
 
 ################################################################################
 
 ASSETS_TIMESTAMP = deps/assets_timestamp
 
+OPENAL_FOLDER = $(ROOT)/deps/openal-soft
 OPENAL_DIR = $(ROOT)/deps/openal-soft/android
 OPENAL_LIB = $(OPENAL_DIR)libs/$(TARGET_ABI)/libopenal.so
 OPENAL_TIMESTAMP = $(OPENAL_DIR)/timestamp
 OPENAL_TIMESTAMP_INT = $(ROOT)/deps/openal_timestamp
-OPENAL_URL_GIT = https://github.com/Wemersive/openal-soft
+OPENAL_URL_GIT = https://github.com/MoNTE48/openal-soft
 
 OGG_DIR = $(ROOT)/deps/libvorbis-libogg-android
 OGG_LIB = $(OGG_DIR)/libs/$(TARGET_ABI)/libogg.so
@@ -103,12 +102,12 @@ GMP_TIMESTAMP = $(GMP_DIR)/timestamp
 GMP_TIMESTAMP_INT = $(ROOT)/deps/gmp_timestamp
 GMP_URL_HTTP = https://gmplib.org/download/gmp/gmp-$(GMP_VERSION).tar.bz2
 
-FREETYPE_VERSION = 2.6.2
+FREETYPE_VERSION = 2.6.3
 FREETYPE_DIR = $(ROOT)/deps/freetype
 FREETYPE_LIB = $(FREETYPE_DIR)/objs/.libs/libfreetype.a
 FREETYPE_TIMESTAMP = $(FREETYPE_DIR)/timestamp
 FREETYPE_TIMESTAMP_INT = $(ROOT)/deps/freetype_timestamp
-FREETYPE_URL_HTTP = http://sourceforge.net/projects/freetype/files/freetype2/2.6.2/freetype-$(FREETYPE_VERSION).tar.bz2
+FREETYPE_URL_HTTP = http://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VERSION)/freetype-$(FREETYPE_VERSION).tar.bz2
 
 ICONV_VERSION = 1.14
 ICONV_DIR = $(ROOT)/deps/libiconv
@@ -179,7 +178,7 @@ delconfig :
 
 $(PATHCFGFILE) :
 	@echo "Please specify path of ANDROID NDK";                                \
-	echo "e.g. /home/user/android-ndk-r10e/";                                   \
+	echo "e.g. /home/user/android-ndk-r10e/";                                  \
 	read ANDROID_NDK ;                                                         \
 	if [ ! -d $$ANDROID_NDK ] ; then                                           \
 		echo "$$ANDROID_NDK is not a valid folder";                            \
@@ -239,7 +238,7 @@ $(OPENAL_LIB): $(OPENAL_TIMESTAMP)
 	fi
 
 clean_openal :
-	$(RM) -rf ${OPENAL_DIR}
+	$(RM) -rf ${OPENAL_FOLDER}
 
 $(OGG_TIMESTAMP) : ogg_download
 	@LAST_MODIF=$$(find ${OGG_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
@@ -323,7 +322,8 @@ $(OPENSSL_LIB): $(OPENSSL_TIMESTAMP) $(GMP_LIB)
 	--toolchain=${TARGET_TOOLCHAIN}${COMPILER_VERSION}                         \
 	--install-dir=$${TOOLCHAIN} --platform=${APP_PLATFORM};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
-	CC=${CROSS_PREFIX}gcc ./Configure enable-gmp -DL_ENDIAN -I${GMP_DIR} -L${GMP_DIR}/usr/lib android-${TARGET_ARCH};\
+	CC=${CROSS_PREFIX}gcc ./Configure no-ssl2 no-ssl3 no-hw enable-gmp         \
+	-DL_ENDIAN -I${GMP_DIR} -L${GMP_DIR}/usr/lib android-${TARGET_ARCH};       \
 	CC=${CROSS_PREFIX}gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST} make depend;     \
 	CC=${CROSS_PREFIX}gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST} make build_libs; \
 	touch ${OPENSSL_TIMESTAMP};                                                \
@@ -434,12 +434,12 @@ $(ICONV_LIB) : $(ICONV_TIMESTAMP)
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-iconv;                            \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
 	--toolchain=${TARGET_TOOLCHAIN}${COMPILER_VERSION}                         \
-	--install-dir=$${TOOLCHAIN};                                               \
+	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	./configure --enable-static --disable-shared --host=${TARGET_HOST2} || exit 1;   \
+	./configure --enable-static --disable-shared --host=${TARGET_HOST2} || exit 1;  \
 	sed -i 's/LIBICONV_VERSION_INFO) /LIBICONV_VERSION_INFO) -avoid-version /g' lib/Makefile; \
 	grep "iconv_LDFLAGS" src/Makefile;                                         \
 	$(MAKE) -s || exit 1;                                                      \
@@ -514,11 +514,12 @@ clean_irrlicht :
 $(CURL_TIMESTAMP) : curl_download
 	@LAST_MODIF=$$(find ${CURL_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
 	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
-		touch ${CURL_TIMESTAMP};                                               \
+		touch ${CURL_TIMESTAMP};                                           \
 	fi
 
+
 curl_download :
-	@if [ ! -d "deps/curl-${CURL_VERSION}" ] ; then                            \
+	@if [ ! -d "deps/curl" ] ; then                            \
 		echo "curl sources missing, downloading...";                           \
 		mkdir -p ${ROOT}/deps;                                                 \
 		cd deps;                                                               \
@@ -531,7 +532,7 @@ curl_download :
 curl : $(CURL_LIB)
 
 $(CURL_LIB): $(CURL_TIMESTAMP) $(OPENSSL_LIB)
-	@REFRESH=0;                                                                \
+	+ @REFRESH=0;                                                          \
 	if [ ! -e ${CURL_TIMESTAMP_INT} ] ; then                                   \
 		REFRESH=1;                                                             \
 	fi;                                                                        \
@@ -550,7 +551,7 @@ $(CURL_LIB): $(CURL_TIMESTAMP) $(OPENSSL_LIB)
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-curl;                             \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
 	--toolchain=${TARGET_TOOLCHAIN}${COMPILER_VERSION}                         \
-	--install-dir=$${TOOLCHAIN};                                               \
+	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
@@ -569,7 +570,7 @@ $(CURL_LIB): $(CURL_TIMESTAMP) $(OPENSSL_LIB)
 	fi
 
 clean_curl :
-	$(RM) -f deps/curl
+	$(RM) -R ${CURL_DIR}
 
 $(GMP_TIMESTAMP) : gmp_download
 	@LAST_MODIF=$$(find ${GMP_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
@@ -610,7 +611,7 @@ $(GMP_LIB): $(GMP_TIMESTAMP)
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-gmp;                              \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
 	--toolchain=${TARGET_TOOLCHAIN}${COMPILER_VERSION}                         \
-	--install-dir=$${TOOLCHAIN};                                               \
+	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
@@ -626,7 +627,7 @@ $(GMP_LIB): $(GMP_TIMESTAMP)
 	fi
 
 clean_gmp:
-	$(RM) -f deps/gmp
+	$(RM) -R deps/gmp
 
 sqlite3_download:
 	@if [ ! -d ${SQLITE3_DIR} ] ; then                                           \
@@ -641,7 +642,7 @@ sqlite3_download:
 
 clean_sqlite3:
 	cd deps && $(RM) -rf ${SQLITE3_DIR} && \
-	$(RM) -f sqlite
+	$(RM) -R sqlite
 
 $(ASSETS_TIMESTAMP) : $(IRRLICHT_LIB)
 	@mkdir -p ${ROOT}/deps;                                                     \
@@ -687,14 +688,11 @@ luajit : $(LUAJIT_LIB)
 
 $(LUAJIT_LIB): $(LUAJIT_TIMESTAMP)
 	@REFRESH=0;                                                                \
-		if [ ! -e ${LUAJIT_TIMESTAMP_INT} ] ; then                             \
-		REFRESH=1;                                                             \
-	fi;                                                                        \
-	if [ ! -e ${LUAJIT_LIB} ] ; then                                           \
-		REFRESH=1;                                                             \
+	if [ ! -e ${LUAJIT_TIMESTAMP_INT} ] ; then                                 \
+		REFRESH=1;                                                         \
 	fi;                                                                        \
 	if [ ${LUAJIT_TIMESTAMP} -nt ${LUAJIT_TIMESTAMP_INT} ] ; then              \
-		REFRESH=1;                                                             \
+		REFRESH=1;                                                         \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
 	mkdir -p ${LUAJIT_DIR};                                                    \
@@ -705,7 +703,7 @@ $(LUAJIT_LIB): $(LUAJIT_TIMESTAMP)
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-luajit;                           \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
 	--toolchain=${TARGET_TOOLCHAIN}${COMPILER_VERSION}                         \
-	--install-dir=$${TOOLCHAIN};                                               \
+	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export TARGET_FLAGS="${TARGET_CFLAGS_ADDON}";                              \
 	export TARGET_LDFLAGS="${TARGET_LDFLAGS_ADDON}";                           \
@@ -718,7 +716,7 @@ $(LUAJIT_LIB): $(LUAJIT_TIMESTAMP)
 	fi
 
 clean_luajit:
-	$(RM) -f deps/luajit
+	$(RM) -R deps/luajit
 
 assets : $(ASSETS_TIMESTAMP)
 	@REFRESH=0;                                                                \
@@ -762,7 +760,7 @@ clean_assets :
 	@$(RM) -r assets
 
 apk: $(PATHCFGFILE) assets $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(GMP_LIB) \
-    $(LUAJIT_LIB)                                                              \
+        $(LUAJIT_LIB)                                                              \
 	$(OPENAL_LIB) $(OGG_LIB) prep_srcdir $(ROOT)/jni/src/android_version.h     \
 	$(ROOT)/jni/src/android_version_githash.h sqlite3_download
 	@export NDEBUG=$$NDEBUG; $(MAKE) manifest;                                 \
