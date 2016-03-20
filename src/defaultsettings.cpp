@@ -185,6 +185,8 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("minimap_shape_round", "true");
 	settings->setDefault("minimap_double_scan_height", "false");
 
+	settings->setDefault("send_pre_v25_init", "true");
+
 	settings->setDefault("curl_timeout", "5000");
 	settings->setDefault("curl_parallel_limit", "8");
 	settings->setDefault("curl_file_download_timeout", "300000");
@@ -279,6 +281,9 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("sqlite_synchronous", "2");
 	settings->setDefault("full_block_send_enable_min_time_from_building", "2.0");
 	settings->setDefault("dedicated_server_step", "0.1");
+	settings->setDefault("active_block_mgmt_interval", "2.0");
+	settings->setDefault("abm_interval", "1.0");
+	settings->setDefault("nodetimer_interval", "1.0");
 	settings->setDefault("ignore_world_load_errors", "false");
 	settings->setDefault("remote_media", "");
 	settings->setDefault("debug_log_level", "action");

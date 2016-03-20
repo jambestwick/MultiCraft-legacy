@@ -24,6 +24,10 @@ local function get_formspec(tabview, name, tabdata)
     minetest.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.jpg')
     --minetest.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
 	
+	-- Update the cached supported proto info,
+	-- it may have changed after a change by the settings menu.
+	common_update_cached_supp_proto()
+
 	local render_details = core.is_yes(core.setting_getbool("public_serverlist"))
 	
 	local retval =

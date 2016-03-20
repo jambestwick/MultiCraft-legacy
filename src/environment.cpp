@@ -59,6 +59,9 @@ Environment::Environment():
 	m_day_night_ratio_override(0.0f)
 {
 	m_cache_enable_shaders = g_settings->getBool("enable_shaders");
+	m_cache_active_block_mgmt_interval = g_settings->getFloat("active_block_mgmt_interval");
+	m_cache_abm_interval = g_settings->getFloat("abm_interval");
+	m_cache_nodetimer_interval = g_settings->getFloat("nodetimer_interval");
 }
 
 Environment::~Environment()
@@ -1322,9 +1325,8 @@ void ServerEnvironment::step(float dtime)
 	/*
 		Manage active block list
 	*/
-	if(m_active_blocks_management_interval.step(dtime, 2.0))
-	{
-		ScopeProfiler sp(g_profiler, "SEnv: manage act. block list avg /2s", SPT_AVG);
+	if (m_active_blocks_management_interval.step(dtime, m_cache_active_block_mgmt_interval)) {
+		ScopeProfiler sp(g_profiler, "SEnv: manage act. block list avg per interval", SPT_AVG);
 		/*
 			Get player block positions
 		*/
@@ -1399,12 +1401,10 @@ void ServerEnvironment::step(float dtime)
 	/*
 		Mess around in active blocks
 	*/
-	const float abm_interval = 1.0;
-	if(m_active_blocks_nodemetadata_interval.step(dtime, 1.0))
-	{
-		ScopeProfiler sp(g_profiler, "SEnv: mess in act. blocks avg /1s", SPT_AVG);
+	if (m_active_blocks_nodemetadata_interval.step(dtime, m_cache_nodetimer_interval)) {
+		ScopeProfiler sp(g_profiler, "SEnv: mess in act. blocks avg per interval", SPT_AVG);
 
-		float dtime = 1.0;
+		float dtime = m_cache_nodetimer_interval;
 
 		// Initialize handling of ActiveBlockModifiers
 		ABMHandler abmhandler(m_abms, abm_interval, this, true);
@@ -1453,6 +1453,52 @@ void ServerEnvironment::step(float dtime)
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	if (m_active_block_modifier_interval.step(dtime, m_cache_abm_interval))
+	do{ // breakable
+		if(m_active_block_interval_overload_skip > 0){
+			ScopeProfiler sp(g_profiler, "SEnv: ABM overload skips");
+			m_active_block_interval_overload_skip--;
+			break;
+		}
+		ScopeProfiler sp(g_profiler, "SEnv: modify in blocks avg per interval", SPT_AVG);
+		TimeTaker timer("modify in active blocks per interval");
+
+		// Initialize handling of ActiveBlockModifiers
+		ABMHandler abmhandler(m_abms, m_cache_abm_interval, this, true);
+
+		for(std::set<v3s16>::iterator
+				i = m_active_blocks.m_list.begin();
+				i != m_active_blocks.m_list.end(); ++i)
+		{
+			v3s16 p = *i;
+
+			/*infostream<<"Server: Block ("<<p.X<<","<<p.Y<<","<<p.Z
+					<<") being handled"<<std::endl;*/
+
+			MapBlock *block = m_map->getBlockNoCreateNoEx(p);
+			if(block == NULL)
+				continue;
+
+			// Set current time as timestamp
+			block->setTimestampNoChangedFlag(m_game_time);
+
+			/* Handle ActiveBlockModifiers */
+			abmhandler.apply(block);
+		}
+
+		u32 time_ms = timer.stop(true);
+		u32 max_time_ms = 200;
+		if(time_ms > max_time_ms){
+			warningstream<<"active block modifiers took "
+					<<time_ms<<"ms (longer than "
+					<<max_time_ms<<"ms)"<<std::endl;
+			m_active_block_interval_overload_skip = (time_ms / max_time_ms) + 1;
+		}
+	}while(0);
+
+>>>>>>> upstream1/master
 	/*
 		Step script environment (run global on_step())
 	*/
