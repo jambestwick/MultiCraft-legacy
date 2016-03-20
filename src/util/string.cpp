@@ -102,13 +102,6 @@ std::wstring utf8_to_wide(const std::string &input)
 	return out;
 }
 
-#ifdef __ANDROID__
-// TODO: this is an ugly fix for wide_to_utf8 somehow not working on android
-std::string wide_to_utf8(const std::wstring &input)
-{
-	return wide_to_narrow(input);
-}
-#else
 std::string wide_to_utf8(const std::wstring &input)
 {
 	size_t inbuf_size = (input.length() + 1) * sizeof(wchar_t);
@@ -135,7 +128,6 @@ std::string wide_to_utf8(const std::wstring &input)
 	return out;
 }
 
-#endif
 #else // _WIN32
 
 std::wstring utf8_to_wide(const std::string &input)
@@ -202,23 +194,12 @@ wchar_t *narrow_to_wide_c(const char *str)
 
 #ifdef __ANDROID__
 
-const wchar_t* wide_chars =
-	L" !\"#$%&'()*+,-./0123456789:;<=>?@"
-	L"ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`"
-	L"abcdefghijklmnopqrstuvwxyz{|}~";
-
 int wctomb(char *s, wchar_t wc)
 {
-	for (unsigned int j = 0; j < (sizeof(wide_chars)/sizeof(wchar_t));j++) {
-		if (wc == wide_chars[j]) {
-			*s = (char) (j+32);
-			return 1;
-		}
-		else if (wc == L'\n') {
+	if (wc == L'\n') {
 			*s = '\n';
 			return 1;
 		}
-	}
 	return -1;
 }
 
@@ -235,27 +216,7 @@ int mbtowc(wchar_t *pwc, const char *s, size_t n)
 	}
 }
 
-std::wstring narrow_to_wide(const std::string &mbs) {
-	size_t wcl = mbs.size();
-
-	std::wstring retval = L"";
-
-	for (unsigned int i = 0; i < wcl; i++) {
-		if (((unsigned char) mbs[i] >31) &&
-		 ((unsigned char) mbs[i] < 127)) {
-
-			retval += wide_chars[(unsigned char) mbs[i] -32];
-		}
-		//handle newline
-		else if (mbs[i] == '\n') {
-			retval += L'\n';
-		}
-	}
-
-	return retval;
-}
-
-#else // not Android
+#endif
 
 std::wstring narrow_to_wide(const std::string &mbs)
 {
@@ -268,38 +229,6 @@ std::wstring narrow_to_wide(const std::string &mbs)
 	return *wcs;
 }
 
-#endif
-
-#ifdef __ANDROID__
-
-std::string wide_to_narrow(const std::wstring &wcs) {
-	size_t mbl = wcs.size()*4;
-
-	std::string retval = "";
-	for (unsigned int i = 0; i < wcs.size(); i++) {
-		wchar_t char1 = (wchar_t) wcs[i];
-
-		if (char1 == L'\n') {
-			retval += '\n';
-			continue;
-		}
-
-		for (unsigned int j = 0; j < wcslen(wide_chars);j++) {
-			wchar_t char2 = (wchar_t) wide_chars[j];
-
-			if (char1 == char2) {
-				char toadd = (j+32);
-				retval += toadd;
-				break;
-			}
-		}
-	}
-
-	return retval;
-}
-
-#else // not Android
-
 std::string wide_to_narrow(const std::wstring &wcs)
 {
 	size_t mbl = wcs.size() * 4;
@@ -311,8 +240,6 @@ std::string wide_to_narrow(const std::wstring &wcs)
 		mbs[len] = 0;
 	return *mbs;
 }
-
-#endif
 
 std::string urlencode(std::string str)
 {
@@ -727,6 +654,33 @@ static bool parseNamedColorString(const std::string &value, video::SColor &color
 	color = video::SColor(color_temp);
 
 	return true;
+}
+
+std::wstring removeChatEscapes(const std::wstring &s) {
+	std::wstring output;
+	size_t i = 0;
+	while (i < s.length()) {
+		if (s[i] == L'\v') {
+			++i;
+			if (i == s.length()) continue;
+			if (s[i] == L'(') {
+				++i;
+				while (i < s.length() && s[i] != L')') {
+					if (s[i] == L'\\') {
+						++i;
+					}
+					++i;
+				}
+				++i;
+			} else {
+				++i;
+			}
+			continue;
+		}
+		output += s[i];
+		++i;
+	}
+	return output;
 }
 
 void str_replace(std::string &str, char from, char to)

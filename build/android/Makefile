@@ -4,7 +4,7 @@
 # GPROF = 1
 
 # build for build platform
-APP_PLATFORM     = android-19
+APP_PLATFORM = android-19
 
 # paths used for timestaps, dependencys, tree config and libs
 PATHCFGFILE = path.cfg
@@ -21,8 +21,8 @@ TARGET_HOST = arm-linux
 TARGET_HOST2 = arm-linux
 TARGET_ABI = armeabi-v7a-hard
 TARGET_LIBDIR = armeabi-v7a
-TARGET_TOOLCHAIN = arm-linux-androideabi-
-TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mfloat-abi=hard -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves
+TARGET_TOOLCHAIN = arm-linux-androideabi
+TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves
 TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
 TARGET_ARCH = armv7
@@ -36,10 +36,11 @@ CROSS_PREFIX = arm-linux-androideabi-
 # TARGET_HOST2 = arm-linux
 # TARGET_ABI = arm64-v8a
 # TARGET_LIBDIR = arm64-v8a
-# TARGET_TOOLCHAIN = aarch64-linux-android-
-# TARGET_CFLAGS_ADDON = -Ofast
+# TARGET_TOOLCHAIN = aarch64-linux-android
+# TARGET_CFLAGS_ADDON = -march=armv8-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves
 # TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
-# TARGET_ARCH = aarch64
+# TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
+# TARGET_ARCH = arm64
 # CROSS_PREFIX = aarch64-linux-android-
 
 ################################################################################
@@ -50,9 +51,10 @@ CROSS_PREFIX = arm-linux-androideabi-
 # TARGET_HOST2 = x86-linux
 # TARGET_ABI = x86
 # TARGET_LIBDIR = x86
-# TARGET_TOOLCHAIN = x86-
+# TARGET_TOOLCHAIN = x86
 # TARGET_CFLAGS_ADDON = -Ofast
 # TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
+# TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
 # TARGET_ARCH = x86
 # CROSS_PREFIX = i686-linux-android-
 
@@ -75,6 +77,7 @@ OGG_TIMESTAMP_INT = $(ROOT)/deps/ogg_timestamp
 OGG_URL_GIT = https://github.com/vincentjames501/libvorbis-libogg-android
 
 IRRLICHT_COMMIT = 58fa0cf3419c2733159fc3c6253634bedada3bfe
+#IRRLICHT_COMMIT = 54b8cba398c3b845d0d1158822916c2f78be194b
 IRRLICHT_DIR = $(ROOT)/deps/irrlicht
 IRRLICHT_LIB = $(IRRLICHT_DIR)/lib/Android/libIrrlicht.a
 IRRLICHT_TIMESTAMP = $(IRRLICHT_DIR)/timestamp
@@ -185,9 +188,6 @@ $(PATHCFGFILE) :
 		exit 1;                                                                \
 	fi;                                                                        \
 	echo "ANDROID_NDK = $$ANDROID_NDK" > ${PATHCFGFILE};                       \
-	echo "NDK_MODULE_PATH = $$ANDROID_NDK/toolchains" >> ${PATHCFGFILE};            \
-	echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";\
-	echo "+ Note: NDK_MODULE_PATH is set to $$ANDROID_NDK/toolchains";              \
 	echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";\
 	echo "Please specify path of ANDROID SDK";                                 \
 	echo "e.g. /home/user/adt-bundle-linux-x86_64-20131030/sdk/";              \
@@ -226,7 +226,7 @@ $(OPENAL_LIB): $(OPENAL_TIMESTAMP)
 	export PATH=$$PATH:${ANDROID_NDK};                                         \
 	echo "changed timestamp for openal detected building...";                  \
 	cd ${OPENAL_DIR};                                                          \
-	ndk-build NDEBUG=${NDEBUG} NDK_MODULE_PATH=${NDK_MODULE_PATH}              \
+	ndk-build NDEBUG=${NDEBUG}                                                 \
 	APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM} TARGET_ARCH_ABI=${TARGET_ABI} \
 	APP_PLATFORM=${APP_PLATFORM} TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"       \
 	TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                                  \
@@ -272,7 +272,7 @@ $(OGG_LIB): $(OGG_TIMESTAMP)
 	export PATH=$$PATH:${ANDROID_NDK};                                         \
 	echo "changed timestamp for ogg detected building...";                     \
 	cd ${OGG_DIR};                                                             \
-	ndk-build NDEBUG=${NDEBUG} NDK_MODULE_PATH=${NDK_MODULE_PATH}              \
+	ndk-build NDEBUG=${NDEBUG}                                                 \
 	APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                         \
 	TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                    \
 	TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                                  \
@@ -319,7 +319,7 @@ $(OPENSSL_LIB): $(OPENSSL_TIMESTAMP) $(GMP_LIB)
 	cd ${OPENSSL_DIR};                                                         \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-openssl;                          \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}${COMPILER_VERSION}                         \
+	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                         \
 	--install-dir=$${TOOLCHAIN} --platform=${APP_PLATFORM};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	CC=${CROSS_PREFIX}gcc ./Configure no-ssl2 no-ssl3 no-hw enable-gmp         \
@@ -351,7 +351,7 @@ freetype_download :
 		wget ${FREETYPE_URL_HTTP} || exit 1;                                    \
 		tar -xjf freetype-${FREETYPE_VERSION}.tar.bz2 || exit 1;                \
 		rm freetype-${FREETYPE_VERSION}.tar.bz2;                                \
-		ln -s freetype-${FREETYPE_VERSION} freetype;                            \
+		mv freetype-${FREETYPE_VERSION} freetype;                            \
 	fi
 
 freetype : $(FREETYPE_LIB)
@@ -375,12 +375,12 @@ $(FREETYPE_LIB) : $(FREETYPE_TIMESTAMP)
 	export CROSS_PREFIX=${CROSS_PREFIX};                                       \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-freetype;                         \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}${COMPILER_VERSION}                         \
-	--install-dir=$${TOOLCHAIN};                                               \
+	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                         \
+	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	CC=${CROSS_PREFIX}gcc ./configure --host=${TARGET_HOST}-androideabi        \
+	CC=${CROSS_PREFIX}gcc ./configure --host=${TARGET_HOST}       \
 		--prefix=${TOOLCHAIN} --with-png=no --with-harfbuzz=no || exit 1;      \
 	CC=${CROSS_PREFIX}gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST}-freetype make || exit 1; \
 	touch ${FREETYPE_TIMESTAMP};                                               \
@@ -433,7 +433,7 @@ $(ICONV_LIB) : $(ICONV_TIMESTAMP)
 	cd ${ICONV_DIR};                                                           \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-iconv;                            \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}${COMPILER_VERSION}                         \
+	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                         \
 	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
@@ -500,7 +500,7 @@ $(IRRLICHT_LIB): $(IRRLICHT_TIMESTAMP) $(FREETYPE_LIB)
 	export PATH=$$PATH:${ANDROID_NDK};                                         \
 	echo "changed timestamp for irrlicht detected building...";                \
 	cd deps/irrlicht/source/Irrlicht/Android;                                  \
-	ndk-build NDEBUG=${NDEBUG} NDK_MODULE_PATH=${NDK_MODULE_PATH}              \
+	ndk-build NDEBUG=${NDEBUG}                                                 \
 	APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM} || exit 1;              \
 	touch ${IRRLICHT_TIMESTAMP};                                               \
 	touch ${IRRLICHT_TIMESTAMP_INT};                                           \
@@ -550,7 +550,7 @@ $(CURL_LIB): $(CURL_TIMESTAMP) $(OPENSSL_LIB)
 	export CROSS_PREFIX=${CROSS_PREFIX};                                       \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-curl;                             \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}${COMPILER_VERSION}                         \
+	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                         \
 	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
@@ -607,10 +607,10 @@ $(GMP_LIB): $(GMP_TIMESTAMP)
 	export PATH=$$PATH:${ANDROID_NDK};                                         \
 	echo "changed timestamp for gmp detected building...";                     \
 	cd deps/gmp;                                                               \
-	export CROSS_PREFIX=${CROSS_PREFIX};                                       \
+    export CROSS_PREFIX=${CROSS_PREFIX};                                       \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-gmp;                              \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}${COMPILER_VERSION}                         \
+	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
 	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
@@ -702,7 +702,7 @@ $(LUAJIT_LIB): $(LUAJIT_TIMESTAMP)
 	export CROSS_PREFIX=${CROSS_PREFIX};                                       \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-luajit;                           \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}${COMPILER_VERSION}                         \
+	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                         \
 	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export TARGET_FLAGS="${TARGET_CFLAGS_ADDON}";                              \
@@ -716,18 +716,15 @@ $(LUAJIT_LIB): $(LUAJIT_TIMESTAMP)
 	fi
 
 clean_luajit:
-	$(RM) -R deps/luajit
+	$(RM) -r deps/luajit
 
 assets : $(ASSETS_TIMESTAMP)
 	@REFRESH=0;                                                                \
-	if [ ! -e ${ASSETS_TIMESTAMP}.old ] ; then                                 \
-		REFRESH=1;                                                             \
+	if [ ! -e ${ASSETS_TIMESTAMP} ] ; then                                 \
+		REFRESH=1;                                                         \
 	fi;                                                                        \
-	if [ ${ASSETS_TIMESTAMP} -nt ${ASSETS_TIMESTAMP}.old ] ; then              \
-		REFRESH=1;                                                             \
-	fi;                                                                        \
-	if [ ! -d ${ROOT}/assets ] ; then                                          \
-		REFRESH=1;                                                             \
+	if [ ${ASSETS_TIMESTAMP} -nt ${ASSETS_TIMESTAMP} ] ; then              \
+		REFRESH=1;                                                         \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
 	echo "assets changed, refreshing...";                                      \
@@ -749,9 +746,10 @@ assets : $(ASSETS_TIMESTAMP)
 	find . -type f -path "*.gitignore" -exec rm -rf {} \; ;                    \
 	ls -R | grep ":$$" | sed -e 's/:$$//' -e 's/\.//' -e 's/^\///' > "index.txt"; \
 	find MultiCraft >"filelist.txt";                                           \
-	cp ${ROOT}/${ASSETS_TIMESTAMP} ${ROOT}/${ASSETS_TIMESTAMP}.old;            \
 	echo "Creating Files.zip";						   \
 	zip -r Files.zip MultiCraft;						   \
+	touch ${ASSETS_TIMESTAMP};                                                 \
+	touch ${ASSETS_TIMESTAMP_INT};                                             \
 	else									   \
 		echo "nothing to be done for assets";                              \
 	fi
@@ -760,14 +758,14 @@ clean_assets :
 	@$(RM) -r assets
 
 apk: $(PATHCFGFILE) assets $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(GMP_LIB) \
-        $(LUAJIT_LIB)                                                              \
+    $(LUAJIT_LIB)                                                              \
 	$(OPENAL_LIB) $(OGG_LIB) prep_srcdir $(ROOT)/jni/src/android_version.h     \
 	$(ROOT)/jni/src/android_version_githash.h sqlite3_download
 	@export NDEBUG=$$NDEBUG; $(MAKE) manifest;                                 \
 	export PATH=$$PATH:${SDKFOLDER}/platform-tools:${ANDROID_NDK};             \
 	export ANDROID_HOME=${SDKFOLDER};                                          \
 	mkdir -p ${ROOT}/src;                                                      \
-	ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}                               \
+	ndk-build NDEBUG=${NDEBUG}                                                 \
 	GPROF=${GPROF} APP_ABI=${TARGET_ABI}                                       \
 	APP_PLATFORM=${APP_PLATFORM}                                               \
 	TARGET_LIBDIR=${TARGET_LIBDIR}                                             \

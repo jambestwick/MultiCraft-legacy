@@ -105,7 +105,7 @@ void ItemDefinition::reset()
 	inventory_image = "";
 	wield_image = "";
 	wield_scale = v3f(1.0, 1.0, 1.0);
-	stack_max = 99;
+	stack_max = 64;
 	usable = false;
 	liquids_pointable = false;
 	if(tool_capabilities)

@@ -66,8 +66,7 @@ ifdef GPROF
 GPROF_DEF=-DGPROF
 endif
 
-LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_      \
-				-DHAVE_TOUCHSCREENGUI         \
+LOCAL_CFLAGS := -DHAVE_TOUCHSCREENGUI         \
 				-DUSE_CURL=1                  \
 				-DUSE_SOUND=1                 \
 				-DUSE_FREETYPE=1              \
@@ -79,7 +78,7 @@ LOCAL_CFLAGS += -g -D_DEBUG -O0 -fno-omit-frame-pointer
 else
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a-hard)
-LOCAL_CFLAGS += -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mfloat-abi=hard -march=armv7-a -Ofast -fno-fast-math -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves
+LOCAL_CFLAGS += -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fno-fast-math -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -Wno-deprecated-declarations
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
 endif
 
@@ -92,6 +91,7 @@ endif
 
 ifeq ($(TARGET_ARCH_ABI),x86)
 LOCAL_CFLAGS += -fno-stack-protector
+LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
 endif
 
 LOCAL_C_INCLUDES :=                               \
@@ -107,7 +107,7 @@ LOCAL_C_INCLUDES :=                               \
 		deps/libvorbis-libogg-android/jni/include \
 		deps/gmp/usr/include                      \
 		deps/sqlite/                              \
-		deps/luajit/src
+		deps/luajit/src                           
 
 LOCAL_SRC_FILES :=                                \
 		jni/src/ban.cpp                           \
