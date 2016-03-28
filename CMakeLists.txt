@@ -13,7 +13,7 @@ set(PROJECT_NAME_CAPITALIZED "MultiCraft")
 # Also remember to set PROTOCOL_VERSION in network/networkprotocol.h when releasing
 set(VERSION_MAJOR 1)
 set(VERSION_MINOR 1)
-set(VERSION_PATCH 0)
+set(VERSION_PATCH 2)
 set(VERSION_EXTRA "" CACHE STRING "Stuff to append to version string")
 
 # Change to false for releases
@@ -155,7 +155,7 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/client" DESTINATION "${SHAREDIR}"
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/games" DESTINATION "${SHAREDIR}" PATTERN ".git*" EXCLUDE)
 
 if(BUILD_CLIENT)
-	install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/textures/base/pack" DESTINATION "${SHAREDIR}/textures/base")
+	install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/textures" DESTINATION "${SHAREDIR}")
 endif()
 
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/fonts" DESTINATION "${SHAREDIR}")
@@ -226,4 +226,3 @@ if(DOXYGEN_FOUND)
 		COMMENT "Generating API documentation with Doxygen" VERBATIM
 	)
 endif()
-

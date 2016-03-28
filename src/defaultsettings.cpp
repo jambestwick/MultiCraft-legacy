@@ -102,7 +102,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("vsync", "false");
 	settings->setDefault("address", "");
 	settings->setDefault("random_input", "false");
-	settings->setDefault("client_unload_unused_data_timeout", "600");
+	settings->setDefault("client_unload_unused_data_timeout", "300");
 	settings->setDefault("client_mapblock_limit", "5000");
 	settings->setDefault("enable_fog", "true");
 	settings->setDefault("fov", "72");
@@ -357,11 +357,11 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("sqlite_synchronous", "1");
 	settings->setDefault("gui_scaling", "1.1");
 	settings->setDefault("curl_verify_cert","false");
-	settings->setDefault("viewing_range", "30");
+	settings->setDefault("viewing_range", "25");
 	settings->setDefault("inventory_image_hack", "false");
 	settings->setDefault("doubletap_jump", "true");
-	settings->setDefault("server_map_save_interval", "30");
-	settings->setDefault("client_unload_unused_data_timeout", "90");
+	settings->setDefault("server_map_save_interval", "15");
+	settings->setDefault("client_unload_unused_data_timeout", "30");
 	settings->setDefault("active_block_range", "1");
     settings->setDefault("chunksize", "3");
 

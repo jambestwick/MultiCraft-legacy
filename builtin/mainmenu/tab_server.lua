@@ -18,12 +18,6 @@
 --------------------------------------------------------------------------------
 local function get_formspec(tabview, name, tabdata)
 
-	mm_texture.clear("header")
-    mm_texture.clear("footer")
-    minetest.set_clouds(false)
-    minetest.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.jpg')
-    --minetest.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
-	
 	local index = menudata.worldlist:get_current_index(
 				tonumber(core.setting_get("mainmenu_last_selected_world"))
 				)

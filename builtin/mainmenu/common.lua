@@ -197,8 +197,7 @@ function menu_render_worldlist()
 			retval = retval ..","
 		end
 
-		retval = retval .. core.formspec_escape(v.name) ..
-					" \\[" .. core.formspec_escape(v.gameid) .. "\\]"
+		retval = retval .. core.formspec_escape(v.name) .. ""
 	end
 
 	return retval

@@ -69,10 +69,10 @@ void android_main(android_app *app)
 /* TODO this doesn't work as expected, no idea why but there's a workaround   */
 /* for it right now */
 extern "C" {
-	JNIEXPORT void JNICALL Java_mobi_MultiCraft_MCNativeActivity_putMessageBoxResult(
+	JNIEXPORT void JNICALL Java_mobi_MultiCraft_GameActivity_putMessageBoxResult(
 			JNIEnv * env, jclass thiz, jstring text)
 	{
-		errorstream << "Java_mobi_MultiCraft_MCNativeActivity_putMessageBoxResult got: "
+		errorstream << "Java_mobi_MultiCraft_GameActivity_putMessageBoxResult got: "
 				<< std::string((const char*)env->GetStringChars(text,0))
 				<< std::endl;
 	}
@@ -136,7 +136,7 @@ void initAndroid()
 		exit(-1);
 	}
 
-	nativeActivity = findClass("mobi/MultiCraft/MCNativeActivity");
+	nativeActivity = findClass("mobi/MultiCraft/GameActivity");
 	if (nativeActivity == 0) {
 		errorstream <<
 			"porting::initAndroid unable to find java native activity class" <<

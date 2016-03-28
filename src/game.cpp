@@ -4209,10 +4209,9 @@ void Game::updateGui(float *statustext_time, const RunStats &stats,
 	} else if (flags.show_hud || flags.show_chat) {
 		std::ostringstream os(std::ios_base::binary);
 		os << std::setprecision(1) << std::fixed
-		   << "(X: " << (player_position.X / BS)
+		   << "X: " << (player_position.X / BS)
 		   << ", Y: " << (player_position.Y / BS)
-		   << ", Z: " << (player_position.Z / BS)
-		   << ")";
+		   << ", Z: " << (player_position.Z / BS);
 		guitext->setText(utf8_to_wide(os.str()).c_str());
 		guitext->setVisible(true);
 	} else {

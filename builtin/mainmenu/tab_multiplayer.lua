@@ -18,12 +18,6 @@
 --------------------------------------------------------------------------------
 local function get_formspec(tabview, name, tabdata)
 
-	mm_texture.clear("header")
-    mm_texture.clear("footer")
-    minetest.set_clouds(false)
-    minetest.set_background("background",minetest.formspec_escape(mm_texture.basetexturedir)..'background.jpg')
-    --minetest.set_background("header",minetest.formspec_escape(mm_texture.basetexturedir)..'header.png')
-	
 	-- Update the cached supported proto info,
 	-- it may have changed after a change by the settings menu.
 	common_update_cached_supp_proto()

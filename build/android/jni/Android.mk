@@ -29,8 +29,8 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := ogg
-LOCAL_SRC_FILES := deps/libvorbis-libogg-android/libs/$(TARGET_LIBDIR)/libogg.so
-include $(PREBUILT_SHARED_LIBRARY)
+LOCAL_SRC_FILES := deps/libvorbis-libogg-android/obj/local/$(APP_ABI)/libogg.a
+include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := vorbis
@@ -53,20 +53,19 @@ LOCAL_SRC_FILES := deps/openssl/libcrypto.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := luajit
+LOCAL_MODULE := LuaJIT
 LOCAL_SRC_FILES := deps/luajit/src/libluajit.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := multicraft
 
-LOCAL_CPP_FEATURES += exceptions
-
 ifdef GPROF
 GPROF_DEF=-DGPROF
 endif
 
-LOCAL_CFLAGS := -DHAVE_TOUCHSCREENGUI         \
+LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_      \
+                -DHAVE_TOUCHSCREENGUI         \
 				-DUSE_CURL=1                  \
 				-DUSE_SOUND=1                 \
 				-DUSE_FREETYPE=1              \
@@ -323,8 +322,8 @@ LOCAL_SRC_FILES += \
 # JSONCPP
 LOCAL_SRC_FILES += jni/src/json/jsoncpp.cpp
 
-LOCAL_SHARED_LIBRARIES := ogg vorbis gmp
-LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl ssl crypto iconv luajit openal android_native_app_glue $(PROFILER_LIBS)
+LOCAL_SHARED_LIBRARIES := gmp vorbis
+LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl ssl crypto iconv LuaJIT openal ogg android_native_app_glue $(PROFILER_LIBS)
 
 LOCAL_LDLIBS := -lEGL -llog -lGLESv1_CM -lGLESv2 -lz -landroid -lOpenSLES
 

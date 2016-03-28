@@ -40,7 +40,7 @@ local function get_formspec(tabview, name, tabdata)
 			dump(core.setting_getbool("enable_damage")) .. "]"..
 			"textlist[0,0;11.75,3.7;sp_worlds;" ..
 			menu_render_worldlist() ..
-			";" .. index .. "]"
+			";" .. index .. ";true]"
 	return retval
 end
 

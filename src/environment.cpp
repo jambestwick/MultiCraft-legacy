@@ -1406,9 +1406,6 @@ void ServerEnvironment::step(float dtime)
 
 		float dtime = m_cache_nodetimer_interval;
 
-		// Initialize handling of ActiveBlockModifiers
-		ABMHandler abmhandler(m_abms, abm_interval, this, true);
-		
 		for(std::set<v3s16>::iterator
 				i = m_active_blocks.m_list.begin();
 				i != m_active_blocks.m_list.end(); ++i)
@@ -1427,9 +1424,6 @@ void ServerEnvironment::step(float dtime)
 
 			// Set current time as timestamp
 			block->setTimestampNoChangedFlag(m_game_time);
-			
-			abmhandler.apply(block);
-			
 			// If time has changed much from the one on disk,
 			// set block to be saved when it is unloaded
 			if(block->getTimestamp() > block->getDiskTimestamp() + 60)
@@ -1453,8 +1447,6 @@ void ServerEnvironment::step(float dtime)
 		}
 	}
 
-<<<<<<< HEAD
-=======
 	if (m_active_block_modifier_interval.step(dtime, m_cache_abm_interval))
 	do{ // breakable
 		if(m_active_block_interval_overload_skip > 0){
@@ -1498,7 +1490,6 @@ void ServerEnvironment::step(float dtime)
 		}
 	}while(0);
 
->>>>>>> upstream1/master
 	/*
 		Step script environment (run global on_step())
 	*/

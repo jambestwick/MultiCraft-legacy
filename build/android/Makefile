@@ -74,7 +74,7 @@ OGG_LIB = $(OGG_DIR)/libs/$(TARGET_ABI)/libogg.so
 VORBIS_LIB = $(OGG_DIR)/libs/$(TARGET_ABI)/libogg.so
 OGG_TIMESTAMP = $(OGG_DIR)/timestamp
 OGG_TIMESTAMP_INT = $(ROOT)/deps/ogg_timestamp
-OGG_URL_GIT = https://github.com/vincentjames501/libvorbis-libogg-android
+OGG_URL_GIT = https://github.com/MoNTE48/libvorbis-libogg-android
 
 IRRLICHT_COMMIT = 58fa0cf3419c2733159fc3c6253634bedada3bfe
 #IRRLICHT_COMMIT = 54b8cba398c3b845d0d1158822916c2f78be194b
@@ -91,7 +91,7 @@ OPENSSL_TIMESTAMP = $(OPENSSL_DIR)/timestamp
 OPENSSL_TIMESTAMP_INT = $(ROOT)/deps/openssl_timestamp
 OPENSSL_URL = ftp://ftp.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
 
-CURL_VERSION = 7.47.1
+CURL_VERSION = 7.48.0
 CURL_DIR = $(ROOT)/deps/curl
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
@@ -110,7 +110,7 @@ FREETYPE_DIR = $(ROOT)/deps/freetype
 FREETYPE_LIB = $(FREETYPE_DIR)/objs/.libs/libfreetype.a
 FREETYPE_TIMESTAMP = $(FREETYPE_DIR)/timestamp
 FREETYPE_TIMESTAMP_INT = $(ROOT)/deps/freetype_timestamp
-FREETYPE_URL_HTTP = http://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VERSION)/freetype-$(FREETYPE_VERSION).tar.bz2
+FREETYPE_URL_HTTP = http://download.savannah.gnu.org/releases/freetype/freetype-$(FREETYPE_VERSION).tar.bz2
 
 ICONV_VERSION = 1.14
 ICONV_DIR = $(ROOT)/deps/libiconv
@@ -157,7 +157,7 @@ VERSION_PATCH := $(shell cat $(ROOT)/../../CMakeLists.txt | \
 	$(ASSETS_TIMESTAMP) $(LUAJIT_TIMESTAMP) \
 	$(OPENAL_TIMESTAMP) $(OGG_TIMESTAMP) \
 	$(IRRLICHT_TIMESTAMP) $(CURL_TIMESTAMP) \
-	$(OPENSSL_TIMESTAMP) \
+	$(OPENSSL_TIMESTAMP) $(VORBIS_TIMESTAMP) \
 	$(ROOT)/jni/src/android_version.h \
 	$(ROOT)/jni/src/android_version_githash.h
 
@@ -252,9 +252,6 @@ ogg_download :
 		mkdir -p ${ROOT}/deps;                                                 \
 		cd ${ROOT}/deps ;                                                      \
 		git clone ${OGG_URL_GIT}|| exit 1;                                     \
-		cd libvorbis-libogg-android ;                                          \
-		patch -p1 < ../../libvorbis-libogg-fpu.patch || exit 1;                \
-		sed -i 's-:-?-' jni/Application.mk;                                    \
 	fi
 
 ogg : $(OGG_LIB)
@@ -319,7 +316,7 @@ $(OPENSSL_LIB): $(OPENSSL_TIMESTAMP) $(GMP_LIB)
 	cd ${OPENSSL_DIR};                                                         \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-openssl;                          \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                         \
+	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
 	--install-dir=$${TOOLCHAIN} --platform=${APP_PLATFORM};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	CC=${CROSS_PREFIX}gcc ./Configure no-ssl2 no-ssl3 no-hw enable-gmp         \
@@ -433,7 +430,7 @@ $(ICONV_LIB) : $(ICONV_TIMESTAMP)
 	cd ${ICONV_DIR};                                                           \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-iconv;                            \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                         \
+	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
 	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
@@ -702,7 +699,7 @@ $(LUAJIT_LIB): $(LUAJIT_TIMESTAMP)
 	export CROSS_PREFIX=${CROSS_PREFIX};                                       \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-luajit;                           \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                         \
+	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
 	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export TARGET_FLAGS="${TARGET_CFLAGS_ADDON}";                              \
@@ -716,7 +713,7 @@ $(LUAJIT_LIB): $(LUAJIT_TIMESTAMP)
 	fi
 
 clean_luajit:
-	$(RM) -r deps/luajit
+	$(RM) -R deps/luajit
 
 assets : $(ASSETS_TIMESTAMP)
 	@REFRESH=0;                                                                \
@@ -772,9 +769,9 @@ apk: $(PATHCFGFILE) assets $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(GMP_LIB) \
 	TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                    \
 	TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                                  \
 	TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" &&                             \
-#	ant $$BUILD_TYPE &&                                                        \
-	echo "	Success! =)"                                                       \
-#	echo "APK: bin/MultiCraft-$$BUILD_TYPE.apk" &&                             \
+	echo "	Success! =)";                                                       \
+	ant $$BUILD_TYPE &&                                                        \
+	echo "APK: bin/MultiCraft-$$BUILD_TYPE.apk"                                \
 
 prep_srcdir :
 	@if [ ! -e ${ROOT}/jni/src ]; then                                         \

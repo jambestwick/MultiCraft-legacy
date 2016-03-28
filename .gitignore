@@ -29,8 +29,6 @@ gtags.files
 ## Non-static MultiCraft directories or symlinks to these
 /bin/
 /cache
-/textures/*
-!/textures/base/
 /screenshots
 
 ## Configuration/log files

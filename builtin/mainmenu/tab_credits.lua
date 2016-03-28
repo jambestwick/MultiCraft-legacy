@@ -21,14 +21,13 @@ tab_credits = {
 	name = "credits",
 	caption = fgettext("Credits"),
 	cbf_formspec = function (tabview, name, tabdata)
-			local logofile = defaulttexturedir .. "smoke_puff.png"
 			return "label[0.5,3.2;MultiCraft " .. core.get_version() .. "]" ..
 				"label[0.5,3.5;Open Source Project]" ..
-				"image[0.5,1;" .. core.formspec_escape(logofile) .. "]" ..
 				"tablecolumns[color;text]" ..
 				"tableoptions[background=#00000000;highlight=#00000000;border=false]" ..
 				"table[3.5,-0.25;8.5,5.8;list_credits;" ..
 				"#FFFF00," .. fgettext("Core Developers") .."," ..
+				",Maksim Gamarnik (MoNTE48) <MoNTE48@mail.ua>,"..
 				",Perttu Ahola (celeron55) <celeron55@gmail.com>,"..
 				",Ryan Kwolek (kwolekr) <kwolekr@minetest.net>,"..
 				",PilzAdam <pilzadam@minetest.net>," ..
