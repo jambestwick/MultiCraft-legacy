@@ -78,7 +78,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         loadSettings(this);
         IntentFilter filter = new IntentFilter(UnzipService.ACTION_UPDATE);
@@ -87,6 +86,8 @@ public class MainActivity extends Activity {
             finish();
             return;
         }
+
+
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestStoragePermission();
@@ -95,11 +96,24 @@ public class MainActivity extends Activity {
         }
     }
 
+    public void makeFullScreen() {
+        if (Build.VERSION.SDK_INT >= 19) {
+            this.getWindow().getDecorView()
+                    .setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         dismissProgressDialog();
         unregisterReceiver(myReceiver);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        makeFullScreen();
     }
 
     private void addShortcut() {
@@ -117,6 +131,7 @@ public class MainActivity extends Activity {
 
     @SuppressWarnings("deprecation")
     public void init() {
+        setContentView(R.layout.activity_main);
         if (isCreateShortcut())
             addShortcut();
         mProgressBar = (ProgressBar) findViewById(R.id.PB1);
@@ -175,7 +190,7 @@ public class MainActivity extends Activity {
         util.deleteZip(FILES);
         util.deleteZip(WORLDS);
         util.deleteZip(GAMES);
-        Intent intent = new Intent(MainActivity.this, MCNativeActivity.class);
+        Intent intent = new Intent(MainActivity.this, GameActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
@@ -265,7 +280,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
-            if (util.getAvailableSpaceInMB() > 25) {
+            if (util.getAvailableSpaceInMB() > 15) {
                 try {
                     startUnzipService(zips);
                 } catch (IOException e) {

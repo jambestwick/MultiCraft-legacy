@@ -7,15 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
-public class MCNativeActivity extends NativeActivity {
+public class GameActivity extends NativeActivity {
     static {
-        System.loadLibrary("openal");
-        System.loadLibrary("ogg");
+
         System.loadLibrary("vorbis");
+        System.loadLibrary("gmp");
         System.loadLibrary("ssl");
         System.loadLibrary("crypto");
-        System.loadLibrary("gmp");
-        System.loadLibrary("iconv");
         System.loadLibrary("multicraft");
     }
 
@@ -28,6 +26,7 @@ public class MCNativeActivity extends NativeActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//        startAd(this, true);
         m_MessagReturnCode = -1;
         m_MessageReturnValue = "";
     }
@@ -45,14 +44,25 @@ public class MCNativeActivity extends NativeActivity {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
             makeFullScreen();
-
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+//        startAd(this, false);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         makeFullScreen();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        stopAd();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -71,7 +81,7 @@ public class MCNativeActivity extends NativeActivity {
     }
 
     public void showDialog(String acceptButton, String hint, String current, int editType) {
-        Intent intent = new Intent(this, MultiCraftTextEntry.class);
+        Intent intent = new Intent(this, InputDialogActivity.class);
         Bundle params = new Bundle();
         params.putString("acceptButton", acceptButton);
         params.putString("hint", hint);
