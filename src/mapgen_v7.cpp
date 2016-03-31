@@ -152,7 +152,7 @@ MapgenV7Params::MapgenV7Params()
 	np_terrain_base    = NoiseParams(4,    70,  v3f(600,  600,  600),  82341, 5, 0.6,  2.0);
 	np_terrain_alt     = NoiseParams(4,    25,  v3f(600,  600,  600),  5934,  5, 0.6,  2.0);
 	np_terrain_persist = NoiseParams(0.6,  0.1, v3f(2000, 2000, 2000), 539,   3, 0.6,  2.0);
-	np_height_select   = NoiseParams(-12,  24,  v3f(500,  500,  500),  4213,  6, 0.7,  2.0);
+	np_height_select   = NoiseParams(-8,   16,  v3f(500,  500,  500),  4213,  6, 0.7,  2.0);
 	np_filler_depth    = NoiseParams(0,    1.2, v3f(150,  150,  150),  261,   3, 0.7,  2.0);
 	np_mount_height    = NoiseParams(256,  112, v3f(1000, 1000, 1000), 72449, 3, 0.6,  2.0);
 	np_ridge_uwater    = NoiseParams(0,    1,   v3f(1000, 1000, 1000), 85039, 5, 0.6,  2.0);
@@ -875,6 +875,7 @@ void MapgenV7::generateCaves(s16 max_stone_y)
 	for (s16 z = node_min.Z; z <= node_max.Z; z++)
 	for (s16 x = node_min.X; x <= node_max.X; x++, index2d++) {
 		bool column_is_open = false;  // Is column open to overground
+		bool is_tunnel = false;  // Is tunnel or tunnel floor
 		u32 vi = vm->m_area.index(x, node_max.Y + 1, z);
 		u32 index3d = (z - node_min.Z) * zstride + (csize.Y + 1) * ystride +
 			(x - node_min.X);
@@ -901,13 +902,16 @@ void MapgenV7::generateCaves(s16 max_stone_y)
 			if (d1 * d2 > 0.3f && ndef->get(c).is_ground_content) {
 				// In tunnel and ground content, excavate
 				vm->m_data[vi] = MapNode(CONTENT_AIR);
-			} else if (column_is_open &&
+				is_tunnel = true;
+			} else if (is_tunnel && column_is_open &&
 					(c == biome->c_filler || c == biome->c_stone)) {
 				// Tunnel entrance floor
 				vm->m_data[vi] = MapNode(biome->c_top);
 				column_is_open = false;
+				is_tunnel = false;
 			} else {
 				column_is_open = false;
+				is_tunnel = false;
 			}
 		}
 	}
