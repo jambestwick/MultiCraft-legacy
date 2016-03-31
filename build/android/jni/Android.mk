@@ -28,13 +28,8 @@ LOCAL_SRC_FILES := deps/openal-soft/android/obj/local/$(APP_ABI)/libopenal.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := ogg
-LOCAL_SRC_FILES := deps/libvorbis-libogg-android/obj/local/$(APP_ABI)/libogg.a
-include $(PREBUILT_STATIC_LIBRARY)
-
-include $(CLEAR_VARS)
 LOCAL_MODULE := vorbis
-LOCAL_SRC_FILES := deps/libvorbis-libogg-android/libs/$(TARGET_LIBDIR)/libvorbis.so
+LOCAL_SRC_FILES := deps/libvorbis-android/libs/$(TARGET_LIBDIR)/libvorbis.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
@@ -64,12 +59,12 @@ ifdef GPROF
 GPROF_DEF=-DGPROF
 endif
 
-LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_      \
-                -DHAVE_TOUCHSCREENGUI         \
-				-DUSE_CURL=1                  \
-				-DUSE_SOUND=1                 \
-				-DUSE_FREETYPE=1              \
-				$(GPROF_DEF)                  \
+LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_         \
+				-DHAVE_TOUCHSCREENGUI            \
+				-DUSE_CURL=1                     \
+				-DUSE_SOUND=1                    \
+				-DUSE_FREETYPE=1                 \
+				$(GPROF_DEF)                     \
 				-pipe -fstrict-aliasing
 
 ifndef NDEBUG
@@ -103,7 +98,7 @@ LOCAL_C_INCLUDES :=                               \
 		deps/freetype/include                     \
 		deps/curl/include                         \
 		deps/openal-soft/include                  \
-		deps/libvorbis-libogg-android/jni/include \
+		deps/libvorbis-android/jni/include        \
 		deps/gmp/usr/include                      \
 		deps/sqlite/                              \
 		deps/luajit/src                           
@@ -314,16 +309,16 @@ LOCAL_SRC_FILES += deps/sqlite/sqlite3.c
 
 # Threading
 LOCAL_SRC_FILES += \
-		jni/src/threading/event.cpp \
-		jni/src/threading/mutex.cpp \
-		jni/src/threading/semaphore.cpp \
+		jni/src/threading/event.cpp             \
+		jni/src/threading/mutex.cpp             \
+		jni/src/threading/semaphore.cpp         \
 		jni/src/threading/thread.cpp
 
 # JSONCPP
 LOCAL_SRC_FILES += jni/src/json/jsoncpp.cpp
 
 LOCAL_SHARED_LIBRARIES := gmp vorbis
-LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl ssl crypto iconv LuaJIT openal ogg android_native_app_glue $(PROFILER_LIBS)
+LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl ssl crypto iconv LuaJIT openal android_native_app_glue $(PROFILER_LIBS)
 
 LOCAL_LDLIBS := -lEGL -llog -lGLESv1_CM -lGLESv2 -lz -landroid -lOpenSLES
 

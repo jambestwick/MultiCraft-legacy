@@ -72,6 +72,7 @@ core.register_entity(":__builtin:item", {
 			infotext = description,
 		}
 		self.object:set_properties(prop)
+			self.collect = true
 	end,
 
 	get_staticdata = function(self)
@@ -79,7 +80,8 @@ core.register_entity(":__builtin:item", {
 			itemstring = self.itemstring,
 			always_collect = self.always_collect,
 			age = self.age,
-			dropped_by = self.dropped_by
+			dropped_by = self.dropped_by,
+			--collect = self.collect
 		})
 	end,
 
@@ -93,6 +95,10 @@ core.register_entity(":__builtin:item", {
 					self.age = data.age + dtime_s
 				else
 					self.age = dtime_s
+				--end
+				--remember collection data
+				--if data.collect then
+					--self.collect = data.collect
 				end
 				self.dropped_by = data.dropped_by
 			end
