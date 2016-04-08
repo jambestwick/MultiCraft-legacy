@@ -39,7 +39,7 @@ dofile(menupath .. DIR_DELIM .. "store.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_config_world.lua")
 dofile(menupath .. DIR_DELIM .. "tab_credits.lua")
 if not (PLATFORM == "Android") then
-dofile(menupath .. DIR_DELIM .. "modmgr.lua")
+	dofile(menupath .. DIR_DELIM .. "modmgr.lua")
 	dofile(menupath .. DIR_DELIM .. "tab_settings.lua")
 	dofile(menupath .. DIR_DELIM .. "dlg_settings_advanced.lua")
 	dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
@@ -67,6 +67,7 @@ local function init_globals()
 	-- Init gamedata
 	gamedata.worldindex = 0
 
+
 		menudata.worldlist = filterlist.create(
 			core.get_worlds,
 			compare_worlds,
@@ -83,10 +84,7 @@ local function init_globals()
 		menudata.worldlist:add_sort_mechanism("alphabetic", sort_worlds_alphabetic)
 		menudata.worldlist:set_sortmode("alphabetic")
 
-		if not core.setting_get("menu_last_game") then
-			local default_game = core.setting_get("default_game") or "default"
-			core.setting_set("menu_last_game", default_game )
-		end
+		core.setting_set("menu_last_game", "default")
 
 		mm_texture.init()
 
@@ -131,3 +129,4 @@ local function init_globals()
 end
 
 init_globals()
+

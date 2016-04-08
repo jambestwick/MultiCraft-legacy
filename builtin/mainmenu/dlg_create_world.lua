@@ -16,7 +16,6 @@
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 local function create_world_formspec(dialogdata)
-
 	local mapgens = core.get_mapgen_names()
 
 	local current_seed = core.setting_get("fixed_map_seed") or ""
@@ -57,10 +56,9 @@ local function create_world_formspec(dialogdata)
 		--"label[2,2;" .. fgettext("Mapgen") .. "]"..
 		--"dropdown[4.2,2;6.3;dd_mapgen;" .. mglist .. ";" .. selindex .. "]" ..
 
-		--"label[2,3;" .. fgettext("Game") .. "]"..
 		"dropdown[6000.2,6;6.3;games;" .. gamemgr.gamelist() ..
                 ";1]" ..
-
+		
 		"button[5,2.6;2.6,0.5;world_create_confirm;" .. fgettext("Create") .. "]" ..
 		"button[7.5,2.6;2.8,0.5;world_create_cancel;" .. fgettext("Cancel") .. "]"
 		
@@ -116,7 +114,6 @@ local function create_world_buttonhandler(this, fields)
 				core.setting_set("menu_last_game",gamemgr.games[gameindex].id)
 				if this.data.update_worldlist_filter then
 					menudata.worldlist:set_filtercriteria(gamemgr.games[gameindex].id)
-					--mm_texture.update("singleplayer", gamemgr.games[gameindex].id)
 				end
 				menudata.worldlist:refresh()
 				core.setting_set("mainmenu_last_selected_world",

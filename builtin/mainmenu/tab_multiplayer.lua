@@ -17,7 +17,6 @@
 
 --------------------------------------------------------------------------------
 local function get_formspec(tabview, name, tabdata)
-
 	-- Update the cached supported proto info,
 	-- it may have changed after a change by the settings menu.
 	common_update_cached_supp_proto()
@@ -259,7 +258,7 @@ end
 --------------------------------------------------------------------------------
 tab_multiplayer = {
 	name = "multiplayer",
-	caption = fgettext("Client"),
+	caption = fgettext("Multi Player"),
 	cbf_formspec = get_formspec,
 	cbf_button_handler = main_button_handler,
 	on_change = on_change

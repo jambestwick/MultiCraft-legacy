@@ -80,8 +80,7 @@ core.register_entity(":__builtin:item", {
 			itemstring = self.itemstring,
 			always_collect = self.always_collect,
 			age = self.age,
-			dropped_by = self.dropped_by,
-			--collect = self.collect
+			dropped_by = self.dropped_by
 		})
 	end,
 
@@ -95,10 +94,6 @@ core.register_entity(":__builtin:item", {
 					self.age = data.age + dtime_s
 				else
 					self.age = dtime_s
-				--end
-				--remember collection data
-				--if data.collect then
-					--self.collect = data.collect
 				end
 				self.dropped_by = data.dropped_by
 			end
@@ -208,6 +203,16 @@ core.register_entity(":__builtin:item", {
 				self.physical_state = true
 				self.object:set_properties({physical = true})
 			end
+		end
+
+		if nn == "default:lava_flowing" or nn == "default:lava_source" then
+			minetest.sound_play("default_cool_lava", {
+				pos=self.object:getpos(),
+				max_hear_distance = 6,
+				gain = 0.5
+			})
+			self.object:remove()
+			return
 		end
 	end,
 

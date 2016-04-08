@@ -222,7 +222,7 @@ Mapper::Mapper(IrrlichtDevice *device, Client *client)
 	// Initialize static settings
 	m_enable_shaders = g_settings->getBool("enable_shaders");
 	m_surface_mode_scan_height =
-		g_settings->getBool("minimap_double_scan_height") ? 256 : 128;
+		g_settings->getBool("minimap_double_scan_height") ? 128 : 64;
 
 	// Initialize minimap data
 	data = new MinimapData;
@@ -306,12 +306,8 @@ void Mapper::setMinimapMode(MinimapMode mode)
 {
 	static const MinimapModeDef modedefs[MINIMAP_MODE_COUNT] = {
 		{false, 0, 0},
-		{false, m_surface_mode_scan_height, 256},
-		{false, m_surface_mode_scan_height, 128},
 		{false, m_surface_mode_scan_height, 64},
-		{true, 32, 128},
-		{true, 32, 64},
-		{true, 32, 32}
+		{true, 32, 64}
 	};
 
 	if (mode >= MINIMAP_MODE_COUNT)

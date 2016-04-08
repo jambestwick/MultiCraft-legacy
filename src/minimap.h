@@ -30,18 +30,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <vector>
 #include "camera.h"
 
-#define MINIMAP_MAX_SX 512
-#define MINIMAP_MAX_SY 512
+#define MINIMAP_MAX_SX 256
+#define MINIMAP_MAX_SY 256
 
 
 enum MinimapMode {
 	MINIMAP_MODE_OFF,
-	MINIMAP_MODE_SURFACEx1,
-	MINIMAP_MODE_SURFACEx2,
-	MINIMAP_MODE_SURFACEx4,
-	MINIMAP_MODE_RADARx1,
-	MINIMAP_MODE_RADARx2,
-	MINIMAP_MODE_RADARx4,
+	MINIMAP_MODE_SURFACE,
+	MINIMAP_MODE_RADAR,
 	MINIMAP_MODE_COUNT,
 };
 

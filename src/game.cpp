@@ -2963,29 +2963,17 @@ void Game::toggleMinimap(float *statustext_time, bool *flag,
 
 	*flag = true;
 	switch (mode) {
-		case MINIMAP_MODE_SURFACEx1:
-			statustext = L"Minimap in surface mode, Zoom x1";
+		case MINIMAP_MODE_SURFACE:
+			statustext = L"Minimap enabled";
 			break;
-		case MINIMAP_MODE_SURFACEx2:
-			statustext = L"Minimap in surface mode, Zoom x2";
-			break;
-		case MINIMAP_MODE_SURFACEx4:
-			statustext = L"Minimap in surface mode, Zoom x4";
-			break;
-		case MINIMAP_MODE_RADARx1:
-			statustext = L"Minimap in radar mode, Zoom x1";
-			break;
-		case MINIMAP_MODE_RADARx2:
-			statustext = L"Minimap in radar mode, Zoom x2";
-			break;
-		case MINIMAP_MODE_RADARx4:
-			statustext = L"Minimap in radar mode, Zoom x4";
+		case MINIMAP_MODE_RADAR:
+			statustext = L"Radar mode enabled";
 			break;
 		default:
 			mode = MINIMAP_MODE_OFF;
 			*flag = false;
 			statustext = (hud_flags & HUD_FLAG_MINIMAP_VISIBLE) ?
-				L"Minimap hidden" : L"Minimap disabled by server";
+				L"Minimap disabled" : L"Minimap disabled by server";
 	}
 
 	*statustext_time = 0;

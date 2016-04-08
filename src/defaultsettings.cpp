@@ -182,7 +182,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_vbo", "true");
 	
 	settings->setDefault("enable_minimap", "true");
-	settings->setDefault("minimap_shape_round", "true");
+	settings->setDefault("minimap_shape_round", "false");
 	settings->setDefault("minimap_double_scan_height", "false");
 
 	settings->setDefault("send_pre_v25_init", "true");
@@ -351,8 +351,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("emergequeue_limit_generate", "8");
 	settings->setDefault("max_block_generate_distance", "2");
 	settings->setDefault("enable_3d_clouds", "false");
-	settings->setDefault("fps_max", "45");
-	settings->setDefault("pause_fps_max", "10");
+	settings->setDefault("fps_max", "30");
 	settings->setDefault("max_objects_per_block", "20");
 	settings->setDefault("sqlite_synchronous", "1");
 	settings->setDefault("gui_scaling", "1.1");
@@ -360,7 +359,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("viewing_range", "25");
 	settings->setDefault("inventory_image_hack", "false");
 	settings->setDefault("doubletap_jump", "true");
-	settings->setDefault("server_map_save_interval", "15");
+	settings->setDefault("server_map_save_interval", "20");
 	settings->setDefault("client_unload_unused_data_timeout", "30");
 	settings->setDefault("active_block_range", "1");
     settings->setDefault("chunksize", "3");
@@ -382,7 +381,7 @@ void set_default_settings(Settings *settings)
 	}
 
 	std::stringstream anddroidfontsize;
-	anddroidfontsize << DEFAULT_FONT_SIZE / 2.9 * x_inches;
+	anddroidfontsize << DEFAULT_FONT_SIZE / 2.5 * x_inches;
 	settings->setDefault("font_size", anddroidfontsize.str());
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");

@@ -29,8 +29,8 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := vorbis
-LOCAL_SRC_FILES := deps/libvorbis-android/libs/$(TARGET_LIBDIR)/libvorbis.so
-include $(PREBUILT_SHARED_LIBRARY)
+LOCAL_SRC_FILES := deps/libvorbis-android/obj/local/$(APP_ABI)/libvorbis.a
+include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := gmp
@@ -84,7 +84,8 @@ LOCAL_CFLAGS += -pg
 endif
 
 ifeq ($(TARGET_ARCH_ABI),x86)
-LOCAL_CFLAGS += -fno-stack-protector
+LOCAL_CFLAGS += -mhard-float -Ofast -fno-fast-math -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -Wno-deprecated-declarations -fno-stack-protector
+LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections
 LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
 endif
 
@@ -223,26 +224,6 @@ LOCAL_SRC_FILES :=                                \
 		jni/src/util/string.cpp                   \
 		jni/src/util/srp.cpp                      \
 		jni/src/util/timetaker.cpp                \
-		jni/src/unittest/test.cpp                 \
-		jni/src/unittest/test_collision.cpp       \
-		jni/src/unittest/test_compression.cpp     \
-		jni/src/unittest/test_connection.cpp      \
-		jni/src/unittest/test_filepath.cpp        \
-		jni/src/unittest/test_inventory.cpp       \
-		jni/src/unittest/test_mapnode.cpp         \
-		jni/src/unittest/test_nodedef.cpp         \
-		jni/src/unittest/test_noderesolver.cpp    \
-		jni/src/unittest/test_noise.cpp           \
-		jni/src/unittest/test_objdef.cpp          \
-		jni/src/unittest/test_profiler.cpp        \
-		jni/src/unittest/test_random.cpp          \
-		jni/src/unittest/test_schematic.cpp       \
-		jni/src/unittest/test_serialization.cpp   \
-		jni/src/unittest/test_settings.cpp        \
-		jni/src/unittest/test_socket.cpp          \
-		jni/src/unittest/test_utilities.cpp       \
-		jni/src/unittest/test_voxelalgorithms.cpp \
-		jni/src/unittest/test_voxelmanipulator.cpp \
 		jni/src/touchscreengui.cpp                \
 		jni/src/settings.cpp                      \
 		jni/src/wieldmesh.cpp                     \
@@ -308,7 +289,7 @@ LOCAL_SRC_FILES +=                                \
 LOCAL_SRC_FILES += deps/sqlite/sqlite3.c
 
 # Threading
-LOCAL_SRC_FILES += \
+LOCAL_SRC_FILES +=                                \
 		jni/src/threading/event.cpp             \
 		jni/src/threading/mutex.cpp             \
 		jni/src/threading/semaphore.cpp         \
@@ -317,8 +298,8 @@ LOCAL_SRC_FILES += \
 # JSONCPP
 LOCAL_SRC_FILES += jni/src/json/jsoncpp.cpp
 
-LOCAL_SHARED_LIBRARIES := gmp vorbis
-LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl ssl crypto iconv LuaJIT openal android_native_app_glue $(PROFILER_LIBS)
+LOCAL_SHARED_LIBRARIES := gmp
+LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl ssl crypto iconv LuaJIT openal vorbis android_native_app_glue $(PROFILER_LIBS)
 
 LOCAL_LDLIBS := -lEGL -llog -lGLESv1_CM -lGLESv2 -lz -landroid -lOpenSLES
 

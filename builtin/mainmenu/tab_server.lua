@@ -17,7 +17,7 @@
 
 --------------------------------------------------------------------------------
 local function get_formspec(tabview, name, tabdata)
-
+	
 	local index = menudata.worldlist:get_current_index(
 				tonumber(core.setting_get("mainmenu_last_selected_world"))
 				)
@@ -55,7 +55,7 @@ local function get_formspec(tabview, name, tabdata)
 	retval = retval ..
 		"textlist[4,0.25;7.5,3.7;srv_worlds;" ..
 		menu_render_worldlist() ..
-		";" .. index .. "]"
+		";" .. index .. ";true]"
 	
 	return retval
 end
@@ -188,7 +188,7 @@ end
 --------------------------------------------------------------------------------
 tab_server = {
 	name = "server",
-	caption = fgettext("Server"),
+	caption = fgettext("Create Server"),
 	cbf_formspec = get_formspec,
 	cbf_button_handler = main_button_handler,
 	on_change = nil

@@ -52,7 +52,7 @@ CROSS_PREFIX = arm-linux-androideabi-
 # TARGET_ABI = x86
 # TARGET_LIBDIR = x86
 # TARGET_TOOLCHAIN = x86
-# TARGET_CFLAGS_ADDON = -Ofast
+# TARGET_CFLAGS_ADDON = -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves
 # TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 # TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
 # TARGET_ARCH = x86
@@ -70,7 +70,7 @@ OPENAL_TIMESTAMP_INT = $(ROOT)/deps/openal_timestamp
 OPENAL_URL_GIT = https://github.com/MoNTE48/openal-soft
 
 VORBIS_DIR = $(ROOT)/deps/libvorbis-android
-VORBIS_LIB = $(VORBIS_DIR)/libs/$(TARGET_ABI)/libvorbis.so
+VORBIS_LIB = $(VORBIS_DIR)/obj/local/$(TARGET_ABI)/libvorbis.a
 VORBIS_TIMESTAMP = $(VORBIS_DIR)/timestamp
 VORBIS_TIMESTAMP_INT = $(ROOT)/deps/vorbis_timestamp
 VORBIS_URL_GIT = https://github.com/MoNTE48/libvorbis-android
@@ -118,7 +118,7 @@ ICONV_TIMESTAMP = $(ICONV_DIR)/timestamp
 ICONV_TIMESTAMP_INT = $(ROOT)/deps/iconv_timestamp
 ICONV_URL_HTTP = http://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
 
-SQLITE3_VERSION= 3120000
+SQLITE3_VERSION= 3120100
 SQLITE3_DIR = $(ROOT)/deps/sqlite
 SQLITE3_URL = http://www.sqlite.org/2016/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 
@@ -226,7 +226,7 @@ $(OPENAL_LIB): $(OPENAL_TIMESTAMP)
 	echo "changed timestamp for openal detected building...";                  \
 	cd ${OPENAL_DIR};                                                          \
 	ndk-build NDEBUG=${NDEBUG}                                                 \
-	APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM} TARGET_ARCH_ABI=${TARGET_ABI} \
+	APP_ABI=${TARGET_ABI} TARGET_ARCH_ABI=${TARGET_ABI}                        \
 	APP_PLATFORM=${APP_PLATFORM} TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"       \
 	TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                                  \
 	TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                     \
@@ -247,36 +247,36 @@ $(VORBIS_TIMESTAMP) : vorbis_download
 
 vorbis_download :
 	@if [ ! -d ${VORBIS_DIR} ] ; then                                             \
-		echo "vorbis sources missing, downloading...";                            \
+		echo "vorbis sources missing, downloading...";                         \
 		mkdir -p ${ROOT}/deps;                                                 \
 		cd ${ROOT}/deps ;                                                      \
-		git clone ${VORBIS_URL_GIT}|| exit 1;                                     \
+		git clone ${VORBIS_URL_GIT}|| exit 1;                                  \
 	fi
 
 vorbis : $(VORBIS_LIB)
 
 $(VORBIS_LIB): $(VORBIS_TIMESTAMP)
-	+ @REFRESH=0;                                                                \
-	if [ ! -e ${VORBIS_TIMESTAMP_INT} ] ; then                                    \
-		echo "${VORBIS_TIMESTAMP_INT} doesn't exist";                             \
+	+ @REFRESH=0;                                                          \
+	if [ ! -e ${VORBIS_TIMESTAMP_INT} ] ; then                                 \
+		echo "${VORBIS_TIMESTAMP_INT} doesn't exist";                      \
 		REFRESH=1;                                                             \
 	fi;                                                                        \
-	if [ ${VORBIS_TIMESTAMP} -nt ${VORBIS_TIMESTAMP_INT} ] ; then                    \
+	if [ ${VORBIS_TIMESTAMP} -nt ${VORBIS_TIMESTAMP_INT} ] ; then              \
 		REFRESH=1;                                                             \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
 	export PATH=$$PATH:${ANDROID_NDK};                                         \
-	echo "changed timestamp for vorbis detected building...";                     \
-	cd ${VORBIS_DIR};                                                             \
+	echo "changed timestamp for vorbis detected building...";                  \
+	cd ${VORBIS_DIR};                                                          \
 	ndk-build NDEBUG=${NDEBUG}                                                 \
 	APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                         \
 	TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                    \
 	TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                                  \
 	TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                     \
-	touch ${VORBIS_TIMESTAMP};                                                    \
-	touch ${VORBIS_TIMESTAMP_INT};                                                \
+	touch ${VORBIS_TIMESTAMP};                                                 \
+	touch ${VORBIS_TIMESTAMP_INT};                                             \
 	else                                                                       \
-		echo "nothing to be done for libvorbis/libvorbis";                        \
+		echo "nothing to be done for libvorbis";                               \
 	fi
 
 clean_vorbis :
@@ -364,14 +364,13 @@ $(FREETYPE_LIB) : $(FREETYPE_TIMESTAMP)
 		REFRESH=1;                                                             \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
-	mkdir -p ${FREETYPE_DIR};                                                  \
 	export PATH=$$PATH:${ANDROID_NDK};                                         \
 	echo "changed timestamp for freetype detected building...";                \
 	cd deps/freetype;                                                          \
 	export CROSS_PREFIX=${CROSS_PREFIX};                                       \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-freetype;                         \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                         \
+	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
 	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CXX=${CROSS_PREFIX}g++;                                             \
@@ -403,8 +402,8 @@ iconv_download :
 		wget ${ICONV_URL_HTTP} || exit 1;                                  \
 		tar -xzf libiconv-${ICONV_VERSION}.tar.gz || exit 1;               \
 		rm libiconv-${ICONV_VERSION}.tar.gz;                               \
-		ln -s libiconv-${ICONV_VERSION} libiconv;                          \
-		cd ${ICONV_DIR};                                                   \
+		mv libiconv-${ICONV_VERSION} libiconv;                             \
+		cd libiconv;                                                          \
 		patch -p1 < ${ROOT}/libiconv_android.patch;                        \
 		patch -p1 < ${ROOT}/libiconv_stdio.patch;                          \
 	fi
@@ -423,7 +422,6 @@ $(ICONV_LIB) : $(ICONV_TIMESTAMP)
 		REFRESH=1;                                                         \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
-	mkdir -p ${ICONV_DIR};                                                     \
 	export PATH=$$PATH:${ANDROID_NDK};                                         \
 	echo "changed timestamp for iconv detected building...";                   \
 	cd ${ICONV_DIR};                                                           \
@@ -448,7 +446,6 @@ $(ICONV_LIB) : $(ICONV_TIMESTAMP)
 
 clean_iconv :
 	$(RM) -rf ${ICONV_DIR}
-	$(RM) -rf ${ICONV_DIR}-${ICONV_VERSION}
 
 #Note: Texturehack patch is required for gpu's not supporting color format
 #      correctly. Known bad GPU:
@@ -466,9 +463,9 @@ irrlicht_download :
 		mv irrlicht-${IRRLICHT_COMMIT} irrlicht;                               \
 		cd irrlicht;                                                           \
 		mkdir -p lib/Android;                                                  \
-		patch -p1 < ../../irrlicht-touchcount.patch || exit 1;                 \
-		patch -p1 < ../../irrlicht-back_button.patch || exit 1;                \
-		patch -p1 < ../../irrlicht-texturehack.patch || exit 1;                \
+		patch -p1 < ../../irrlicht-touchcount.patch   || exit 1;               \
+		patch -p1 < ../../irrlicht-back_button.patch  || exit 1;               \
+		patch -p1 < ../../irrlicht-texturehack.patch  || exit 1;               \
 		patch -p1 < ../../irrlicht-optimization.patch || exit 1;               \
 	fi
 
@@ -492,7 +489,6 @@ $(IRRLICHT_LIB): $(IRRLICHT_TIMESTAMP) $(FREETYPE_LIB)
 		REFRESH=1;                                                             \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
-	mkdir -p ${IRRLICHT_DIR};                                                  \
 	export PATH=$$PATH:${ANDROID_NDK};                                         \
 	echo "changed timestamp for irrlicht detected building...";                \
 	cd deps/irrlicht/source/Irrlicht/Android;                                  \
@@ -539,14 +535,13 @@ $(CURL_LIB): $(CURL_TIMESTAMP) $(OPENSSL_LIB)
 		REFRESH=1;                                                             \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
-	mkdir -p ${CURL_DIR};                                                      \
 	export PATH=$$PATH:${ANDROID_NDK};                                         \
 	echo "changed timestamp for curl detected building...";                    \
 	cd deps/curl;                                                              \
 	export CROSS_PREFIX=${CROSS_PREFIX};                                       \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-curl;                             \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                         \
+	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
 	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
@@ -599,7 +594,6 @@ $(GMP_LIB): $(GMP_TIMESTAMP)
 		REFRESH=1;                                                         \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
-	mkdir -p ${GMP_DIR};                                                       \
 	export PATH=$$PATH:${ANDROID_NDK};                                         \
 	echo "changed timestamp for gmp detected building...";                     \
 	cd deps/gmp;                                                               \
@@ -607,7 +601,7 @@ $(GMP_LIB): $(GMP_TIMESTAMP)
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-gmp;                              \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
 	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
-	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
+	APP_PLATFORM=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                  \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
@@ -625,9 +619,9 @@ $(GMP_LIB): $(GMP_TIMESTAMP)
 clean_gmp:
 	$(RM) -R deps/gmp
 
-sqlite3_download: deps/${SQLITE3_FOLDER}/sqlite3.c
+sqlite3_download: deps/sqlite/sqlite3.c
 
-deps/${SQLITE3_FOLDER}/sqlite3.c :
+deps/sqlite/sqlite3.c :
 	mkdir -p ${ROOT}/deps;                                                     \
 	cd ${ROOT}/deps;                                                           \
 	rm -R sqlite;                                                              \
@@ -655,7 +649,7 @@ $(ASSETS_TIMESTAMP) : $(IRRLICHT_LIB)
 		touch ${IRRLICHT_DIR}/media/timestamp;                                 \
 		touch ${ASSETS_TIMESTAMP};                                             \
 	fi;                                                                        \
-	if [ ${ROOT}/../../multicraft.conf.example -nt ${ASSETS_TIMESTAMP} ] ; then  \
+	if [ ${ROOT}/../../multicraft.conf.example -nt ${ASSETS_TIMESTAMP} ] ; then \
 		echo "conf changed";                                                   \
 		touch ${ASSETS_TIMESTAMP};                                             \
 	fi;                                                                        \
@@ -765,10 +759,8 @@ apk: $(PATHCFGFILE) assets $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(GMP_LIB) \
 	GPROF=${GPROF} APP_ABI=${TARGET_ABI}                                       \
 	APP_PLATFORM=${APP_PLATFORM}                                               \
 	TARGET_LIBDIR=${TARGET_LIBDIR}                                             \
-	TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                    \
-	TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                                  \
 	TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" &&                             \
-	echo "	Success! =)";                                                       \
+	echo "	Success! =)";                                                      \
 	ant $$BUILD_TYPE &&                                                        \
 	echo "APK: bin/MultiCraft-$$BUILD_TYPE.apk"                                \
 

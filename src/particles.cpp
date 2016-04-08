@@ -524,7 +524,7 @@ void ParticleManager::addNodeParticle(IGameDef* gamedef, scene::ISceneManager* s
 	if(tiles[texid].material_flags & MATERIAL_FLAG_ANIMATION_VERTICAL_FRAMES)
 		ymax /= tiles[texid].animation_frame_count;
 
-	float size = rand() % 64 / 512.;
+	float size = rand() % 64 / 256.;
 	float visual_size = BS * size;
 	v2f texsize(size * 2, ymax * size * 2);
 	v2f texpos;

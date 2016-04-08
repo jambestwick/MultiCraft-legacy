@@ -34,10 +34,8 @@ local function get_formspec(tabview, name, tabdata)
 			"button[3.5,4.5;2.6,0.5;world_delete;".. fgettext("Delete") .. "]" ..
 			"button[6,4.5;2.8,0.5;world_create;".. fgettext("New") .. "]" ..
 			"button[8.7,4.5;3.30,0.5;play;".. fgettext("Play") .. "]" ..
-			"checkbox[0.0,4;cb_creative_mode;".. fgettext("Creative Inventory") .. ";" ..
+			"checkbox[0.0,4.25;cb_creative_mode;".. fgettext("Creative Mode") .. ";" ..
 			dump(core.setting_getbool("creative_mode")) .. "]"..
-			"checkbox[0.0,4.5;cb_enable_damage;".. fgettext("Survival Mode") .. ";" ..
-			dump(core.setting_getbool("enable_damage")) .. "]"..
 			"textlist[0,0;11.75,3.7;sp_worlds;" ..
 			menu_render_worldlist() ..
 			";" .. index .. ";true]"
@@ -71,21 +69,18 @@ local function main_button_handler(this, fields, name, tabdata)
 		return true
 	end
 
-	if fields["cb_creative_mode"] then
-		core.setting_set("creative_mode", fields["cb_creative_mode"])
-		local selected = core.get_textlist_index("sp_worlds")
-		menu_worldmt(selected, "creative_mode", fields["cb_creative_mode"])
-
-		return true
-	end
-
-	if fields["cb_enable_damage"] then
-		core.setting_set("enable_damage", fields["cb_enable_damage"])
-		local selected = core.get_textlist_index("sp_worlds")
-		menu_worldmt(selected, "enable_damage", fields["cb_enable_damage"])
-
-		return true
-	end
+    if fields["cb_creative_mode"] then
+            core.setting_set("creative_mode", fields["cb_creative_mode"])
+            local bool = fields["cb_creative_mode"]
+            if bool == 'true' then
+                bool = 'false'
+            else
+                bool = 'true'
+            end
+                core.setting_set("enable_damage", bool)
+                core.setting_save()
+            return true
+    end
 
 	if fields["play"] ~= nil or
 		world_doubleclick or
@@ -108,7 +103,6 @@ local function main_button_handler(this, fields, name, tabdata)
 		create_world_dlg:set_parent(this)
 		this:hide()
 		create_world_dlg:show()
-		--mm_texture.update("singleplayer",current_game())
 		return true
 	end
 
@@ -125,7 +119,6 @@ local function main_button_handler(this, fields, name, tabdata)
 				delete_world_dlg:set_parent(this)
 				this:hide()
 				delete_world_dlg:show()
-				--mm_texture.update("singleplayer",current_game())
 			end
 		end
 		
@@ -143,7 +136,6 @@ local function main_button_handler(this, fields, name, tabdata)
 				configdialog:set_parent(this)
 				this:hide()
 				configdialog:show()
-				--mm_texture.update("singleplayer",current_game())
 			end
 		end
 		

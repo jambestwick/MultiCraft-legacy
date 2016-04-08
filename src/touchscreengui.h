@@ -53,11 +53,12 @@ typedef enum {
 	noclip_id,
 	fast_id,
 #endif
-//	minimap_id,
+	minimap_id,
 //	debug_id,
 	chat_id,
 //	camera_id,
 	range_id,
+	empty_id,
 	after_last_element_id
 } touch_gui_button_id;
 
