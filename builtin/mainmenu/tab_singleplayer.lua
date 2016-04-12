@@ -145,9 +145,10 @@ end
 
 
 --------------------------------------------------------------------------------
-tab_singleplayer = {
+return {
 	name = "singleplayer",
 	caption = fgettext("Single Player"),
 	cbf_formspec = get_formspec,
 	cbf_button_handler = main_button_handler,
-	}
+	on_change = on_change
+}
