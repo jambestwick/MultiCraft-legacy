@@ -103,7 +103,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("address", "");
 	settings->setDefault("random_input", "false");
 	settings->setDefault("client_unload_unused_data_timeout", "300");
-	settings->setDefault("client_mapblock_limit", "5000");
+	settings->setDefault("client_mapblock_limit", "4000");
 	settings->setDefault("enable_fog", "true");
 	settings->setDefault("fov", "72");
 	settings->setDefault("view_bobbing", "true");
@@ -340,8 +340,8 @@ void set_default_settings(Settings *settings)
 #ifdef __ANDROID__
 	settings->setDefault("screenW", "0");
 	settings->setDefault("screenH", "0");
-	settings->setDefault("fullscreen", "true");
 	settings->setDefault("enable_shaders", "false");
+	settings->setDefault("fullscreen", "true");
 	settings->setDefault("video_driver", "ogles1");
 	settings->setDefault("touchtarget", "true");
 	settings->setDefault("TMPFolder","/sdcard/tmp/");
@@ -355,14 +355,15 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("max_objects_per_block", "20");
 	settings->setDefault("sqlite_synchronous", "1");
 	settings->setDefault("gui_scaling", "1.1");
-	settings->setDefault("curl_verify_cert","false");
-	settings->setDefault("viewing_range", "25");
-	settings->setDefault("inventory_image_hack", "false");
 	settings->setDefault("doubletap_jump", "true");
 	settings->setDefault("server_map_save_interval", "20");
-	settings->setDefault("client_unload_unused_data_timeout", "30");
+	settings->setDefault("client_unload_unused_data_timeout", "60");
 	settings->setDefault("active_block_range", "1");
-    settings->setDefault("chunksize", "3");
+	settings->setDefault("chunksize", "3");
+	settings->setDefault("client_mapblock_limit", "1000");
+	
+	settings->setDefault("viewing_range", "25");
+	settings->setDefault("inventory_image_hack", "false");
 
     // check for device with small screen
 	float x_inches = ((double) porting::getDisplaySize().X /
@@ -385,7 +386,10 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("font_size", anddroidfontsize.str());
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");
-
+	
+	settings->setDefault("curl_verify_cert","false");
+#else
+	settings->setDefault("screen_dpi", "72");
 #endif
 }
 
