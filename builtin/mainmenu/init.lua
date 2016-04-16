@@ -118,7 +118,6 @@ local function init_globals()
 	tv_main:show()
 
 	-- Create modstore ui
-	else
 	--if PLATFORM == "Android" then
 	--	modstore.init({x = 12, y = 6}, 3, 2)
 	--else
