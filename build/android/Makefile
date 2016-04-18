@@ -22,7 +22,7 @@ TARGET_HOST2 = arm-linux
 TARGET_ABI = armeabi-v7a-hard
 TARGET_LIBDIR = armeabi-v7a
 TARGET_TOOLCHAIN = arm-linux-androideabi
-TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves
+TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
 TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
 TARGET_ARCH = armv7
@@ -156,7 +156,8 @@ VERSION_PATCH := $(shell cat $(ROOT)/../../CMakeLists.txt | \
 	$(ASSETS_TIMESTAMP) $(LUAJIT_TIMESTAMP) \
 	$(OPENAL_TIMESTAMP) $(VORBIS_TIMESTAMP) \
 	$(IRRLICHT_TIMESTAMP) $(CURL_TIMESTAMP) \
-	$(OPENSSL_TIMESTAMP) $(VORBIS_TIMESTAMP) \
+	#$(OPENSSL_TIMESTAMP) $(VORBIS_TIMESTAMP) \
+	$(VORBIS_TIMESTAMP) \
 	$(ROOT)/jni/src/android_version.h \
 	$(ROOT)/jni/src/android_version_githash.h
 
@@ -547,11 +548,14 @@ $(CURL_LIB): $(CURL_TIMESTAMP) $(OPENSSL_LIB)
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	export CPPFLAGS="$${CPPFLAGS} -I${OPENSSL_DIR}/include                     \
+	#export CPPFLAGS="$${CPPFLAGS} -I${OPENSSL_DIR}/include                    \
+	export CPPFLAGS="$${CPPFLAGS}                                              \
 	${TARGET_CFLAGS_ADDON}";                                                   \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
-	export LDFLAGS="$${LDFLAGS} -L${OPENSSL_DIR} ${TARGET_LDFLAGS_ADDON}";     \
-	./configure --host=${TARGET_HOST} --enable-static --disable-shared --with-ssl; \
+	#export LDFLAGS="$${LDFLAGS} -L${OPENSSL_DIR} ${TARGET_LDFLAGS_ADDON}";    \
+	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
+	#./configure --host=${TARGET_HOST} --enable-static --disable-shared --with-ssl; \
+	./configure --host=${TARGET_HOST} --enable-static --disable-shared;        \
 	$(MAKE) -s || exit 1;                                                      \
 	touch ${CURL_TIMESTAMP};                                                   \
 	touch ${CURL_TIMESTAMP_INT};                                               \
@@ -791,6 +795,9 @@ clean_all :
 	$(MAKE) clean_assets clean_manifest;                                       \
 	sleep 1;                                                                   \
 	$(RM) -r gen libs obj deps bin Debug and_env jni/src
+	
+clean_src :
+	$(RM) -r gen libs obj bin Debug and_env jni/src
 
 $(ROOT)/jni/src/android_version_githash.h : prep_srcdir
 	@export VERSION_FILE=${ROOT}/jni/src/android_version_githash.h;            \

@@ -37,7 +37,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "mesh.h"
 #include "itemdef.h"
 #include "tool.h"
-#include "content_cso.h"
+//disable
+//#include "content_cso.h"
 #include "sound.h"
 #include "nodedef.h"
 #include "localplayer.h"
@@ -1745,10 +1746,11 @@ void GenericCAO::processMessage(const std::string &data)
 			{
 				// TODO: Execute defined fast response
 				// As there is no definition, make a smoke puff
-				ClientSimpleObject *simple = createSmokePuff(
-						m_smgr, m_env, m_position,
-						m_prop.visual_size * BS);
-				m_env->addSimpleObject(simple);
+				//disable
+				//ClientSimpleObject *simple = createSmokePuff(
+				//		m_smgr, m_env, m_position,
+				//		m_prop.visual_size * BS);
+				//m_env->addSimpleObject(simple);
 			} else {
 				// TODO: Execute defined fast response
 				// Flashing shall suffice as there is no definition
@@ -1801,10 +1803,11 @@ bool GenericCAO::directReportPunch(v3f dir, const ItemStack *punchitem,
 			m_hp = 0;
 			// TODO: Execute defined fast response
 			// As there is no definition, make a smoke puff
-			ClientSimpleObject *simple = createSmokePuff(
-					m_smgr, m_env, m_position,
-					m_prop.visual_size * BS);
-			m_env->addSimpleObject(simple);
+			//disable
+			//ClientSimpleObject *simple = createSmokePuff(
+			//		m_smgr, m_env, m_position,
+			//		m_prop.visual_size * BS);
+			//m_env->addSimpleObject(simple);
 		}
 		// TODO: Execute defined fast response
 		// Flashing shall suffice as there is no definition

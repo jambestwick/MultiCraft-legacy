@@ -151,7 +151,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("desynchronize_mapblock_texture_animation", "true");
 	settings->setDefault("hud_hotbar_max_width", "1.0");
 	settings->setDefault("enable_local_map_saving", "false");
-	settings->setDefault("show_entity_selectionbox", "true");
+	settings->setDefault("show_entity_selectionbox", "false");
 
 	settings->setDefault("mip_map", "false");
 	settings->setDefault("anisotropic_filter", "false");
@@ -205,7 +205,7 @@ void set_default_settings(Settings *settings)
 
 #if USE_FREETYPE
 	settings->setDefault("freetype", "true");
-	settings->setDefault("font_path", porting::getDataPath("fonts" DIR_DELIM "basis33.ttf"));
+	settings->setDefault("font_path", porting::getDataPath("fonts" DIR_DELIM "retrovillenc.ttf"));
 	settings->setDefault("font_shadow", "1");
 	settings->setDefault("font_shadow_alpha", "128");
 	settings->setDefault("mono_font_path", porting::getDataPath("fonts" DIR_DELIM "liberationmono.ttf"));
@@ -217,7 +217,7 @@ void set_default_settings(Settings *settings)
 	std::stringstream fontsize;
 	fontsize << DEFAULT_FONT_SIZE;
 
-	settings->setDefault("font_size", "16");
+	settings->setDefault("font_size", "12");
 	settings->setDefault("mono_font_size", fontsize.str());
 	settings->setDefault("fallback_font_size", fontsize.str());
 #else
@@ -291,7 +291,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("emergequeue_limit_total", "256");
 	settings->setDefault("emergequeue_limit_diskonly", "32");
 	settings->setDefault("emergequeue_limit_generate", "32");
-	settings->setDefault("num_emerge_threads", "1");
+	settings->setDefault("num_emerge_threads", "2");
 	settings->setDefault("secure.enable_security", "false");
 	settings->setDefault("secure.trusted_mods", "");
 	settings->setDefault("secure.http_mods", "");
@@ -361,7 +361,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("client_unload_unused_data_timeout", "60");
 	settings->setDefault("active_block_range", "1");
 	settings->setDefault("chunksize", "3");
-	settings->setDefault("client_mapblock_limit", "1000");
+	settings->setDefault("client_mapblock_limit", "500");
 	
 	settings->setDefault("viewing_range", "25");
 	settings->setDefault("inventory_image_hack", "false");
@@ -370,7 +370,7 @@ void set_default_settings(Settings *settings)
 	float x_inches = ((double) porting::getDisplaySize().X /
 			(160 * porting::getDisplayDensity()));
 	if (x_inches < 3.5) {
-		settings->setDefault("hud_scaling", "0.5");
+		settings->setDefault("hud_scaling", "0.45");
 		settings->setDefault("gui_scaling", "1.0");
 	}
 	if (x_inches < 6.0) {
@@ -383,7 +383,7 @@ void set_default_settings(Settings *settings)
 	}
 
 	std::stringstream anddroidfontsize;
-	anddroidfontsize << DEFAULT_FONT_SIZE / 2.5 * x_inches;
+	anddroidfontsize << DEFAULT_FONT_SIZE / 2.8 * x_inches;
 	settings->setDefault("font_size", anddroidfontsize.str());
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");

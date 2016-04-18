@@ -40,7 +40,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #ifdef __ANDROID__
 #include "client/tile.h"
-#include <GLES/gl.h>
 #endif
 
 

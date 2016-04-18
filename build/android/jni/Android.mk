@@ -38,16 +38,6 @@ LOCAL_SRC_FILES := deps/gmp/usr/lib/libgmp.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := ssl
-LOCAL_SRC_FILES := deps/openssl/libssl.a
-include $(PREBUILT_STATIC_LIBRARY)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := crypto
-LOCAL_SRC_FILES := deps/openssl/libcrypto.a
-include $(PREBUILT_STATIC_LIBRARY)
-
-include $(CLEAR_VARS)
 LOCAL_MODULE := LuaJIT
 LOCAL_SRC_FILES := deps/luajit/src/libluajit.a
 include $(PREBUILT_STATIC_LIBRARY)
@@ -72,7 +62,7 @@ LOCAL_CFLAGS += -g -D_DEBUG -O0 -fno-omit-frame-pointer
 else
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a-hard)
-LOCAL_CFLAGS += -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fno-fast-math -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -Wno-deprecated-declarations
+LOCAL_CFLAGS += -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fno-fast-math -funsafe-math-optimizations -fno-trapping-math -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
 endif
 
@@ -84,13 +74,13 @@ LOCAL_CFLAGS += -pg
 endif
 
 ifeq ($(TARGET_ARCH_ABI),x86)
-LOCAL_CFLAGS += -mhard-float -Ofast -fno-fast-math -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -Wno-deprecated-declarations -fno-stack-protector
+LOCAL_CFLAGS += -mhard-float -Ofast -fno-fast-math -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -Wno-deprecated-declarations -fvisibility=hidden -fno-stack-protector 
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections
 LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
 endif
 
 LOCAL_C_INCLUDES :=                               \
-		jni/src jni/src/sqlite                    \
+		jni/src                                   \
 		jni/src/script                            \
 		jni/src/json                              \
 		jni/src/cguittfont                        \
@@ -118,7 +108,6 @@ LOCAL_SRC_FILES :=                                \
 		jni/src/collision.cpp                     \
 		jni/src/content_abm.cpp                   \
 		jni/src/content_cao.cpp                   \
-		jni/src/content_cso.cpp                   \
 		jni/src/content_mapblock.cpp              \
 		jni/src/content_mapnode.cpp               \
 		jni/src/content_nodemeta.cpp              \
@@ -228,9 +217,9 @@ LOCAL_SRC_FILES :=                                \
 		jni/src/settings.cpp                      \
 		jni/src/wieldmesh.cpp                     \
 		jni/src/client/clientlauncher.cpp         \
-		jni/src/client/tile.cpp
-
-# intentionally kept out (we already build openssl itself): jni/src/util/sha256.c
+		jni/src/client/tile.cpp                   \
+		jni/src/util/sha256.c
+#	jni/src/content_cso.cpp
 
 # Network
 LOCAL_SRC_FILES +=                                \
@@ -239,9 +228,9 @@ LOCAL_SRC_FILES +=                                \
 		jni/src/network/clientopcodes.cpp         \
 		jni/src/network/clientpackethandler.cpp   \
 		jni/src/network/serveropcodes.cpp         \
-		jni/src/network/serverpackethandler.cpp   \
+		jni/src/network/serverpackethandler.cpp
 
-# lua api
+# Lua API
 LOCAL_SRC_FILES +=                                \
 		jni/src/script/common/c_content.cpp       \
 		jni/src/script/common/c_converter.cpp     \
@@ -281,15 +270,14 @@ LOCAL_SRC_FILES +=                                \
 		jni/src/script/scripting_game.cpp         \
 		jni/src/script/scripting_mainmenu.cpp
 
-#freetype2 support
-LOCAL_SRC_FILES +=                                \
-		jni/src/cguittfont/xCGUITTFont.cpp
+# Freetype2
+LOCAL_SRC_FILES += jni/src/cguittfont/xCGUITTFont.cpp
 
 # SQLite3
 LOCAL_SRC_FILES += deps/sqlite/sqlite3.c
 
 # Threading
-LOCAL_SRC_FILES +=                                \
+LOCAL_SRC_FILES +=                              \
 		jni/src/threading/event.cpp             \
 		jni/src/threading/mutex.cpp             \
 		jni/src/threading/semaphore.cpp         \
@@ -299,13 +287,13 @@ LOCAL_SRC_FILES +=                                \
 LOCAL_SRC_FILES += jni/src/json/jsoncpp.cpp
 
 LOCAL_SHARED_LIBRARIES := gmp
-LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl ssl crypto iconv LuaJIT openal vorbis android_native_app_glue $(PROFILER_LIBS)
+
+LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl iconv LuaJIT openal vorbis android_native_app_glue $(PROFILER_LIBS)
 
 LOCAL_LDLIBS := -lEGL -llog -lGLESv1_CM -lGLESv2 -lz -landroid -lOpenSLES
 
 include $(BUILD_SHARED_LIBRARY)
 
-# at the end of Android.mk
 ifdef GPROF
 $(call import-module,android-ndk-profiler)
 endif

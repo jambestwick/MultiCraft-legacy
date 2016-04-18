@@ -756,10 +756,10 @@ video::ITexture* TextureSource::generateTextureFromMesh(
 
 	// use no render to texture hack
 	if (
-		(renderer.find("Adreno") != std::string::npos) ||
-		(renderer.find("Mali") != std::string::npos) ||
-		(renderer.find("Immersion") != std::string::npos) ||
-		(renderer.find("Tegra") != std::string::npos) ||
+		//(renderer.find("Adreno") != std::string::npos) ||
+		//(renderer.find("Mali") != std::string::npos) ||
+		//(renderer.find("Immersion") != std::string::npos) ||
+		//(renderer.find("Tegra") != std::string::npos) ||
 		g_settings->getBool("inventory_image_hack")
 		) {
 		// Get a scene manager
@@ -1053,7 +1053,6 @@ video::IImage* TextureSource::generateImage(const std::string &name)
 }
 
 #ifdef __ANDROID__
-#include <GLES/gl.h>
 /**
  * Check and align image to npot2 if required by hardware
  * @param image image to check for npot2 alignment
