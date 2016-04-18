@@ -129,7 +129,8 @@ local function init_globals()
 	core.sound_play("main_menu", false)
 	
 	minetest.set_clouds(false)
-	core.set_background("background", defaulttexturedir .. "background.jpg");
+	--core.set_background("background", defaulttexturedir .. "background.jpg");
+	mm_texture.set_dirt_bg()
 end
 
 init_globals()

@@ -143,6 +143,8 @@ local function main_button_handler(this, fields, name, tabdata)
 	end
 end
 
+local function on_change(type, old_tab, new_tab)
+end
 
 --------------------------------------------------------------------------------
 return {
