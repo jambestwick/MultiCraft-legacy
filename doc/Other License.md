@@ -227,6 +227,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+RetroVille NC:
+
+  100% Free
+
+Copyright (c) 2010, Jayvee Enaguas
+
+http://www.dafont.com/retroville-nc.font
+
 --- --- ---
 
 Mod "Dungeon Loot" [dungeon_loot]

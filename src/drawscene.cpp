@@ -500,7 +500,11 @@ void draw_load_screen(const std::wstring &text, IrrlichtDevice* device,
 	}
 	else
 		driver->beginScene(true, true, video::SColor(255, 0, 0, 0));
-
+		video::ITexture *background_image = driver->getTexture((porting::path_share + "/textures/base/bg.png").c_str());   
+		draw2DImageFilterScaled(driver, background_image,
+			irr::core::rect<s32>(0, 0, screensize.X*2, screensize.Y*2),
+			irr::core::rect<s32>(0, 0, screensize.X, screensize.Y), 0, 0, false);
+	
 	// draw progress bar
 	if ((percent >= 0) && (percent <= 100))
 	{

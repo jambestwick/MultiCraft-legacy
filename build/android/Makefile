@@ -83,6 +83,7 @@ IRRLICHT_TIMESTAMP = $(IRRLICHT_DIR)/timestamp
 IRRLICHT_TIMESTAMP_INT = $(ROOT)/deps/irrlicht_timestamp
 IRRLICHT_URL_HTTP = https://github.com/zaki/irrlicht/archive/$(IRRLICHT_COMMIT).zip
 
+# not used now
 OPENSSL_VERSION = 1.0.2g
 OPENSSL_DIR = $(ROOT)/deps/openssl
 OPENSSL_LIB = $(OPENSSL_DIR)/libssl.so.1.0.0
@@ -118,7 +119,7 @@ ICONV_TIMESTAMP = $(ICONV_DIR)/timestamp
 ICONV_TIMESTAMP_INT = $(ROOT)/deps/iconv_timestamp
 ICONV_URL_HTTP = http://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
 
-SQLITE3_VERSION= 3120100
+SQLITE3_VERSION= 3120200
 SQLITE3_DIR = $(ROOT)/deps/sqlite
 SQLITE3_URL = http://www.sqlite.org/2016/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 
@@ -376,9 +377,9 @@ $(FREETYPE_LIB) : $(FREETYPE_TIMESTAMP)
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	CC=${CROSS_PREFIX}gcc ./configure --host=${TARGET_HOST}       \
-		--prefix=${TOOLCHAIN} --with-png=no --with-harfbuzz=no || exit 1;      \
-	CC=${CROSS_PREFIX}gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST}-freetype make || exit 1; \
+	CC=${CROSS_PREFIX}gcc ./configure --host=${TARGET_HOST}                    \
+		--prefix=${TOOLCHAIN} --with-png=no --with-harfbuzz=no  || exit 1;      \
+	CC=${CROSS_PREFIX}gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST}-freetype $(MAKE) || exit 1; \
 	touch ${FREETYPE_TIMESTAMP};                                               \
 	touch ${FREETYPE_TIMESTAMP_INT};                                           \
 	$(RM) -rf $${TOOLCHAIN};                                                   \

@@ -33,6 +33,7 @@ gtags.files
 
 ## Configuration/log files
 debug.txt
+multicraft.conf
 
 ## Doxygen files
 doc/Doxyfile

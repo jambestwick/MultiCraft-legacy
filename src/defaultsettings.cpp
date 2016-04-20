@@ -217,7 +217,7 @@ void set_default_settings(Settings *settings)
 	std::stringstream fontsize;
 	fontsize << DEFAULT_FONT_SIZE;
 
-	settings->setDefault("font_size", "12");
+	settings->setDefault("font_size", fontsize.str());
 	settings->setDefault("mono_font_size", fontsize.str());
 	settings->setDefault("fallback_font_size", fontsize.str());
 #else
@@ -355,7 +355,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("fps_max", "30");
 	settings->setDefault("max_objects_per_block", "20");
 	settings->setDefault("sqlite_synchronous", "1");
-	settings->setDefault("gui_scaling", "1.1");
+	settings->setDefault("gui_scaling", "1.2");
 	settings->setDefault("doubletap_jump", "true");
 	settings->setDefault("server_map_save_interval", "20");
 	settings->setDefault("client_unload_unused_data_timeout", "60");
@@ -382,9 +382,10 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("mouse_sensitivity", "0.15");
 	}
 
-	std::stringstream anddroidfontsize;
-	anddroidfontsize << DEFAULT_FONT_SIZE / 2.8 * x_inches;
-	settings->setDefault("font_size", anddroidfontsize.str());
+	//std::stringstream anddroidfontsize;
+	//anddroidfontsize << DEFAULT_FONT_SIZE / 3.0 * x_inches;
+	//settings->setDefault("font_size", anddroidfontsize.str());
+
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");
 	

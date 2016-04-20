@@ -180,6 +180,6 @@ function mm_texture.set_dirt_bg()
 	end
 	
 	--use base pack
-	local minimalpath = defaulttexturedir .. "dirt_bg.png"
+	local minimalpath = defaulttexturedir .. "bg.png"
 	core.set_background("background", minimalpath, true, 128)
 end

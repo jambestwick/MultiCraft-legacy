@@ -449,7 +449,7 @@ void Hud::drawHotbar(u16 playeritem) {
 
 	s32 hotbar_itemcount = player->hud_hotbar_itemcount;
 	s32 width = hotbar_itemcount * (m_hotbar_imagesize + m_padding * 2);
-	v2s32 pos = centerlowerpos - v2s32(width / 2, m_hotbar_imagesize + m_padding * 3);
+	v2s32 pos = centerlowerpos - v2s32(width / 2, m_hotbar_imagesize + m_padding * 2.7);
 
 	if ( (float) width / (float) porting::getWindowSize().X <=
 			g_settings->getFloat("hud_hotbar_max_width")) {
@@ -580,7 +580,7 @@ void Hud::updateSelectionMesh(const v3s16 &camera_offset)
 
 	m_halo_boxes.push_back(halo_box);
 	m_selection_mesh = convertNodeboxesToMesh(
-		m_halo_boxes, texture_uv, 0.5);
+		m_halo_boxes, texture_uv, 0.3);
 }
 
 void Hud::resizeHotbar() {
