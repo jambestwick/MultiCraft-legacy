@@ -178,8 +178,8 @@ function mm_texture.set_dirt_bg()
 			return true
 		end
 	end
-	
-	--use base pack
+
+	-- Use universal fallback texture in textures/base/pack
 	local minimalpath = defaulttexturedir .. "bg.png"
 	core.set_background("background", minimalpath, true, 128)
 end
