@@ -9,16 +9,12 @@ import android.view.WindowManager;
 
 public class GameActivity extends NativeActivity {
     static {
-
-        System.loadLibrary("vorbis");
         System.loadLibrary("gmp");
-        System.loadLibrary("ssl");
-        System.loadLibrary("crypto");
         System.loadLibrary("multicraft");
     }
 
-    private int m_MessagReturnCode;
-    private String m_MessageReturnValue;
+    private int messageReturnCode;
+    private String messageReturnValue;
 
     public static native void putMessageBoxResult(String text);
 
@@ -27,8 +23,9 @@ public class GameActivity extends NativeActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 //        startAd(this, true);
-        m_MessagReturnCode = -1;
-        m_MessageReturnValue = "";
+        messageReturnCode = -1;
+        messageReturnValue = "";
+        makeFullScreen();
     }
 
 
@@ -69,10 +66,10 @@ public class GameActivity extends NativeActivity {
         if (requestCode == 101) {
             if (resultCode == RESULT_OK) {
                 String text = data.getStringExtra("text");
-                m_MessagReturnCode = 0;
-                m_MessageReturnValue = text;
+                messageReturnCode = 0;
+                messageReturnValue = text;
             } else {
-                m_MessagReturnCode = 1;
+                messageReturnCode = 1;
             }
         }
     }
@@ -89,17 +86,17 @@ public class GameActivity extends NativeActivity {
         params.putInt("editType", editType);
         intent.putExtras(params);
         startActivityForResult(intent, 101);
-        m_MessageReturnValue = "";
-        m_MessagReturnCode = -1;
+        messageReturnValue = "";
+        messageReturnCode = -1;
     }
 
     public int getDialogState() {
-        return m_MessagReturnCode;
+        return messageReturnCode;
     }
 
     public String getDialogValue() {
-        m_MessagReturnCode = -1;
-        return m_MessageReturnValue;
+        messageReturnCode = -1;
+        return messageReturnValue;
     }
 
     public float getDensity() {

@@ -29,7 +29,7 @@ public class UnzipService extends IntentService {
         super("mobi.MultiCraft.UnzipService");
     }
 
-    private void _dirChecker(String dir, String unzipLocation) {
+    private void isDir(String dir, String unzipLocation) {
         File f = new File(unzipLocation + dir);
 
         if (!f.isDirectory()) {
@@ -48,11 +48,9 @@ public class UnzipService extends IntentService {
 
         mNotifyManager.notify(id, mBuilder.build());
         int per = 0;
+        int size = getSummarySize(file);
         for (String f : file) {
             try {
-
-                ZipFile zipSize = new ZipFile(f);
-
                 try {
                     FileInputStream fin = new FileInputStream(f);
                     ZipInputStream zin = new ZipInputStream(fin);
@@ -60,10 +58,10 @@ public class UnzipService extends IntentService {
                     while ((ze = zin.getNextEntry()) != null) {
                         if (ze.isDirectory()) {
                             per++;
-                            _dirChecker(ze.getName(), location);
+                            isDir(ze.getName(), location);
                         } else {
                             per++;
-                            int progress = 100 * per / zipSize.size();
+                            int progress = 100 * per / size;
                             // send update
                             publishProgress(progress);
                             FileOutputStream f_out = new FileOutputStream(location + ze.getName());
@@ -79,7 +77,7 @@ public class UnzipService extends IntentService {
                     }
                     zin.close();
                 } catch (FileNotFoundException e) {
-                    Log.e(TAG, e.getMessage(), e.fillInStackTrace());
+                    Log.e(TAG, e.getMessage());
                 }
             } catch (IOException e) {
                 Log.e(TAG, e.getLocalizedMessage());
@@ -91,6 +89,19 @@ public class UnzipService extends IntentService {
         Intent intentUpdate = new Intent(ACTION_UPDATE);
         intentUpdate.putExtra(ACTION_PROGRESS, progress);
         sendBroadcast(intentUpdate);
+    }
+
+    private int getSummarySize(String[] zips) {
+        int size = 0;
+        for (String z : zips) {
+            try {
+                ZipFile zipSize = new ZipFile(z);
+                size += zipSize.size();
+            } catch (IOException e) {
+                Log.e(TAG, e.getLocalizedMessage());
+            }
+        }
+        return size;
     }
 
     @Override

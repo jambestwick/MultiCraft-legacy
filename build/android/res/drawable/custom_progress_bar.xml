@@ -1,14 +1,13 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Define the progress properties like start color, end color etc -->
     <item android:id="@android:id/progress">
         <clip>
             <shape>
                 <gradient
                     android:angle="270"
-                    android:centerColor="#007A00"
+                    android:centerColor="#808080"
                     android:centerY="1.0"
-                    android:endColor="#06101d"
-                    android:startColor="#007A00" />
+                    android:endColor="#808080"
+                    android:startColor="#808080" />
             </shape>
         </clip>
     </item>

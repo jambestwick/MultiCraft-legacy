@@ -49,7 +49,6 @@
         </activity>
         <activity
             android:name=".InputDialogActivity"
-            android:excludeFromRecents="true"
             android:theme="@style/Theme.Transparent" />
 
         <service

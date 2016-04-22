@@ -24,7 +24,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,17 +45,10 @@ public class MainActivity extends Activity {
     public final static String NOMEDIA = ".nomedia";
     private final static int REQUEST_STORAGE = 0;
     private ProgressDialog mProgressDialog;
-    private String oldDataFolder = "/MultiCraft";
     private String dataFolder = "/Android/data/mobi.MultiCraft/files/";
     private String unzipLocation = Environment.getExternalStorageDirectory() + dataFolder;
-    private String oldUnzipLocation = Environment.getExternalStorageDirectory() + oldDataFolder;
-    private String oldWorldLocation = oldUnzipLocation + "/worlds";
-    private String oldGamesLocation = oldUnzipLocation + "/games/MultiCraft_game";
-    private String newWorldLocation = unzipLocation + "/worlds";
-    private String newGamesLocation = unzipLocation + "/games/MultiCraft_game";
     private ProgressBar mProgressBar;
     private Utilities util;
-    private boolean isCopyOld = false;
     private BroadcastReceiver myReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -66,11 +58,7 @@ public class MainActivity extends Activity {
                 mProgressBar.setProgress(progress);
             } else {
                 util.createNomedia();
-                if (isCopyOld) {
-                    new CopyFolderTask().execute(new String[]{oldWorldLocation, newWorldLocation}, new String[]{oldGamesLocation, newGamesLocation});
-                } else {
-                    runGame();
-                }
+                runGame();
             }
         }
     };
@@ -100,6 +88,14 @@ public class MainActivity extends Activity {
         if (Build.VERSION.SDK_INT >= 19) {
             this.getWindow().getDecorView()
                     .setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            makeFullScreen();
         }
     }
 
@@ -237,29 +233,6 @@ public class MainActivity extends Activity {
 
     }
 
-    private class CopyFolderTask extends AsyncTask<String[], Void, Void> {
-
-        @Override
-        protected Void doInBackground(String[]... params) {
-            for (String[] p : params) {
-                File src = new File(p[0]);
-                File dest = new File(p[1]);
-                try {
-                    util.copyDirectory(src, dest);
-                } catch (IOException e) {
-                    Log.e(TAG, "copy failed: " + e.getMessage());
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            util.deleteFiles(oldUnzipLocation);
-            runGame();
-        }
-    }
-
     private class CopyZip extends AsyncTask<String, Void, String> {
         String[] zips;
 
@@ -317,17 +290,6 @@ public class MainActivity extends Activity {
 
     private class Utilities {
 
-		/*
-         * private void createLangFile() { PrintWriter writer; try { writer =
-		 * new PrintWriter(unzipLocation + "lang.txt", "UTF-8"); if
-		 * ("Russian".equals(Locale.getDefault().getDisplayLanguage())) {
-		 * writer.println("ru"); } else { writer.println("en"); }
-		 * writer.close(); } catch (Exception e) { Log.e(TAG,
-		 * e.getLocalizedMessage()); }
-		 * 
-		 * }
-		 */
-
         private void createDataFolder() {
             File folder = new File(unzipLocation);
             if (!(folder.exists()))
@@ -371,52 +333,14 @@ public class MainActivity extends Activity {
         }
 
         public void checkVersion() {
-            if (isFolderEmpty(oldUnzipLocation) && isFolderEmpty(unzipLocation)) {
+            if (isFolderEmpty(unzipLocation)) {
                 saveSettings(TAG_BUILD_NUMBER, getString(R.string.ver));
-                startDeletion(true);
-            } else if (!isFolderEmpty(oldUnzipLocation)) {
-                saveSettings(TAG_BUILD_NUMBER, getString(R.string.ver));
-                isCopyOld = true;
                 startDeletion(true);
             } else if (getBuildNumber().equals(getString(R.string.ver))) {
                 runGame();
             } else {
                 saveSettings(TAG_BUILD_NUMBER, getString(R.string.ver));
                 startDeletion(false);
-            }
-        }
-
-        public void copyDirectory(File sourceLocation, File targetLocation)
-                throws IOException {
-
-            if (sourceLocation.isDirectory()) {
-                if (!targetLocation.exists() && !targetLocation.mkdirs()) {
-                    throw new IOException("Cannot create dir " + targetLocation.getAbsolutePath());
-                }
-
-                String[] children = sourceLocation.list();
-                for (String aChildren : children) {
-                    copyDirectory(new File(sourceLocation, aChildren),
-                            new File(targetLocation, aChildren));
-                }
-            } else {
-                // make sure the directory we plan to store the recording in exists
-                File directory = targetLocation.getParentFile();
-                if (directory != null && !directory.exists() && !directory.mkdirs()) {
-                    throw new IOException("Cannot create dir " + directory.getAbsolutePath());
-                }
-
-                InputStream in = new FileInputStream(sourceLocation);
-                OutputStream out = new FileOutputStream(targetLocation);
-
-                // Copy the bits from in stream to out stream
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-                in.close();
-                out.close();
             }
         }
 
