@@ -22,7 +22,6 @@ local multicraft_developers = {
 }
 
 local core_developers = {
-	"Maksim Gamarnik (MoNTE48) <MoNTE48@mail.ua>",
 	"Perttu Ahola (celeron55) <celeron55@gmail.com>",
 	"Ryan Kwolek (kwolekr) <kwolekr@minetest.net>",
 	"PilzAdam <pilzadam@minetest.net>",
@@ -78,14 +77,13 @@ return {
 	name = "credits",
 	caption = fgettext("Credits"),
 	cbf_formspec = function(tabview, name, tabdata)
-		return "label[0.1,0;MultiCraft " .. core.get_version() .. "]" ..
-			"label[0.1,0.3;Open Source Project]" ..
-			"label[0.1,2.0;https://github.com/]" ..
-			"label[0.1,2.3;MultiCraftProject]" ..
-			"label[0.1,5.0;LGPLv3.0+ and CC-BY-SA 3.0]" ..
+		return "label[0.1,0;MultiCraft Open Source Project, ver. " .. core.get_version() .. "]" ..
+			"label[0.1,0.3;]" ..
+			"label[0.1,0.5;https://github.com/MultiCraftProject]" ..
+			"label[0.1,1.0;LGPLv3.0+ and CC-BY-SA 3.0]" ..
 			"tablecolumns[color;text]" ..
 			"tableoptions[background=#00000000;highlight=#00000000;border=false]" ..
-			"table[3.5,-0.25;8.5,5.8;list_credits;" ..
+			"table[0,1.7;11.75,3.45;list_credits;" ..
 			"#FFFF00," .. fgettext("MultiCraft Developers") .. ",," ..
 			table.concat(multicraft_developers, ",,") .. ",,," ..
 			"#FFFF00," .. fgettext("Minetest Developers") .. ",," ..
