@@ -228,10 +228,8 @@ $(OPENAL_LIB): $(OPENAL_TIMESTAMP)
 	echo "changed timestamp for openal detected building...";                  \
 	cd ${OPENAL_DIR};                                                          \
 	ndk-build NDEBUG=${NDEBUG}                                                 \
-	APP_ABI=${TARGET_ABI} TARGET_ARCH_ABI=${TARGET_ABI}                        \
-	APP_PLATFORM=${APP_PLATFORM} TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"       \
-	TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                                  \
-	TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                     \
+	APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                         \
+	LOCAL_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                      \
 	touch ${OPENAL_TIMESTAMP};                                                 \
 	touch ${OPENAL_TIMESTAMP_INT};                                             \
 	else                                                                       \
@@ -272,9 +270,7 @@ $(VORBIS_LIB): $(VORBIS_TIMESTAMP)
 	cd ${VORBIS_DIR};                                                          \
 	ndk-build NDEBUG=${NDEBUG}                                                 \
 	APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                         \
-	TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                    \
-	TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                                  \
-	TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                     \
+	LOCAL_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                      \
 	touch ${VORBIS_TIMESTAMP};                                                 \
 	touch ${VORBIS_TIMESTAMP_INT};                                             \
 	else                                                                       \
@@ -377,8 +373,11 @@ $(FREETYPE_LIB) : $(FREETYPE_TIMESTAMP)
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
+	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CFLAGS_ADDON}";                     \
+	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
+	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
 	CC=${CROSS_PREFIX}gcc ./configure --host=${TARGET_HOST}                    \
-		--prefix=${TOOLCHAIN} --with-png=no --with-harfbuzz=no  || exit 1;      \
+		--prefix=${TOOLCHAIN} --with-png=no --with-harfbuzz=no  || exit 1;     \
 	CC=${CROSS_PREFIX}gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST}-freetype $(MAKE) || exit 1; \
 	touch ${FREETYPE_TIMESTAMP};                                               \
 	touch ${FREETYPE_TIMESTAMP_INT};                                           \
@@ -435,7 +434,10 @@ $(ICONV_LIB) : $(ICONV_TIMESTAMP)
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	./configure --enable-static --disable-shared --host=${TARGET_HOST2} || exit 1;  \
+	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CFLAGS_ADDON}";                     \
+	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
+	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
+	./configure --enable-static --disable-shared --host=${TARGET_HOST2} || exit 1; \
 	sed -i 's/LIBICONV_VERSION_INFO) /LIBICONV_VERSION_INFO) -avoid-version /g' lib/Makefile; \
 	grep "iconv_LDFLAGS" src/Makefile;                                         \
 	$(MAKE) -s || exit 1;                                                      \
@@ -525,7 +527,8 @@ curl_download :
 
 curl : $(CURL_LIB)
 
-$(CURL_LIB): $(CURL_TIMESTAMP) $(OPENSSL_LIB)
+#$(CURL_LIB): $(CURL_TIMESTAMP) $(OPENSSL_LIB)
+$(CURL_LIB): $(CURL_TIMESTAMP)
 	+ @REFRESH=0;                                                          \
 	if [ ! -e ${CURL_TIMESTAMP_INT} ] ; then                                   \
 		REFRESH=1;                                                             \
@@ -550,8 +553,7 @@ $(CURL_LIB): $(CURL_TIMESTAMP) $(OPENSSL_LIB)
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
 	#export CPPFLAGS="$${CPPFLAGS} -I${OPENSSL_DIR}/include                    \
-	export CPPFLAGS="$${CPPFLAGS}                                              \
-	${TARGET_CFLAGS_ADDON}";                                                   \
+	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CFLAGS_ADDON}";                     \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
 	#export LDFLAGS="$${LDFLAGS} -L${OPENSSL_DIR} ${TARGET_LDFLAGS_ADDON}";    \
 	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
@@ -606,7 +608,7 @@ $(GMP_LIB): $(GMP_TIMESTAMP)
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-gmp;                              \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
 	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
-	APP_PLATFORM=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                  \
+	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
@@ -763,8 +765,7 @@ apk: $(PATHCFGFILE) assets $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(GMP_LIB) \
 	ndk-build NDEBUG=${NDEBUG}                                                 \
 	GPROF=${GPROF} APP_ABI=${TARGET_ABI}                                       \
 	APP_PLATFORM=${APP_PLATFORM}                                               \
-	TARGET_LIBDIR=${TARGET_LIBDIR}                                             \
-	TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" &&                             \
+	TARGET_LIBDIR=${TARGET_LIBDIR} &&                                          \
 	echo "	Success! =)";                                                      \
 	ant $$BUILD_TYPE &&                                                        \
 	echo "APK: bin/MultiCraft-$$BUILD_TYPE.apk"                                \

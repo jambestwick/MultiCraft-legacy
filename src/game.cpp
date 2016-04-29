@@ -4316,7 +4316,11 @@ void Game::updateGui(float *statustext_time, const RunStats &stats,
 	if (!statustext.empty()) {
 		s32 status_width  = guitext_status->getTextWidth();
 		s32 status_height = guitext_status->getTextHeight();
+#ifdef __ANDROID__
+		s32 status_y = screensize.Y - 320 * g_settings->getFloat("hud_scaling");
+#else
 		s32 status_y = screensize.Y - 150;
+#endif
 		s32 status_x = (screensize.X - status_width) / 2;
 		core::rect<s32> rect(
 				status_x , status_y - status_height,

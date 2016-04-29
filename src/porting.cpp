@@ -466,26 +466,6 @@ bool setSystemPaths()
 
 #endif
 
-void migrateCachePath()
-{
-	const std::string local_cache_path = path_user + DIR_DELIM + "cache";
-
-	// Delete tmp folder if it exists (it only ever contained
-	// a temporary ogg file, which is no longer used).
-	if (fs::PathExists(local_cache_path + DIR_DELIM + "tmp"))
-		fs::RecursiveDelete(local_cache_path + DIR_DELIM + "tmp");
-
-	// Bail if migration impossible
-	if (path_cache == local_cache_path || !fs::PathExists(local_cache_path)
-			|| fs::PathExists(path_cache)) {
-		return;
-	}
-	if (!fs::Rename(local_cache_path, path_cache)) {
-		errorstream << "Failed to migrate local cache path "
-			"to system path!" << std::endl;
-	}
-}
-
 void initializePaths()
 {
 #if RUN_IN_PLACE
@@ -550,8 +530,6 @@ void initializePaths()
 		// If neither works, use $PATH_USER/cache
 		path_cache = path_user + DIR_DELIM + "cache";
 	}
-	// Migrate cache folder to new location if possible
-	migrateCachePath();
 #endif
 
 	infostream << "Detected share path: " << path_share << std::endl;
