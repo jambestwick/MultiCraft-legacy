@@ -6,12 +6,17 @@
 # build for build platform
 APP_PLATFORM = android-19
 
-# paths used for timestaps, dependencys, tree config and libs
-PATHCFGFILE = path.cfg
+ANDR_ROOT = $(shell pwd)
+PROJ_ROOT = $(shell realpath $(ANDR_ROOT)/../..)
+APP_ROOT = $(ANDR_ROOT)/src/main
 
-ANDROID_VERSION_CODE = 1
 
-COMPILER_VERSION = 4.9
+VERSION_MAJOR := $(shell cat $(PROJ_ROOT)/CMakeLists.txt | \
+	grep ^set\(VERSION_MAJOR\ | sed 's/)/ /' | cut -f2 -d' ')
+VERSION_MINOR := $(shell cat $(PROJ_ROOT)/CMakeLists.txt | \
+	grep ^set\(VERSION_MINOR\ | sed 's/)/ /' | cut -f2 -d' ')
+VERSION_PATCH := $(shell cat $(PROJ_ROOT)/CMakeLists.txt | \
+	grep ^set\(VERSION_PATCH\ | sed 's/)/ /' | cut -f2 -d' ')
 
 ################################################################################
 # toolchain config for ARMv7
@@ -27,6 +32,7 @@ TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
 TARGET_ARCH = armv7
 CROSS_PREFIX = arm-linux-androideabi-
+COMPILER_VERSION = 4.9
 
 ################################################################################
 # toolchain config for ARMv8
@@ -42,6 +48,7 @@ CROSS_PREFIX = arm-linux-androideabi-
 # TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
 # TARGET_ARCH = arm64
 # CROSS_PREFIX = aarch64-linux-android-
+# COMPILER_VERSION = 4.9
 
 ################################################################################
 # toolchain config for x86
@@ -57,93 +64,96 @@ CROSS_PREFIX = arm-linux-androideabi-
 # TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
 # TARGET_ARCH = x86
 # CROSS_PREFIX = i686-linux-android-
+# COMPILER_VERSION = 4.9
 
 ################################################################################
 
 ASSETS_TIMESTAMP = deps/assets_timestamp
 
-OPENAL_FOLDER = $(ROOT)/deps/openal-soft
-OPENAL_DIR = $(ROOT)/deps/openal-soft/android
+OPENAL_FOLDER = $(ANDR_ROOT)/deps/openal-soft
+OPENAL_DIR = $(ANDR_ROOT)/deps/openal-soft/android
 OPENAL_LIB = $(OPENAL_DIR)/libs/$(TARGET_ABI)/libopenal.so
 OPENAL_TIMESTAMP = $(OPENAL_DIR)/timestamp
-OPENAL_TIMESTAMP_INT = $(ROOT)/deps/openal_timestamp
+OPENAL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/openal_timestamp
 OPENAL_URL_GIT = https://github.com/MoNTE48/openal-soft
 
-VORBIS_DIR = $(ROOT)/deps/libvorbis-android
+VORBIS_DIR = $(ANDR_ROOT)/deps/libvorbis-android
 VORBIS_LIB = $(VORBIS_DIR)/obj/local/$(TARGET_ABI)/libvorbis.a
 VORBIS_TIMESTAMP = $(VORBIS_DIR)/timestamp
-VORBIS_TIMESTAMP_INT = $(ROOT)/deps/vorbis_timestamp
+VORBIS_TIMESTAMP_INT = $(ANDR_ROOT)/deps/vorbis_timestamp
 VORBIS_URL_GIT = https://github.com/MoNTE48/libvorbis-android
 
 IRRLICHT_COMMIT = 58fa0cf3419c2733159fc3c6253634bedada3bfe
-#IRRLICHT_COMMIT = 54b8cba398c3b845d0d1158822916c2f78be194b
-IRRLICHT_DIR = $(ROOT)/deps/irrlicht
+IRRLICHT_DIR = $(ANDR_ROOT)/deps/irrlicht
 IRRLICHT_LIB = $(IRRLICHT_DIR)/lib/Android/libIrrlicht.a
 IRRLICHT_TIMESTAMP = $(IRRLICHT_DIR)/timestamp
-IRRLICHT_TIMESTAMP_INT = $(ROOT)/deps/irrlicht_timestamp
+IRRLICHT_TIMESTAMP_INT = $(ANDR_ROOT)/deps/irrlicht_timestamp
 IRRLICHT_URL_HTTP = https://github.com/zaki/irrlicht/archive/$(IRRLICHT_COMMIT).zip
 
 # not used now
 OPENSSL_VERSION = 1.0.2g
-OPENSSL_DIR = $(ROOT)/deps/openssl
+OPENSSL_DIR = $(ANDR_ROOT)/deps/openssl
 OPENSSL_LIB = $(OPENSSL_DIR)/libssl.so.1.0.0
 OPENSSL_TIMESTAMP = $(OPENSSL_DIR)/timestamp
-OPENSSL_TIMESTAMP_INT = $(ROOT)/deps/openssl_timestamp
+OPENSSL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/openssl_timestamp
 OPENSSL_URL = ftp://ftp.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
 
 CURL_VERSION = 7.48.0
-CURL_DIR = $(ROOT)/deps/curl
+CURL_DIR = $(ANDR_ROOT)/deps/curl
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
-CURL_TIMESTAMP_INT = $(ROOT)/deps/curl_timestamp
+CURL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/curl_timestamp
 CURL_URL_HTTP = http://curl.haxx.se/download/curl-${CURL_VERSION}.tar.bz2
 
 GMP_VERSION = 6.1.0
-GMP_DIR = $(ROOT)/deps/gmp
+GMP_DIR = $(ANDR_ROOT)/deps/gmp
 GMP_LIB = $(GMP_DIR)/usr/lib/libgmp.so
 GMP_TIMESTAMP = $(GMP_DIR)/timestamp
-GMP_TIMESTAMP_INT = $(ROOT)/deps/gmp_timestamp
+GMP_TIMESTAMP_INT = $(ANDR_ROOT)/deps/gmp_timestamp
 GMP_URL_HTTP = https://gmplib.org/download/gmp/gmp-$(GMP_VERSION).tar.bz2
 
 FREETYPE_VERSION = 2.6.3
-FREETYPE_DIR = $(ROOT)/deps/freetype
+FREETYPE_DIR = $(ANDR_ROOT)/deps/freetype
 FREETYPE_LIB = $(FREETYPE_DIR)/objs/.libs/libfreetype.a
 FREETYPE_TIMESTAMP = $(FREETYPE_DIR)/timestamp
-FREETYPE_TIMESTAMP_INT = $(ROOT)/deps/freetype_timestamp
+FREETYPE_TIMESTAMP_INT = $(ANDR_ROOT)/deps/freetype_timestamp
 FREETYPE_URL_HTTP = http://download.savannah.gnu.org/releases/freetype/freetype-$(FREETYPE_VERSION).tar.bz2
 
 ICONV_VERSION = 1.14
-ICONV_DIR = $(ROOT)/deps/libiconv
+ICONV_DIR = $(ANDR_ROOT)/deps/libiconv
 ICONV_LIB = $(ICONV_DIR)/lib/.libs/libiconv.a
 ICONV_TIMESTAMP = $(ICONV_DIR)/timestamp
-ICONV_TIMESTAMP_INT = $(ROOT)/deps/iconv_timestamp
+ICONV_TIMESTAMP_INT = $(ANDR_ROOT)/deps/iconv_timestamp
 ICONV_URL_HTTP = http://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
 
 SQLITE3_VERSION= 3120200
-SQLITE3_DIR = $(ROOT)/deps/sqlite
+SQLITE3_DIR = $(ANDR_ROOT)/deps/sqlite
 SQLITE3_URL = http://www.sqlite.org/2016/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 
 LUAJIT_GIT_BRANCH = v2.1
-LUAJIT_DIR = $(ROOT)/deps/luajit
+LUAJIT_DIR = $(ANDR_ROOT)/deps/luajit
 LUAJIT_LIB = $(LUAJIT_DIR)src/libluajit.a
 LUAJIT_TIMESTAMP = $(LUAJIT_DIR)/timestamp
-LUAJIT_TIMESTAMP_INT = $(ROOT)/deps/luajit_timestamp
+LUAJIT_TIMESTAMP_INT = $(ANDR_ROOT)/deps/luajit_timestamp
 LUAJIT_URL_GIT = https://github.com/LuaJIT/LuaJIT.git
 
 ################################################################################
 
 OS := $(shell uname)
 
-ROOT = $(shell pwd)
+ANDR_ROOT = $(shell pwd)
 
-VERSION_MAJOR := $(shell cat $(ROOT)/../../CMakeLists.txt | \
+VERSION_MAJOR := $(shell cat $(ANDR_ROOT)/../../CMakeLists.txt | \
 	grep ^set\(VERSION_MAJOR\ | sed 's/)/ /' | cut -f2 -d' ')
-VERSION_MINOR := $(shell cat $(ROOT)/../../CMakeLists.txt | \
+VERSION_MINOR := $(shell cat $(ANDR_ROOT)/../../CMakeLists.txt | \
 	grep ^set\(VERSION_MINOR\ | sed 's/)/ /' | cut -f2 -d' ')
-VERSION_PATCH := $(shell cat $(ROOT)/../../CMakeLists.txt | \
+VERSION_PATCH := $(shell cat $(ANDR_ROOT)/../../CMakeLists.txt | \
 	grep ^set\(VERSION_PATCH\ | sed 's/)/ /' | cut -f2 -d' ')
 
--include $(PATHCFGFILE)
+ANDROID_SDK = $(shell grep '^sdk\.dir' local.properties | sed 's/^.*=[[:space:]]*//')
+ANDROID_NDK = $(shell grep '^ndk\.dir' local.properties | sed 's/^.*=[[:space:]]*//')
+NDK_MODULE_PATH = $(ANDROID_NDK)/toolchains
+
 
 .PHONY : debug release reconfig delconfig \
 	irrlicht_download clean_irrlicht irrlicht \
@@ -152,52 +162,51 @@ VERSION_PATCH := $(shell cat $(ROOT)/../../CMakeLists.txt | \
 	luajit_download clean_luajit luajit \
 	apk clean_apk \
 	clean_all clean prep_srcdir \
-	install_debug install envpaths all \
-	manifest clean_manifest\
+	install_debug install_release envpaths all \
 	$(ASSETS_TIMESTAMP) $(LUAJIT_TIMESTAMP) \
 	$(OPENAL_TIMESTAMP) $(VORBIS_TIMESTAMP) \
 	$(IRRLICHT_TIMESTAMP) $(CURL_TIMESTAMP) \
 	#$(OPENSSL_TIMESTAMP) $(VORBIS_TIMESTAMP) \
 	$(VORBIS_TIMESTAMP) \
-	$(ROOT)/jni/src/android_version.h \
-	$(ROOT)/jni/src/android_version_githash.h
+	$(ANDR_ROOT)/jni/src/android_version.h \
+	$(ANDR_ROOT)/jni/src/android_version_githash.h
 
-debug : $(PATHCFGFILE)
+debug : local.properties
 	export NDEBUG=;                                                            \
 	export BUILD_TYPE=debug;                                                   \
 	$(MAKE) apk
 
 all : debug release
 
-release : $(PATHCFGFILE)
+release : local.properties
 	@export NDEBUG=1;                                                          \
 	export BUILD_TYPE=release;                                                 \
 	$(MAKE) apk
 
 reconfig: delconfig
-	@$(MAKE) $(PATHCFGFILE)
+	@$(MAKE) local.properties
 
-delconfig :
-	$(RM) ${PATHCFGFILE}
+delconfig:
+	$(RM) local.properties
 
-$(PATHCFGFILE) :
+local.properties:
 	@echo "Please specify path of ANDROID NDK";                                \
-	echo "e.g. /home/user/android-ndk-r10e/";                                  \
+	echo "e.g. $$HOME/Android/ndk-r11c/";                                  \
 	read ANDROID_NDK ;                                                         \
 	if [ ! -d $$ANDROID_NDK ] ; then                                           \
 		echo "$$ANDROID_NDK is not a valid folder";                            \
 		exit 1;                                                                \
 	fi;                                                                        \
-	echo "ANDROID_NDK = $$ANDROID_NDK" > ${PATHCFGFILE};                       \
-	echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";\
+	echo "ndk.dir = $$ANDROID_NDK" > local.properties;                         \
 	echo "Please specify path of ANDROID SDK";                                 \
-	echo "e.g. /home/user/adt-bundle-linux-x86_64-20131030/sdk/";              \
+	echo "e.g. $$HOME/Android/sdk/";                                       \
 	read SDKFLDR ;                                                             \
 	if [ ! -d $$SDKFLDR ] ; then                                               \
 		echo "$$SDKFLDR is not a valid folder";                                \
 		exit 1;                                                                \
 	fi;                                                                        \
-	echo "SDKFOLDER = $$SDKFLDR" >> ${PATHCFGFILE};
+	echo "sdk.dir = $$SDKFLDR" >> local.properties;
+
 
 $(OPENAL_TIMESTAMP) : openal_download
 	@LAST_MODIF=$$(find ${OPENAL_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
@@ -208,8 +217,8 @@ $(OPENAL_TIMESTAMP) : openal_download
 openal_download :
 	@if [ ! -d ${OPENAL_DIR} ] ; then                                          \
 		echo "openal sources missing, downloading...";                         \
-		mkdir -p ${ROOT}/deps;                                                 \
-		cd ${ROOT}/deps ;                                                      \
+		mkdir -p ${ANDR_ROOT}/deps;                                            \
+		cd ${ANDR_ROOT}/deps ;                                                 \
 		git clone ${OPENAL_URL_GIT} || exit 1;                                 \
 	fi
 
@@ -224,12 +233,11 @@ $(OPENAL_LIB): $(OPENAL_TIMESTAMP)
 		REFRESH=1;                                                         \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
-	export PATH=$$PATH:${ANDROID_NDK};                                         \
 	echo "changed timestamp for openal detected building...";                  \
 	cd ${OPENAL_DIR};                                                          \
-	ndk-build NDEBUG=${NDEBUG}                                                 \
-	APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                         \
-	LOCAL_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                      \
+	${ANDROID_NDK}/ndk-build NDEBUG=${NDEBUG}                                  \
+		NDK_MODULE_PATH=${NDK_MODULE_PATH} APP_ABI=${TARGET_ABI}               \
+		TARGET_ARCH_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM} || exit 1;  \
 	touch ${OPENAL_TIMESTAMP};                                                 \
 	touch ${OPENAL_TIMESTAMP_INT};                                             \
 	else                                                                       \
@@ -248,8 +256,8 @@ $(VORBIS_TIMESTAMP) : vorbis_download
 vorbis_download :
 	@if [ ! -d ${VORBIS_DIR} ] ; then                                             \
 		echo "vorbis sources missing, downloading...";                         \
-		mkdir -p ${ROOT}/deps;                                                 \
-		cd ${ROOT}/deps ;                                                      \
+		mkdir -p ${ANDR_ROOT}/deps;                                                 \
+		cd ${ANDR_ROOT}/deps ;                                                      \
 		git clone ${VORBIS_URL_GIT}|| exit 1;                                  \
 	fi
 
@@ -265,14 +273,16 @@ $(VORBIS_LIB): $(VORBIS_TIMESTAMP)
 		REFRESH=1;                                                             \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
-	export PATH=$$PATH:${ANDROID_NDK};                                         \
 	echo "changed timestamp for vorbis detected building...";                  \
 	cd ${VORBIS_DIR};                                                          \
-	ndk-build NDEBUG=${NDEBUG}                                                 \
-	APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                         \
-	LOCAL_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                      \
-	touch ${VORBIS_TIMESTAMP};                                                 \
-	touch ${VORBIS_TIMESTAMP_INT};                                             \
+	${ANDROID_NDK}/ndk-build NDEBUG=${NDEBUG}                                  \
+		NDK_MODULE_PATH=${NDK_MODULE_PATH}                                     \
+		APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                     \
+		TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                \
+		TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                              \
+		TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                 \
+	touch ${OGG_TIMESTAMP};                                                    \
+	touch ${OGG_TIMESTAMP_INT};                                                \
 	else                                                                       \
 		echo "nothing to be done for libvorbis";                               \
 	fi
@@ -289,11 +299,11 @@ $(OPENSSL_TIMESTAMP) : openssl_download
 openssl_download :
 	@if [ ! -d ${OPENSSL_DIR} ] ; then                                         \
 		echo "openssl sources missing, downloading...";                        \
-		mkdir -p ${ROOT}/deps;                                                 \
-		cd ${ROOT}/deps;                                                       \
+		mkdir -p ${ANDR_ROOT}/deps;                                                 \
+		cd ${ANDR_ROOT}/deps;                                                       \
 		wget ${OPENSSL_URL} || exit 1;                                         \
 		tar -xzf openssl-$(OPENSSL_VERSION).tar.gz;                            \
-		$(RM) -rf $(ROOT)/deps/openssl-$(OPENSSL_VERSION).tar.gz;              \
+		$(RM) -rf $(ANDR_ROOT)/deps/openssl-$(OPENSSL_VERSION).tar.gz;              \
 		mv openssl-$(OPENSSL_VERSION) openssl;                                 \
 	fi
 
@@ -313,8 +323,8 @@ $(OPENSSL_LIB): $(OPENSSL_TIMESTAMP) $(GMP_LIB)
 	cd ${OPENSSL_DIR};                                                         \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-openssl;                          \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
-	--install-dir=$${TOOLCHAIN} --platform=${APP_PLATFORM};                    \
+		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
+		--install-dir=$${TOOLCHAIN} --platform=${APP_PLATFORM};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	CC=${CROSS_PREFIX}gcc ./Configure no-ssl2 no-ssl3 no-hw enable-gmp         \
 	-DL_ENDIAN -I${GMP_DIR} -L${GMP_DIR}/usr/lib android-${TARGET_ARCH};       \
@@ -340,7 +350,7 @@ $(FREETYPE_TIMESTAMP) : freetype_download
 freetype_download :
 	@if [ ! -d "${FREETYPE_DIR}" ] ; then                                       \
 		echo "freetype sources missing, downloading...";                        \
-		mkdir -p ${ROOT}/deps;                                                  \
+		mkdir -p ${ANDR_ROOT}/deps;                                                  \
 		cd deps;                                                                \
 		wget ${FREETYPE_URL_HTTP} || exit 1;                                    \
 		tar -xjf freetype-${FREETYPE_VERSION}.tar.bz2 || exit 1;                \
@@ -398,15 +408,15 @@ $(ICONV_TIMESTAMP) : iconv_download
 iconv_download :
 	@if [ ! -d ${ICONV_DIR} ] ; then                                           \
 		echo "iconv sources missing, downloading...";                      \
-		mkdir -p ${ROOT}/deps;                                             \
-		cd ${ROOT}/deps;                                                   \
+		mkdir -p ${ANDR_ROOT}/deps;                                        \
+		cd ${ANDR_ROOT}/deps;                                              \
 		wget ${ICONV_URL_HTTP} || exit 1;                                  \
 		tar -xzf libiconv-${ICONV_VERSION}.tar.gz || exit 1;               \
 		rm libiconv-${ICONV_VERSION}.tar.gz;                               \
 		mv libiconv-${ICONV_VERSION} libiconv;                             \
 		cd libiconv;                                                          \
-		patch -p1 < ${ROOT}/libiconv_android.patch;                        \
-		patch -p1 < ${ROOT}/libiconv_stdio.patch;                          \
+		patch -p1 < ${ANDR_ROOT}/libiconv_android.patch;                        \
+		patch -p1 < ${ANDR_ROOT}/libiconv_stdio.patch;                          \
 	fi
 
 iconv : $(ICONV_LIB)
@@ -423,13 +433,13 @@ $(ICONV_LIB) : $(ICONV_TIMESTAMP)
 		REFRESH=1;                                                         \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
-	export PATH=$$PATH:${ANDROID_NDK};                                         \
+	mkdir -p ${ICONV_DIR};                                                     \
 	echo "changed timestamp for iconv detected building...";                   \
 	cd ${ICONV_DIR};                                                           \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-iconv;                            \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
-	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
+		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
+		--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
@@ -459,7 +469,7 @@ clean_iconv :
 irrlicht_download :
 	@if [ ! -d "deps/irrlicht" ] ; then                                        \
 		echo "irrlicht sources missing, downloading...";                       \
-		mkdir -p ${ROOT}/deps;                                                 \
+		mkdir -p ${ANDR_ROOT}/deps;                                            \
 		cd deps;                                                               \
 		wget ${IRRLICHT_URL_HTTP} || exit 1;                                   \
 		unzip ${IRRLICHT_COMMIT}.zip || exit 1;                                \
@@ -467,10 +477,10 @@ irrlicht_download :
 		mv irrlicht-${IRRLICHT_COMMIT} irrlicht;                               \
 		cd irrlicht;                                                           \
 		mkdir -p lib/Android;                                                  \
-		patch -p1 < ../../irrlicht-touchcount.patch   || exit 1;               \
-		patch -p1 < ../../irrlicht-back_button.patch  || exit 1;               \
-		patch -p1 < ../../irrlicht-texturehack.patch  || exit 1;               \
-		patch -p1 < ../../irrlicht-optimization.patch || exit 1;               \
+		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-touchcount.patch || exit 1;  \
+		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-back_button.patch || exit 1; \
+		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-texturehack.patch || exit 1; \
+		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-optimization.patch || exit 1;\
 	fi
 
 $(IRRLICHT_TIMESTAMP) : irrlicht_download
@@ -493,11 +503,12 @@ $(IRRLICHT_LIB): $(IRRLICHT_TIMESTAMP) $(FREETYPE_LIB)
 		REFRESH=1;                                                             \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
-	export PATH=$$PATH:${ANDROID_NDK};                                         \
+	mkdir -p ${IRRLICHT_DIR};                                                  \
 	echo "changed timestamp for irrlicht detected building...";                \
 	cd deps/irrlicht/source/Irrlicht/Android;                                  \
-	ndk-build NDEBUG=${NDEBUG}                                                 \
-	APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM} || exit 1;              \
+	${ANDROID_NDK}/ndk-build NDEBUG=${NDEBUG}                                  \
+		NDK_MODULE_PATH=${NDK_MODULE_PATH}                                     \
+		APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM} || exit 1;          \
 	touch ${IRRLICHT_TIMESTAMP};                                               \
 	touch ${IRRLICHT_TIMESTAMP_INT};                                           \
 	else                                                                       \
@@ -517,7 +528,7 @@ $(CURL_TIMESTAMP) : curl_download
 curl_download :
 	@if [ ! -d "deps/curl" ] ; then                            \
 		echo "curl sources missing, downloading...";                           \
-		mkdir -p ${ROOT}/deps;                                                 \
+		mkdir -p ${ANDR_ROOT}/deps;                                            \
 		cd deps;                                                               \
 		wget ${CURL_URL_HTTP} || exit 1;                                       \
 		tar -xjf curl-${CURL_VERSION}.tar.bz2 || exit 1;                       \
@@ -540,14 +551,14 @@ $(CURL_LIB): $(CURL_TIMESTAMP)
 		REFRESH=1;                                                             \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
-	export PATH=$$PATH:${ANDROID_NDK};                                         \
+	mkdir -p ${CURL_DIR};                                                      \
 	echo "changed timestamp for curl detected building...";                    \
 	cd deps/curl;                                                              \
 	export CROSS_PREFIX=${CROSS_PREFIX};                                       \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-curl;                             \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
-	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
+		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
+		--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
@@ -579,7 +590,7 @@ $(GMP_TIMESTAMP) : gmp_download
 gmp_download :
 	@if [ ! -d "${GMP_DIR}" ] ; then                                           \
 		echo "gmp sources missing, downloading...";                            \
-		mkdir -p ${ROOT}/deps;                                                 \
+		mkdir -p ${ANDR_ROOT}/deps;                                                 \
 		cd deps;                                                               \
 		wget ${GMP_URL_HTTP} || exit 1;                                        \
 		tar -xjf gmp-${GMP_VERSION}.tar.bz2 || exit 1;                         \
@@ -601,14 +612,14 @@ $(GMP_LIB): $(GMP_TIMESTAMP)
 		REFRESH=1;                                                         \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
-	export PATH=$$PATH:${ANDROID_NDK};                                         \
+	mkdir -p ${GMP_DIR};                                                       \
 	echo "changed timestamp for gmp detected building...";                     \
 	cd deps/gmp;                                                               \
     export CROSS_PREFIX=${CROSS_PREFIX};                                       \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-gmp;                              \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
-	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
+		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
+		--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
@@ -629,8 +640,8 @@ clean_gmp:
 sqlite3_download: deps/sqlite/sqlite3.c
 
 deps/sqlite/sqlite3.c :
-	mkdir -p ${ROOT}/deps;                                                     \
-	cd ${ROOT}/deps;                                                           \
+	mkdir -p ${ANDR_ROOT}/deps;                                                     \
+	cd ${ANDR_ROOT}/deps;                                                           \
 	rm -R sqlite;                                                              \
 	wget ${SQLITE3_URL};                                                       \
 	unzip sqlite-amalgamation-$(SQLITE3_VERSION).zip || exit 1;                \
@@ -642,13 +653,13 @@ clean_sqlite3:
 	$(RM) -R sqlite
 
 $(ASSETS_TIMESTAMP) : $(IRRLICHT_LIB)
-	@mkdir -p ${ROOT}/deps;                                                     \
+	@mkdir -p ${ANDR_ROOT}/deps;                                                \
 	for DIRNAME in {builtin,client,doc,fonts,games,mods,po,textures}; do        \
-		LAST_MODIF=$$(find ${ROOT}/../../${DIRNAME} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
-		if [ $$(basename $$LAST_MODIF) != "timestamp" ]; then                   \
-			touch ${ROOT}/../../${DIRNAME}/timestamp;                           \
-			touch ${ASSETS_TIMESTAMP};                                          \
-			echo ${DIRNAME} changed $$LAST_MODIF;                               \
+		LAST_MODIF=$$(find ${PROJ_ROOT}/${DIRNAME} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
+		if [ $$(basename $$LAST_MODIF) != "timestamp" ]; then               \
+			touch ${PROJ_ROOT}/${DIRNAME}/timestamp;                   \
+			touch ${ASSETS_TIMESTAMP};                                  \
+			echo ${DIRNAME} changed $$LAST_MODIF;                       \
 		fi;                                                                 \
 	done;                                                                       \
 	LAST_MODIF=$$(find ${IRRLICHT_DIR}/media -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
@@ -656,11 +667,11 @@ $(ASSETS_TIMESTAMP) : $(IRRLICHT_LIB)
 		touch ${IRRLICHT_DIR}/media/timestamp;                                 \
 		touch ${ASSETS_TIMESTAMP};                                             \
 	fi;                                                                        \
-	if [ ${ROOT}/../../multicraft.conf.example -nt ${ASSETS_TIMESTAMP} ] ; then \
+	if [ ${PROJ_ROOT}/multicraft.conf.example -nt ${ASSETS_TIMESTAMP} ] ; then   \
 		echo "conf changed";                                                   \
 		touch ${ASSETS_TIMESTAMP};                                             \
 	fi;                                                                        \
-	if [ ${ROOT}/../../README.md -nt ${ASSETS_TIMESTAMP} ] ; then              \
+	if [ ${PROJ_ROOT}/README.txt -nt ${ASSETS_TIMESTAMP} ] ; then              \
 		touch ${ASSETS_TIMESTAMP};                                             \
 	fi;                                                                        \
 	if [ ! -e $(ASSETS_TIMESTAMP) ] ; then                                     \
@@ -676,8 +687,8 @@ $(LUAJIT_TIMESTAMP) : luajit_download
 luajit_download :
 	@if [ ! -d ${LUAJIT_DIR} ] ; then                                          \
 		echo "luajit sources missing, downloading...";                         \
-		mkdir -p ${ROOT}/deps;                                                 \
-		cd ${ROOT}/deps;                                                       \
+		mkdir -p ${ANDR_ROOT}/deps;                                                 \
+		cd ${ANDR_ROOT}/deps;                                                       \
 		git clone --branch ${LUAJIT_GIT_BRANCH} ${LUAJIT_URL_GIT} luajit || exit 1; \
 	fi
 
@@ -716,25 +727,19 @@ clean_luajit:
 	$(RM) -R deps/luajit
 
 assets : $(ASSETS_TIMESTAMP)
-	@REFRESH=0;                                                                \
-	if [ ! -e ${ASSETS_TIMESTAMP} ] ; then                                 \
-		REFRESH=1;                                                         \
-	fi;                                                                        \
-	if [ ${ASSETS_TIMESTAMP} -nt ${ASSETS_TIMESTAMP} ] ; then              \
-		REFRESH=1;                                                         \
+	if [ ! -d ${APP_ROOT}/assets ] ; then                                      \
+		REFRESH=1;                                                             \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
 	echo "assets changed, refreshing...";                                      \
 	$(MAKE) clean_assets;                                                      \
-	mkdir -p ${ROOT}/assets/MultiCraft;                                        \
-	cp ${ROOT}/../../multicraft.conf.example ${ROOT}/assets/MultiCraft;        \
-	cp ${ROOT}/../../README.md ${ROOT}/assets/MultiCraft;                      \
-	cp -r ${ROOT}/../../builtin ${ROOT}/assets/MultiCraft;                     \
-	mkdir ${ROOT}/assets/MultiCraft/fonts;                                     \
-	cp -r ${ROOT}/../../fonts/basis33.ttf ${ROOT}/assets/MultiCraft/fonts/;    \
-	cp -r ${ROOT}/../../games ${ROOT}/assets/MultiCraft;                       \
-	cp -r ${ROOT}/../../textures ${ROOT}/assets/MultiCraft;                    \
-	cd ${ROOT}/assets ||  exit 1;                                              \
+	mkdir -p ${PROJ_ROOT}/assets/MultiCraft;                                        \
+	cp -r ${PROJ_ROOT}/builtin ${APP_ROOT}/assets/MultiCraft;                     \
+	mkdir ${APP_ROOT}/assets/MultiCraft/fonts;                                     \
+	cp -r ${PROJ_ROOT}/fonts/retrovillenc.ttf ${APP_ROOT}/assets/MultiCraft/fonts/;    \
+	cp -r ${PROJ_ROOT}/games ${APP_ROOT}/assets/MultiCraft;                       \
+	cp -r ${PROJ_ROOT}/textures ${APP_ROOT}/assets/MultiCraft;                    \
+	cd ${APP_ROOT}/assets ||  exit 1;                                              \
 	find . -name "timestamp" -exec rm {} \; ;                                  \
 	find . -name "*.blend" -exec rm {} \; ;                                    \
 	find . -name "*~" -exec rm {} \; ;                                         \
@@ -742,13 +747,12 @@ assets : $(ASSETS_TIMESTAMP)
 	find . -type d -path "*.svn" -exec rm -rf {} \; ;                          \
 	find . -type f -path "*.gitignore" -exec rm -rf {} \; ;                    \
 	ls -R | grep ":$$" | sed -e 's/:$$//' -e 's/\.//' -e 's/^\///' > "index.txt"; \
-	find MultiCraft >"filelist.txt";                                           \
+	find -L MultiCraft > filelist.txt;                                            \
 	echo "Creating Files.zip";						   \
 	zip -r Files.zip MultiCraft;						   \
-	touch ${ASSETS_TIMESTAMP};                                                 \
-	touch ${ASSETS_TIMESTAMP_INT};                                             \
-	else									   \
-		echo "nothing to be done for assets";                              \
+	cp ${ANDR_ROOT}/${ASSETS_TIMESTAMP} ${ANDR_ROOT}/${ASSETS_TIMESTAMP}.old;  \
+	else                                                                       \
+		echo "nothing to be done for assets";                                  \
 	fi
 
 clean_assets :
@@ -756,53 +760,50 @@ clean_assets :
 
 apk: $(PATHCFGFILE) assets $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(GMP_LIB) \
     $(LUAJIT_LIB)                                                              \
-	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir $(ROOT)/jni/src/android_version.h     \
-	$(ROOT)/jni/src/android_version_githash.h sqlite3_download
-	@export NDEBUG=$$NDEBUG; $(MAKE) manifest;                                 \
-	export PATH=$$PATH:${SDKFOLDER}/platform-tools:${ANDROID_NDK};             \
-	export ANDROID_HOME=${SDKFOLDER};                                          \
-	mkdir -p ${ROOT}/src;                                                      \
-	ndk-build NDEBUG=${NDEBUG}                                                 \
-	GPROF=${GPROF} APP_ABI=${TARGET_ABI}                                       \
-	APP_PLATFORM=${APP_PLATFORM}                                               \
-	TARGET_LIBDIR=${TARGET_LIBDIR} &&                                          \
+	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h     \
+	$(ANDR_ROOT)/jni/src/android_version_githash.h sqlite3_download
+	@${ANDROID_NDK}/ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}               \
+		GPROF=${GPROF} APP_ABI=${TARGET_ABI}                                   \
+		APP_PLATFORM=${APP_PLATFORM}                                           \
+		TARGET_LIBDIR=${TARGET_LIBDIR} &&                                      \
+	if [ ! -e ${APP_ROOT}/jniLibs ]; then                                      \
+		ln -s ${ANDR_ROOT}/libs ${APP_ROOT}/jniLibs || exit 1;                 \
+	fi;                                                                        \
+	export VERSION_STR="${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" && \
+	export BUILD_TYPE_C=$$(echo "$${BUILD_TYPE}" | sed 's/./\U&/') &&          \
+	gradle assemble$$BUILD_TYPE_C &&                                           \
 	echo "	Success! =)";                                                      \
 	ant $$BUILD_TYPE &&                                                        \
-	echo "APK: bin/MultiCraft-$$BUILD_TYPE.apk"                                \
+	echo "APK stored at: build/outputs/apk/MultiCraft-$$BUILD_TYPE.apk" &&      \
+	echo "You can install it with \`make install_$$BUILD_TYPE\`"
+
+# These Intentionally doesn't depend on their respective build steps,
+# because it takes a while to verify that everything's up-to-date.
+install_debug:
+	${ANDROID_SDK}/platform-tools/adb install -r build/outputs/apk/Minetest-debug.apk
+
+install_release:
+	${ANDROID_SDK}/platform-tools/adb install -r build/outputs/apk/Minetest-release.apk
 
 prep_srcdir :
-	@if [ ! -e ${ROOT}/jni/src ]; then                                         \
-		ln -s ${ROOT}/../../src ${ROOT}/jni/src;                           \
+	@if [ ! -e ${ANDR_ROOT}/jni/src ]; then                                    \
+		ln -s ${PROJ_ROOT}/src ${ANDR_ROOT}/jni/src;                           \
 	fi
 
-clean_apk : manifest
-	@export PATH=$$PATH:${SDKFOLDER}platform-tools:${ANDROID_NDK};             \
-	export ANDROID_HOME=${SDKFOLDER};                                          \
-	ant clean
-
-install_debug :
-	@export PATH=$$PATH:${SDKFOLDER}platform-tools:${ANDROID_NDK};             \
-	adb install -r ${ROOT}/bin/MultiCraft-debug.apk
-
-install :
-	@export PATH=$$PATH:${SDKFOLDER}platform-tools:${ANDROID_NDK};             \
-	adb install -r ${ROOT}/bin/MultiCraft-release.apk
-
-envpaths :
-	@echo "export PATH=$$PATH:${SDKFOLDER}platform-tools:${ANDROID_NDK}" > and_env;\
-	echo "export ANDROID_HOME=${SDKFOLDER}" >> and_env;
+clean_apk :
+	gradle clean
 
 clean_all :
-	$(MAKE) clean_apk;                                                         \
-	$(MAKE) clean_assets clean_manifest;                                       \
+	@$(MAKE) clean_apk;                                                        \
+	$(MAKE) clean_assets;                                                      \
 	sleep 1;                                                                   \
 	$(RM) -r gen libs obj deps bin Debug and_env jni/src
 	
 clean_src :
 	$(RM) -r gen libs obj bin Debug and_env jni/src
 
-$(ROOT)/jni/src/android_version_githash.h : prep_srcdir
-	@export VERSION_FILE=${ROOT}/jni/src/android_version_githash.h;            \
+$(ANDR_ROOT)/jni/src/android_version_githash.h : prep_srcdir
+	@export VERSION_FILE=${ANDR_ROOT}/jni/src/android_version_githash.h;        \
 	export VERSION_FILE_NEW=$${VERSION_FILE}.new;                              \
 	{                                                                          \
 	echo "#ifndef ANDROID_MT_VERSION_GITHASH_H";                               \
@@ -820,8 +821,8 @@ $(ROOT)/jni/src/android_version_githash.h : prep_srcdir
 	fi
 
 
-$(ROOT)/jni/src/android_version.h : prep_srcdir
-	@export VERSION_FILE=${ROOT}/jni/src/android_version.h;                    \
+$(ANDR_ROOT)/jni/src/android_version.h : prep_srcdir
+	@export VERSION_FILE=${ANDR_ROOT}/jni/src/android_version.h;                \
 	export VERSION_FILE_NEW=$${VERSION_FILE}.new;                              \
 	{                                                                          \
 	echo "#ifndef ANDROID_MT_VERSION_H";                                       \
@@ -840,22 +841,5 @@ $(ROOT)/jni/src/android_version.h : prep_srcdir
 		rm "$${VERSION_FILE_NEW}";                                         \
 	fi
 
-manifest :
-	@BASE_VERSION="${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}";        \
-	if [ "${NDEBUG}x" != "x" ] ; then                                          \
-		DBG='';                                                                \
-		DBG_FLAG="android:debuggable=\"false\"";                               \
-	else                                                                       \
-		DBG="<uses-permission android:name=\"android.permission.SET_DEBUG_APP\" />"; \
-		DBG_FLAG="android:debuggable=\"true\"";                                \
-	fi;                                                                        \
-	cat ${ROOT}/AndroidManifest.xml.template |                                 \
-	sed "s/###ANDROID_VERSION###/${ANDROID_VERSION_CODE}/g" |                  \
-	sed "s/###BASE_VERSION###/$$BASE_VERSION/g" |                              \
-	sed -e "s@###DEBUG_BUILD###@$$DBG@g" |                                     \
-	sed -e "s@###DEBUG_FLAG###@$$DBG_FLAG@g" >${ROOT}/AndroidManifest.xml
-
-clean_manifest :
-	rm -rf ${ROOT}/AndroidManifest.xml
-
 clean : clean_apk clean_assets
+

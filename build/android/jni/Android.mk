@@ -50,12 +50,12 @@ GPROF_DEF=-DGPROF
 endif
 
 LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_         \
-				-DHAVE_TOUCHSCREENGUI            \
-				-DUSE_CURL=1                     \
-				-DUSE_SOUND=1                    \
-				-DUSE_FREETYPE=1                 \
-				$(GPROF_DEF)                     \
-				-pipe -fstrict-aliasing
+		-DHAVE_TOUCHSCREENGUI            \
+		-DUSE_CURL=1                     \
+		-DUSE_SOUND=1                    \
+		-DUSE_FREETYPE=1                 \
+		$(GPROF_DEF)                     \
+		-pipe -fstrict-aliasing
 
 ifndef NDEBUG
 LOCAL_CFLAGS += -g -D_DEBUG -O0 -fno-omit-frame-pointer
@@ -80,7 +80,7 @@ LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections
 LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
 endif
 
-LOCAL_C_INCLUDES :=                               \
+LOCAL_C_INCLUDES := \
 		jni/src                                   \
 		jni/src/script                            \
 		jni/src/json                              \
@@ -95,7 +95,7 @@ LOCAL_C_INCLUDES :=                               \
 		deps/sqlite/                              \
 		deps/luajit/src                           
 
-LOCAL_SRC_FILES :=                                \
+LOCAL_SRC_FILES := \
 		jni/src/ban.cpp                           \
 		jni/src/camera.cpp                        \
 		jni/src/cavegen.cpp                       \
@@ -223,7 +223,7 @@ LOCAL_SRC_FILES :=                                \
 #	jni/src/content_cso.cpp
 
 # Network
-LOCAL_SRC_FILES +=                                \
+LOCAL_SRC_FILES += \
 		jni/src/network/connection.cpp            \
 		jni/src/network/networkpacket.cpp         \
 		jni/src/network/clientopcodes.cpp         \
@@ -231,8 +231,8 @@ LOCAL_SRC_FILES +=                                \
 		jni/src/network/serveropcodes.cpp         \
 		jni/src/network/serverpackethandler.cpp
 
-# Lua API
-LOCAL_SRC_FILES +=                                \
+# lua api
+LOCAL_SRC_FILES += \
 		jni/src/script/common/c_content.cpp       \
 		jni/src/script/common/c_converter.cpp     \
 		jni/src/script/common/c_internal.cpp      \
@@ -274,6 +274,40 @@ LOCAL_SRC_FILES +=                                \
 # Freetype2
 LOCAL_SRC_FILES += jni/src/cguittfont/xCGUITTFont.cpp
 
+# Lua
+LOCAL_SRC_FILES += \
+		jni/src/lua/src/lapi.c                    \
+		jni/src/lua/src/lauxlib.c                 \
+		jni/src/lua/src/lbaselib.c                \
+		jni/src/lua/src/lcode.c                   \
+		jni/src/lua/src/ldblib.c                  \
+		jni/src/lua/src/ldebug.c                  \
+		jni/src/lua/src/ldo.c                     \
+		jni/src/lua/src/ldump.c                   \
+		jni/src/lua/src/lfunc.c                   \
+		jni/src/lua/src/lgc.c                     \
+		jni/src/lua/src/linit.c                   \
+		jni/src/lua/src/liolib.c                  \
+		jni/src/lua/src/llex.c                    \
+		jni/src/lua/src/lmathlib.c                \
+		jni/src/lua/src/lmem.c                    \
+		jni/src/lua/src/loadlib.c                 \
+		jni/src/lua/src/lobject.c                 \
+		jni/src/lua/src/lopcodes.c                \
+		jni/src/lua/src/loslib.c                  \
+		jni/src/lua/src/lparser.c                 \
+		jni/src/lua/src/lstate.c                  \
+		jni/src/lua/src/lstring.c                 \
+		jni/src/lua/src/lstrlib.c                 \
+		jni/src/lua/src/ltable.c                  \
+		jni/src/lua/src/ltablib.c                 \
+		jni/src/lua/src/ltm.c                     \
+		jni/src/lua/src/lundump.c                 \
+		jni/src/lua/src/lvm.c                     \
+		jni/src/lua/src/lzio.c                    \
+		jni/src/lua/src/print.c
+>>>>>>> upstream1/master
+
 # SQLite3
 LOCAL_SRC_FILES += deps/sqlite/sqlite3.c
 
@@ -299,3 +333,4 @@ ifdef GPROF
 $(call import-module,android-ndk-profiler)
 endif
 $(call import-module,android/native_app_glue)
+
