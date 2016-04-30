@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- подготовка к запуску -->
+    <string name="rm_old">Подготовка к обновлению&#8230;</string>
+    <string name="loading">Загрузка&#8230;</string>
+    <string name="notification_title">Загрузка MultiCraft</string>
+    <string name="notification_description">Осталось меньше минуты&#8230;</string>
+    <string name="not_enough_space">Недостаточно места для распаковки.\nОсвободите пространство в памяти устройства!</string>
+    <string name="explain">Для корректной работы, игре требуется разрешение записывать в память устройтсва.</string>
+</resources>
