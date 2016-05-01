@@ -274,39 +274,6 @@ LOCAL_SRC_FILES += \
 # Freetype2
 LOCAL_SRC_FILES += jni/src/cguittfont/xCGUITTFont.cpp
 
-# Lua
-LOCAL_SRC_FILES += \
-		jni/src/lua/src/lapi.c                    \
-		jni/src/lua/src/lauxlib.c                 \
-		jni/src/lua/src/lbaselib.c                \
-		jni/src/lua/src/lcode.c                   \
-		jni/src/lua/src/ldblib.c                  \
-		jni/src/lua/src/ldebug.c                  \
-		jni/src/lua/src/ldo.c                     \
-		jni/src/lua/src/ldump.c                   \
-		jni/src/lua/src/lfunc.c                   \
-		jni/src/lua/src/lgc.c                     \
-		jni/src/lua/src/linit.c                   \
-		jni/src/lua/src/liolib.c                  \
-		jni/src/lua/src/llex.c                    \
-		jni/src/lua/src/lmathlib.c                \
-		jni/src/lua/src/lmem.c                    \
-		jni/src/lua/src/loadlib.c                 \
-		jni/src/lua/src/lobject.c                 \
-		jni/src/lua/src/lopcodes.c                \
-		jni/src/lua/src/loslib.c                  \
-		jni/src/lua/src/lparser.c                 \
-		jni/src/lua/src/lstate.c                  \
-		jni/src/lua/src/lstring.c                 \
-		jni/src/lua/src/lstrlib.c                 \
-		jni/src/lua/src/ltable.c                  \
-		jni/src/lua/src/ltablib.c                 \
-		jni/src/lua/src/ltm.c                     \
-		jni/src/lua/src/lundump.c                 \
-		jni/src/lua/src/lvm.c                     \
-		jni/src/lua/src/lzio.c                    \
-		jni/src/lua/src/print.c
->>>>>>> upstream1/master
 
 # SQLite3
 LOCAL_SRC_FILES += deps/sqlite/sqlite3.c

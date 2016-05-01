@@ -3082,10 +3082,22 @@ void Game::toggleFullViewRange(float *statustext_time)
 		L"Enabled full viewing range"
 	};
 
+#ifdef __ANDROID__
+	static s16 other_range = g_settings->getS16("viewing_range_secondary");
+	// Switch to secondary vrange
+	s16 range_new = other_range;
+	other_range = g_settings->getS16("viewing_range");
+
+	g_settings->set("viewing_range", itos(range_new));
+	statustext = utf8_to_wide("Viewing range changed to "
+			+ itos(range_new));
+#else
 	draw_control->range_all = !draw_control->range_all;
 	infostream << msg[draw_control->range_all] << std::endl;
 	statustext = msg[draw_control->range_all];
 	*statustext_time = 0;
+#endif
+
 }
 
 

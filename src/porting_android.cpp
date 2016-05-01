@@ -70,7 +70,7 @@ void android_main(android_app *app)
 /* for it right now */
 extern "C" {
 	JNIEXPORT void JNICALL Java_mobi_MultiCraft_GameActivity_putMessageBoxResult(
-			JNIEnv * env, jclass thiz, jstring text)
+			JNIEnv *env, jclass j_this, jstring text)
 	{
 		errorstream << "Java_mobi_MultiCraft_GameActivity_putMessageBoxResult got: "
 				<< std::string((const char*)env->GetStringChars(text,0))
@@ -105,17 +105,6 @@ jclass findClass(std::string classname)
 	jstring strClassName =
 			jnienv->NewStringUTF(classname.c_str());
 	return (jclass) jnienv->CallObjectMethod(cls, findClass, strClassName);
-}
-
-void copyAssets()
-{
-	jmethodID assetcopy = jnienv->GetMethodID(nativeActivity,"copyAssets","()V");
-
-	if (assetcopy == 0) {
-		assert("porting::copyAssets unable to find copy assets method" == 0);
-	}
-
-	jnienv->CallVoidMethod(app_global->activity->clazz, assetcopy);
 }
 
 void initAndroid()

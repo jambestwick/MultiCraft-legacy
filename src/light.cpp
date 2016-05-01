@@ -70,9 +70,7 @@ void set_light_table(float gamma)
 	 * of 1.8 the light values set by this function are the same as those
 	 * hardcoded in the initalizer list for the declaration of light_LUT.
 	 */
-	
-	// I'm not sure it can be done. But it works just fine! :)
-	/*static const int adjustments[LIGHT_MAX + 1] = {
+	static const int adjustments[LIGHT_MAX + 1] = {
 		 7,
 		 7,
 		 7,
@@ -88,7 +86,7 @@ void set_light_table(float gamma)
 		-40,
 		-25,
 		0
-	};*/
+	};
 
 	gamma = rangelim(gamma, 1.0, 3.0);
 
@@ -96,8 +94,7 @@ void set_light_table(float gamma)
 
 	for (size_t i = 0; i < LIGHT_MAX; i++) {
 		light_LUT[i] = (u8)(255 * powf(brightness / 255.0f,  gamma));
-		//light_LUT[i] = rangelim(light_LUT[i] + adjustments[i], 0, 255);
-		light_LUT[i] = rangelim(light_LUT[i] + 10, 0, 255);
+		light_LUT[i] = rangelim(light_LUT[i] + adjustments[i], 0, 255);
 		if (i > 1 && light_LUT[i] < light_LUT[i-1])
 			light_LUT[i] = light_LUT[i-1] + 1;
 		brightness += brightness_step;

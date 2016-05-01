@@ -110,7 +110,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("leaves_style", "fancy");
 	settings->setDefault("connected_glass", "false");
 	settings->setDefault("smooth_lighting", "true");
-	settings->setDefault("display_gamma", "1.8");
+	settings->setDefault("display_gamma", "1.5");
 	settings->setDefault("texture_path", "");
 	settings->setDefault("shader_path", "");
 	settings->setDefault("video_driver", "opengl");
@@ -181,7 +181,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_particles", "true");
 	settings->setDefault("enable_mesh_cache", "false");
 	settings->setDefault("enable_vbo", "true");
-	
+
 	settings->setDefault("enable_minimap", "true");
 	settings->setDefault("minimap_shape_round", "false");
 	settings->setDefault("minimap_double_scan_height", "false");
@@ -345,7 +345,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("fullscreen", "true");
 	settings->setDefault("video_driver", "ogles1");
 	settings->setDefault("touchtarget", "true");
-	settings->setDefault("TMPFolder","/sdcard/tmp/");
 	settings->setDefault("touchscreen_threshold","20");
 	settings->setDefault("smooth_lighting", "false");
 	settings->setDefault("emergequeue_limit_diskonly", "8");
@@ -354,15 +353,16 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_3d_clouds", "false");
 	settings->setDefault("fps_max", "30");
 	settings->setDefault("max_objects_per_block", "20");
-	settings->setDefault("sqlite_synchronous", "1");
+	settings->setDefault("sqlite_synchronous", "0");
 	settings->setDefault("gui_scaling", "1.2");
 	settings->setDefault("doubletap_jump", "true");
-	settings->setDefault("server_map_save_interval", "15");
 	settings->setDefault("client_mapblock_limit", "500");
 	settings->setDefault("active_block_range", "1");
 	settings->setDefault("chunksize", "3");
+	settings->setDefault("directional_colored_fog", "false");
 	
 	settings->setDefault("viewing_range", "25");
+	settings->setDefault("viewing_range_secondary", "150");
 	settings->setDefault("inventory_image_hack", "false");
 
     // check for device with small screen

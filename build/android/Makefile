@@ -254,9 +254,9 @@ vorbis_download :
 vorbis : $(VORBIS_LIB)
 
 $(VORBIS_LIB): $(VORBIS_TIMESTAMP)
-	+ @REFRESH=0;                                                          \
+	+ @REFRESH=0;                                                              \
 	if [ ! -e ${VORBIS_TIMESTAMP_INT} ] ; then                                 \
-		echo "${VORBIS_TIMESTAMP_INT} doesn't exist";                      \
+		echo "${VORBIS_TIMESTAMP_INT} doesn't exist";                          \
 		REFRESH=1;                                                             \
 	fi;                                                                        \
 	if [ ${VORBIS_TIMESTAMP} -nt ${VORBIS_TIMESTAMP_INT} ] ; then              \
@@ -271,8 +271,8 @@ $(VORBIS_LIB): $(VORBIS_TIMESTAMP)
 		TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                \
 		TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                              \
 		TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                 \
-	touch ${OGG_TIMESTAMP};                                                    \
-	touch ${OGG_TIMESTAMP_INT};                                                \
+	touch ${VORBIS_TIMESTAMP};                                                 \
+	touch ${VORBIS_TIMESTAMP_INT};                                             \
 	else                                                                       \
 		echo "nothing to be done for libvorbis";                               \
 	fi
@@ -374,7 +374,7 @@ $(FREETYPE_LIB) : $(FREETYPE_TIMESTAMP)
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CFLAGS_ADDON}";                     \
+	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                   \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
 	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
 	CC=${CROSS_PREFIX}gcc ./configure --host=${TARGET_HOST}                    \
@@ -406,8 +406,8 @@ iconv_download :
 		rm libiconv-${ICONV_VERSION}.tar.gz;                               \
 		mv libiconv-${ICONV_VERSION} libiconv;                             \
 		cd libiconv;                                                       \
-		patch -p1 < ${ANDR_ROOT}/libiconv_android.patch;                   \
-		patch -p1 < ${ANDR_ROOT}/libiconv_stdio.patch;                     \
+		patch -p1 < ${ANDR_ROOT}/patches/libiconv_android.patch;                   \
+		patch -p1 < ${ANDR_ROOT}/patches/libiconv_stdio.patch;                     \
 	fi
 
 iconv : $(ICONV_LIB)
@@ -436,7 +436,7 @@ $(ICONV_LIB) : $(ICONV_TIMESTAMP)
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CFLAGS_ADDON}";                     \
+	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                   \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
 	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
 	./configure --enable-static --disable-shared --host=${TARGET_HOST2} || exit 1; \
@@ -555,7 +555,7 @@ $(CURL_LIB): $(CURL_TIMESTAMP)
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
 	#export CPPFLAGS="$${CPPFLAGS} -I${OPENSSL_DIR}/include                    \
-	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CFLAGS_ADDON}";                     \
+	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                     \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
 	#export LDFLAGS="$${LDFLAGS} -L${OPENSSL_DIR} ${TARGET_LDFLAGS_ADDON}";    \
 	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
@@ -718,19 +718,22 @@ clean_luajit:
 	$(RM) -R deps/luajit
 
 assets : $(ASSETS_TIMESTAMP)
-	if [ ! -d ${APP_ROOT}/assets ] ; then                                      \
-		REFRESH=1;                                                             \
+	@REFRESH=0;                                                                \
+	if [ ! -e ${ASSETS_TIMESTAMP} ] ; then                                     \
+		REFRESH=1;                                                         \
 	fi;                                                                        \
-	if [ $$REFRESH -ne 0 ] ; then                                              \
+	if [ ${ASSETS_TIMESTAMP} -nt ${ASSETS_TIMESTAMP} ] ; then                  \
+		REFRESH=1;                                                         \
 	echo "assets changed, refreshing...";                                      \
 	$(MAKE) clean_assets;                                                      \
-	mkdir -p ${PROJ_ROOT}/assets/MultiCraft;                                        \
-	cp -r ${PROJ_ROOT}/builtin ${APP_ROOT}/assets/MultiCraft;                     \
-	mkdir ${APP_ROOT}/assets/MultiCraft/fonts;                                     \
-	cp -r ${PROJ_ROOT}/fonts/retrovillenc.ttf ${APP_ROOT}/assets/MultiCraft/fonts/;    \
-	cp -r ${PROJ_ROOT}/games ${APP_ROOT}/assets/MultiCraft;                       \
-	cp -r ${PROJ_ROOT}/textures ${APP_ROOT}/assets/MultiCraft;                    \
-	cd ${APP_ROOT}/assets ||  exit 1;                                              \
+	mkdir -p ${APP_ROOT}/assets/MultiCraft;                                    \
+	cp -r ${PROJ_ROOT}/builtin ${APP_ROOT}/assets/MultiCraft;                  \
+	mkdir ${APP_ROOT}/assets/MultiCraft/fonts;                                 \
+	cp -r ${PROJ_ROOT}/fonts/retrovillenc.ttf ${APP_ROOT}/assets/MultiCraft/fonts/; \
+	cp -r ${PROJ_ROOT}/games ${APP_ROOT}/assets/MultiCraft;                    \
+	cp -r ${PROJ_ROOT}/textures ${APP_ROOT}/assets/MultiCraft;                 \
+	cp -r ${PROJ_ROOT}/worlds ${APP_ROOT}/assets/MultiCraft;                   \
+	cd ${APP_ROOT}/assets ||  exit 1;                                          \
 	find . -name "timestamp" -exec rm {} \; ;                                  \
 	find . -name "*.blend" -exec rm {} \; ;                                    \
 	find . -name "*~" -exec rm {} \; ;                                         \
@@ -738,10 +741,11 @@ assets : $(ASSETS_TIMESTAMP)
 	find . -type d -path "*.svn" -exec rm -rf {} \; ;                          \
 	find . -type f -path "*.gitignore" -exec rm -rf {} \; ;                    \
 	ls -R | grep ":$$" | sed -e 's/:$$//' -e 's/\.//' -e 's/^\///' > "index.txt"; \
-	find -L MultiCraft > filelist.txt;                                            \
-	echo "Creating Files.zip";						   \
-	zip -r Files.zip MultiCraft;						   \
-	cp ${ANDR_ROOT}/${ASSETS_TIMESTAMP} ${ANDR_ROOT}/${ASSETS_TIMESTAMP}.old;  \
+	find -L MultiCraft > filelist.txt;                                         \
+	echo "Creating Files.zip";						                           \
+	zip -r Files.zip MultiCraft;						                       \
+	touch ${ASSETS_TIMESTAMP};                                                 \
+	touch ${ASSETS_TIMESTAMP_INT};                                             \
 	else                                                                       \
 		echo "nothing to be done for assets";                                  \
 	fi
@@ -749,10 +753,11 @@ assets : $(ASSETS_TIMESTAMP)
 clean_assets :
 	@$(RM) -r assets
 
-apk: local.properties assets $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(GMP_LIB) $(LUAJIT_LIB)       \                                                              \
-	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h    \
+apk: local.properties $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(GMP_LIB) $(LUAJIT_LIB)       \
+	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h     \
 	$(ANDR_ROOT)/jni/src/android_version_githash.h sqlite3_download
-	@${ANDROID_NDK}/ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}               \
+	@$(MAKE) assets;                                                           \
+	${ANDROID_NDK}/ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}                \
 		GPROF=${GPROF} APP_ABI=${TARGET_ABI}                                   \
 		APP_PLATFORM=${APP_PLATFORM}                                           \
 		TARGET_LIBDIR=${TARGET_LIBDIR} &&                                      \
@@ -764,7 +769,7 @@ apk: local.properties assets $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(GMP_LIB)
 	gradle assemble$$BUILD_TYPE_C &&                                           \
 	echo "	Success! =)";                                                      \
 	ant $$BUILD_TYPE &&                                                        \
-	echo "APK stored at: build/outputs/apk/MultiCraft-$$BUILD_TYPE.apk" &&      \
+	echo "APK stored at: build/outputs/apk/MultiCraft-$$BUILD_TYPE.apk" &&     \
 	echo "You can install it with \`make install_$$BUILD_TYPE\`"
 
 # These Intentionally doesn't depend on their respective build steps,
