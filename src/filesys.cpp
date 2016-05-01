@@ -18,7 +18,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 #include "filesys.h"
-#include "porting.h"
 #include "util/string.h"
 #include <iostream>
 #include <stdio.h>

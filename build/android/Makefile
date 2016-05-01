@@ -742,8 +742,8 @@ assets : $(ASSETS_TIMESTAMP)
 	find . -type f -path "*.gitignore" -exec rm -rf {} \; ;                    \
 	ls -R | grep ":$$" | sed -e 's/:$$//' -e 's/\.//' -e 's/^\///' > "index.txt"; \
 	find -L MultiCraft > filelist.txt;                                         \
-	echo "Creating Files.zip";						                           \
-	zip -r Files.zip MultiCraft;						                       \
+	echo "Creating Files.zip";                                                 \
+	zip -r Files.zip MultiCraft;                                               \
 	touch ${ASSETS_TIMESTAMP};                                                 \
 	touch ${ASSETS_TIMESTAMP_INT};                                             \
 	else                                                                       \
