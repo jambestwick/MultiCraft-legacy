@@ -105,7 +105,7 @@ CURL_DIR = $(ANDR_ROOT)/deps/curl
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
 CURL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/curl_timestamp
-CURL_URL_HTTP = http://curl.haxx.se/download/curl-${CURL_VERSION}.tar.bz2
+CURL_URL_HTTP = http://dl.uxnr.de/mirror/curl/curl-${CURL_VERSION}.tar.bz2
 
 GMP_VERSION = 6.1.0
 GMP_DIR = $(ANDR_ROOT)/deps/gmp
@@ -406,8 +406,8 @@ iconv_download :
 		rm libiconv-${ICONV_VERSION}.tar.gz;                               \
 		mv libiconv-${ICONV_VERSION} libiconv;                             \
 		cd libiconv;                                                       \
-		patch -p1 < ${ANDR_ROOT}/patches/libiconv_android.patch;                   \
-		patch -p1 < ${ANDR_ROOT}/patches/libiconv_stdio.patch;                     \
+		patch -p1 < ${ANDR_ROOT}/patches/libiconv_android.patch;           \
+		patch -p1 < ${ANDR_ROOT}/patches/libiconv_stdio.patch;             \
 	fi
 
 iconv : $(ICONV_LIB)
