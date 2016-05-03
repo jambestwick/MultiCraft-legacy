@@ -385,3 +385,4 @@ u8 light_decode_table[LIGHT_MAX+1] =
 };
 #endif
 
+

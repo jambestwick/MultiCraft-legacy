@@ -1164,17 +1164,16 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 
 	float ypos = singleplayermode ? 0.5 : 0.1;
 	std::ostringstream os;
+
 	os << FORMSPEC_VERSION_STRING  << SIZE_TAG
 		<< "bgcolor[#00000060;true]"
 		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_continue;"
 		<< strgettext("Continue") << "]";
-
+#ifndef __ANDROID__
 	if (!singleplayermode) {
 		os << "button_exit[4," << (ypos++) << ";3,0.5;btn_change_password;"
 		   << strgettext("Change Password") << "]";
 	}
-
-#ifndef __ANDROID__
 	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_sound;"
 			<< strgettext("Sound Volume") << "]";
 	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_key_config;"
@@ -1243,7 +1242,6 @@ static void updateChat(Client &client, f32 dtime, bool show_debug,
 	//now use real height of text and adjust rect according to this size
 	rect = core::rect<s32>(10, chat_y, width,
 			       chat_y + guitext_chat->getTextHeight());
-
 
 
 	guitext_chat->setRelativePosition(rect);
@@ -2327,7 +2325,7 @@ bool Game::connectToServer(const std::string &playername,
 			// Only time out if we aren't waiting for the server we started
 			if ((*address != "") && (wait_time > 10)) {
 				*error_message = "Connection timed out.";
-				errorstream << *error_message << std::endl;
+				infostream << *error_message << std::endl;
 				break;
 			}
 
@@ -2473,7 +2471,7 @@ inline bool Game::handleCallbacks()
 
 	if (g_gamecallback->changepassword_requested) {
 		(new GUIPasswordChange(guienv, guiroot, -1,
-					   &g_menumgr, client))->drop();
+				       &g_menumgr, client))->drop();
 		g_gamecallback->changepassword_requested = false;
 	}
 
@@ -3078,24 +3076,21 @@ void Game::decreaseViewRange(float *statustext_time)
 void Game::toggleFullViewRange(float *statustext_time)
 {
 #ifdef __ANDROID__
-	static s16 other_range = g_settings->getS16("viewing_range_secondary");
-	s16 range_new = other_range;
-	other_range = g_settings->getS16("viewing_range");
-
-	g_settings->set("viewing_range", itos(range_new));
-
-	//statustext = utf8_to_wide("Viewing range changed to "
-	//		+ itos(range_new));
+	static const wchar_t *msg[] = {
+		L"Disabled far viewing range",
+		L"Enabled far viewing range"
+	};
 #else
 	static const wchar_t *msg[] = {
 		L"Disabled full viewing range",
 		L"Enabled full viewing range"
 	};
+#endif
+
 	draw_control->range_all = !draw_control->range_all;
 	infostream << msg[draw_control->range_all] << std::endl;
 	statustext = msg[draw_control->range_all];
 	*statustext_time = 0;
-#endif
 }
 
 
@@ -3967,6 +3962,9 @@ void Game::updateFrame(ProfilerGraph *graph, RunStats *stats,
 
 	if (draw_control->range_all) {
 		runData->fog_range = 100000 * BS;
+		#ifdef __ANDROID__
+				runData->fog_range = 0.9 * draw_control->wanted_range * 4 * BS;
+		#endif
 	} else {
 		runData->fog_range = 0.9 * draw_control->wanted_range * BS;
 	}

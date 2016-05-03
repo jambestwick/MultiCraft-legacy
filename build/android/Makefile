@@ -61,10 +61,10 @@ COMPILER_VERSION = 4.9
 # TARGET_ABI = x86
 # TARGET_LIBDIR = x86
 # TARGET_TOOLCHAIN = x86
-# TARGET_CFLAGS_ADDON = -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves
+# TARGET_CFLAGS_ADDON = -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
 # TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 # TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
-# TARGET_ARCH = x86
+# ARGET_ARCH = x86
 # CROSS_PREFIX = i686-linux-android-
 # COMPILER_VERSION = 4.9
 
@@ -107,12 +107,12 @@ CURL_TIMESTAMP = $(CURL_DIR)/timestamp
 CURL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/curl_timestamp
 CURL_URL_HTTP = http://dl.uxnr.de/mirror/curl/curl-${CURL_VERSION}.tar.bz2
 
-GMP_VERSION = 6.1.0
-GMP_DIR = $(ANDR_ROOT)/deps/gmp
-GMP_LIB = $(GMP_DIR)/usr/lib/libgmp.so
-GMP_TIMESTAMP = $(GMP_DIR)/timestamp
-GMP_TIMESTAMP_INT = $(ANDR_ROOT)/deps/gmp_timestamp
-GMP_URL_HTTP = https://gmplib.org/download/gmp/gmp-$(GMP_VERSION).tar.bz2
+MPIR_VERSION = 2.7.2
+MPIR_DIR = $(ANDR_ROOT)/deps/mpir
+MPIR_LIB = $(MPIR_DIR)/usr/lib/libmpir.a
+MPIR_TIMESTAMP = $(MPIR_DIR)/timestamp
+MPIR_TIMESTAMP_INT = $(ANDR_ROOT)/deps/mpir_timestamp
+MPIR_URL_HTTP = http://mpir.org/mpir-$(MPIR_VERSION).tar.bz2
 
 FREETYPE_VERSION = 2.6.3
 FREETYPE_DIR = $(ANDR_ROOT)/deps/freetype
@@ -299,7 +299,7 @@ openssl_download :
 
 openssl : $(OPENSSL_LIB)
 
-$(OPENSSL_LIB): $(OPENSSL_TIMESTAMP) $(GMP_LIB)
+$(OPENSSL_LIB): $(OPENSSL_TIMESTAMP) $(MPIR_LIB)
 	@REFRESH=0;                                                                \
 	if [ ! -e ${OPENSSL_TIMESTAMP_INT} ] ; then                                \
 		echo "${OPENSSL_TIMESTAMP_INT} doesn't exist";                         \
@@ -317,7 +317,7 @@ $(OPENSSL_LIB): $(OPENSSL_TIMESTAMP) $(GMP_LIB)
 		--install-dir=$${TOOLCHAIN} --platform=${APP_PLATFORM};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	CC=${CROSS_PREFIX}gcc ./Configure no-ssl2 no-ssl3 no-hw enable-gmp         \
-	-DL_ENDIAN -I${GMP_DIR} -L${GMP_DIR}/usr/lib android-${TARGET_ARCH};       \
+	-DL_ENDIAN -I${MPIR_DIR} -L${MPIR_DIR}/usr/lib android-${TARGET_ARCH};     \
 	CC=${CROSS_PREFIX}gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST} make depend;     \
 	CC=${CROSS_PREFIX}gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST} make build_libs; \
 	touch ${OPENSSL_TIMESTAMP};                                                \
@@ -572,61 +572,59 @@ $(CURL_LIB): $(CURL_TIMESTAMP)
 clean_curl :
 	$(RM) -R ${CURL_DIR}
 
-$(GMP_TIMESTAMP) : gmp_download
-	@LAST_MODIF=$$(find ${GMP_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
+$(MPIR_TIMESTAMP) : mpir_download
+	@LAST_MODIF=$$(find ${MPIR_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
 	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
-		touch ${GMP_TIMESTAMP};                                            \
+		touch ${MPIR_TIMESTAMP};                                            \
 	fi
 
-gmp_download :
-	@if [ ! -d "${GMP_DIR}" ] ; then                                       \
-		echo "gmp sources missing, downloading...";                        \
+mpir_download :
+	@if [ ! -d "${MPIR_DIR}" ] ; then                                       \
+		echo "mpir sources missing, downloading...";                        \
 		mkdir -p ${ANDR_ROOT}/deps;                                        \
 		cd deps;                                                           \
-		wget ${GMP_URL_HTTP} || exit 1;                                    \
-		tar -xjf gmp-${GMP_VERSION}.tar.bz2 || exit 1;                     \
-		rm gmp-${GMP_VERSION}.tar.bz2;                                     \
-		mv gmp-${GMP_VERSION} gmp;                                         \
+		wget ${MPIR_URL_HTTP} || exit 1;                                    \
+		tar -xjf mpir-${MPIR_VERSION}.tar.bz2 || exit 1;                     \
+		rm mpir-${MPIR_VERSION}.tar.bz2;                                     \
+		mv mpir-${MPIR_VERSION} mpir;                                         \
 	fi
 
-gmp : $(GMP_LIB)
+mpir : $(MPIR_LIB)
 
-$(GMP_LIB): $(GMP_TIMESTAMP)
+$(MPIR_LIB): $(MPIR_TIMESTAMP)
 	@REFRESH=0;                                                                \
-	if [ ! -e ${GMP_TIMESTAMP_INT} ] ; then                                    \
+	if [ ! -e ${MPIR_TIMESTAMP_INT} ] ; then                                   \
 		REFRESH=1;                                                         \
 	fi;                                                                        \
-	if [ ! -e ${GMP_LIB} ] ; then                                              \
+	if [ ! -e ${MPIR_LIB} ] ; then                                             \
 		REFRESH=1;                                                         \
 	fi;                                                                        \
-	if [ ${GMP_TIMESTAMP} -nt ${GMP_TIMESTAMP_INT} ] ; then                    \
+	if [ ${MPIR_TIMESTAMP} -nt ${MPIR_TIMESTAMP_INT} ] ; then                  \
 		REFRESH=1;                                                         \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
-	mkdir -p ${GMP_DIR};                                                       \
-	echo "changed timestamp for gmp detected building...";                     \
-	cd deps/gmp;                                                               \
+	mkdir -p ${MPIR_DIR};                                                      \
+	echo "changed timestamp for mpir detected building...";                    \
+	cd deps/mpir;                                                              \
     export CROSS_PREFIX=${CROSS_PREFIX};                                       \
-	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-gmp;                              \
+	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-mpir;                             \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
 		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
 		--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
-	export LIBGMP_LDFLAGS="-avoid-version";                                    \
-	export LIBGMPXX_LDFLAGS="-avoid-version";                                  \
 	./configure --host=${TARGET_HOST} --prefix=/usr;                           \
-	$(MAKE) install DESTDIR=/${GMP_DIR} || exit 1;                             \
-	touch ${GMP_TIMESTAMP};                                                    \
-	touch ${GMP_TIMESTAMP_INT};                                                \
+	$(MAKE) install DESTDIR=/${MPIR_DIR} || exit 1;                            \
+	touch ${MPIR_TIMESTAMP};                                                   \
+	touch ${MPIR_TIMESTAMP_INT};                                               \
 	$(RM) -rf $${TOOLCHAIN};                                                   \
 	else                                                                       \
-		echo "nothing to be done for gmp";                                 \
+		echo "nothing to be done for mpir";                                 \
 	fi
 
-clean_gmp:
-	$(RM) -R deps/gmp
+clean_mpir:
+	$(RM) -R deps/mpir
 
 sqlite3_download: deps/sqlite/sqlite3.c
 
@@ -753,7 +751,7 @@ assets : $(ASSETS_TIMESTAMP)
 clean_assets :
 	@$(RM) -r assets
 
-apk: local.properties $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(GMP_LIB) $(LUAJIT_LIB)       \
+apk: local.properties $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(MPIR_LIB) $(LUAJIT_LIB)       \
 	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h     \
 	$(ANDR_ROOT)/jni/src/android_version_githash.h sqlite3_download
 	@$(MAKE) assets;                                                           \

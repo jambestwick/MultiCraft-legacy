@@ -183,7 +183,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_vbo", "true");
 
 	settings->setDefault("enable_minimap", "true");
-	settings->setDefault("minimap_shape_round", "false");
+	settings->setDefault("minimap_shape_round", "true");
 	settings->setDefault("minimap_double_scan_height", "false");
 
 	settings->setDefault("send_pre_v25_init", "true");
@@ -215,7 +215,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("fallback_font_shadow_alpha", "128");
 
 	std::stringstream fontsize;
-	fontsize << DEFAULT_FONT_SIZE;
+	fontsize << TTF_DEFAULT_FONT_SIZE - 5;
 
 	settings->setDefault("font_size", fontsize.str());
 	settings->setDefault("mono_font_size", fontsize.str());
@@ -362,7 +362,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("directional_colored_fog", "false");
 	
 	settings->setDefault("viewing_range", "25");
-	settings->setDefault("viewing_range_secondary", "150");
 	settings->setDefault("inventory_image_hack", "false");
 
     // check for device with small screen
@@ -376,6 +375,7 @@ void set_default_settings(Settings *settings)
 		// small 4" phones
 		settings->setDefault("hud_scaling", "0.5");
 		settings->setDefault("gui_scaling", "1.0");
+		settings->setDefault("mouse_sensitivity", "0.15");
 	}
 	if (x_inches > 5) {
 		// tablets

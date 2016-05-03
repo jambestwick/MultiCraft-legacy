@@ -247,6 +247,10 @@ void ClientMap::updateDrawList(video::IVideoDriver* driver)
 				block->mesh->updateCameraOffset(m_camera_offset);
 
 			float range = 100000 * BS;
+			#ifdef __ANDROID__
+				range = m_control.wanted_range * 4 * BS;	
+			#endif
+			
 			if (m_control.range_all == false)
 				range = m_control.wanted_range * BS;
 

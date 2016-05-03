@@ -95,7 +95,7 @@ local function init_globals()
 	-- Create main tabview
 	local tv_main = tabview_create("maintab", {x = 12, y = 5.2}, {x = 0, y = 0})
 
-	--tv_main:set_autosave_tab(true)
+	tv_main:set_autosave_tab(true)
 	tv_main:add(tabs.singleplayer)
 	tv_main:add(tabs.multiplayer)
 	tv_main:add(tabs.server)
@@ -111,9 +111,7 @@ local function init_globals()
 	tv_main:set_global_event_handler(main_event_handler)
 	tv_main:set_fixed_size(false)
 
-	--if PLATFORM ~= "Android" then
-	--	tv_main:set_tab(core.setting_get("maintab_LAST"))
-	--end
+		tv_main:set_tab(core.setting_get("maintab_LAST"))
 	ui.set_default("maintab")
 	tv_main:show()
 
@@ -129,7 +127,6 @@ local function init_globals()
 	core.sound_play("main_menu", false)
 	
 	minetest.set_clouds(false)
-	--core.set_background("background", defaulttexturedir .. "background.jpg");
 	mm_texture.set_dirt_bg()
 end
 

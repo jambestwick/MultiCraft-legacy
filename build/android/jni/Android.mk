@@ -4,7 +4,7 @@ LOCAL_PATH := $(call my-dir)/..
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := Irrlicht
-LOCAL_SRC_FILES := deps/irrlicht/lib/Android/libIrrlicht.a
+LOCAL_SRC_FILES := deps/irrlicht/source/Irrlicht/Android/obj/local/$(APP_ABI)/libIrrlicht.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
@@ -33,9 +33,9 @@ LOCAL_SRC_FILES := deps/libvorbis-android/obj/local/$(APP_ABI)/libvorbis.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := gmp
-LOCAL_SRC_FILES := deps/gmp/usr/lib/libgmp.so
-include $(PREBUILT_SHARED_LIBRARY)
+LOCAL_MODULE := mpir
+LOCAL_SRC_FILES := deps/mpir/usr/lib/libmpir.a
+include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := LuaJIT
@@ -75,7 +75,8 @@ LOCAL_CFLAGS += -pg
 endif
 
 ifeq ($(TARGET_ARCH_ABI),x86)
-LOCAL_CFLAGS += -mhard-float -Ofast -fno-fast-math -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -Wno-deprecated-declarations -fvisibility=hidden -fno-stack-protector
+LOCAL_CFLAGS += -mhard-float -Ofast -fno-fast-math -funsafe-math-optimizations -fno-trapping-math -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden -fno-stack-protector
+LOCAL_CXXFLAGS += -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections
 LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
 endif
@@ -91,7 +92,7 @@ LOCAL_C_INCLUDES := \
 		deps/curl/include                         \
 		deps/openal-soft/include                  \
 		deps/libvorbis-android/jni/include        \
-		deps/gmp/usr/include                      \
+		deps/mpir/usr/include                     \
 		deps/sqlite/                              \
 		deps/luajit/src                           
 
@@ -288,9 +289,7 @@ LOCAL_SRC_FILES +=                              \
 # JSONCPP
 LOCAL_SRC_FILES += jni/src/json/jsoncpp.cpp
 
-LOCAL_SHARED_LIBRARIES := gmp
-
-LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl iconv LuaJIT openal vorbis android_native_app_glue $(PROFILER_LIBS)
+LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl iconv LuaJIT openal vorbis mpir android_native_app_glue $(PROFILER_LIBS)
 
 LOCAL_LDLIBS := -lEGL -llog -lGLESv1_CM -lGLESv2 -lz -landroid -lOpenSLES
 

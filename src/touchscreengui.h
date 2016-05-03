@@ -99,7 +99,6 @@ private:
 	std::map<int,rect<s32> > m_hud_rects;
 	std::map<int,irr::EKEY_CODE> m_hud_ids;
 	bool                    m_visible; // is the gui visible
-	rect<s32>				controlpadarea;
 
 	/* value in degree */
 	double                  m_camera_yaw;
@@ -160,15 +159,15 @@ private:
 
 	/* handle released hud buttons */
 	bool isReleaseHUDButton(int eventID);
-	
-	/* get size of regular gui control button */
-	int getGuiButtonSize();
 
 	/* handle double taps */
 	bool doubleTapDetection();
 
 	/* handle release event */
 	void handleReleaseEvent(int evt_id);
+
+	/* get size of regular gui control button */
+	int getGuiButtonSize();
 
 	/* doubleclick detection variables */
 	struct key_event {

@@ -39,7 +39,7 @@ using namespace irr::core;
 
 extern Settings *g_settings;
 
-const char *touchgui_button_imagenames[] = {
+const char* touchgui_button_imagenames[] = {
 	"up_one.png",
 	"up_two.png",
 	"up_three.png",
@@ -155,14 +155,15 @@ TouchScreenGUI::TouchScreenGUI(IrrlichtDevice *device, IEventReceiver* receiver)
 		m_buttons[i].repeatdelay   = BUTTON_REPEAT_DELAY;
 	}
 
-	m_screensize = m_device->getVideoDriver()->getScreenSize();
+		m_screensize = device->getVideoDriver()->getScreenSize();
 }
 
 void TouchScreenGUI::loadButtonTexture(button_info* btn, const char* path, rect<s32> button_rect)
 {
 	unsigned int tid;
 	video::ITexture *texture = guiScalingImageButton(m_device->getVideoDriver(),
-		m_texturesource->getTexture(path, &tid), button_rect.getWidth(), button_rect.getHeight());
+			m_texturesource->getTexture(path, &tid), button_rect.getWidth(),
+			button_rect.getHeight());
 	if (texture) {
 		btn->guibutton->setUseAlphaChannel(true);
 		if (g_settings->getBool("gui_scaling_filter")) {
@@ -193,7 +194,7 @@ void TouchScreenGUI::initButton(touch_gui_button_id id, rect<s32> button_rect,
 	btn->immediate_release = immediate_release;
 	btn->ids.clear();
 
-	loadButtonTexture(btn,touchgui_button_imagenames[id], button_rect);
+	loadButtonTexture(btn,touchgui_button_imagenames[id],button_rect);
 }
 
 static int getMaxControlPadSize(float density) {
@@ -219,8 +220,7 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 	u32 button_size      = getGuiButtonSize();
 	m_visible            = true;
 	m_texturesource      = tsrc;
-	m_control_pad_rect   = rect<s32>(
-	        0,                    m_screensize.Y - control_pad_size,
+	m_control_pad_rect   = rect<s32>(0, m_screensize.Y - control_pad_size,
 			0 + control_pad_size, m_screensize.Y);
 
 	/*
@@ -231,7 +231,6 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 	*/
 	
 	int number = 0;
-
 	for (int y = 0; y < 3; ++y)
 		for (int x = 0; x < 3; ++x, ++number) {
 			v2s32 tl;
@@ -277,20 +276,19 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 				id = right_id;
 				caption = L">";
 				break;
-
 			}
 			if (id != after_last_element_id) {
 				initButton(id, button_rect, caption, false);
-			}
+				}
 		}
 
 	/* init inventory button */
 	initButton(inventory_id,
-	           rect<s32>(m_screensize.X-(button_size),
-					   m_screensize.Y-(button_size),
-					   m_screensize.X,
-					   m_screensize.Y),
-	                  L"inv", false, SLOW_BUTTON_REPEAT);
+			rect<s32>(m_screensize.X-(button_size),
+					m_screensize.Y-(button_size),
+					m_screensize.X,
+					m_screensize.Y),
+			L"inv", false, SLOW_BUTTON_REPEAT);
 
 	/* init drop button */
 	initButton(drop_id,
@@ -307,6 +305,7 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 					m_screensize.X-(button_size),
 					m_screensize.Y),
 			L"H", false, SLOW_BUTTON_REPEAT);
+
 	/* init jump button */
 	initButton(jump_id,
 	           rect<s32>(m_screensize.X-(button_size*2),
@@ -500,6 +499,7 @@ void TouchScreenGUI::handleButtonEvent(touch_gui_button_id button,
 	delete translated;
 }
 
+
 void TouchScreenGUI::handleReleaseEvent(int evt_id)
 {
 	touch_gui_button_id button = getButtonID(evt_id);
@@ -566,7 +566,6 @@ void TouchScreenGUI::handleReleaseEvent(int evt_id)
 	}
 }
 
-
 void TouchScreenGUI::translateEvent(const SEvent &event)
 {
 	if (!m_visible) {
@@ -598,9 +597,7 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 		/* handle button events */
 		if (button != after_last_element_id) {
 			handleButtonEvent(button, eventID, true);
-	}
-		else if (isHUDButton(event))
-		{
+		} else if (isHUDButton(event)) {
 			/* already handled in isHUDButton() */
 		} else if (m_control_pad_rect.isPointInside(v2s32(toadd.X, toadd.Y))) {
 			// ignore events inside the control pad not already handled
@@ -653,7 +650,7 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 					s32 dy = Y - m_pointerpos[event.TouchInput.ID].Y;
 
 					/* adapt to similar behaviour as pc screen */
-					double d         = g_settings->getFloat("mouse_sensitivity") ;
+					double d         = g_settings->getFloat("mouse_sensitivity");
 					double old_yaw   = m_camera_yaw;
 					double old_pitch = m_camera_pitch;
 
@@ -682,7 +679,7 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 						->getRayFromScreenCoordinates(
 								v2s32(event.TouchInput.X,event.TouchInput.Y));
 			}
-		}else {
+		} else {
 			handleChangedButton(event);
 		}
 	}
@@ -745,7 +742,7 @@ bool TouchScreenGUI::doubleTapDetection()
 	m_key_events[1].x         = m_move_downlocation.X;
 	m_key_events[1].y         = m_move_downlocation.Y;
 
-	u32 delta = porting::getDeltaMs(m_key_events[0].down_time,getTimeMs());
+	u32 delta = porting::getDeltaMs(m_key_events[0].down_time, getTimeMs());
 	if (delta > 400)
 		return false;
 
