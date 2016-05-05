@@ -24,8 +24,7 @@ mt_color_dark_green = "#003300"
 
 local menupath = core.get_mainmenu_path()
 local basepath = core.get_builtin_path()
-defaulttexturedir = core.get_texturepath_share() .. DIR_DELIM .. "base" ..
-					DIR_DELIM
+defaulttexturedir = core.get_texturepath_share() .. DIR_DELIM .. "base" .. DIR_DELIM
 
 dofile(basepath .. DIR_DELIM .. "common" .. DIR_DELIM .. "async_event.lua")
 dofile(basepath .. DIR_DELIM .. "common" .. DIR_DELIM .. "filterlist.lua")
@@ -43,7 +42,7 @@ dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_config_world.lua")
 if PLATFORM ~= "Android" then
 	dofile(menupath .. DIR_DELIM .. "modmgr.lua")
-	dofile(menupath .. DIR_DELIM .. "store.lua")
+--	dofile(menupath .. DIR_DELIM .. "store.lua")
 	dofile(menupath .. DIR_DELIM .. "dlg_settings_advanced.lua")
 end
 
@@ -104,14 +103,14 @@ local function init_globals()
 		tv_main:add(tabs.settings)
 		tv_main:add(tabs.texturepacks)
 	end
-	
+
 	--tv_main:add(tabs.mods)
 	tv_main:add(tabs.credits)
 
 	tv_main:set_global_event_handler(main_event_handler)
 	tv_main:set_fixed_size(false)
 
-		tv_main:set_tab(core.setting_get("maintab_LAST"))
+	tv_main:set_tab(core.setting_get("maintab_LAST"))
 	ui.set_default("maintab")
 	tv_main:show()
 
@@ -125,9 +124,10 @@ local function init_globals()
 	ui.update()
 
 	core.sound_play("main_menu", false)
-	
+
 	minetest.set_clouds(false)
 	mm_texture.set_dirt_bg()
 end
 
 init_globals()
+

@@ -20,8 +20,7 @@ mm_texture = {}
 
 --------------------------------------------------------------------------------
 function mm_texture.init()
-	mm_texture.defaulttexturedir = core.get_texturepath() .. DIR_DELIM .. "base" ..
-						DIR_DELIM
+	mm_texture.defaulttexturedir = core.get_texturepath() .. DIR_DELIM .. "base" .. DIR_DELIM
 	mm_texture.basetexturedir = mm_texture.defaulttexturedir
 	
 	mm_texture.texturepack = core.setting_get("texture_path")

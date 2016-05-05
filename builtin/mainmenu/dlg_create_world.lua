@@ -46,7 +46,7 @@ local function create_world_formspec(dialogdata)
 
 	current_seed = core.formspec_escape(current_seed)
 	local retval =
-		"size[12,3,true]" ..
+		"size[11.5,3,false]" ..
 		"label[2,0;" .. fgettext("World name") .. "]"..
 		"field[4.5,0.4;6,0.5;te_world_name;;]" ..
 
@@ -56,11 +56,10 @@ local function create_world_formspec(dialogdata)
 		--"label[2,2;" .. fgettext("Mapgen") .. "]"..
 		--"dropdown[4.2,2;6.3;dd_mapgen;" .. mglist .. ";" .. selindex .. "]" ..
 
-		"dropdown[6000.2,6;6.3;games;" .. gamemgr.gamelist() ..
-                ";1]" ..
+		"dropdown[600.2,6;6.3;games;" .. gamemgr.gamelist() .. ";1]" ..
 		
-		"button[5,2.6;2.6,0.5;world_create_confirm;" .. fgettext("Create") .. "]" ..
-		"button[7.5,2.6;2.8,0.5;world_create_cancel;" .. fgettext("Cancel") .. "]"
+		"button[3.25,2.6;2.5,0.5;world_create_confirm;" .. fgettext("Create") .. "]" ..
+		"button[5.75,2.6;2.5,0.5;world_create_cancel;" .. fgettext("Cancel") .. "]"
 		
 	if #gamemgr.games == 0 then
 		retval = retval .. "box[2,4;8,1;#ff8800]label[2.25,4;" ..
