@@ -352,6 +352,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("max_block_generate_distance", "3");
 	settings->setDefault("enable_3d_clouds", "false");
 	settings->setDefault("fps_max", "30");
+	settings->setDefault("pause_fps_max", "10");
 	settings->setDefault("max_objects_per_block", "20");
 	settings->setDefault("sqlite_synchronous", "0");
 	settings->setDefault("gui_scaling", "1.2");
@@ -360,7 +361,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("active_block_range", "1");
 	settings->setDefault("chunksize", "3");
 	settings->setDefault("directional_colored_fog", "false");
-	
+
 	settings->setDefault("viewing_range", "25");
 	settings->setDefault("inventory_image_hack", "false");
 
