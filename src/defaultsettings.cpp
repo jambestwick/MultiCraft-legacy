@@ -371,7 +371,7 @@ void set_default_settings(Settings *settings)
 		// all phones
 		settings->setDefault("hud_scaling", "0.6");
 	}
-	if (x_inches < 3.5) {
+	if (x_inches < 3.7) {
 		// small 4" phones
 		settings->setDefault("hud_scaling", "0.5");
 		settings->setDefault("gui_scaling", "1.0");

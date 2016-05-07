@@ -1240,9 +1240,14 @@ bool TextureSource::generateImagePart(std::string part_of_name,
 
 					It is an image with a number of cracking stages
 					horizontally tiled.
-				*/
+				*/			
+#ifdef __ANDROID__
+				video::IImage *img_crack = m_sourcecache.getOrLoad(
+					"crack_anylength_android.png", m_device);
+#else
 				video::IImage *img_crack = m_sourcecache.getOrLoad(
 					"crack_anylength.png", m_device);
+#endif
 
 				if (img_crack) {
 					draw_crack(img_crack, baseimg,

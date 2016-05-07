@@ -64,7 +64,7 @@ COMPILER_VERSION = 4.9
 # TARGET_CFLAGS_ADDON = -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
 # TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 # TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
-# ARGET_ARCH = x86
+# TARGET_ARCH = x86
 # CROSS_PREFIX = i686-linux-android-
 # COMPILER_VERSION = 4.9
 
