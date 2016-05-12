@@ -1,6 +1,6 @@
 MultiCraft Android version
 =====================
-Date: 2015 12 16
+Date: 2016 05 13
 
 Controls
 --------
@@ -33,8 +33,8 @@ When a menu or inventory is displayed:
 
 Special settings
 ----------------
-There are some settings especially useful for Android users. Minetest's config
-file can usually be found at /mnt/sdcard/Minetest.
+There are some settings especially useful for Android users. MultiCraft's config
+file can usually be found at /sdcard/Android/data/mobi.MultiCraft.
 
 * gui_scaling: this is a user-specified scaling factor for the GUI- In case
                main menu is too big or small on your device, try changing this
@@ -51,29 +51,22 @@ Not all issues are fixed by now:
 * 512 MB RAM seems to be inadequate -- this depends on the server you join.
   Try to play on more lightweight servers.
 
-Versioning
-----------
-Android version numbers are 4 digits instead of Minetest's 3 digits.  The last
-number of Android's version represents the Android internal version code. This
-version code is strictly incremental. It's incremented for each official
-Minetest Android build.
-
-E.g. prerelease Minetest Android builds have been 0.4.9.3, while the first
-official version most likely will be 0.4.10.4
 
 Requirements
 ------------
 
-In order to build, your PC has to be set up to build Minetest in the usual
-manner (see the regular Minetest documentation for how to get this done).
-In addition to what is required for Minetest in general, you will need the
+In order to build, your PC has to be set up to build MultiCraft in the usual
+manner (see the regular MultiCraft documentation for how to get this done).
+In addition to what is required for MultiCraft in general, you will need the
 following software packages. The version number in parenthesis denotes the
 version that was tested at the time this README was drafted; newer/older
 versions may or may not work.
 
 * android SDK (24.4.1)
-* android NDK (r10e)
-* wget (1.13.4)
+* android NDK (r11c)
+* wget
+* g++-multilib
+* m4
 
 Additionally, you'll need to have an Internet connection available on the
 build system, as the Android build will download some source packages.
@@ -88,7 +81,7 @@ Debug build:
 * Wait for build to finish
 
 After the build is finished, the resulting apk can be fond in
-build/android/bin/. It will be called Minetest-debug.apk
+build/android/bin/. It will be called MultiCraft-debug.apk
 
 Release build:
 
@@ -101,12 +94,12 @@ Release build:
   file "ant.properties" there. Add following lines to that file:
   
   > key.store=<path to your keystore>
-  > key.alias=Minetest
+  > key.alias=MultiCraft
 
 * Execute "make release"
 * Enter your keystore as well as your Mintest key password once asked. Be
   careful it's shown on console in clear text!
-* The result can be found at "bin/Minetest-release.apk"
+* The result can be found at "bin/MultiCraft-release.apk"
 
 Other things that may be nice to know
 ------------
@@ -128,7 +121,7 @@ Other things that may be nice to know
   e.g.:
 
   > make clean_irrlicht
-  
+
 
 After compiling you need to archive files in assets into three zips - Files.zip, games.zip and worlds.zip. 
 games.zip must contain "games" folder.
