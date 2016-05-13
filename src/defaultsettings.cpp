@@ -90,7 +90,7 @@ void set_default_settings(Settings *settings)
 	#endif
 
 	settings->setDefault("fps_max", "60");
-	settings->setDefault("pause_fps_max", "15");
+	settings->setDefault("pause_fps_max", "10");
 	settings->setDefault("viewing_range", "100");
 	settings->setDefault("map_generation_limit", "31000");
 	settings->setDefault("screenW", "800");
@@ -352,8 +352,8 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("max_block_generate_distance", "3");
 	settings->setDefault("enable_3d_clouds", "false");
 	settings->setDefault("fps_max", "30");
-	settings->setDefault("pause_fps_max", "10");
-	settings->setDefault("max_objects_per_block", "20");
+	settings->setDefault("pause_fps_max", "5");
+	settings->setDefault("max_objects_per_block", "15");
 	settings->setDefault("sqlite_synchronous", "0");
 	settings->setDefault("gui_scaling", "1.2");
 	settings->setDefault("doubletap_jump", "true");

@@ -109,7 +109,7 @@ CURL_URL_HTTP = http://dl.uxnr.de/mirror/curl/curl-${CURL_VERSION}.tar.bz2
 
 MPIR_VERSION = 2.7.2
 MPIR_DIR = $(ANDR_ROOT)/deps/mpir
-MPIR_LIB = $(MPIR_DIR)/usr/lib/libmpir.a
+MPIR_LIB = $(MPIR_DIR)/usr/local/lib/libmpir.a
 MPIR_TIMESTAMP = $(MPIR_DIR)/timestamp
 MPIR_TIMESTAMP_INT = $(ANDR_ROOT)/deps/mpir_timestamp
 MPIR_URL_HTTP = http://mpir.org/mpir-$(MPIR_VERSION).tar.bz2
@@ -226,8 +226,11 @@ $(OPENAL_LIB): $(OPENAL_TIMESTAMP)
 	echo "changed timestamp for openal detected building...";                  \
 	cd ${OPENAL_DIR};                                                          \
 	${ANDROID_NDK}/ndk-build NDEBUG=${NDEBUG}                                  \
-		NDK_MODULE_PATH=${NDK_MODULE_PATH} APP_ABI=${TARGET_ABI}               \
-		TARGET_ARCH_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM} || exit 1;  \
+		NDK_MODULE_PATH=${NDK_MODULE_PATH}                                     \
+		APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                     \
+		TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                \
+		TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                              \
+		TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                 \
 	touch ${OPENAL_TIMESTAMP};                                                 \
 	touch ${OPENAL_TIMESTAMP_INT};                                             \
 	else                                                                       \
@@ -554,12 +557,12 @@ $(CURL_LIB): $(CURL_TIMESTAMP)
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	#export CPPFLAGS="$${CPPFLAGS} -I${OPENSSL_DIR}/include                    \
-	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                     \
+#	export CPPFLAGS="$${CPPFLAGS} -I${OPENSSL_DIR}/include                     \
+	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                   \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
-	#export LDFLAGS="$${LDFLAGS} -L${OPENSSL_DIR} ${TARGET_LDFLAGS_ADDON}";    \
+#	export LDFLAGS="$${LDFLAGS} -L${OPENSSL_DIR} ${TARGET_LDFLAGS_ADDON}";     \
 	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
-	#./configure --host=${TARGET_HOST} --enable-static --disable-shared --with-ssl; \
+#	./configure --host=${TARGET_HOST} --enable-static --disable-shared --with-ssl; \
 	./configure --host=${TARGET_HOST} --enable-static --disable-shared;        \
 	$(MAKE) -s || exit 1;                                                      \
 	touch ${CURL_TIMESTAMP};                                                   \
@@ -579,14 +582,14 @@ $(MPIR_TIMESTAMP) : mpir_download
 	fi
 
 mpir_download :
-	@if [ ! -d "${MPIR_DIR}" ] ; then                                       \
-		echo "mpir sources missing, downloading...";                        \
-		mkdir -p ${ANDR_ROOT}/deps;                                        \
-		cd deps;                                                           \
-		wget ${MPIR_URL_HTTP} || exit 1;                                    \
-		tar -xjf mpir-${MPIR_VERSION}.tar.bz2 || exit 1;                     \
-		rm mpir-${MPIR_VERSION}.tar.bz2;                                     \
-		mv mpir-${MPIR_VERSION} mpir;                                         \
+	@if [ ! -d "${MPIR_DIR}" ] ; then                                          \
+		echo "mpir sources missing, downloading...";                           \
+		mkdir -p ${ANDR_ROOT}/deps;                                            \
+		cd deps;                                                               \
+		wget ${MPIR_URL_HTTP} || exit 1;                                       \
+		tar -xjf mpir-${MPIR_VERSION}.tar.bz2 || exit 1;                       \
+		rm mpir-${MPIR_VERSION}.tar.bz2;                                       \
+		mv mpir-${MPIR_VERSION} mpir;                                          \
 	fi
 
 mpir : $(MPIR_LIB)
@@ -614,7 +617,7 @@ $(MPIR_LIB): $(MPIR_TIMESTAMP)
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
-	./configure --host=${TARGET_HOST} --prefix=/usr;                           \
+	./configure --enable-static --disable-shared --host=${TARGET_HOST};        \
 	$(MAKE) install DESTDIR=/${MPIR_DIR} || exit 1;                            \
 	touch ${MPIR_TIMESTAMP};                                                   \
 	touch ${MPIR_TIMESTAMP_INT};                                               \
@@ -704,7 +707,7 @@ $(LUAJIT_LIB): $(LUAJIT_TIMESTAMP)
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export TARGET_FLAGS="${TARGET_CFLAGS_ADDON}";                              \
 	export TARGET_LDFLAGS="${TARGET_LDFLAGS_ADDON}";                           \
-	$(MAKE) CROSS=${CROSS_PREFIX} XCFLAGS="-DLUAJIT_DISABLE_JIT -DLUAJIT_DISABLE_FFI" HOST_CC="gcc -m32" BUILDMODE=static; \
+	$(MAKE) CROSS=${CROSS_PREFIX} XCFLAGS="-DLUAJIT_DISABLE_FFI" HOST_CC="gcc -m32" BUILDMODE=static; \
 	touch ${LUAJIT_TIMESTAMP};                                                 \
 	touch ${LUAJIT_TIMESTAMP_INT};                                             \
 	$(RM) -rf $${TOOLCHAIN};                                                   \
@@ -753,9 +756,8 @@ clean_assets :
 
 apk: local.properties $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(MPIR_LIB) $(LUAJIT_LIB)       \
 	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h     \
-	$(ANDR_ROOT)/jni/src/android_version_githash.h sqlite3_download
-	@$(MAKE) assets;                                                           \
-	${ANDROID_NDK}/ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}                \
+	$(ANDR_ROOT)/jni/src/android_version_githash.h sqlite3_download assets
+	+ @${ANDROID_NDK}/ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}                \
 		GPROF=${GPROF} APP_ABI=${TARGET_ABI}                                   \
 		APP_PLATFORM=${APP_PLATFORM}                                           \
 		TARGET_LIBDIR=${TARGET_LIBDIR} &&                                      \

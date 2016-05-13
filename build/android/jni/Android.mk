@@ -34,7 +34,7 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := mpir
-LOCAL_SRC_FILES := deps/mpir/usr/lib/libmpir.a
+LOCAL_SRC_FILES := deps/mpir/usr/local/lib/libmpir.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
@@ -49,7 +49,7 @@ ifdef GPROF
 GPROF_DEF=-DGPROF
 endif
 
-LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_         \
+LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_ \
 		-DHAVE_TOUCHSCREENGUI            \
 		-DUSE_CURL=1                     \
 		-DUSE_SOUND=1                    \
@@ -92,7 +92,7 @@ LOCAL_C_INCLUDES := \
 		deps/curl/include                         \
 		deps/openal-soft/include                  \
 		deps/libvorbis-android/jni/include        \
-		deps/mpir/usr/include                     \
+		deps/mpir                                 \
 		deps/sqlite/                              \
 		deps/luajit/src                           
 
