@@ -93,12 +93,12 @@ IRRLICHT_TIMESTAMP_INT = $(ANDR_ROOT)/deps/irrlicht_timestamp
 IRRLICHT_URL_HTTP = https://github.com/zaki/irrlicht/archive/$(IRRLICHT_COMMIT).zip
 
 # not used now
-OPENSSL_VERSION = 1.0.2g
+OPENSSL_VERSION = 1.0.2h
 OPENSSL_DIR = $(ANDR_ROOT)/deps/openssl
 OPENSSL_LIB = $(OPENSSL_DIR)/libssl.so.1.0.0
 OPENSSL_TIMESTAMP = $(OPENSSL_DIR)/timestamp
 OPENSSL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/openssl_timestamp
-OPENSSL_URL = ftp://ftp.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
+OPENSSL_URL = https://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
 
 CURL_VERSION = 7.48.0
 CURL_DIR = $(ANDR_ROOT)/deps/curl
@@ -126,11 +126,11 @@ ICONV_DIR = $(ANDR_ROOT)/deps/libiconv
 ICONV_LIB = $(ICONV_DIR)/lib/.libs/libiconv.a
 ICONV_TIMESTAMP = $(ICONV_DIR)/timestamp
 ICONV_TIMESTAMP_INT = $(ANDR_ROOT)/deps/iconv_timestamp
-ICONV_URL_HTTP = http://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
+ICONV_URL_HTTP = https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
 
 SQLITE3_VERSION= 3120200
 SQLITE3_DIR = $(ANDR_ROOT)/deps/sqlite
-SQLITE3_URL = http://www.sqlite.org/2016/sqlite-amalgamation-$(SQLITE3_VERSION).zip
+SQLITE3_URL = https://www.sqlite.org/2016/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 
 LUAJIT_GIT_BRANCH = v2.1
 LUAJIT_DIR = $(ANDR_ROOT)/deps/luajit

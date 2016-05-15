@@ -5,7 +5,7 @@
  			}
  
 -			device->postEventFromUser(event);
-+			status = device->postEventFromUser(event) ? 1 : 0;
++			status = device->postEventFromUser(event);
  		}
  		break;
  		default:
