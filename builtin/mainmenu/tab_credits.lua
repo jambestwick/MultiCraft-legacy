@@ -85,17 +85,15 @@ return {
 			"label[0.1,1.0;LGPLv3.0+ and CC-BY-SA 3.0]" ..
 			"tablecolumns[color;text]" ..
 			"tableoptions[background=#00000000;highlight=#00000000;border=false]" ..
-			"table[0,1.7;11.75,3.45;list_credits;" ..
-			"#FFFF00," .. fgettext("MultiCraft Developers") .. ",," ..
-			table.concat(multicraft_developers, ",,") .. ",,," ..
-			"#FFFF00," .. fgettext("Minetest Developers") .. ",," ..
-			"table[3.5,-0.25;8.5,5.8;list_credits;" ..
-			"#FFFF00," .. "Dedication of the current release" .. ",," ..
-			"The 0.4.14 release is dedicated to the memory of" .. ",," ..
+			"table[0,1.6;11.75,3.5;list_credits;" ..
+			"#FFFF00," .. fgettext("Dedication of the current release") .. ",," .. 
+			"This release is dedicated to the memory of" .. ",," ..
 			"Minetest developer Maciej Kasatkin (RealBadAngel)" .. ",," ..
 			"who died on March 24 2016." .. ",," ..
 			"Our thoughts are with his family and friends." .. ",,," ..
-			"#FFFF00," .. fgettext("Core Developers") .. ",," ..
+			"#FFFF00," .. fgettext("MultiCraft Developers") .. ",," ..
+			table.concat(multicraft_developers, ",,") .. ",,," ..
+			"#FFFF00," .. fgettext("Minetest Developers") .. ",," ..
 			table.concat(core_developers, ",,") .. ",,," ..
 			"#FFFF00," .. fgettext("Active Contributors") .. ",," ..
 			table.concat(active_contributors, ",,") .. ",,," ..
