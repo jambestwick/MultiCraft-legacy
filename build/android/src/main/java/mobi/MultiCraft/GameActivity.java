@@ -9,7 +9,6 @@ import android.view.WindowManager;
 
 public class GameActivity extends NativeActivity {
     static {
-        System.loadLibrary("gmp");
         System.loadLibrary("multicraft");
     }
 
@@ -31,8 +30,9 @@ public class GameActivity extends NativeActivity {
 
     public void makeFullScreen() {
         if (Build.VERSION.SDK_INT >= 19) {
-            this.getWindow().getDecorView()
-                    .setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+            this.getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            );
         }
     }
 
@@ -62,6 +62,9 @@ public class GameActivity extends NativeActivity {
 //        stopAd();
     }
 
+    @Override
+    public void onBackPressed() {
+    }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 101) {
             if (resultCode == RESULT_OK) {
@@ -103,11 +106,12 @@ public class GameActivity extends NativeActivity {
         return getResources().getDisplayMetrics().density;
     }
 
+    public int getDisplayHeight() {
+        return getResources().getDisplayMetrics().heightPixels;
+    }
+
     public int getDisplayWidth() {
         return getResources().getDisplayMetrics().widthPixels;
     }
 
-    public int getDisplayHeight() {
-        return getResources().getDisplayMetrics().heightPixels;
-    }
 }

@@ -67,6 +67,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        setContentView(R.layout.activity_main);
         loadSettings(this);
         IntentFilter filter = new IntentFilter(UnzipService.ACTION_UPDATE);
         registerReceiver(myReceiver, filter);
@@ -127,7 +128,7 @@ public class MainActivity extends Activity {
 
     @SuppressWarnings("deprecation")
     public void init() {
-        setContentView(R.layout.activity_main);
+        RateMe.onStart(this);
         if (isCreateShortcut())
             addShortcut();
         mProgressBar = (ProgressBar) findViewById(R.id.PB1);
@@ -186,6 +187,38 @@ public class MainActivity extends Activity {
         util.deleteZip(FILES);
         util.deleteZip(WORLDS);
         util.deleteZip(GAMES);
+        if (RateMe.shouldShowRateDialog()) {
+            hideViews();
+            RateMe.showRateDialog(this);
+            RateMe.setCallback(new RateMe.Callback() {
+                @Override
+                public void onPositive() {
+                    finish();
+                }
+
+                @Override
+                public void onNegative() {
+                    Toast.makeText(MainActivity.this, R.string.sad, Toast.LENGTH_LONG).show();
+                    startGameActivity();
+                }
+
+                @Override
+                public void onCancelled() {
+                    startGameActivity();
+                }
+            });
+        } else {
+            startGameActivity();
+        }
+    }
+
+    private void hideViews() {
+        mProgressBar.setVisibility(View.GONE);
+        findViewById(R.id.imageView).setVisibility(View.GONE);
+        findViewById(R.id.tv_progress_circle).setVisibility(View.GONE);
+    }
+
+    private void startGameActivity() {
         Intent intent = new Intent(MainActivity.this, GameActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -306,8 +339,7 @@ public class MainActivity extends Activity {
             if (isAll) {
                 new DeleteTask().execute(unzipLocation);
             } else {
-                new DeleteTask().execute(unzipLocation + "textures", unzipLocation + "games/MultiCraft", unzipLocation + "builtin",
-                        unzipLocation + "fonts", unzipLocation + "debug.txt");
+                new DeleteTask().execute(unzipLocation + "games", unzipLocation + "debug.txt");
             }
         }
 
@@ -326,18 +358,12 @@ public class MainActivity extends Activity {
             return availableSpace / SIZE_MB;
         }
 
-        private boolean isFolderEmpty(String folder) {
-            File location = new File(folder);
-            File[] contents = location.listFiles();
-            return contents == null || contents.length == 0;
-        }
-
         public void checkVersion() {
-            if (isFolderEmpty(unzipLocation)) {
+            if (getBuildNumber().equals(getString(R.string.ver))) {
+                runGame();
+            } else if (getBuildNumber().equals("0")) {
                 saveSettings(TAG_BUILD_NUMBER, getString(R.string.ver));
                 startDeletion(true);
-            } else if (getBuildNumber().equals(getString(R.string.ver))) {
-                runGame();
             } else {
                 saveSettings(TAG_BUILD_NUMBER, getString(R.string.ver));
                 startDeletion(false);

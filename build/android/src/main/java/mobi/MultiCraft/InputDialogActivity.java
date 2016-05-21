@@ -57,6 +57,7 @@ public class InputDialogActivity extends Activity {
                 pushResult(editText.getText().toString());
                 setResult(Activity.RESULT_CANCELED);
                 alertDialog.dismiss();
+                makeFullScreen();
                 finish();
             }
         });
@@ -70,6 +71,15 @@ public class InputDialogActivity extends Activity {
         resultData.putExtra("text", text);
         setResult(Activity.RESULT_OK, resultData);
         alertDialog.dismiss();
+        makeFullScreen();
         finish();
+    }
+
+    public void makeFullScreen() {
+        if (Build.VERSION.SDK_INT >= 19) {
+            this.getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            );
+        }
     }
 }
