@@ -100,7 +100,7 @@ OPENSSL_TIMESTAMP = $(OPENSSL_DIR)/timestamp
 OPENSSL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/openssl_timestamp
 OPENSSL_URL = https://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
 
-CURL_VERSION = 7.48.0
+CURL_VERSION = 7.50.1
 CURL_DIR = $(ANDR_ROOT)/deps/curl
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
@@ -114,7 +114,7 @@ MPIR_TIMESTAMP = $(MPIR_DIR)/timestamp
 MPIR_TIMESTAMP_INT = $(ANDR_ROOT)/deps/mpir_timestamp
 MPIR_URL_HTTP = http://mpir.org/mpir-$(MPIR_VERSION).tar.bz2
 
-FREETYPE_VERSION = 2.6.3
+FREETYPE_VERSION = 2.6.5
 FREETYPE_DIR = $(ANDR_ROOT)/deps/freetype
 FREETYPE_LIB = $(FREETYPE_DIR)/objs/.libs/libfreetype.a
 FREETYPE_TIMESTAMP = $(FREETYPE_DIR)/timestamp
@@ -128,7 +128,7 @@ ICONV_TIMESTAMP = $(ICONV_DIR)/timestamp
 ICONV_TIMESTAMP_INT = $(ANDR_ROOT)/deps/iconv_timestamp
 ICONV_URL_HTTP = https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
 
-SQLITE3_VERSION= 3120200
+SQLITE3_VERSION = 3130000
 SQLITE3_DIR = $(ANDR_ROOT)/deps/sqlite
 SQLITE3_URL = https://www.sqlite.org/2016/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 
