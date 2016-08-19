@@ -277,7 +277,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("time_send_interval", "5");
 	settings->setDefault("time_speed", "72");
 	settings->setDefault("server_unload_unused_data_timeout", "29");
-	settings->setDefault("max_objects_per_block", "49");
+	settings->setDefault("max_objects_per_block", "15");
 	settings->setDefault("server_map_save_interval", "5.3");
 	settings->setDefault("sqlite_synchronous", "2");
 	settings->setDefault("full_block_send_enable_min_time_from_building", "2.0");
@@ -287,7 +287,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("nodetimer_interval", "1.0");
 	settings->setDefault("ignore_world_load_errors", "false");
 	settings->setDefault("remote_media", "");
-	settings->setDefault("debug_log_level", "action");
+	settings->setDefault("debug_log_level", "warning");
 	settings->setDefault("emergequeue_limit_total", "256");
 	settings->setDefault("emergequeue_limit_diskonly", "32");
 	settings->setDefault("emergequeue_limit_generate", "32");
@@ -352,7 +352,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_3d_clouds", "false");
 	settings->setDefault("fps_max", "30");
 	settings->setDefault("pause_fps_max", "5");
-	settings->setDefault("max_objects_per_block", "15");
 	settings->setDefault("sqlite_synchronous", "0");
 	settings->setDefault("gui_scaling", "1.2");
 	settings->setDefault("doubletap_jump", "true");
