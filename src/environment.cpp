@@ -2235,7 +2235,7 @@ void ServerEnvironment::deactivateFarObjects(bool force_delete)
 			if(block)
 			{
 				if(block->m_static_objects.m_stored.size() >= g_settings->getU16("max_objects_per_block")){
-					errorstream<<"ServerEnv: Trying to store id="<<obj->getId()
+					infostream<<"ServerEnv: Trying to store id="<<obj->getId()
 							<<" statically but block "<<PP(blockpos)
 							<<" already contains "
 							<<block->m_static_objects.m_stored.size()

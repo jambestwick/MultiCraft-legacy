@@ -24,17 +24,17 @@ VERSION_PATCH := $(shell cat $(PROJ_ROOT)/CMakeLists.txt | \
 # toolchain config for ARMv7
 ################################################################################
 
-TARGET_HOST = arm-linux
-TARGET_HOST2 = arm-linux
-TARGET_ABI = armeabi-v7a-hard
-TARGET_LIBDIR = armeabi-v7a
-TARGET_TOOLCHAIN = arm-linux-androideabi
-TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
-TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
-TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
-TARGET_ARCH = armv7
-CROSS_PREFIX = arm-linux-androideabi-
-COMPILER_VERSION = 4.9
+# TARGET_HOST = arm-linux
+# TARGET_HOST2 = arm-linux
+# TARGET_ABI = armeabi-v7a-hard
+# TARGET_LIBDIR = armeabi-v7a
+# TARGET_TOOLCHAIN = arm-linux-androideabi
+# TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
+# TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
+# TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
+# TARGET_ARCH = armv7
+# CROSS_PREFIX = arm-linux-androideabi-
+# COMPILER_VERSION = 4.9
 
 ################################################################################
 # toolchain config for ARMv8
@@ -56,28 +56,30 @@ COMPILER_VERSION = 4.9
 # toolchain config for x86
 ################################################################################
 
-# TARGET_HOST = x86-linux
-# TARGET_HOST2 = x86-linux
-# TARGET_ABI = x86
-# TARGET_LIBDIR = x86
-# TARGET_TOOLCHAIN = x86
-# TARGET_CFLAGS_ADDON = -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
-# TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
-# TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
-# TARGET_ARCH = x86
-# CROSS_PREFIX = i686-linux-android-
-# COMPILER_VERSION = 4.9
+TARGET_HOST = x86-linux
+TARGET_HOST2 = x86-linux
+TARGET_ABI = x86
+TARGET_LIBDIR = x86
+TARGET_TOOLCHAIN = x86
+TARGET_CFLAGS_ADDON = -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
+TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
+TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
+TARGET_ARCH = x86
+CROSS_PREFIX = i686-linux-android-
+COMPILER_VERSION = 4.9
 
 ################################################################################
 
 ASSETS_TIMESTAMP = deps/assets_timestamp
 
+OPENAL_URL = https://github.com/MoNTE48/openal-soft/releases/download/$(OPENAL_VER)/$(OPENAL_VER).zip
+OPENAL_VER = openal-soft-1.17.2-dev
 OPENAL_FOLDER = $(ANDR_ROOT)/deps/openal-soft
 OPENAL_DIR = $(ANDR_ROOT)/deps/openal-soft/android
 OPENAL_LIB = $(OPENAL_DIR)/libs/$(TARGET_ABI)/libopenal.so
 OPENAL_TIMESTAMP = $(OPENAL_DIR)/timestamp
 OPENAL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/openal_timestamp
-OPENAL_URL_GIT = https://github.com/MoNTE48/openal-soft
+#OPENAL_URL_GIT = https://github.com/MoNTE48/openal-soft
 
 VORBIS_DIR = $(ANDR_ROOT)/deps/libvorbis-android
 VORBIS_LIB = $(VORBIS_DIR)/obj/local/$(TARGET_ABI)/libvorbis.a
@@ -128,7 +130,7 @@ ICONV_TIMESTAMP = $(ICONV_DIR)/timestamp
 ICONV_TIMESTAMP_INT = $(ANDR_ROOT)/deps/iconv_timestamp
 ICONV_URL_HTTP = https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
 
-SQLITE3_VERSION = 3130000
+SQLITE3_VERSION = 3140100
 SQLITE3_DIR = $(ANDR_ROOT)/deps/sqlite
 SQLITE3_URL = https://www.sqlite.org/2016/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 
@@ -209,7 +211,10 @@ openal_download :
 		echo "openal sources missing, downloading...";                         \
 		mkdir -p ${ANDR_ROOT}/deps;                                            \
 		cd ${ANDR_ROOT}/deps ;                                                 \
-		git clone ${OPENAL_URL_GIT} || exit 1;                                 \
+#		git clone ${OPENAL_URL_GIT} || exit 1;                                 \
+		wget ${OPENAL_URL} || exit 1;                                          \
+		unzip ${OPENAL_VER}.zip -d openal-soft || exit 1;                      \
+		rm ${OPENAL_VER}.zip || exit 1;                                        \
 	fi
 
 openal : $(OPENAL_LIB)

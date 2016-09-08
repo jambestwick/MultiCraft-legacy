@@ -1,6 +1,5 @@
 MultiCraft Android version
 =====================
-Date: 2016 05 13
 
 Controls
 --------
