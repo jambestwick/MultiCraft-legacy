@@ -24,17 +24,17 @@ VERSION_PATCH := $(shell cat $(PROJ_ROOT)/CMakeLists.txt | \
 # toolchain config for ARMv7
 ################################################################################
 
-# TARGET_HOST = arm-linux
-# TARGET_HOST2 = arm-linux
-# TARGET_ABI = armeabi-v7a-hard
-# TARGET_LIBDIR = armeabi-v7a
-# TARGET_TOOLCHAIN = arm-linux-androideabi
-# TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
-# TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
-# TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
-# TARGET_ARCH = armv7
-# CROSS_PREFIX = arm-linux-androideabi-
-# COMPILER_VERSION = 4.9
+TARGET_HOST = arm-linux
+TARGET_HOST2 = arm-linux
+TARGET_ABI = armeabi-v7a-hard
+TARGET_LIBDIR = armeabi-v7a
+TARGET_TOOLCHAIN = arm-linux-androideabi
+TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden -fgraphite-identity
+TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
+TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
+TARGET_ARCH = armv7
+CROSS_PREFIX = arm-linux-androideabi-
+COMPILER_VERSION = 4.9
 
 ################################################################################
 # toolchain config for ARMv8
@@ -56,17 +56,17 @@ VERSION_PATCH := $(shell cat $(PROJ_ROOT)/CMakeLists.txt | \
 # toolchain config for x86
 ################################################################################
 
-TARGET_HOST = x86-linux
-TARGET_HOST2 = x86-linux
-TARGET_ABI = x86
-TARGET_LIBDIR = x86
-TARGET_TOOLCHAIN = x86
-TARGET_CFLAGS_ADDON = -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
-TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
-TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
-TARGET_ARCH = x86
-CROSS_PREFIX = i686-linux-android-
-COMPILER_VERSION = 4.9
+# TARGET_HOST = x86-linux
+# TARGET_HOST2 = x86-linux
+# TARGET_ABI = x86
+# TARGET_LIBDIR = x86
+# TARGET_TOOLCHAIN = x86
+# TARGET_CFLAGS_ADDON = -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
+# TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
+# TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
+# TARGET_ARCH = x86
+# CROSS_PREFIX = i686-linux-android-
+# COMPILER_VERSION = 4.9
 
 ################################################################################
 
@@ -102,7 +102,7 @@ OPENSSL_TIMESTAMP = $(OPENSSL_DIR)/timestamp
 OPENSSL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/openssl_timestamp
 OPENSSL_URL = https://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
 
-CURL_VERSION = 7.50.1
+CURL_VERSION = 7.50.2
 CURL_DIR = $(ANDR_ROOT)/deps/curl
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
@@ -116,7 +116,7 @@ MPIR_TIMESTAMP = $(MPIR_DIR)/timestamp
 MPIR_TIMESTAMP_INT = $(ANDR_ROOT)/deps/mpir_timestamp
 MPIR_URL_HTTP = http://mpir.org/mpir-$(MPIR_VERSION).tar.bz2
 
-FREETYPE_VERSION = 2.6.5
+FREETYPE_VERSION = 2.7
 FREETYPE_DIR = $(ANDR_ROOT)/deps/freetype
 FREETYPE_LIB = $(FREETYPE_DIR)/objs/.libs/libfreetype.a
 FREETYPE_TIMESTAMP = $(FREETYPE_DIR)/timestamp
@@ -130,7 +130,7 @@ ICONV_TIMESTAMP = $(ICONV_DIR)/timestamp
 ICONV_TIMESTAMP_INT = $(ANDR_ROOT)/deps/iconv_timestamp
 ICONV_URL_HTTP = https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
 
-SQLITE3_VERSION = 3140100
+SQLITE3_VERSION = 3140200
 SQLITE3_DIR = $(ANDR_ROOT)/deps/sqlite
 SQLITE3_URL = https://www.sqlite.org/2016/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 
@@ -140,6 +140,12 @@ LUAJIT_LIB = $(LUAJIT_DIR)src/libluajit.a
 LUAJIT_TIMESTAMP = $(LUAJIT_DIR)/timestamp
 LUAJIT_TIMESTAMP_INT = $(ANDR_ROOT)/deps/luajit_timestamp
 LUAJIT_URL_GIT = https://github.com/LuaJIT/LuaJIT.git
+
+#GNUINTL_DIR = $(ANDR_ROOT)/deps/gnuintl
+#GNUINTL_LIB = $(LUAJIT_DIR)src/gnuintl.a
+#GNUINTL_TIMESTAMP = $(GNUINTL_DIR)/timestamp
+#GNUINTL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/gnuintl_timestamp
+#GNUINTL_URL_GIT = https://github.com/LuaJIT/LuaJIT.git
 
 ################################################################################
 
@@ -153,13 +159,15 @@ NDK_MODULE_PATH = $(ANDROID_NDK)/toolchains
 	clean_assets assets sqlite3_download \
 	freetype_download clean_freetype freetype \
 	luajit_download clean_luajit luajit \
+#	gnuintl_download clean_gnuintl gnuintl \
 	apk clean_apk \
 	clean_all clean prep_srcdir \
 	install_debug install_release envpaths all \
 	$(ASSETS_TIMESTAMP) $(LUAJIT_TIMESTAMP) \
 	$(OPENAL_TIMESTAMP) $(VORBIS_TIMESTAMP) \
 	$(IRRLICHT_TIMESTAMP) $(CURL_TIMESTAMP) \
-	#$(OPENSSL_TIMESTAMP) \
+#	$(OPENSSL_TIMESTAMP) \
+#	$(GNUINTL_TIMESTAMP) \
 	$(ANDR_ROOT)/jni/src/android_version.h \
 	$(ANDR_ROOT)/jni/src/android_version_githash.h
 
@@ -435,7 +443,6 @@ $(ICONV_LIB) : $(ICONV_TIMESTAMP)
 	mkdir -p ${ICONV_DIR};                                                     \
 	echo "changed timestamp for iconv detected building...";                   \
 	cd ${ICONV_DIR};                                                           \
-	\
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-iconv;                            \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
 		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                    \
@@ -457,7 +464,6 @@ $(ICONV_LIB) : $(ICONV_TIMESTAMP)
 	else                                                                       \
 		echo "nothing to be done for iconv";                               \
 	fi
-
 clean_iconv :
 	$(RM) -rf ${ICONV_DIR}
 
@@ -722,6 +728,54 @@ $(LUAJIT_LIB): $(LUAJIT_TIMESTAMP)
 
 clean_luajit:
 	$(RM) -R deps/luajit
+
+$(GNUINTL_TIMESTAMP) : gnuintl_download
+	@LAST_MODIF=$$(find ${GNUINTL_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
+	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
+		touch ${GNUINTL_TIMESTAMP};                                            \
+	fi
+
+gnuintl_download :
+	@if [ ! -d "${GNUINTL_DIR}" ] ; then                                          \
+		echo "gnuintl sources missing, downloading...";                           \
+#		mkdir -p ${ANDR_ROOT}/deps;                                            \
+#		cd deps;                                                               \
+#		wget ${MPIR_URL_HTTP} || exit 1;                                       \
+#		tar -xjf gnuintl-${MPIR_VERSION}.tar.bz2 || exit 1;                       \
+#		rm gnuintl-${MPIR_VERSION}.tar.bz2;                                       \
+#		mv gnuintl-${MPIR_VERSION} gnuintl;                                          \
+	fi
+
+gnuintl : $(GNUINTL_LIB)
+
+$(GNUINTL_LIB): $(GNUINTL_TIMESTAMP)
+	@REFRESH=0;                                                                \
+	if [ ! -e ${GNUINTL_TIMESTAMP_INT} ] ; then                                   \
+		REFRESH=1;                                                         \
+	fi;                                                                        \
+	if [ ! -e ${GNUINTL_LIB} ] ; then                                             \
+		REFRESH=1;                                                         \
+	fi;                                                                        \
+	if [ ${GNUINTL_TIMESTAMP} -nt ${GNUINTL_TIMESTAMP_INT} ] ; then                  \
+		REFRESH=1;                                                         \
+	fi;                                                                        \
+	if [ $$REFRESH -ne 0 ] ; then                                              \
+	mkdir -p ${GNUINTL_DIR};                                                      \
+	echo "changed timestamp for gnuintl detected building...";                    \
+	cd ${GNUINTL_DIR};                       \
+	${ANDROID_NDK}/ndk-build NDEBUG=${NDEBUG}                                  \
+		NDK_MODULE_PATH=${NDK_MODULE_PATH}                                     \
+		APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM} || exit 1;          \
+	touch ${GNUINTL_TIMESTAMP};                                                   \
+	touch ${GNUINTL_TIMESTAMP_INT};                                               \
+	$(RM) -rf $${TOOLCHAIN};                                                   \
+	else                                                                       \
+		echo "nothing to be done for gnuintl";                                 \
+	fi
+
+
+clean_gnuintl:
+	$(RM) -R sqlite
 
 assets : $(ASSETS_TIMESTAMP)
 	@REFRESH=0;                                                                \

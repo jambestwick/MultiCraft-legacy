@@ -359,6 +359,9 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("active_block_range", "1");
 	settings->setDefault("chunksize", "3");
 	settings->setDefault("directional_colored_fog", "false");
+	settings->setDefault("gui_scaling_filter", "false");
+	settings->setDefault("gui_scaling_filter_txr2img", "false");
+	settings->setDefault("max_simultaneous_block_sends_per_client", "5");
 
 	settings->setDefault("viewing_range", "25");
 	settings->setDefault("inventory_image_hack", "false");

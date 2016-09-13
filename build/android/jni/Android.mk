@@ -42,6 +42,22 @@ LOCAL_MODULE := LuaJIT
 LOCAL_SRC_FILES := deps/luajit/src/libluajit.a
 include $(PREBUILT_STATIC_LIBRARY)
 
+#include $(CLEAR_VARS)
+#LOCAL_MODULE := GNUIntl
+#LOCAL_SRC_FILES := deps/gnuintl/obj/local/$(APP_ABI)/libgnuintl.so
+#LOCAL_CFLAGS := -DHAVE_CONFIG_H
+#LOCAL_CFLAGS += -DDEPENDS_ON_LIBICONV=1
+#LOCAL_CFLAGS += -Drelocate=libintl_relocate
+#LOCAL_CFLAGS += -Dset_relocation_prefix=libintl_set_relocation_prefix
+#LOCAL_CFLAGS += -DNO_XMALLOC
+#LOCAL_CFLAGS += -DIN_LIBRARY
+#LOCAL_CFLAGS += -DENABLE_RELOCATABLE=1
+#LOCAL_CFLAGS += -DIN_LIBINTL
+#LOCAL_CFLAGS += -DBUILDING_DLL
+#LOCAL_CFLAGS += -DBUILDING_LIBINTL
+#LOCAL_CFLAGS += -DLOCALE_ALIAS_PATH=\"/sdcard/Android/data/mobi.MultiCraft/files\"
+#include $(PREBUILT_SHARED_LIBRARY)
+
 include $(CLEAR_VARS)
 LOCAL_MODULE := multicraft
 
@@ -56,14 +72,15 @@ LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_ \
 		-DUSE_FREETYPE=1                 \
 		$(GPROF_DEF)                     \
 		-pipe -fstrict-aliasing
+#		-DUSE_GETTEXT=1
 
 ifndef NDEBUG
 LOCAL_CFLAGS += -g -D_DEBUG -O0 -fno-omit-frame-pointer
 else
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a-hard)
-LOCAL_CFLAGS += -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fno-fast-math -funsafe-math-optimizations -fno-trapping-math -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
-LOCAL_CXXFLAGS += -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
+LOCAL_CFLAGS += -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fno-fast-math -funsafe-math-optimizations -fno-trapping-math -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden -fgraphite-identity
+LOCAL_CXXFLAGS += -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden -fgraphite-identity
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
 endif
 
@@ -94,7 +111,9 @@ LOCAL_C_INCLUDES := \
 		deps/libvorbis-android/jni/include        \
 		deps/mpir                                 \
 		deps/sqlite/                              \
-		deps/luajit/src                           
+		deps/luajit/src                           \
+#		deps/gnuintl/jni/include                  \
+#		deps/gnuintl/jni/src
 
 LOCAL_SRC_FILES := \
 		jni/src/ban.cpp                           \
@@ -221,7 +240,7 @@ LOCAL_SRC_FILES := \
 		jni/src/client/clientlauncher.cpp         \
 		jni/src/client/tile.cpp                   \
 		jni/src/util/sha256.c
-#	jni/src/content_cso.cpp
+#		jni/src/content_cso.cpp
 
 # Network
 LOCAL_SRC_FILES += \
@@ -275,7 +294,6 @@ LOCAL_SRC_FILES += \
 # Freetype2
 LOCAL_SRC_FILES += jni/src/cguittfont/xCGUITTFont.cpp
 
-
 # SQLite3
 LOCAL_SRC_FILES += deps/sqlite/sqlite3.c
 
@@ -290,6 +308,7 @@ LOCAL_SRC_FILES +=                              \
 LOCAL_SRC_FILES += jni/src/json/jsoncpp.cpp
 
 LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl iconv LuaJIT openal vorbis mpir android_native_app_glue $(PROFILER_LIBS)
+#LOCAL_SHARED_LIBRARIES := GNUIntl
 
 LOCAL_LDLIBS := -lEGL -llog -lGLESv1_CM -lGLESv2 -lz -landroid -lOpenSLES
 
@@ -299,4 +318,3 @@ ifdef GPROF
 $(call import-module,android-ndk-profiler)
 endif
 $(call import-module,android/native_app_glue)
-

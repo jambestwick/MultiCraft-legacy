@@ -23,6 +23,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "config.h" // for USE_GETTEXT
 
 #if USE_GETTEXT
+//	#include <libgnuintl.h>
 	#include <libintl.h>
 #else
 	#define gettext(String) String
