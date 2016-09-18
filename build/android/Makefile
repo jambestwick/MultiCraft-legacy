@@ -26,12 +26,12 @@ VERSION_PATCH := $(shell cat $(PROJ_ROOT)/CMakeLists.txt | \
 
 TARGET_HOST = arm-linux
 TARGET_HOST2 = arm-linux
-TARGET_ABI = armeabi-v7a-hard
+TARGET_ABI = armeabi-v7a
 TARGET_LIBDIR = armeabi-v7a
 TARGET_TOOLCHAIN = arm-linux-androideabi
-TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden -fgraphite-identity
+TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
 TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
-TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections -lm_hard
+TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
 TARGET_ARCH = armv7
 CROSS_PREFIX = arm-linux-androideabi-
 COMPILER_VERSION = 4.9
@@ -487,6 +487,7 @@ irrlicht_download :
 		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-back_button.patch || exit 1; \
 		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-texturehack.patch || exit 1; \
 		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-optimization.patch || exit 1;\
+		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-CEGL.patch || exit 1;        \
 	fi
 
 $(IRRLICHT_TIMESTAMP) : irrlicht_download
