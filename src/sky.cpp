@@ -512,9 +512,9 @@ void Sky::update(float time_of_day, float time_brightness,
 			(155./255*1.2,193./255,240./255, 1.0);
 
 	video::SColorf skycolor_bright_normal_f =
-			video::SColor(255, 140, 186, 250);
+			video::SColor(255, 2, 138, 255);
 	video::SColorf skycolor_bright_dawn_f =
-			video::SColor(255, 180, 186, 250);
+			video::SColor(255, 180, 186, 255);
 	
 	video::SColorf cloudcolor_bright_normal_f =
 			video::SColor(255, 240,240,255);

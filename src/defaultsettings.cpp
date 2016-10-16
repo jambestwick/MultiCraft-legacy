@@ -110,7 +110,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("leaves_style", "fancy");
 	settings->setDefault("connected_glass", "false");
 	settings->setDefault("smooth_lighting", "true");
-	settings->setDefault("display_gamma", "1.5");
+	settings->setDefault("display_gamma", "1.4");
 	settings->setDefault("texture_path", "");
 	settings->setDefault("shader_path", "");
 	settings->setDefault("video_driver", "opengl");
@@ -118,7 +118,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("noclip", "false");
 	settings->setDefault("continuous_forward", "false");
 	settings->setDefault("cinematic", "false");
-	settings->setDefault("camera_smoothing", "0");
+	settings->setDefault("camera_smoothing", "0.1");
 	settings->setDefault("cinematic_camera_smoothing", "0.7");
 	settings->setDefault("fast_move", "false");
 	settings->setDefault("invert_mouse", "false");
@@ -135,10 +135,10 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("opaque_water", "false");
 	settings->setDefault("console_color", "(0,0,0)");
 	settings->setDefault("console_alpha", "200");
-	settings->setDefault("selectionbox_color", "(0,0,0)");
-	settings->setDefault("selectionbox_width", "2");
+	settings->setDefault("selectionbox_color", "(255,255,255)");
+	settings->setDefault("selectionbox_width", "4");
 	settings->setDefault("inventory_items_animations", "false");
-	settings->setDefault("node_highlighting", "halo");
+	settings->setDefault("node_highlighting", "box");
 	settings->setDefault("crosshair_color", "(255,255,255)");
 	settings->setDefault("crosshair_alpha", "255");
 	settings->setDefault("hud_scaling", "1.0");
@@ -343,27 +343,29 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_shaders", "false");
 	settings->setDefault("fullscreen", "true");
 	settings->setDefault("video_driver", "ogles1");
-	settings->setDefault("touchtarget", "true");
-	settings->setDefault("touchscreen_threshold","20");
+	settings->setDefault("touchtarget", "false");
+	settings->setDefault("touchscreen_threshold", "20");
 	settings->setDefault("smooth_lighting", "false");
 	settings->setDefault("emergequeue_limit_diskonly", "8");
 	settings->setDefault("emergequeue_limit_generate", "8");
 	settings->setDefault("max_block_generate_distance", "3");
-	settings->setDefault("enable_3d_clouds", "false");
-	settings->setDefault("fps_max", "30");
+//	settings->setDefault("enable_3d_clouds", "false");
+	settings->setDefault("fps_max", "35");
 	settings->setDefault("pause_fps_max", "5");
 	settings->setDefault("sqlite_synchronous", "0");
 	settings->setDefault("gui_scaling", "1.2");
 	settings->setDefault("doubletap_jump", "true");
-	settings->setDefault("client_mapblock_limit", "500");
+	settings->setDefault("client_mapblock_limit", "250");
 	settings->setDefault("active_block_range", "1");
 	settings->setDefault("chunksize", "3");
-	settings->setDefault("directional_colored_fog", "false");
-	settings->setDefault("gui_scaling_filter", "false");
 	settings->setDefault("gui_scaling_filter_txr2img", "false");
 	settings->setDefault("max_simultaneous_block_sends_per_client", "5");
+	settings->setDefault("abm_interval", "2.0");
+	settings->setDefault("selectionbox_width", "7");
+	settings->setDefault("cloud_radius", "6");
+	settings->setDefault("client_unload_unused_data_timeout", "120");
 
-	settings->setDefault("viewing_range", "25");
+	settings->setDefault("viewing_range", "30");
 	settings->setDefault("inventory_image_hack", "false");
 
     // check for device with small screen
@@ -372,6 +374,7 @@ void set_default_settings(Settings *settings)
 	if (x_inches < 5) {
 		// all phones
 		settings->setDefault("hud_scaling", "0.6");
+		settings->setDefault("mouse_sensitivity", "0.15");
 	}
 	if (x_inches < 3.7) {
 		// small 4" phones
@@ -382,15 +385,13 @@ void set_default_settings(Settings *settings)
 	if (x_inches > 5) {
 		// tablets
 		settings->setDefault("hud_scaling", "0.85");
-		settings->setDefault("mouse_sensitivity", "0.15");
+		settings->setDefault("mouse_sensitivity", "0.2");
 	}
 
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");
 	
 	settings->setDefault("curl_verify_cert","false");
-#else
-	settings->setDefault("screen_dpi", "72");
 #endif
 }
 

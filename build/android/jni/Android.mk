@@ -33,11 +33,6 @@ LOCAL_SRC_FILES := deps/libvorbis-android/obj/local/$(APP_ABI)/libvorbis.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := mpir
-LOCAL_SRC_FILES := deps/mpir/usr/local/lib/libmpir.a
-include $(PREBUILT_STATIC_LIBRARY)
-
-include $(CLEAR_VARS)
 LOCAL_MODULE := LuaJIT
 LOCAL_SRC_FILES := deps/luajit/src/libluajit.a
 include $(PREBUILT_STATIC_LIBRARY)
@@ -84,8 +79,6 @@ LOCAL_CXXFLAGS += -mfpu=vfpv3-d16 -march=armv7-a -Ofast -fdata-sections -ffuncti
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections
 endif
 
-TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -D_NDK_MATH_NO_SOFTFP=1 -mhard-float -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
-
 endif
 
 ifdef GPROF
@@ -94,10 +87,9 @@ LOCAL_CFLAGS += -pg
 endif
 
 ifeq ($(TARGET_ARCH_ABI),x86)
-LOCAL_CFLAGS += -mhard-float -Ofast -fno-fast-math -funsafe-math-optimizations -fno-trapping-math -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden -fno-stack-protector
+LOCAL_CFLAGS += -Ofast -fno-fast-math -funsafe-math-optimizations -fno-trapping-math -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden -fno-stack-protector 
 LOCAL_CXXFLAGS += -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections
-LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
 endif
 
 LOCAL_C_INCLUDES := \
@@ -105,13 +97,13 @@ LOCAL_C_INCLUDES := \
 		jni/src/script                            \
 		jni/src/json                              \
 		jni/src/cguittfont                        \
+		jni/src/gmp                               \
 		deps/irrlicht/include                     \
 		deps/libiconv/include                     \
 		deps/freetype/include                     \
 		deps/curl/include                         \
 		deps/openal-soft/include                  \
 		deps/libvorbis-android/jni/include        \
-		deps/mpir                                 \
 		deps/sqlite/                              \
 		deps/luajit/src                           \
 #		deps/gnuintl/jni/include                  \
@@ -241,7 +233,8 @@ LOCAL_SRC_FILES := \
 		jni/src/wieldmesh.cpp                     \
 		jni/src/client/clientlauncher.cpp         \
 		jni/src/client/tile.cpp                   \
-		jni/src/util/sha256.c
+		jni/src/util/sha256.c                     \
+		jni/src/gmp/mini-gmp.c
 #		jni/src/content_cso.cpp
 
 # Network
@@ -300,7 +293,7 @@ LOCAL_SRC_FILES += jni/src/cguittfont/xCGUITTFont.cpp
 LOCAL_SRC_FILES += deps/sqlite/sqlite3.c
 
 # Threading
-LOCAL_SRC_FILES +=                              \
+LOCAL_SRC_FILES += \
 		jni/src/threading/event.cpp             \
 		jni/src/threading/mutex.cpp             \
 		jni/src/threading/semaphore.cpp         \
@@ -309,10 +302,10 @@ LOCAL_SRC_FILES +=                              \
 # JSONCPP
 LOCAL_SRC_FILES += jni/src/json/jsoncpp.cpp
 
-LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl iconv LuaJIT openal vorbis mpir android_native_app_glue $(PROFILER_LIBS)
+LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl iconv LuaJIT openal vorbis android_native_app_glue $(PROFILER_LIBS)
 #LOCAL_SHARED_LIBRARIES := GNUIntl
 
-LOCAL_LDLIBS := -lEGL -llog -lGLESv1_CM -lGLESv2 -lz -landroid -lOpenSLES
+LOCAL_LDLIBS := -lEGL -lGLESv1_CM -lGLESv2 -landroid -lOpenSLES
 
 include $(BUILD_SHARED_LIBRARY)
 

@@ -103,7 +103,7 @@ Hud::Hud(video::IVideoDriver *driver, scene::ISceneManager* smgr,
 	if (mode == "box") {
 		m_use_selection_mesh = false;
 		m_selection_material.Thickness =
-			rangelim(g_settings->getS16("selectionbox_width"), 1, 5);
+			rangelim(g_settings->getS16("selectionbox_width"), 1, 7);
 	} else if (mode == "halo") {
 		m_use_selection_mesh = true;
 		m_selection_material.setTexture(0, tsrc->getTextureForMesh("halo.png"));
@@ -484,10 +484,17 @@ void Hud::drawCrosshair()
 				core::rect<s32>(0, 0, size.X, size.Y),
 				0, crosshair_argb, true);
 	} else {
+#ifdef __ANDROID__
+		driver->draw2DLine(m_displaycenter - v2s32(40, 0),
+				m_displaycenter + v2s32(40, 0), crosshair_argb);
+		driver->draw2DLine(m_displaycenter - v2s32(0, 40),
+				m_displaycenter + v2s32(0, 40), crosshair_argb);
+#else
 		driver->draw2DLine(m_displaycenter - v2s32(10, 0),
 				m_displaycenter + v2s32(10, 0), crosshair_argb);
 		driver->draw2DLine(m_displaycenter - v2s32(0, 10),
 				m_displaycenter + v2s32(0, 10), crosshair_argb);
+#endif
 	}
 }
 
@@ -511,12 +518,9 @@ void Hud::drawSelectionMesh()
 				i->MinEdge + m_selection_pos_with_offset,
 				i->MaxEdge + m_selection_pos_with_offset);
 
-			u32 r = (selectionbox_argb.getRed() *
-					m_selection_mesh_color.getRed() / 255);
-			u32 g = (selectionbox_argb.getGreen() *
-					m_selection_mesh_color.getGreen() / 255);
-			u32 b = (selectionbox_argb.getBlue() *
-					m_selection_mesh_color.getBlue() / 255);
+			u32 r = (selectionbox_argb.getRed());
+			u32 g = (selectionbox_argb.getGreen());
+			u32 b = (selectionbox_argb.getBlue());
 			driver->draw3DBox(box, video::SColor(255, r, g, b));
 		}
 		driver->setMaterial(oldmaterial);

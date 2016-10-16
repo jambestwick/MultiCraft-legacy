@@ -1162,7 +1162,11 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 		bool singleplayermode)
 {
 
+#ifndef __ANDROID__
 	float ypos = singleplayermode ? 0.5 : 0.1;
+#else
+	float ypos =1.0;
+#endif
 	std::ostringstream os;
 
 	os << FORMSPEC_VERSION_STRING  << SIZE_TAG
@@ -1180,7 +1184,7 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 			<< strgettext("Change Keys")  << "]";
 #endif
 	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_menu;"
-			<< strgettext("Exit to Menu") << "]";
+			<< strgettext("Save and Exit") << "]";
 	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_os;"
 			<< strgettext("Close game")   << "]"
 			<< "\n;]";
