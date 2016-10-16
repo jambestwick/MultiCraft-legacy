@@ -1165,7 +1165,7 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 #ifndef __ANDROID__
 	float ypos = singleplayermode ? 0.5 : 0.1;
 #else
-	float ypos =1.0;
+	float ypos = 1.0;
 #endif
 	std::ostringstream os;
 

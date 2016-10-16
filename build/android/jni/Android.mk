@@ -8,6 +8,11 @@ LOCAL_SRC_FILES := deps/irrlicht/source/Irrlicht/Android/obj/local/$(APP_ABI)/li
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := LevelDB
+LOCAL_SRC_FILES := deps/leveldb/out-static/libleveldb.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := curl
 LOCAL_SRC_FILES := deps/curl/lib/.libs/libcurl.a
 include $(PREBUILT_STATIC_LIBRARY)
@@ -65,6 +70,7 @@ LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_ \
 		-DUSE_CURL=1                     \
 		-DUSE_SOUND=1                    \
 		-DUSE_FREETYPE=1                 \
+		-DUSE_LEVELDB=1                  \
 		$(GPROF_DEF)                     \
 		-pipe -fstrict-aliasing
 #		-DUSE_GETTEXT=1
@@ -105,6 +111,7 @@ LOCAL_C_INCLUDES := \
 		deps/openal-soft/include                  \
 		deps/libvorbis-android/jni/include        \
 		deps/sqlite/                              \
+		deps/leveldb/include                      \
 		deps/luajit/src                           \
 #		deps/gnuintl/jni/include                  \
 #		deps/gnuintl/jni/src
@@ -229,6 +236,7 @@ LOCAL_SRC_FILES := \
 		jni/src/util/srp.cpp                      \
 		jni/src/util/timetaker.cpp                \
 		jni/src/touchscreengui.cpp                \
+		jni/src/database-leveldb.cpp              \
 		jni/src/settings.cpp                      \
 		jni/src/wieldmesh.cpp                     \
 		jni/src/client/clientlauncher.cpp         \
@@ -302,7 +310,7 @@ LOCAL_SRC_FILES += \
 # JSONCPP
 LOCAL_SRC_FILES += jni/src/json/jsoncpp.cpp
 
-LOCAL_STATIC_LIBRARIES := Irrlicht freetype curl iconv LuaJIT openal vorbis android_native_app_glue $(PROFILER_LIBS)
+LOCAL_STATIC_LIBRARIES := Irrlicht LevelDB freetype curl iconv LuaJIT openal vorbis android_native_app_glue $(PROFILER_LIBS)
 #LOCAL_SHARED_LIBRARIES := GNUIntl
 
 LOCAL_LDLIBS := -lEGL -lGLESv1_CM -lGLESv2 -landroid -lOpenSLES

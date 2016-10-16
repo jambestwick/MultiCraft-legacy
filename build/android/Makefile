@@ -51,6 +51,14 @@ CROSS_PREFIX = arm-linux-androideabi-
 
 ASSETS_TIMESTAMP = deps/assets_timestamp
 
+LEVELDB_URL = https://github.com/google/leveldb/archive/v$(LEVELDB_VER).zip
+LEVELDB_VER = 1.19
+LEVELDB_DIR = $(ANDR_ROOT)/deps/leveldb
+LEVELDB_LIB = $(LEVELDB_DIR)/out-static/libleveldb.a
+LEVELDB_TIMESTAMP = $(LEVELDB_DIR)/timestamp
+LEVELDB_TIMESTAMP_INT = $(ANDR_ROOT)/deps/leveldb_timestamp
+#LEVELDB_URL_GIT = https://github.com/google/leveldb
+
 #OPENAL_URL = https://github.com/MoNTE48/openal-soft/releases/download/$(OPENAL_VER)/$(OPENAL_VER).zip
 #OPENAL_VER = openal-soft-1.17.2-dev
 OPENAL_FOLDER = $(ANDR_ROOT)/deps/openal-soft
@@ -128,6 +136,7 @@ NDK_MODULE_PATH = $(ANDROID_NDK)/toolchains
 
 
 .PHONY : debug release reconfig delconfig \
+	leveldb_download clean_leveldb leveldb\
 	irrlicht_download clean_irrlicht irrlicht \
 	clean_assets assets sqlite3_download \
 	freetype_download clean_freetype freetype \
@@ -204,7 +213,7 @@ $(OPENAL_LIB): $(OPENAL_TIMESTAMP)
 		REFRESH=1;                                                             \
 	fi;                                                                        \
 	if [ ${OPENAL_TIMESTAMP} -nt ${OPENAL_TIMESTAMP_INT} ] ; then              \
-		REFRESH=1;                                                           \
+		REFRESH=1;                                                             \
 	fi;                                                                        \
 	if [ $$REFRESH -ne 0 ] ; then                                              \
 	echo "changed timestamp for openal detected building...";                  \
@@ -212,7 +221,7 @@ $(OPENAL_LIB): $(OPENAL_TIMESTAMP)
 	${ANDROID_NDK}/ndk-build NDEBUG=${NDEBUG}                                  \
 		NDK_MODULE_PATH=${NDK_MODULE_PATH}                                     \
 		APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                     \
-		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}     \
+		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}                              \
 		TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                \
 		TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                              \
 		TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                 \
@@ -320,6 +329,60 @@ clean_openssl :
 	$(RM) -rf deps/openssl-$(OPENSSL_VERSION).tar.gz;                          \
 	$(RM) -rf deps/openssl
 
+$(LEVELDB_TIMESTAMP) : leveldb_download
+	@LAST_MODIF=$$(find ${LEVELDB_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
+	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
+		touch ${LEVELDB_TIMESTAMP};                                            \
+	fi
+
+leveldb_download :
+	@if [ ! -d ${LEVELDB_DIR} ] ; then                                         \
+		echo "leveldb sources missing, downloading...";                        \
+		mkdir -p ${ANDR_ROOT}/deps;                                            \
+		cd ${ANDR_ROOT}/deps ;                                                 \
+#		git clone ${LEVELDB_URL_GIT} || exit 1;                                \
+		wget ${LEVELDB_URL} || exit 1;                                          \
+		unzip v${LEVELDB_VER}.zip  || exit 1;                      \
+		rm v${LEVELDB_VER}.zip || exit 1;                                        \
+		mv leveldb-${LEVELDB_VER} leveldb || exit 1;                                        \
+	fi
+
+leveldb : $(LEVELDB_LIB)
+
+$(LEVELDB_LIB): $(LEVELDB_TIMESTAMP)
+	@REFRESH=0;                                                                \
+	if [ ! -e ${LEVELDB_TIMESTAMP_INT} ] ; then                                \
+		REFRESH=1;                                                             \
+	fi;                                                                        \
+	if [ ${LEVELDB_TIMESTAMP} -nt ${LEVELDB_TIMESTAMP_INT} ] ; then            \
+		REFRESH=1;                                                             \
+	fi;                                                                        \
+	if [ $$REFRESH -ne 0 ] ; then                                              \
+	echo "changed timestamp for leveldb detected building...";                 \
+	cd deps/leveldb;                                                           \
+	export CROSS_PREFIX=${CROSS_PREFIX};                                       \
+	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-leveldb;                          \
+	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
+	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
+	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
+	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
+	export CC=${CROSS_PREFIX}gcc;                                              \
+	export CXX=${CROSS_PREFIX}g++;                                             \
+	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
+	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                   \
+	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
+	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";      \
+	$(MAKE) || exit 1;                                                      \
+	touch ${LEVELDB_TIMESTAMP};                                                \
+	touch ${LEVELDB_TIMESTAMP_INT};                                            \
+	$(RM) -rf $${TOOLCHAIN};                                                   \
+	else                                                                       \
+		echo "nothing to be done for leveldb";                                 \
+	fi
+
+clean_leveldb :
+	$(RM) -rf deps/leveldb
+
 $(FREETYPE_TIMESTAMP) : freetype_download
 	@LAST_MODIF=$$(find ${FREETYPE_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
 	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
@@ -382,7 +445,7 @@ clean_freetype :
 $(ICONV_TIMESTAMP) : iconv_download
 	@LAST_MODIF=$$(find ${ICONV_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
 	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
-		touch ${ICONV_TIMESTAMP};                                           \
+		touch ${ICONV_TIMESTAMP};                                              \
 	fi
 
 iconv_download :
@@ -738,13 +801,13 @@ clean_assets :
 	@$(RM) -r assets
 
 # $(MPIR_LIB)
-apk: local.properties $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(LUAJIT_LIB)       \
-	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h     \
+apk: local.properties $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_LIB) $(LUAJIT_LIB) \
+	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h      \
 	$(ANDR_ROOT)/jni/src/android_version_githash.h sqlite3_download assets
-	+ @${ANDROID_NDK}/ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}                \
+	+ @${ANDROID_NDK}/ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}                  \
 		GPROF=${GPROF} APP_ABI=${TARGET_ABI}                                   \
 		APP_PLATFORM=${APP_PLATFORM}                                           \
-			NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}     \
+		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}                              \
 		TARGET_LIBDIR=${TARGET_LIBDIR} &&                                      \
 	if [ ! -e ${APP_ROOT}/jniLibs ]; then                                      \
 		ln -s ${ANDR_ROOT}/libs ${APP_ROOT}/jniLibs || exit 1;                 \
@@ -810,7 +873,7 @@ $(ANDR_ROOT)/jni/src/android_version.h : prep_srcdir
 	echo "#define VERSION_MAJOR ${VERSION_MAJOR}";                             \
 	echo "#define VERSION_MINOR ${VERSION_MINOR}";                             \
 	echo "#define VERSION_PATCH ${VERSION_PATCH}";                             \
-	echo "#define VERSION_STRING STR(VERSION_MAJOR) \".\" STR(VERSION_MINOR) \
+	echo "#define VERSION_STRING STR(VERSION_MAJOR) \".\" STR(VERSION_MINOR)   \
 	\".\" STR(VERSION_PATCH)";                                                 \
 	echo "#endif";                                                             \
 	} > $${VERSION_FILE_NEW};                                                  \
