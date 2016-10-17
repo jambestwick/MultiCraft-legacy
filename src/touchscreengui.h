@@ -62,7 +62,7 @@ typedef enum {
 	after_last_element_id
 } touch_gui_button_id;
 
-#define MIN_DIG_TIME_MS 300
+#define MIN_DIG_TIME_MS 500
 #define MAX_TOUCH_COUNT 64
 #define BUTTON_REPEAT_DELAY 0.2f
 

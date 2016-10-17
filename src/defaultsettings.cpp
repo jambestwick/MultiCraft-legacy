@@ -118,7 +118,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("noclip", "false");
 	settings->setDefault("continuous_forward", "false");
 	settings->setDefault("cinematic", "false");
-	settings->setDefault("camera_smoothing", "0.1");
+	settings->setDefault("camera_smoothing", "0");
 	settings->setDefault("cinematic_camera_smoothing", "0.7");
 	settings->setDefault("fast_move", "false");
 	settings->setDefault("invert_mouse", "false");
@@ -361,7 +361,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("gui_scaling_filter_txr2img", "false");
 	settings->setDefault("max_simultaneous_block_sends_per_client", "5");
 	settings->setDefault("abm_interval", "2.0");
-	settings->setDefault("selectionbox_width", "7");
+	settings->setDefault("selectionbox_width", "6");
 	settings->setDefault("cloud_radius", "6");
 	settings->setDefault("client_unload_unused_data_timeout", "120");
 

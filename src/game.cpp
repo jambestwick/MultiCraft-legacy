@@ -2090,7 +2090,7 @@ bool Game::autoMigrateSingleplayerWorld(const std::string map_dir)
 	new_db->beginSave();
 	for (std::vector<v3s16>::const_iterator it = blocks.begin(); it != blocks.end(); ++it) {
 		std::string data;
-		old_db->loadBlock(*it, &data);
+		data = old_db->loadBlock(*it);
 		if (!data.empty())
 			new_db->saveBlock(*it, data);
 		else

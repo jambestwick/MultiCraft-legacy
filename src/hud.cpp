@@ -103,7 +103,7 @@ Hud::Hud(video::IVideoDriver *driver, scene::ISceneManager* smgr,
 	if (mode == "box") {
 		m_use_selection_mesh = false;
 		m_selection_material.Thickness =
-			rangelim(g_settings->getS16("selectionbox_width"), 1, 7);
+			rangelim(g_settings->getS16("selectionbox_width"), 1, 6);
 	} else if (mode == "halo") {
 		m_use_selection_mesh = true;
 		m_selection_material.setTexture(0, tsrc->getTextureForMesh("halo.png"));
@@ -485,10 +485,10 @@ void Hud::drawCrosshair()
 				0, crosshair_argb, true);
 	} else {
 #ifdef __ANDROID__
-		driver->draw2DLine(m_displaycenter - v2s32(40, 0),
-				m_displaycenter + v2s32(40, 0), crosshair_argb);
-		driver->draw2DLine(m_displaycenter - v2s32(0, 40),
-				m_displaycenter + v2s32(0, 40), crosshair_argb);
+		driver->draw2DLine(m_displaycenter - v2s32(35, 0),
+				m_displaycenter + v2s32(35, 0), crosshair_argb);
+		driver->draw2DLine(m_displaycenter - v2s32(0, 35),
+				m_displaycenter + v2s32(0, 35), crosshair_argb);
 #else
 		driver->draw2DLine(m_displaycenter - v2s32(10, 0),
 				m_displaycenter + v2s32(10, 0), crosshair_argb);

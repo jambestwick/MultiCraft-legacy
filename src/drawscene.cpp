@@ -511,9 +511,9 @@ void draw_load_screen(const std::wstring &text, IrrlichtDevice* device,
 		v2s32 barsize(
 				// 342 is (approximately) 256/0.75 to keep bar on same size as
 				// before with default settings
-				342 * porting::getDisplayDensity() *
+				342 * 1.2 * porting::getDisplayDensity() *
 				g_settings->getFloat("gui_scaling"),
-				g_fontengine->getTextHeight() * 2);
+				g_fontengine->getTextHeight() * 3);
 
 		core::rect<s32> barrect(center - barsize / 2, center + barsize / 2);
 		driver->draw2DRectangle(video::SColor(255, 255, 255, 255),barrect, NULL); // border
