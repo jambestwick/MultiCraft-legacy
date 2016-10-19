@@ -1,6 +1,7 @@
 ################################################################################
 
 OS := $(shell uname)
+SHELL := /bin/bash
 
 # compile with GPROF
 # GPROF = 1
@@ -144,7 +145,7 @@ NDK_MODULE_PATH = $(ANDROID_NDK)/toolchains
 .PHONY : debug release reconfig delconfig \
 	leveldb_download clean_leveldb leveldb\
 	irrlicht_download clean_irrlicht irrlicht \
-	clean_assets assets sqlite3_download \
+	clean_assets assets \
 	freetype_download clean_freetype freetype \
 	luajit_download clean_luajit luajit \
 	apk clean_apk \
@@ -293,7 +294,7 @@ $(OPENSSL_TIMESTAMP) : openssl_download
 openssl_download :
 	@if [ ! -d ${OPENSSL_DIR} ] ; then                                         \
 		echo "openssl sources missing, downloading...";                        \
-		mkdir -p ${ANDR_ROOT}/deps;                                             \
+		mkdir -p ${ANDR_ROOT}/deps;                                            \
 		cd ${ANDR_ROOT}/deps;                                                  \
 		wget ${OPENSSL_URL} || exit 1;                                         \
 		tar -xzf openssl-$(OPENSSL_VERSION).tar.gz;                            \
@@ -346,11 +347,11 @@ leveldb_download :
 		echo "leveldb sources missing, downloading...";                        \
 		mkdir -p ${ANDR_ROOT}/deps;                                            \
 		cd ${ANDR_ROOT}/deps ;                                                 \
-#		git clone ${LEVELDB_URL_GIT} || exit 1;                                \
-		wget ${LEVELDB_URL} || exit 1;                                          \
-		unzip v${LEVELDB_VER}.zip  || exit 1;                      \
-		rm v${LEVELDB_VER}.zip || exit 1;                                        \
-		mv leveldb-${LEVELDB_VER} leveldb || exit 1;                                        \
+#		git clone ${LEVELDB_URL_GIT} || exit 1;                                 \
+		wget ${LEVELDB_URL} || exit 1;                                         \
+		unzip v${LEVELDB_VER}.zip  || exit 1;                                  \
+		rm v${LEVELDB_VER}.zip || exit 1;                                      \
+		mv leveldb-${LEVELDB_VER} leveldb || exit 1;                           \
 	fi
 
 leveldb : $(LEVELDB_LIB)
@@ -523,7 +524,7 @@ intl_download :
 		wget ${INTL_URL_HTTP} -O libintl.tar.gz || exit 1;                 \
 		tar -xzf libintl.tar.gz || exit 1;                                 \
 		rm libintl.tar.gz;                                                 \
-		ln -s libintl-lite-master libintl;                                 \
+		mv libintl-lite-master libintl;                                 \
 	fi
 
 intl : $(INTL_LIB)
@@ -543,14 +544,17 @@ $(INTL_LIB) : $(INTL_TIMESTAMP)
 	mkdir -p ${INTL_DIR};                                                      \
 	echo "changed timestamp for intl detected building...";                    \
 	cd ${INTL_DIR};                                                            \
-	\
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-intl;                             \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
 		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                    \
 		--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	cd internal;                                                               \
-	${CROSS_PREFIX}g++ -O3 -c libintl.cpp -o libintl.o || exit 1;              \
+	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
+	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                   \
+	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
+	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
+	${CROSS_PREFIX}g++ -O3 -c libintl.cpp -o libintl.o || exit 1;   \
 	${CROSS_PREFIX}ar rs ../libintl.a libintl.o || exit 1;                     \
 	cd ..;                                                                     \
 	touch ${INTL_TIMESTAMP};                                                   \
@@ -735,29 +739,14 @@ $(MPIR_LIB): $(MPIR_TIMESTAMP)
 clean_mpir:
 	$(RM) -R deps/mpir
 
-sqlite3_download: deps/sqlite/sqlite3.c
-
-deps/sqlite/sqlite3.c :
-	mkdir -p ${ANDR_ROOT}/deps;                                                     \
-	cd ${ANDR_ROOT}/deps;                                                           \
-	rm -R sqlite;                                                              \
-	wget ${SQLITE3_URL};                                                       \
-	unzip sqlite-amalgamation-$(SQLITE3_VERSION).zip || exit 1;                \
-	rm sqlite-amalgamation-$(SQLITE3_VERSION).zip;                             \
-	mv sqlite-amalgamation-$(SQLITE3_VERSION) sqlite;                          \
-fi
-
-clean_sqlite3:
-	$(RM) -R sqlite
-
 $(ASSETS_TIMESTAMP) : $(IRRLICHT_LIB)
 	@mkdir -p ${ANDR_ROOT}/deps;                                                \
 	for DIRNAME in {builtin,client,doc,fonts,games,po,textures}; do        \
 		LAST_MODIF=$$(find ${PROJ_ROOT}/$$DIRNAME -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
 		if [ $$(basename $$LAST_MODIF) != "timestamp" ]; then               \
-			touch ${PROJ_ROOT}/$$DIRNAME/timestamp;                    \
-			touch ${ASSETS_TIMESTAMP};                                  \
-			echo $$DIRNAME changed $$LAST_MODIF;                       \
+			touch ${PROJ_ROOT}/$$DIRNAME/timestamp;                      \
+			touch ${ASSETS_TIMESTAMP};                                   \
+			echo $$DIRNAME changed $$LAST_MODIF;                         \
 		fi;                                                                 \
 	done;                                                                       \
 	LAST_MODIF=$$(find ${IRRLICHT_DIR}/media -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
@@ -829,7 +818,7 @@ assets : $(ASSETS_TIMESTAMP)
 	if [ ! -e ${ASSETS_TIMESTAMP}.old ] ; then                                 \
 		REFRESH=1;                                                             \
 	fi;                                                                        \
-	if [ ${ASSETS_TIMESTAMP} -nt ${ASSETS_TIMESTAMP}.old ] ; then          \
+	if [ ${ASSETS_TIMESTAMP} -nt ${ASSETS_TIMESTAMP}.old ] ; then              \
 		REFRESH=1;                                                             \
 	fi;                                                                        \
 	if [ ! -e ${APP_ROOT}/assets ] ; then                                      \
@@ -887,8 +876,15 @@ clean_assets :
 # $(MPIR_LIB)
 apk: local.properties $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_LIB) $(LUAJIT_LIB) \
 	$(OPENAL_LIB) $(VORBIS_LIB) $(INTL_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h      \
-	$(ANDR_ROOT)/jni/src/android_version_githash.h sqlite3_download assets
-	+ @${ANDROID_NDK}/ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}                  \
+	$(ANDR_ROOT)/jni/src/android_version_githash.h assets
+	+@cd ${ANDR_ROOT}/deps;                                                     \
+	rm -R sqlite;                                                              \
+	wget ${SQLITE3_URL};                                                       \
+	unzip sqlite-amalgamation-$(SQLITE3_VERSION).zip || exit 1;                \
+	rm sqlite-amalgamation-$(SQLITE3_VERSION).zip;                             \
+	mv sqlite-amalgamation-$(SQLITE3_VERSION) sqlite;                          \
+	cd ..;                                                                     \
+	${ANDROID_NDK}/ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}                \
 		GPROF=${GPROF} APP_ABI=${TARGET_ABI}                                   \
 		APP_PLATFORM=${APP_PLATFORM}                                           \
 		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}                              \
@@ -898,7 +894,7 @@ apk: local.properties $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_LIB) $(
 	fi;                                                                        \
 	export VERSION_STR="${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" && \
 	export BUILD_TYPE_C=$$(echo "$${BUILD_TYPE}" | sed 's/./\U&/') &&          \
-	gradle assemble$$BUILD_TYPE_C &&                                           \
+#	gradle assemble$$BUILD_TYPE_C &&                                           \
 	echo "APK stored at: build/outputs/apk/MultiCraft-$$BUILD_TYPE.apk" &&     \
 	echo "You can install it with \`make install_$$BUILD_TYPE\`"
 
@@ -916,7 +912,7 @@ prep_srcdir :
 	fi
 
 clean_apk :
-	gradle clean
+#	gradle clean
 
 clean_all :
 	@$(MAKE) clean_apk;                                                        \

@@ -1171,21 +1171,21 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 
 	os << FORMSPEC_VERSION_STRING  << SIZE_TAG
 		<< "bgcolor[#00000060;true]"
-		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_continue;"
+		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_continue;"
 		<< strgettext("Continue") << "]";
 #ifndef __ANDROID__
 	if (!singleplayermode) {
-		os << "button_exit[4," << (ypos++) << ";3,0.5;btn_change_password;"
+		os << "button_exit[3.5," << (ypos++) << ";4,0.5;btn_change_password;"
 		   << strgettext("Change Password") << "]";
 	}
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_sound;"
+	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_sound;"
 			<< strgettext("Sound Volume") << "]";
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_key_config;"
+	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_key_config;"
 			<< strgettext("Change Keys")  << "]";
 #endif
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_menu;"
+	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_exit_menu;"
 			<< strgettext("Save and Exit") << "]";
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_os;"
+	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_exit_os;"
 			<< strgettext("Close game")   << "]"
 			<< "\n;]";
 
