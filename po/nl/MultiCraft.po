@@ -6,11 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: minetest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-05 16:13+0200\n"
+"POT-Creation-Date: 2016-10-19 05:00+0300\n"
 "PO-Revision-Date: 2016-05-07 00:58+0000\n"
 "Last-Translator: Auke Kok <sofar+github@foo-projects.org>\n"
-"Language-Team: Dutch "
-"<https://hosted.weblate.org/projects/minetest/minetest/nl/>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/minetest/minetest/"
+"nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -74,8 +74,7 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "Wij ondersteunen protocol versies $1 tot en met $2."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -146,14 +145,6 @@ msgstr "Download een sub-spel, zoals minetest_game, van minetest.net"
 msgid "Download one from minetest.net"
 msgstr "Download er een van minetest.net"
 
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Spel"
-
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Wereldgenerator"
-
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Geen wereldnaam opgegeven of geen spel geselecteerd"
@@ -180,9 +171,8 @@ msgstr "Er zijn geen spellen geïnstalleerd."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "Weet je zeker dat je mod \"$1\" wilt verwijderen?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
-#: src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Delete"
 msgstr "Verwijderen"
 
@@ -197,6 +187,14 @@ msgstr "Modbeheer: onjuist pad \"$1\""
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "Verwijder wereld \"$1\"?"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Nee"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Ja"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -244,8 +242,8 @@ msgid ""
 "Format: <offset>, <scale>, (<spreadX>, <spreadY>, <spreadZ>), <seed>, "
 "<octaves>, <persistence>"
 msgstr ""
-"Formaat: <basiswaarde>, <schaal>, (<X-spreiding>, <Y-spreiding>, "
-"<Z-spreiding>), <kiemgetal>, <octaven>, <persistentie>"
+"Formaat: <basiswaarde>, <schaal>, (<X-spreiding>, <Y-spreiding>, <Z-"
+"spreiding>), <kiemgetal>, <octaven>, <persistentie>"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Games"
@@ -368,12 +366,22 @@ msgid "Active Contributors"
 msgstr "Andere actieve ontwikkelaars"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Core Developers"
+msgid "Credits"
+msgstr "Credits"
+
+#: builtin/mainmenu/tab_credits.lua
+msgid "Dedication of the current release"
+msgstr ""
+
+#: builtin/mainmenu/tab_credits.lua
+#, fuzzy
+msgid "Minetest Developers"
 msgstr "Hoofdontwikkelaars"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Credits"
-msgstr "Credits"
+#, fuzzy
+msgid "MultiCraft Developers"
+msgstr "Hoofdontwikkelaars"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -415,35 +423,35 @@ msgstr "Geselecteerde modverzameling deïnstalleren"
 msgid "Address / Port"
 msgstr "Server adres / Poort"
 
-#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Cliënt"
-
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Connect"
 msgstr "Verbinden"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Creative mode"
 msgstr "Creatieve modus"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Damage enabled"
 msgstr "Verwondingen aangeschakeld"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Del. Favorite"
 msgstr "Verwijder Favoriete"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Favorite"
 msgstr "Favorieten"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
+msgid "Multi Player"
+msgstr ""
+
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Name / Password"
 msgstr "Naam / Wachtwoord"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "PvP enabled"
 msgstr "Spelergevechten aangeschakeld"
 
@@ -451,19 +459,19 @@ msgstr "Spelergevechten aangeschakeld"
 msgid "Bind Address"
 msgstr "Lokaal server-adres"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Configure"
 msgstr "Instellingen"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Creatieve modus"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Create Server"
+msgstr "Bezig server te maken..."
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Enable Damage"
-msgstr "Verwondingen inschakelen"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Creative Inventory"
+msgstr "inventaris"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -485,13 +493,9 @@ msgstr "Poort"
 msgid "Public"
 msgstr "Publiek"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Select World:"
 msgstr "Selecteer Wereld:"
-
-#: builtin/mainmenu/tab_server.lua
-msgid "Server"
-msgstr "Server"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -500,6 +504,11 @@ msgstr "Serverpoort"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Start spel"
+
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Survival Mode"
+msgstr "Creatieve modus"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -558,10 +567,6 @@ msgid "Mipmap + Aniso. Filter"
 msgstr "Mipmap + Anisotropisch filteren"
 
 #: builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Nee"
-
-#: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
 msgstr "Geen Filter"
 
@@ -600,6 +605,10 @@ msgstr "Parallax occlusie"
 #: builtin/mainmenu/tab_settings.lua
 msgid "Particles"
 msgstr "Effectdeeltjes"
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "Reset singleplayer world"
+msgstr "Reset Singleplayer wereld"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
@@ -649,28 +658,17 @@ msgstr "Bewegende planten"
 msgid "Waving Water"
 msgstr "Golvend water"
 
-#: builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Ja"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Config mods"
-msgstr "Mods configureren"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Main"
-msgstr "Hoofdmenu"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Start Singleplayer"
-msgstr "Start Singleplayer"
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Creatieve modus"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Spelen"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-msgid "Singleplayer"
+#, fuzzy
+msgid "Single Player"
 msgstr "Singleplayer"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -758,6 +756,11 @@ msgid "Change Password"
 msgstr "Verander wachtwoord"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Close game"
+msgstr "Sluiten spel"
+
+#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "Verbinding met de server wordt gemaakt..."
 
@@ -772,68 +775,6 @@ msgstr "Bezig cliënt te maken..."
 #: src/game.cpp
 msgid "Creating server..."
 msgstr "Bezig server te maken..."
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"- WASD: move\n"
-"- Space: jump/climb\n"
-"- Shift: sneak/go down\n"
-"- Q: drop item\n"
-"- I: inventory\n"
-"- Mouse: turn/look\n"
-"- Mouse left: dig/punch\n"
-"- Mouse right: place/use\n"
-"- Mouse wheel: select item\n"
-"- T: chat\n"
-msgstr ""
-"Standaard toetsen:\n"
-"- W,A,S,D: bewegen\n"
-"- Spatie: spring/klim\n"
-"- Shift: kruip/duik\n"
-"- Q: weggooien\n"
-"- I: rugzak\n"
-"- Muis: draaien/kijken\n"
-"- L-muisknop: graaf/sla\n"
-"- R-muisknop: plaats/gebruik\n"
-"- Muiswiel: selecteer vak\n"
-"- T: chatten\n"
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"No menu visible:\n"
-"- single tap: button activate\n"
-"- double tap: place/use\n"
-"- slide finger: look around\n"
-"Menu/Inventory visible:\n"
-"- double tap (outside):\n"
-" -->close\n"
-"- touch stack, touch slot:\n"
-" --> move stack\n"
-"- touch&drag, tap 2nd finger\n"
-" --> place single item to slot\n"
-msgstr ""
-"Standaardbesturing:\n"
-"Geen menu getoond:\n"
-"- enkele tik: activeren\n"
-"- dubbele tik: plaats / gebruik\n"
-"- vinger schuiven: rondkijken\n"
-"Menu of inventaris getoond:\n"
-"- dubbele tik buiten menu:\n"
-" --> sluiten\n"
-"- aanraken stapel of vak:\n"
-" --> stapel verplaatsen\n"
-"- aanraken & slepen, tik met tweede vinger\n"
-"  --> plaats enkel object in vak\n"
-
-#: src/game.cpp
-msgid "Exit to Menu"
-msgstr "Terug naar menu"
-
-#: src/game.cpp
-msgid "Exit to OS"
-msgstr "Afsluiten"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -852,6 +793,11 @@ msgid "MiB/s"
 msgstr "MiB/s"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Migrating world..."
+msgstr "Bezig cliënt te maken..."
+
+#: src/game.cpp
 msgid "Node definitions..."
 msgstr "Node definities..."
 
@@ -862,6 +808,10 @@ msgstr "Server-adres opzoeken..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Respawn"
+
+#: src/game.cpp
+msgid "Save and Exit"
+msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -932,7 +882,9 @@ msgid "Key already in use"
 msgstr "Toets is al in gebruik"
 
 #: src/guiKeyChangeMenu.cpp
-msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
+#, fuzzy
+msgid ""
+"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
 msgstr ""
 "Sneltoetsen. (Als dit menu stuk gaat, verwijder dan instellingen uit "
 "minetest.conf)"
@@ -1577,6 +1529,10 @@ msgid "Clean transparent textures"
 msgstr "Schoonmaken Transparante texturen"
 
 #: src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Cliënt"
+
+#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr "Cliënt en server"
 
@@ -2165,6 +2121,10 @@ msgstr "GUI schalingsfilter"
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr "GUI schalingsfilter: txr2img"
+
+#: src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Spel"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -3010,6 +2970,10 @@ msgstr "Max aantal wereldblokken"
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr "Wereldblok vergeet-tijd"
+
+#: src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Wereldgenerator"
 
 #: src/settings_translation_file.cpp
 msgid "Mapgen Valleys"
@@ -4509,209 +4473,134 @@ msgstr "Maximaal parallellisme in cURL"
 msgid "cURL timeout"
 msgstr "cURL timeout"
 
-#~ msgid "Item textures..."
-#~ msgstr "Voorwerp-texturen..."
+#~ msgid "No of course not!"
+#~ msgstr "Nee, natuurlijk niet!"
 
+#~ msgid "Public Serverlist"
+#~ msgstr "Publieke Serverlijst"
+
+#~ msgid "No!!!"
+#~ msgstr "Nee!!!"
+
+#, fuzzy
 #~ msgid ""
-#~ "Enable a bit lower water surface, so it doesn't \"fill\" the node "
-#~ "completely.\n"
-#~ "Note that this is not quite optimized and that smooth lighting on the\n"
-#~ "water surface doesn't work with this."
+#~ "Map generation attributes specific to Mapgen Valleys.\n"
+#~ "Flags that are not specified in the flag string are not modified from the "
+#~ "default.\n"
+#~ "Flags starting with \"no\" are used to explicitly disable them.\n"
+#~ "\"altitude_chill\" makes higher elevations colder, which may cause biome "
+#~ "issues.\n"
+#~ "\"humid_rivers\" modifies the humidity around rivers and in areas where "
+#~ "water would tend to pool. It may interfere with delicately adjusted "
+#~ "biomes."
 #~ msgstr ""
-#~ "Maak de wateroppervlakte iets lager, zodat het niet de hele node vult.\n"
-#~ "Dit is niet echt geoptimaliseerd, en vloeiende belichting van de\n"
-#~ "wateroppervlakte werkt niet als dit is aangeschakeld."
-
-#~ msgid "Enable selection highlighting for nodes (disables selectionbox)."
-#~ msgstr "Laat geselecteerde nodes oplichten (schakelt selectie-randen uit)."
-
-#~ msgid ""
-#~ "Julia set: (X,Y,Z) offsets from world centre.\n"
-#~ "Range roughly -2 to 2, multiply by j_scale for offsets in nodes."
-#~ msgstr ""
-#~ "Juliaverzameling: (X,Y,X) afstanden van wereld-centrum.\n"
-#~ "Bereik is ongeveer -2 tot 2. Vermenigvuldig met j_scale voor de afstand "
-#~ "in nodes."
+#~ "Algemene wereldgenerator instellingen.\n"
+#~ "Vlaggen die niet in de lijst van vlaggen staan, behouden hun standaard-"
+#~ "waarde.\n"
+#~ "Zet \"no\" voor een vlag om hem expliciet uit te zetten.\n"
+#~ "'trees' en 'flat' zijn enkel van toepassing in mgv6."
 
 #~ msgid ""
-#~ "Julia set: W value determining the 4D shape.\n"
-#~ "Range roughly -2 to 2."
-#~ msgstr ""
-#~ "Juliaverzameling: W-waarde van de 4D vorm.\n"
-#~ "Bereik is ongeveer -2 tot 2."
-
-#~ msgid ""
-#~ "Key for decreasing the viewing range. Modifies the minimum viewing "
-#~ "range.\n"
-#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
-#~ msgstr ""
-#~ "Toets voor het verkleinen van de zichtafstand. Dit verandert de minimale "
-#~ "zichtafstand.\n"
-#~ "Zie http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
-
-#~ msgid ""
-#~ "Key for increasing the viewing range. Modifies the minimum viewing "
-#~ "range.\n"
-#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
-#~ msgstr ""
-#~ "Toets voor het vergroten van de zichtafstand. Dit verandert de minimale "
-#~ "zichtafstand.\n"
-#~ "Zie http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
-
-#~ msgid ""
-#~ "Mandelbrot set: (X,Y,Z) offsets from world centre.\n"
-#~ "Range roughly -2 to 2, multiply by m_scale for offsets in nodes."
-#~ msgstr ""
-#~ "Mandelbrot verzameling: (X,Y,Z) afstanden vanaf wereld-centrum.\n"
-#~ " Bereik is ongeveer -2 tot 2. Vermenigvuldig met m_scale voor de afstand "
-#~ "in nodes."
-
-#~ msgid "Mandelbrot set: Approximate (X,Y,Z) scales in nodes."
-#~ msgstr "Mandelbrot verzameling: (X,Y,Z) schaal, in nodes (bij benadering)."
-
-#~ msgid ""
-#~ "Mandelbrot set: Iterations of the recursive function.\n"
-#~ "Controls scale of finest detail."
-#~ msgstr ""
-#~ "Mandelbrot verzameling: Aantal iteraties van de recursieve functie.\n"
-#~ "Bepaalt de schaal van de kleinste details."
-
-#~ msgid ""
-#~ "Map generation attributes specific to Mapgen fractal.\n"
-#~ "'julia' selects a julia set to be generated instead of a mandelbrot set.\n"
+#~ "Map generation attributes specific to Mapgen v7.\n"
+#~ "'ridges' are the rivers.\n"
 #~ "Flags that are not specified in the flag string are not modified from the "
 #~ "default.\n"
 #~ "Flags starting with \"no\" are used to explicitly disable them."
 #~ msgstr ""
-#~ "Wereldgeneratie instellingen voor de fractal generator.\n"
-#~ "'julia' selecterd een julia-verzameling in plaats van een mandebrot-"
-#~ "verzameling.\n"
+#~ "Wereldgenerator instellingen specified voor generator v7.\n"
+#~ "\"ridges\" zijn rivieren.\n"
 #~ "Vlaggen die niet in de lijst van vlaggen staan, behouden hun standaard-"
 #~ "waarde.\n"
 #~ "Zet \"no\" voor een vlag om hem expliciet uit te zetten."
 
-#~ msgid "Mapgen fractal mandelbrot iterations"
-#~ msgstr "Fractal wereldgenerator mandelbrot iteraties"
-
-#~ msgid "Mapgen fractal mandelbrot offset"
-#~ msgstr "Fractal wereldgenerator mandelbrot centrum-afstand"
-
-#~ msgid "Mapgen fractal mandelbrot scale"
-#~ msgstr "Fractal wereldgenerator mandelbrot schaal"
-
-#~ msgid "Mapgen fractal mandelbrot slice w"
-#~ msgstr "Fractal wereldgenerator mandelbrot w-doorsnede"
-
-#~ msgid ""
-#~ "Maximum distance above water level for player spawn.\n"
-#~ "Larger values result in spawn points closer to (x = 0, z = 0).\n"
-#~ "Smaller values may result in a suitable spawn point not being found,\n"
-#~ "resulting in a spawn at (0, 0, 0) possibly buried underground."
-#~ msgstr ""
-#~ "Maximum hoogte boven waterniveau waar een speler geboren wordt.\n"
-#~ "Bij hogere waarden zullen de plaatsen dichter bij (x = 0, z = 0) liggen.\n"
-#~ "Bij lagere waarden kan het zijn dat een geschikte plek niet gevonden "
-#~ "wordt,\n"
-#~ "in dat geval wordt de speler geboren op (0, 0, 0), mogelijk onder de "
-#~ "grond."
-
-#~ msgid ""
-#~ "Minimum wanted FPS.\n"
-#~ "The amount of rendered stuff is dynamically set according to this. and "
-#~ "viewing range min and max."
-#~ msgstr ""
-#~ "Minimaal gewenste FPS.\n"
-#~ "De hoeveelheid gerenderd materiaal wordt aangepast afhankelijk van deze "
-#~ "waarde, en van de min en max zichtafstanden."
-
-#~ msgid "New style water"
-#~ msgstr "Nieuw water"
-
-#~ msgid ""
-#~ "Pre-generate all item visuals used in the inventory.\n"
-#~ "This increases startup time, but runs smoother in-game.\n"
-#~ "The generated textures can easily exceed your VRAM, causing artifacts in "
-#~ "the inventory."
-#~ msgstr ""
-#~ "Genereer beelden van objecten in de rugzak vooraf.\n"
-#~ "De start-tijd wordt hierdoor langer, maar het spel wordt vloeiender.\n"
-#~ "Dit kost veel geheugen op de videokaart. Als die onvoldoende geheugen "
-#~ "heeft kan dit resulteren in vreemde effecten."
-
-#~ msgid "Preload inventory textures"
-#~ msgstr "Laad rugzak-texturen vooraf"
-
-#~ msgid "Vertical initial window size."
-#~ msgstr "Aanvangshoogte van het window."
-
-#~ msgid "Vertical spawn range"
-#~ msgstr "Vertikaal geboortegebied"
-
-#~ msgid "Viewing range minimum"
-#~ msgstr "Minimale zichtafstand"
-
-#~ msgid "Wanted FPS"
-#~ msgstr "Gewenste FPS"
-
-#~ msgid "Reset singleplayer world"
-#~ msgstr "Reset Singleplayer wereld"
-
-#~ msgid "Scaling factor applied to menu elements: "
-#~ msgstr "Schaal-factor toegepast op menu elementen: "
+#, fuzzy
+#~ msgid "If disabled "
+#~ msgstr "MP uitschakelen"
 
 #, fuzzy
-#~ msgid "Downloading"
-#~ msgstr "Downloaden"
+#~ msgid "If enabled, "
+#~ msgstr "ingeschakeld"
 
-#~ msgid "Left click: Move all items, Right click: Move single item"
+#~ msgid "Rendering:"
+#~ msgstr "Rendering:"
+
+#~ msgid "Restart minetest for driver change to take effect"
+#~ msgstr "Herstart minetest om de driver te activeren"
+
+#~ msgid "Game Name"
+#~ msgstr "Spel"
+
+#~ msgid "Gamemgr: Unable to copy mod \"$1\" to game \"$2\""
+#~ msgstr "Gamemgr: Kan mod \"$1\" niet naar spel \"$2\" kopiëren"
+
+#~ msgid "GAMES"
+#~ msgstr "SPELLEN"
+
+#~ msgid "Mods:"
+#~ msgstr "Mods:"
+
+#~ msgid "new game"
+#~ msgstr "nieuw spel"
+
+#~ msgid "EDIT GAME"
+#~ msgstr "SPEL AANPASSEN"
+
+#~ msgid "Remove selected mod"
+#~ msgstr "Geselecteerde mod verwijderen"
+
+#~ msgid "<<-- Add mod"
+#~ msgstr "<<-- Mod toevoegen"
+
+#~ msgid "CLIENT"
+#~ msgstr "CLIENT"
+
+#~ msgid "START SERVER"
+#~ msgstr "START SERVER"
+
+#~ msgid "Name"
+#~ msgstr "Naam"
+
+#~ msgid "Password"
+#~ msgstr "Wachtwoord"
+
+#~ msgid "SETTINGS"
+#~ msgstr "INSTELLINGEN"
+
+#~ msgid "Preload item visuals"
+#~ msgstr "Voorwerpen vooraf laden"
+
+#~ msgid "Finite Liquid"
+#~ msgstr "Eindige vloeistoffen"
+
+#~ msgid "SINGLE PLAYER"
+#~ msgstr "SINGLEPLAYER"
+
+#~ msgid "TEXTURE PACKS"
+#~ msgstr "TEXTUREN"
+
+#~ msgid "MODS"
+#~ msgstr "MODS"
+
+#~ msgid "Add mod:"
+#~ msgstr "Mod toevoegen:"
+
+#~ msgid "Local install"
+#~ msgstr "Plaatselijk installeren"
+
+#~ msgid ""
+#~ "Warning: Some mods are not configured yet.\n"
+#~ "They will be enabled by default when you save the configuration.  "
 #~ msgstr ""
-#~ "Linkermuisknop: Verplaats alle items. Rechtermuisknop: Verplaats één item"
+#~ "Let op: Nog niet alle mods zijn geconfigueerd. \n"
+#~ "De mods zullen automatisch worden ingeschakeld als je de configuratie "
+#~ "bewaard. "
 
-#~ msgid "is required by:"
-#~ msgstr "is benodigd voor:"
-
-#~ msgid "Configuration saved.  "
-#~ msgstr "Instellingen bewaard. "
-
-#~ msgid "Warning: Configuration not consistent.  "
-#~ msgstr "Waarschuwing: Instellingen niet consistent. "
-
-#~ msgid "Cannot create world: Name contains invalid characters"
-#~ msgstr "Kan geen nieuwe wereld aanmaken: de naam bevat onjuiste tekens"
-
-#~ msgid "Show Public"
-#~ msgstr "Publieke server"
-
-#~ msgid "Show Favorites"
-#~ msgstr "Favourieten"
-
-#~ msgid "Leave address blank to start a local server."
-#~ msgstr "Laat het adres leeg om een lokale server te starten."
-
-#~ msgid "Create world"
-#~ msgstr "Maak wereld aan"
-
-#~ msgid "Address required."
-#~ msgstr "IP-adres nodig."
-
-#~ msgid "Cannot delete world: Nothing selected"
-#~ msgstr "Kan niets verwijderen: Geen wereld geselecteerd"
-
-#~ msgid "Files to be deleted"
-#~ msgstr "Deze bestanden worden verwijderd"
-
-#~ msgid "Cannot create world: No games found"
-#~ msgstr "Kan geen wereld aanmaken: Geen games gevonden"
-
-#~ msgid "Cannot configure world: Nothing selected"
-#~ msgstr "Kan instellingen niet aanpassen: Niets geselecteerd"
-
-#~ msgid "Failed to delete all world files"
-#~ msgstr "Niet alle bestanden zijn verwijderd"
+#~ msgid ""
+#~ "Warning: Some configured mods are missing.\n"
+#~ "Their setting will be removed when you save the configuration.  "
+#~ msgstr ""
+#~ "LEt op: Sommige ingestelde mods zijn vermist.\n"
+#~ "Hun instellingen worden verwijderd als je de configuratie opslaat. "
 
 #~ msgid ""
 #~ "Default Controls:\n"
@@ -4738,131 +4627,276 @@ msgstr "cURL timeout"
 #~ "- ESC: Menu\n"
 #~ "- T: Chat\n"
 
-#~ msgid ""
-#~ "Warning: Some configured mods are missing.\n"
-#~ "Their setting will be removed when you save the configuration.  "
+#~ msgid "Failed to delete all world files"
+#~ msgstr "Niet alle bestanden zijn verwijderd"
+
+#~ msgid "Cannot configure world: Nothing selected"
+#~ msgstr "Kan instellingen niet aanpassen: Niets geselecteerd"
+
+#~ msgid "Cannot create world: No games found"
+#~ msgstr "Kan geen wereld aanmaken: Geen games gevonden"
+
+#~ msgid "Files to be deleted"
+#~ msgstr "Deze bestanden worden verwijderd"
+
+#~ msgid "Cannot delete world: Nothing selected"
+#~ msgstr "Kan niets verwijderen: Geen wereld geselecteerd"
+
+#~ msgid "Address required."
+#~ msgstr "IP-adres nodig."
+
+#~ msgid "Create world"
+#~ msgstr "Maak wereld aan"
+
+#~ msgid "Leave address blank to start a local server."
+#~ msgstr "Laat het adres leeg om een lokale server te starten."
+
+#~ msgid "Show Favorites"
+#~ msgstr "Favourieten"
+
+#~ msgid "Show Public"
+#~ msgstr "Publieke server"
+
+#~ msgid "Cannot create world: Name contains invalid characters"
+#~ msgstr "Kan geen nieuwe wereld aanmaken: de naam bevat onjuiste tekens"
+
+#~ msgid "Warning: Configuration not consistent.  "
+#~ msgstr "Waarschuwing: Instellingen niet consistent. "
+
+#~ msgid "Configuration saved.  "
+#~ msgstr "Instellingen bewaard. "
+
+#~ msgid "is required by:"
+#~ msgstr "is benodigd voor:"
+
+#~ msgid "Left click: Move all items, Right click: Move single item"
 #~ msgstr ""
-#~ "LEt op: Sommige ingestelde mods zijn vermist.\n"
-#~ "Hun instellingen worden verwijderd als je de configuratie opslaat. "
-
-#~ msgid ""
-#~ "Warning: Some mods are not configured yet.\n"
-#~ "They will be enabled by default when you save the configuration.  "
-#~ msgstr ""
-#~ "Let op: Nog niet alle mods zijn geconfigueerd. \n"
-#~ "De mods zullen automatisch worden ingeschakeld als je de configuratie "
-#~ "bewaard. "
-
-#~ msgid "Local install"
-#~ msgstr "Plaatselijk installeren"
-
-#~ msgid "Add mod:"
-#~ msgstr "Mod toevoegen:"
-
-#~ msgid "MODS"
-#~ msgstr "MODS"
-
-#~ msgid "TEXTURE PACKS"
-#~ msgstr "TEXTUREN"
-
-#~ msgid "SINGLE PLAYER"
-#~ msgstr "SINGLEPLAYER"
-
-#~ msgid "Finite Liquid"
-#~ msgstr "Eindige vloeistoffen"
-
-#~ msgid "Preload item visuals"
-#~ msgstr "Voorwerpen vooraf laden"
-
-#~ msgid "SETTINGS"
-#~ msgstr "INSTELLINGEN"
-
-#~ msgid "Password"
-#~ msgstr "Wachtwoord"
-
-#~ msgid "Name"
-#~ msgstr "Naam"
-
-#~ msgid "START SERVER"
-#~ msgstr "START SERVER"
-
-#~ msgid "CLIENT"
-#~ msgstr "CLIENT"
-
-#~ msgid "<<-- Add mod"
-#~ msgstr "<<-- Mod toevoegen"
-
-#~ msgid "Remove selected mod"
-#~ msgstr "Geselecteerde mod verwijderen"
-
-#~ msgid "EDIT GAME"
-#~ msgstr "SPEL AANPASSEN"
-
-#~ msgid "new game"
-#~ msgstr "nieuw spel"
-
-#~ msgid "Mods:"
-#~ msgstr "Mods:"
-
-#~ msgid "GAMES"
-#~ msgstr "SPELLEN"
-
-#~ msgid "Gamemgr: Unable to copy mod \"$1\" to game \"$2\""
-#~ msgstr "Gamemgr: Kan mod \"$1\" niet naar spel \"$2\" kopiëren"
-
-#~ msgid "Game Name"
-#~ msgstr "Spel"
-
-#~ msgid "Restart minetest for driver change to take effect"
-#~ msgstr "Herstart minetest om de driver te activeren"
-
-#~ msgid "Rendering:"
-#~ msgstr "Rendering:"
+#~ "Linkermuisknop: Verplaats alle items. Rechtermuisknop: Verplaats één item"
 
 #, fuzzy
-#~ msgid "If enabled, "
-#~ msgstr "ingeschakeld"
+#~ msgid "Downloading"
+#~ msgstr "Downloaden"
 
-#, fuzzy
-#~ msgid "If disabled "
-#~ msgstr "MP uitschakelen"
+#~ msgid "Scaling factor applied to menu elements: "
+#~ msgstr "Schaal-factor toegepast op menu elementen: "
+
+#~ msgid "Wanted FPS"
+#~ msgstr "Gewenste FPS"
+
+#~ msgid "Viewing range minimum"
+#~ msgstr "Minimale zichtafstand"
+
+#~ msgid "Vertical spawn range"
+#~ msgstr "Vertikaal geboortegebied"
+
+#~ msgid "Vertical initial window size."
+#~ msgstr "Aanvangshoogte van het window."
+
+#~ msgid "Preload inventory textures"
+#~ msgstr "Laad rugzak-texturen vooraf"
 
 #~ msgid ""
-#~ "Map generation attributes specific to Mapgen v7.\n"
-#~ "'ridges' are the rivers.\n"
+#~ "Pre-generate all item visuals used in the inventory.\n"
+#~ "This increases startup time, but runs smoother in-game.\n"
+#~ "The generated textures can easily exceed your VRAM, causing artifacts in "
+#~ "the inventory."
+#~ msgstr ""
+#~ "Genereer beelden van objecten in de rugzak vooraf.\n"
+#~ "De start-tijd wordt hierdoor langer, maar het spel wordt vloeiender.\n"
+#~ "Dit kost veel geheugen op de videokaart. Als die onvoldoende geheugen "
+#~ "heeft kan dit resulteren in vreemde effecten."
+
+#~ msgid "New style water"
+#~ msgstr "Nieuw water"
+
+#~ msgid ""
+#~ "Minimum wanted FPS.\n"
+#~ "The amount of rendered stuff is dynamically set according to this. and "
+#~ "viewing range min and max."
+#~ msgstr ""
+#~ "Minimaal gewenste FPS.\n"
+#~ "De hoeveelheid gerenderd materiaal wordt aangepast afhankelijk van deze "
+#~ "waarde, en van de min en max zichtafstanden."
+
+#~ msgid ""
+#~ "Maximum distance above water level for player spawn.\n"
+#~ "Larger values result in spawn points closer to (x = 0, z = 0).\n"
+#~ "Smaller values may result in a suitable spawn point not being found,\n"
+#~ "resulting in a spawn at (0, 0, 0) possibly buried underground."
+#~ msgstr ""
+#~ "Maximum hoogte boven waterniveau waar een speler geboren wordt.\n"
+#~ "Bij hogere waarden zullen de plaatsen dichter bij (x = 0, z = 0) liggen.\n"
+#~ "Bij lagere waarden kan het zijn dat een geschikte plek niet gevonden "
+#~ "wordt,\n"
+#~ "in dat geval wordt de speler geboren op (0, 0, 0), mogelijk onder de "
+#~ "grond."
+
+#~ msgid "Mapgen fractal mandelbrot slice w"
+#~ msgstr "Fractal wereldgenerator mandelbrot w-doorsnede"
+
+#~ msgid "Mapgen fractal mandelbrot scale"
+#~ msgstr "Fractal wereldgenerator mandelbrot schaal"
+
+#~ msgid "Mapgen fractal mandelbrot offset"
+#~ msgstr "Fractal wereldgenerator mandelbrot centrum-afstand"
+
+#~ msgid "Mapgen fractal mandelbrot iterations"
+#~ msgstr "Fractal wereldgenerator mandelbrot iteraties"
+
+#~ msgid ""
+#~ "Map generation attributes specific to Mapgen fractal.\n"
+#~ "'julia' selects a julia set to be generated instead of a mandelbrot set.\n"
 #~ "Flags that are not specified in the flag string are not modified from the "
 #~ "default.\n"
 #~ "Flags starting with \"no\" are used to explicitly disable them."
 #~ msgstr ""
-#~ "Wereldgenerator instellingen specified voor generator v7.\n"
-#~ "\"ridges\" zijn rivieren.\n"
+#~ "Wereldgeneratie instellingen voor de fractal generator.\n"
+#~ "'julia' selecterd een julia-verzameling in plaats van een mandebrot-"
+#~ "verzameling.\n"
 #~ "Vlaggen die niet in de lijst van vlaggen staan, behouden hun standaard-"
 #~ "waarde.\n"
 #~ "Zet \"no\" voor een vlag om hem expliciet uit te zetten."
 
-#, fuzzy
 #~ msgid ""
-#~ "Map generation attributes specific to Mapgen Valleys.\n"
-#~ "Flags that are not specified in the flag string are not modified from the "
-#~ "default.\n"
-#~ "Flags starting with \"no\" are used to explicitly disable them.\n"
-#~ "\"altitude_chill\" makes higher elevations colder, which may cause biome "
-#~ "issues.\n"
-#~ "\"humid_rivers\" modifies the humidity around rivers and in areas where "
-#~ "water would tend to pool. It may interfere with delicately adjusted "
-#~ "biomes."
+#~ "Mandelbrot set: Iterations of the recursive function.\n"
+#~ "Controls scale of finest detail."
 #~ msgstr ""
-#~ "Algemene wereldgenerator instellingen.\n"
-#~ "Vlaggen die niet in de lijst van vlaggen staan, behouden hun standaard-"
-#~ "waarde.\n"
-#~ "Zet \"no\" voor een vlag om hem expliciet uit te zetten.\n"
-#~ "'trees' en 'flat' zijn enkel van toepassing in mgv6."
+#~ "Mandelbrot verzameling: Aantal iteraties van de recursieve functie.\n"
+#~ "Bepaalt de schaal van de kleinste details."
 
-#~ msgid "No!!!"
-#~ msgstr "Nee!!!"
+#~ msgid "Mandelbrot set: Approximate (X,Y,Z) scales in nodes."
+#~ msgstr "Mandelbrot verzameling: (X,Y,Z) schaal, in nodes (bij benadering)."
 
-#~ msgid "Public Serverlist"
-#~ msgstr "Publieke Serverlijst"
+#~ msgid ""
+#~ "Mandelbrot set: (X,Y,Z) offsets from world centre.\n"
+#~ "Range roughly -2 to 2, multiply by m_scale for offsets in nodes."
+#~ msgstr ""
+#~ "Mandelbrot verzameling: (X,Y,Z) afstanden vanaf wereld-centrum.\n"
+#~ " Bereik is ongeveer -2 tot 2. Vermenigvuldig met m_scale voor de afstand "
+#~ "in nodes."
 
-#~ msgid "No of course not!"
-#~ msgstr "Nee, natuurlijk niet!"
+#~ msgid ""
+#~ "Key for increasing the viewing range. Modifies the minimum viewing "
+#~ "range.\n"
+#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+#~ msgstr ""
+#~ "Toets voor het vergroten van de zichtafstand. Dit verandert de minimale "
+#~ "zichtafstand.\n"
+#~ "Zie http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+
+#~ msgid ""
+#~ "Key for decreasing the viewing range. Modifies the minimum viewing "
+#~ "range.\n"
+#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+#~ msgstr ""
+#~ "Toets voor het verkleinen van de zichtafstand. Dit verandert de minimale "
+#~ "zichtafstand.\n"
+#~ "Zie http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+
+#~ msgid ""
+#~ "Julia set: W value determining the 4D shape.\n"
+#~ "Range roughly -2 to 2."
+#~ msgstr ""
+#~ "Juliaverzameling: W-waarde van de 4D vorm.\n"
+#~ "Bereik is ongeveer -2 tot 2."
+
+#~ msgid ""
+#~ "Julia set: (X,Y,Z) offsets from world centre.\n"
+#~ "Range roughly -2 to 2, multiply by j_scale for offsets in nodes."
+#~ msgstr ""
+#~ "Juliaverzameling: (X,Y,X) afstanden van wereld-centrum.\n"
+#~ "Bereik is ongeveer -2 tot 2. Vermenigvuldig met j_scale voor de afstand "
+#~ "in nodes."
+
+#~ msgid "Enable selection highlighting for nodes (disables selectionbox)."
+#~ msgstr "Laat geselecteerde nodes oplichten (schakelt selectie-randen uit)."
+
+#~ msgid ""
+#~ "Enable a bit lower water surface, so it doesn't \"fill\" the node "
+#~ "completely.\n"
+#~ "Note that this is not quite optimized and that smooth lighting on the\n"
+#~ "water surface doesn't work with this."
+#~ msgstr ""
+#~ "Maak de wateroppervlakte iets lager, zodat het niet de hele node vult.\n"
+#~ "Dit is niet echt geoptimaliseerd, en vloeiende belichting van de\n"
+#~ "wateroppervlakte werkt niet als dit is aangeschakeld."
+
+#~ msgid "Item textures..."
+#~ msgstr "Voorwerp-texturen..."
+
+#~ msgid "Exit to OS"
+#~ msgstr "Afsluiten"
+
+#~ msgid "Exit to Menu"
+#~ msgstr "Terug naar menu"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "No menu visible:\n"
+#~ "- single tap: button activate\n"
+#~ "- double tap: place/use\n"
+#~ "- slide finger: look around\n"
+#~ "Menu/Inventory visible:\n"
+#~ "- double tap (outside):\n"
+#~ " -->close\n"
+#~ "- touch stack, touch slot:\n"
+#~ " --> move stack\n"
+#~ "- touch&drag, tap 2nd finger\n"
+#~ " --> place single item to slot\n"
+#~ msgstr ""
+#~ "Standaardbesturing:\n"
+#~ "Geen menu getoond:\n"
+#~ "- enkele tik: activeren\n"
+#~ "- dubbele tik: plaats / gebruik\n"
+#~ "- vinger schuiven: rondkijken\n"
+#~ "Menu of inventaris getoond:\n"
+#~ "- dubbele tik buiten menu:\n"
+#~ " --> sluiten\n"
+#~ "- aanraken stapel of vak:\n"
+#~ " --> stapel verplaatsen\n"
+#~ "- aanraken & slepen, tik met tweede vinger\n"
+#~ "  --> plaats enkel object in vak\n"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "- WASD: move\n"
+#~ "- Space: jump/climb\n"
+#~ "- Shift: sneak/go down\n"
+#~ "- Q: drop item\n"
+#~ "- I: inventory\n"
+#~ "- Mouse: turn/look\n"
+#~ "- Mouse left: dig/punch\n"
+#~ "- Mouse right: place/use\n"
+#~ "- Mouse wheel: select item\n"
+#~ "- T: chat\n"
+#~ msgstr ""
+#~ "Standaard toetsen:\n"
+#~ "- W,A,S,D: bewegen\n"
+#~ "- Spatie: spring/klim\n"
+#~ "- Shift: kruip/duik\n"
+#~ "- Q: weggooien\n"
+#~ "- I: rugzak\n"
+#~ "- Muis: draaien/kijken\n"
+#~ "- L-muisknop: graaf/sla\n"
+#~ "- R-muisknop: plaats/gebruik\n"
+#~ "- Muiswiel: selecteer vak\n"
+#~ "- T: chatten\n"
+
+#~ msgid "Start Singleplayer"
+#~ msgstr "Start Singleplayer"
+
+#~ msgid "Main"
+#~ msgstr "Hoofdmenu"
+
+#~ msgid "Config mods"
+#~ msgstr "Mods configureren"
+
+#~ msgid "Server"
+#~ msgstr "Server"
+
+#~ msgid "Enable Damage"
+#~ msgstr "Verwondingen inschakelen"

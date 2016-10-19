@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the MultiCraft package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: minetest\n"
+"Project-Id-Version: MultiCraft\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-05 16:13+0200\n"
+"POT-Creation-Date: 2016-10-19 05:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,8 +95,7 @@ msgid "Save"
 msgstr ""
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -132,14 +131,6 @@ msgstr ""
 msgid "Seed"
 msgstr ""
 
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr ""
-
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Game"
-msgstr ""
-
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Create"
 msgstr ""
@@ -172,9 +163,8 @@ msgstr ""
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr ""
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
-#: src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Delete"
 msgstr ""
 
@@ -188,6 +178,14 @@ msgstr ""
 
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
+msgstr ""
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr ""
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "No"
 msgstr ""
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
@@ -351,7 +349,15 @@ msgid "Credits"
 msgstr ""
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Core Developers"
+msgid "Dedication of the current release"
+msgstr ""
+
+#: builtin/mainmenu/tab_credits.lua
+msgid "MultiCraft Developers"
+msgstr ""
+
+#: builtin/mainmenu/tab_credits.lua
+msgid "Minetest Developers"
 msgstr ""
 
 #: builtin/mainmenu/tab_credits.lua
@@ -398,43 +404,43 @@ msgstr ""
 msgid "Address / Port"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Name / Password"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Connect"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Del. Favorite"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Favorite"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Creative mode"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Damage enabled"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "PvP enabled"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
-msgid "Client"
+#: builtin/mainmenu/tab_multiplayer.lua
+msgid "Multi Player"
 msgstr ""
 
 #: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "New"
 msgstr ""
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Configure"
 msgstr ""
 
@@ -442,18 +448,16 @@ msgstr ""
 msgid "Start Game"
 msgstr ""
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Select World:"
 msgstr ""
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
+#: builtin/mainmenu/tab_server.lua
+msgid "Creative Inventory"
 msgstr ""
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Enable Damage"
+#: builtin/mainmenu/tab_server.lua
+msgid "Survival Mode"
 msgstr ""
 
 #: builtin/mainmenu/tab_server.lua
@@ -481,7 +485,7 @@ msgid "No world created or selected!"
 msgstr ""
 
 #: builtin/mainmenu/tab_server.lua
-msgid "Server"
+msgid "Create Server"
 msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
@@ -549,14 +553,6 @@ msgid "Are you sure to reset your singleplayer world?"
 msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr ""
-
-#: builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr ""
-
-#: builtin/mainmenu/tab_settings.lua
 msgid "Smooth Lighting"
 msgstr ""
 
@@ -586,6 +582,10 @@ msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua src/settings_translation_file.cpp
 msgid "Shaders"
+msgstr ""
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "Reset singleplayer world"
 msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
@@ -636,24 +636,16 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Start Singleplayer"
-msgstr ""
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Config mods"
-msgstr ""
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Main"
-msgstr ""
-
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr ""
 
 #: builtin/mainmenu/tab_singleplayer.lua
-msgid "Singleplayer"
+msgid "Creative Mode"
+msgstr ""
+
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Single Player"
 msgstr ""
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -733,37 +725,6 @@ msgid "Respawn"
 msgstr ""
 
 #: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"No menu visible:\n"
-"- single tap: button activate\n"
-"- double tap: place/use\n"
-"- slide finger: look around\n"
-"Menu/Inventory visible:\n"
-"- double tap (outside):\n"
-" -->close\n"
-"- touch stack, touch slot:\n"
-" --> move stack\n"
-"- touch&drag, tap 2nd finger\n"
-" --> place single item to slot\n"
-msgstr ""
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"- WASD: move\n"
-"- Space: jump/climb\n"
-"- Shift: sneak/go down\n"
-"- Q: drop item\n"
-"- I: inventory\n"
-"- Mouse: turn/look\n"
-"- Mouse left: dig/punch\n"
-"- Mouse right: place/use\n"
-"- Mouse wheel: select item\n"
-"- T: chat\n"
-msgstr ""
-
-#: src/game.cpp
 msgid "Continue"
 msgstr ""
 
@@ -780,11 +741,11 @@ msgid "Change Keys"
 msgstr ""
 
 #: src/game.cpp
-msgid "Exit to Menu"
+msgid "Save and Exit"
 msgstr ""
 
 #: src/game.cpp
-msgid "Exit to OS"
+msgid "Close game"
 msgstr ""
 
 #: src/game.cpp
@@ -793,6 +754,10 @@ msgstr ""
 
 #: src/game.cpp
 msgid "Creating server..."
+msgstr ""
+
+#: src/game.cpp
+msgid "Migrating world..."
 msgstr ""
 
 #: src/game.cpp
@@ -846,7 +811,8 @@ msgid "Enter "
 msgstr ""
 
 #: src/guiKeyChangeMenu.cpp
-msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
+msgid ""
+"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
 msgstr ""
 
 #: src/guiKeyChangeMenu.cpp
@@ -1251,6 +1217,10 @@ msgstr ""
 
 #: src/keycode.cpp
 msgid "Zoom"
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Client"
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -2724,6 +2694,10 @@ msgid ""
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid "Game"
+msgstr ""
+
+#: src/settings_translation_file.cpp
 msgid "Default game"
 msgstr ""
 
@@ -3161,6 +3135,10 @@ msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid "Liquid update interval in seconds."
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Mapgen"
 msgstr ""
 
 #: src/settings_translation_file.cpp

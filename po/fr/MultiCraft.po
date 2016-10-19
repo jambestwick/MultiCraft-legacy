@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-05 16:13+0200\n"
+"POT-Creation-Date: 2016-10-19 05:00+0300\n"
 "PO-Revision-Date: 2016-05-07 11:19+0000\n"
 "Last-Translator: Yvan YR <yvan_yr@yahoo.fr>\n"
-"Language-Team: French "
-"<https://hosted.weblate.org/projects/minetest/minetest/fr/>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/minetest/minetest/"
+"fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -73,8 +73,7 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "Nous supportons seulement les versions du protocole entre $1 et $2."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -146,14 +145,6 @@ msgstr "Téléchargez un jeu, comme minetest_game, depuis minetest.net"
 msgid "Download one from minetest.net"
 msgstr "Téléchargez-en un depuis minetest.net"
 
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Jeu"
-
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Générateur de terrain"
-
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Nom du monde manquant ou aucun jeu sélectionné"
@@ -178,9 +169,8 @@ msgstr "Vous n'avez pas de jeux installés."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "Êtes-vous sûr de vouloir supprimer \"$1\" ?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
-#: src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -195,6 +185,14 @@ msgstr "Gestionnaire de mods : chemin de mod invalide \"$1\""
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "Supprimer le monde \"$1\" ?"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Non"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Oui"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -368,12 +366,22 @@ msgid "Active Contributors"
 msgstr "Contributeurs actifs"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Core Developers"
+msgid "Credits"
+msgstr "Crédits"
+
+#: builtin/mainmenu/tab_credits.lua
+msgid "Dedication of the current release"
+msgstr ""
+
+#: builtin/mainmenu/tab_credits.lua
+#, fuzzy
+msgid "Minetest Developers"
 msgstr "Développeurs principaux"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Credits"
-msgstr "Crédits"
+#, fuzzy
+msgid "MultiCraft Developers"
+msgstr "Développeurs principaux"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -416,38 +424,38 @@ msgstr "Désinstaller le pack de mods"
 msgid "Address / Port"
 msgstr "Adresse / Port :"
 
-#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Client"
-
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Connect"
 msgstr "Rejoindre"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Creative mode"
 msgstr "Mode créatif"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Damage enabled"
 msgstr "Dégâts activés"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 #, fuzzy
 msgid "Del. Favorite"
 msgstr "Supprimer favoris :"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 #, fuzzy
 msgid "Favorite"
 msgstr "Favoris :"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
+msgid "Multi Player"
+msgstr ""
+
+#: builtin/mainmenu/tab_multiplayer.lua
 #, fuzzy
 msgid "Name / Password"
 msgstr "Nom / Mot de passe :"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "PvP enabled"
 msgstr "Combat activé"
 
@@ -455,19 +463,19 @@ msgstr "Combat activé"
 msgid "Bind Address"
 msgstr "Adresse à assigner"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Configure"
 msgstr "Configurer"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Mode créatif"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Create Server"
+msgstr "Création du serveur..."
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Enable Damage"
-msgstr "Activer les dégâts"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Creative Inventory"
+msgstr "Inventaire"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -489,13 +497,9 @@ msgstr "Port"
 msgid "Public"
 msgstr "Public"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Select World:"
 msgstr "Sélectionner un monde :"
-
-#: builtin/mainmenu/tab_server.lua
-msgid "Server"
-msgstr "Serveur"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -504,6 +508,11 @@ msgstr "Port du serveur"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Démarrer"
+
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Survival Mode"
+msgstr "Mode créatif"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -564,10 +573,6 @@ msgid "Mipmap + Aniso. Filter"
 msgstr "MIP map + anisotropie"
 
 #: builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Non"
-
-#: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
 msgstr "Aucun filtre"
 
@@ -610,6 +615,10 @@ msgstr "Occlusion parallaxe"
 #, fuzzy
 msgid "Particles"
 msgstr "Activer les particules"
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "Reset singleplayer world"
+msgstr "Réinitialiser le monde"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
@@ -660,28 +669,17 @@ msgstr "Plantes ondulantes"
 msgid "Waving Water"
 msgstr "Eau ondulante"
 
-#: builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Oui"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Config mods"
-msgstr "Configurer les mods"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Main"
-msgstr "Menu principal"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Start Singleplayer"
-msgstr "Démarrer une partie solo"
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Mode créatif"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Jouer"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-msgid "Singleplayer"
+#, fuzzy
+msgid "Single Player"
 msgstr "Solo"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -769,6 +767,11 @@ msgid "Change Password"
 msgstr "Changer votre mot de passe"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Close game"
+msgstr "Fermer jeu"
+
+#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "Connexion au serveur..."
 
@@ -783,65 +786,6 @@ msgstr "Création du client..."
 #: src/game.cpp
 msgid "Creating server..."
 msgstr "Création du serveur..."
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"- WASD: move\n"
-"- Space: jump/climb\n"
-"- Shift: sneak/go down\n"
-"- Q: drop item\n"
-"- I: inventory\n"
-"- Mouse: turn/look\n"
-"- Mouse left: dig/punch\n"
-"- Mouse right: place/use\n"
-"- Mouse wheel: select item\n"
-"- T: chat\n"
-msgstr ""
-"Contrôles:\n"
-"- ZQSD : se déplacer\n"
-"- Espace : sauter/grimper\n"
-"- Maj. : marcher lentement/descendre\n"
-"- A : lâcher l'objet en main\n"
-"- I : inventaire\n"
-"- Souris : tourner/regarder\n"
-"- Souris gauche : creuser/attaquer\n"
-"- Souris droite : placer/utiliser\n"
-"- Molette souris : sélectionner objet\n"
-"- T : discuter\n"
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"No menu visible:\n"
-"- single tap: button activate\n"
-"- double tap: place/use\n"
-"- slide finger: look around\n"
-"Menu/Inventory visible:\n"
-"- double tap (outside):\n"
-" -->close\n"
-"- touch stack, touch slot:\n"
-" --> move stack\n"
-"- touch&drag, tap 2nd finger\n"
-" --> place single item to slot\n"
-msgstr ""
-"Touches par défaut :\n"
-"Sans menu visible :\n"
-"- un seul appui : touche d'activation\n"
-"- double-appui : placement / utilisation\n"
-"- Glissement du doigt : regarder autour\n"
-"Menu / Inventaire visible :\n"
-"- double-appui (en dehors) : fermeture\n"
-"- objet(s) dans l'inventaire : déplacement\n"
-"- appui, glissement et appui : placement d'un seul item par slot\n"
-
-#: src/game.cpp
-msgid "Exit to Menu"
-msgstr "Quitter vers le menu"
-
-#: src/game.cpp
-msgid "Exit to OS"
-msgstr "Quitter le jeu"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -860,6 +804,11 @@ msgid "MiB/s"
 msgstr "Mo/s"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Migrating world..."
+msgstr "Création du client..."
+
+#: src/game.cpp
 msgid "Node definitions..."
 msgstr "Définitions des blocs..."
 
@@ -870,6 +819,10 @@ msgstr "Résolution de l'adresse..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Réapparaître"
+
+#: src/game.cpp
+msgid "Save and Exit"
+msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -940,7 +893,9 @@ msgid "Key already in use"
 msgstr "Touche déjà utilisée"
 
 #: src/guiKeyChangeMenu.cpp
-msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
+#, fuzzy
+msgid ""
+"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
 msgstr "Raccourcis"
 
 #: src/guiKeyChangeMenu.cpp src/keycode.cpp
@@ -1584,6 +1539,10 @@ msgid "Clean transparent textures"
 msgstr "Textures transparentes filtrées"
 
 #: src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Client"
+
+#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr "Client et Serveur"
 
@@ -2203,6 +2162,10 @@ msgstr "Filtrage des images du GUI"
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr "Filtrage txr2img du GUI"
+
+#: src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Jeu"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -3044,6 +3007,10 @@ msgstr "Limite des mapblocks"
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr "Délais d'interruption du déchargement des mapblocks"
+
+#: src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Générateur de terrain"
 
 #: src/settings_translation_file.cpp
 #, fuzzy
@@ -4562,92 +4529,37 @@ msgstr "Limite parallèle de cURL"
 msgid "cURL timeout"
 msgstr "Délais d'interruption de cURL"
 
-#~ msgid "Item textures..."
-#~ msgstr "Textures d'items..."
+#~ msgid "No of course not!"
+#~ msgstr "Non, bien sûr que non !"
+
+#~ msgid "Public Serverlist"
+#~ msgstr "Liste de serveurs publics"
+
+#~ msgid "Generate Normalmaps"
+#~ msgstr "Normal Mapping"
+
+#~ msgid "No!!!"
+#~ msgstr "Non !"
+
+#, fuzzy
+#~ msgid ""
+#~ "Map generation attributes specific to Mapgen Valleys.\n"
+#~ "Flags that are not specified in the flag string are not modified from the "
+#~ "default.\n"
+#~ "Flags starting with \"no\" are used to explicitly disable them.\n"
+#~ "\"altitude_chill\" makes higher elevations colder, which may cause biome "
+#~ "issues.\n"
+#~ "\"humid_rivers\" modifies the humidity around rivers and in areas where "
+#~ "water would tend to pool. It may interfere with delicately adjusted "
+#~ "biomes."
+#~ msgstr ""
+#~ "Attributs généraux de la génération de terrain.\n"
+#~ "Les drapeaux qui ne sont spécifiés dans leur champ respectif gardent "
+#~ "leurs valeurs par défaut."
 
 #~ msgid ""
-#~ "Enable a bit lower water surface, so it doesn't \"fill\" the node "
-#~ "completely.\n"
-#~ "Note that this is not quite optimized and that smooth lighting on the\n"
-#~ "water surface doesn't work with this."
-#~ msgstr ""
-#~ "Rend la surface de l'eau légèrement plus basse, de façon à ce qu'elle ne "
-#~ "submerge pas\n"
-#~ "entièrement le bloc voisin.\n"
-#~ "Cette fonctionnalité est encore expérimentale et la lumière douce "
-#~ "n’apparaît pas à la\n"
-#~ "surface de l'eau."
-
-#~ msgid "Enable selection highlighting for nodes (disables selectionbox)."
-#~ msgstr ""
-#~ "Active l'éclairage des blocs pointés (et supprime les bordures noires de "
-#~ "sélection)."
-
-#~ msgid ""
-#~ "Julia set: (X,Y,Z) offsets from world centre.\n"
-#~ "Range roughly -2 to 2, multiply by j_scale for offsets in nodes."
-#~ msgstr ""
-#~ "Série Julia : décalages (X,Y,Z) à partir du centre du monde.\n"
-#~ "La portée est environ entre -2 et 2. Multiplier par j_scale pour décaler "
-#~ "en nombre de blocs."
-
-#~ msgid ""
-#~ "Julia set: W value determining the 4D shape.\n"
-#~ "Range roughly -2 to 2."
-#~ msgstr ""
-#~ "Série Julia : valeur W déterminant la forme 4D.\n"
-#~ "La portée est environ entre -2 et 2."
-
-#~ msgid ""
-#~ "Key for decreasing the viewing range. Modifies the minimum viewing "
-#~ "range.\n"
-#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
-#~ msgstr ""
-#~ "Touche pour réduire la distance de vue. Modifie la distance de vue "
-#~ "minimale.\n"
-#~ "Voir http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
-
-#~ msgid ""
-#~ "Key for increasing the viewing range. Modifies the minimum viewing "
-#~ "range.\n"
-#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
-#~ msgstr ""
-#~ "Touche pour augmenter la distance de vue. Modifie la distance de vue "
-#~ "minimale.\n"
-#~ "Voir http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
-
-#~ msgid ""
-#~ "Mandelbrot set: (X,Y,Z) offsets from world centre.\n"
-#~ "Range roughly -2 to 2, multiply by m_scale for offsets in nodes."
-#~ msgstr ""
-#~ "Série Mandelbrot : décalages (X,Y,Z) à partir du centre du monde.\n"
-#~ "La portée est environ entre -2 et 2. Multiplier par m_scale pour décaler "
-#~ "en nombre de blocs."
-
-#~ msgid "Mandelbrot set: Approximate (X,Y,Z) scales in nodes."
-#~ msgstr "Série Mandelbrot : échelles (X,Y,Z) en blocs."
-
-#~ msgid ""
-#~ "Mandelbrot set: Iterations of the recursive function.\n"
-#~ "Controls scale of finest detail."
-#~ msgstr ""
-#~ "Série Mandelbrot : itérations de la fonction récursive.\n"
-#~ "Contrôle l'échelle du détail le plus subtil."
-
-#~ msgid ""
-#~ "Mandelbrot set: W co-ordinate of the generated 3D slice of the 4D shape.\n"
-#~ "Range roughly -2 to 2."
-#~ msgstr ""
-#~ "Série Mandelbrot : coordonnée W de la couche 3D de la forme 4D.\n"
-#~ "La portée est environ entre -2 et 2."
-
-#~ msgid ""
-#~ "Map generation attributes specific to Mapgen fractal.\n"
-#~ "'julia' selects a julia set to be generated instead of a mandelbrot set.\n"
+#~ "Map generation attributes specific to Mapgen v7.\n"
+#~ "'ridges' are the rivers.\n"
 #~ "Flags that are not specified in the flag string are not modified from the "
 #~ "default.\n"
 #~ "Flags starting with \"no\" are used to explicitly disable them."
@@ -4658,141 +4570,104 @@ msgstr "Délais d'interruption de cURL"
 #~ "par défaut.\n"
 #~ "Les drapeaux commençant par \"non\" sont désactivés."
 
-#~ msgid "Mapgen fractal mandelbrot iterations"
-#~ msgstr "Mapgen Mandelbrot : itérations fractales"
+#~ msgid "\""
+#~ msgstr "\""
 
-#~ msgid "Mapgen fractal mandelbrot offset"
-#~ msgstr "Mapgen Mandelbrot : décalages fractals"
+#~ msgid "Enable a bit lower water surface, so it doesn't "
+#~ msgstr ""
+#~ "Rend l'eau légèrement plus basse, de façon à ce qu'elle ne submerge pas "
+#~ "le bloc complètement.\n"
+#~ "Note : cette fonctionnalité est assez expérimentale et l'éclairage doux "
+#~ "ne fonctionne pas dessus. "
 
-#~ msgid "Mapgen fractal mandelbrot scale"
-#~ msgstr "Mapgen Mandelbrot : échelles fractales"
+#~ msgid "If disabled "
+#~ msgstr "Si désactivé "
 
-#~ msgid "Mapgen fractal mandelbrot slice w"
-#~ msgstr "Mapgen Mandelbrot : couche fractale W"
+#~ msgid "If enabled, "
+#~ msgstr "Si activé, "
+
+#~ msgid "Rendering:"
+#~ msgstr "Affichage :"
+
+#~ msgid "Restart minetest for driver change to take effect"
+#~ msgstr "Redémarrez Minetest pour que le changement du pilote prenne effet"
+
+#~ msgid "Game Name"
+#~ msgstr "Nom du jeu"
+
+#~ msgid "Gamemgr: Unable to copy mod \"$1\" to game \"$2\""
+#~ msgstr "Gamemgr : Impossible de copier le mod \"$1\" dans le jeu \"$2\""
+
+#~ msgid "GAMES"
+#~ msgstr "JEUX"
+
+#~ msgid "Mods:"
+#~ msgstr "Mods :"
+
+#~ msgid "new game"
+#~ msgstr "nouveau jeu"
+
+#~ msgid "EDIT GAME"
+#~ msgstr "MODIFIER LE JEU"
+
+#~ msgid "Remove selected mod"
+#~ msgstr "Supprimer le mod sélectionné"
+
+#~ msgid "<<-- Add mod"
+#~ msgstr "<<-- Ajouter un mod"
+
+#~ msgid "CLIENT"
+#~ msgstr "CLIENT"
+
+#~ msgid "START SERVER"
+#~ msgstr "DÉMARRER LE SERVEUR"
+
+#~ msgid "Name"
+#~ msgstr "Nom"
+
+#~ msgid "Password"
+#~ msgstr "Mot de passe"
+
+#~ msgid "SETTINGS"
+#~ msgstr "PARAMÈTRES"
+
+#~ msgid "Preload item visuals"
+#~ msgstr "Précharger les objets"
+
+#~ msgid "Finite Liquid"
+#~ msgstr "Liquides limités"
+
+#~ msgid "SINGLE PLAYER"
+#~ msgstr "PARTIE SOLO"
+
+#~ msgid "TEXTURE PACKS"
+#~ msgstr "PACKS DE TEXTURES"
+
+#~ msgid "MODS"
+#~ msgstr "MODS"
+
+#~ msgid "Add mod:"
+#~ msgstr "Ajouter un mod :"
+
+#~ msgid "Local install"
+#~ msgstr "Installation locale"
 
 #~ msgid ""
-#~ "Maximum distance above water level for player spawn.\n"
-#~ "Larger values result in spawn points closer to (x = 0, z = 0).\n"
-#~ "Smaller values may result in a suitable spawn point not being found,\n"
-#~ "resulting in a spawn at (0, 0, 0) possibly buried underground."
+#~ "Warning: Some mods are not configured yet.\n"
+#~ "They will be enabled by default when you save the configuration.  "
 #~ msgstr ""
-#~ "Distance maximum au-dessus du niveau de l'eau où le joueur apparaît.\n"
-#~ "Des valeurs plus grandes aboutissent à des locations plus proches de (x = "
-#~ "0, z = 0).\n"
-#~ "Des valeurs plus petites peut résulter à une location de spawn non-"
-#~ "trouvée, résultant\n"
-#~ "à une location située à (0, 0, 0) probablement enterrée sous le sol."
+#~ "Attention : certains mods ne sont pas encore configurés.\n"
+#~ "Ils seront activés par défaut quand vous enregistrerez la configuration. "
 
 #~ msgid ""
-#~ "Minimum wanted FPS.\n"
-#~ "The amount of rendered stuff is dynamically set according to this. and "
-#~ "viewing range min and max."
+#~ "Warning: Some configured mods are missing.\n"
+#~ "Their setting will be removed when you save the configuration.  "
 #~ msgstr ""
-#~ "Images par seconde (FPS) minimum.\n"
-#~ "Le niveau de rendu est dynamiquement adapté selon ce paramètre et la "
-#~ "distance de vue (minimale et maximale)."
+#~ "Attention : certains mods configurés sont introuvables.\n"
+#~ "Leurs réglages seront effacés quand vous enregistrerez la configuration. "
 
-#~ msgid "New style water"
-#~ msgstr "Nouveau style de liquide"
-
-#~ msgid ""
-#~ "Pre-generate all item visuals used in the inventory.\n"
-#~ "This increases startup time, but runs smoother in-game.\n"
-#~ "The generated textures can easily exceed your VRAM, causing artifacts in "
-#~ "the inventory."
-#~ msgstr ""
-#~ "Pré-générer tous les visuels d'items utilisés dans l'inventaire.\n"
-#~ "Cela augmente le temps de démarrage, mais rend les inventaires plus "
-#~ "fluides.\n"
-#~ "Les textures générées peuvent facilement déborder votre VRAM, causant des "
-#~ "bugs dans votre inventaire."
-
-#~ msgid "Preload inventory textures"
-#~ msgstr "Pré-chargement des textures d'inventaire"
-
-#~ msgid ""
-#~ "The allowed adjustment range for the automatic rendering range "
-#~ "adjustment.\n"
-#~ "Set this to be equal to viewing range minimum to disable the auto-"
-#~ "adjustment algorithm."
-#~ msgstr ""
-#~ "Distance d'affichage maximum.\n"
-#~ "Définir cette valeur égale à la distance de vue minimum pour désactiver\n"
-#~ "l'auto-ajustement dynamique de la distance d'affichage."
-
-#~ msgid "Vertical initial window size."
-#~ msgstr "Largeur initiale de la fenêtre de jeu."
-
-#~ msgid "Vertical spawn range"
-#~ msgstr "Portée verticale du spawn"
-
-#~ msgid "Viewing range minimum"
-#~ msgstr "Distance de vue minimum"
-
-#~ msgid "Wanted FPS"
-#~ msgstr "FPS minimum"
-
-#~ msgid "Reset singleplayer world"
-#~ msgstr "Réinitialiser le monde"
-
-#~ msgid "Scaling factor applied to menu elements: "
-#~ msgstr "Taille appliquée aux menus : "
-
-#~ msgid "Downloading"
-#~ msgstr "Téléchargement"
-
-#~ msgid " KB/s"
-#~ msgstr " Ko/s"
-
-#~ msgid " MB/s"
-#~ msgstr " Mo/s"
-
-#~ msgid "Left click: Move all items, Right click: Move single item"
-#~ msgstr ""
-#~ "Clic gauche : déplacer tous les objets -- Clic droit : déplacer un objet"
-
-#~ msgid "is required by:"
-#~ msgstr "est requis par :"
-
-#~ msgid "Configuration saved.  "
-#~ msgstr "Configuration enregistrée. "
-
-#~ msgid "Warning: Configuration not consistent.  "
-#~ msgstr "Attention : configuration incorrecte. "
-
-#~ msgid "Cannot create world: Name contains invalid characters"
-#~ msgstr ""
-#~ "Impossible de créer le monde : le nom contient des caractères invalides"
-
-#~ msgid "Show Public"
-#~ msgstr "Voir les serveurs publics"
-
-#~ msgid "Show Favorites"
-#~ msgstr "Voir les serveurs favoris"
-
-#~ msgid "Leave address blank to start a local server."
-#~ msgstr "Laisser l'adresse vide pour lancer un serveur local."
-
-#~ msgid "Create world"
-#~ msgstr "Créer un monde"
-
-#~ msgid "Address required."
-#~ msgstr "Adresse requise."
-
-#~ msgid "Cannot delete world: Nothing selected"
-#~ msgstr "Impossible de supprimer le monde : rien n'est sélectionné"
-
-#~ msgid "Files to be deleted"
-#~ msgstr "Fichiers à supprimer"
-
-#~ msgid "Cannot create world: No games found"
-#~ msgstr "Impossible de créer le monde : aucun jeu n'est présent"
-
-#~ msgid "Cannot configure world: Nothing selected"
-#~ msgstr "Impossible de configurer ce monde : aucune sélection active"
-
-#~ msgid "Failed to delete all world files"
-#~ msgstr "Tous les fichiers du monde n'ont pu être supprimés"
+#~ msgid "Delete map"
+#~ msgstr "Supprimer la carte"
 
 #~ msgid ""
 #~ "Default Controls:\n"
@@ -4819,108 +4694,142 @@ msgstr "Délais d'interruption de cURL"
 #~ "- Échap : ce menu\n"
 #~ "- T : discuter\n"
 
-#~ msgid "Delete map"
-#~ msgstr "Supprimer la carte"
+#~ msgid "Failed to delete all world files"
+#~ msgstr "Tous les fichiers du monde n'ont pu être supprimés"
+
+#~ msgid "Cannot configure world: Nothing selected"
+#~ msgstr "Impossible de configurer ce monde : aucune sélection active"
+
+#~ msgid "Cannot create world: No games found"
+#~ msgstr "Impossible de créer le monde : aucun jeu n'est présent"
+
+#~ msgid "Files to be deleted"
+#~ msgstr "Fichiers à supprimer"
+
+#~ msgid "Cannot delete world: Nothing selected"
+#~ msgstr "Impossible de supprimer le monde : rien n'est sélectionné"
+
+#~ msgid "Address required."
+#~ msgstr "Adresse requise."
+
+#~ msgid "Create world"
+#~ msgstr "Créer un monde"
+
+#~ msgid "Leave address blank to start a local server."
+#~ msgstr "Laisser l'adresse vide pour lancer un serveur local."
+
+#~ msgid "Show Favorites"
+#~ msgstr "Voir les serveurs favoris"
+
+#~ msgid "Show Public"
+#~ msgstr "Voir les serveurs publics"
+
+#~ msgid "Cannot create world: Name contains invalid characters"
+#~ msgstr ""
+#~ "Impossible de créer le monde : le nom contient des caractères invalides"
+
+#~ msgid "Warning: Configuration not consistent.  "
+#~ msgstr "Attention : configuration incorrecte. "
+
+#~ msgid "Configuration saved.  "
+#~ msgstr "Configuration enregistrée. "
+
+#~ msgid "is required by:"
+#~ msgstr "est requis par :"
+
+#~ msgid "Left click: Move all items, Right click: Move single item"
+#~ msgstr ""
+#~ "Clic gauche : déplacer tous les objets -- Clic droit : déplacer un objet"
+
+#~ msgid " MB/s"
+#~ msgstr " Mo/s"
+
+#~ msgid " KB/s"
+#~ msgstr " Ko/s"
+
+#~ msgid "Downloading"
+#~ msgstr "Téléchargement"
+
+#~ msgid "Scaling factor applied to menu elements: "
+#~ msgstr "Taille appliquée aux menus : "
+
+#~ msgid "Wanted FPS"
+#~ msgstr "FPS minimum"
+
+#~ msgid "Viewing range minimum"
+#~ msgstr "Distance de vue minimum"
+
+#~ msgid "Vertical spawn range"
+#~ msgstr "Portée verticale du spawn"
+
+#~ msgid "Vertical initial window size."
+#~ msgstr "Largeur initiale de la fenêtre de jeu."
 
 #~ msgid ""
-#~ "Warning: Some configured mods are missing.\n"
-#~ "Their setting will be removed when you save the configuration.  "
+#~ "The allowed adjustment range for the automatic rendering range "
+#~ "adjustment.\n"
+#~ "Set this to be equal to viewing range minimum to disable the auto-"
+#~ "adjustment algorithm."
 #~ msgstr ""
-#~ "Attention : certains mods configurés sont introuvables.\n"
-#~ "Leurs réglages seront effacés quand vous enregistrerez la configuration. "
+#~ "Distance d'affichage maximum.\n"
+#~ "Définir cette valeur égale à la distance de vue minimum pour désactiver\n"
+#~ "l'auto-ajustement dynamique de la distance d'affichage."
+
+#~ msgid "Preload inventory textures"
+#~ msgstr "Pré-chargement des textures d'inventaire"
 
 #~ msgid ""
-#~ "Warning: Some mods are not configured yet.\n"
-#~ "They will be enabled by default when you save the configuration.  "
+#~ "Pre-generate all item visuals used in the inventory.\n"
+#~ "This increases startup time, but runs smoother in-game.\n"
+#~ "The generated textures can easily exceed your VRAM, causing artifacts in "
+#~ "the inventory."
 #~ msgstr ""
-#~ "Attention : certains mods ne sont pas encore configurés.\n"
-#~ "Ils seront activés par défaut quand vous enregistrerez la configuration. "
+#~ "Pré-générer tous les visuels d'items utilisés dans l'inventaire.\n"
+#~ "Cela augmente le temps de démarrage, mais rend les inventaires plus "
+#~ "fluides.\n"
+#~ "Les textures générées peuvent facilement déborder votre VRAM, causant des "
+#~ "bugs dans votre inventaire."
 
-#~ msgid "Local install"
-#~ msgstr "Installation locale"
-
-#~ msgid "Add mod:"
-#~ msgstr "Ajouter un mod :"
-
-#~ msgid "MODS"
-#~ msgstr "MODS"
-
-#~ msgid "TEXTURE PACKS"
-#~ msgstr "PACKS DE TEXTURES"
-
-#~ msgid "SINGLE PLAYER"
-#~ msgstr "PARTIE SOLO"
-
-#~ msgid "Finite Liquid"
-#~ msgstr "Liquides limités"
-
-#~ msgid "Preload item visuals"
-#~ msgstr "Précharger les objets"
-
-#~ msgid "SETTINGS"
-#~ msgstr "PARAMÈTRES"
-
-#~ msgid "Password"
-#~ msgstr "Mot de passe"
-
-#~ msgid "Name"
-#~ msgstr "Nom"
-
-#~ msgid "START SERVER"
-#~ msgstr "DÉMARRER LE SERVEUR"
-
-#~ msgid "CLIENT"
-#~ msgstr "CLIENT"
-
-#~ msgid "<<-- Add mod"
-#~ msgstr "<<-- Ajouter un mod"
-
-#~ msgid "Remove selected mod"
-#~ msgstr "Supprimer le mod sélectionné"
-
-#~ msgid "EDIT GAME"
-#~ msgstr "MODIFIER LE JEU"
-
-#~ msgid "new game"
-#~ msgstr "nouveau jeu"
-
-#~ msgid "Mods:"
-#~ msgstr "Mods :"
-
-#~ msgid "GAMES"
-#~ msgstr "JEUX"
-
-#~ msgid "Gamemgr: Unable to copy mod \"$1\" to game \"$2\""
-#~ msgstr "Gamemgr : Impossible de copier le mod \"$1\" dans le jeu \"$2\""
-
-#~ msgid "Game Name"
-#~ msgstr "Nom du jeu"
-
-#~ msgid "Restart minetest for driver change to take effect"
-#~ msgstr "Redémarrez Minetest pour que le changement du pilote prenne effet"
-
-#~ msgid "Rendering:"
-#~ msgstr "Affichage :"
-
-#~ msgid "If enabled, "
-#~ msgstr "Si activé, "
-
-#~ msgid "If disabled "
-#~ msgstr "Si désactivé "
-
-#~ msgid "Enable a bit lower water surface, so it doesn't "
-#~ msgstr ""
-#~ "Rend l'eau légèrement plus basse, de façon à ce qu'elle ne submerge pas "
-#~ "le bloc complètement.\n"
-#~ "Note : cette fonctionnalité est assez expérimentale et l'éclairage doux "
-#~ "ne fonctionne pas dessus. "
-
-#~ msgid "\""
-#~ msgstr "\""
+#~ msgid "New style water"
+#~ msgstr "Nouveau style de liquide"
 
 #~ msgid ""
-#~ "Map generation attributes specific to Mapgen v7.\n"
-#~ "'ridges' are the rivers.\n"
+#~ "Minimum wanted FPS.\n"
+#~ "The amount of rendered stuff is dynamically set according to this. and "
+#~ "viewing range min and max."
+#~ msgstr ""
+#~ "Images par seconde (FPS) minimum.\n"
+#~ "Le niveau de rendu est dynamiquement adapté selon ce paramètre et la "
+#~ "distance de vue (minimale et maximale)."
+
+#~ msgid ""
+#~ "Maximum distance above water level for player spawn.\n"
+#~ "Larger values result in spawn points closer to (x = 0, z = 0).\n"
+#~ "Smaller values may result in a suitable spawn point not being found,\n"
+#~ "resulting in a spawn at (0, 0, 0) possibly buried underground."
+#~ msgstr ""
+#~ "Distance maximum au-dessus du niveau de l'eau où le joueur apparaît.\n"
+#~ "Des valeurs plus grandes aboutissent à des locations plus proches de (x = "
+#~ "0, z = 0).\n"
+#~ "Des valeurs plus petites peut résulter à une location de spawn non-"
+#~ "trouvée, résultant\n"
+#~ "à une location située à (0, 0, 0) probablement enterrée sous le sol."
+
+#~ msgid "Mapgen fractal mandelbrot slice w"
+#~ msgstr "Mapgen Mandelbrot : couche fractale W"
+
+#~ msgid "Mapgen fractal mandelbrot scale"
+#~ msgstr "Mapgen Mandelbrot : échelles fractales"
+
+#~ msgid "Mapgen fractal mandelbrot offset"
+#~ msgstr "Mapgen Mandelbrot : décalages fractals"
+
+#~ msgid "Mapgen fractal mandelbrot iterations"
+#~ msgstr "Mapgen Mandelbrot : itérations fractales"
+
+#~ msgid ""
+#~ "Map generation attributes specific to Mapgen fractal.\n"
+#~ "'julia' selects a julia set to be generated instead of a mandelbrot set.\n"
 #~ "Flags that are not specified in the flag string are not modified from the "
 #~ "default.\n"
 #~ "Flags starting with \"no\" are used to explicitly disable them."
@@ -4931,30 +4840,155 @@ msgstr "Délais d'interruption de cURL"
 #~ "par défaut.\n"
 #~ "Les drapeaux commençant par \"non\" sont désactivés."
 
-#, fuzzy
 #~ msgid ""
-#~ "Map generation attributes specific to Mapgen Valleys.\n"
-#~ "Flags that are not specified in the flag string are not modified from the "
-#~ "default.\n"
-#~ "Flags starting with \"no\" are used to explicitly disable them.\n"
-#~ "\"altitude_chill\" makes higher elevations colder, which may cause biome "
-#~ "issues.\n"
-#~ "\"humid_rivers\" modifies the humidity around rivers and in areas where "
-#~ "water would tend to pool. It may interfere with delicately adjusted "
-#~ "biomes."
+#~ "Mandelbrot set: W co-ordinate of the generated 3D slice of the 4D shape.\n"
+#~ "Range roughly -2 to 2."
 #~ msgstr ""
-#~ "Attributs généraux de la génération de terrain.\n"
-#~ "Les drapeaux qui ne sont spécifiés dans leur champ respectif gardent "
-#~ "leurs valeurs par défaut."
+#~ "Série Mandelbrot : coordonnée W de la couche 3D de la forme 4D.\n"
+#~ "La portée est environ entre -2 et 2."
 
-#~ msgid "No!!!"
-#~ msgstr "Non !"
+#~ msgid ""
+#~ "Mandelbrot set: Iterations of the recursive function.\n"
+#~ "Controls scale of finest detail."
+#~ msgstr ""
+#~ "Série Mandelbrot : itérations de la fonction récursive.\n"
+#~ "Contrôle l'échelle du détail le plus subtil."
 
-#~ msgid "Generate Normalmaps"
-#~ msgstr "Normal Mapping"
+#~ msgid "Mandelbrot set: Approximate (X,Y,Z) scales in nodes."
+#~ msgstr "Série Mandelbrot : échelles (X,Y,Z) en blocs."
 
-#~ msgid "Public Serverlist"
-#~ msgstr "Liste de serveurs publics"
+#~ msgid ""
+#~ "Mandelbrot set: (X,Y,Z) offsets from world centre.\n"
+#~ "Range roughly -2 to 2, multiply by m_scale for offsets in nodes."
+#~ msgstr ""
+#~ "Série Mandelbrot : décalages (X,Y,Z) à partir du centre du monde.\n"
+#~ "La portée est environ entre -2 et 2. Multiplier par m_scale pour décaler "
+#~ "en nombre de blocs."
 
-#~ msgid "No of course not!"
-#~ msgstr "Non, bien sûr que non !"
+#~ msgid ""
+#~ "Key for increasing the viewing range. Modifies the minimum viewing "
+#~ "range.\n"
+#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+#~ msgstr ""
+#~ "Touche pour augmenter la distance de vue. Modifie la distance de vue "
+#~ "minimale.\n"
+#~ "Voir http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+
+#~ msgid ""
+#~ "Key for decreasing the viewing range. Modifies the minimum viewing "
+#~ "range.\n"
+#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+#~ msgstr ""
+#~ "Touche pour réduire la distance de vue. Modifie la distance de vue "
+#~ "minimale.\n"
+#~ "Voir http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+
+#~ msgid ""
+#~ "Julia set: W value determining the 4D shape.\n"
+#~ "Range roughly -2 to 2."
+#~ msgstr ""
+#~ "Série Julia : valeur W déterminant la forme 4D.\n"
+#~ "La portée est environ entre -2 et 2."
+
+#~ msgid ""
+#~ "Julia set: (X,Y,Z) offsets from world centre.\n"
+#~ "Range roughly -2 to 2, multiply by j_scale for offsets in nodes."
+#~ msgstr ""
+#~ "Série Julia : décalages (X,Y,Z) à partir du centre du monde.\n"
+#~ "La portée est environ entre -2 et 2. Multiplier par j_scale pour décaler "
+#~ "en nombre de blocs."
+
+#~ msgid "Enable selection highlighting for nodes (disables selectionbox)."
+#~ msgstr ""
+#~ "Active l'éclairage des blocs pointés (et supprime les bordures noires de "
+#~ "sélection)."
+
+#~ msgid ""
+#~ "Enable a bit lower water surface, so it doesn't \"fill\" the node "
+#~ "completely.\n"
+#~ "Note that this is not quite optimized and that smooth lighting on the\n"
+#~ "water surface doesn't work with this."
+#~ msgstr ""
+#~ "Rend la surface de l'eau légèrement plus basse, de façon à ce qu'elle ne "
+#~ "submerge pas\n"
+#~ "entièrement le bloc voisin.\n"
+#~ "Cette fonctionnalité est encore expérimentale et la lumière douce "
+#~ "n’apparaît pas à la\n"
+#~ "surface de l'eau."
+
+#~ msgid "Item textures..."
+#~ msgstr "Textures d'items..."
+
+#~ msgid "Exit to OS"
+#~ msgstr "Quitter le jeu"
+
+#~ msgid "Exit to Menu"
+#~ msgstr "Quitter vers le menu"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "No menu visible:\n"
+#~ "- single tap: button activate\n"
+#~ "- double tap: place/use\n"
+#~ "- slide finger: look around\n"
+#~ "Menu/Inventory visible:\n"
+#~ "- double tap (outside):\n"
+#~ " -->close\n"
+#~ "- touch stack, touch slot:\n"
+#~ " --> move stack\n"
+#~ "- touch&drag, tap 2nd finger\n"
+#~ " --> place single item to slot\n"
+#~ msgstr ""
+#~ "Touches par défaut :\n"
+#~ "Sans menu visible :\n"
+#~ "- un seul appui : touche d'activation\n"
+#~ "- double-appui : placement / utilisation\n"
+#~ "- Glissement du doigt : regarder autour\n"
+#~ "Menu / Inventaire visible :\n"
+#~ "- double-appui (en dehors) : fermeture\n"
+#~ "- objet(s) dans l'inventaire : déplacement\n"
+#~ "- appui, glissement et appui : placement d'un seul item par slot\n"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "- WASD: move\n"
+#~ "- Space: jump/climb\n"
+#~ "- Shift: sneak/go down\n"
+#~ "- Q: drop item\n"
+#~ "- I: inventory\n"
+#~ "- Mouse: turn/look\n"
+#~ "- Mouse left: dig/punch\n"
+#~ "- Mouse right: place/use\n"
+#~ "- Mouse wheel: select item\n"
+#~ "- T: chat\n"
+#~ msgstr ""
+#~ "Contrôles:\n"
+#~ "- ZQSD : se déplacer\n"
+#~ "- Espace : sauter/grimper\n"
+#~ "- Maj. : marcher lentement/descendre\n"
+#~ "- A : lâcher l'objet en main\n"
+#~ "- I : inventaire\n"
+#~ "- Souris : tourner/regarder\n"
+#~ "- Souris gauche : creuser/attaquer\n"
+#~ "- Souris droite : placer/utiliser\n"
+#~ "- Molette souris : sélectionner objet\n"
+#~ "- T : discuter\n"
+
+#~ msgid "Start Singleplayer"
+#~ msgstr "Démarrer une partie solo"
+
+#~ msgid "Main"
+#~ msgstr "Menu principal"
+
+#~ msgid "Config mods"
+#~ msgstr "Configurer les mods"
+
+#~ msgid "Server"
+#~ msgstr "Serveur"
+
+#~ msgid "Enable Damage"
+#~ msgstr "Activer les dégâts"

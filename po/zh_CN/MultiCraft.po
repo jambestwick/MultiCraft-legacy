@@ -6,11 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: minetest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-05 16:13+0200\n"
+"POT-Creation-Date: 2016-10-19 05:00+0300\n"
 "PO-Revision-Date: 2016-05-05 19:09+0000\n"
 "Last-Translator: Claybiokiller <clay0305@hotmail.com>\n"
-"Language-Team: Chinese (China) "
-"<https://hosted.weblate.org/projects/minetest/minetest/zh_CN/>\n"
+"Language-Team: Chinese (China) <https://hosted.weblate.org/projects/minetest/"
+"minetest/zh_CN/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,8 +71,7 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "我们支持的协议版本为 $1 至 $2。"
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -141,14 +140,6 @@ msgstr "从 minetest.net 下载一个子游戏，例如 minetest_game"
 msgid "Download one from minetest.net"
 msgstr "从 minetest.net 下载一个"
 
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Game"
-msgstr "游戏"
-
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "地图生成器"
-
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "未指定世界名或未选择游戏"
@@ -173,9 +164,8 @@ msgstr "你没有安装任何子游戏。"
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "你确认要删除“$1”？"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
-#: src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Delete"
 msgstr "删除"
 
@@ -190,6 +180,14 @@ msgstr "MOD管理器：MOD“$1“路径非法"
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "删除世界“$1”？"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "否"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "是"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -356,12 +354,22 @@ msgid "Active Contributors"
 msgstr "积极贡献者"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Core Developers"
+msgid "Credits"
+msgstr "贡献者"
+
+#: builtin/mainmenu/tab_credits.lua
+msgid "Dedication of the current release"
+msgstr ""
+
+#: builtin/mainmenu/tab_credits.lua
+#, fuzzy
+msgid "Minetest Developers"
 msgstr "核心开发者"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Credits"
-msgstr "贡献者"
+#, fuzzy
+msgid "MultiCraft Developers"
+msgstr "核心开发者"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -404,38 +412,38 @@ msgstr "删除选中的MOD包"
 msgid "Address / Port"
 msgstr "地址/端口:"
 
-#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
-msgid "Client"
-msgstr "客户端"
-
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Connect"
 msgstr "连接"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Creative mode"
 msgstr "创造模式"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Damage enabled"
 msgstr "启用伤害"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 #, fuzzy
 msgid "Del. Favorite"
 msgstr "最爱的服务器："
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 #, fuzzy
 msgid "Favorite"
 msgstr "最爱的服务器："
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
+msgid "Multi Player"
+msgstr ""
+
+#: builtin/mainmenu/tab_multiplayer.lua
 #, fuzzy
 msgid "Name / Password"
 msgstr "用户名/密码:"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "PvP enabled"
 msgstr "启用 PvP"
 
@@ -443,19 +451,19 @@ msgstr "启用 PvP"
 msgid "Bind Address"
 msgstr "绑定地址"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Configure"
 msgstr "配置"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "创造模式"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Create Server"
+msgstr "建立服务器...."
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Enable Damage"
-msgstr "开启伤害风险"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Creative Inventory"
+msgstr "物品栏"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -477,13 +485,9 @@ msgstr "端口"
 msgid "Public"
 msgstr "公共服务器"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Select World:"
 msgstr "选择世界："
-
-#: builtin/mainmenu/tab_server.lua
-msgid "Server"
-msgstr "服务器"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -492,6 +496,11 @@ msgstr "服务器端口"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "启动游戏"
+
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Survival Mode"
+msgstr "创造模式"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -551,10 +560,6 @@ msgid "Mipmap + Aniso. Filter"
 msgstr "Mip 贴图 + Aniso 过滤"
 
 #: builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "否"
-
-#: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
 msgstr "无过滤"
 
@@ -596,6 +601,11 @@ msgstr "视差贴图"
 #, fuzzy
 msgid "Particles"
 msgstr "启用粒子"
+
+#: builtin/mainmenu/tab_settings.lua
+#, fuzzy
+msgid "Reset singleplayer world"
+msgstr "重置单人游戏"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
@@ -645,28 +655,17 @@ msgstr "摇摆的植物"
 msgid "Waving Water"
 msgstr "流动的水面"
 
-#: builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "是"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Config mods"
-msgstr "配置 MOD"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Main"
-msgstr "主要"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Start Singleplayer"
-msgstr "单人游戏"
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "创造模式"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "开始游戏"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-msgid "Singleplayer"
+#, fuzzy
+msgid "Single Player"
 msgstr "单人游戏"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -754,6 +753,11 @@ msgid "Change Password"
 msgstr "更改密码"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Close game"
+msgstr "关闭商店"
+
+#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "正在连接服务器..."
 
@@ -768,68 +772,6 @@ msgstr "正在建立客户端..."
 #: src/game.cpp
 msgid "Creating server..."
 msgstr "建立服务器...."
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"- WASD: move\n"
-"- Space: jump/climb\n"
-"- Shift: sneak/go down\n"
-"- Q: drop item\n"
-"- I: inventory\n"
-"- Mouse: turn/look\n"
-"- Mouse left: dig/punch\n"
-"- Mouse right: place/use\n"
-"- Mouse wheel: select item\n"
-"- T: chat\n"
-msgstr ""
-"默认控制：\n"
-"W/A/S/D: 移动\n"
-"空格: 跳/爬\n"
-"Shift: 潜行/向下\n"
-"Q: 丢物品\n"
-"I: 物品栏\n"
-"鼠标:转身/环顾\n"
-"鼠标左键: 挖\n"
-"鼠标右键: 放/使用\n"
-"鼠标滚轮: 选择物品\n"
-"T: 聊天\n"
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"No menu visible:\n"
-"- single tap: button activate\n"
-"- double tap: place/use\n"
-"- slide finger: look around\n"
-"Menu/Inventory visible:\n"
-"- double tap (outside):\n"
-" -->close\n"
-"- touch stack, touch slot:\n"
-" --> move stack\n"
-"- touch&drag, tap 2nd finger\n"
-" --> place single item to slot\n"
-msgstr ""
-"默认控制:\n"
-"菜单不可见时:\n"
-"- 单击: 激活按钮\n"
-"- 双击: 放置/使用\n"
-"- 滑动手指: 改变视角\n"
-"菜单/物品栏可见时:\n"
-"- 双击 (界面区域外):\n"
-" --> 关闭\n"
-"- 点击物品, 然后点击栏位:\n"
-" --> 移动一组物品\n"
-"- 点击物品并拖动, 然后另一手指点击\n"
-" --> 移动一个物品\n"
-
-#: src/game.cpp
-msgid "Exit to Menu"
-msgstr "退出至菜单"
-
-#: src/game.cpp
-msgid "Exit to OS"
-msgstr "退出至操作系统"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -848,6 +790,11 @@ msgid "MiB/s"
 msgstr "MiB/s"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Migrating world..."
+msgstr "正在建立客户端..."
+
+#: src/game.cpp
 msgid "Node definitions..."
 msgstr "方块定义..."
 
@@ -858,6 +805,10 @@ msgstr "正在解析地址..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "重生"
+
+#: src/game.cpp
+msgid "Save and Exit"
+msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -928,7 +879,9 @@ msgid "Key already in use"
 msgstr "按键已被占用"
 
 #: src/guiKeyChangeMenu.cpp
-msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
+#, fuzzy
+msgid ""
+"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
 msgstr "键位配置。（如果这个菜单被弄乱，从 minetest.conf 中删掉点东西）"
 
 #: src/guiKeyChangeMenu.cpp src/keycode.cpp
@@ -1588,6 +1541,10 @@ msgid "Clean transparent textures"
 msgstr "干净透明纹理"
 
 #: src/settings_translation_file.cpp
+msgid "Client"
+msgstr "客户端"
+
+#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr "客户端和服务器"
 
@@ -2154,6 +2111,10 @@ msgstr "用户图形界面缩放过滤器"
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr "用户图形界面缩放过滤器 txr2img"
+
+#: src/settings_translation_file.cpp
+msgid "Game"
+msgstr "游戏"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -2801,6 +2762,10 @@ msgstr "地图块限制"
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr "地图块卸载超时"
+
+#: src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "地图生成器"
 
 #: src/settings_translation_file.cpp
 msgid "Mapgen Valleys"
@@ -4155,74 +4120,102 @@ msgstr "cURL 并发限制"
 msgid "cURL timeout"
 msgstr "cURL 超时"
 
-#, fuzzy
-#~ msgid "Preload inventory textures"
-#~ msgstr "载入中..."
+#~ msgid "No of course not!"
+#~ msgstr "当然不！"
+
+#~ msgid "Public Serverlist"
+#~ msgstr "公共服务器列表"
+
+#~ msgid "Generate Normalmaps"
+#~ msgstr "生成一般地图"
+
+#~ msgid "No!!!"
+#~ msgstr "不!!!"
 
 #, fuzzy
-#~ msgid "Reset singleplayer world"
-#~ msgstr "重置单人游戏"
-
-#~ msgid "Scaling factor applied to menu elements: "
-#~ msgstr "菜单元素应用缩放因子"
-
-#~ msgid "Touch free target"
-#~ msgstr "自由触摸目标"
+#~ msgid "If disabled "
+#~ msgstr "禁用MOD包"
 
 #, fuzzy
-#~ msgid "Downloading"
-#~ msgstr "下载中"
+#~ msgid "If enabled, "
+#~ msgstr "启用"
 
-#~ msgid " KB/s"
-#~ msgstr "千字节/秒"
+#~ msgid "Restart minetest for driver change to take effect"
+#~ msgstr "重启minetest让驱动变化生效"
 
-#~ msgid " MB/s"
-#~ msgstr "兆字节/秒"
+#~ msgid "Game Name"
+#~ msgstr "游戏名"
 
-#~ msgid "Left click: Move all items, Right click: Move single item"
-#~ msgstr "左键：移动所有物品，右键：移动单个物品"
+#~ msgid "Gamemgr: Unable to copy mod \"$1\" to game \"$2\""
+#~ msgstr "游戏管理: 无法复制MOD“$1”到游戏“$2”"
 
-#~ msgid "is required by:"
-#~ msgstr "被需要："
+#~ msgid "GAMES"
+#~ msgstr "游戏"
 
-#~ msgid "Configuration saved.  "
-#~ msgstr "配置已保存。  "
+#~ msgid "Mods:"
+#~ msgstr "MODS："
 
-#~ msgid "Warning: Configuration not consistent.  "
-#~ msgstr "警告：配置不一致。  "
+#~ msgid "new game"
+#~ msgstr "新建游戏"
 
-#~ msgid "Cannot create world: Name contains invalid characters"
-#~ msgstr "无法创建世界：名字包含非法字符"
+#~ msgid "EDIT GAME"
+#~ msgstr "编辑游戏"
 
-#~ msgid "Show Public"
-#~ msgstr "显示公共"
+#~ msgid "Remove selected mod"
+#~ msgstr "删除选中MOD"
 
-#~ msgid "Show Favorites"
-#~ msgstr "显示最爱"
+#~ msgid "<<-- Add mod"
+#~ msgstr "<<-- 添加MOD"
 
-#~ msgid "Leave address blank to start a local server."
-#~ msgstr "地址栏留空可启动本地服务器。"
+#~ msgid "CLIENT"
+#~ msgstr "客户端"
 
-#~ msgid "Create world"
-#~ msgstr "创造世界"
+#~ msgid "START SERVER"
+#~ msgstr "启动服务器"
 
-#~ msgid "Address required."
-#~ msgstr "需要地址。"
+#~ msgid "Name"
+#~ msgstr "名字"
 
-#~ msgid "Cannot delete world: Nothing selected"
-#~ msgstr "无法删除世界：没有选择世界"
+#~ msgid "Password"
+#~ msgstr "密码"
 
-#~ msgid "Files to be deleted"
-#~ msgstr "将被删除的文件"
+#~ msgid "SETTINGS"
+#~ msgstr "设置"
 
-#~ msgid "Cannot create world: No games found"
-#~ msgstr "无法创造世界：未找到游戏模式"
+#~ msgid "Preload item visuals"
+#~ msgstr "预先加载物品图像"
 
-#~ msgid "Cannot configure world: Nothing selected"
-#~ msgstr "无法配置世界：没有选择世界"
+#~ msgid "Finite Liquid"
+#~ msgstr "液体有限延伸"
 
-#~ msgid "Failed to delete all world files"
-#~ msgstr "无法删除所有该世界的文件"
+#~ msgid "SINGLE PLAYER"
+#~ msgstr "单人游戏"
+
+#~ msgid "TEXTURE PACKS"
+#~ msgstr "材质包"
+
+#~ msgid "MODS"
+#~ msgstr "MODS"
+
+#~ msgid "Add mod:"
+#~ msgstr "添加MOD："
+
+#~ msgid "Local install"
+#~ msgstr "本地安装"
+
+#~ msgid ""
+#~ "Warning: Some mods are not configured yet.\n"
+#~ "They will be enabled by default when you save the configuration.  "
+#~ msgstr ""
+#~ "警告：一些MOD仍未设定。\n"
+#~ "它们会在你保存配置的时候自动启用。  "
+
+#~ msgid ""
+#~ "Warning: Some configured mods are missing.\n"
+#~ "Their setting will be removed when you save the configuration.  "
+#~ msgstr ""
+#~ "警告：缺少一些设定了的MOD。\n"
+#~ "它们的设置会在你保存配置的时候被移除。  "
 
 #~ msgid ""
 #~ "Default Controls:\n"
@@ -4250,99 +4243,140 @@ msgstr "cURL 超时"
 #~ "ESC：菜单\n"
 #~ "T：聊天\n"
 
-#~ msgid ""
-#~ "Warning: Some configured mods are missing.\n"
-#~ "Their setting will be removed when you save the configuration.  "
-#~ msgstr ""
-#~ "警告：缺少一些设定了的MOD。\n"
-#~ "它们的设置会在你保存配置的时候被移除。  "
+#~ msgid "Failed to delete all world files"
+#~ msgstr "无法删除所有该世界的文件"
+
+#~ msgid "Cannot configure world: Nothing selected"
+#~ msgstr "无法配置世界：没有选择世界"
+
+#~ msgid "Cannot create world: No games found"
+#~ msgstr "无法创造世界：未找到游戏模式"
+
+#~ msgid "Files to be deleted"
+#~ msgstr "将被删除的文件"
+
+#~ msgid "Cannot delete world: Nothing selected"
+#~ msgstr "无法删除世界：没有选择世界"
+
+#~ msgid "Address required."
+#~ msgstr "需要地址。"
+
+#~ msgid "Create world"
+#~ msgstr "创造世界"
+
+#~ msgid "Leave address blank to start a local server."
+#~ msgstr "地址栏留空可启动本地服务器。"
+
+#~ msgid "Show Favorites"
+#~ msgstr "显示最爱"
+
+#~ msgid "Show Public"
+#~ msgstr "显示公共"
+
+#~ msgid "Cannot create world: Name contains invalid characters"
+#~ msgstr "无法创建世界：名字包含非法字符"
+
+#~ msgid "Warning: Configuration not consistent.  "
+#~ msgstr "警告：配置不一致。  "
+
+#~ msgid "Configuration saved.  "
+#~ msgstr "配置已保存。  "
+
+#~ msgid "is required by:"
+#~ msgstr "被需要："
+
+#~ msgid "Left click: Move all items, Right click: Move single item"
+#~ msgstr "左键：移动所有物品，右键：移动单个物品"
+
+#~ msgid " MB/s"
+#~ msgstr "兆字节/秒"
+
+#~ msgid " KB/s"
+#~ msgstr "千字节/秒"
+
+#, fuzzy
+#~ msgid "Downloading"
+#~ msgstr "下载中"
+
+#~ msgid "Touch free target"
+#~ msgstr "自由触摸目标"
+
+#~ msgid "Scaling factor applied to menu elements: "
+#~ msgstr "菜单元素应用缩放因子"
+
+#, fuzzy
+#~ msgid "Preload inventory textures"
+#~ msgstr "载入中..."
+
+#~ msgid "Exit to OS"
+#~ msgstr "退出至操作系统"
+
+#~ msgid "Exit to Menu"
+#~ msgstr "退出至菜单"
 
 #~ msgid ""
-#~ "Warning: Some mods are not configured yet.\n"
-#~ "They will be enabled by default when you save the configuration.  "
+#~ "Default Controls:\n"
+#~ "No menu visible:\n"
+#~ "- single tap: button activate\n"
+#~ "- double tap: place/use\n"
+#~ "- slide finger: look around\n"
+#~ "Menu/Inventory visible:\n"
+#~ "- double tap (outside):\n"
+#~ " -->close\n"
+#~ "- touch stack, touch slot:\n"
+#~ " --> move stack\n"
+#~ "- touch&drag, tap 2nd finger\n"
+#~ " --> place single item to slot\n"
 #~ msgstr ""
-#~ "警告：一些MOD仍未设定。\n"
-#~ "它们会在你保存配置的时候自动启用。  "
+#~ "默认控制:\n"
+#~ "菜单不可见时:\n"
+#~ "- 单击: 激活按钮\n"
+#~ "- 双击: 放置/使用\n"
+#~ "- 滑动手指: 改变视角\n"
+#~ "菜单/物品栏可见时:\n"
+#~ "- 双击 (界面区域外):\n"
+#~ " --> 关闭\n"
+#~ "- 点击物品, 然后点击栏位:\n"
+#~ " --> 移动一组物品\n"
+#~ "- 点击物品并拖动, 然后另一手指点击\n"
+#~ " --> 移动一个物品\n"
 
-#~ msgid "Local install"
-#~ msgstr "本地安装"
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "- WASD: move\n"
+#~ "- Space: jump/climb\n"
+#~ "- Shift: sneak/go down\n"
+#~ "- Q: drop item\n"
+#~ "- I: inventory\n"
+#~ "- Mouse: turn/look\n"
+#~ "- Mouse left: dig/punch\n"
+#~ "- Mouse right: place/use\n"
+#~ "- Mouse wheel: select item\n"
+#~ "- T: chat\n"
+#~ msgstr ""
+#~ "默认控制：\n"
+#~ "W/A/S/D: 移动\n"
+#~ "空格: 跳/爬\n"
+#~ "Shift: 潜行/向下\n"
+#~ "Q: 丢物品\n"
+#~ "I: 物品栏\n"
+#~ "鼠标:转身/环顾\n"
+#~ "鼠标左键: 挖\n"
+#~ "鼠标右键: 放/使用\n"
+#~ "鼠标滚轮: 选择物品\n"
+#~ "T: 聊天\n"
 
-#~ msgid "Add mod:"
-#~ msgstr "添加MOD："
-
-#~ msgid "MODS"
-#~ msgstr "MODS"
-
-#~ msgid "TEXTURE PACKS"
-#~ msgstr "材质包"
-
-#~ msgid "SINGLE PLAYER"
+#~ msgid "Start Singleplayer"
 #~ msgstr "单人游戏"
 
-#~ msgid "Finite Liquid"
-#~ msgstr "液体有限延伸"
+#~ msgid "Main"
+#~ msgstr "主要"
 
-#~ msgid "Preload item visuals"
-#~ msgstr "预先加载物品图像"
+#~ msgid "Config mods"
+#~ msgstr "配置 MOD"
 
-#~ msgid "SETTINGS"
-#~ msgstr "设置"
+#~ msgid "Server"
+#~ msgstr "服务器"
 
-#~ msgid "Password"
-#~ msgstr "密码"
-
-#~ msgid "Name"
-#~ msgstr "名字"
-
-#~ msgid "START SERVER"
-#~ msgstr "启动服务器"
-
-#~ msgid "CLIENT"
-#~ msgstr "客户端"
-
-#~ msgid "<<-- Add mod"
-#~ msgstr "<<-- 添加MOD"
-
-#~ msgid "Remove selected mod"
-#~ msgstr "删除选中MOD"
-
-#~ msgid "EDIT GAME"
-#~ msgstr "编辑游戏"
-
-#~ msgid "new game"
-#~ msgstr "新建游戏"
-
-#~ msgid "Mods:"
-#~ msgstr "MODS："
-
-#~ msgid "GAMES"
-#~ msgstr "游戏"
-
-#~ msgid "Gamemgr: Unable to copy mod \"$1\" to game \"$2\""
-#~ msgstr "游戏管理: 无法复制MOD“$1”到游戏“$2”"
-
-#~ msgid "Game Name"
-#~ msgstr "游戏名"
-
-#~ msgid "Restart minetest for driver change to take effect"
-#~ msgstr "重启minetest让驱动变化生效"
-
-#, fuzzy
-#~ msgid "If enabled, "
-#~ msgstr "启用"
-
-#, fuzzy
-#~ msgid "If disabled "
-#~ msgstr "禁用MOD包"
-
-#~ msgid "No!!!"
-#~ msgstr "不!!!"
-
-#~ msgid "Generate Normalmaps"
-#~ msgstr "生成一般地图"
-
-#~ msgid "Public Serverlist"
-#~ msgstr "公共服务器列表"
-
-#~ msgid "No of course not!"
-#~ msgstr "当然不！"
+#~ msgid "Enable Damage"
+#~ msgstr "开启伤害风险"

@@ -6,11 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Minetest 0.4.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-05 16:13+0200\n"
+"POT-Creation-Date: 2016-10-19 05:00+0300\n"
 "PO-Revision-Date: 2016-05-08 17:01+0000\n"
 "Last-Translator: Emon Omen <emon@openmailbox.org>\n"
-"Language-Team: Italian "
-"<https://hosted.weblate.org/projects/minetest/minetest/it/>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/minetest/"
+"minetest/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -73,8 +73,7 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "Supportiamo versioni di protocollo comprese tra $1 e $2."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -145,14 +144,6 @@ msgstr "Scaricare un sottogioco, come minetest_game, da minetest.net"
 msgid "Download one from minetest.net"
 msgstr "Scaricarne uno da minetest.net"
 
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Gioco"
-
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Generatore mappa"
-
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr ""
@@ -178,9 +169,8 @@ msgstr "Non avete sottogiochi installati."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "Siete certi di volere cancellare \"$1\"?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
-#: src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Delete"
 msgstr "Cancellare"
 
@@ -195,6 +185,14 @@ msgstr "Modmgr: percorso mod. non valido \"$1\""
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "Cancellare il mondo \"$1\"?"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "No"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Sì"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -364,12 +362,22 @@ msgid "Active Contributors"
 msgstr "Contributori attivi"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Core Developers"
+msgid "Credits"
+msgstr "Crediti"
+
+#: builtin/mainmenu/tab_credits.lua
+msgid "Dedication of the current release"
+msgstr ""
+
+#: builtin/mainmenu/tab_credits.lua
+#, fuzzy
+msgid "Minetest Developers"
 msgstr "Sviluppatori principali"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Credits"
-msgstr "Crediti"
+#, fuzzy
+msgid "MultiCraft Developers"
+msgstr "Sviluppatori principali"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -411,35 +419,35 @@ msgstr "Disinstallare il pacchetto mod. scelto"
 msgid "Address / Port"
 msgstr "Indirizzo / Porta"
 
-#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Client"
-
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Connect"
 msgstr "Connettersi"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Creative mode"
 msgstr "Modalità creativa"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Damage enabled"
 msgstr "Danno abilitato"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Del. Favorite"
 msgstr "Canc. prefer."
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Favorite"
 msgstr "Preferiti:"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
+msgid "Multi Player"
+msgstr ""
+
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Name / Password"
 msgstr "Nome / Password"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "PvP enabled"
 msgstr "GcG abilitato"
 
@@ -447,19 +455,19 @@ msgstr "GcG abilitato"
 msgid "Bind Address"
 msgstr "Legare indirizzo"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Configure"
 msgstr "Configurare"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Modalità creativa"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Create Server"
+msgstr "Creazione del server..."
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Enable Damage"
-msgstr "Abilitare il danno"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Creative Inventory"
+msgstr "Inventario"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -481,13 +489,9 @@ msgstr "Porta"
 msgid "Public"
 msgstr "Pubblico"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Select World:"
 msgstr "Scegliere il mondo:"
-
-#: builtin/mainmenu/tab_server.lua
-msgid "Server"
-msgstr "Server"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -496,6 +500,11 @@ msgstr "Porta del server"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Avviare il gioco"
+
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Survival Mode"
+msgstr "Modalità creativa"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -554,10 +563,6 @@ msgid "Mipmap + Aniso. Filter"
 msgstr "Mipmap + Filtro aniso."
 
 #: builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "No"
-
-#: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
 msgstr "Nessun filtro"
 
@@ -596,6 +601,11 @@ msgstr "Occlusione di parallasse"
 #: builtin/mainmenu/tab_settings.lua
 msgid "Particles"
 msgstr "Particelle"
+
+#: builtin/mainmenu/tab_settings.lua
+#, fuzzy
+msgid "Reset singleplayer world"
+msgstr "Siete certi di volere azzerare il vostro mondo di giocatore singolo?"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
@@ -645,28 +655,17 @@ msgstr "Piante ondeggianti"
 msgid "Waving Water"
 msgstr "Acqua ondeggiante"
 
-#: builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Sì"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Config mods"
-msgstr "Config. mod."
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Main"
-msgstr "Principale"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Start Singleplayer"
-msgstr "Avviare il giocatore singolo"
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Modalità creativa"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Giocare"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-msgid "Singleplayer"
+#, fuzzy
+msgid "Single Player"
 msgstr "Giocatore singolo"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -754,6 +753,11 @@ msgid "Change Password"
 msgstr "Modificare la password"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Close game"
+msgstr "Chiudi gioco"
+
+#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "Connessione al server..."
 
@@ -768,68 +772,6 @@ msgstr "Creazione del client..."
 #: src/game.cpp
 msgid "Creating server..."
 msgstr "Creazione del server..."
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"- WASD: move\n"
-"- Space: jump/climb\n"
-"- Shift: sneak/go down\n"
-"- Q: drop item\n"
-"- I: inventory\n"
-"- Mouse: turn/look\n"
-"- Mouse left: dig/punch\n"
-"- Mouse right: place/use\n"
-"- Mouse wheel: select item\n"
-"- T: chat\n"
-msgstr ""
-"Controlli predefiniti:\n"
-"- WASD: muoversi\n"
-"- Spazio: saltare/salire\n"
-"- Maiusc: strisciare/scendere\n"
-"- Q: lasciare cadere l'oggetto\n"
-"- I: inventario\n"
-"- Mouse: girarsi/guardare\n"
-"- Mouse sin.: scavare/colpire\n"
-"- Mouse des.: posizionare/usare\n"
-"- Rot. mouse: scegliere l'oggetto\n"
-"- T: messaggistica\n"
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"No menu visible:\n"
-"- single tap: button activate\n"
-"- double tap: place/use\n"
-"- slide finger: look around\n"
-"Menu/Inventory visible:\n"
-"- double tap (outside):\n"
-" -->close\n"
-"- touch stack, touch slot:\n"
-" --> move stack\n"
-"- touch&drag, tap 2nd finger\n"
-" --> place single item to slot\n"
-msgstr ""
-"Controlli predefiniti:\n"
-"Menu non visibile:\n"
-"- colpetto: attivare pulsante\n"
-"- doppio colpetto: posizionare/usare\n"
-"- trascinare col dito: guardare attorno\n"
-"Menu/Inventario visibile:\n"
-"- doppio colpetto (fuori):\n"
-" -->chiudere\n"
-"- toccare pila, toccare alloggio:\n"
-" --> muovere pila\n"
-"- tocco&trascina, colpetto 2o dito\n"
-" --> posizionere oggetto singolo nell'alloggio\n"
-
-#: src/game.cpp
-msgid "Exit to Menu"
-msgstr "Tornare al menu"
-
-#: src/game.cpp
-msgid "Exit to OS"
-msgstr "Tornare al s.o."
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -848,6 +790,11 @@ msgid "MiB/s"
 msgstr "MiB/s"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Migrating world..."
+msgstr "Creazione del client..."
+
+#: src/game.cpp
 msgid "Node definitions..."
 msgstr "Definizioni del nodo..."
 
@@ -858,6 +805,10 @@ msgstr "Risoluzione dell'indirizzo..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Ricomparire"
+
+#: src/game.cpp
+msgid "Save and Exit"
+msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -928,7 +879,9 @@ msgid "Key already in use"
 msgstr "Tasto già in uso"
 
 #: src/guiKeyChangeMenu.cpp
-msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
+#, fuzzy
+msgid ""
+"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
 msgstr ""
 "Collegamenti dei tasti. (Se questo menu si incasina, togliete la roba da "
 "minetest.conf)"
@@ -1596,6 +1549,10 @@ msgid "Clean transparent textures"
 msgstr "Immagini trasparenti pulite"
 
 #: src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Client"
+
+#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr "Client e server"
 
@@ -1633,8 +1590,8 @@ msgid ""
 "functions even when mod security is on (via request_insecure_environment())."
 msgstr ""
 "Lista separata da virgole dei mod affidabili ai quali è permesso accedere a "
-"funzioni non sicure anche quando il valore \"mod security\" è impostato su \""
-"on\" (utilizzando request_insecure_environment())."
+"funzioni non sicure anche quando il valore \"mod security\" è impostato su "
+"\"on\" (utilizzando request_insecure_environment())."
 
 #: src/settings_translation_file.cpp
 msgid ""
@@ -1950,8 +1907,8 @@ msgid ""
 "textures)\n"
 "when connecting to the server."
 msgstr ""
-"Abilita l'utilizzo di un server di materiale remoto (se fornito dal server)."
-"\n"
+"Abilita l'utilizzo di un server di materiale remoto (se fornito dal "
+"server).\n"
 "I server remoti offrono un modo significativamente più veloce di "
 "scaricamento\n"
 "del materiale (ad es. le immagini) quando ci si collega al server."
@@ -2216,6 +2173,10 @@ msgstr "Filtro di scala GUI"
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr "Filtro di scala GUI txr2img"
+
+#: src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Gioco"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -2988,8 +2949,8 @@ msgid ""
 "default.\n"
 "Flags starting with 'no' are used to explicitly disable them."
 msgstr ""
-"Attributi di generazione della mappa specifici per il Generatore mappa valli."
-"\n"
+"Attributi di generazione della mappa specifici per il Generatore mappa "
+"valli.\n"
 "'altitude_chill' rende più fredde le altitudini più elevate, il che potrebbe "
 "causare problemi di bioma.\n"
 "'humid_rivers' modifica l'umidità attorno ai fiumi e in aree dove l'acqua "
@@ -3080,6 +3041,10 @@ msgstr "Limite del blocco mappa"
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr "Tempo di scad. dello scaric. del blocco mappa"
+
+#: src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Generatore mappa"
 
 #: src/settings_translation_file.cpp
 msgid "Mapgen Valleys"
@@ -4596,101 +4561,17 @@ msgstr "Limite cURL parallelo"
 msgid "cURL timeout"
 msgstr "Tempo di scadenza cURL"
 
-#~ msgid "Item textures..."
-#~ msgstr "Immagini degli oggetti..."
+#~ msgid "No of course not!"
+#~ msgstr "No, certo che no!"
 
-#~ msgid "Preload inventory textures"
-#~ msgstr "Precaricamento delle textures dell'inventario"
+#~ msgid "Public Serverlist"
+#~ msgstr "Elenco dei server pubblici"
 
-#~ msgid "Viewing range minimum"
-#~ msgstr "Distanza minima di visibilità"
+#~ msgid "Generate Normalmaps"
+#~ msgstr "Generare normalmap"
 
-#~ msgid "Wanted FPS"
-#~ msgstr "FPS desiderati"
-
-#~ msgid "Local install"
-#~ msgstr "Installazione locale"
-
-#~ msgid "Add mod:"
-#~ msgstr "Aggiungere un modulo:"
-
-#~ msgid "MODS"
-#~ msgstr "MODULI"
-
-#~ msgid "TEXTURE PACKS"
-#~ msgstr "PACCH. DI IMM."
-
-#~ msgid "SINGLE PLAYER"
-#~ msgstr "GIOC. SING."
-
-#~ msgid "Finite Liquid"
-#~ msgstr "Liquido limitato"
-
-#~ msgid "Preload item visuals"
-#~ msgstr "Precaricare le immagini"
-
-#~ msgid "SETTINGS"
-#~ msgstr "IMPOSTAZIONI"
-
-#~ msgid "Password"
-#~ msgstr "Password"
-
-#~ msgid "Name"
-#~ msgstr "Nome"
-
-#~ msgid "START SERVER"
-#~ msgstr "AVVIO SERVER"
-
-#~ msgid "CLIENT"
-#~ msgstr "CLIENT"
-
-#~ msgid "<<-- Add mod"
-#~ msgstr "<<-- Aggiungere il modulo"
-
-#~ msgid "Remove selected mod"
-#~ msgstr "Rimuovere il modulo selezionato"
-
-#~ msgid "EDIT GAME"
-#~ msgstr "MODIFICARE IL GIOCO"
-
-#~ msgid "new game"
-#~ msgstr "nuovo gioco"
-
-#~ msgid "Mods:"
-#~ msgstr "Moduli:"
-
-#~ msgid "GAMES"
-#~ msgstr "GIOCHI"
-
-#~ msgid "Gamemgr: Unable to copy mod \"$1\" to game \"$2\""
-#~ msgstr "Gestore del gioco: impossibile il modulo \"$1\" nel gioco \"$2\""
-
-#~ msgid "Game Name"
-#~ msgstr "Nome del gioco"
-
-#~ msgid "Restart minetest for driver change to take effect"
-#~ msgstr "Riavviare minetest per rendere effettive le modifiche"
-
-#~ msgid "If enabled, "
-#~ msgstr "attivata"
-
-#~ msgid "If disabled "
-#~ msgstr "Disatt. pacch."
-
-#~ msgid ""
-#~ "Map generation attributes specific to Mapgen v7.\n"
-#~ "'ridges' are the rivers.\n"
-#~ "Flags that are not specified in the flag string are not modified from the "
-#~ "default.\n"
-#~ "Flags starting with \"no\" are used to explicitly disable them."
-#~ msgstr ""
-#~ "Attributi di generazione della mappa specifici per Generatore mappa v. "
-#~ "7.\n"
-#~ "'ridges' sono i fiumi.\n"
-#~ "Le impostazioni che non sono specificate nella stringa mantengono i "
-#~ "valori predefiniti.\n"
-#~ "Le impostazioni che iniziano con \"no\" sono usate per disabilitarle "
-#~ "esplicitamente."
+#~ msgid "No!!!"
+#~ msgstr "No!!!"
 
 #~ msgid ""
 #~ "Map generation attributes specific to Mapgen Valleys.\n"
@@ -4714,14 +4595,171 @@ msgstr "Tempo di scadenza cURL"
 #~ "\"humid_rivers\" modifica l'umidità attorno ai fiumi e nelle aree in cui "
 #~ "l'acqua tenderebbe a stagnare. Potrebbe interferire con biomi"
 
-#~ msgid "No!!!"
-#~ msgstr "No!!!"
+#~ msgid ""
+#~ "Map generation attributes specific to Mapgen v7.\n"
+#~ "'ridges' are the rivers.\n"
+#~ "Flags that are not specified in the flag string are not modified from the "
+#~ "default.\n"
+#~ "Flags starting with \"no\" are used to explicitly disable them."
+#~ msgstr ""
+#~ "Attributi di generazione della mappa specifici per Generatore mappa v. "
+#~ "7.\n"
+#~ "'ridges' sono i fiumi.\n"
+#~ "Le impostazioni che non sono specificate nella stringa mantengono i "
+#~ "valori predefiniti.\n"
+#~ "Le impostazioni che iniziano con \"no\" sono usate per disabilitarle "
+#~ "esplicitamente."
 
-#~ msgid "Generate Normalmaps"
-#~ msgstr "Generare normalmap"
+#~ msgid "If disabled "
+#~ msgstr "Disatt. pacch."
 
-#~ msgid "Public Serverlist"
-#~ msgstr "Elenco dei server pubblici"
+#~ msgid "If enabled, "
+#~ msgstr "attivata"
 
-#~ msgid "No of course not!"
-#~ msgstr "No, certo che no!"
+#~ msgid "Restart minetest for driver change to take effect"
+#~ msgstr "Riavviare minetest per rendere effettive le modifiche"
+
+#~ msgid "Game Name"
+#~ msgstr "Nome del gioco"
+
+#~ msgid "Gamemgr: Unable to copy mod \"$1\" to game \"$2\""
+#~ msgstr "Gestore del gioco: impossibile il modulo \"$1\" nel gioco \"$2\""
+
+#~ msgid "GAMES"
+#~ msgstr "GIOCHI"
+
+#~ msgid "Mods:"
+#~ msgstr "Moduli:"
+
+#~ msgid "new game"
+#~ msgstr "nuovo gioco"
+
+#~ msgid "EDIT GAME"
+#~ msgstr "MODIFICARE IL GIOCO"
+
+#~ msgid "Remove selected mod"
+#~ msgstr "Rimuovere il modulo selezionato"
+
+#~ msgid "<<-- Add mod"
+#~ msgstr "<<-- Aggiungere il modulo"
+
+#~ msgid "CLIENT"
+#~ msgstr "CLIENT"
+
+#~ msgid "START SERVER"
+#~ msgstr "AVVIO SERVER"
+
+#~ msgid "Name"
+#~ msgstr "Nome"
+
+#~ msgid "Password"
+#~ msgstr "Password"
+
+#~ msgid "SETTINGS"
+#~ msgstr "IMPOSTAZIONI"
+
+#~ msgid "Preload item visuals"
+#~ msgstr "Precaricare le immagini"
+
+#~ msgid "Finite Liquid"
+#~ msgstr "Liquido limitato"
+
+#~ msgid "SINGLE PLAYER"
+#~ msgstr "GIOC. SING."
+
+#~ msgid "TEXTURE PACKS"
+#~ msgstr "PACCH. DI IMM."
+
+#~ msgid "MODS"
+#~ msgstr "MODULI"
+
+#~ msgid "Add mod:"
+#~ msgstr "Aggiungere un modulo:"
+
+#~ msgid "Local install"
+#~ msgstr "Installazione locale"
+
+#~ msgid "Wanted FPS"
+#~ msgstr "FPS desiderati"
+
+#~ msgid "Viewing range minimum"
+#~ msgstr "Distanza minima di visibilità"
+
+#~ msgid "Preload inventory textures"
+#~ msgstr "Precaricamento delle textures dell'inventario"
+
+#~ msgid "Item textures..."
+#~ msgstr "Immagini degli oggetti..."
+
+#~ msgid "Exit to OS"
+#~ msgstr "Tornare al s.o."
+
+#~ msgid "Exit to Menu"
+#~ msgstr "Tornare al menu"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "No menu visible:\n"
+#~ "- single tap: button activate\n"
+#~ "- double tap: place/use\n"
+#~ "- slide finger: look around\n"
+#~ "Menu/Inventory visible:\n"
+#~ "- double tap (outside):\n"
+#~ " -->close\n"
+#~ "- touch stack, touch slot:\n"
+#~ " --> move stack\n"
+#~ "- touch&drag, tap 2nd finger\n"
+#~ " --> place single item to slot\n"
+#~ msgstr ""
+#~ "Controlli predefiniti:\n"
+#~ "Menu non visibile:\n"
+#~ "- colpetto: attivare pulsante\n"
+#~ "- doppio colpetto: posizionare/usare\n"
+#~ "- trascinare col dito: guardare attorno\n"
+#~ "Menu/Inventario visibile:\n"
+#~ "- doppio colpetto (fuori):\n"
+#~ " -->chiudere\n"
+#~ "- toccare pila, toccare alloggio:\n"
+#~ " --> muovere pila\n"
+#~ "- tocco&trascina, colpetto 2o dito\n"
+#~ " --> posizionere oggetto singolo nell'alloggio\n"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "- WASD: move\n"
+#~ "- Space: jump/climb\n"
+#~ "- Shift: sneak/go down\n"
+#~ "- Q: drop item\n"
+#~ "- I: inventory\n"
+#~ "- Mouse: turn/look\n"
+#~ "- Mouse left: dig/punch\n"
+#~ "- Mouse right: place/use\n"
+#~ "- Mouse wheel: select item\n"
+#~ "- T: chat\n"
+#~ msgstr ""
+#~ "Controlli predefiniti:\n"
+#~ "- WASD: muoversi\n"
+#~ "- Spazio: saltare/salire\n"
+#~ "- Maiusc: strisciare/scendere\n"
+#~ "- Q: lasciare cadere l'oggetto\n"
+#~ "- I: inventario\n"
+#~ "- Mouse: girarsi/guardare\n"
+#~ "- Mouse sin.: scavare/colpire\n"
+#~ "- Mouse des.: posizionare/usare\n"
+#~ "- Rot. mouse: scegliere l'oggetto\n"
+#~ "- T: messaggistica\n"
+
+#~ msgid "Start Singleplayer"
+#~ msgstr "Avviare il giocatore singolo"
+
+#~ msgid "Main"
+#~ msgstr "Principale"
+
+#~ msgid "Config mods"
+#~ msgstr "Config. mod."
+
+#~ msgid "Server"
+#~ msgstr "Server"
+
+#~ msgid "Enable Damage"
+#~ msgstr "Abilitare il danno"

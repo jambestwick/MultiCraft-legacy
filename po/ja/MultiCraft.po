@@ -2,11 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: minetest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-05 16:13+0200\n"
+"POT-Creation-Date: 2016-10-19 05:00+0300\n"
 "PO-Revision-Date: 2016-05-07 16:10+0000\n"
 "Last-Translator: BreadW <toshiharu.uno@gmail.com>\n"
-"Language-Team: Japanese "
-"<https://hosted.weblate.org/projects/minetest/minetest/ja/>\n"
+"Language-Team: Japanese <https://hosted.weblate.org/projects/minetest/"
+"minetest/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,8 +67,7 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "プロトコルバージョンは$1から$2までをサポートしています。"
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -140,14 +139,6 @@ msgstr ""
 msgid "Download one from minetest.net"
 msgstr "minetest.netからダウンロードしてください"
 
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Game"
-msgstr "ゲーム"
-
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "ワールドタイプ"
-
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "ワールド名が入力されていないか、ゲームが選択されていません"
@@ -172,9 +163,8 @@ msgstr "サブゲームがインストールされていません。"
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "本当に\"$1\"を削除してよろしいですか？"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
-#: src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Delete"
 msgstr "削除"
 
@@ -189,6 +179,14 @@ msgstr "Modマネージャー: Mod\"$1\"の場所が不明です"
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "ワールド\"$1\"を削除しますか？"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "いいえ"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "はい"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -357,12 +355,22 @@ msgid "Active Contributors"
 msgstr "活動中の開発協力者"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Core Developers"
+msgid "Credits"
+msgstr "クレジット"
+
+#: builtin/mainmenu/tab_credits.lua
+msgid "Dedication of the current release"
+msgstr ""
+
+#: builtin/mainmenu/tab_credits.lua
+#, fuzzy
+msgid "Minetest Developers"
 msgstr "開発者"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Credits"
-msgstr "クレジット"
+#, fuzzy
+msgid "MultiCraft Developers"
+msgstr "開発者"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -404,35 +412,35 @@ msgstr "選択したModパックを削除"
 msgid "Address / Port"
 msgstr "アドレスとポート"
 
-#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
-msgid "Client"
-msgstr "クライアント"
-
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Connect"
 msgstr "接続"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Creative mode"
 msgstr "クリエイティブモード"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Damage enabled"
 msgstr "ダメージ有効"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Del. Favorite"
 msgstr "お気に入りを削除"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Favorite"
 msgstr "お気に入り"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
+msgid "Multi Player"
+msgstr ""
+
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Name / Password"
 msgstr "名前とパスワード"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "PvP enabled"
 msgstr "PvP有効"
 
@@ -440,19 +448,19 @@ msgstr "PvP有効"
 msgid "Bind Address"
 msgstr "バインドアドレス"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Configure"
 msgstr "設定"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "クリエイティブモード"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Create Server"
+msgstr "サーバを起動中..."
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Enable Damage"
-msgstr "ダメージ有効"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Creative Inventory"
+msgstr "インベントリ"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -474,13 +482,9 @@ msgstr "ポート"
 msgid "Public"
 msgstr "公開サーバ"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Select World:"
 msgstr "ワールドを選択:"
-
-#: builtin/mainmenu/tab_server.lua
-msgid "Server"
-msgstr "サーバ"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -489,6 +493,11 @@ msgstr "サーバのポート"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "ゲームスタート"
+
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Survival Mode"
+msgstr "クリエイティブモード"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -547,10 +556,6 @@ msgid "Mipmap + Aniso. Filter"
 msgstr "異方性フィルタ"
 
 #: builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "いいえ"
-
-#: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
 msgstr "フィルタ無し"
 
@@ -589,6 +594,10 @@ msgstr "視差遮蔽マッピング"
 #: builtin/mainmenu/tab_settings.lua
 msgid "Particles"
 msgstr "パーティクル有効化"
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "Reset singleplayer world"
+msgstr "シングルプレイヤーのワールドをリセット"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
@@ -638,28 +647,17 @@ msgstr "揺れる草花"
 msgid "Waving Water"
 msgstr "揺れる水"
 
-#: builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "はい"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Config mods"
-msgstr "Mod設定"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Main"
-msgstr "メイン"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Start Singleplayer"
-msgstr "シングルプレイ開始"
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "クリエイティブモード"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "プレイ"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-msgid "Singleplayer"
+#, fuzzy
+msgid "Single Player"
 msgstr "シングルプレイヤー"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -747,6 +745,11 @@ msgid "Change Password"
 msgstr "パスワード変更"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Close game"
+msgstr "ストアを閉じる"
+
+#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "サーバに接続中..."
 
@@ -761,68 +764,6 @@ msgstr "クライアントを起動中..."
 #: src/game.cpp
 msgid "Creating server..."
 msgstr "サーバを起動中..."
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"- WASD: move\n"
-"- Space: jump/climb\n"
-"- Shift: sneak/go down\n"
-"- Q: drop item\n"
-"- I: inventory\n"
-"- Mouse: turn/look\n"
-"- Mouse left: dig/punch\n"
-"- Mouse right: place/use\n"
-"- Mouse wheel: select item\n"
-"- T: chat\n"
-msgstr ""
-"デフォルトの操作:\n"
-"- WASD: 移動\n"
-"- スペース: ジャンプ/登る\n"
-"- Shift: スニーク/降りる\n"
-"- Q: アイテムを落とす\n"
-"- I: インベントリ\n"
-"- マウス: 見回す\n"
-"- 左クリック: 破壊/パンチ\n"
-"- 右クリック: 設置/使用\n"
-"- マウスホイール: アイテム選択\n"
-"- T: チャット\n"
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"No menu visible:\n"
-"- single tap: button activate\n"
-"- double tap: place/use\n"
-"- slide finger: look around\n"
-"Menu/Inventory visible:\n"
-"- double tap (outside):\n"
-" -->close\n"
-"- touch stack, touch slot:\n"
-" --> move stack\n"
-"- touch&drag, tap 2nd finger\n"
-" --> place single item to slot\n"
-msgstr ""
-"デフォルトの操作:\n"
-"タッチ操作:\n"
-"- シングルタップ: ブロックの破壊\n"
-"- ダブルタップ: 設置/使用\n"
-"- スライド: 見回す\n"
-"メニュー/インベントリの操作:\n"
-"- メニューの外をダブルタップ:\n"
-" --> 閉じる\n"
-"- アイテムをタッチ:\n"
-" --> アイテムの移動\n"
-"- タッチしてドラッグ、二本指タップ:\n"
-" --> アイテムを一つスロットに置く\n"
-
-#: src/game.cpp
-msgid "Exit to Menu"
-msgstr "タイトル"
-
-#: src/game.cpp
-msgid "Exit to OS"
-msgstr "終了"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -841,6 +782,11 @@ msgid "MiB/s"
 msgstr "MB/秒"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Migrating world..."
+msgstr "クライアントを起動中..."
+
+#: src/game.cpp
 msgid "Node definitions..."
 msgstr "ノードを定義中..."
 
@@ -851,6 +797,10 @@ msgstr "アドレスを解決中..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "リスポーン"
+
+#: src/game.cpp
+msgid "Save and Exit"
+msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -921,7 +871,9 @@ msgid "Key already in use"
 msgstr "キーが重複しています"
 
 #: src/guiKeyChangeMenu.cpp
-msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
+#, fuzzy
+msgid ""
+"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
 msgstr ""
 "操作設定です。 (変更に失敗した場合、minetest.confから該当する設定を削除してく"
 "ださい)"
@@ -1604,6 +1556,10 @@ msgid "Clean transparent textures"
 msgstr "テクスチャの透過を削除"
 
 #: src/settings_translation_file.cpp
+msgid "Client"
+msgstr "クライアント"
+
+#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr "クライアントとサーバ"
 
@@ -2274,6 +2230,10 @@ msgid "GUI scaling filter txr2img"
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid "Game"
+msgstr "ゲーム"
+
+#: src/settings_translation_file.cpp
 msgid "Gamma"
 msgstr ""
 
@@ -2920,6 +2880,10 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "ワールドタイプ"
 
 #: src/settings_translation_file.cpp
 msgid "Mapgen Valleys"
@@ -4285,45 +4249,115 @@ msgstr "cURLパラレル制限"
 msgid "cURL timeout"
 msgstr "cURLタイムアウト"
 
-#, fuzzy
-#~ msgid "Preload inventory textures"
-#~ msgstr "テクスチャ読み込み中..."
-
-#~ msgid "Reset singleplayer world"
-#~ msgstr "シングルプレイヤーのワールドをリセット"
-
-#~ msgid "Scaling factor applied to menu elements: "
-#~ msgstr "メニューの大きさとして設定されている数値: "
-
-#~ msgid "Touch free target"
-#~ msgstr "タッチ位置を自由にする"
-
-#~ msgid " KB/s"
-#~ msgstr " KB/秒"
-
-#~ msgid " MB/s"
-#~ msgstr " MB/秒"
-
-#~ msgid "Restart minetest for driver change to take effect"
-#~ msgstr "ドライバーを変更するためMinetestを再起動します"
-
-#~ msgid "Rendering:"
-#~ msgstr "レンダリング:"
-
-#~ msgid "If enabled, "
-#~ msgstr "有効化の場合 "
-
-#~ msgid "If disabled "
-#~ msgstr "無効化の場合 "
-
-#~ msgid "No!!!"
-#~ msgstr "いいえ！！！"
-
-#~ msgid "Generate Normalmaps"
-#~ msgstr "ノーマルマップの生成"
+#~ msgid "No of course not!"
+#~ msgstr "いいえ！"
 
 #~ msgid "Public Serverlist"
 #~ msgstr "公開サーバ一覧"
 
-#~ msgid "No of course not!"
-#~ msgstr "いいえ！"
+#~ msgid "Generate Normalmaps"
+#~ msgstr "ノーマルマップの生成"
+
+#~ msgid "No!!!"
+#~ msgstr "いいえ！！！"
+
+#~ msgid "If disabled "
+#~ msgstr "無効化の場合 "
+
+#~ msgid "If enabled, "
+#~ msgstr "有効化の場合 "
+
+#~ msgid "Rendering:"
+#~ msgstr "レンダリング:"
+
+#~ msgid "Restart minetest for driver change to take effect"
+#~ msgstr "ドライバーを変更するためMinetestを再起動します"
+
+#~ msgid " MB/s"
+#~ msgstr " MB/秒"
+
+#~ msgid " KB/s"
+#~ msgstr " KB/秒"
+
+#~ msgid "Touch free target"
+#~ msgstr "タッチ位置を自由にする"
+
+#~ msgid "Scaling factor applied to menu elements: "
+#~ msgstr "メニューの大きさとして設定されている数値: "
+
+#, fuzzy
+#~ msgid "Preload inventory textures"
+#~ msgstr "テクスチャ読み込み中..."
+
+#~ msgid "Exit to OS"
+#~ msgstr "終了"
+
+#~ msgid "Exit to Menu"
+#~ msgstr "タイトル"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "No menu visible:\n"
+#~ "- single tap: button activate\n"
+#~ "- double tap: place/use\n"
+#~ "- slide finger: look around\n"
+#~ "Menu/Inventory visible:\n"
+#~ "- double tap (outside):\n"
+#~ " -->close\n"
+#~ "- touch stack, touch slot:\n"
+#~ " --> move stack\n"
+#~ "- touch&drag, tap 2nd finger\n"
+#~ " --> place single item to slot\n"
+#~ msgstr ""
+#~ "デフォルトの操作:\n"
+#~ "タッチ操作:\n"
+#~ "- シングルタップ: ブロックの破壊\n"
+#~ "- ダブルタップ: 設置/使用\n"
+#~ "- スライド: 見回す\n"
+#~ "メニュー/インベントリの操作:\n"
+#~ "- メニューの外をダブルタップ:\n"
+#~ " --> 閉じる\n"
+#~ "- アイテムをタッチ:\n"
+#~ " --> アイテムの移動\n"
+#~ "- タッチしてドラッグ、二本指タップ:\n"
+#~ " --> アイテムを一つスロットに置く\n"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "- WASD: move\n"
+#~ "- Space: jump/climb\n"
+#~ "- Shift: sneak/go down\n"
+#~ "- Q: drop item\n"
+#~ "- I: inventory\n"
+#~ "- Mouse: turn/look\n"
+#~ "- Mouse left: dig/punch\n"
+#~ "- Mouse right: place/use\n"
+#~ "- Mouse wheel: select item\n"
+#~ "- T: chat\n"
+#~ msgstr ""
+#~ "デフォルトの操作:\n"
+#~ "- WASD: 移動\n"
+#~ "- スペース: ジャンプ/登る\n"
+#~ "- Shift: スニーク/降りる\n"
+#~ "- Q: アイテムを落とす\n"
+#~ "- I: インベントリ\n"
+#~ "- マウス: 見回す\n"
+#~ "- 左クリック: 破壊/パンチ\n"
+#~ "- 右クリック: 設置/使用\n"
+#~ "- マウスホイール: アイテム選択\n"
+#~ "- T: チャット\n"
+
+#~ msgid "Start Singleplayer"
+#~ msgstr "シングルプレイ開始"
+
+#~ msgid "Main"
+#~ msgstr "メイン"
+
+#~ msgid "Config mods"
+#~ msgstr "Mod設定"
+
+#~ msgid "Server"
+#~ msgstr "サーバ"
+
+#~ msgid "Enable Damage"
+#~ msgstr "ダメージ有効"

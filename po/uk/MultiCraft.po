@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: minetest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-05 16:13+0200\n"
+"POT-Creation-Date: 2016-10-19 05:00+0300\n"
 "PO-Revision-Date: 2016-05-10 00:06+0000\n"
 "Last-Translator: Fixer <artem.brz@gmail.com>\n"
-"Language-Team: Ukrainian "
-"<https://hosted.weblate.org/projects/minetest/minetest/uk/>\n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/minetest/"
+"minetest/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 2.7-dev\n"
 
 #: builtin/fstk/ui.lua
@@ -75,8 +75,7 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "Ми підтримуємо протокол між версіями $1 і $2."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -150,14 +149,6 @@ msgstr "Завантажте гру, наприклад, minetest_game з minete
 msgid "Download one from minetest.net"
 msgstr "Завантажте з minetest.net"
 
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Гра"
-
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Генератор світу"
-
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Назву світу не задано або не обрано гру"
@@ -182,9 +173,8 @@ msgstr "Ви не маєте встановлених ігор."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "Ви впевнені, що бажаєте видалити \"$1\"?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
-#: src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Delete"
 msgstr "Видалити"
 
@@ -199,6 +189,14 @@ msgstr "Modmgr: недійсний шлях модифікації \"$1\""
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "Видалити світ \"$1\"?"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Ні"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Так"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -370,12 +368,22 @@ msgid "Active Contributors"
 msgstr "Активні учасники"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Core Developers"
+msgid "Credits"
+msgstr "Подяка"
+
+#: builtin/mainmenu/tab_credits.lua
+msgid "Dedication of the current release"
+msgstr ""
+
+#: builtin/mainmenu/tab_credits.lua
+#, fuzzy
+msgid "Minetest Developers"
 msgstr "Основні розробники ядра гри"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Credits"
-msgstr "Подяка"
+#, fuzzy
+msgid "MultiCraft Developers"
+msgstr "Основні розробники ядра гри"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -417,36 +425,36 @@ msgstr "Видалити обрану збірку модифікацій"
 msgid "Address / Port"
 msgstr "Адреса / Порт"
 
-#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Клієнт"
-
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Connect"
 msgstr "Під'єднатися"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Creative mode"
 msgstr "Творчість"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 #, fuzzy
 msgid "Damage enabled"
 msgstr "Поранення"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Del. Favorite"
 msgstr "Видалити мітку"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Favorite"
 msgstr "Улюблені"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
+msgid "Multi Player"
+msgstr ""
+
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Name / Password"
 msgstr "Ім'я / Пароль"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "PvP enabled"
 msgstr "Бої увімкнено"
 
@@ -454,19 +462,19 @@ msgstr "Бої увімкнено"
 msgid "Bind Address"
 msgstr "Закріпити адресу"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Configure"
 msgstr "Налаштувати"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Творчість"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Create Server"
+msgstr "Створення сервера..."
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Enable Damage"
-msgstr "Увімкнути поранення"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Creative Inventory"
+msgstr "Інвентар"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -488,13 +496,9 @@ msgstr "Порт"
 msgid "Public"
 msgstr "Публічний"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Select World:"
 msgstr "Виберіть світ:"
-
-#: builtin/mainmenu/tab_server.lua
-msgid "Server"
-msgstr "Сервер"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -503,6 +507,11 @@ msgstr "Порт сервера"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Почати гру"
+
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Survival Mode"
+msgstr "Творчість"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -563,10 +572,6 @@ msgid "Mipmap + Aniso. Filter"
 msgstr "Міпмапи і анізотропний фільтр"
 
 #: builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Ні"
-
-#: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
 msgstr "Без фільтрування"
 
@@ -605,6 +610,10 @@ msgstr "Паралаксова оклюзія"
 #: builtin/mainmenu/tab_settings.lua
 msgid "Particles"
 msgstr "Часточки"
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "Reset singleplayer world"
+msgstr "Скинути світ однокористувацької гри"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
@@ -655,28 +664,17 @@ msgstr "Коливати квіти"
 msgid "Waving Water"
 msgstr "Коливати воду"
 
-#: builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Так"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Config mods"
-msgstr "Налаштувати модифікації"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Main"
-msgstr "Головне Меню"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Start Singleplayer"
-msgstr "Почати одиночну гру"
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Творчість"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Грати"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-msgid "Singleplayer"
+#, fuzzy
+msgid "Single Player"
 msgstr "Одиночна гра"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -765,6 +763,11 @@ msgid "Change Password"
 msgstr "Змінити Пароль"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Close game"
+msgstr "Вийти з гри"
+
+#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "Підключення до сервера..."
 
@@ -779,68 +782,6 @@ msgstr "Створення клієнта..."
 #: src/game.cpp
 msgid "Creating server..."
 msgstr "Створення сервера..."
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"- WASD: move\n"
-"- Space: jump/climb\n"
-"- Shift: sneak/go down\n"
-"- Q: drop item\n"
-"- I: inventory\n"
-"- Mouse: turn/look\n"
-"- Mouse left: dig/punch\n"
-"- Mouse right: place/use\n"
-"- Mouse wheel: select item\n"
-"- T: chat\n"
-msgstr ""
-"Стандартне керування клавішами:\n"
-"- WASD: рух\n"
-"- Space: стрибок/лізти вгору\n"
-"- Shift: крастися/лізти вниз\n"
-"- Q: кинути предмет\n"
-"- I: інвентар\n"
-"- Мишка: поворот/дивитися\n"
-"- Ліва клавіша миші: копати/удар\n"
-"- Права клавіша миші: поставити/використовувати\n"
-"- Колесо миші: вибір предмета\n"
-"- T: чат\n"
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"No menu visible:\n"
-"- single tap: button activate\n"
-"- double tap: place/use\n"
-"- slide finger: look around\n"
-"Menu/Inventory visible:\n"
-"- double tap (outside):\n"
-" -->close\n"
-"- touch stack, touch slot:\n"
-" --> move stack\n"
-"- touch&drag, tap 2nd finger\n"
-" --> place single item to slot\n"
-msgstr ""
-"Стандартне керування дотиком:\n"
-"Коли меню не відображається:\n"
-"- один дотик: активувати кнопку\n"
-"- дотикнутися двічі: встановити/використати\n"
-"- провести пальцем: роззирнутися\n"
-"Коли відображається меню або інвертар:\n"
-"- дотикнутися двічі (поза межами):\n"
-" --> закрити\n"
-"- Торкнутися купи, торкнутися комірки:\n"
-" --> перемістити купу\n"
-"- Торкнутися і тягнути, дотикнутися лругим пальцем\n"
-" --> помістити один предмет у комірку\n"
-
-#: src/game.cpp
-msgid "Exit to Menu"
-msgstr "Вихід в меню"
-
-#: src/game.cpp
-msgid "Exit to OS"
-msgstr "Вихід з гри"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -859,6 +800,11 @@ msgid "MiB/s"
 msgstr "МіБ/сек"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Migrating world..."
+msgstr "Створення клієнта..."
+
+#: src/game.cpp
 msgid "Node definitions..."
 msgstr "Визначення блоків..."
 
@@ -869,6 +815,10 @@ msgstr "Отримання адреси..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Переродитися"
+
+#: src/game.cpp
+msgid "Save and Exit"
+msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -939,7 +889,9 @@ msgid "Key already in use"
 msgstr "Клавіша вже використовується"
 
 #: src/guiKeyChangeMenu.cpp
-msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
+#, fuzzy
+msgid ""
+"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
 msgstr ""
 "Комбінації клавіш. (Якщо це меню зламалося, видаліть налаштування з minetest."
 "conf)"
@@ -1563,6 +1515,10 @@ msgid "Clean transparent textures"
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Клієнт"
+
+#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr ""
 
@@ -2106,6 +2062,10 @@ msgstr "Масштаб інтерфейсу"
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Гра"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -2753,6 +2713,10 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Генератор світу"
 
 #: src/settings_translation_file.cpp
 msgid "Mapgen Valleys"
@@ -4092,99 +4056,169 @@ msgstr ""
 msgid "cURL timeout"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Preload inventory textures"
-#~ msgstr "Завантаження текстур..."
+#~ msgid "No of course not!"
+#~ msgstr "Ні, звісно ні!"
 
-#~ msgid "Reset singleplayer world"
-#~ msgstr "Скинути світ однокористувацької гри"
-
-#~ msgid "Scaling factor applied to menu elements: "
-#~ msgstr "Масштабування елементів меню: "
+#~ msgid "Public Serverlist"
+#~ msgstr "Список публічних серверів"
 
 #, fuzzy
-#~ msgid "Downloading"
-#~ msgstr "Вниз"
+#~ msgid "Generate Normalmaps"
+#~ msgstr "Генерувати карти нормалей"
 
-#~ msgid "Left click: Move all items, Right click: Move single item"
-#~ msgstr ""
-#~ "Ліва кнопка миші: Перемістити усі предмети, Права кнопка миші: "
-#~ "Перемістити один предмет"
-
-#~ msgid "is required by:"
-#~ msgstr "необхідний для:"
-
-#~ msgid "Configuration saved.  "
-#~ msgstr "Налаштування Збережено.  "
-
-#~ msgid "Warning: Configuration not consistent.  "
-#~ msgstr "Попередження: Помилкова конфігурація.  "
-
-#~ msgid "Cannot create world: Name contains invalid characters"
-#~ msgstr "Неможливо створити світ: Ім'я містить недопустимі символи"
-
-#~ msgid "Show Public"
-#~ msgstr "Показати Публічні"
-
-#~ msgid "Show Favorites"
-#~ msgstr "Показати Улюблені"
-
-#~ msgid "Leave address blank to start a local server."
-#~ msgstr "Залишіть адресу незаповненою для створення локального серверу."
-
-#~ msgid "Create world"
-#~ msgstr "Створити світ"
-
-#~ msgid "Address required."
-#~ msgstr "Адреса необхідна."
-
-#~ msgid "Cannot delete world: Nothing selected"
-#~ msgstr "Неможливо видалити світ: Нічого не вибрано"
-
-#~ msgid "Files to be deleted"
-#~ msgstr "Файлів, що підлягають видаленню"
-
-#~ msgid "Cannot create world: No games found"
-#~ msgstr "Неможливо створити світ: Не знайдено жодної гри"
-
-#~ msgid "Cannot configure world: Nothing selected"
-#~ msgstr "Неможливо налаштувати світ: Нічого не вибрано"
-
-#~ msgid "Failed to delete all world files"
-#~ msgstr "Помилка при видаленні файлів світу"
+#~ msgid "No!!!"
+#~ msgstr "Ні!!!"
 
 #, fuzzy
-#~ msgid "Finite Liquid"
-#~ msgstr "Кінцеві рідини"
-
-#~ msgid "Preload item visuals"
-#~ msgstr "Попереднє завантаження зображень"
-
-#, fuzzy
-#~ msgid "Password"
-#~ msgstr "Старий Пароль"
-
-#, fuzzy
-#~ msgid "Game Name"
-#~ msgstr "Гра"
+#~ msgid "If disabled "
+#~ msgstr "Вимкнути багатокористувацьку гру"
 
 #, fuzzy
 #~ msgid "If enabled, "
 #~ msgstr "Увімкнено"
 
 #, fuzzy
-#~ msgid "If disabled "
-#~ msgstr "Вимкнути багатокористувацьку гру"
-
-#~ msgid "No!!!"
-#~ msgstr "Ні!!!"
+#~ msgid "Game Name"
+#~ msgstr "Гра"
 
 #, fuzzy
-#~ msgid "Generate Normalmaps"
-#~ msgstr "Генерувати карти нормалей"
+#~ msgid "Password"
+#~ msgstr "Старий Пароль"
 
-#~ msgid "Public Serverlist"
-#~ msgstr "Список публічних серверів"
+#~ msgid "Preload item visuals"
+#~ msgstr "Попереднє завантаження зображень"
 
-#~ msgid "No of course not!"
-#~ msgstr "Ні, звісно ні!"
+#, fuzzy
+#~ msgid "Finite Liquid"
+#~ msgstr "Кінцеві рідини"
+
+#~ msgid "Failed to delete all world files"
+#~ msgstr "Помилка при видаленні файлів світу"
+
+#~ msgid "Cannot configure world: Nothing selected"
+#~ msgstr "Неможливо налаштувати світ: Нічого не вибрано"
+
+#~ msgid "Cannot create world: No games found"
+#~ msgstr "Неможливо створити світ: Не знайдено жодної гри"
+
+#~ msgid "Files to be deleted"
+#~ msgstr "Файлів, що підлягають видаленню"
+
+#~ msgid "Cannot delete world: Nothing selected"
+#~ msgstr "Неможливо видалити світ: Нічого не вибрано"
+
+#~ msgid "Address required."
+#~ msgstr "Адреса необхідна."
+
+#~ msgid "Create world"
+#~ msgstr "Створити світ"
+
+#~ msgid "Leave address blank to start a local server."
+#~ msgstr "Залишіть адресу незаповненою для створення локального серверу."
+
+#~ msgid "Show Favorites"
+#~ msgstr "Показати Улюблені"
+
+#~ msgid "Show Public"
+#~ msgstr "Показати Публічні"
+
+#~ msgid "Cannot create world: Name contains invalid characters"
+#~ msgstr "Неможливо створити світ: Ім'я містить недопустимі символи"
+
+#~ msgid "Warning: Configuration not consistent.  "
+#~ msgstr "Попередження: Помилкова конфігурація.  "
+
+#~ msgid "Configuration saved.  "
+#~ msgstr "Налаштування Збережено.  "
+
+#~ msgid "is required by:"
+#~ msgstr "необхідний для:"
+
+#~ msgid "Left click: Move all items, Right click: Move single item"
+#~ msgstr ""
+#~ "Ліва кнопка миші: Перемістити усі предмети, Права кнопка миші: "
+#~ "Перемістити один предмет"
+
+#, fuzzy
+#~ msgid "Downloading"
+#~ msgstr "Вниз"
+
+#~ msgid "Scaling factor applied to menu elements: "
+#~ msgstr "Масштабування елементів меню: "
+
+#, fuzzy
+#~ msgid "Preload inventory textures"
+#~ msgstr "Завантаження текстур..."
+
+#~ msgid "Exit to OS"
+#~ msgstr "Вихід з гри"
+
+#~ msgid "Exit to Menu"
+#~ msgstr "Вихід в меню"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "No menu visible:\n"
+#~ "- single tap: button activate\n"
+#~ "- double tap: place/use\n"
+#~ "- slide finger: look around\n"
+#~ "Menu/Inventory visible:\n"
+#~ "- double tap (outside):\n"
+#~ " -->close\n"
+#~ "- touch stack, touch slot:\n"
+#~ " --> move stack\n"
+#~ "- touch&drag, tap 2nd finger\n"
+#~ " --> place single item to slot\n"
+#~ msgstr ""
+#~ "Стандартне керування дотиком:\n"
+#~ "Коли меню не відображається:\n"
+#~ "- один дотик: активувати кнопку\n"
+#~ "- дотикнутися двічі: встановити/використати\n"
+#~ "- провести пальцем: роззирнутися\n"
+#~ "Коли відображається меню або інвертар:\n"
+#~ "- дотикнутися двічі (поза межами):\n"
+#~ " --> закрити\n"
+#~ "- Торкнутися купи, торкнутися комірки:\n"
+#~ " --> перемістити купу\n"
+#~ "- Торкнутися і тягнути, дотикнутися лругим пальцем\n"
+#~ " --> помістити один предмет у комірку\n"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "- WASD: move\n"
+#~ "- Space: jump/climb\n"
+#~ "- Shift: sneak/go down\n"
+#~ "- Q: drop item\n"
+#~ "- I: inventory\n"
+#~ "- Mouse: turn/look\n"
+#~ "- Mouse left: dig/punch\n"
+#~ "- Mouse right: place/use\n"
+#~ "- Mouse wheel: select item\n"
+#~ "- T: chat\n"
+#~ msgstr ""
+#~ "Стандартне керування клавішами:\n"
+#~ "- WASD: рух\n"
+#~ "- Space: стрибок/лізти вгору\n"
+#~ "- Shift: крастися/лізти вниз\n"
+#~ "- Q: кинути предмет\n"
+#~ "- I: інвентар\n"
+#~ "- Мишка: поворот/дивитися\n"
+#~ "- Ліва клавіша миші: копати/удар\n"
+#~ "- Права клавіша миші: поставити/використовувати\n"
+#~ "- Колесо миші: вибір предмета\n"
+#~ "- T: чат\n"
+
+#~ msgid "Start Singleplayer"
+#~ msgstr "Почати одиночну гру"
+
+#~ msgid "Main"
+#~ msgstr "Головне Меню"
+
+#~ msgid "Config mods"
+#~ msgstr "Налаштувати модифікації"
+
+#~ msgid "Server"
+#~ msgstr "Сервер"
+
+#~ msgid "Enable Damage"
+#~ msgstr "Увімкнути поранення"

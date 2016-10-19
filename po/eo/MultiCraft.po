@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: minetest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-05 16:13+0200\n"
+"POT-Creation-Date: 2016-10-19 05:00+0300\n"
 "PO-Revision-Date: 2015-09-13 12:36+0200\n"
 "Last-Translator: Tim <t4im@openmailbox.org>\n"
 "Language-Team: Esperanto <https://hosted.weblate.org/projects/minetest/"
@@ -72,8 +72,7 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr ""
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -144,14 +143,6 @@ msgstr "Elŝutu subludon, kiel minetest_game, el minetest.net"
 msgid "Download one from minetest.net"
 msgstr "Elŝutu ludon el minetest.net"
 
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Ludo"
-
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Mondogenerilo"
-
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Neniu mondonomo donitas aŭ neniu ludon elektitas"
@@ -177,9 +168,8 @@ msgstr "Neniu instalantaj subludoj."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "Ĉu vi certas forigi \"$1\"?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
-#: src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Delete"
 msgstr "Forigi"
 
@@ -194,6 +184,14 @@ msgstr "Modmgr: malvalida modifo-dosierindiko \"$1\""
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "Ĉu forigi mondon \"$1\"?"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Ne"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Jes"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -363,12 +361,22 @@ msgid "Active Contributors"
 msgstr "Aktivaj kontribuistoj"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Core Developers"
+msgid "Credits"
+msgstr "Kontribuantaro"
+
+#: builtin/mainmenu/tab_credits.lua
+msgid "Dedication of the current release"
+msgstr ""
+
+#: builtin/mainmenu/tab_credits.lua
+#, fuzzy
+msgid "Minetest Developers"
 msgstr "Kernprogramistoj"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Credits"
-msgstr "Kontribuantaro"
+#, fuzzy
+msgid "MultiCraft Developers"
+msgstr "Kernprogramistoj"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -411,36 +419,36 @@ msgstr "Malinstali selektan modifaron"
 msgid "Address / Port"
 msgstr "Adreso / Pordo:"
 
-#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Kliento"
-
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Connect"
 msgstr "Konekti"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Creative mode"
 msgstr "Kreiva reĝimo"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Damage enabled"
 msgstr "Damaĝo ŝaltitas"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Del. Favorite"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Favorite"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
+msgid "Multi Player"
+msgstr ""
+
+#: builtin/mainmenu/tab_multiplayer.lua
 #, fuzzy
 msgid "Name / Password"
 msgstr "Nomo / Pasvorto:"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "PvP enabled"
 msgstr "Dueloj ŝaltitas"
 
@@ -448,19 +456,19 @@ msgstr "Dueloj ŝaltitas"
 msgid "Bind Address"
 msgstr "Asocianta adreso"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Configure"
 msgstr "Agordi"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Kreiva reĝimo"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Create Server"
+msgstr "Krei servilon…"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Enable Damage"
-msgstr "Ŝalti damaĝon"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Creative Inventory"
+msgstr "Inventaro"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -482,13 +490,9 @@ msgstr "Pordo"
 msgid "Public"
 msgstr "Publika"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Select World:"
 msgstr "Elektu mondon:"
-
-#: builtin/mainmenu/tab_server.lua
-msgid "Server"
-msgstr "Servilo"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -497,6 +501,11 @@ msgstr "Servila pordo"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Startigi ludon"
+
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Survival Mode"
+msgstr "Kreiva reĝimo"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -560,10 +569,6 @@ msgid "Mipmap + Aniso. Filter"
 msgstr "Mipmapo + Malizotropa filtrilo"
 
 #: builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Ne"
-
-#: builtin/mainmenu/tab_settings.lua
 #, fuzzy
 msgid "No Filter"
 msgstr "Neniu filtrilo"
@@ -607,6 +612,10 @@ msgstr "Paralaksa Okludo"
 #, fuzzy
 msgid "Particles"
 msgstr "Ŝaltu ĉiujn"
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "Reset singleplayer world"
+msgstr "Nuligi solludantan mondon"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
@@ -662,28 +671,17 @@ msgstr "Ondantaj plantoj"
 msgid "Waving Water"
 msgstr "Ondanta akvo"
 
-#: builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Jes"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Config mods"
-msgstr "Agordi modifojn"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Main"
-msgstr "Ĉefmenuo"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Start Singleplayer"
-msgstr "Startigi solludanton"
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Kreiva reĝimo"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Ludi"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-msgid "Singleplayer"
+#, fuzzy
+msgid "Single Player"
 msgstr "Solludanto"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -771,6 +769,11 @@ msgid "Change Password"
 msgstr "Ŝanĝi pasvorton"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Close game"
+msgstr "Fermi"
+
+#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "Konekti al servilo…"
 
@@ -785,68 +788,6 @@ msgstr "Krei klienton…"
 #: src/game.cpp
 msgid "Creating server..."
 msgstr "Krei servilon…"
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"- WASD: move\n"
-"- Space: jump/climb\n"
-"- Shift: sneak/go down\n"
-"- Q: drop item\n"
-"- I: inventory\n"
-"- Mouse: turn/look\n"
-"- Mouse left: dig/punch\n"
-"- Mouse right: place/use\n"
-"- Mouse wheel: select item\n"
-"- T: chat\n"
-msgstr ""
-"Defaŭltaj Klavoj:\n"
-"- WASD: movi\n"
-"- Spacetklavo: salti/klimi\n"
-"- Majuskliga Klavo: lanti/malsupreniri\n"
-"- Q: lasi aĵon\n"
-"- I: inventaro\n"
-"- Muso: turni/rigardi\n"
-"- Muso maldekstra: fosi/bati\n"
-"- Muso dekstra: lokigi/uzi\n"
-"- Musrado: elekti aĵon\n"
-"- T: babili\n"
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"No menu visible:\n"
-"- single tap: button activate\n"
-"- double tap: place/use\n"
-"- slide finger: look around\n"
-"Menu/Inventory visible:\n"
-"- double tap (outside):\n"
-" -->close\n"
-"- touch stack, touch slot:\n"
-" --> move stack\n"
-"- touch&drag, tap 2nd finger\n"
-" --> place single item to slot\n"
-msgstr ""
-"Defaŭltaj Klavoj:\n"
-"Nevidebla menuo :\n"
-"- unufoja tuŝeto: aktivigi butonon\n"
-"- dufoja tuŝeto: lokigi/uzi\n"
-"- ŝova fingro: rigardi\n"
-"Videbla menuo/inventaro:\n"
-"- dufoja tuŝeto (ekstere):\n"
-" -->fermi\n"
-"- tuŝi stakon, tuŝi inventaran spacon:\n"
-" --> movi stakon\n"
-"- tuŝi kaj treni, tuŝeti duan fingron\n"
-" --> lokigi unun aĵon al inventara spaco\n"
-
-#: src/game.cpp
-msgid "Exit to Menu"
-msgstr "Foriri al menuo"
-
-#: src/game.cpp
-msgid "Exit to OS"
-msgstr "Foriri al operaciumo"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -865,6 +806,11 @@ msgid "MiB/s"
 msgstr "MiB/s"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Migrating world..."
+msgstr "Krei klienton…"
+
+#: src/game.cpp
 msgid "Node definitions..."
 msgstr "Nodaĵaj difinoj…"
 
@@ -875,6 +821,10 @@ msgstr "Adrestrovili…"
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Renaskiĝi"
+
+#: src/game.cpp
+msgid "Save and Exit"
+msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -945,7 +895,9 @@ msgid "Key already in use"
 msgstr "Klavo jam uzatas"
 
 #: src/guiKeyChangeMenu.cpp
-msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
+#, fuzzy
+msgid ""
+"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
 msgstr ""
 "Klavagordoj (Se tiu menuo misfunkcias, forigu agordojn el minetest.conf)"
 
@@ -1569,6 +1521,10 @@ msgid "Clean transparent textures"
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Kliento"
+
+#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr ""
 
@@ -2133,6 +2089,10 @@ msgstr "GUI skala faktoro"
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Ludo"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -2788,6 +2748,10 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Mondogenerilo"
 
 #: src/settings_translation_file.cpp
 #, fuzzy
@@ -4188,42 +4152,112 @@ msgstr ""
 msgid "cURL timeout"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Preload inventory textures"
-#~ msgstr "Ŝargi teksturojn…"
+#~ msgid "No of course not!"
+#~ msgstr "Ne, memkompreneble!"
 
-#~ msgid "Reset singleplayer world"
-#~ msgstr "Nuligi solludantan mondon"
-
-#~ msgid "Scaling factor applied to menu elements: "
-#~ msgstr "Skala faktoro por menuoj "
-
-#~ msgid "Touch free target"
-#~ msgstr "Sentuŝa celo"
-
-#~ msgid "Restart minetest for driver change to take effect"
-#~ msgstr "Restartigu Minetest-on por efikigi pelilan ŝanĝon"
-
-#~ msgid "Rendering:"
-#~ msgstr "Bildigo:"
-
-#, fuzzy
-#~ msgid "If enabled, "
-#~ msgstr "ŝaltita"
-
-#, fuzzy
-#~ msgid "If disabled "
-#~ msgstr "Malŝaltu modifaron"
-
-#~ msgid "No!!!"
-#~ msgstr "Ne!!!"
+#~ msgid "Public Serverlist"
+#~ msgstr "Publika servilolisto"
 
 #, fuzzy
 #~ msgid "Generate Normalmaps"
 #~ msgstr "Generi Normalmapojn"
 
-#~ msgid "Public Serverlist"
-#~ msgstr "Publika servilolisto"
+#~ msgid "No!!!"
+#~ msgstr "Ne!!!"
 
-#~ msgid "No of course not!"
-#~ msgstr "Ne, memkompreneble!"
+#, fuzzy
+#~ msgid "If disabled "
+#~ msgstr "Malŝaltu modifaron"
+
+#, fuzzy
+#~ msgid "If enabled, "
+#~ msgstr "ŝaltita"
+
+#~ msgid "Rendering:"
+#~ msgstr "Bildigo:"
+
+#~ msgid "Restart minetest for driver change to take effect"
+#~ msgstr "Restartigu Minetest-on por efikigi pelilan ŝanĝon"
+
+#~ msgid "Touch free target"
+#~ msgstr "Sentuŝa celo"
+
+#~ msgid "Scaling factor applied to menu elements: "
+#~ msgstr "Skala faktoro por menuoj "
+
+#, fuzzy
+#~ msgid "Preload inventory textures"
+#~ msgstr "Ŝargi teksturojn…"
+
+#~ msgid "Exit to OS"
+#~ msgstr "Foriri al operaciumo"
+
+#~ msgid "Exit to Menu"
+#~ msgstr "Foriri al menuo"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "No menu visible:\n"
+#~ "- single tap: button activate\n"
+#~ "- double tap: place/use\n"
+#~ "- slide finger: look around\n"
+#~ "Menu/Inventory visible:\n"
+#~ "- double tap (outside):\n"
+#~ " -->close\n"
+#~ "- touch stack, touch slot:\n"
+#~ " --> move stack\n"
+#~ "- touch&drag, tap 2nd finger\n"
+#~ " --> place single item to slot\n"
+#~ msgstr ""
+#~ "Defaŭltaj Klavoj:\n"
+#~ "Nevidebla menuo :\n"
+#~ "- unufoja tuŝeto: aktivigi butonon\n"
+#~ "- dufoja tuŝeto: lokigi/uzi\n"
+#~ "- ŝova fingro: rigardi\n"
+#~ "Videbla menuo/inventaro:\n"
+#~ "- dufoja tuŝeto (ekstere):\n"
+#~ " -->fermi\n"
+#~ "- tuŝi stakon, tuŝi inventaran spacon:\n"
+#~ " --> movi stakon\n"
+#~ "- tuŝi kaj treni, tuŝeti duan fingron\n"
+#~ " --> lokigi unun aĵon al inventara spaco\n"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "- WASD: move\n"
+#~ "- Space: jump/climb\n"
+#~ "- Shift: sneak/go down\n"
+#~ "- Q: drop item\n"
+#~ "- I: inventory\n"
+#~ "- Mouse: turn/look\n"
+#~ "- Mouse left: dig/punch\n"
+#~ "- Mouse right: place/use\n"
+#~ "- Mouse wheel: select item\n"
+#~ "- T: chat\n"
+#~ msgstr ""
+#~ "Defaŭltaj Klavoj:\n"
+#~ "- WASD: movi\n"
+#~ "- Spacetklavo: salti/klimi\n"
+#~ "- Majuskliga Klavo: lanti/malsupreniri\n"
+#~ "- Q: lasi aĵon\n"
+#~ "- I: inventaro\n"
+#~ "- Muso: turni/rigardi\n"
+#~ "- Muso maldekstra: fosi/bati\n"
+#~ "- Muso dekstra: lokigi/uzi\n"
+#~ "- Musrado: elekti aĵon\n"
+#~ "- T: babili\n"
+
+#~ msgid "Start Singleplayer"
+#~ msgstr "Startigi solludanton"
+
+#~ msgid "Main"
+#~ msgstr "Ĉefmenuo"
+
+#~ msgid "Config mods"
+#~ msgstr "Agordi modifojn"
+
+#~ msgid "Server"
+#~ msgstr "Servilo"
+
+#~ msgid "Enable Damage"
+#~ msgstr "Ŝalti damaĝon"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: minetest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-05 16:13+0200\n"
+"POT-Creation-Date: 2016-10-19 05:00+0300\n"
 "PO-Revision-Date: 2016-04-12 19:07+0000\n"
 "Last-Translator: Muhammad Rifqi Priyo Susanto "
 "<muhammadrifqipriyosusanto@gmail.com>\n"
@@ -73,8 +73,7 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "Kami mendukung protokol antara versi $1 dan versi $2."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -149,14 +148,6 @@ msgstr "Unduh sebuah sub-permainan, seperti minetest_game, dari minetest.net"
 msgid "Download one from minetest.net"
 msgstr "Unduh satu dari minetest.net"
 
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Permainan"
-
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Generator peta"
-
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Tidak ada dunia atau permainan yang dipilih"
@@ -181,9 +172,8 @@ msgstr "Anda tidak punya sub-permainan terpasang."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "Anda yakin ingin menghapus \"$1\"?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
-#: src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Delete"
 msgstr "Hapus"
 
@@ -198,6 +188,14 @@ msgstr "Pengelola mod: jalur mod tidak sah \"$1\""
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "Hapus Dunia \"$1\"?"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Tidak"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Ya"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -370,12 +368,22 @@ msgid "Active Contributors"
 msgstr "Kontributor Aktif"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Core Developers"
+msgid "Credits"
+msgstr "Penghargaan"
+
+#: builtin/mainmenu/tab_credits.lua
+msgid "Dedication of the current release"
+msgstr ""
+
+#: builtin/mainmenu/tab_credits.lua
+#, fuzzy
+msgid "Minetest Developers"
 msgstr "Pengembang Inti"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Credits"
-msgstr "Penghargaan"
+#, fuzzy
+msgid "MultiCraft Developers"
+msgstr "Pengembang Inti"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -418,36 +426,36 @@ msgstr "Copot pemasangan paket mod terpilih"
 msgid "Address / Port"
 msgstr "Alamat / Port :"
 
-#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Klien"
-
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Connect"
 msgstr "Sambung"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Creative mode"
 msgstr "Mode kreatif"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Damage enabled"
 msgstr "Kerusakan diaktifkan"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Del. Favorite"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Favorite"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
+msgid "Multi Player"
+msgstr ""
+
+#: builtin/mainmenu/tab_multiplayer.lua
 #, fuzzy
 msgid "Name / Password"
 msgstr "Nama / Kata sandi :"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "PvP enabled"
 msgstr "PvP diaktifkan"
 
@@ -455,19 +463,19 @@ msgstr "PvP diaktifkan"
 msgid "Bind Address"
 msgstr "Alamat Sambungan"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Configure"
 msgstr "Konfigurasi"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Mode Kreatif"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Create Server"
+msgstr "Membuat server..."
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Enable Damage"
-msgstr "Aktifkan Kerusakan"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Creative Inventory"
+msgstr "Inventaris"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -489,13 +497,9 @@ msgstr "Port"
 msgid "Public"
 msgstr "Publik"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Select World:"
 msgstr "Pilih Dunia:"
-
-#: builtin/mainmenu/tab_server.lua
-msgid "Server"
-msgstr "Server"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -504,6 +508,11 @@ msgstr "Port Server"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Mulai Permainan"
+
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Survival Mode"
+msgstr "Mode Kreatif"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -567,10 +576,6 @@ msgid "Mipmap + Aniso. Filter"
 msgstr "Mipmap + Aniso. Filter"
 
 #: builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Tidak"
-
-#: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
 msgstr "Tanpa Filter"
 
@@ -614,6 +619,10 @@ msgstr "Parallax Occlusion"
 #, fuzzy
 msgid "Particles"
 msgstr "Aktifkan Partikel"
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "Reset singleplayer world"
+msgstr "Atur ulang dunia pemain tunggal"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
@@ -664,28 +673,17 @@ msgstr "Tanaman Berayun"
 msgid "Waving Water"
 msgstr "Air Berombak"
 
-#: builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Ya"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Config mods"
-msgstr "Konfigurasi mod"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Main"
-msgstr "Beranda"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Start Singleplayer"
-msgstr "Mulai Pemain Tunggal"
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Mode Kreatif"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Mainkan"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-msgid "Singleplayer"
+#, fuzzy
+msgid "Single Player"
 msgstr "Pemain Tunggal"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -773,6 +771,11 @@ msgid "Change Password"
 msgstr "Ganti Kata Sandi"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Close game"
+msgstr "Tutup toko"
+
+#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "Menghubungkan ke server..."
 
@@ -787,68 +790,6 @@ msgstr "Membuat klien..."
 #: src/game.cpp
 msgid "Creating server..."
 msgstr "Membuat server..."
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"- WASD: move\n"
-"- Space: jump/climb\n"
-"- Shift: sneak/go down\n"
-"- Q: drop item\n"
-"- I: inventory\n"
-"- Mouse: turn/look\n"
-"- Mouse left: dig/punch\n"
-"- Mouse right: place/use\n"
-"- Mouse wheel: select item\n"
-"- T: chat\n"
-msgstr ""
-"Kontrol Bawaan:\n"
-"- WASD: bergerak\n"
-"- Space: lompat/panjat\n"
-"- Shift: merayap/turun\n"
-"- Q: jatuhkan barang\n"
-"- I: inventaris\n"
-"- Mouse: belok/melihat\n"
-"- Mouse kiri: gali/pukul\n"
-"- Mouse kanan: taruh/pakai\n"
-"- Roda mouse: pilih barang\n"
-"- T: obrolan\n"
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"No menu visible:\n"
-"- single tap: button activate\n"
-"- double tap: place/use\n"
-"- slide finger: look around\n"
-"Menu/Inventory visible:\n"
-"- double tap (outside):\n"
-" -->close\n"
-"- touch stack, touch slot:\n"
-" --> move stack\n"
-"- touch&drag, tap 2nd finger\n"
-" --> place single item to slot\n"
-msgstr ""
-"Kontrol Bawaan:\n"
-"Tanpa menu yang tampak:\n"
-"- ketuk sekali: tekan tombol\n"
-"- ketuk ganda: taruh/pakai\n"
-"- geser: melihat sekitar\n"
-"Menu/Inventaris tampak:\n"
-"- ketuk ganda (di luar):\n"
-" -->tutup\n"
-"- tekan tumpukan, tekan wadah:\n"
-" --> pindah tumpukan\n"
-"- tekan&geser, ketuk jari kedua\n"
-" --> taruh barang tunggal ke wadah\n"
-
-#: src/game.cpp
-msgid "Exit to Menu"
-msgstr "Menu Utama"
-
-#: src/game.cpp
-msgid "Exit to OS"
-msgstr "Tutup Aplikasi"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -867,6 +808,11 @@ msgid "MiB/s"
 msgstr "MiB/s"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Migrating world..."
+msgstr "Membuat klien..."
+
+#: src/game.cpp
 msgid "Node definitions..."
 msgstr "Definisi node..."
 
@@ -877,6 +823,10 @@ msgstr "Mencari alamat..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Bangkit"
+
+#: src/game.cpp
+msgid "Save and Exit"
+msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -949,7 +899,9 @@ msgid "Key already in use"
 msgstr "Tombol telah terpakai"
 
 #: src/guiKeyChangeMenu.cpp
-msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
+#, fuzzy
+msgid ""
+"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
 msgstr ""
 "Pengaturan tombol. (Jika menu ini kacau, hapus pengaturan kontrol dari "
 "minetest.conf)"
@@ -1618,6 +1570,10 @@ msgid "Clean transparent textures"
 msgstr "Bersihkan tekstur transparan"
 
 #: src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Klien"
+
+#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr "Klien dan Server"
 
@@ -2208,6 +2164,10 @@ msgstr "Filter skala antarmuka"
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Permainan"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -2920,6 +2880,10 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Generator peta"
 
 #: src/settings_translation_file.cpp
 msgid "Mapgen Valleys"
@@ -4303,53 +4267,123 @@ msgstr "Batas cURL paralel"
 msgid "cURL timeout"
 msgstr "Batas waktu cURL"
 
-#, fuzzy
-#~ msgid "Preload inventory textures"
-#~ msgstr "Memuat tekstur..."
+#~ msgid "No of course not!"
+#~ msgstr "Tentu tidak!"
 
-#~ msgid "Reset singleplayer world"
-#~ msgstr "Atur ulang dunia pemain tunggal"
+#~ msgid "Public Serverlist"
+#~ msgstr "Daftar Server Publik"
 
-#~ msgid "Scaling factor applied to menu elements: "
-#~ msgstr "Faktor skala yang diatur untuk elemen menu: "
+#~ msgid "Generate Normalmaps"
+#~ msgstr "Hasilkan Normalmaps"
 
-#~ msgid "Touch free target"
-#~ msgstr "Bebas sentuhan"
+#~ msgid "No!!!"
+#~ msgstr "Tidak!!!"
 
-#~ msgid "Downloading"
-#~ msgstr "Mengunduh"
-
-#~ msgid " KB/s"
-#~ msgstr " KB/detik"
-
-#~ msgid " MB/s"
-#~ msgstr " MB/detik"
-
-#~ msgid "Restart minetest for driver change to take effect"
-#~ msgstr "Mulai ulang minetest untuk beralih ke driver yang dipilih"
-
-#~ msgid "Rendering:"
-#~ msgstr "Rendering:"
-
-#, fuzzy
-#~ msgid "If enabled, "
-#~ msgstr "diaktifkan"
+#~ msgid "\""
+#~ msgstr "\""
 
 #, fuzzy
 #~ msgid "If disabled "
 #~ msgstr "Nonaktifkan PM"
 
-#~ msgid "\""
-#~ msgstr "\""
+#, fuzzy
+#~ msgid "If enabled, "
+#~ msgstr "diaktifkan"
 
-#~ msgid "No!!!"
-#~ msgstr "Tidak!!!"
+#~ msgid "Rendering:"
+#~ msgstr "Rendering:"
 
-#~ msgid "Generate Normalmaps"
-#~ msgstr "Hasilkan Normalmaps"
+#~ msgid "Restart minetest for driver change to take effect"
+#~ msgstr "Mulai ulang minetest untuk beralih ke driver yang dipilih"
 
-#~ msgid "Public Serverlist"
-#~ msgstr "Daftar Server Publik"
+#~ msgid " MB/s"
+#~ msgstr " MB/detik"
 
-#~ msgid "No of course not!"
-#~ msgstr "Tentu tidak!"
+#~ msgid " KB/s"
+#~ msgstr " KB/detik"
+
+#~ msgid "Downloading"
+#~ msgstr "Mengunduh"
+
+#~ msgid "Touch free target"
+#~ msgstr "Bebas sentuhan"
+
+#~ msgid "Scaling factor applied to menu elements: "
+#~ msgstr "Faktor skala yang diatur untuk elemen menu: "
+
+#, fuzzy
+#~ msgid "Preload inventory textures"
+#~ msgstr "Memuat tekstur..."
+
+#~ msgid "Exit to OS"
+#~ msgstr "Tutup Aplikasi"
+
+#~ msgid "Exit to Menu"
+#~ msgstr "Menu Utama"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "No menu visible:\n"
+#~ "- single tap: button activate\n"
+#~ "- double tap: place/use\n"
+#~ "- slide finger: look around\n"
+#~ "Menu/Inventory visible:\n"
+#~ "- double tap (outside):\n"
+#~ " -->close\n"
+#~ "- touch stack, touch slot:\n"
+#~ " --> move stack\n"
+#~ "- touch&drag, tap 2nd finger\n"
+#~ " --> place single item to slot\n"
+#~ msgstr ""
+#~ "Kontrol Bawaan:\n"
+#~ "Tanpa menu yang tampak:\n"
+#~ "- ketuk sekali: tekan tombol\n"
+#~ "- ketuk ganda: taruh/pakai\n"
+#~ "- geser: melihat sekitar\n"
+#~ "Menu/Inventaris tampak:\n"
+#~ "- ketuk ganda (di luar):\n"
+#~ " -->tutup\n"
+#~ "- tekan tumpukan, tekan wadah:\n"
+#~ " --> pindah tumpukan\n"
+#~ "- tekan&geser, ketuk jari kedua\n"
+#~ " --> taruh barang tunggal ke wadah\n"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "- WASD: move\n"
+#~ "- Space: jump/climb\n"
+#~ "- Shift: sneak/go down\n"
+#~ "- Q: drop item\n"
+#~ "- I: inventory\n"
+#~ "- Mouse: turn/look\n"
+#~ "- Mouse left: dig/punch\n"
+#~ "- Mouse right: place/use\n"
+#~ "- Mouse wheel: select item\n"
+#~ "- T: chat\n"
+#~ msgstr ""
+#~ "Kontrol Bawaan:\n"
+#~ "- WASD: bergerak\n"
+#~ "- Space: lompat/panjat\n"
+#~ "- Shift: merayap/turun\n"
+#~ "- Q: jatuhkan barang\n"
+#~ "- I: inventaris\n"
+#~ "- Mouse: belok/melihat\n"
+#~ "- Mouse kiri: gali/pukul\n"
+#~ "- Mouse kanan: taruh/pakai\n"
+#~ "- Roda mouse: pilih barang\n"
+#~ "- T: obrolan\n"
+
+#~ msgid "Start Singleplayer"
+#~ msgstr "Mulai Pemain Tunggal"
+
+#~ msgid "Main"
+#~ msgstr "Beranda"
+
+#~ msgid "Config mods"
+#~ msgstr "Konfigurasi mod"
+
+#~ msgid "Server"
+#~ msgstr "Server"
+
+#~ msgid "Enable Damage"
+#~ msgstr "Aktifkan Kerusakan"

@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: minetest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-05 16:13+0200\n"
+"POT-Creation-Date: 2016-10-19 05:00+0300\n"
 "PO-Revision-Date: 2016-05-07 03:17+0000\n"
 "Last-Translator: Kisbenedek Márton <martonkisbenedek@gmail.com>\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/minetest/minetest/hu/>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/minetest/"
+"minetest/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -74,8 +74,7 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "$1 és $2 közötti protokoll verziókat támogatunk."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -146,14 +145,6 @@ msgstr "Tölts le egy al-játékot (mint a Minetest Game) a minetest.net-ről"
 msgid "Download one from minetest.net"
 msgstr "Letöltés a minetest.net-ről"
 
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Játék"
-
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Térkép generátor"
-
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Nincs megadva a világ neve, vagy nincs kiválasztva játék"
@@ -179,9 +170,8 @@ msgstr "Nincsenek aljátékok telepítve."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "Biztosan törölni akarod: \"$1\"?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
-#: src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Delete"
 msgstr "Törlés"
 
@@ -196,6 +186,14 @@ msgstr "Modmgr: érvénytelen mod útvonal: \"$1\""
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "\"$1\" világ törlése?"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Nem"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Igen"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -361,12 +359,22 @@ msgid "Active Contributors"
 msgstr "Tevékeny hozzájárulók"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Core Developers"
+msgid "Credits"
+msgstr "Készítők"
+
+#: builtin/mainmenu/tab_credits.lua
+msgid "Dedication of the current release"
+msgstr ""
+
+#: builtin/mainmenu/tab_credits.lua
+#, fuzzy
+msgid "Minetest Developers"
 msgstr "Belső fejlesztők"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Credits"
-msgstr "Készítők"
+#, fuzzy
+msgid "MultiCraft Developers"
+msgstr "Belső fejlesztők"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -408,35 +416,35 @@ msgstr "Kiválasztott modpakk törlése"
 msgid "Address / Port"
 msgstr "Cím / Port"
 
-#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Kliens"
-
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Connect"
 msgstr "Csatlakozás"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Creative mode"
 msgstr "Kreatív mód"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Damage enabled"
 msgstr "Sérülés engedélyezve"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Del. Favorite"
 msgstr "Kedvenc törlés"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Favorite"
 msgstr "Kedvenc"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
+msgid "Multi Player"
+msgstr ""
+
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Name / Password"
 msgstr "Név / Jelszó"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "PvP enabled"
 msgstr "PvP engedélyezve"
 
@@ -445,19 +453,19 @@ msgstr "PvP engedélyezve"
 msgid "Bind Address"
 msgstr "Bind Address"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Configure"
 msgstr "Beállít"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Kreatív mód"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Create Server"
+msgstr "Szerver létrehozása..."
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Enable Damage"
-msgstr "Sérülés engedélyezése"
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Creative Inventory"
+msgstr "Eszköztár"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -479,13 +487,9 @@ msgstr "Port"
 msgid "Public"
 msgstr "Nyilvános"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Select World:"
 msgstr "Világ kiválasztása:"
-
-#: builtin/mainmenu/tab_server.lua
-msgid "Server"
-msgstr "Szerver"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -494,6 +498,11 @@ msgstr "Szerver port"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Játék indítása"
+
+#: builtin/mainmenu/tab_server.lua
+#, fuzzy
+msgid "Survival Mode"
+msgstr "Kreatív mód"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -555,10 +564,6 @@ msgid "Mipmap + Aniso. Filter"
 msgstr "Mipmap + Aniso. Filter"
 
 #: builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Nem"
-
-#: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
 msgstr "Nincs szűrés"
 
@@ -598,6 +603,10 @@ msgstr "Parallax Occlusion"
 #: builtin/mainmenu/tab_settings.lua
 msgid "Particles"
 msgstr "Részecskék"
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "Reset singleplayer world"
+msgstr "Egyjátékos világ visszaállítása"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
@@ -647,28 +656,17 @@ msgstr "Hullámzó növények"
 msgid "Waving Water"
 msgstr "Hullámzó víz"
 
-#: builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Igen"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Config mods"
-msgstr "Modok beállítása"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Main"
-msgstr "Fő"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Start Singleplayer"
-msgstr "Egyjátékos mód indítása"
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Kreatív mód"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Játék"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-msgid "Singleplayer"
+#, fuzzy
+msgid "Single Player"
 msgstr "Egyjátékos"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -757,6 +755,11 @@ msgid "Change Password"
 msgstr "Jelszó változtatás"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Close game"
+msgstr "Bezár játék"
+
+#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "Csatlakozás a szerverhez..."
 
@@ -771,68 +774,6 @@ msgstr "Kliens létrehozása..."
 #: src/game.cpp
 msgid "Creating server..."
 msgstr "Szerver létrehozása..."
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"- WASD: move\n"
-"- Space: jump/climb\n"
-"- Shift: sneak/go down\n"
-"- Q: drop item\n"
-"- I: inventory\n"
-"- Mouse: turn/look\n"
-"- Mouse left: dig/punch\n"
-"- Mouse right: place/use\n"
-"- Mouse wheel: select item\n"
-"- T: chat\n"
-msgstr ""
-"Alapértelmezett irányítás:\n"
-"- WASD: Mozgás\n"
-"- Space: Ugrás/Mászás\n"
-"- Shift: Lopakodás/Lefelé\n"
-"- Q: Tárgy eldobása\n"
-"- I: Eszköztár\n"
-"- Egér: Forgás/Nézelődés\n"
-"- Bal-egér: Ásás/Ütés\n"
-"- Jobb-egér: Helyez/Használ\n"
-"- Egér görgő: Tárgy kiválaszt\n"
-"- T: Csevegés\n"
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"No menu visible:\n"
-"- single tap: button activate\n"
-"- double tap: place/use\n"
-"- slide finger: look around\n"
-"Menu/Inventory visible:\n"
-"- double tap (outside):\n"
-" -->close\n"
-"- touch stack, touch slot:\n"
-" --> move stack\n"
-"- touch&drag, tap 2nd finger\n"
-" --> place single item to slot\n"
-msgstr ""
-"Alapértelmezett irányítás:\n"
-"Nem látható menü:\n"
-"- egy érintés: gomb aktivál\n"
-"- dupla érintés: helyez/használ\n"
-"- ujj csúsztatás: körbenéz\n"
-"Menü/Eszköztár látható:\n"
-"- dupla érintés (külső):\n"
-" -->bezár\n"
-"- stack, vagy slot érintése:\n"
-" --> stack mozgatás\n"
-"- érint&megfogás, érintés 2. ujjal\n"
-" --> egy elem slotba helyezése\n"
-
-#: src/game.cpp
-msgid "Exit to Menu"
-msgstr "Kilépés a menübe"
-
-#: src/game.cpp
-msgid "Exit to OS"
-msgstr "Bezárás"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -851,6 +792,11 @@ msgid "MiB/s"
 msgstr "MiB/mp"
 
 #: src/game.cpp
+#, fuzzy
+msgid "Migrating world..."
+msgstr "Kliens létrehozása..."
+
+#: src/game.cpp
 msgid "Node definitions..."
 msgstr "Csomópont definíciók..."
 
@@ -861,6 +807,10 @@ msgstr "Cím feloldása..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Újraéledés"
+
+#: src/game.cpp
+msgid "Save and Exit"
+msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -931,7 +881,9 @@ msgid "Key already in use"
 msgstr "A gomb már használatban van"
 
 #: src/guiKeyChangeMenu.cpp
-msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
+#, fuzzy
+msgid ""
+"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
 msgstr ""
 "Gombkiosztás. (Ha elfuserálod ezt a menüt, távolíts el néhány dolgot a "
 "minetest.conf-ból)"
@@ -1583,6 +1535,10 @@ msgid "Clean transparent textures"
 msgstr "Tiszta átlátszó textúrák"
 
 #: src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Kliens"
+
+#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr "Kliens és szerver"
 
@@ -2177,6 +2133,10 @@ msgstr "Felhasználói felület méretarány szűrő"
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr "Felhasználói felület méretarány szűrő txr2img"
+
+#: src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Játék"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -2968,6 +2928,10 @@ msgstr "Térképblokk korlát"
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Térkép generátor"
 
 #: src/settings_translation_file.cpp
 msgid "Mapgen Valleys"
@@ -4392,173 +4356,17 @@ msgstr ""
 msgid "cURL timeout"
 msgstr ""
 
-#~ msgid "Item textures..."
-#~ msgstr "Elem textúrák..."
+#~ msgid "No of course not!"
+#~ msgstr "Persze, hogy nem!"
 
-#~ msgid ""
-#~ "Enable a bit lower water surface, so it doesn't \"fill\" the node "
-#~ "completely.\n"
-#~ "Note that this is not quite optimized and that smooth lighting on the\n"
-#~ "water surface doesn't work with this."
-#~ msgstr ""
-#~ "Kicsivel alacsonyabb víz felszín engedélyezése, hogy ne töltse meg "
-#~ "teljesen a blokkot.\n"
-#~ "Megjegyzés: ez nem teljesen optimalizált, és a simított megvilágítás\n"
-#~ "így nem működik a víz felszínén."
+#~ msgid "Public Serverlist"
+#~ msgstr "Nyilvános szerverlista"
 
-#~ msgid "Enable selection highlighting for nodes (disables selectionbox)."
-#~ msgstr ""
-#~ "Kijelölés kiemelés (kivilágítás) engedélyezése a blokkoknál (letiltja a "
-#~ "kijelölődobozt)."
+#~ msgid "Generate Normalmaps"
+#~ msgstr "Normálfelületek generálása"
 
-#~ msgid ""
-#~ "Key for decreasing the viewing range. Modifies the minimum viewing "
-#~ "range.\n"
-#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
-#~ msgstr ""
-#~ "A látóterület csökkentésének gombja. A minimum látóterületet módosítja.\n"
-#~ "Lásd: http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
-
-#~ msgid ""
-#~ "Key for increasing the viewing range. Modifies the minimum viewing "
-#~ "range.\n"
-#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
-#~ msgstr ""
-#~ "A látóterület növelésének gombja. A minimum látótávolságot módosítja.\n"
-#~ "Lásd: http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
-
-#~ msgid ""
-#~ "Maximum distance above water level for player spawn.\n"
-#~ "Larger values result in spawn points closer to (x = 0, z = 0).\n"
-#~ "Smaller values may result in a suitable spawn point not being found,\n"
-#~ "resulting in a spawn at (0, 0, 0) possibly buried underground."
-#~ msgstr ""
-#~ "Maximum távolság a vízszinttől, ahol a játékosok újraéledhetnek/"
-#~ "megjelenhetnek csatlakozáskor (spawn).\n"
-#~ "Magasabb értékek közelebb visznek az (x = 0, z = 0)-hoz.\n"
-#~ "Alacsonyabb értékek azt eredményezhetik, hogy nem lesz megfelelő pont a "
-#~ "feléledéshez,\n"
-#~ "(0,0,0) pozícióban történő feléledést, ami valószínűleg a föld alatt lesz."
-
-#, fuzzy
-#~ msgid ""
-#~ "Minimum wanted FPS.\n"
-#~ "The amount of rendered stuff is dynamically set according to this. and "
-#~ "viewing range min and max."
-#~ msgstr ""
-#~ "Minimum kívánt FPS.\n"
-#~ "A renderelt cuccok mennyisége dinamikusan ez alapján állítódik be (és a "
-#~ "látórerület min és max)."
-
-#~ msgid "New style water"
-#~ msgstr "Új stílusú víz"
-
-#~ msgid "Preload inventory textures"
-#~ msgstr "Eszköztár textúráinak előtöltése"
-
-#~ msgid "Vertical initial window size."
-#~ msgstr "Függőleges kezdeti ablak méret."
-
-#~ msgid "Vertical spawn range"
-#~ msgstr "Az (újra)éledés függőleges irányú területe"
-
-#~ msgid "Viewing range minimum"
-#~ msgstr "Minimum látóterület"
-
-#~ msgid "Wanted FPS"
-#~ msgstr "Kívánt FPS"
-
-#~ msgid "Reset singleplayer world"
-#~ msgstr "Egyjátékos világ visszaállítása"
-
-#~ msgid "Scaling factor applied to menu elements: "
-#~ msgstr "A méretarány alkalmazva a menü elemekre: "
-
-#, fuzzy
-#~ msgid "Touch free target"
-#~ msgstr "Touch free target"
-
-#, fuzzy
-#~ msgid "Downloading"
-#~ msgstr "Le"
-
-#~ msgid "Left click: Move all items, Right click: Move single item"
-#~ msgstr "Ball gomb: Tárgyak mozgatása, Jobb gomb: egy tárgyat mozgat"
-
-#~ msgid "is required by:"
-#~ msgstr "kell neki:"
-
-#~ msgid "Configuration saved.  "
-#~ msgstr "Beállítások mentve.  "
-
-#~ msgid "Warning: Configuration not consistent.  "
-#~ msgstr "Figyelem: A beállítások nem egyformák.  "
-
-#~ msgid "Cannot create world: Name contains invalid characters"
-#~ msgstr "Nem sikerült a világ létrehozása: A névben nem jó karakterek vannak"
-
-#~ msgid "Show Public"
-#~ msgstr "Publikus mutatása"
-
-#~ msgid "Show Favorites"
-#~ msgstr "Kedvencek mutatása"
-
-#~ msgid "Leave address blank to start a local server."
-#~ msgstr "Hagyd el a nevét, hogy helyi szervert indíts."
-
-#~ msgid "Create world"
-#~ msgstr "Világ létrehozása"
-
-#~ msgid "Address required."
-#~ msgstr "Cím szükséges."
-
-#~ msgid "Cannot delete world: Nothing selected"
-#~ msgstr "Nem törölhető a világ: Nincs kiválasztva"
-
-#~ msgid "Files to be deleted"
-#~ msgstr "A fájl törölve lett"
-
-#~ msgid "Cannot create world: No games found"
-#~ msgstr "Nem sikerült a világot létrehozni: Nem található a játék"
-
-#~ msgid "Cannot configure world: Nothing selected"
-#~ msgstr "Nem sikerült a világ beállítása: Nincs kiválasztva"
-
-#~ msgid "Failed to delete all world files"
-#~ msgstr "Hiba az összes világ törlése közben"
-
-#, fuzzy
-#~ msgid "Finite Liquid"
-#~ msgstr "Végtelen folyadék"
-
-#~ msgid "Preload item visuals"
-#~ msgstr "Előretöltött tárgy láthatóság"
-
-#, fuzzy
-#~ msgid "Password"
-#~ msgstr "Régi jelszó"
-
-#, fuzzy
-#~ msgid "Game Name"
-#~ msgstr "Játék"
-
-#~ msgid "Restart minetest for driver change to take effect"
-#~ msgstr "A driver változások életbe lépéséhez indítsd újra a Minetestet"
-
-#~ msgid "Rendering:"
-#~ msgstr "Renderelés:"
-
-#, fuzzy
-#~ msgid "If enabled, "
-#~ msgstr "Engedélyez"
-
-#, fuzzy
-#~ msgid "If disabled "
-#~ msgstr "Csomag letiltás"
+#~ msgid "No!!!"
+#~ msgstr "Nem!!!"
 
 #, fuzzy
 #~ msgid ""
@@ -4582,14 +4390,240 @@ msgstr ""
 #~ "water would tend to pool. It may interfere with delicately adjusted "
 #~ "biomes."
 
-#~ msgid "No!!!"
-#~ msgstr "Nem!!!"
+#, fuzzy
+#~ msgid "If disabled "
+#~ msgstr "Csomag letiltás"
 
-#~ msgid "Generate Normalmaps"
-#~ msgstr "Normálfelületek generálása"
+#, fuzzy
+#~ msgid "If enabled, "
+#~ msgstr "Engedélyez"
 
-#~ msgid "Public Serverlist"
-#~ msgstr "Nyilvános szerverlista"
+#~ msgid "Rendering:"
+#~ msgstr "Renderelés:"
 
-#~ msgid "No of course not!"
-#~ msgstr "Persze, hogy nem!"
+#~ msgid "Restart minetest for driver change to take effect"
+#~ msgstr "A driver változások életbe lépéséhez indítsd újra a Minetestet"
+
+#, fuzzy
+#~ msgid "Game Name"
+#~ msgstr "Játék"
+
+#, fuzzy
+#~ msgid "Password"
+#~ msgstr "Régi jelszó"
+
+#~ msgid "Preload item visuals"
+#~ msgstr "Előretöltött tárgy láthatóság"
+
+#, fuzzy
+#~ msgid "Finite Liquid"
+#~ msgstr "Végtelen folyadék"
+
+#~ msgid "Failed to delete all world files"
+#~ msgstr "Hiba az összes világ törlése közben"
+
+#~ msgid "Cannot configure world: Nothing selected"
+#~ msgstr "Nem sikerült a világ beállítása: Nincs kiválasztva"
+
+#~ msgid "Cannot create world: No games found"
+#~ msgstr "Nem sikerült a világot létrehozni: Nem található a játék"
+
+#~ msgid "Files to be deleted"
+#~ msgstr "A fájl törölve lett"
+
+#~ msgid "Cannot delete world: Nothing selected"
+#~ msgstr "Nem törölhető a világ: Nincs kiválasztva"
+
+#~ msgid "Address required."
+#~ msgstr "Cím szükséges."
+
+#~ msgid "Create world"
+#~ msgstr "Világ létrehozása"
+
+#~ msgid "Leave address blank to start a local server."
+#~ msgstr "Hagyd el a nevét, hogy helyi szervert indíts."
+
+#~ msgid "Show Favorites"
+#~ msgstr "Kedvencek mutatása"
+
+#~ msgid "Show Public"
+#~ msgstr "Publikus mutatása"
+
+#~ msgid "Cannot create world: Name contains invalid characters"
+#~ msgstr "Nem sikerült a világ létrehozása: A névben nem jó karakterek vannak"
+
+#~ msgid "Warning: Configuration not consistent.  "
+#~ msgstr "Figyelem: A beállítások nem egyformák.  "
+
+#~ msgid "Configuration saved.  "
+#~ msgstr "Beállítások mentve.  "
+
+#~ msgid "is required by:"
+#~ msgstr "kell neki:"
+
+#~ msgid "Left click: Move all items, Right click: Move single item"
+#~ msgstr "Ball gomb: Tárgyak mozgatása, Jobb gomb: egy tárgyat mozgat"
+
+#, fuzzy
+#~ msgid "Downloading"
+#~ msgstr "Le"
+
+#, fuzzy
+#~ msgid "Touch free target"
+#~ msgstr "Touch free target"
+
+#~ msgid "Scaling factor applied to menu elements: "
+#~ msgstr "A méretarány alkalmazva a menü elemekre: "
+
+#~ msgid "Wanted FPS"
+#~ msgstr "Kívánt FPS"
+
+#~ msgid "Viewing range minimum"
+#~ msgstr "Minimum látóterület"
+
+#~ msgid "Vertical spawn range"
+#~ msgstr "Az (újra)éledés függőleges irányú területe"
+
+#~ msgid "Vertical initial window size."
+#~ msgstr "Függőleges kezdeti ablak méret."
+
+#~ msgid "Preload inventory textures"
+#~ msgstr "Eszköztár textúráinak előtöltése"
+
+#~ msgid "New style water"
+#~ msgstr "Új stílusú víz"
+
+#, fuzzy
+#~ msgid ""
+#~ "Minimum wanted FPS.\n"
+#~ "The amount of rendered stuff is dynamically set according to this. and "
+#~ "viewing range min and max."
+#~ msgstr ""
+#~ "Minimum kívánt FPS.\n"
+#~ "A renderelt cuccok mennyisége dinamikusan ez alapján állítódik be (és a "
+#~ "látórerület min és max)."
+
+#~ msgid ""
+#~ "Maximum distance above water level for player spawn.\n"
+#~ "Larger values result in spawn points closer to (x = 0, z = 0).\n"
+#~ "Smaller values may result in a suitable spawn point not being found,\n"
+#~ "resulting in a spawn at (0, 0, 0) possibly buried underground."
+#~ msgstr ""
+#~ "Maximum távolság a vízszinttől, ahol a játékosok újraéledhetnek/"
+#~ "megjelenhetnek csatlakozáskor (spawn).\n"
+#~ "Magasabb értékek közelebb visznek az (x = 0, z = 0)-hoz.\n"
+#~ "Alacsonyabb értékek azt eredményezhetik, hogy nem lesz megfelelő pont a "
+#~ "feléledéshez,\n"
+#~ "(0,0,0) pozícióban történő feléledést, ami valószínűleg a föld alatt lesz."
+
+#~ msgid ""
+#~ "Key for increasing the viewing range. Modifies the minimum viewing "
+#~ "range.\n"
+#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+#~ msgstr ""
+#~ "A látóterület növelésének gombja. A minimum látótávolságot módosítja.\n"
+#~ "Lásd: http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+
+#~ msgid ""
+#~ "Key for decreasing the viewing range. Modifies the minimum viewing "
+#~ "range.\n"
+#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+#~ msgstr ""
+#~ "A látóterület csökkentésének gombja. A minimum látóterületet módosítja.\n"
+#~ "Lásd: http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+
+#~ msgid "Enable selection highlighting for nodes (disables selectionbox)."
+#~ msgstr ""
+#~ "Kijelölés kiemelés (kivilágítás) engedélyezése a blokkoknál (letiltja a "
+#~ "kijelölődobozt)."
+
+#~ msgid ""
+#~ "Enable a bit lower water surface, so it doesn't \"fill\" the node "
+#~ "completely.\n"
+#~ "Note that this is not quite optimized and that smooth lighting on the\n"
+#~ "water surface doesn't work with this."
+#~ msgstr ""
+#~ "Kicsivel alacsonyabb víz felszín engedélyezése, hogy ne töltse meg "
+#~ "teljesen a blokkot.\n"
+#~ "Megjegyzés: ez nem teljesen optimalizált, és a simított megvilágítás\n"
+#~ "így nem működik a víz felszínén."
+
+#~ msgid "Item textures..."
+#~ msgstr "Elem textúrák..."
+
+#~ msgid "Exit to OS"
+#~ msgstr "Bezárás"
+
+#~ msgid "Exit to Menu"
+#~ msgstr "Kilépés a menübe"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "No menu visible:\n"
+#~ "- single tap: button activate\n"
+#~ "- double tap: place/use\n"
+#~ "- slide finger: look around\n"
+#~ "Menu/Inventory visible:\n"
+#~ "- double tap (outside):\n"
+#~ " -->close\n"
+#~ "- touch stack, touch slot:\n"
+#~ " --> move stack\n"
+#~ "- touch&drag, tap 2nd finger\n"
+#~ " --> place single item to slot\n"
+#~ msgstr ""
+#~ "Alapértelmezett irányítás:\n"
+#~ "Nem látható menü:\n"
+#~ "- egy érintés: gomb aktivál\n"
+#~ "- dupla érintés: helyez/használ\n"
+#~ "- ujj csúsztatás: körbenéz\n"
+#~ "Menü/Eszköztár látható:\n"
+#~ "- dupla érintés (külső):\n"
+#~ " -->bezár\n"
+#~ "- stack, vagy slot érintése:\n"
+#~ " --> stack mozgatás\n"
+#~ "- érint&megfogás, érintés 2. ujjal\n"
+#~ " --> egy elem slotba helyezése\n"
+
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "- WASD: move\n"
+#~ "- Space: jump/climb\n"
+#~ "- Shift: sneak/go down\n"
+#~ "- Q: drop item\n"
+#~ "- I: inventory\n"
+#~ "- Mouse: turn/look\n"
+#~ "- Mouse left: dig/punch\n"
+#~ "- Mouse right: place/use\n"
+#~ "- Mouse wheel: select item\n"
+#~ "- T: chat\n"
+#~ msgstr ""
+#~ "Alapértelmezett irányítás:\n"
+#~ "- WASD: Mozgás\n"
+#~ "- Space: Ugrás/Mászás\n"
+#~ "- Shift: Lopakodás/Lefelé\n"
+#~ "- Q: Tárgy eldobása\n"
+#~ "- I: Eszköztár\n"
+#~ "- Egér: Forgás/Nézelődés\n"
+#~ "- Bal-egér: Ásás/Ütés\n"
+#~ "- Jobb-egér: Helyez/Használ\n"
+#~ "- Egér görgő: Tárgy kiválaszt\n"
+#~ "- T: Csevegés\n"
+
+#~ msgid "Start Singleplayer"
+#~ msgstr "Egyjátékos mód indítása"
+
+#~ msgid "Main"
+#~ msgstr "Fő"
+
+#~ msgid "Config mods"
+#~ msgstr "Modok beállítása"
+
+#~ msgid "Server"
+#~ msgstr "Szerver"
+
+#~ msgid "Enable Damage"
+#~ msgstr "Sérülés engedélyezése"

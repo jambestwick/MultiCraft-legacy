@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: minetest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-05 16:13+0200\n"
+"POT-Creation-Date: 2016-10-19 05:00+0300\n"
 "PO-Revision-Date: 2016-04-18 23:08+0000\n"
 "Last-Translator: Stas Kies <stask85@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/minetest/"
@@ -74,8 +74,7 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "Мы поддерживаем версии протоколов между $1 и $2."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -146,14 +145,6 @@ msgstr "Скачайте мини-игры, такие как minetest_game, н�
 msgid "Download one from minetest.net"
 msgstr "Загрузите их с minetest.net"
 
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Игра"
-
-#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Генератор карты"
-
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Не задано имя мира или не выбрана игра"
@@ -180,9 +171,8 @@ msgstr "У вас не установлены мини-игры."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "Уверены, что хотите удалить \"$1\"?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
-#: src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Delete"
 msgstr "Удалить"
 
@@ -197,6 +187,14 @@ msgstr "Modmgr: неправильный путь \"$1\""
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "Удалить мир \"$1\"?"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Нет"
+
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Да"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -364,12 +362,20 @@ msgid "Active Contributors"
 msgstr "Активные контрибьюторы"
 
 #: builtin/mainmenu/tab_credits.lua
-msgid "Core Developers"
-msgstr "Основные разработчики"
-
-#: builtin/mainmenu/tab_credits.lua
 msgid "Credits"
 msgstr "Благодарности"
+
+#: builtin/mainmenu/tab_credits.lua
+msgid "Dedication of the current release"
+msgstr ""
+
+#: builtin/mainmenu/tab_credits.lua
+msgid "Minetest Developers"
+msgstr "Minetest разработчики"
+
+#: builtin/mainmenu/tab_credits.lua
+msgid "MultiCraft Developers"
+msgstr "MultiCraft разработчики"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -408,42 +414,38 @@ msgid "Uninstall selected modpack"
 msgstr "Удалить выбранный мод-пак"
 
 #: builtin/mainmenu/tab_multiplayer.lua
-#, fuzzy
 msgid "Address / Port"
 msgstr "Адрес / Порт:"
 
-#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Клиент"
-
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Connect"
 msgstr "Подключиться"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Creative mode"
 msgstr "Режим творчества"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Damage enabled"
 msgstr "Разрешить увечья"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
-#, fuzzy
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Del. Favorite"
-msgstr "Избранное:"
+msgstr "Удал. Избр.:"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
-#, fuzzy
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Favorite"
 msgstr "Избранное:"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
-#, fuzzy
+#: builtin/mainmenu/tab_multiplayer.lua
+msgid "Multi Player"
+msgstr "Мультиплеер"
+
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "Name / Password"
 msgstr "Имя / Пароль:"
 
-#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_multiplayer.lua
 msgid "PvP enabled"
 msgstr "PvP разрешён"
 
@@ -451,19 +453,17 @@ msgstr "PvP разрешён"
 msgid "Bind Address"
 msgstr "Адрес"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Configure"
 msgstr "Настроить"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Режим творчества"
+#: builtin/mainmenu/tab_server.lua
+msgid "Create Server"
+msgstr "Создать Сервер"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Enable Damage"
-msgstr "Разрешить увечья"
+#: builtin/mainmenu/tab_server.lua
+msgid "Creative Inventory"
+msgstr "Креативный Инвентарь"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -485,13 +485,9 @@ msgstr "Порт"
 msgid "Public"
 msgstr "Публичные"
 
-#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: builtin/mainmenu/tab_server.lua
 msgid "Select World:"
 msgstr "Выберите мир:"
-
-#: builtin/mainmenu/tab_server.lua
-msgid "Server"
-msgstr "Сервер"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -500,6 +496,10 @@ msgstr "Порт сервера"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Начать игру"
+
+#: builtin/mainmenu/tab_server.lua
+msgid "Survival Mode"
+msgstr "Режим выживания"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -559,10 +559,6 @@ msgid "Mipmap + Aniso. Filter"
 msgstr "Мипмаппинг с анизотр. фильтром"
 
 #: builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Нет"
-
-#: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
 msgstr "Без Фильтров"
 
@@ -605,6 +601,10 @@ msgstr "Parallax Occlusion"
 #, fuzzy
 msgid "Particles"
 msgstr "Включить частицы"
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "Reset singleplayer world"
+msgstr "Сброс одиночной игры"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
@@ -655,28 +655,16 @@ msgstr "Покачивание растений"
 msgid "Waving Water"
 msgstr "Волны на воде"
 
-#: builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Да"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Config mods"
-msgstr "Настройка модов"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Main"
-msgstr "Главное меню"
-
-#: builtin/mainmenu/tab_simple_main.lua
-msgid "Start Singleplayer"
-msgstr "Начать одиночную игру"
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Режим творчества"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Играть"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-msgid "Singleplayer"
+msgid "Single Player"
 msgstr "Одиночная игра"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -765,6 +753,10 @@ msgid "Change Password"
 msgstr "Изменить пароль"
 
 #: src/game.cpp
+msgid "Close game"
+msgstr "Закрыть игру"
+
+#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "Подключение к серверу..."
 
@@ -781,69 +773,6 @@ msgid "Creating server..."
 msgstr "Создание сервера..."
 
 #: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"- WASD: move\n"
-"- Space: jump/climb\n"
-"- Shift: sneak/go down\n"
-"- Q: drop item\n"
-"- I: inventory\n"
-"- Mouse: turn/look\n"
-"- Mouse left: dig/punch\n"
-"- Mouse right: place/use\n"
-"- Mouse wheel: select item\n"
-"- T: chat\n"
-msgstr ""
-"Управление по умолчанию:\n"
-"- WASD: движение\n"
-"- Пробел: прыжок/вверх\n"
-"- Shift: красться/вниз\n"
-"- Q: бросить предмет\n"
-"- I: инвентарь\n"
-"- Мышка: поворот\n"
-"- ЛКМ: копать/удар\n"
-"- ПКМ: поставить/использовать\n"
-"- Колесико мыши: выбор предмета\n"
-"- T: чат\n"
-
-#: src/game.cpp
-msgid ""
-"Default Controls:\n"
-"No menu visible:\n"
-"- single tap: button activate\n"
-"- double tap: place/use\n"
-"- slide finger: look around\n"
-"Menu/Inventory visible:\n"
-"- double tap (outside):\n"
-" -->close\n"
-"- touch stack, touch slot:\n"
-" --> move stack\n"
-"- touch&drag, tap 2nd finger\n"
-" --> place single item to slot\n"
-msgstr ""
-"Управление по умолчанию:\n"
-"Не в меню:\n"
-"- одно нажатие: кнопка активаций\n"
-"- двойное нажатие: положить/использовать\n"
-"- скольжение пальцем: осмотреться\n"
-"В меню/инвертаре:\n"
-"- двойное нажатие (вне меню)\n"
-"--> закрыть меню\n"
-"- Нажать на стопку, затем на ячейку:\n"
-"--> Двигать стопку\n"
-"- Потащить одним пальцем стопку в нужную ячейку, нажать вторым пальцем на "
-"экран:\n"
-"--> Положить один предмет в ячейку\n"
-
-#: src/game.cpp
-msgid "Exit to Menu"
-msgstr "Выход в меню"
-
-#: src/game.cpp
-msgid "Exit to OS"
-msgstr "Выход в ОС"
-
-#: src/game.cpp
 msgid "Item definitions..."
 msgstr "Описания предметов..."
 
@@ -853,11 +782,15 @@ msgstr "КиБ/с"
 
 #: src/game.cpp
 msgid "Media..."
-msgstr "Медиафайлы..."
+msgstr "Загрузка..."
 
 #: src/game.cpp
 msgid "MiB/s"
 msgstr "МиБ/с"
+
+#: src/game.cpp
+msgid "Migrating world..."
+msgstr "Обновление мира..."
 
 #: src/game.cpp
 msgid "Node definitions..."
@@ -870,6 +803,10 @@ msgstr "Получение адреса..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Возродиться"
+
+#: src/game.cpp
+msgid "Save and Exit"
+msgstr "Сохранить и Выйти"
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -940,7 +877,8 @@ msgid "Key already in use"
 msgstr "Клавиша уже используется"
 
 #: src/guiKeyChangeMenu.cpp
-msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
+msgid ""
+"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
 msgstr ""
 "Сочетания клавиш. (Если это меню сломалось, удалите настройки из minetest."
 "conf)"
@@ -1331,7 +1269,6 @@ msgid "3D mode"
 msgstr "3D режим"
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid ""
 "3D support.\n"
 "Currently supported:\n"
@@ -1486,7 +1423,6 @@ msgid "Basic"
 msgstr "Базовый"
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid "Basic Privileges"
 msgstr "Стандартные права"
 
@@ -1515,7 +1451,6 @@ msgid "Camera smoothing"
 msgstr "Сглаживание камеры"
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid "Camera smoothing in cinematic mode"
 msgstr "Сглаживание камеры в кинематографическом режиме"
 
@@ -1586,6 +1521,10 @@ msgstr "Кнопка переключения в кинематографиче�
 #: src/settings_translation_file.cpp
 msgid "Clean transparent textures"
 msgstr "очистить прозрачные структуры"
+
+#: src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Клиент"
 
 #: src/settings_translation_file.cpp
 msgid "Client and Server"
@@ -1722,7 +1661,6 @@ msgid "Crosshair alpha"
 msgstr "Прозрачность перекрестия"
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid "Crosshair alpha (opaqueness, between 0 and 255)."
 msgstr "Прозрачность перекрестия (от 0 (прозрачно) до 255 (непрозрачно))."
 
@@ -2152,6 +2090,10 @@ msgstr "Фильтр масштабирования интерфейса"
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr "txr2img фильтр масштабирования интерфейса"
+
+#: src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Игра"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -2894,6 +2836,10 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Генератор карты"
 
 #: src/settings_translation_file.cpp
 #, fuzzy
@@ -3997,7 +3943,6 @@ msgid "Time in between active block management cycles"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid ""
 "Time in seconds for item entity (dropped items) to live.\n"
 "Setting it to -1 disables the feature."
@@ -4006,12 +3951,10 @@ msgstr ""
 "Установите в -1 для отключения этой функции."
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid "Time send interval"
 msgstr "Интервал отправки"
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid "Time speed"
 msgstr "Скорость хода времени"
 
@@ -4031,17 +3974,14 @@ msgid ""
 msgstr ""
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid "Toggle camera mode key"
 msgstr "Клавиша переключения режима камеры."
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid "Tooltip delay"
 msgstr "Задержка подсказки."
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid "Trilinear filtering"
 msgstr "Трилинейная фильтрация"
 
@@ -4070,7 +4010,6 @@ msgid "Unlimited player transfer distance"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid "Unload unused server data"
 msgstr "Выгружать неиспользуемые сервером данные"
 
@@ -4117,7 +4056,6 @@ msgid "Useful for mod developers."
 msgstr "Разработчики в отставке"
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid "V-Sync"
 msgstr "V-Sync"
 
@@ -4361,110 +4299,107 @@ msgstr ""
 msgid "cURL timeout"
 msgstr "cURL тайм-аут"
 
-#~ msgid ""
-#~ "Enable a bit lower water surface, so it doesn't \"fill\" the node "
-#~ "completely.\n"
-#~ "Note that this is not quite optimized and that smooth lighting on the\n"
-#~ "water surface doesn't work with this."
-#~ msgstr ""
-#~ "Включите немного более низкую поверхность воды, чтобы она\n"
-#~ "не заполняла блок полностью. Учтите, что это не совсем оптимизировано,\n"
-#~ "и мягкое освещение на поверхности воды не работает с этим."
+#~ msgid "No of course not!"
+#~ msgstr "Нет, конечно нет!"
+
+#~ msgid "Public Serverlist"
+#~ msgstr "Список публичных серверов"
+
+#~ msgid "Generate Normalmaps"
+#~ msgstr "Генерировать карты нормалей"
+
+#~ msgid "No!!!"
+#~ msgstr "Нет!"
+
+#~ msgid "\""
+#~ msgstr "\""
+
+#~ msgid "If disabled "
+#~ msgstr "Если выключено "
+
+#~ msgid "If enabled, "
+#~ msgstr "Если включено "
+
+#~ msgid "Rendering:"
+#~ msgstr "Рендеринг:"
+
+#~ msgid "Restart minetest for driver change to take effect"
+#~ msgstr "Перезапустите Minetest для принятия изменений"
+
+#~ msgid "Game Name"
+#~ msgstr "Название"
+
+#~ msgid "Gamemgr: Unable to copy mod \"$1\" to game \"$2\""
+#~ msgstr "Gamemgr: Не могу скопировать мод \"$1\" в игру \"$2\""
+
+#~ msgid "GAMES"
+#~ msgstr "ИГРЫ"
+
+#~ msgid "Mods:"
+#~ msgstr "Моды:"
+
+#~ msgid "new game"
+#~ msgstr "Создать игру"
+
+#~ msgid "EDIT GAME"
+#~ msgstr "РЕДАКТИРОВАНИЕ"
+
+#~ msgid "Remove selected mod"
+#~ msgstr "Удалить мод"
+
+#~ msgid "<<-- Add mod"
+#~ msgstr "<<-- Добавить мод"
+
+#~ msgid "CLIENT"
+#~ msgstr "КЛИЕНТ"
+
+#~ msgid "START SERVER"
+#~ msgstr "СЕРВЕР"
+
+#~ msgid "Name"
+#~ msgstr "Имя"
+
+#~ msgid "Password"
+#~ msgstr "Пароль"
+
+#~ msgid "SETTINGS"
+#~ msgstr "НАСТРОЙКИ"
+
+#~ msgid "Preload item visuals"
+#~ msgstr "Предзагрузка изображений"
+
+#~ msgid "Finite Liquid"
+#~ msgstr "Конечные жидкости"
+
+#~ msgid "SINGLE PLAYER"
+#~ msgstr "ОДИНОЧНАЯ ИГРА"
+
+#~ msgid "TEXTURE PACKS"
+#~ msgstr "ПАКЕТЫ ТЕКСТУР"
+
+#~ msgid "MODS"
+#~ msgstr "МОДЫ"
+
+#~ msgid "Add mod:"
+#~ msgstr "Добавить мод:"
+
+#~ msgid "Local install"
+#~ msgstr "Локальная установка"
 
 #~ msgid ""
-#~ "Key for decreasing the viewing range. Modifies the minimum viewing "
-#~ "range.\n"
-#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+#~ "Warning: Some mods are not configured yet.\n"
+#~ "They will be enabled by default when you save the configuration.  "
 #~ msgstr ""
-#~ "Клавиша уменьшения видимого диапазона. Изменяет минимальную дальность "
-#~ "отображения.\n"
-#~ "Смотрите http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+#~ "Предупреждение: Некоторые моды еще не настроены.\n"
+#~ "Их стандартные настройки будут установлены, когда вы сохраните "
+#~ "конфигурацию.  "
 
 #~ msgid ""
-#~ "Key for increasing the viewing range. Modifies the minimum viewing "
-#~ "range.\n"
-#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+#~ "Warning: Some configured mods are missing.\n"
+#~ "Their setting will be removed when you save the configuration.  "
 #~ msgstr ""
-#~ "Клавиша Увеличения видимого диапазона. Изменяет минимальную дальность "
-#~ "отображения.\n"
-#~ "Смотрите http://irrlicht.sourceforge.net/docu/namespaceirr."
-#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
-
-#, fuzzy
-#~ msgid "New style water"
-#~ msgstr "Новый стиль воды"
-
-#~ msgid "Preload inventory textures"
-#~ msgstr "Предзагрузка текстур..."
-
-#, fuzzy
-#~ msgid "Viewing range minimum"
-#~ msgstr "Минимальная граница дальности отрисовки."
-
-#, fuzzy
-#~ msgid "Wanted FPS"
-#~ msgstr "Ожидаемый FPS"
-
-#~ msgid "Reset singleplayer world"
-#~ msgstr "Сброс одиночной игры"
-
-#~ msgid "Scaling factor applied to menu elements: "
-#~ msgstr "Коэффициент масштаба интерфейса: "
-
-#~ msgid "Touch free target"
-#~ msgstr "Свободный выбор цели"
-
-#, fuzzy
-#~ msgid "Downloading"
-#~ msgstr "Загрузить"
-
-#~ msgid "Left click: Move all items, Right click: Move single item"
-#~ msgstr "ЛКМ: Переместить все предметы, ПКМ: Переместить один предмет"
-
-#~ msgid "is required by:"
-#~ msgstr "требуется для:"
-
-#~ msgid "Configuration saved.  "
-#~ msgstr "Настройки сохранены.  "
-
-#~ msgid "Warning: Configuration not consistent.  "
-#~ msgstr "Предупреждение: Неверная конфигурация.  "
-
-#~ msgid "Cannot create world: Name contains invalid characters"
-#~ msgstr "Невозможно создать мир: Имя содержит недопустимые символы"
-
-#~ msgid "Show Public"
-#~ msgstr "Публичные"
-
-#~ msgid "Show Favorites"
-#~ msgstr "Избранные"
-
-#~ msgid "Leave address blank to start a local server."
-#~ msgstr "Оставьте адрес пустым для запуска локального сервера."
-
-#~ msgid "Create world"
-#~ msgstr "Создать мир"
-
-#~ msgid "Address required."
-#~ msgstr "Нужно ввести адрес."
-
-#~ msgid "Cannot delete world: Nothing selected"
-#~ msgstr "Невозможно удалить мир: Ничего не выбрано"
-
-#~ msgid "Files to be deleted"
-#~ msgstr "Следующие файлы будут удалены"
-
-#~ msgid "Cannot create world: No games found"
-#~ msgstr "Невозможно создать мир: Ни одной игры не найдено"
-
-#~ msgid "Cannot configure world: Nothing selected"
-#~ msgstr "Невозможно настроить мир: ничего не выбрано"
-
-#~ msgid "Failed to delete all world files"
-#~ msgstr "Ошибка при удалении файлов мира"
+#~ "Предупреждение: Некоторые моды не найдены.\n"
+#~ "Их настройки будут удалены, когда вы сохраните конфигурацию.  "
 
 #~ msgid ""
 #~ "Default Controls:\n"
@@ -4491,104 +4426,178 @@ msgstr "cURL тайм-аут"
 #~ "- ESC: это меню\n"
 #~ "- T: чат\n"
 
-#~ msgid ""
-#~ "Warning: Some configured mods are missing.\n"
-#~ "Their setting will be removed when you save the configuration.  "
-#~ msgstr ""
-#~ "Предупреждение: Некоторые моды не найдены.\n"
-#~ "Их настройки будут удалены, когда вы сохраните конфигурацию.  "
+#~ msgid "Failed to delete all world files"
+#~ msgstr "Ошибка при удалении файлов мира"
+
+#~ msgid "Cannot configure world: Nothing selected"
+#~ msgstr "Невозможно настроить мир: ничего не выбрано"
+
+#~ msgid "Cannot create world: No games found"
+#~ msgstr "Невозможно создать мир: Ни одной игры не найдено"
+
+#~ msgid "Files to be deleted"
+#~ msgstr "Следующие файлы будут удалены"
+
+#~ msgid "Cannot delete world: Nothing selected"
+#~ msgstr "Невозможно удалить мир: Ничего не выбрано"
+
+#~ msgid "Address required."
+#~ msgstr "Нужно ввести адрес."
+
+#~ msgid "Create world"
+#~ msgstr "Создать мир"
+
+#~ msgid "Leave address blank to start a local server."
+#~ msgstr "Оставьте адрес пустым для запуска локального сервера."
+
+#~ msgid "Show Favorites"
+#~ msgstr "Избранные"
+
+#~ msgid "Show Public"
+#~ msgstr "Публичные"
+
+#~ msgid "Cannot create world: Name contains invalid characters"
+#~ msgstr "Невозможно создать мир: Имя содержит недопустимые символы"
+
+#~ msgid "Warning: Configuration not consistent.  "
+#~ msgstr "Предупреждение: Неверная конфигурация.  "
+
+#~ msgid "Configuration saved.  "
+#~ msgstr "Настройки сохранены.  "
+
+#~ msgid "is required by:"
+#~ msgstr "требуется для:"
+
+#~ msgid "Left click: Move all items, Right click: Move single item"
+#~ msgstr "ЛКМ: Переместить все предметы, ПКМ: Переместить один предмет"
+
+#, fuzzy
+#~ msgid "Downloading"
+#~ msgstr "Загрузить"
+
+#~ msgid "Touch free target"
+#~ msgstr "Свободный выбор цели"
+
+#~ msgid "Scaling factor applied to menu elements: "
+#~ msgstr "Коэффициент масштаба интерфейса: "
+
+#, fuzzy
+#~ msgid "Wanted FPS"
+#~ msgstr "Ожидаемый FPS"
+
+#, fuzzy
+#~ msgid "Viewing range minimum"
+#~ msgstr "Минимальная граница дальности отрисовки."
+
+#~ msgid "Preload inventory textures"
+#~ msgstr "Предзагрузка текстур..."
+
+#, fuzzy
+#~ msgid "New style water"
+#~ msgstr "Новый стиль воды"
 
 #~ msgid ""
-#~ "Warning: Some mods are not configured yet.\n"
-#~ "They will be enabled by default when you save the configuration.  "
+#~ "Key for increasing the viewing range. Modifies the minimum viewing "
+#~ "range.\n"
+#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
 #~ msgstr ""
-#~ "Предупреждение: Некоторые моды еще не настроены.\n"
-#~ "Их стандартные настройки будут установлены, когда вы сохраните "
-#~ "конфигурацию.  "
+#~ "Клавиша Увеличения видимого диапазона. Изменяет минимальную дальность "
+#~ "отображения.\n"
+#~ "Смотрите http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
 
-#~ msgid "Local install"
-#~ msgstr "Локальная установка"
+#~ msgid ""
+#~ "Key for decreasing the viewing range. Modifies the minimum viewing "
+#~ "range.\n"
+#~ "See http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
+#~ msgstr ""
+#~ "Клавиша уменьшения видимого диапазона. Изменяет минимальную дальность "
+#~ "отображения.\n"
+#~ "Смотрите http://irrlicht.sourceforge.net/docu/namespaceirr."
+#~ "html#a54da2a0e231901735e3da1b0edf72eb3"
 
-#~ msgid "Add mod:"
-#~ msgstr "Добавить мод:"
+#~ msgid ""
+#~ "Enable a bit lower water surface, so it doesn't \"fill\" the node "
+#~ "completely.\n"
+#~ "Note that this is not quite optimized and that smooth lighting on the\n"
+#~ "water surface doesn't work with this."
+#~ msgstr ""
+#~ "Включите немного более низкую поверхность воды, чтобы она\n"
+#~ "не заполняла блок полностью. Учтите, что это не совсем оптимизировано,\n"
+#~ "и мягкое освещение на поверхности воды не работает с этим."
 
-#~ msgid "MODS"
-#~ msgstr "МОДЫ"
+#~ msgid "Exit to OS"
+#~ msgstr "Выход в ОС"
 
-#~ msgid "TEXTURE PACKS"
-#~ msgstr "ПАКЕТЫ ТЕКСТУР"
+#~ msgid "Exit to Menu"
+#~ msgstr "Выход в меню"
 
-#~ msgid "SINGLE PLAYER"
-#~ msgstr "ОДИНОЧНАЯ ИГРА"
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "No menu visible:\n"
+#~ "- single tap: button activate\n"
+#~ "- double tap: place/use\n"
+#~ "- slide finger: look around\n"
+#~ "Menu/Inventory visible:\n"
+#~ "- double tap (outside):\n"
+#~ " -->close\n"
+#~ "- touch stack, touch slot:\n"
+#~ " --> move stack\n"
+#~ "- touch&drag, tap 2nd finger\n"
+#~ " --> place single item to slot\n"
+#~ msgstr ""
+#~ "Управление по умолчанию:\n"
+#~ "Не в меню:\n"
+#~ "- одно нажатие: кнопка активаций\n"
+#~ "- двойное нажатие: положить/использовать\n"
+#~ "- скольжение пальцем: осмотреться\n"
+#~ "В меню/инвертаре:\n"
+#~ "- двойное нажатие (вне меню)\n"
+#~ "--> закрыть меню\n"
+#~ "- Нажать на стопку, затем на ячейку:\n"
+#~ "--> Двигать стопку\n"
+#~ "- Потащить одним пальцем стопку в нужную ячейку, нажать вторым пальцем на "
+#~ "экран:\n"
+#~ "--> Положить один предмет в ячейку\n"
 
-#~ msgid "Finite Liquid"
-#~ msgstr "Конечные жидкости"
+#~ msgid ""
+#~ "Default Controls:\n"
+#~ "- WASD: move\n"
+#~ "- Space: jump/climb\n"
+#~ "- Shift: sneak/go down\n"
+#~ "- Q: drop item\n"
+#~ "- I: inventory\n"
+#~ "- Mouse: turn/look\n"
+#~ "- Mouse left: dig/punch\n"
+#~ "- Mouse right: place/use\n"
+#~ "- Mouse wheel: select item\n"
+#~ "- T: chat\n"
+#~ msgstr ""
+#~ "Управление по умолчанию:\n"
+#~ "- WASD: движение\n"
+#~ "- Пробел: прыжок/вверх\n"
+#~ "- Shift: красться/вниз\n"
+#~ "- Q: бросить предмет\n"
+#~ "- I: инвентарь\n"
+#~ "- Мышка: поворот\n"
+#~ "- ЛКМ: копать/удар\n"
+#~ "- ПКМ: поставить/использовать\n"
+#~ "- Колесико мыши: выбор предмета\n"
+#~ "- T: чат\n"
 
-#~ msgid "Preload item visuals"
-#~ msgstr "Предзагрузка изображений"
+#~ msgid "Start Singleplayer"
+#~ msgstr "Начать одиночную игру"
 
-#~ msgid "SETTINGS"
-#~ msgstr "НАСТРОЙКИ"
+#~ msgid "Main"
+#~ msgstr "Главное меню"
 
-#~ msgid "Password"
-#~ msgstr "Пароль"
+#~ msgid "Config mods"
+#~ msgstr "Настройка модов"
 
-#~ msgid "Name"
-#~ msgstr "Имя"
+#~ msgid "Server"
+#~ msgstr "Сервер"
 
-#~ msgid "START SERVER"
-#~ msgstr "СЕРВЕР"
-
-#~ msgid "CLIENT"
-#~ msgstr "КЛИЕНТ"
-
-#~ msgid "<<-- Add mod"
-#~ msgstr "<<-- Добавить мод"
-
-#~ msgid "Remove selected mod"
-#~ msgstr "Удалить мод"
-
-#~ msgid "EDIT GAME"
-#~ msgstr "РЕДАКТИРОВАНИЕ"
-
-#~ msgid "new game"
-#~ msgstr "Создать игру"
-
-#~ msgid "Mods:"
-#~ msgstr "Моды:"
-
-#~ msgid "GAMES"
-#~ msgstr "ИГРЫ"
-
-#~ msgid "Gamemgr: Unable to copy mod \"$1\" to game \"$2\""
-#~ msgstr "Gamemgr: Не могу скопировать мод \"$1\" в игру \"$2\""
-
-#~ msgid "Game Name"
-#~ msgstr "Название"
-
-#~ msgid "Restart minetest for driver change to take effect"
-#~ msgstr "Перезапустите Minetest для принятия изменений"
-
-#~ msgid "Rendering:"
-#~ msgstr "Рендеринг:"
-
-#~ msgid "If enabled, "
-#~ msgstr "Если включено "
-
-#~ msgid "If disabled "
-#~ msgstr "Если выключено "
-
-#~ msgid "\""
-#~ msgstr "\""
-
-#~ msgid "No!!!"
-#~ msgstr "Нет!"
-
-#~ msgid "Generate Normalmaps"
-#~ msgstr "Генерировать карты нормалей"
-
-#~ msgid "Public Serverlist"
-#~ msgstr "Список публичных серверов"
-
-#~ msgid "No of course not!"
-#~ msgstr "Нет, конечно нет!"
+#~ msgid "Enable Damage"
+#~ msgstr "Разрешить увечья"
