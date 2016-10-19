@@ -889,8 +889,6 @@ apk: local.properties $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_LIB) $(
 	export VERSION_STR="${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" && \
 	export BUILD_TYPE_C=$$(echo "$${BUILD_TYPE}" | sed 's/./\U&/') &&          \
 	gradle assemble$$BUILD_TYPE_C &&                                           \
-	echo "	Success! =)";                                                      \
-	ant $$BUILD_TYPE &&                                                        \
 	echo "APK stored at: build/outputs/apk/MultiCraft-$$BUILD_TYPE.apk" &&     \
 	echo "You can install it with \`make install_$$BUILD_TYPE\`"
 
