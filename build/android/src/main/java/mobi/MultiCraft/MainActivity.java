@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,27 +29,38 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static mobi.MultiCraft.PermissionManager.permissionsRejected;
+import static mobi.MultiCraft.PermissionManager.permissionsToRequest;
 import static mobi.MultiCraft.PreferencesHelper.TAG_BUILD_NUMBER;
+import static mobi.MultiCraft.PreferencesHelper.TAG_LAUNCH_TIMES;
 import static mobi.MultiCraft.PreferencesHelper.TAG_SHORTCUT_CREATED;
 import static mobi.MultiCraft.PreferencesHelper.getBuildNumber;
+import static mobi.MultiCraft.PreferencesHelper.getLaunchTimes;
 import static mobi.MultiCraft.PreferencesHelper.isCreateShortcut;
 import static mobi.MultiCraft.PreferencesHelper.loadSettings;
 import static mobi.MultiCraft.PreferencesHelper.saveSettings;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements WVersionManager.ActivityListener {
+    private final static int COARSE_LOCATION_RESULT = 100;
+    private final static int WRITE_EXTERNAL_RESULT = 101;
+    private final static int ALL_PERMISSIONS_RESULT = 102;
+
     public final static String TAG = "Error";
     public final static String CREATE_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
     public final static String FILES = Environment.getExternalStorageDirectory() + "/Files.zip";
     public final static String WORLDS = Environment.getExternalStorageDirectory() + "/worlds.zip";
     public final static String GAMES = Environment.getExternalStorageDirectory() + "/games.zip";
     public final static String NOMEDIA = ".nomedia";
-    private final static int REQUEST_STORAGE = 0;
     private ProgressDialog mProgressDialog;
     private String dataFolder = "/Android/data/mobi.MultiCraft/files/";
     private String unzipLocation = Environment.getExternalStorageDirectory() + dataFolder;
     private ProgressBar mProgressBar;
     private Utilities util;
+    private WVersionManager versionManager = null;
+    private PermissionManager pm = null;
     private BroadcastReceiver myReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -75,14 +87,52 @@ public class MainActivity extends Activity {
             finish();
             return;
         }
-
-
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            requestStoragePermission();
+        int i = getLaunchTimes();
+        i++;
+        saveSettings(TAG_LAUNCH_TIMES, i);
+        pm = new PermissionManager(this);
+        String[] permList = pm.requestPermissions();
+        if (permList.length > 0) {
+            ActivityCompat.requestPermissions(this, permList, ALL_PERMISSIONS_RESULT);
         } else {
             init();
         }
+
+    }
+
+    @Override
+    public void isShowUpdateDialog(boolean flag) {
+        if (flag) {
+            versionManager.showDialog();
+            versionManager.setCallback(new WVersionManager.Callback() {
+                @Override
+                public void onPositive() {
+                    versionManager.updateNow(versionManager.getUpdateUrl());
+                    finish();
+                }
+
+                @Override
+                public void onNegative() {
+                    versionManager.ignoreThisVersion();
+                    checkRateDialog();
+                }
+
+                @Override
+                public void onRemind() {
+                    versionManager.remindMeLater(versionManager.getReminderTimer());
+                    checkRateDialog();
+                }
+            });
+        } else {
+            checkRateDialog();
+        }
+    }
+
+    private void checkNewVersion() {
+        versionManager = new WVersionManager(this);
+        versionManager.setVersionContentUrl("http://pastebin.com/raw/aeM2bmSB");
+        versionManager.checkVersion();
+
     }
 
     public void makeFullScreen() {
@@ -134,16 +184,22 @@ public class MainActivity extends Activity {
         mProgressBar = (ProgressBar) findViewById(R.id.PB1);
         Drawable draw;
         draw = getResources().getDrawable(R.drawable.custom_progress_bar);
+        mProgressBar.setVisibility(View.VISIBLE);
         mProgressBar.setProgressDrawable(draw);
         util = new Utilities();
         util.createDataFolder();
         util.checkVersion();
     }
 
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
+    }
+
     private void requestPermissionAfterExplain() {
         Toast.makeText(this, R.string.explain, Toast.LENGTH_LONG).show();
         ActivityCompat.requestPermissions(MainActivity.this,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE);
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_RESULT);
     }
 
     private void requestStoragePermission() {
@@ -151,19 +207,38 @@ public class MainActivity extends Activity {
             requestPermissionAfterExplain();
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_STORAGE);
+                    WRITE_EXTERNAL_RESULT);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-
-        // Check if the only required permission has been granted
-        if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            init();
-        } else {
-            requestStoragePermission();
+        switch (requestCode) {
+            case WRITE_EXTERNAL_RESULT:
+                if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    init();
+                } else {
+                    requestStoragePermission();
+                }
+                break;
+            case COARSE_LOCATION_RESULT:
+                break;
+            case ALL_PERMISSIONS_RESULT:
+                for (String perms : permissionsToRequest) {
+                    if (!pm.hasPermission(perms)) {
+                        permissionsRejected.add(perms);
+                    }
+                }
+                if (permissionsRejected.size() == 0) {
+                    init();
+                } else if (!Arrays.asList(permissionsRejected.toArray()).contains(WRITE_EXTERNAL_STORAGE)) {
+                    Toast.makeText(this, R.string.location, Toast.LENGTH_SHORT).show();
+                    init();
+                } else {
+                    requestStoragePermission();
+                }
+                break;
         }
     }
 
@@ -183,10 +258,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    public void runGame() {
-        util.deleteZip(FILES);
-        util.deleteZip(WORLDS);
-        util.deleteZip(GAMES);
+    private void checkRateDialog() {
         if (RateMe.shouldShowRateDialog()) {
             hideViews();
             RateMe.showRateDialog(this);
@@ -207,6 +279,17 @@ public class MainActivity extends Activity {
                     startGameActivity();
                 }
             });
+        } else {
+            startGameActivity();
+        }
+    }
+
+    public void runGame() {
+        util.deleteZip(FILES);
+        util.deleteZip(WORLDS);
+        util.deleteZip(GAMES);
+        if (isNetworkConnected()) {
+            checkNewVersion();
         } else {
             startGameActivity();
         }
@@ -358,7 +441,7 @@ public class MainActivity extends Activity {
             return availableSpace / SIZE_MB;
         }
 
-        public void checkVersion() {
+        void checkVersion() {
             if (getBuildNumber().equals(getString(R.string.ver))) {
                 runGame();
             } else if (getBuildNumber().equals("0")) {
@@ -383,7 +466,7 @@ public class MainActivity extends Activity {
             }
         }
 
-        public void createNomedia() {
+        void createNomedia() {
             File myFile = new File(unzipLocation, NOMEDIA);
             if (!myFile.exists())
                 try {

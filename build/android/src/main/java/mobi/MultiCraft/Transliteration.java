@@ -1,6 +1,6 @@
 package mobi.MultiCraft;
 
-public class Transliteration {
+class Transliteration {
 
     private static final String[] CHAR_TABLE = new String[81];
     private static final char START_CHAR = 'Ё';
@@ -55,7 +55,7 @@ public class Transliteration {
      * каждая русская буква будет заменена на соответствующую английскую.
      * Не русские символы останутся прежними.
      */
-    public static String toLatin(String text) {
+    static String toLatin(String text) {
         char charBuffer[] = text.toCharArray();
         StringBuilder sb = new StringBuilder(text.length());
         for (char symbol : charBuffer) {

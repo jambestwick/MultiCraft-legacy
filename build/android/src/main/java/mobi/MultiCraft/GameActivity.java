@@ -9,6 +9,7 @@ import android.view.WindowManager;
 
 public class GameActivity extends NativeActivity {
     static {
+        System.loadLibrary("gnustl_shared");
         System.loadLibrary("multicraft");
     }
 
@@ -65,6 +66,7 @@ public class GameActivity extends NativeActivity {
     @Override
     public void onBackPressed() {
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 101) {
             if (resultCode == RESULT_OK) {

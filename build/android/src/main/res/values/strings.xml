@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name" translatable="false">MultiCraft</string>
-    <string name="ver" translatable="false">1.1.3.1</string>
+    <string name="ver" translatable="false">1.1.5</string>
     <string name="google_app_id" translatable="false">312077575425</string>
     <!-- preparation for start -->
 
@@ -16,10 +16,18 @@
 
     <!-- permission block -->
     <string name="explain">Game need permission to write files to storage memory.</string>
+    <string name="location">Location permission provide you better interaction with game</string>
     <!-- rate dialog -->
     <string name="rta_dialog_title">Please, rate MultiCraft!</string>
     <string name="rate_title">Title</string>
     <string name="rate_submit">SUBMIT</string>
     <string name="rate_description">Description</string>
-    <string name="sad">We are sorry that you did not like the MultiCraft!</string>
+    <string name="sad">We are sorry that you did not like the game!</string>
+    <string name="recommend">Loading recommendations \n for you \n %1$s</string>
+
+    <!--update dialog -->
+    <string name="update">Update</string>
+    <string name="later">Later</string>
+    <string name="ignore">Ignore</string>
+
 </resources>

@@ -16,11 +16,11 @@ import android.widget.RatingBar;
 
 import java.util.Date;
 
-public class RateMe {
+class RateMe {
 
-    public static final int INSTALL_DAYS = 3;
-    public static final int LAUNCH_TIMES = 3;
-    public static final boolean DEBUG = false;
+    private static final int INSTALL_DAYS = 3;
+    private static final int LAUNCH_TIMES = 2;
+    private static final boolean DEBUG = false;
     private static final String TAG = RateMe.class.getSimpleName();
     private static final String GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=";
     private static final String PREF_NAME = "RateMe";
@@ -32,11 +32,11 @@ public class RateMe {
     private static boolean mOptOut = false;
     private static Callback sCallback = null;
 
-    public static void setCallback(Callback callback) {
+    static void setCallback(Callback callback) {
         sCallback = callback;
     }
 
-    public static void onStart(Context context) {
+    static void onStart(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         Editor editor = pref.edit();
         // If it is the first launch, save the date in shared preference.
@@ -57,7 +57,7 @@ public class RateMe {
         printStatus();
     }
 
-    public static boolean shouldShowRateDialog() {
+    static boolean shouldShowRateDialog() {
         if (mOptOut) {
             return false;
         } else {
@@ -69,7 +69,7 @@ public class RateMe {
         }
     }
 
-    public static void showRateDialog(final Context context) {
+    static void showRateDialog(final Context context) {
         final Dialog dialog = new Dialog(context, R.style.DialogTheme);
         dialog.setCanceledOnTouchOutside(false);
         if (Build.VERSION.SDK_INT >= 19) {
@@ -113,10 +113,6 @@ public class RateMe {
             }
         });
         dialog.show();
-    }
-
-    public static void stopRateDialog(final Context context) {
-        setOptOut(context, true);
     }
 
     private static void clearSharedPreferences(Context context) {
@@ -163,7 +159,7 @@ public class RateMe {
         }
     }
 
-    public interface Callback {
+    interface Callback {
         void onPositive();
 
         void onNegative();

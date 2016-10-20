@@ -7,6 +7,11 @@
 
     <style name="DialogTheme" parent="android:Theme.Holo.Light.Dialog" />
 
+    <style name="CountDialogTheme" parent="android:Theme.Holo.Light.Dialog">
+        <item name="android:colorBackground">#70FFFFFF</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="Theme.Transparent" parent="android:Theme.Holo.Light.NoActionBar.Fullscreen">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
