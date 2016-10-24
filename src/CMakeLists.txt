@@ -469,7 +469,6 @@ set(client_SRCS
 	clientobject.cpp
 	clouds.cpp
 	content_cao.cpp
-	content_cso.cpp
 	content_mapblock.cpp
 	convert_json.cpp
 	drawscene.cpp

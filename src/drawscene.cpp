@@ -520,7 +520,7 @@ void draw_load_screen(const std::wstring &text, IrrlichtDevice* device,
 		driver->draw2DRectangle(video::SColor(255, 64, 64, 64), core::rect<s32> (
 				barrect.UpperLeftCorner + 1,
 				barrect.LowerRightCorner-1), NULL); // black inside the bar
-		driver->draw2DRectangle(video::SColor(255, 128, 128, 128), core::rect<s32> (
+		driver->draw2DRectangle(video::SColor(255, 255 - percent * 2, percent * 2, 48), core::rect<s32> (
 				barrect.UpperLeftCorner + 1,
 				core::vector2d<s32>(
 						barrect.LowerRightCorner.X -

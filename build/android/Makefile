@@ -58,7 +58,6 @@ LEVELDB_DIR = $(ANDR_ROOT)/deps/leveldb
 LEVELDB_LIB = $(LEVELDB_DIR)/out-static/libleveldb.a
 LEVELDB_TIMESTAMP = $(LEVELDB_DIR)/timestamp
 LEVELDB_TIMESTAMP_INT = $(ANDR_ROOT)/deps/leveldb_timestamp
-#LEVELDB_URL_GIT = https://github.com/google/leveldb
 
 #OPENAL_URL = https://github.com/MoNTE48/openal-soft/releases/download/$(OPENAL_VER)/$(OPENAL_VER).zip
 #OPENAL_VER = openal-soft-1.17.2-dev
@@ -140,23 +139,6 @@ LUAJIT_URL_GIT = https://github.com/LuaJIT/LuaJIT.git
 ANDROID_SDK = $(shell grep '^sdk\.dir' local.properties | sed 's/^.*=[[:space:]]*//')
 ANDROID_NDK = $(shell grep '^ndk\.dir' local.properties | sed 's/^.*=[[:space:]]*//')
 NDK_MODULE_PATH = $(ANDROID_NDK)/toolchains
-
-
-.PHONY : debug release reconfig delconfig \
-	leveldb_download clean_leveldb leveldb\
-	irrlicht_download clean_irrlicht irrlicht \
-	clean_assets assets \
-	freetype_download clean_freetype freetype \
-	luajit_download clean_luajit luajit \
-	apk clean_apk \
-	clean_all clean prep_srcdir \
-	install_debug install_release envpaths all \
-	$(ASSETS_TIMESTAMP) $(LUAJIT_TIMESTAMP) \
-	$(OPENAL_TIMESTAMP) $(VORBIS_TIMESTAMP) \
-	$(IRRLICHT_TIMESTAMP) $(CURL_TIMESTAMP) \
-	$(ANDR_ROOT)/jni/src/android_version.h \
-	$(ANDR_ROOT)/jni/src/android_version_githash.h
-#	$(OPENSSL_TIMESTAMP) \
 
 debug : local.properties
 	export NDEBUG=;                                                            \
@@ -347,7 +329,6 @@ leveldb_download :
 		echo "leveldb sources missing, downloading...";                        \
 		mkdir -p ${ANDR_ROOT}/deps;                                            \
 		cd ${ANDR_ROOT}/deps ;                                                 \
-#		git clone ${LEVELDB_URL_GIT} || exit 1;                                 \
 		wget ${LEVELDB_URL} || exit 1;                                         \
 		unzip v${LEVELDB_VER}.zip  || exit 1;                                  \
 		rm v${LEVELDB_VER}.zip || exit 1;                                      \
@@ -503,7 +484,7 @@ $(ICONV_LIB) : $(ICONV_TIMESTAMP)
 	$(MAKE) -s || exit 1;                                                      \
 	touch ${ICONV_TIMESTAMP};                                                  \
 	touch ${ICONV_TIMESTAMP_INT};                                              \
-	rm -rf ${TOOLCHAIN};                                                       \
+	rm -rf $${TOOLCHAIN};                                                       \
 	else                                                                       \
 		echo "nothing to be done for iconv";                               \
 	fi
@@ -525,43 +506,6 @@ intl_download :
 		tar -xzf libintl.tar.gz || exit 1;                                 \
 		rm libintl.tar.gz;                                                 \
 		mv libintl-lite-master libintl;                                 \
-	fi
-
-intl : $(INTL_LIB)
-
-$(INTL_LIB) : $(INTL_TIMESTAMP)
-	@REFRESH=0;                                                                \
-	if [ ! -e ${INTL_TIMESTAMP_INT} ] ; then                                   \
-		REFRESH=1;                                                             \
-	fi;                                                                        \
-	if [ ! -e ${INTL_LIB} ] ; then                                             \
-		REFRESH=1;                                                             \
-	fi;                                                                        \
-	if [ ${INTL_TIMESTAMP} -nt ${INTL_TIMESTAMP_INT} ] ; then                  \
-		REFRESH=1;                                                             \
-	fi;                                                                        \
-	if [ $$REFRESH -ne 0 ] ; then                                              \
-	mkdir -p ${INTL_DIR};                                                      \
-	echo "changed timestamp for intl detected building...";                    \
-	cd ${INTL_DIR};                                                            \
-	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-intl;                             \
-	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                    \
-		--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                \
-	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
-	cd internal;                                                               \
-	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                   \
-	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
-	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
-	${CROSS_PREFIX}g++ -O3 -c libintl.cpp -o libintl.o || exit 1;   \
-	${CROSS_PREFIX}ar rs ../libintl.a libintl.o || exit 1;                     \
-	cd ..;                                                                     \
-	touch ${INTL_TIMESTAMP};                                                   \
-	touch ${INTL_TIMESTAMP_INT};                                               \
-	rm -rf ${TOOLCHAIN};                                                       \
-	else                                                                       \
-		echo "nothing to be done for intl";                                    \
 	fi
 
 clean_intl :
@@ -739,6 +683,21 @@ $(MPIR_LIB): $(MPIR_TIMESTAMP)
 clean_mpir:
 	$(RM) -R deps/mpir
 
+sqlite3_download :
+	@if [ ! -d ${SQLITE3_DIR} ] ; then                                        \
+		echo "libintl sources missing, downloading...";                    \
+		mkdir -p ${ANDR_ROOT}/deps;                                        \
+		cd ${ANDR_ROOT}/deps;                                              \
+		rm -R sqlite;                                                              \
+		wget ${SQLITE3_URL};                                                       \
+		unzip sqlite-amalgamation-$(SQLITE3_VERSION).zip || exit 1;                \
+		rm sqlite-amalgamation-$(SQLITE3_VERSION).zip;                             \
+		mv sqlite-amalgamation-$(SQLITE3_VERSION) sqlite;                          \
+	fi
+
+clean_sqlite3 :
+	$(RM) -rf ${SQLITE3_DIR}
+
 $(ASSETS_TIMESTAMP) : $(IRRLICHT_LIB)
 	@mkdir -p ${ANDR_ROOT}/deps;                                                \
 	for DIRNAME in {builtin,client,doc,fonts,games,po,textures}; do        \
@@ -875,16 +834,9 @@ clean_assets :
 
 # $(MPIR_LIB)
 apk: local.properties $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_LIB) $(LUAJIT_LIB) \
-	$(OPENAL_LIB) $(VORBIS_LIB) $(INTL_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h      \
-	$(ANDR_ROOT)/jni/src/android_version_githash.h assets
-	+@cd ${ANDR_ROOT}/deps;                                                     \
-	rm -R sqlite;                                                              \
-	wget ${SQLITE3_URL};                                                       \
-	unzip sqlite-amalgamation-$(SQLITE3_VERSION).zip || exit 1;                \
-	rm sqlite-amalgamation-$(SQLITE3_VERSION).zip;                             \
-	mv sqlite-amalgamation-$(SQLITE3_VERSION) sqlite;                          \
-	cd ..;                                                                     \
-	${ANDROID_NDK}/ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}                \
+	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h      \
+	$(ANDR_ROOT)/jni/src/android_version_githash.h sqlite3_download intl_download assets
+	+@${ANDROID_NDK}/ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}                \
 		GPROF=${GPROF} APP_ABI=${TARGET_ABI}                                   \
 		APP_PLATFORM=${APP_PLATFORM}                                           \
 		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}                              \
@@ -963,4 +915,3 @@ $(ANDR_ROOT)/jni/src/android_version.h : prep_srcdir
 	fi
 
 clean : clean_apk clean_assets
-

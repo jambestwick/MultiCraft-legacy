@@ -28,11 +28,6 @@ LOCAL_SRC_FILES := deps/libiconv/lib/.libs/libiconv.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := intl
-LOCAL_SRC_FILES := deps/libintl/libintl.a
-include $(PREBUILT_STATIC_LIBRARY)
-
-include $(CLEAR_VARS)
 LOCAL_MODULE := openal
 LOCAL_SRC_FILES := deps/openal-soft/android/obj/local/$(APP_ABI)/libopenal.a
 include $(PREBUILT_STATIC_LIBRARY)
@@ -62,15 +57,14 @@ LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_ \
 		-DUSE_GETTEXT=1                  \
 		-DUSE_LEVELDB=1                  \
 		$(GPROF_DEF)                     \
-		-pipe -fstrict-aliasing
-#		-DUSE_GETTEXT=1
+		-pipe
 
 ifndef NDEBUG
 LOCAL_CFLAGS += -g -D_DEBUG -O0 -fno-omit-frame-pointer
 else
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
-LOCAL_CFLAGS += -mfpu=vfpv3-d16 -march=armv7-a -Ofast -fno-fast-math -funsafe-math-optimizations -fno-trapping-math -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
+LOCAL_CFLAGS += -mfpu=vfpv3-d16 -march=armv7-a -Ofast -fno-fast-math -funsafe-math-optimizations -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
 LOCAL_CXXFLAGS += -mfpu=vfpv3-d16 -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections
 endif
@@ -232,7 +226,6 @@ LOCAL_SRC_FILES := \
 		jni/src/client/tile.cpp                   \
 		jni/src/util/sha256.c                     \
 		jni/src/gmp/mini-gmp.c
-#		jni/src/content_cso.cpp
 
 # Network
 LOCAL_SRC_FILES += \
@@ -288,6 +281,9 @@ LOCAL_SRC_FILES += jni/src/cguittfont/xCGUITTFont.cpp
 
 # SQLite3
 LOCAL_SRC_FILES += deps/sqlite/sqlite3.c
+
+# libIntl
+LOCAL_SRC_FILES += deps/libintl/internal/libintl.cpp
 
 # Threading
 LOCAL_SRC_FILES += \

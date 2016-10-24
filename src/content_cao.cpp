@@ -37,8 +37,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "mesh.h"
 #include "itemdef.h"
 #include "tool.h"
-//disable
-//#include "content_cso.h"
 #include "sound.h"
 #include "nodedef.h"
 #include "localplayer.h"
