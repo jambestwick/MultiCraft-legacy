@@ -23,11 +23,6 @@ LOCAL_SRC_FILES := deps/freetype/objs/.libs/libfreetype.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := iconv
-LOCAL_SRC_FILES := deps/libiconv/lib/.libs/libiconv.a
-include $(PREBUILT_STATIC_LIBRARY)
-
-include $(CLEAR_VARS)
 LOCAL_MODULE := openal
 LOCAL_SRC_FILES := deps/openal-soft/android/obj/local/$(APP_ABI)/libopenal.a
 include $(PREBUILT_STATIC_LIBRARY)
@@ -89,7 +84,6 @@ LOCAL_C_INCLUDES := \
 		jni/src/cguittfont                        \
 		jni/src/gmp                               \
 		deps/irrlicht/include                     \
-		deps/libiconv/include                     \
 		deps/libintl                              \
 		deps/freetype/include                     \
 		deps/curl/include                         \
@@ -295,7 +289,19 @@ LOCAL_SRC_FILES += \
 # JSONCPP
 LOCAL_SRC_FILES += jni/src/json/jsoncpp.cpp
 
-LOCAL_STATIC_LIBRARIES := Irrlicht LevelDB freetype curl iconv intl LuaJIT openal vorbis android_native_app_glue $(PROFILER_LIBS)
+# libiconv
+LOCAL_CFLAGS += -Wno-multichar -D_ANDROID -DLIBDIR -DBUILDING_LIBICONV 
+
+LOCAL_C_INCLUDES += \
+		deps/libiconv/include                     \
+		deps/libiconv/lib                     \
+		deps/libiconv/libcharset/include                     \
+		
+LOCAL_SRC_FILES += \
+		deps/libiconv/lib/iconv.c                        \
+		deps/libiconv/libcharset/lib/localcharset.c \
+
+LOCAL_STATIC_LIBRARIES := Irrlicht LevelDB freetype curl intl LuaJIT openal vorbis android_native_app_glue $(PROFILER_LIBS)
 
 LOCAL_LDLIBS := -lEGL -lGLESv1_CM -lGLESv2 -landroid -lOpenSLES
 

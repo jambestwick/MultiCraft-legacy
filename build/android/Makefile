@@ -108,19 +108,13 @@ FREETYPE_DIR = $(ANDR_ROOT)/deps/freetype
 FREETYPE_LIB = $(FREETYPE_DIR)/objs/.libs/libfreetype.a
 FREETYPE_TIMESTAMP = $(FREETYPE_DIR)/timestamp
 FREETYPE_TIMESTAMP_INT = $(ANDR_ROOT)/deps/freetype_timestamp
-FREETYPE_URL_HTTP = http://download.savannah.gnu.org/releases/freetype/freetype-$(FREETYPE_VERSION).tar.bz2
+FREETYPE_URL_HTTP = https://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VERSION)/freetype-$(FREETYPE_VERSION).tar.bz2
 
 ICONV_VERSION = 1.14
 ICONV_DIR = $(ANDR_ROOT)/deps/libiconv
-ICONV_LIB = $(ICONV_DIR)/lib/.libs/libiconv.a
-ICONV_TIMESTAMP = $(ICONV_DIR)/timestamp
-ICONV_TIMESTAMP_INT = $(ANDR_ROOT)/deps/iconv_timestamp
 ICONV_URL_HTTP = https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
 
 INTL_DIR = $(ANDR_ROOT)/deps/libintl/
-INTL_LIB = $(INTL_DIR)/libintl.a
-INTL_TIMESTAMP = $(INTL_DIR)timestamp
-INTL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/intl_timestamp
 INTL_URL_HTTP = https://github.com/j-jorge/libintl-lite/archive/master.tar.gz
 
 SQLITE3_VERSION = 3150000
@@ -430,12 +424,6 @@ $(FREETYPE_LIB) : $(FREETYPE_TIMESTAMP)
 clean_freetype :
 	$(RM) -rf ${FREETYPE_DIR}
 
-$(ICONV_TIMESTAMP) : iconv_download
-	@LAST_MODIF=$$(find ${ICONV_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
-	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
-		touch ${ICONV_TIMESTAMP};                                              \
-	fi
-
 iconv_download :
 	@if [ ! -d ${ICONV_DIR} ] ; then                                           \
 		echo "iconv sources missing, downloading...";                      \
@@ -448,54 +436,15 @@ iconv_download :
 		cd libiconv;                                                       \
 		patch -p1 < ${ANDR_ROOT}/patches/libiconv_android.patch;           \
 		patch -p1 < ${ANDR_ROOT}/patches/libiconv_stdio.patch;             \
-	fi
-
-iconv : $(ICONV_LIB)
-
-$(ICONV_LIB) : $(ICONV_TIMESTAMP)
-	@REFRESH=0;                                                                \
-	if [ ! -e ${ICONV_TIMESTAMP_INT} ] ; then                                  \
-		REFRESH=1;                                                         \
-	fi;                                                                        \
-	if [ ! -e ${ICONV_LIB} ] ; then                                            \
-		REFRESH=1;                                                         \
-	fi;                                                                        \
-	if [ ${ICONV_TIMESTAMP} -nt ${ICONV_TIMESTAMP_INT} ] ; then                \
-		REFRESH=1;                                                         \
-	fi;                                                                        \
-	if [ $$REFRESH -ne 0 ] ; then                                              \
-	mkdir -p ${ICONV_DIR};                                                     \
-	echo "changed timestamp for iconv detected building...";                   \
-	cd ${ICONV_DIR};                                                           \
-	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-iconv;                            \
-	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
+		export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-iconv;                            \
+		${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
 		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                    \
 		--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                \
-	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
-	export CC=${CROSS_PREFIX}gcc;                                              \
-	export CXX=${CROSS_PREFIX}g++;                                             \
-	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                   \
-	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
-	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
-	./configure --enable-static --disable-shared --host=${TARGET_HOST} || exit 1; \
-	sed -i 's/LIBICONV_VERSION_INFO) /LIBICONV_VERSION_INFO) -avoid-version /g' lib/Makefile; \
-	grep "iconv_LDFLAGS" src/Makefile;                                         \
-	$(MAKE) -s || exit 1;                                                      \
-	touch ${ICONV_TIMESTAMP};                                                  \
-	touch ${ICONV_TIMESTAMP_INT};                                              \
-	rm -rf $${TOOLCHAIN};                                                       \
-	else                                                                       \
-		echo "nothing to be done for iconv";                               \
+		./configure || exit 1;  \
 	fi
+
 clean_iconv :
 	$(RM) -rf ${ICONV_DIR}
-
-$(INTL_TIMESTAMP) : intl_download
-	@LAST_MODIF=$$(find ${INTL_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
-	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
-		touch ${INTL_TIMESTAMP};                                           \
-	fi
 
 intl_download :
 	@if [ ! -d ${INTL_DIR} ] ; then                                        \
@@ -685,7 +634,7 @@ clean_mpir:
 
 sqlite3_download :
 	@if [ ! -d ${SQLITE3_DIR} ] ; then                                        \
-		echo "libintl sources missing, downloading...";                    \
+		echo "sqlite3 sources missing, downloading...";                    \
 		mkdir -p ${ANDR_ROOT}/deps;                                        \
 		cd ${ANDR_ROOT}/deps;                                              \
 		rm -R sqlite;                                                              \
@@ -833,9 +782,9 @@ clean_assets :
 	@$(RM) -r ${APP_ROOT}/assets
 
 # $(MPIR_LIB)
-apk: local.properties $(ICONV_LIB) $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_LIB) $(LUAJIT_LIB) \
+apk: local.properties $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_LIB) $(LUAJIT_LIB) \
 	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h      \
-	$(ANDR_ROOT)/jni/src/android_version_githash.h sqlite3_download intl_download assets
+	$(ANDR_ROOT)/jni/src/android_version_githash.h sqlite3_download intl_download iconv_download assets
 	+@${ANDROID_NDK}/ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}                \
 		GPROF=${GPROF} APP_ABI=${TARGET_ABI}                                   \
 		APP_PLATFORM=${APP_PLATFORM}                                           \
