@@ -29,8 +29,8 @@ TARGET_HOST = arm-linux
 TARGET_ABI = armeabi-v7a
 TARGET_LIBDIR = armeabi-v7a
 TARGET_TOOLCHAIN = arm-linux-androideabi
-TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
-TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
+TARGET_CFLAGS_ADDON = -mfpu=vfpv4-d16 -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto
+TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON) 
 TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
 CROSS_PREFIX = arm-linux-androideabi-
 
@@ -89,7 +89,7 @@ OPENSSL_TIMESTAMP = $(OPENSSL_DIR)/timestamp
 OPENSSL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/openssl_timestamp
 OPENSSL_URL = https://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
 
-CURL_VERSION = 7.50.3
+CURL_VERSION = 7.51.0
 CURL_DIR = $(ANDR_ROOT)/deps/curl
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
@@ -117,7 +117,7 @@ ICONV_URL_HTTP = https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).
 INTL_DIR = $(ANDR_ROOT)/deps/libintl/
 INTL_URL_HTTP = https://github.com/j-jorge/libintl-lite/archive/master.tar.gz
 
-SQLITE3_VERSION = 3150000
+SQLITE3_VERSION = 3150100
 SQLITE3_DIR = $(ANDR_ROOT)/deps/sqlite
 SQLITE3_URL = https://www.sqlite.org/2016/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 
@@ -408,8 +408,8 @@ $(FREETYPE_LIB) : $(FREETYPE_TIMESTAMP)
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                   \
-	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
+	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON} -fno-lto";                   \
+	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON} -fno-lto";                         \
 	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
 	CC=${CROSS_PREFIX}gcc ./configure  --enable-static --disable-shared --host=${TARGET_HOST} \
 		--prefix=${TOOLCHAIN} --with-png=no --with-harfbuzz=no  || exit 1;     \
@@ -563,8 +563,8 @@ $(CURL_LIB): $(CURL_TIMESTAMP)
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                   \
-	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
+	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON} -fno-lto";                   \
+	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON} -fno-lto";                         \
 	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
 #	export CPPFLAGS="$${CPPFLAGS} -I${OPENSSL_DIR}/include                     \
 #	export LDFLAGS="$${LDFLAGS} -L${OPENSSL_DIR} ${TARGET_LDFLAGS_ADDON}";     \
@@ -616,7 +616,7 @@ $(MPIR_LIB): $(MPIR_TIMESTAMP)
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-mpir;                             \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
 		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
-		--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
+		--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN} ;                    \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
@@ -707,8 +707,8 @@ $(LUAJIT_LIB): $(LUAJIT_TIMESTAMP)
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
 	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
 	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
-	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
-	export TARGET_FLAGS="${TARGET_CFLAGS_ADDON}";                              \
+	export PATH="$${TOOLCHAIN}/bin:$${PATH} -fno-lto";                                  \
+	export TARGET_FLAGS="${TARGET_CFLAGS_ADDON} -fno-lto";                              \
 	export TARGET_LDFLAGS="${TARGET_LDFLAGS_ADDON}";                           \
 	$(MAKE) CROSS=${CROSS_PREFIX} XCFLAGS="-DLUAJIT_DISABLE_FFI" HOST_CC="gcc -m32" BUILDMODE=static; \
 	touch ${LUAJIT_TIMESTAMP};                                                 \
