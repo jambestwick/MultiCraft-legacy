@@ -72,7 +72,6 @@ core.register_entity(":__builtin:item", {
 			infotext = description,
 		}
 		self.object:set_properties(prop)
-			self.collect = true
 	end,
 
 	get_staticdata = function(self)
