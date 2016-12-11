@@ -37,7 +37,7 @@ echo "Creating assets.zip"
 ZIPDEST=$FOLDER/assets.zip
 rm -f $ZIPDEST
 
-cd $DEST; zip -9r $ZIPDEST -- *
+cd $DEST; zip -0r $ZIPDEST -- *
 cd $FOLDER; rm -rf $DEST
 
 ###########

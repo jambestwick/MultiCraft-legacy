@@ -29,6 +29,10 @@
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Advertising</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Advertising</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Advertising</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
