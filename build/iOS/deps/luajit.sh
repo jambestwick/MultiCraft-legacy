@@ -13,14 +13,14 @@ fi
 cd luajit-src
 
 # 32-bit
-make \
+make -j$(sysctl -n hw.ncpu) \
   HOST_CC="clang -m32 -arch i386" CROSS="$(dirname $IOS_CC)/" \
   TARGET_FLAGS="${IOS_FLAGS/-arch arm64/}" TARGET_SYS=iOS \
   -j$(sysctl -n hw.ncpu)
 mv src/libluajit.a tmp32.a
 make clean
 # 64-bit
-make \
+make -j$(sysctl -n hw.ncpu) \
   HOST_CC=clang CROSS="$(dirname $IOS_CC)/" \
   TARGET_FLAGS="${IOS_FLAGS/-arch armv7/}" TARGET_SYS=iOS \
   -j$(sysctl -n hw.ncpu)
