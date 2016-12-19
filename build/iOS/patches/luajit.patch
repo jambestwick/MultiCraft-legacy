@@ -1,0 +1,13 @@
+--- src/Makefile	2016-12-13 22:30:13.000000000 +0200
++++ src/Makefile.new	2016-12-14 03:14:34.000000000 +0200
+@@ -166,6 +166,10 @@
+     HOST_SYS= Windows
+     HOST_MSYS= cygwin
+   endif
++# Use Clang for macOS host.
++  ifeq (Darwin,$(HOST_SYS))
++    DEFAULT_CC= clang
++  endif
+ endif
+ 
+ ##############################################################################

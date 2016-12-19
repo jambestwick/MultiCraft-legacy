@@ -1,16 +1,21 @@
 #!/bin/bash -e
 
 . ../sdk.sh
-LUAJIT_VERSION=2.1.0-beta2
+LUAJIT_VERSION=2.1
 
 if [ ! -d luajit-src ]; then
-	wget http://luajit.org/download/LuaJIT-$LUAJIT_VERSION.tar.gz
-	tar -xzvf LuaJIT-$LUAJIT_VERSION.tar.gz
+	wget https://github.com/LuaJIT/LuaJIT/archive/v$LUAJIT_VERSION.zip
+	unzip v$LUAJIT_VERSION.zip
 	mv LuaJIT-$LUAJIT_VERSION luajit-src
-	rm LuaJIT-$LUAJIT_VERSION.tar.gz
+	rm v$LUAJIT_VERSION.zip
 fi
 
 cd luajit-src
+
+if [ ! -f .patched ]; then
+patch -p0 <../../patches/luajit.patch
+touch .patched
+fi
 
 # 32-bit
 make -j$(sysctl -n hw.ncpu) \

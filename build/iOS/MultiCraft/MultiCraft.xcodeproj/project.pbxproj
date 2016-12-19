@@ -1708,6 +1708,7 @@
 					"-flto",
 					"-fvisibility=hidden",
 				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-L${SRCROOT}/../deps/irrlicht",
@@ -1775,6 +1776,7 @@
 					"-flto",
 					"-fvisibility=hidden",
 				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-L${SRCROOT}/../deps/irrlicht",

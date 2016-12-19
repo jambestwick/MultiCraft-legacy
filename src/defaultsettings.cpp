@@ -428,7 +428,7 @@ void set_default_settings(Settings *settings)
 	if ([SDVersion deviceSize] == Screen4inch) {
 		settings->setDefault("hud_scaling", "0.5");
 		settings->setDefault("gui_scaling", "0.9");
-		settings->setDefault("mouse_sensitivity", "0.2");
+		settings->setDefault("mouse_sensitivity", "0.23");
 	};
 	// 4.7" (iPhone)
 	if ([SDVersion deviceSize] == Screen4Dot7inch) {

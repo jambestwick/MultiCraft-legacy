@@ -127,8 +127,6 @@ end
 
 	ui.update()
 
-	core.sound_play("main_menu", false)
-
 	minetest.set_clouds(false)
 	mm_texture.set_dirt_bg()
 end
