@@ -1495,6 +1495,10 @@ public:
 
 	void run();
 	void shutdown();
+#ifdef __IOS__
+	void pauseGame();
+	void customStatustext(const std::wstring &text, float time);
+#endif
 
 protected:
 
@@ -1699,6 +1703,9 @@ private:
 #ifdef __ANDROID__
 	bool m_android_chat_open;
 #endif
+#ifdef __IOS__
+	GameRunData* runData_ptr;
+#endif
 };
 
 Game::Game() :
@@ -1722,6 +1729,9 @@ Game::Game() :
 	sky(NULL),
 	local_inventory(NULL),
 	hud(NULL),
+#ifdef __IOS__
+	runData_ptr(NULL),
+#endif
 	mapper(NULL)
 {
 	g_settings->registerChangedCallback("doubletap_jump",
@@ -1841,6 +1851,9 @@ void Game::run()
 	runData.time_from_last_punch  = 10.0;
 	runData.profiler_max_page = 3;
 	runData.update_wielded_item_trigger = true;
+#ifdef __IOS__
+	runData_ptr = &runData;
+#endif
 
 	flags.show_chat = true;
 	flags.show_hud = true;
@@ -4526,6 +4539,28 @@ void Game::readSettings()
 	m_cache_mouse_sensitivity = rangelim(m_cache_mouse_sensitivity, 0.001, 100.0);
 }
 
+#ifdef __IOS__
+void Game::pauseGame()
+{
+	g_touchscreengui->handleReleaseAll();
+	if (g_menumgr.pausesGame())
+		return;
+	show_pause_menu(&current_formspec, client, gamedef,
+			texture_src, device, simple_singleplayer_mode);
+}
+
+void Game::customStatustext(const std::wstring &text, float time)
+{
+	if (!runData_ptr)
+		return;
+	statustext = text;
+	if(statustext == L"")
+		runData_ptr->statustext_time = 0;
+	else
+		runData_ptr->statustext_time = time;
+}
+#endif
+
 /****************************************************************************/
 /****************************************************************************
  Shutdown / cleanup
@@ -4560,6 +4595,8 @@ void Game::extendedResourceCleanup()
  ****************************************************************************/
 /****************************************************************************/
 
+static Game *g_game = NULL;
+
 void the_game(bool *kill,
 		bool random_input,
 		InputHandler *input,
@@ -4578,6 +4615,7 @@ void the_game(bool *kill,
 		bool simple_singleplayer_mode)
 {
 	Game game;
+	g_game = &game;
 
 	/* Make a copy of the server address because if a local singleplayer server
 	 * is created then this is updated and we don't want to change the value
@@ -4607,4 +4645,23 @@ void the_game(bool *kill,
 		error_message = e.what() + strgettext("\nCheck debug.txt for details.");
 		errorstream << "ModError: " << error_message << std::endl;
 	}
+
+	g_game = NULL;
 }
+
+#ifdef __IOS__
+void external_pause_game()
+{
+	if (!g_game)
+		return;
+	g_game->pauseGame();
+}
+
+void external_statustext(const char *text, float duration)
+{
+	if (!g_game)
+		return;
+	std::wstring s = narrow_to_wide(std::string(text));
+	g_game->customStatustext(s, duration);
+}
+#endif
