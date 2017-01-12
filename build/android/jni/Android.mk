@@ -60,10 +60,10 @@ else
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 LOCAL_CFLAGS += \
--mfpu=vfpv4 -march=armv7-a -Ofast \
+-mfpu=vfpv3-d16 -march=armv7-a -Ofast \
 -fno-fast-math -funsafe-math-optimizations -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range \
 -fvisibility=hidden -flto
-LOCAL_CXXFLAGS += -mfpu=vfpv4 -march=armv7-a -Ofast -fvisibility=hidden
+LOCAL_CXXFLAGS += -mfpu=vfpv3-d16 -march=armv7-a -Ofast -fvisibility=hidden
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections
 endif
 
@@ -76,10 +76,10 @@ endif
 
 ifeq ($(TARGET_ARCH_ABI),x86)
 LOCAL_CFLAGS += \
- -fno-stack-protector -Ofast \
--fno-fast-math -funsafe-math-optimizations -fno-trapping-math -ffinite-math-only -fno-rounding-math -fno-signaling-nans \
--fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
-LOCAL_CXXFLAGS += -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
+-fno-stack-protector -Ofast \
+-fno-fast-math -funsafe-math-optimizations -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range \
+-fvisibility=hidden -flto
+LOCAL_CXXFLAGS += -Ofast -fvisibility=hidden
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections
 endif
 

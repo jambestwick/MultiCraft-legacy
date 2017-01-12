@@ -347,7 +347,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_shaders", "false");
 	settings->setDefault("fullscreen", "true");
 	settings->setDefault("video_driver", "ogles1");
-	settings->setDefault("touchtarget", "false");
 	settings->setDefault("touchscreen_threshold", "20");
 	settings->setDefault("max_block_generate_distance", "3");
 	settings->setDefault("pause_fps_max", "5");
@@ -369,6 +368,8 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("selectionbox_width", "6");
 	settings->setDefault("emergequeue_limit_diskonly", "8");
 	settings->setDefault("emergequeue_limit_generate", "8");
+	settings->setDefault("touchtarget", "true");
+	settings->setDefault("enable_3d_clouds", "false");
 
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");
@@ -413,6 +414,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("viewing_range", "50");
 	settings->setDefault("selectionbox_width", "3");
 	settings->setDefault("smooth_lighting", "true");
+	settings->setDefault("touchtarget", "false");
 
 	// For iPad =)
 	settings->setDefault("hud_scaling", "0.8");

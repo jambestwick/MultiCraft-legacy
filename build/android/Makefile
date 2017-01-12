@@ -29,7 +29,7 @@ TARGET_HOST = arm-linux
 TARGET_ABI = armeabi-v7a
 TARGET_LIBDIR = armeabi-v7a
 TARGET_TOOLCHAIN = arm-linux-androideabi
-TARGET_CFLAGS_ADDON = -mfpu=vfpv4-d16 -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto
+TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto
 TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON) 
 TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
 CROSS_PREFIX = arm-linux-androideabi-
@@ -42,7 +42,7 @@ CROSS_PREFIX = arm-linux-androideabi-
 # TARGET_ABI = x86
 # TARGET_LIBDIR = x86
 # TARGET_TOOLCHAIN = x86
-# TARGET_CFLAGS_ADDON = -Ofast -fdata-sections -ffunction-sections -fmodulo-sched -fmodulo-sched-allow-regmoves -fvisibility=hidden
+# TARGET_CFLAGS_ADDON = -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto
 # TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 # TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
 # TARGET_ARCH = x86
@@ -81,29 +81,14 @@ IRRLICHT_TIMESTAMP = $(IRRLICHT_DIR)/timestamp
 IRRLICHT_TIMESTAMP_INT = $(ANDR_ROOT)/deps/irrlicht_timestamp
 IRRLICHT_URL_HTTP = https://github.com/zaki/irrlicht/archive/$(IRRLICHT_COMMIT).zip
 
-# not used now
-OPENSSL_VERSION = 1.0.2h
-OPENSSL_DIR = $(ANDR_ROOT)/deps/openssl
-OPENSSL_LIB = $(OPENSSL_DIR)/libssl.so.1.0.0
-OPENSSL_TIMESTAMP = $(OPENSSL_DIR)/timestamp
-OPENSSL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/openssl_timestamp
-OPENSSL_URL = https://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
-
-CURL_VERSION = 7.51.0
+CURL_VERSION = 7.52.1
 CURL_DIR = $(ANDR_ROOT)/deps/curl
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
 CURL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/curl_timestamp
 CURL_URL_HTTP = http://dl.uxnr.de/mirror/curl/curl-${CURL_VERSION}.tar.bz2
 
-# not used now
-MPIR_DIR = $(ANDR_ROOT)/deps/mpir
-MPIR_LIB = $(MPIR_DIR)/usr/local/lib/libmpir.a
-MPIR_TIMESTAMP = $(MPIR_DIR)/timestamp
-MPIR_TIMESTAMP_INT = $(ANDR_ROOT)/deps/mpir_timestamp
-MPIR_URL_GIT = https://github.com/wbhart/mpir
-
-FREETYPE_VERSION = 2.7
+FREETYPE_VERSION = 2.7.1
 FREETYPE_DIR = $(ANDR_ROOT)/deps/freetype
 FREETYPE_LIB = $(FREETYPE_DIR)/objs/.libs/libfreetype.a
 FREETYPE_TIMESTAMP = $(FREETYPE_DIR)/timestamp
@@ -117,9 +102,9 @@ ICONV_URL_HTTP = https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).
 INTL_DIR = $(ANDR_ROOT)/deps/libintl/
 INTL_URL_HTTP = https://github.com/j-jorge/libintl-lite/archive/master.tar.gz
 
-SQLITE3_VERSION = 3150100
+SQLITE3_VERSION = 3160200
 SQLITE3_DIR = $(ANDR_ROOT)/deps/sqlite
-SQLITE3_URL = https://www.sqlite.org/2016/sqlite-amalgamation-$(SQLITE3_VERSION).zip
+SQLITE3_URL = https://www.sqlite.org/2017/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 
 LUAJIT_GIT_BRANCH = v2.1
 LUAJIT_DIR = $(ANDR_ROOT)/deps/luajit
@@ -127,6 +112,21 @@ LUAJIT_LIB = $(LUAJIT_DIR)src/libluajit.a
 LUAJIT_TIMESTAMP = $(LUAJIT_DIR)/timestamp
 LUAJIT_TIMESTAMP_INT = $(ANDR_ROOT)/deps/luajit_timestamp
 LUAJIT_URL_GIT = https://github.com/LuaJIT/LuaJIT.git
+
+# not used now
+MPIR_DIR = $(ANDR_ROOT)/deps/mpir
+MPIR_LIB = $(MPIR_DIR)/usr/local/lib/libmpir.a
+MPIR_TIMESTAMP = $(MPIR_DIR)/timestamp
+MPIR_TIMESTAMP_INT = $(ANDR_ROOT)/deps/mpir_timestamp
+MPIR_URL_GIT = https://github.com/wbhart/mpir
+
+# not used now
+OPENSSL_VERSION = 1.0.2h
+OPENSSL_DIR = $(ANDR_ROOT)/deps/openssl
+OPENSSL_LIB = $(OPENSSL_DIR)/libssl.so.1.0.0
+OPENSSL_TIMESTAMP = $(OPENSSL_DIR)/timestamp
+OPENSSL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/openssl_timestamp
+OPENSSL_URL = https://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
 
 ################################################################################
 
