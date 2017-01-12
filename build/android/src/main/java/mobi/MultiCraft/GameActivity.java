@@ -9,7 +9,6 @@ import android.view.WindowManager;
 
 public class GameActivity extends NativeActivity {
     static {
-        System.loadLibrary("gnustl_shared");
         System.loadLibrary("multicraft");
     }
 
