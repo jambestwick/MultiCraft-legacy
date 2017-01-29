@@ -113,21 +113,6 @@ LUAJIT_TIMESTAMP = $(LUAJIT_DIR)/timestamp
 LUAJIT_TIMESTAMP_INT = $(ANDR_ROOT)/deps/luajit_timestamp
 LUAJIT_URL_GIT = https://github.com/LuaJIT/LuaJIT.git
 
-# not used now
-MPIR_DIR = $(ANDR_ROOT)/deps/mpir
-MPIR_LIB = $(MPIR_DIR)/usr/local/lib/libmpir.a
-MPIR_TIMESTAMP = $(MPIR_DIR)/timestamp
-MPIR_TIMESTAMP_INT = $(ANDR_ROOT)/deps/mpir_timestamp
-MPIR_URL_GIT = https://github.com/wbhart/mpir
-
-# not used now
-OPENSSL_VERSION = 1.0.2h
-OPENSSL_DIR = $(ANDR_ROOT)/deps/openssl
-OPENSSL_LIB = $(OPENSSL_DIR)/libssl.so.1.0.0
-OPENSSL_TIMESTAMP = $(OPENSSL_DIR)/timestamp
-OPENSSL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/openssl_timestamp
-OPENSSL_URL = https://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
-
 ################################################################################
 
 ANDROID_SDK = $(shell grep '^sdk\.dir' local.properties | sed 's/^.*=[[:space:]]*//')
@@ -202,9 +187,10 @@ $(OPENAL_LIB): $(OPENAL_TIMESTAMP)
 	echo "changed timestamp for openal detected building...";                  \
 	cd ${OPENAL_DIR};                                                          \
 	${ANDROID_NDK}/ndk-build NDEBUG=${NDEBUG}                                  \
-		NDK_MODULE_PATH=${NDK_MODULE_PATH}                                     \
-		APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                     \
-		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}                              \
+		NDK_MODULE_PATH=${NDK_MODULE_PATH} APP_ABI=${TARGET_ABI}               \
+		TARGET_ARCH_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}             \
+		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}gcc \
+		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}g++ \
 		TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                \
 		TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                              \
 		TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                 \
@@ -248,7 +234,8 @@ $(VORBIS_LIB): $(VORBIS_TIMESTAMP)
 	${ANDROID_NDK}/ndk-build NDEBUG=${NDEBUG}                                  \
 		NDK_MODULE_PATH=${NDK_MODULE_PATH}                                     \
 		APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                     \
-		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}     \
+		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}gcc \
+		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}g++ \
 		TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                \
 		TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                              \
 		TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                 \
@@ -260,57 +247,6 @@ $(VORBIS_LIB): $(VORBIS_TIMESTAMP)
 
 clean_vorbis :
 	$(RM) -rf ${VORBIS_DIR}
-
-$(OPENSSL_TIMESTAMP) : openssl_download
-	@LAST_MODIF=$$(find ${OPENSSL_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
-	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
-		touch ${OPENSSL_TIMESTAMP};                                            \
-	fi
-
-openssl_download :
-	@if [ ! -d ${OPENSSL_DIR} ] ; then                                         \
-		echo "openssl sources missing, downloading...";                        \
-		mkdir -p ${ANDR_ROOT}/deps;                                            \
-		cd ${ANDR_ROOT}/deps;                                                  \
-		wget ${OPENSSL_URL} || exit 1;                                         \
-		tar -xzf openssl-$(OPENSSL_VERSION).tar.gz;                            \
-		$(RM) -rf $(ANDR_ROOT)/deps/openssl-$(OPENSSL_VERSION).tar.gz;         \
-		mv openssl-$(OPENSSL_VERSION) openssl;                                 \
-	fi
-
-openssl : $(OPENSSL_LIB)
-
-$(OPENSSL_LIB): $(OPENSSL_TIMESTAMP) $(MPIR_LIB)
-	@REFRESH=0;                                                                \
-	if [ ! -e ${OPENSSL_TIMESTAMP_INT} ] ; then                                \
-		echo "${OPENSSL_TIMESTAMP_INT} doesn't exist";                         \
-		REFRESH=1;                                                             \
-	fi;                                                                        \
-	if [ ${OPENSSL_TIMESTAMP} -nt ${OPENSSL_TIMESTAMP_INT} ] ; then            \
-		REFRESH=1;                                                             \
-	fi;                                                                        \
-	if [ $$REFRESH -ne 0 ] ; then                                              \
-	echo "changed timestamp for openssl detected building...";                 \
-	cd ${OPENSSL_DIR};                                                         \
-	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-openssl;                          \
-	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
-		--install-dir=$${TOOLCHAIN} --platform=${APP_PLATFORM};                    \
-	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
-	CC=${CROSS_PREFIX}gcc ./Configure no-ssl2 no-ssl3 no-hw enable-gmp         \
-	-DL_ENDIAN -I${MPIR_DIR} -L${MPIR_DIR}/usr/lib android-${TARGET_ARCH};     \
-	CC=${CROSS_PREFIX}gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST} make depend;     \
-	CC=${CROSS_PREFIX}gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST} make build_libs; \
-	touch ${OPENSSL_TIMESTAMP};                                                \
-	touch ${OPENSSL_TIMESTAMP_INT};                                            \
-	$(RM) -rf $${TOOLCHAIN};                                                   \
-	else                                                                       \
-		echo "nothing to be done for openssl";                        \
-	fi
-
-clean_openssl :
-	$(RM) -rf deps/openssl-$(OPENSSL_VERSION).tar.gz;                          \
-	$(RM) -rf deps/openssl
 
 $(LEVELDB_TIMESTAMP) : leveldb_download
 	@LAST_MODIF=$$(find ${LEVELDB_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
@@ -345,15 +281,16 @@ $(LEVELDB_LIB): $(LEVELDB_TIMESTAMP)
 	export CROSS_PREFIX=${CROSS_PREFIX};                                       \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-leveldb;                          \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-	--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
-	--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
+		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                     \
+		--platform=${APP_PLATFORM}                                             \
+		--install-dir=$${TOOLCHAIN};                                           \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
 	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                   \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
-	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";      \
+	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
 	$(MAKE) || exit 1;                                                      \
 	touch ${LEVELDB_TIMESTAMP};                                                \
 	touch ${LEVELDB_TIMESTAMP_INT};                                            \
@@ -446,6 +383,7 @@ iconv_download :
 clean_iconv :
 	$(RM) -rf ${ICONV_DIR}
 
+<<<<<<< HEAD
 intl_download :
 	@if [ ! -d ${INTL_DIR} ] ; then                                        \
 		echo "libintl sources missing, downloading...";                    \
@@ -455,6 +393,42 @@ intl_download :
 		tar -xzf libintl.tar.gz || exit 1;                                 \
 		rm libintl.tar.gz;                                                 \
 		mv libintl-lite-master libintl;                                 \
+=======
+$(ICONV_LIB) : $(ICONV_TIMESTAMP)
+	@REFRESH=0;                                                                \
+	if [ ! -e ${ICONV_TIMESTAMP_INT} ] ; then                                  \
+		REFRESH=1;                                                         \
+	fi;                                                                        \
+	if [ ! -e ${ICONV_LIB} ] ; then                                            \
+		REFRESH=1;                                                         \
+	fi;                                                                        \
+	if [ ${ICONV_TIMESTAMP} -nt ${ICONV_TIMESTAMP_INT} ] ; then                \
+		REFRESH=1;                                                         \
+	fi;                                                                        \
+	if [ $$REFRESH -ne 0 ] ; then                                              \
+	mkdir -p ${ICONV_DIR};                                                     \
+	echo "changed timestamp for iconv detected building...";                   \
+	cd ${ICONV_DIR};                                                           \
+	\
+	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-iconv;                            \
+	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
+		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                     \
+		--platform=android-9                                                   \
+		--install-dir=$${TOOLCHAIN};                                           \
+	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
+	export CC=${CROSS_PREFIX}gcc;                                              \
+	export CXX=${CROSS_PREFIX}g++;                                             \
+	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
+	./configure --host=${TARGET_HOST} || exit 1;                               \
+	sed -i 's/LIBICONV_VERSION_INFO) /LIBICONV_VERSION_INFO) -avoid-version /g' lib/Makefile; \
+	grep "iconv_LDFLAGS" src/Makefile;                                         \
+	$(MAKE) -s || exit 1;                                                      \
+	touch ${ICONV_TIMESTAMP};                                                  \
+	touch ${ICONV_TIMESTAMP_INT};                                              \
+	rm -rf ${TOOLCHAIN};                                                       \
+	else                                                                       \
+		echo "nothing to be done for iconv";                               \
+>>>>>>> upstream/master
 	fi
 
 clean_intl :
@@ -508,8 +482,12 @@ $(IRRLICHT_LIB): $(IRRLICHT_TIMESTAMP) $(FREETYPE_LIB)
 	cd deps/irrlicht/source/Irrlicht/Android;                                  \
 	${ANDROID_NDK}/ndk-build NDEBUG=${NDEBUG}                                  \
 		NDK_MODULE_PATH=${NDK_MODULE_PATH}                                     \
-		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}     \
-		APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM} || exit 1;          \
+		APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                     \
+		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}gcc \
+		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}g++ \
+		TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                \
+		TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                              \
+		TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                 \
 	touch ${IRRLICHT_TIMESTAMP};                                               \
 	touch ${IRRLICHT_TIMESTAMP_INT};                                           \
 	else                                                                       \
@@ -538,7 +516,6 @@ curl_download :
 
 curl : $(CURL_LIB)
 
-#$(CURL_LIB): $(CURL_TIMESTAMP) $(OPENSSL_LIB)
 $(CURL_LIB): $(CURL_TIMESTAMP)
 	@REFRESH=0;                                                                \
 	if [ ! -e ${CURL_TIMESTAMP_INT} ] ; then                                   \
@@ -557,17 +534,18 @@ $(CURL_LIB): $(CURL_TIMESTAMP)
 	export CROSS_PREFIX=${CROSS_PREFIX};                                       \
 	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-curl;                             \
 	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
-		--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN};                    \
+		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                    \
+		--platform=${APP_PLATFORM}                                             \
+		--install-dir=$${TOOLCHAIN};                                           \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
 	export CC=${CROSS_PREFIX}gcc;                                              \
 	export CXX=${CROSS_PREFIX}g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON} -fno-lto";                   \
-	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON} -fno-lto";                         \
+	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON} -fno-lto";          \
+	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON} -fno-lto";                \
 	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
-#	export CPPFLAGS="$${CPPFLAGS} -I${OPENSSL_DIR}/include                     \
-#	export LDFLAGS="$${LDFLAGS} -L${OPENSSL_DIR} ${TARGET_LDFLAGS_ADDON}";     \
+#	export CPPFLAGS="$${CPPFLAGS}                                              \
+#	export LDFLAGS="$${LDFLAGS}                  ${TARGET_LDFLAGS_ADDON}";     \
 #	./configure --host=${TARGET_HOST} --enable-static --disable-shared --with-ssl; \
 	./configure --host=${TARGET_HOST} --enable-static --disable-shared;        \
 	$(MAKE) -s || exit 1;                                                      \
@@ -580,57 +558,6 @@ $(CURL_LIB): $(CURL_TIMESTAMP)
 
 clean_curl :
 	$(RM) -R ${CURL_DIR}
-
-$(MPIR_TIMESTAMP) : mpir_download
-	@LAST_MODIF=$$(find ${MPIR_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
-	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
-		touch ${MPIR_TIMESTAMP};                                            \
-	fi
-
-mpir_download :
-	@if [ ! -d "${MPIR_DIR}" ] ; then                                          \
-		echo "mpir sources missing, downloading...";                           \
-		mkdir -p ${ANDR_ROOT}/deps;                                            \
-		cd deps;                                                               \
-		git clone ${MPIR_URL_GIT} || exit 1;                                   \
-	fi
-
-mpir : $(MPIR_LIB)
-
-$(MPIR_LIB): $(MPIR_TIMESTAMP)
-	@REFRESH=0;                                                                \
-	if [ ! -e ${MPIR_TIMESTAMP_INT} ] ; then                                   \
-		REFRESH=1;                                                         \
-	fi;                                                                        \
-	if [ ! -e ${MPIR_LIB} ] ; then                                             \
-		REFRESH=1;                                                         \
-	fi;                                                                        \
-	if [ ${MPIR_TIMESTAMP} -nt ${MPIR_TIMESTAMP_INT} ] ; then                  \
-		REFRESH=1;                                                         \
-	fi;                                                                        \
-	if [ $$REFRESH -ne 0 ] ; then                                              \
-	mkdir -p ${MPIR_DIR};                                                      \
-	echo "changed timestamp for mpir detected building...";                    \
-	cd deps/mpir;                                                              \
-	export CROSS_PREFIX=${CROSS_PREFIX};                                       \
-	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-mpir;                             \
-	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                        \
-		--platform=${APP_PLATFORM} --install-dir=$${TOOLCHAIN} ;                    \
-	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
-	export CC=${CROSS_PREFIX}gcc;                                              \
-	export CXX=${CROSS_PREFIX}g++;                                             \
-	./configure --enable-static --disable-shared --host=${TARGET_HOST};        \
-	$(MAKE) install DESTDIR=/${MPIR_DIR} || exit 1;                            \
-	touch ${MPIR_TIMESTAMP};                                                   \
-	touch ${MPIR_TIMESTAMP_INT};                                               \
-	$(RM) -rf $${TOOLCHAIN};                                                   \
-	else                                                                       \
-		echo "nothing to be done for mpir";                                   \
-	fi
-
-clean_mpir:
-	$(RM) -R deps/mpir
 
 sqlite3_download :
 	@if [ ! -d ${SQLITE3_DIR} ] ; then                                        \
@@ -781,15 +708,19 @@ assets : $(ASSETS_TIMESTAMP)
 clean_assets :
 	@$(RM) -r ${APP_ROOT}/assets
 
-# $(MPIR_LIB)
 apk: local.properties $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_LIB) $(LUAJIT_LIB) \
 	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h      \
 	$(ANDR_ROOT)/jni/src/android_version_githash.h sqlite3_download intl_download iconv_download assets
 	+@${ANDROID_NDK}/ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}                \
 		GPROF=${GPROF} APP_ABI=${TARGET_ABI}                                   \
 		APP_PLATFORM=${APP_PLATFORM}                                           \
+		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}gcc \
+		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}g++ \
 		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}                              \
-		TARGET_LIBDIR=${TARGET_LIBDIR} &&                                      \
+		TARGET_LIBDIR=${TARGET_LIBDIR}                                         \
+		TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                \
+		TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                              \
+		TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                 \
 	if [ ! -e ${APP_ROOT}/jniLibs ]; then                                      \
 		ln -s ${ANDR_ROOT}/libs ${APP_ROOT}/jniLibs || exit 1;                 \
 	fi;                                                                        \

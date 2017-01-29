@@ -13,7 +13,7 @@ set(PROJECT_NAME_CAPITALIZED "MultiCraft")
 # Also remember to set PROTOCOL_VERSION in network/networkprotocol.h when releasing
 set(VERSION_MAJOR 1)
 set(VERSION_MINOR 1)
-set(VERSION_PATCH 4)
+set(VERSION_PATCH 7)
 set(VERSION_EXTRA "" CACHE STRING "Stuff to append to version string")
 
 # Change to false for releases
@@ -163,6 +163,7 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/fonts" DESTINATION "${SHAREDIR}")
 install(FILES "README.md" DESTINATION "${DOCDIR}")
 install(FILES "doc/lua_api.txt" DESTINATION "${DOCDIR}")
 install(FILES "doc/menu_lua_api.txt" DESTINATION "${DOCDIR}")
+install(FILES "doc/texture_packs.txt" DESTINATION "${DOCDIR}")
 install(FILES "doc/world_format.txt" DESTINATION "${DOCDIR}")
 install(FILES "multicraft.conf.example" DESTINATION "${EXAMPLE_CONF_DIR}")
 
@@ -171,6 +172,10 @@ if(UNIX AND NOT APPLE)
 	install(FILES "misc/MultiCraft.desktop" DESTINATION "${XDG_APPS_DIR}")
 	install(FILES "misc/MultiCraft.appdata.xml" DESTINATION "${APPDATADIR}")
 	install(FILES "misc/MultiCraft.svg" DESTINATION "${ICONDIR}/hicolor/scalable/apps")
+ # ToDo
+	install(FILES "misc/minetest-xorg-icon-128.png"
+		DESTINATION "${ICONDIR}/hicolor/128x128/apps"
+		RENAME "minetest.png")
 endif()
 
 if(APPLE)
@@ -187,7 +192,7 @@ add_subdirectory(src)
 
 # CPack
 
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "An InfiniMiner/Minecraft inspired game")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "An Minecraft inspired game")
 set(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${VERSION_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${VERSION_PATCH})

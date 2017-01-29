@@ -86,7 +86,7 @@ endif
 LOCAL_C_INCLUDES := \
 		jni/src                                   \
 		jni/src/script                            \
-		jni/src/json                              \
+		jni/src/jsoncpp                           \
 		jni/src/cguittfont                        \
 		jni/src/gmp                               \
 		deps/irrlicht/include                     \
@@ -156,6 +156,7 @@ LOCAL_SRC_FILES := \
 		jni/src/log.cpp                           \
 		jni/src/main.cpp                          \
 		jni/src/map.cpp                           \
+		jni/src/map_settings_manager.cpp          \
 		jni/src/mapblock.cpp                      \
 		jni/src/mapblock_mesh.cpp                 \
 		jni/src/mapgen.cpp                        \
@@ -189,6 +190,8 @@ LOCAL_SRC_FILES := \
 		jni/src/porting.cpp                       \
 		jni/src/profiler.cpp                      \
 		jni/src/quicktune.cpp                     \
+		jni/src/reflowscan.cpp                    \
+		jni/src/remoteplayer.cpp                  \
 		jni/src/rollback.cpp                      \
 		jni/src/rollback_interface.cpp            \
 		jni/src/serialization.cpp                 \
@@ -211,6 +214,7 @@ LOCAL_SRC_FILES := \
 		jni/src/util/auth.cpp                     \
 		jni/src/util/base64.cpp                   \
 		jni/src/util/directiontables.cpp          \
+		jni/src/util/enriched_string.cpp          \
 		jni/src/util/numeric.cpp                  \
 		jni/src/util/pointedthing.cpp             \
 		jni/src/util/serialize.cpp                \
@@ -225,7 +229,9 @@ LOCAL_SRC_FILES := \
 		jni/src/client/clientlauncher.cpp         \
 		jni/src/client/tile.cpp                   \
 		jni/src/util/sha256.c                     \
-		jni/src/gmp/mini-gmp.c
+		jni/src/gmp/mini-gmp.c                    \
+		jni/src/client/joystick_controller.cpp    \
+		jni/src/irrlicht_changes/static_text.cpp
 
 # Network
 LOCAL_SRC_FILES += \
@@ -293,7 +299,7 @@ LOCAL_SRC_FILES += \
 		jni/src/threading/thread.cpp
 
 # JSONCPP
-LOCAL_SRC_FILES += jni/src/json/jsoncpp.cpp
+LOCAL_SRC_FILES += jni/src/jsoncpp/json/jsoncpp.cpp
 
 # libiconv
 LOCAL_CFLAGS += -Wno-multichar -D_ANDROID -DLIBDIR -DBUILDING_LIBICONV 
