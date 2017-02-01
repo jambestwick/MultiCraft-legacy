@@ -76,7 +76,8 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "Yalnızca $1 ve $2 arası protokol sürümleri desteklenmektedir."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -147,6 +148,14 @@ msgstr "Minetest.net adresinden bir oyun modu indirin"
 msgid "Download one from minetest.net"
 msgstr "Minetest.net adresinden indirin"
 
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Oyun"
+
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Mapgen"
+
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Dünya seçilmedi ya da adlandırılmadı"
@@ -171,8 +180,9 @@ msgstr "Ek bir oyun modu yüklü değil."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr " \"$1\" 'i silmek istediğinizden emin misiniz ?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
-#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: src/keycode.cpp
 msgid "Delete"
 msgstr "Sil"
 
@@ -187,14 +197,6 @@ msgstr "Modmgr: \"$1\" eklenti konumu yanlış"
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr " \"$1\" dünyasını sil ?"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Hayır"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Evet"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -360,22 +362,12 @@ msgid "Active Contributors"
 msgstr "Aktif katkı sağlayanlar"
 
 #: builtin/mainmenu/tab_credits.lua
+msgid "Core Developers"
+msgstr "Ana geliştiriciler"
+
+#: builtin/mainmenu/tab_credits.lua
 msgid "Credits"
 msgstr "Hakkında"
-
-#: builtin/mainmenu/tab_credits.lua
-msgid "Dedication of the current release"
-msgstr ""
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "Minetest Developers"
-msgstr "Ana geliştiriciler"
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "MultiCraft Developers"
-msgstr "Ana geliştiriciler"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -418,36 +410,36 @@ msgstr "Seçilen eklenti paketini sil"
 msgid "Address / Port"
 msgstr "Adres / Port :"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Çevirimiçi Oyna"
+
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Connect"
 msgstr "Bağlan"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Creative mode"
 msgstr "Yaratıcı mod"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Damage enabled"
 msgstr "Hasar alma etkin"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Del. Favorite"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Favorite"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua
-msgid "Multi Player"
-msgstr ""
-
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "Name / Password"
 msgstr "Kullanıcı Adı / Şifre :"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "PvP enabled"
 msgstr "Mücadele modu"
 
@@ -455,19 +447,19 @@ msgstr "Mücadele modu"
 msgid "Bind Address"
 msgstr "Adresi doğrula"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Configure"
 msgstr "Ayarla"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Create Server"
-msgstr "Sunucu oluşturuluyor..."
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Yaratıcı Mod"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Creative Inventory"
-msgstr "Envanter"
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Enable Damage"
+msgstr "Hasarı etkinleştir"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -490,9 +482,13 @@ msgstr "Port"
 msgid "Public"
 msgstr "Herkese Açık"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Select World:"
 msgstr "Dünya seç :"
+
+#: builtin/mainmenu/tab_server.lua
+msgid "Server"
+msgstr "Sunucu Kur"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -501,11 +497,6 @@ msgstr "Sunucu portu"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Oyunu Başlat"
-
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Survival Mode"
-msgstr "Yaratıcı Mod"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -568,6 +559,10 @@ msgstr "Mipmap"
 #, fuzzy
 msgid "Mipmap + Aniso. Filter"
 msgstr "Mipmap  Aniso. Süzgeci"
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Hayır"
 
 #: builtin/mainmenu/tab_settings.lua
 #, fuzzy
@@ -673,17 +668,28 @@ msgstr "Dalgalanan Bitkiler"
 msgid "Waving Water"
 msgstr "Dalgalanan Su"
 
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Yaratıcı Mod"
+#: builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Evet"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Config mods"
+msgstr "Eklentileri ayarla"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Main"
+msgstr "Ana"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Start Singleplayer"
+msgstr "Tek kişilik oyunu başlat"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Oyna"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-#, fuzzy
-msgid "Single Player"
+msgid "Singleplayer"
 msgstr "Tek Kişilik"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -773,11 +779,6 @@ msgid "Change Password"
 msgstr "Şifre değiştir"
 
 #: src/game.cpp
-#, fuzzy
-msgid "Close game"
-msgstr "Mağazayı kapat"
-
-#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "Sunucuya bağlanılıyor..."
 
@@ -792,6 +793,68 @@ msgstr "İstemci oluşturuluyor..."
 #: src/game.cpp
 msgid "Creating server..."
 msgstr "Sunucu oluşturuluyor..."
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"- WASD: move\n"
+"- Space: jump/climb\n"
+"- Shift: sneak/go down\n"
+"- Q: drop item\n"
+"- I: inventory\n"
+"- Mouse: turn/look\n"
+"- Mouse left: dig/punch\n"
+"- Mouse right: place/use\n"
+"- Mouse wheel: select item\n"
+"- T: chat\n"
+msgstr ""
+"Varsayılanlar Kontroller:\n"
+"- WASD: Hareket et\n"
+"- Boşluk: Zıpla/Tırman\n"
+"- Shift: Sessiz yürü/Aşağı in\n"
+"- Q: Elindekini bırak\n"
+"- I: Envanter\n"
+"- Fare: Dön/Bak\n"
+"- Sol fare: Kaz/Vur\n"
+"- Sağ fare: Yerleştir/Kullan\n"
+"- Fare tekerleği: Araç seç\n"
+"- T: Sohbet\n"
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"No menu visible:\n"
+"- single tap: button activate\n"
+"- double tap: place/use\n"
+"- slide finger: look around\n"
+"Menu/Inventory visible:\n"
+"- double tap (outside):\n"
+" -->close\n"
+"- touch stack, touch slot:\n"
+" --> move stack\n"
+"- touch&drag, tap 2nd finger\n"
+" --> place single item to slot\n"
+msgstr ""
+"Varsayılan Kontroller:\n"
+"Tüm menüler gizli:\n"
+"- Tek tık: tuş etkin\n"
+"- Çift tık: yerleştir/kullan\n"
+"- Parmağı kaydır: etrafa bak\n"
+"Menu/Encanter görünür:\n"
+"- çift tık (dışarda):\n"
+" -->kapat\n"
+"- touch stack, touch slot:\n"
+" --> move stack\n"
+"- tut&bırak, iki parmağı kullan\n"
+" --> slotuna bir item bırak\n"
+
+#: src/game.cpp
+msgid "Exit to Menu"
+msgstr "Menüye dön"
+
+#: src/game.cpp
+msgid "Exit to OS"
+msgstr "Oyundan Çık"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -810,11 +873,6 @@ msgid "MiB/s"
 msgstr ""
 
 #: src/game.cpp
-#, fuzzy
-msgid "Migrating world..."
-msgstr "İstemci oluşturuluyor..."
-
-#: src/game.cpp
 msgid "Node definitions..."
 msgstr "Blok tanımlamaları..."
 
@@ -825,10 +883,6 @@ msgstr "Adres çözümleniyor..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Yeniden Canlan"
-
-#: src/game.cpp
-msgid "Save and Exit"
-msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -899,9 +953,7 @@ msgid "Key already in use"
 msgstr "Tuş zaten kullanımda"
 
 #: src/guiKeyChangeMenu.cpp
-#, fuzzy
-msgid ""
-"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
+msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
 msgstr "Tuş ayaları. ( Olağandışı durumlarda minetest.conf 'u düzenleyin )"
 
 #: src/guiKeyChangeMenu.cpp src/keycode.cpp
@@ -1544,10 +1596,6 @@ msgid "Clean transparent textures"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Çevirimiçi Oyna"
-
-#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr ""
 
@@ -2147,10 +2195,6 @@ msgstr "Menü boyutları"
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Oyun"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -2864,10 +2908,6 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Mapgen"
 
 #: src/settings_translation_file.cpp
 #, fuzzy
@@ -4333,8 +4373,8 @@ msgstr ""
 #~ msgid "Rendering:"
 #~ msgstr "Kaplama:"
 
-#~ msgid " MB/s"
-#~ msgstr " MB/s"
+#~ msgid "Restart minetest for driver change to take effect"
+#~ msgstr "Değişikliklerin etkin olabilmesi için minetesti yeniden başlatın"
 
 #~ msgid "Numpad "
 #~ msgstr "Numpad "

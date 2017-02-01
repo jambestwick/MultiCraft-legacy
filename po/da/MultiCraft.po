@@ -74,7 +74,8 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "Vi understøtter protokol versioner mellem $1 og $2."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -145,6 +146,14 @@ msgstr "Hent et underspil, såsom minetest_game fra minetest.net"
 msgid "Download one from minetest.net"
 msgstr "Hent en fra minetest.net"
 
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Spil"
+
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Mapgen"
+
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Intet navn på verden angivet eller intet spil valgt"
@@ -170,8 +179,9 @@ msgstr "Du har ikke installeret nogle subgames."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "Er du sikker på, at du vil slette »$1«?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
-#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: src/keycode.cpp
 msgid "Delete"
 msgstr "Slet"
 
@@ -186,14 +196,6 @@ msgstr "Modmgr: ugyldig mod-sti \"$1\""
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "Slet verden \"$1\"?"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Nej"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Ja"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -362,22 +364,12 @@ msgid "Active Contributors"
 msgstr "Aktive bidragere"
 
 #: builtin/mainmenu/tab_credits.lua
+msgid "Core Developers"
+msgstr "Hoved udviklere"
+
+#: builtin/mainmenu/tab_credits.lua
 msgid "Credits"
 msgstr "Skabt af"
-
-#: builtin/mainmenu/tab_credits.lua
-msgid "Dedication of the current release"
-msgstr ""
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "Minetest Developers"
-msgstr "Hoved udviklere"
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "MultiCraft Developers"
-msgstr "Hoved udviklere"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -419,19 +411,23 @@ msgstr "Afinstaller den valgte modpack"
 msgid "Address / Port"
 msgstr "Adresse/port"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Klient"
+
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Connect"
 msgstr "Forbind"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Creative mode"
 msgstr "Kreativ tilstand"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Damage enabled"
 msgstr "Skade aktiveret"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "Del. Favorite"
 msgstr "Vis favoritter"
@@ -444,7 +440,7 @@ msgstr "Favorit"
 msgid "Name / Password"
 msgstr "Navn/adgangskode"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "PvP enabled"
 msgstr "Spiller mod spiller aktiveret"
 
@@ -452,19 +448,19 @@ msgstr "Spiller mod spiller aktiveret"
 msgid "Bind Address"
 msgstr "Bind adresse"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Configure"
 msgstr "Konfigurér"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Create Server"
-msgstr "Opretter server..."
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Kreativ tilstand"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Creative Inventory"
-msgstr "Beholdning"
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Enable Damage"
+msgstr "Aktivér skade"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -487,9 +483,13 @@ msgstr "Port"
 msgid "Public"
 msgstr "Offentlig"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Select World:"
 msgstr "Vælg verden:"
+
+#: builtin/mainmenu/tab_server.lua
+msgid "Server"
+msgstr "Server"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -498,11 +498,6 @@ msgstr "Server port"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Start spil / Forbind"
-
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Survival Mode"
-msgstr "Kreativ tilstand"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -563,6 +558,10 @@ msgid "Mipmap + Aniso. Filter"
 msgstr "Mipmap + Aniso-filter"
 
 #: builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Nej"
+
+#: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
 msgstr "Intet filter"
 
@@ -605,11 +604,6 @@ msgstr "Partikler"
 #: builtin/mainmenu/tab_settings.lua
 msgid "Reset singleplayer world"
 msgstr "Nulstil spillerverden"
-
-#: builtin/mainmenu/tab_settings.lua
-#, fuzzy
-msgid "Reset singleplayer world"
-msgstr "Er du sikker på, at du vil nulstille din enkelt spiller-verden?"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
@@ -659,17 +653,28 @@ msgstr "Bølgende planter"
 msgid "Waving Water"
 msgstr "Bølgende vand"
 
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Kreativ tilstand"
+#: builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Ja"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Config mods"
+msgstr "Konfigurér mods"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Main"
+msgstr "Hovedmenu"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Start Singleplayer"
+msgstr "Enlig spiller"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Spil"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-#, fuzzy
-msgid "Single Player"
+msgid "Singleplayer"
 msgstr "Enlig spiller"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -756,11 +761,6 @@ msgstr "Skift tastatur-bindinger"
 #: src/game.cpp
 msgid "Change Password"
 msgstr "Skift kodeord"
-
-#: src/game.cpp
-#, fuzzy
-msgid "Close game"
-msgstr "Luk spil"
 
 #: src/game.cpp
 msgid "Connecting to server..."
@@ -869,10 +869,6 @@ msgid "Respawn"
 msgstr "Genopstå"
 
 #: src/game.cpp
-msgid "Save and Exit"
-msgstr ""
-
-#: src/game.cpp
 msgid "Shutting down..."
 msgstr "Lukker ned..."
 
@@ -943,9 +939,7 @@ msgid "Key already in use"
 msgstr "Tast allerede i brug"
 
 #: src/guiKeyChangeMenu.cpp
-#, fuzzy
-msgid ""
-"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
+msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
 msgstr ""
 "Tastebindinger. (Hvis denne menu fucker op, fjern elementer fra minetest."
 "conf)"
@@ -1624,10 +1618,6 @@ msgid "Clean transparent textures"
 msgstr "Rene gennemsigtige teksturer"
 
 #: src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Klient"
-
-#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr "Klient og server"
 
@@ -2276,10 +2266,6 @@ msgstr "GUI-skaleringsfilter"
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr "GUI-skaleringsfilter txr2img"
-
-#: src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Spil"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"

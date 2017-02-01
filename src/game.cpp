@@ -2244,7 +2244,7 @@ bool Game::autoMigrateSingleplayerWorld(const std::string map_dir)
 	new_db->beginSave();
 	for (std::vector<v3s16>::const_iterator it = blocks.begin(); it != blocks.end(); ++it) {
 		std::string data;
-		data = old_db->loadBlock(*it);
+		old_db->loadBlock(*it, &data);
 		if (!data.empty())
 			new_db->saveBlock(*it, data);
 		else
@@ -4776,8 +4776,7 @@ void Game::pauseGame()
 	g_touchscreengui->handleReleaseAll();
 	if (g_menumgr.pausesGame())
 		return;
-	show_pause_menu(&current_formspec, client, gamedef,
-			texture_src, device, simple_singleplayer_mode);
+	show_pause_menu(&current_formspec, client, gamedef, texture_src, device, &input->joystick, simple_singleplayer_mode);
 }
 
 void Game::customStatustext(const std::wstring &text, float time)

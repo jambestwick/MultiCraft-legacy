@@ -76,7 +76,8 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr ""
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -145,6 +146,14 @@ msgstr ""
 msgid "Download one from minetest.net"
 msgstr ""
 
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Joc"
+
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Mapgen"
+
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Jocul nu are nume, sau nu ai selectat un joc"
@@ -169,8 +178,9 @@ msgstr ""
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "Ești sigur că vrei să ștergi \"$1\"?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
-#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: src/keycode.cpp
 msgid "Delete"
 msgstr "Șterge"
 
@@ -185,14 +195,6 @@ msgstr "Modmgr: Pacht de mod invalid \"$1\""
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "Ștergi lumea \"$1\"?"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Nu"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Da"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -364,22 +366,12 @@ msgid "Active Contributors"
 msgstr "Contribuitori activi"
 
 #: builtin/mainmenu/tab_credits.lua
+msgid "Core Developers"
+msgstr "Dezvoltatori de bază"
+
+#: builtin/mainmenu/tab_credits.lua
 msgid "Credits"
 msgstr "Credits"
-
-#: builtin/mainmenu/tab_credits.lua
-msgid "Dedication of the current release"
-msgstr ""
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "Minetest Developers"
-msgstr "Dezvoltatori de bază"
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "MultiCraft Developers"
-msgstr "Dezvoltatori de bază"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -423,40 +415,40 @@ msgstr "Dezinstalaţi Pachetul de moduri selectat"
 msgid "Address / Port"
 msgstr "Adresă/Port"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Client"
+
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Connect"
 msgstr "Conectează"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "Creative mode"
 msgstr "Modul Creativ"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "Damage enabled"
 msgstr "activat"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "Del. Favorite"
 msgstr "Preferate:"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "Favorite"
 msgstr "Preferate:"
 
-#: builtin/mainmenu/tab_multiplayer.lua
-msgid "Multi Player"
-msgstr ""
-
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "Name / Password"
 msgstr "Nume/Parolă"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "PvP enabled"
 msgstr "activat"
@@ -465,19 +457,19 @@ msgstr "activat"
 msgid "Bind Address"
 msgstr ""
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Configure"
 msgstr "Configurează"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Create Server"
-msgstr "Se crează serverul..."
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Modul Creativ"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Creative Inventory"
-msgstr "Inventar"
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Enable Damage"
+msgstr "Activează Daune"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -500,9 +492,13 @@ msgstr ""
 msgid "Public"
 msgstr "Public"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Select World:"
 msgstr "Selectează lumea:"
+
+#: builtin/mainmenu/tab_server.lua
+msgid "Server"
+msgstr "Server"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -511,11 +507,6 @@ msgstr "Port server"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Începe jocul"
-
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Survival Mode"
-msgstr "Modul Creativ"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -580,6 +571,10 @@ msgstr "Mip Mapping"
 #: builtin/mainmenu/tab_settings.lua
 msgid "Mipmap + Aniso. Filter"
 msgstr ""
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Nu"
 
 #: builtin/mainmenu/tab_settings.lua
 #, fuzzy
@@ -688,17 +683,31 @@ msgstr "Copaci fantezici"
 msgid "Waving Water"
 msgstr "Copaci fantezici"
 
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Modul Creativ"
+#: builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Da"
+
+#: builtin/mainmenu/tab_simple_main.lua
+#, fuzzy
+msgid "Config mods"
+msgstr "Configurează"
+
+#: builtin/mainmenu/tab_simple_main.lua
+#, fuzzy
+msgid "Main"
+msgstr "Meniul Principal"
+
+#: builtin/mainmenu/tab_simple_main.lua
+#, fuzzy
+msgid "Start Singleplayer"
+msgstr "Singleplayer"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Joacă"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-#, fuzzy
-msgid "Single Player"
+msgid "Singleplayer"
 msgstr "Singleplayer"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -791,11 +800,6 @@ msgid "Change Password"
 msgstr "Schimbă Parola"
 
 #: src/game.cpp
-#, fuzzy
-msgid "Close game"
-msgstr "joc nou"
-
-#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "Se conectează la server..."
 
@@ -811,6 +815,56 @@ msgstr "Se creează clientul..."
 #, fuzzy
 msgid "Creating server..."
 msgstr "Se crează serverul..."
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"- WASD: move\n"
+"- Space: jump/climb\n"
+"- Shift: sneak/go down\n"
+"- Q: drop item\n"
+"- I: inventory\n"
+"- Mouse: turn/look\n"
+"- Mouse left: dig/punch\n"
+"- Mouse right: place/use\n"
+"- Mouse wheel: select item\n"
+"- T: chat\n"
+msgstr ""
+"Controale prestabilite:\n"
+"- WASD: mișcare\n"
+"- Spațiu: sărire/urcare\n"
+"- Shift: furișare/coborâre\n"
+"- Q: aruncă obiect\n"
+"- I: inventar\n"
+"- Mouse: întoarcere/vedere\n"
+"- Click stânga: săpare/lovire\n"
+"- Click dreapta: pune/folosește\n"
+"- Rotiță mouse: selectează obiect\n"
+"- T: chat\n"
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"No menu visible:\n"
+"- single tap: button activate\n"
+"- double tap: place/use\n"
+"- slide finger: look around\n"
+"Menu/Inventory visible:\n"
+"- double tap (outside):\n"
+" -->close\n"
+"- touch stack, touch slot:\n"
+" --> move stack\n"
+"- touch&drag, tap 2nd finger\n"
+" --> place single item to slot\n"
+msgstr ""
+
+#: src/game.cpp
+msgid "Exit to Menu"
+msgstr "Ieși în Meniu"
+
+#: src/game.cpp
+msgid "Exit to OS"
+msgstr "Ieși din joc"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -829,11 +883,6 @@ msgid "MiB/s"
 msgstr ""
 
 #: src/game.cpp
-#, fuzzy
-msgid "Migrating world..."
-msgstr "Se creează clientul..."
-
-#: src/game.cpp
 msgid "Node definitions..."
 msgstr "Definițiile Blocurilor..."
 
@@ -844,10 +893,6 @@ msgstr "Se rezolvă adresa..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Reînviere"
-
-#: src/game.cpp
-msgid "Save and Exit"
-msgstr ""
 
 #: src/game.cpp
 #, fuzzy
@@ -919,9 +964,7 @@ msgid "Key already in use"
 msgstr "Tastă deja folosită"
 
 #: src/guiKeyChangeMenu.cpp
-#, fuzzy
-msgid ""
-"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
+msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
 msgstr ""
 "Keybindings. (Dacă acest meniu apare, șterge lucrurile din minetest.conf)"
 
@@ -1564,10 +1607,6 @@ msgid "Clean transparent textures"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Client"
-
-#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr ""
 
@@ -2166,10 +2205,6 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Joc"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -2882,10 +2917,6 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Mapgen"
 
 #: src/settings_translation_file.cpp
 #, fuzzy
@@ -4304,12 +4335,6 @@ msgstr ""
 msgid "cURL timeout"
 msgstr ""
 
-#~ msgid "No of course not!"
-#~ msgstr "Nu, sigur că nu!"
-
-#~ msgid "Public Serverlist"
-#~ msgstr "Listă de servere publică"
-
 #, fuzzy
 #~ msgid "Useful for mod developers."
 #~ msgstr "Dezvoltatori de bază"
@@ -4358,8 +4383,8 @@ msgstr ""
 #~ msgid "START SERVER"
 #~ msgstr "DESCHIDE SERVERUL"
 
-#~ msgid "SETTINGS"
-#~ msgstr "SETĂRI"
+#~ msgid "Name"
+#~ msgstr "Nume"
 
 #~ msgid "Password"
 #~ msgstr "Parolă"

@@ -605,10 +605,6 @@ msgid "Reset singleplayer world"
 msgstr "Сброс одиночной игры"
 
 #: builtin/mainmenu/tab_settings.lua
-msgid "Reset singleplayer world"
-msgstr "Сброс одиночной игры"
-
-#: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
 msgstr "Настройки"
 

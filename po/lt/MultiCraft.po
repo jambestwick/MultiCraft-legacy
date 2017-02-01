@@ -75,7 +75,8 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr ""
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -146,6 +147,14 @@ msgstr "Atsisiųskite sub žaidimą, tokį kaip minetest_game, iš minetest.net"
 msgid "Download one from minetest.net"
 msgstr "Atsisiųsti vieną iš minetest.net"
 
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Žaidimas"
+
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Žemėlapių generavimas"
+
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Nepateiktas joks pasaulio pavadinimas, arba nepasirinktas žaidimas"
@@ -170,8 +179,9 @@ msgstr "Neturite įdiegę sub žaidimų."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "Ar tikrai norite ištrinti „$1“?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
-#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: src/keycode.cpp
 msgid "Delete"
 msgstr "Ištrinti"
 
@@ -186,14 +196,6 @@ msgstr "Papildtvrk: netinkamas papildinio kelias „$1“"
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "Ištrinti pasaulį „$1“?"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Ne"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Taip"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -362,22 +364,12 @@ msgid "Active Contributors"
 msgstr "Aktyvūs pagalbininkai"
 
 #: builtin/mainmenu/tab_credits.lua
+msgid "Core Developers"
+msgstr "Pagrindiniai kūrėjai"
+
+#: builtin/mainmenu/tab_credits.lua
 msgid "Credits"
 msgstr "Padėkos"
-
-#: builtin/mainmenu/tab_credits.lua
-msgid "Dedication of the current release"
-msgstr ""
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "Minetest Developers"
-msgstr "Pagrindiniai kūrėjai"
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "MultiCraft Developers"
-msgstr "Pagrindiniai kūrėjai"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -420,38 +412,38 @@ msgstr "Pašalinti pasirinktą papildinį"
 msgid "Address / Port"
 msgstr "Adresas / Prievadas :"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Žaisti tinkle(klientas)"
+
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Connect"
 msgstr "Jungtis"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Creative mode"
 msgstr "Kūrybinė veiksena"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Damage enabled"
 msgstr "Žalojimas įjungtas"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "Del. Favorite"
 msgstr "Mėgiami:"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "Favorite"
 msgstr "Mėgiami:"
 
-#: builtin/mainmenu/tab_multiplayer.lua
-msgid "Multi Player"
-msgstr ""
-
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "Name / Password"
 msgstr "Vardas / Slaptažodis :"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "PvP enabled"
 msgstr "PvP įjungtas"
 
@@ -459,19 +451,19 @@ msgstr "PvP įjungtas"
 msgid "Bind Address"
 msgstr "Susieti adresą"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Configure"
 msgstr "Konfigūruoti"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Create Server"
-msgstr "Kuriamas serveris...."
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Kūrybinė veiksena"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Creative Inventory"
-msgstr "Inventorius"
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Enable Damage"
+msgstr "Leisti sužeidimus"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -493,9 +485,13 @@ msgstr "Prievadas"
 msgid "Public"
 msgstr "Viešas"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Select World:"
 msgstr "Pasirinkite pasaulį:"
+
+#: builtin/mainmenu/tab_server.lua
+msgid "Server"
+msgstr "Serveris"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -504,11 +500,6 @@ msgstr "Serverio prievadas"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Pradėti žaidimą"
-
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Survival Mode"
-msgstr "Kūrybinė veiksena"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -570,6 +561,10 @@ msgstr ""
 #: builtin/mainmenu/tab_settings.lua
 msgid "Mipmap + Aniso. Filter"
 msgstr ""
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Ne"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
@@ -670,17 +665,28 @@ msgstr ""
 msgid "Waving Water"
 msgstr ""
 
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Kūrybinė veiksena"
+#: builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Taip"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Config mods"
+msgstr "Konfigūruoti papildinius"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Main"
+msgstr "Pagrindinis"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Start Singleplayer"
+msgstr "Atstatyti vieno žaidėjo pasaulį"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Žaisti"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-#, fuzzy
-msgid "Single Player"
+msgid "Singleplayer"
 msgstr "Žaisti vienam"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -769,11 +775,6 @@ msgid "Change Password"
 msgstr "Keisti slaptažodį"
 
 #: src/game.cpp
-#, fuzzy
-msgid "Close game"
-msgstr "Užverti parduotuvę"
-
-#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "Jungiamasi prie serverio..."
 
@@ -788,6 +789,68 @@ msgstr "Kuriamas klientas..."
 #: src/game.cpp
 msgid "Creating server..."
 msgstr "Kuriamas serveris...."
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"- WASD: move\n"
+"- Space: jump/climb\n"
+"- Shift: sneak/go down\n"
+"- Q: drop item\n"
+"- I: inventory\n"
+"- Mouse: turn/look\n"
+"- Mouse left: dig/punch\n"
+"- Mouse right: place/use\n"
+"- Mouse wheel: select item\n"
+"- T: chat\n"
+msgstr ""
+"Numatytas valdymas:\n"
+"- WASD: judėti\n"
+"- Tarpas: šokti/lipti\n"
+"- Lyg2: leistis/eiti žemyn\n"
+"- Q: išmesti elementą\n"
+"- I: inventorius\n"
+"- Pelė: sukti/žiūrėti\n"
+"- Pelės kairys: kasti/smugiuoti\n"
+"- Pelės dešinys: padėti/naudoti\n"
+"- Pelės ratukas: pasirinkti elementą\n"
+"- T: kalbėtis\n"
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"No menu visible:\n"
+"- single tap: button activate\n"
+"- double tap: place/use\n"
+"- slide finger: look around\n"
+"Menu/Inventory visible:\n"
+"- double tap (outside):\n"
+" -->close\n"
+"- touch stack, touch slot:\n"
+" --> move stack\n"
+"- touch&drag, tap 2nd finger\n"
+" --> place single item to slot\n"
+msgstr ""
+"Numatytas valdymas:\n"
+"Nematomi meniu:\n"
+"- vienas palietimas: mygtukas aktyvuoti\n"
+"- dvigubas palietimas: padėti/naudoti\n"
+"- slinkti pirštu: žvalgytis aplink\n"
+"Meniu/Inventorius matomi:\n"
+"- dvigubas palietimas (išorėje):\n"
+" -->uždaryti\n"
+"- liesti rietuvę, liesti angą:\n"
+" --> judinti rietuvę\n"
+"- liesti&tempti, liesti antru pirštu\n"
+" --> padėti vieną elementą į angą\n"
+
+#: src/game.cpp
+msgid "Exit to Menu"
+msgstr "Grįžti į meniu"
+
+#: src/game.cpp
+msgid "Exit to OS"
+msgstr "Išeiti iš žaidimo"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -806,11 +869,6 @@ msgid "MiB/s"
 msgstr "MiB/s"
 
 #: src/game.cpp
-#, fuzzy
-msgid "Migrating world..."
-msgstr "Kuriamas klientas..."
-
-#: src/game.cpp
 msgid "Node definitions..."
 msgstr "Mazgo apibrėžimai..."
 
@@ -821,10 +879,6 @@ msgstr "Ieškoma adreso..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Prisikelti"
-
-#: src/game.cpp
-msgid "Save and Exit"
-msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -895,9 +949,7 @@ msgid "Key already in use"
 msgstr "Klavišas jau naudojamas"
 
 #: src/guiKeyChangeMenu.cpp
-#, fuzzy
-msgid ""
-"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
+msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
 msgstr "Klavišai. (Jei šis meniu sugenda, pašalinkite įrašus iš minetest.conf)"
 
 #: src/guiKeyChangeMenu.cpp src/keycode.cpp
@@ -1535,10 +1587,6 @@ msgid "Clean transparent textures"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Žaisti tinkle(klientas)"
-
-#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr ""
 
@@ -2130,10 +2178,6 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Žaidimas"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -2846,10 +2890,6 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Žemėlapių generavimas"
 
 #: src/settings_translation_file.cpp
 #, fuzzy
@@ -4274,14 +4314,8 @@ msgstr ""
 #~ msgid "EDIT GAME"
 #~ msgstr "KEISTI ŽAIDIMĄ"
 
-#~ msgid "CLIENT"
-#~ msgstr "ŽAISTI TINKLE"
-
-#~ msgid "Exit to OS"
-#~ msgstr "Išeiti iš žaidimo"
-
-#~ msgid "Exit to Menu"
-#~ msgstr "Grįžti į meniu"
+#~ msgid "Remove selected mod"
+#~ msgstr "Pašalinti pasirinktą papildinį"
 
 #~ msgid "<<-- Add mod"
 #~ msgstr "<<-- Pridėti papildinį"

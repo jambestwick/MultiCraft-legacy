@@ -32,4 +32,3 @@ dofile(gamepath.."forceloading.lua")
 --dofile(gamepath.."statbars.lua")
 
 profiler = nil
->>>>>>> upstream/master

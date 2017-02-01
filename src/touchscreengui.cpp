@@ -150,7 +150,7 @@ TouchScreenGUI *g_touchscreengui;
 TouchScreenGUI::TouchScreenGUI(IrrlichtDevice *device, IEventReceiver* receiver):
 	m_device(device),
 	m_guienv(device->getGUIEnvironment()),
-	m_camera_yaw(0.0),
+//	m_camera_yaw(0.0),
 	m_camera_pitch(0.0),
 	m_visible(false),
 	m_move_id(-1),

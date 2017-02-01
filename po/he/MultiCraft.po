@@ -72,7 +72,8 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "אנו תומכים בגרסאות בין 1$ ל-2$ של הפרוטוקול."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -175,8 +176,9 @@ msgstr "אין לך אף מפעיל משחק מותקן."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "האם ברצונך למחוק את  \"$1\"?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
-#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: src/keycode.cpp
 msgid "Delete"
 msgstr "מחק"
 
@@ -191,14 +193,6 @@ msgstr ""
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "למחוק עולם \"$1\"?"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "לא"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "כן"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -361,20 +355,12 @@ msgid "Active Contributors"
 msgstr ""
 
 #: builtin/mainmenu/tab_credits.lua
+msgid "Core Developers"
+msgstr ""
+
+#: builtin/mainmenu/tab_credits.lua
 msgid "Credits"
 msgstr "קרדיטים"
-
-#: builtin/mainmenu/tab_credits.lua
-msgid "Dedication of the current release"
-msgstr ""
-
-#: builtin/mainmenu/tab_credits.lua
-msgid "Minetest Developers"
-msgstr ""
-
-#: builtin/mainmenu/tab_credits.lua
-msgid "MultiCraft Developers"
-msgstr ""
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -416,23 +402,27 @@ msgstr ""
 msgid "Address / Port"
 msgstr "כתובת / פורט"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
+msgid "Client"
+msgstr "קלינט"
+
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Connect"
 msgstr "התחבר"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Creative mode"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Damage enabled"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Del. Favorite"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Favorite"
 msgstr ""
 
@@ -440,7 +430,7 @@ msgstr ""
 msgid "Name / Password"
 msgstr "שם/סיסמה"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "PvP enabled"
 msgstr "PvP אפשר"
 
@@ -448,19 +438,19 @@ msgstr "PvP אפשר"
 msgid "Bind Address"
 msgstr ""
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Configure"
 msgstr "קביעת תצורה"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Create Server"
-msgstr "ליצור"
-
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Creative Inventory"
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
 msgstr "משחק יצירתי"
+
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Enable Damage"
+msgstr "אפשר נזק"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -482,9 +472,13 @@ msgstr "פורט"
 msgid "Public"
 msgstr "ציבורי"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Select World:"
 msgstr "בחר עולם:"
+
+#: builtin/mainmenu/tab_server.lua
+msgid "Server"
+msgstr "שרת"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -493,11 +487,6 @@ msgstr ""
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "התחל משחק"
-
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Survival Mode"
-msgstr "משחק יצירתי"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -557,6 +546,10 @@ msgid "Mipmap + Aniso. Filter"
 msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "לא"
+
+#: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
 msgstr ""
 
@@ -595,11 +588,6 @@ msgstr ""
 #: builtin/mainmenu/tab_settings.lua
 msgid "Particles"
 msgstr "חלקיקים"
-
-#: builtin/mainmenu/tab_settings.lua
-#, fuzzy
-msgid "Reset singleplayer world"
-msgstr "שרת"
 
 #: builtin/mainmenu/tab_settings.lua
 #, fuzzy
@@ -654,17 +642,28 @@ msgstr ""
 msgid "Waving Water"
 msgstr ""
 
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "משחק יצירתי"
+#: builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "כן"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Config mods"
+msgstr ""
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Main"
+msgstr ""
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Start Singleplayer"
+msgstr ""
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "שחק"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-#, fuzzy
-msgid "Single Player"
+msgid "Singleplayer"
 msgstr "שחקן יחיד"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -750,10 +749,6 @@ msgid "Change Password"
 msgstr ""
 
 #: src/game.cpp
-msgid "Close game"
-msgstr ""
-
-#: src/game.cpp
 msgid "Connecting to server..."
 msgstr ""
 
@@ -767,6 +762,45 @@ msgstr ""
 
 #: src/game.cpp
 msgid "Creating server..."
+msgstr ""
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"- WASD: move\n"
+"- Space: jump/climb\n"
+"- Shift: sneak/go down\n"
+"- Q: drop item\n"
+"- I: inventory\n"
+"- Mouse: turn/look\n"
+"- Mouse left: dig/punch\n"
+"- Mouse right: place/use\n"
+"- Mouse wheel: select item\n"
+"- T: chat\n"
+msgstr ""
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"No menu visible:\n"
+"- single tap: button activate\n"
+"- double tap: place/use\n"
+"- slide finger: look around\n"
+"Menu/Inventory visible:\n"
+"- double tap (outside):\n"
+" -->close\n"
+"- touch stack, touch slot:\n"
+" --> move stack\n"
+"- touch&drag, tap 2nd finger\n"
+" --> place single item to slot\n"
+msgstr ""
+
+#: src/game.cpp
+msgid "Exit to Menu"
+msgstr ""
+
+#: src/game.cpp
+msgid "Exit to OS"
 msgstr ""
 
 #: src/game.cpp
@@ -786,10 +820,6 @@ msgid "MiB/s"
 msgstr ""
 
 #: src/game.cpp
-msgid "Migrating world..."
-msgstr ""
-
-#: src/game.cpp
 msgid "Node definitions..."
 msgstr ""
 
@@ -799,10 +829,6 @@ msgstr ""
 
 #: src/game.cpp
 msgid "Respawn"
-msgstr ""
-
-#: src/game.cpp
-msgid "Save and Exit"
 msgstr ""
 
 #: src/game.cpp
@@ -874,8 +900,7 @@ msgid "Key already in use"
 msgstr ""
 
 #: src/guiKeyChangeMenu.cpp
-msgid ""
-"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
+msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
 msgstr ""
 
 #: src/guiKeyChangeMenu.cpp src/keycode.cpp
@@ -1505,10 +1530,6 @@ msgid "Clean transparent textures"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-msgid "Client"
-msgstr "קלינט"
-
-#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr ""
 
@@ -2086,10 +2107,6 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Game"
-msgstr "משחק"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -2795,10 +2812,6 @@ msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
-msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Mapgen"
 msgstr ""
 
 #: src/settings_translation_file.cpp

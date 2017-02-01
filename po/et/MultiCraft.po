@@ -74,7 +74,8 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "Meie toetame protokolli versioone $1 kuni $2."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -145,6 +146,14 @@ msgstr "Laadi alla alammäng, näiteks minetest_game, aadressilt minetest.net"
 msgid "Download one from minetest.net"
 msgstr "Laadi minetest.net-st üks mäng alla"
 
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Mäng"
+
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Kaardi generaator"
+
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "No nimi või no mäng valitud"
@@ -169,8 +178,9 @@ msgstr "Sa ei ole alammänge paigaldanud."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr ""
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
-#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: src/keycode.cpp
 msgid "Delete"
 msgstr "Kustuta"
 
@@ -185,14 +195,6 @@ msgstr ""
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "Kas kustutada maailm \"$1\"?"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Ei"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Jah"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -358,22 +360,12 @@ msgid "Active Contributors"
 msgstr "Co-arendaja"
 
 #: builtin/mainmenu/tab_credits.lua
+msgid "Core Developers"
+msgstr "Põhiline arendaja"
+
+#: builtin/mainmenu/tab_credits.lua
 msgid "Credits"
 msgstr "Tänuavaldused"
-
-#: builtin/mainmenu/tab_credits.lua
-msgid "Dedication of the current release"
-msgstr ""
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "Minetest Developers"
-msgstr "Põhiline arendaja"
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "MultiCraft Developers"
-msgstr "Põhiline arendaja"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -416,38 +408,38 @@ msgstr ""
 msgid "Address / Port"
 msgstr "Aadress / Port:"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
+msgid "Client"
+msgstr ""
+
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Connect"
 msgstr "Liitu"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Creative mode"
 msgstr "Loov režiim"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Damage enabled"
 msgstr "Kahjustamine lubatud"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "Del. Favorite"
 msgstr "Lemmikud:"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "Favorite"
 msgstr "Lemmikud:"
 
-#: builtin/mainmenu/tab_multiplayer.lua
-msgid "Multi Player"
-msgstr ""
-
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "Name / Password"
 msgstr "Nimi / Parool:"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "PvP enabled"
 msgstr "Sisse lülitatud"
@@ -456,19 +448,19 @@ msgstr "Sisse lülitatud"
 msgid "Bind Address"
 msgstr ""
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Configure"
 msgstr "Konfigureeri"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Create Server"
-msgstr "Loo maailm"
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Kujunduslik mängumood"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Creative Inventory"
-msgstr "Seljakott"
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Enable Damage"
+msgstr "Lülita valu sisse"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -491,9 +483,13 @@ msgstr ""
 msgid "Public"
 msgstr "Avalik"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Select World:"
 msgstr "Vali maailm:"
+
+#: builtin/mainmenu/tab_server.lua
+msgid "Server"
+msgstr ""
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -502,11 +498,6 @@ msgstr ""
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Alusta mängu"
-
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Survival Mode"
-msgstr "Kujunduslik mängumood"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -571,6 +562,10 @@ msgstr "Väga hea kvaliteet"
 #: builtin/mainmenu/tab_settings.lua
 msgid "Mipmap + Aniso. Filter"
 msgstr ""
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Ei"
 
 #: builtin/mainmenu/tab_settings.lua
 #, fuzzy
@@ -680,17 +675,31 @@ msgstr "Uhked puud"
 msgid "Waving Water"
 msgstr "Uhked puud"
 
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Kujunduslik mängumood"
+#: builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Jah"
+
+#: builtin/mainmenu/tab_simple_main.lua
+#, fuzzy
+msgid "Config mods"
+msgstr "Konfigureeri"
+
+#: builtin/mainmenu/tab_simple_main.lua
+#, fuzzy
+msgid "Main"
+msgstr "Menüü"
+
+#: builtin/mainmenu/tab_simple_main.lua
+#, fuzzy
+msgid "Start Singleplayer"
+msgstr "Üksikmäng"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Mängi"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-#, fuzzy
-msgid "Single Player"
+msgid "Singleplayer"
 msgstr "Üksikmäng"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -781,11 +790,6 @@ msgid "Change Password"
 msgstr "Vaheta parooli"
 
 #: src/game.cpp
-#, fuzzy
-msgid "Close game"
-msgstr "uus mängu"
-
-#: src/game.cpp
 msgid "Connecting to server..."
 msgstr ""
 
@@ -800,6 +804,45 @@ msgstr ""
 #: src/game.cpp
 msgid "Creating server..."
 msgstr ""
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"- WASD: move\n"
+"- Space: jump/climb\n"
+"- Shift: sneak/go down\n"
+"- Q: drop item\n"
+"- I: inventory\n"
+"- Mouse: turn/look\n"
+"- Mouse left: dig/punch\n"
+"- Mouse right: place/use\n"
+"- Mouse wheel: select item\n"
+"- T: chat\n"
+msgstr ""
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"No menu visible:\n"
+"- single tap: button activate\n"
+"- double tap: place/use\n"
+"- slide finger: look around\n"
+"Menu/Inventory visible:\n"
+"- double tap (outside):\n"
+" -->close\n"
+"- touch stack, touch slot:\n"
+" --> move stack\n"
+"- touch&drag, tap 2nd finger\n"
+" --> place single item to slot\n"
+msgstr ""
+
+#: src/game.cpp
+msgid "Exit to Menu"
+msgstr "Välju menüüsse"
+
+#: src/game.cpp
+msgid "Exit to OS"
+msgstr "Välju mängust"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -818,11 +861,6 @@ msgid "MiB/s"
 msgstr ""
 
 #: src/game.cpp
-#, fuzzy
-msgid "Migrating world..."
-msgstr "Loo maailm"
-
-#: src/game.cpp
 msgid "Node definitions..."
 msgstr ""
 
@@ -833,10 +871,6 @@ msgstr ""
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Ärka ellu"
-
-#: src/game.cpp
-msgid "Save and Exit"
-msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -907,9 +941,7 @@ msgid "Key already in use"
 msgstr "Nupp juba kasutuses"
 
 #: src/guiKeyChangeMenu.cpp
-#, fuzzy
-msgid ""
-"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
+msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
 msgstr ""
 "Nupusätted. (Kui see menüü sassi läheb, siis kustuta asju failist minetest."
 "conf)"
@@ -1553,10 +1585,6 @@ msgid "Clean transparent textures"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-msgid "Client"
-msgstr ""
-
-#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr ""
 
@@ -2152,10 +2180,6 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Mäng"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -2867,10 +2891,6 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Kaardi generaator"
 
 #: src/settings_translation_file.cpp
 #, fuzzy

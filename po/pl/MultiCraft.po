@@ -75,7 +75,8 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "Wspieramy protokoły w wersji od $1 do $2."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -146,6 +147,14 @@ msgstr "Pobierz tryb gry (np. minetest_game), z minetest.net"
 msgid "Download one from minetest.net"
 msgstr "Ściągnij taką z minetest.net"
 
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Gra"
+
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Generator mapy"
+
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Nie podano nazwy świata lub nie wybrano gry"
@@ -171,8 +180,9 @@ msgstr "Nie zainstalowano żadnych trybów gry."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "Na pewno usunąć \"$1\"?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
-#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: src/keycode.cpp
 msgid "Delete"
 msgstr "Usuń"
 
@@ -187,14 +197,6 @@ msgstr "Modmgr: nieprawidłowy katalog \"$1\""
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "Usunąć świat \"$1\"?"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Nie"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Tak"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -362,22 +364,12 @@ msgid "Active Contributors"
 msgstr "Aktywni współautorzy"
 
 #: builtin/mainmenu/tab_credits.lua
+msgid "Core Developers"
+msgstr "Twórcy"
+
+#: builtin/mainmenu/tab_credits.lua
 msgid "Credits"
 msgstr "Autorzy"
-
-#: builtin/mainmenu/tab_credits.lua
-msgid "Dedication of the current release"
-msgstr ""
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "Minetest Developers"
-msgstr "Twórcy"
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "MultiCraft Developers"
-msgstr "Twórcy"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -419,15 +411,19 @@ msgstr "Odinstaluj wybraną paczkę modów"
 msgid "Address / Port"
 msgstr "Adres / Port"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Klient"
+
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Connect"
 msgstr "Połącz"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Creative mode"
 msgstr "Tryb kreatywny"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Damage enabled"
 msgstr "Obrażenia włączone"
 
@@ -439,15 +435,11 @@ msgstr "Usuń ulubiony"
 msgid "Favorite"
 msgstr "Ulubione"
 
-#: builtin/mainmenu/tab_multiplayer.lua
-msgid "Multi Player"
-msgstr ""
-
 #: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Name / Password"
 msgstr "Nazwa gracza / Hasło"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "PvP enabled"
 msgstr "PvP włączone"
 
@@ -455,19 +447,19 @@ msgstr "PvP włączone"
 msgid "Bind Address"
 msgstr "Adres"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Configure"
 msgstr "Ustaw"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Create Server"
-msgstr "Tworzenie serwera...."
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Tryb kreatywny"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Creative Inventory"
-msgstr "Ekwipunek"
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Enable Damage"
+msgstr "Włącz obrażenia"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -489,9 +481,13 @@ msgstr "Port"
 msgid "Public"
 msgstr "Publiczne"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Select World:"
 msgstr "Wybierz świat:"
+
+#: builtin/mainmenu/tab_server.lua
+msgid "Server"
+msgstr "Serwer"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -500,11 +496,6 @@ msgstr "Port Serwera"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Rozpocznij grę/Połącz"
-
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Survival Mode"
-msgstr "Tryb kreatywny"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -561,6 +552,10 @@ msgstr "Mipmapy"
 #: builtin/mainmenu/tab_settings.lua
 msgid "Mipmap + Aniso. Filter"
 msgstr "Mipmapy i Filtr anizotropowe"
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Nie"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
@@ -654,10 +649,6 @@ msgstr "Falujące rośliny"
 msgid "Waving Water"
 msgstr "Falująca woda"
 
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Tryb kreatywny"
-
 #: builtin/mainmenu/tab_settings.lua
 msgid "Yes"
 msgstr "Tak"
@@ -679,8 +670,7 @@ msgid "Play"
 msgstr "Graj"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-#, fuzzy
-msgid "Single Player"
+msgid "Singleplayer"
 msgstr "Pojedynczy gracz"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -768,11 +758,6 @@ msgid "Change Password"
 msgstr "Zmień hasło"
 
 #: src/game.cpp
-#, fuzzy
-msgid "Close game"
-msgstr "Zamknij gry"
-
-#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "Łączenie z serwerem..."
 
@@ -787,6 +772,68 @@ msgstr "Tworzenie klienta..."
 #: src/game.cpp
 msgid "Creating server..."
 msgstr "Tworzenie serwera...."
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"- WASD: move\n"
+"- Space: jump/climb\n"
+"- Shift: sneak/go down\n"
+"- Q: drop item\n"
+"- I: inventory\n"
+"- Mouse: turn/look\n"
+"- Mouse left: dig/punch\n"
+"- Mouse right: place/use\n"
+"- Mouse wheel: select item\n"
+"- T: chat\n"
+msgstr ""
+"Domyślne sterowanie:↵\n"
+"- WASD: ruch↵\n"
+"- Spacja: skok/wspinanie się↵\n"
+"- Shift: skradanie się/schodzenie w dół↵\n"
+"- Q: upuszczenie przedmiotu↵\n"
+"- I: ekwipunek↵\n"
+"- Mysz: obracanie się/patrzenie↵\n"
+"- Lewy przycisk myszy: kopanie/uderzanie↵\n"
+"- Prawy przycisk myszy: postawienie/użycie przedmiotu↵\n"
+"- Rolka myszy: wybór przedmiotu↵\n"
+"- T: chat\n"
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"No menu visible:\n"
+"- single tap: button activate\n"
+"- double tap: place/use\n"
+"- slide finger: look around\n"
+"Menu/Inventory visible:\n"
+"- double tap (outside):\n"
+" -->close\n"
+"- touch stack, touch slot:\n"
+" --> move stack\n"
+"- touch&drag, tap 2nd finger\n"
+" --> place single item to slot\n"
+msgstr ""
+"Domyślne sterowanie:\n"
+"Brak widocznego menu:\n"
+"- pojedyncze dotknięcie: aktywacja\n"
+"- podwójne dotknięcie: postaw/użyj\n"
+"- przejechanie palcem: rozglądanie się\n"
+"Menu/Ekwipunek widoczny:\n"
+"- potwójne dotknięcie poza menu:\n"
+" -->zamknij\n"
+"- dotknięcie stacka, dotknięcie slota:\n"
+" --> przenieś stack\n"
+"- dotknięcie i przeciągnięcie, dotknięcie drugim palcem\n"
+" --> umieść pojedynczy item w slocie\n"
+
+#: src/game.cpp
+msgid "Exit to Menu"
+msgstr "Wyjście do menu"
+
+#: src/game.cpp
+msgid "Exit to OS"
+msgstr "Wyjście z gry"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -805,11 +852,6 @@ msgid "MiB/s"
 msgstr "MiB/s"
 
 #: src/game.cpp
-#, fuzzy
-msgid "Migrating world..."
-msgstr "Tworzenie klienta..."
-
-#: src/game.cpp
 msgid "Node definitions..."
 msgstr "Definicje nod..."
 
@@ -820,10 +862,6 @@ msgstr "Sprawdzanie adresu..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Wróć do gry"
-
-#: src/game.cpp
-msgid "Save and Exit"
-msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -894,9 +932,7 @@ msgid "Key already in use"
 msgstr "Klawisz już zdefiniowany"
 
 #: src/guiKeyChangeMenu.cpp
-#, fuzzy
-msgid ""
-"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
+msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
 msgstr ""
 "Zdefiniowane klawisze. (Jeżeli to menu nie działa, usuń skonfigurowane "
 "klawisze z pliku minetest.conf)"
@@ -1583,10 +1619,6 @@ msgid "Clean transparent textures"
 msgstr "Czyste przeźroczyste tekstury"
 
 #: src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Klient"
-
-#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr "Klient i Serwer"
 
@@ -2233,10 +2265,6 @@ msgstr "Filtr skalowania GUI"
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr "Filtr skalowania GUI txr2img"
-
-#: src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Gra"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -4575,18 +4603,6 @@ msgstr ""
 msgid "cURL timeout"
 msgstr "Limit czasu cURL"
 
-#~ msgid "No of course not!"
-#~ msgstr "Oczywiście, że nie!"
-
-#~ msgid "Public Serverlist"
-#~ msgstr "Lista publicznych serwerów"
-
-#~ msgid "Generate Normalmaps"
-#~ msgstr "Generuj mapy normalnych"
-
-#~ msgid "No!!!"
-#~ msgstr "Nie!!"
-
 #, fuzzy
 #~ msgid "Detailed mod profile data. Useful for mod developers."
 #~ msgstr "Szczegółowe dane profilowania. Przydatne dla twórców modyfikacji."
@@ -4781,9 +4797,3 @@ msgstr "Limit czasu cURL"
 #, fuzzy
 #~ msgid "Preload inventory textures"
 #~ msgstr "Ładowanie..."
-
-#~ msgid "Exit to OS"
-#~ msgstr "Wyjście z gry"
-
-#~ msgid "Exit to Menu"
-#~ msgstr "Wyjście do menu"

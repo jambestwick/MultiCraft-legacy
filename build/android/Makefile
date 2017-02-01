@@ -383,7 +383,6 @@ iconv_download :
 clean_iconv :
 	$(RM) -rf ${ICONV_DIR}
 
-<<<<<<< HEAD
 intl_download :
 	@if [ ! -d ${INTL_DIR} ] ; then                                        \
 		echo "libintl sources missing, downloading...";                    \
@@ -393,42 +392,6 @@ intl_download :
 		tar -xzf libintl.tar.gz || exit 1;                                 \
 		rm libintl.tar.gz;                                                 \
 		mv libintl-lite-master libintl;                                 \
-=======
-$(ICONV_LIB) : $(ICONV_TIMESTAMP)
-	@REFRESH=0;                                                                \
-	if [ ! -e ${ICONV_TIMESTAMP_INT} ] ; then                                  \
-		REFRESH=1;                                                         \
-	fi;                                                                        \
-	if [ ! -e ${ICONV_LIB} ] ; then                                            \
-		REFRESH=1;                                                         \
-	fi;                                                                        \
-	if [ ${ICONV_TIMESTAMP} -nt ${ICONV_TIMESTAMP_INT} ] ; then                \
-		REFRESH=1;                                                         \
-	fi;                                                                        \
-	if [ $$REFRESH -ne 0 ] ; then                                              \
-	mkdir -p ${ICONV_DIR};                                                     \
-	echo "changed timestamp for iconv detected building...";                   \
-	cd ${ICONV_DIR};                                                           \
-	\
-	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-iconv;                            \
-	${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
-		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                     \
-		--platform=android-9                                                   \
-		--install-dir=$${TOOLCHAIN};                                           \
-	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
-	export CC=${CROSS_PREFIX}gcc;                                              \
-	export CXX=${CROSS_PREFIX}g++;                                             \
-	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
-	./configure --host=${TARGET_HOST} || exit 1;                               \
-	sed -i 's/LIBICONV_VERSION_INFO) /LIBICONV_VERSION_INFO) -avoid-version /g' lib/Makefile; \
-	grep "iconv_LDFLAGS" src/Makefile;                                         \
-	$(MAKE) -s || exit 1;                                                      \
-	touch ${ICONV_TIMESTAMP};                                                  \
-	touch ${ICONV_TIMESTAMP_INT};                                              \
-	rm -rf ${TOOLCHAIN};                                                       \
-	else                                                                       \
-		echo "nothing to be done for iconv";                               \
->>>>>>> upstream/master
 	fi
 
 clean_intl :

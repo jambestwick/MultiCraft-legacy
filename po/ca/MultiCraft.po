@@ -7,15 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: minetest\n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD:po/ca/MultiCraft.po
-"POT-Creation-Date: 2016-10-19 05:00+0300\n"
-"PO-Revision-Date: 2016-04-20 13:21+0000\n"
-"Last-Translator: Joan Ciprià Moreno Teodoro <joancipria@gmail.com>\n"
-=======
 "POT-Creation-Date: 2016-08-30 06:18+0200\n"
 "PO-Revision-Date: 2016-10-26 09:14+0000\n"
 "Last-Translator: tonibm19 <bennasar99@gmail.com>\n"
->>>>>>> upstream/master:po/ca/minetest.po
 "Language-Team: Catalan <https://hosted.weblate.org/projects/minetest/"
 "minetest/ca/>\n"
 "Language: ca\n"
@@ -81,7 +75,8 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "Nosaltres suportem versions del protocol entre la versió $1 i la $2."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -153,6 +148,14 @@ msgstr ""
 msgid "Download one from minetest.net"
 msgstr "Descarrega'n alguns des de minetest.net"
 
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Joc"
+
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Generador de mapes"
+
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "No s'ha donat un nom al món o no s'ha seleccionat ningun"
@@ -179,8 +182,9 @@ msgstr "No tens subjocs instal·lats."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "Realment desitja esborrar \"$1\"?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
-#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: src/keycode.cpp
 msgid "Delete"
 msgstr "Esborrar"
 
@@ -195,14 +199,6 @@ msgstr "Modmgr: Ruta del mod \"$1\" invàlida"
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "Eliminar el món \"$1\"?"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "No"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Sí"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -372,22 +368,12 @@ msgid "Active Contributors"
 msgstr "Col·laboradors Actius"
 
 #: builtin/mainmenu/tab_credits.lua
+msgid "Core Developers"
+msgstr "Desenvolupadors del nucli"
+
+#: builtin/mainmenu/tab_credits.lua
 msgid "Credits"
 msgstr "Crèdits"
-
-#: builtin/mainmenu/tab_credits.lua
-msgid "Dedication of the current release"
-msgstr ""
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "Minetest Developers"
-msgstr "Desenvolupadors del nucli"
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "MultiCraft Developers"
-msgstr "Desenvolupadors del nucli"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -429,40 +415,35 @@ msgstr "Desinstal·lar el paquet de mods seleccionat"
 msgid "Address / Port"
 msgstr "Adreça / Port"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Client"
+
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Connect"
 msgstr "Connectar"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Creative mode"
 msgstr "Mode creatiu"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Damage enabled"
 msgstr "Dany activat"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Del. Favorite"
 msgstr "Esborra preferit"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Favorite"
 msgstr "Preferit"
 
-<<<<<<< HEAD:po/ca/MultiCraft.po
-#: builtin/mainmenu/tab_multiplayer.lua
-msgid "Multi Player"
-msgstr ""
-
-#: builtin/mainmenu/tab_multiplayer.lua
-#, fuzzy
-=======
 #: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
->>>>>>> upstream/master:po/ca/minetest.po
 msgid "Name / Password"
 msgstr "Nom / Contrasenya"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "PvP enabled"
 msgstr "PvP activat"
 
@@ -470,19 +451,19 @@ msgstr "PvP activat"
 msgid "Bind Address"
 msgstr "Adreça BIND"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Configure"
 msgstr "Configurar"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Create Server"
-msgstr "Creant servidor ..."
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Mode Creatiu"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Creative Inventory"
-msgstr "Inventari"
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Enable Damage"
+msgstr "Permetre Danys"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -504,9 +485,13 @@ msgstr "Port"
 msgid "Public"
 msgstr "Públic"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Select World:"
 msgstr "Seleccionar un món:"
+
+#: builtin/mainmenu/tab_server.lua
+msgid "Server"
+msgstr "Servidor"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -515,11 +500,6 @@ msgstr "Port del Servidor"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Començar Joc"
-
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Survival Mode"
-msgstr "Mode Creatiu"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -578,6 +558,10 @@ msgid "Mipmap + Aniso. Filter"
 msgstr "Mipmap + Aniso. Filtre"
 
 #: builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "No"
+
+#: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
 msgstr "Sense Filtre"
 
@@ -622,11 +606,6 @@ msgstr "Partícules"
 #, fuzzy
 msgid "Reset singleplayer world"
 msgstr "Reiniciar el mon individual"
-
-#: builtin/mainmenu/tab_settings.lua
-#, fuzzy
-msgid "Reset singleplayer world"
-msgstr "Esteu segur que voleu reiniciar el seu món d'un sol jugador?"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
@@ -676,17 +655,28 @@ msgstr "Moviment de Plantes"
 msgid "Waving Water"
 msgstr "Onatge"
 
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Mode Creatiu"
+#: builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Sí"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Config mods"
+msgstr "Configurar mods"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Main"
+msgstr "Principal"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Start Singleplayer"
+msgstr "Començar Un Jugador"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Jugar"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-#, fuzzy
-msgid "Single Player"
+msgid "Singleplayer"
 msgstr "Un jugador"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -774,11 +764,6 @@ msgid "Change Password"
 msgstr "Canviar contrasenya"
 
 #: src/game.cpp
-#, fuzzy
-msgid "Close game"
-msgstr "Tancar repositori"
-
-#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "Connectant al servidor ..."
 
@@ -793,6 +778,68 @@ msgstr "Creant client ..."
 #: src/game.cpp
 msgid "Creating server..."
 msgstr "Creant servidor ..."
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"- WASD: move\n"
+"- Space: jump/climb\n"
+"- Shift: sneak/go down\n"
+"- Q: drop item\n"
+"- I: inventory\n"
+"- Mouse: turn/look\n"
+"- Mouse left: dig/punch\n"
+"- Mouse right: place/use\n"
+"- Mouse wheel: select item\n"
+"- T: chat\n"
+msgstr ""
+"Controls predeterminats:\n"
+"- WASD: moure\n"
+"- Espai: botar / pujar\n"
+"- Maj .: puntetes / baixar\n"
+"- Q: deixar anar objecte\n"
+"- I: inventari\n"
+"- Ratolí: girar / mirar\n"
+"- Ratolí esq .: excavar / colpejar\n"
+"- Ratolí dre .: col·locar / utilitzar\n"
+"- Roda ratolí: triar objecte\n"
+"- T: xat\n"
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"No menu visible:\n"
+"- single tap: button activate\n"
+"- double tap: place/use\n"
+"- slide finger: look around\n"
+"Menu/Inventory visible:\n"
+"- double tap (outside):\n"
+" -->close\n"
+"- touch stack, touch slot:\n"
+" --> move stack\n"
+"- touch&drag, tap 2nd finger\n"
+" --> place single item to slot\n"
+msgstr ""
+"Controls predeterminats:\n"
+"Amb el menú ocult:\n"
+"- Toc simple: botó activar\n"
+"- Toc doble: posar / utilitzar\n"
+"- Lliscar dit: mirar al voltant\n"
+"Amb el menú / inventari visible:\n"
+"- Toc doble (fora):\n"
+"  -> tancar\n"
+"- Toc a la pila d'objectes:\n"
+"  -> moure la pila\n"
+"- Toc i arrossegar, toc amb 2 dits:\n"
+"  -> col·locar només un objecte\n"
+
+#: src/game.cpp
+msgid "Exit to Menu"
+msgstr "Eixir al menú"
+
+#: src/game.cpp
+msgid "Exit to OS"
+msgstr "Eixir al S.O"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -811,11 +858,6 @@ msgid "MiB/s"
 msgstr "MiB/s"
 
 #: src/game.cpp
-#, fuzzy
-msgid "Migrating world..."
-msgstr "Creant client ..."
-
-#: src/game.cpp
 msgid "Node definitions..."
 msgstr "Definicions dels nodes ..."
 
@@ -826,10 +868,6 @@ msgstr "Resolent adreça ..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Reaparèixer"
-
-#: src/game.cpp
-msgid "Save and Exit"
-msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -900,9 +938,7 @@ msgid "Key already in use"
 msgstr "La tecla s'està utilitzant"
 
 #: src/guiKeyChangeMenu.cpp
-#, fuzzy
-msgid ""
-"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
+msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
 msgstr ""
 "Combinacions de tecles. (Si aquest menú espatlla, esborrar coses de minetest."
 "conf)"
@@ -1595,10 +1631,6 @@ msgid "Clean transparent textures"
 msgstr "Netejar textures transparents"
 
 #: src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Client"
-
-#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr "Client i Servidor"
 
@@ -2201,10 +2233,6 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Joc"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -2947,10 +2975,6 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Generador de mapes"
 
 #: src/settings_translation_file.cpp
 #, fuzzy
@@ -4342,86 +4366,8 @@ msgstr ""
 #~ msgid "Public Serverlist"
 #~ msgstr "Llista de servidors públics"
 
-#~ msgid "No!!!"
-#~ msgstr "No!!!"
-
-<<<<<<< HEAD:po/ca/MultiCraft.po
-#~ msgid "Exit to OS"
-#~ msgstr "Eixir al S.O"
-
-#~ msgid "Exit to Menu"
-#~ msgstr "Eixir al menú"
-
-#~ msgid ""
-#~ "Default Controls:\n"
-#~ "No menu visible:\n"
-#~ "- single tap: button activate\n"
-#~ "- double tap: place/use\n"
-#~ "- slide finger: look around\n"
-#~ "Menu/Inventory visible:\n"
-#~ "- double tap (outside):\n"
-#~ " -->close\n"
-#~ "- touch stack, touch slot:\n"
-#~ " --> move stack\n"
-#~ "- touch&drag, tap 2nd finger\n"
-#~ " --> place single item to slot\n"
-#~ msgstr ""
-#~ "Controls predeterminats:\n"
-#~ "Amb el menú ocult:\n"
-#~ "- Toc simple: botó activar\n"
-#~ "- Toc doble: posar / utilitzar\n"
-#~ "- Lliscar dit: mirar al voltant\n"
-#~ "Amb el menú / inventari visible:\n"
-#~ "- Toc doble (fora):\n"
-#~ "  -> tancar\n"
-#~ "- Toc a la pila d'objectes:\n"
-#~ "  -> moure la pila\n"
-#~ "- Toc i arrossegar, toc amb 2 dits:\n"
-#~ "  -> col·locar només un objecte\n"
-
-#~ msgid ""
-#~ "Default Controls:\n"
-#~ "- WASD: move\n"
-#~ "- Space: jump/climb\n"
-#~ "- Shift: sneak/go down\n"
-#~ "- Q: drop item\n"
-#~ "- I: inventory\n"
-#~ "- Mouse: turn/look\n"
-#~ "- Mouse left: dig/punch\n"
-#~ "- Mouse right: place/use\n"
-#~ "- Mouse wheel: select item\n"
-#~ "- T: chat\n"
-#~ msgstr ""
-#~ "Controls predeterminats:\n"
-#~ "- WASD: moure\n"
-#~ "- Espai: botar / pujar\n"
-#~ "- Maj .: puntetes / baixar\n"
-#~ "- Q: deixar anar objecte\n"
-#~ "- I: inventari\n"
-#~ "- Ratolí: girar / mirar\n"
-#~ "- Ratolí esq .: excavar / colpejar\n"
-#~ "- Ratolí dre .: col·locar / utilitzar\n"
-#~ "- Roda ratolí: triar objecte\n"
-#~ "- T: xat\n"
-
-#~ msgid "Start Singleplayer"
-#~ msgstr "Començar Un Jugador"
-
-#~ msgid "Main"
-#~ msgstr "Principal"
-
-#~ msgid "Config mods"
-#~ msgstr "Configurar mods"
-
-#~ msgid "Server"
-#~ msgstr "Servidor"
-
-#~ msgid "Enable Damage"
-#~ msgstr "Permetre Danys"
-=======
 #~ msgid "Generate Normalmaps"
 #~ msgstr "Generar Mapes Normals"
 
 #~ msgid "No!!!"
 #~ msgstr "No!!!"
->>>>>>> upstream/master:po/ca/minetest.po

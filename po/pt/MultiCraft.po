@@ -74,7 +74,8 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "Nós suportamos as versões de protocolo entre $1 e $2."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -145,6 +146,14 @@ msgstr "Descarregue um subjogo, como o minetest_game, do site minetest.net"
 msgid "Download one from minetest.net"
 msgstr "Descarregue um do site minetest.net"
 
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Jogo"
+
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Geração de Mapa"
+
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Mundo sem nome ou nenhum jogo selecionado"
@@ -169,8 +178,9 @@ msgstr "Não possui nenhum subjogo instalado."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr "Tem a certeza que pretende eliminar \"$1\"?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
-#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: src/keycode.cpp
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -185,14 +195,6 @@ msgstr "Modmgr: caminho para o mod inválido \"$1\""
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr "Eliminar mundo \"$1\"?"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Não"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Sim"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -363,22 +365,12 @@ msgid "Active Contributors"
 msgstr "Contribuidores Ativos"
 
 #: builtin/mainmenu/tab_credits.lua
+msgid "Core Developers"
+msgstr "Desenvolvedores Principais"
+
+#: builtin/mainmenu/tab_credits.lua
 msgid "Credits"
 msgstr "Créditos"
-
-#: builtin/mainmenu/tab_credits.lua
-msgid "Dedication of the current release"
-msgstr ""
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "Minetest Developers"
-msgstr "Desenvolvedores Principais"
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "MultiCraft Developers"
-msgstr "Desenvolvedores Principais"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -420,15 +412,19 @@ msgstr "Desinstalar pacote de mods selecionado"
 msgid "Address / Port"
 msgstr "Endereço / Porta"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Cliente"
+
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Connect"
 msgstr "Ligar"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Creative mode"
 msgstr "Modo Criativo"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Damage enabled"
 msgstr "Dano ativado"
 
@@ -440,15 +436,11 @@ msgstr "Rem. Favorito"
 msgid "Favorite"
 msgstr "Favorito"
 
-#: builtin/mainmenu/tab_multiplayer.lua
-msgid "Multi Player"
-msgstr ""
-
 #: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Name / Password"
 msgstr "Nome / Senha"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "PvP enabled"
 msgstr "PvP ativado"
 
@@ -456,19 +448,19 @@ msgstr "PvP ativado"
 msgid "Bind Address"
 msgstr "Endereço de ligação"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Configure"
 msgstr "Configurar"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Create Server"
-msgstr "A criar servidor..."
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Modo Criativo"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Creative Inventory"
-msgstr "Inventário"
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Enable Damage"
+msgstr "Ativar Dano"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -490,9 +482,13 @@ msgstr "Porta"
 msgid "Public"
 msgstr "Público"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Select World:"
 msgstr "Seleccionar Mundo:"
+
+#: builtin/mainmenu/tab_server.lua
+msgid "Server"
+msgstr "Servidor"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -501,11 +497,6 @@ msgstr "Porta do servidor"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Iniciar Jogo"
-
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Survival Mode"
-msgstr "Modo Criativo"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -564,6 +555,10 @@ msgid "Mipmap + Aniso. Filter"
 msgstr "Mipmap + Filtro Anisotrópico"
 
 #: builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Não"
+
+#: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
 msgstr "Sem Filtro"
 
@@ -606,11 +601,6 @@ msgstr "Ativar Particulas"
 #: builtin/mainmenu/tab_settings.lua
 msgid "Reset singleplayer world"
 msgstr "Reiniciar mundo singleplayer"
-
-#: builtin/mainmenu/tab_settings.lua
-#, fuzzy
-msgid "Reset singleplayer world"
-msgstr "Tem a certeza que deseja reiniciar o seu mundo?"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
@@ -660,10 +650,6 @@ msgstr "Plantas ondulantes"
 msgid "Waving Water"
 msgstr "Água ondulante"
 
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Modo Criativo"
-
 #: builtin/mainmenu/tab_settings.lua
 msgid "Yes"
 msgstr "Sim"
@@ -685,8 +671,7 @@ msgid "Play"
 msgstr "Jogar"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-#, fuzzy
-msgid "Single Player"
+msgid "Singleplayer"
 msgstr "Um Jogador"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -772,11 +757,6 @@ msgstr "Mudar teclas"
 #: src/game.cpp
 msgid "Change Password"
 msgstr "Mudar Senha"
-
-#: src/game.cpp
-#, fuzzy
-msgid "Close game"
-msgstr "Fechar repositório de extras"
 
 #: src/game.cpp
 msgid "Connecting to server..."
@@ -873,11 +853,6 @@ msgid "MiB/s"
 msgstr "MiB/s"
 
 #: src/game.cpp
-#, fuzzy
-msgid "Migrating world..."
-msgstr "A criar cliente..."
-
-#: src/game.cpp
 msgid "Node definitions..."
 msgstr "A definir cubos..."
 
@@ -888,10 +863,6 @@ msgstr "A resolver endereço..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Renascer"
-
-#: src/game.cpp
-msgid "Save and Exit"
-msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -962,9 +933,7 @@ msgid "Key already in use"
 msgstr "Tecla já em uso"
 
 #: src/guiKeyChangeMenu.cpp
-#, fuzzy
-msgid ""
-"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
+msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
 msgstr "Teclas. (Se este menu se estragar, remova as linhas do minetest.conf)"
 
 #: src/guiKeyChangeMenu.cpp src/keycode.cpp
@@ -1647,10 +1616,6 @@ msgid "Clean transparent textures"
 msgstr "Limpar texturas transparentes"
 
 #: src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Cliente"
-
-#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr "Cliente e servidor"
 
@@ -2291,10 +2256,6 @@ msgstr "Filtro de redimensionamento do interface gráfico"
 #: src/settings_translation_file.cpp
 msgid "GUI scaling filter txr2img"
 msgstr "Filtro txr2img de redimensionamento do interface gráfico"
-
-#: src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Jogo"
 
 #: src/settings_translation_file.cpp
 msgid "Gamma"
@@ -3059,10 +3020,6 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Geração de Mapa"
 
 #: src/settings_translation_file.cpp
 msgid "Mapgen Valleys"
