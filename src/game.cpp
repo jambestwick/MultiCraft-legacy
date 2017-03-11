@@ -4114,7 +4114,7 @@ void Game::handlePointingAtObject(GameRunData *runData,
 
 	const ItemDefinition &playeritem_def =
 		playeritem.getDefinition(itemdef_manager);
-	bool nohit_enabled = ((ItemGroupList) playeritem_def.groups)["attached_node"] != 0;
+	bool nohit_enabled = ((ItemGroupList) playeritem_def.groups)["nohit"] != 0;
 
 	if (input->getLeftState() && !nohit_enabled) {
 		bool do_punch = false;
