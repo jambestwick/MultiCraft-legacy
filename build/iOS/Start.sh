@@ -16,7 +16,8 @@ echo "Creating Assets:"
 echo
 echo "Creating App Icon:"
 
-./appicon.sh
+echo "Skipping!"
+#./appicon.sh
 
 echo
 echo "Install CocoaPods:"

@@ -173,7 +173,7 @@ if(UNIX AND NOT APPLE)
 	install(FILES "misc/MultiCraft.appdata.xml" DESTINATION "${APPDATADIR}")
 	install(FILES "misc/MultiCraft.svg" DESTINATION "${ICONDIR}/hicolor/scalable/apps")
  # ToDo
-	install(FILES "misc/minetest-xorg-icon-128.png"
+	install(FILES "misc/MultiCraft-xorg-icon-128.png"
 		DESTINATION "${ICONDIR}/hicolor/128x128/apps"
 		RENAME "minetest.png")
 endif()

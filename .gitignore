@@ -80,7 +80,7 @@ timestamp
 ## iOS build files
 build/iOS/MultiCraft/MultiCraft.xcodeproj/xcuserdata
 build/iOS/MultiCraft/MultiCraft.xcodeproj/project.xcworkspace
-build/iOS/MultiCraft/MultiCraft/Assets.xcassets/AppIcon.appiconset/*.png
+# build/iOS/MultiCraft/MultiCraft/Assets.xcassets/AppIcon.appiconset/*.png
 build/iOS/MultiCraft.xcworkspace
 build/iOS/Pods
 build/iOS/Podfile.lock
