@@ -1208,7 +1208,7 @@ static inline void create_formspec_menu(GUIFormSpecMenu **cur_formspec,
 
 }
 
-#if !defined(__ANDROID__) && !defined(__IOS__)
+#if defined(__ANDROID__) || defined(__IOS__)
 #define SIZE_TAG "size[11,5.5]"
 #else
 #define SIZE_TAG "size[11,5.5,true]" // Fixed size on desktop
