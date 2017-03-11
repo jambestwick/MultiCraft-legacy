@@ -33,20 +33,23 @@ local core_developers = {
 	"Loic Blot (nerzhul/nrz) <loic.blot@unix-experience.fr>",
 	"Matt Gregory (paramat)",
 	"est31 <MTest31@outlook.com>",
-	"Craig Robbins (Zeno)",
+	"Craig Robbins (Zeno) <craig.d.robbins@gmail.com>",
+	"Auke Kok (sofar) <sofar@foo-projects.org>",
+	"Andrew Ward (rubenwardy) <rubenwardy@gmail.com>",
 }
 
 local active_contributors = {
-	"Auke Kok (sofar) <sofar@foo-projects.org>",
 	"Duane Robertson <duane@duanerobertson.com>",
 	"SmallJoker <mk939@ymail.com>",
-	"Andrew Ward (rubenwardy) <rubenwardy@gmail.com>",
+	"Lars Hofhansl <larsh@apache.org>",
 	"Jeija <jeija@mesecons.net>",
 	"Gregory Currie (gregorycu)",
 	"Sokomine <wegwerf@anarres.dyndns.org>",
 	"TeTpaAka",
 	"Jean-Patrick G (kilbith) <jeanpatrick.guerrero@gmail.com>",
 	"Diego Martínez (kaeza) <kaeza@users.sf.net>",
+	"Dániel Juhász (juhdanad) <juhdanad@gmail.com>",
+	"Rogier <rogier777@gmail.com>",
 }
 
 local previous_core_developers = {
@@ -79,18 +82,15 @@ return {
 	name = "credits",
 	caption = fgettext("Credits"),
 	cbf_formspec = function(tabview, name, tabdata)
-		return "label[0.1,0;MultiCraft Open Source Project, ver. " .. core.get_version() .. "]" ..
+	local version = core.get_version()
+--		return "label[0.1,0;MultiCraft Open Source Project, ver. " .. version.string .. "]" ..
+		return "label[0.1,0;MultiCraft Open Source Project]" ..
 			"label[0.1,0.3;]" ..
 			"label[0.1,0.5;https://github.com/MultiCraftProject]" ..
 			"label[0.1,1.0;LGPLv3.0+ and CC-BY-SA 3.0]" ..
 			"tablecolumns[color;text]" ..
 			"tableoptions[background=#00000000;highlight=#00000000;border=false]" ..
 			"table[0,1.6;11.75,3.5;list_credits;" ..
-			"#FFFF00," .. fgettext("Dedication of the current release") .. ",," .. 
-			"This release is dedicated to the memory of" .. ",," ..
-			"Minetest developer Maciej Kasatkin (RealBadAngel)" .. ",," ..
-			"who died on March 24 2016." .. ",," ..
-			"Our thoughts are with his family and friends." .. ",,," ..
 			"#FFFF00," .. fgettext("MultiCraft Developers") .. ",," ..
 			table.concat(multicraft_developers, ",,") .. ",,," ..
 			"#FFFF00," .. fgettext("Minetest Developers") .. ",," ..

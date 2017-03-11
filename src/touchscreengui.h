@@ -67,7 +67,6 @@ typedef enum {
 #define MIN_DIG_TIME_MS 500
 #define BUTTON_REPEAT_DELAY 0.2f
 
-extern const char *touchgui_button_imagenames[];
 
 class TouchScreenGUI
 {
@@ -79,8 +78,14 @@ public:
 
 	void init(ISimpleTextureSource* tsrc);
 
-	double getYaw() { return m_camera_yaw; }
+	double getYawChange() {
+		double res = m_camera_yaw_change;
+		m_camera_yaw_change = 0;
+		return res;
+	}
+
 	double getPitch() { return m_camera_pitch; }
+
 	line3d<f32> getShootline() { return m_shootline; }
 
 	void step(float dtime);
@@ -106,7 +111,7 @@ private:
 	bool                    m_visible; // is the gui visible
 
 	/* value in degree */
-	double                  m_camera_yaw;
+	double                  m_camera_yaw_change;
 	double                  m_camera_pitch;
 
 	line3d<f32>             m_shootline;

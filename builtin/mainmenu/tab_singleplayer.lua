@@ -18,7 +18,7 @@
 local function current_game()
 	local last_game_id = core.setting_get("menu_last_game")
 	local game, index = gamemgr.find_by_gameid(last_game_id)
-	
+
 	return game
 end
 
@@ -30,9 +30,12 @@ local function get_formspec(tabview, name, tabdata)
 				tonumber(core.setting_get("mainmenu_last_selected_world"))
 				)
 
-	retval = retval ..
+	if PLATFORM ~= "iOS" then
+		retval = retval ..
 			"button[3.5,4.5;2.6,0.5;world_delete;".. fgettext("Delete") .. "]" ..
-			"button[6,4.5;2.8,0.5;world_create;".. fgettext("New") .. "]" ..
+			"button[6,4.5;2.8,0.5;world_create;".. fgettext("New") .. "]"
+	end
+	retval = retval ..
 			"button[8.7,4.5;3.30,0.5;play;".. fgettext("Play") .. "]" ..
 			"checkbox[0.0,4.25;cb_creative_mode;".. fgettext("Creative Mode") .. ";" ..
 			dump(core.setting_getbool("creative_mode")) .. "]"..
@@ -87,7 +90,7 @@ local function main_button_handler(this, fields, name, tabdata)
 		fields["key_enter"] then
 		local selected = core.get_textlist_index("sp_worlds")
 		gamedata.selected_world = menudata.worldlist:get_raw_index(selected)
-		
+
 		if selected ~= nil and gamedata.selected_world ~= 0 then
 			gamedata.singleplayer = true
 			core.start()
@@ -121,7 +124,7 @@ local function main_button_handler(this, fields, name, tabdata)
 				delete_world_dlg:show()
 			end
 		end
-		
+
 		return true
 	end
 
@@ -131,14 +134,14 @@ local function main_button_handler(this, fields, name, tabdata)
 			local configdialog =
 				create_configure_world_dlg(
 						menudata.worldlist:get_raw_index(selected))
-			
+
 			if (configdialog ~= nil) then
 				configdialog:set_parent(this)
 				this:hide()
 				configdialog:show()
 			end
 		end
-		
+
 		return true
 	end
 end

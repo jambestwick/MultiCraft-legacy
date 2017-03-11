@@ -23,6 +23,7 @@ tags
 gtags.files
 # OS X
 .DS_Store
+.idea/*
 
 # GNU Patch reject file
 *.rej
@@ -61,6 +62,8 @@ locale/
 *.layout
 *.o
 *.a
+*.ninja
+.ninja*
 
 ## Android build files
 build/android/src/main/assets
@@ -86,3 +89,4 @@ build/iOS/deps/*
 build/iOS/assets.zip
 build/iOS/worlds.zip
 build/iOS/Ads
+po/ca/MultiCraft.po

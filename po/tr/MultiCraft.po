@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-19 05:00+0300\n"
+"POT-Creation-Date: 2016-08-30 06:18+0200\n"
 "PO-Revision-Date: 2015-10-27 16:46+0200\n"
 "Last-Translator: PilzAdam <PilzAdam@minetest.net>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/minetest/"
@@ -76,7 +76,8 @@ msgid "We support protocol versions between version $1 and $2."
 msgstr "Yalnızca $1 ve $2 arası protokol sürümleri desteklenmektedir."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/keycode.cpp
 msgid "Cancel"
@@ -147,6 +148,14 @@ msgstr "Minetest.net adresinden bir oyun modu indirin"
 msgid "Download one from minetest.net"
 msgstr "Minetest.net adresinden indirin"
 
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Game"
+msgstr "Oyun"
+
+#: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
+msgid "Mapgen"
+msgstr "Mapgen"
+
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Dünya seçilmedi ya da adlandırılmadı"
@@ -171,8 +180,9 @@ msgstr "Ek bir oyun modu yüklü değil."
 msgid "Are you sure you want to delete \"$1\"?"
 msgstr " \"$1\" 'i silmek istediğinizden emin misiniz ?"
 
-#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/tab_server.lua
-#: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
+#: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
+#: src/keycode.cpp
 msgid "Delete"
 msgstr "Sil"
 
@@ -187,14 +197,6 @@ msgstr "Modmgr: \"$1\" eklenti konumu yanlış"
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
 msgstr " \"$1\" dünyasını sil ?"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "No"
-msgstr "Hayır"
-
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua
-msgid "Yes"
-msgstr "Evet"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua src/keycode.cpp
 msgid "Accept"
@@ -360,22 +362,12 @@ msgid "Active Contributors"
 msgstr "Aktif katkı sağlayanlar"
 
 #: builtin/mainmenu/tab_credits.lua
+msgid "Core Developers"
+msgstr "Ana geliştiriciler"
+
+#: builtin/mainmenu/tab_credits.lua
 msgid "Credits"
 msgstr "Hakkında"
-
-#: builtin/mainmenu/tab_credits.lua
-msgid "Dedication of the current release"
-msgstr ""
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "Minetest Developers"
-msgstr "Ana geliştiriciler"
-
-#: builtin/mainmenu/tab_credits.lua
-#, fuzzy
-msgid "MultiCraft Developers"
-msgstr "Ana geliştiriciler"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
@@ -418,36 +410,36 @@ msgstr "Seçilen eklenti paketini sil"
 msgid "Address / Port"
 msgstr "Adres / Port :"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua src/settings_translation_file.cpp
+msgid "Client"
+msgstr "Çevirimiçi Oyna"
+
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Connect"
 msgstr "Bağlan"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Creative mode"
 msgstr "Yaratıcı mod"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Damage enabled"
 msgstr "Hasar alma etkin"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Del. Favorite"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Favorite"
 msgstr ""
 
-#: builtin/mainmenu/tab_multiplayer.lua
-msgid "Multi Player"
-msgstr ""
-
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 #, fuzzy
 msgid "Name / Password"
 msgstr "Kullanıcı Adı / Şifre :"
 
-#: builtin/mainmenu/tab_multiplayer.lua
+#: builtin/mainmenu/tab_multiplayer.lua builtin/mainmenu/tab_simple_main.lua
 msgid "PvP enabled"
 msgstr "Mücadele modu"
 
@@ -455,19 +447,19 @@ msgstr "Mücadele modu"
 msgid "Bind Address"
 msgstr "Adresi doğrula"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Configure"
 msgstr "Ayarla"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Create Server"
-msgstr "Sunucu oluşturuluyor..."
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Creative Mode"
+msgstr "Yaratıcı Mod"
 
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Creative Inventory"
-msgstr "Envanter"
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_simple_main.lua
+#: builtin/mainmenu/tab_singleplayer.lua
+msgid "Enable Damage"
+msgstr "Hasarı etkinleştir"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Name/Password"
@@ -490,9 +482,13 @@ msgstr "Port"
 msgid "Public"
 msgstr "Herkese Açık"
 
-#: builtin/mainmenu/tab_server.lua
+#: builtin/mainmenu/tab_server.lua builtin/mainmenu/tab_singleplayer.lua
 msgid "Select World:"
 msgstr "Dünya seç :"
+
+#: builtin/mainmenu/tab_server.lua
+msgid "Server"
+msgstr "Sunucu Kur"
 
 #: builtin/mainmenu/tab_server.lua
 msgid "Server Port"
@@ -501,11 +497,6 @@ msgstr "Sunucu portu"
 #: builtin/mainmenu/tab_server.lua
 msgid "Start Game"
 msgstr "Oyunu Başlat"
-
-#: builtin/mainmenu/tab_server.lua
-#, fuzzy
-msgid "Survival Mode"
-msgstr "Yaratıcı Mod"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
@@ -568,6 +559,10 @@ msgstr "Mipmap"
 #, fuzzy
 msgid "Mipmap + Aniso. Filter"
 msgstr "Mipmap  Aniso. Süzgeci"
+
+#: builtin/mainmenu/tab_settings.lua
+msgid "No"
+msgstr "Hayır"
 
 #: builtin/mainmenu/tab_settings.lua
 #, fuzzy
@@ -673,17 +668,28 @@ msgstr "Dalgalanan Bitkiler"
 msgid "Waving Water"
 msgstr "Dalgalanan Su"
 
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Yaratıcı Mod"
+#: builtin/mainmenu/tab_settings.lua
+msgid "Yes"
+msgstr "Evet"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Config mods"
+msgstr "Eklentileri ayarla"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Main"
+msgstr "Ana"
+
+#: builtin/mainmenu/tab_simple_main.lua
+msgid "Start Singleplayer"
+msgstr "Tek kişilik oyunu başlat"
 
 #: builtin/mainmenu/tab_singleplayer.lua src/keycode.cpp
 msgid "Play"
 msgstr "Oyna"
 
 #: builtin/mainmenu/tab_singleplayer.lua
-#, fuzzy
-msgid "Single Player"
+msgid "Singleplayer"
 msgstr "Tek Kişilik"
 
 #: builtin/mainmenu/tab_texturepacks.lua
@@ -773,11 +779,6 @@ msgid "Change Password"
 msgstr "Şifre değiştir"
 
 #: src/game.cpp
-#, fuzzy
-msgid "Close game"
-msgstr "Mağazayı kapat"
-
-#: src/game.cpp
 msgid "Connecting to server..."
 msgstr "Sunucuya bağlanılıyor..."
 
@@ -792,6 +793,68 @@ msgstr "İstemci oluşturuluyor..."
 #: src/game.cpp
 msgid "Creating server..."
 msgstr "Sunucu oluşturuluyor..."
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"- WASD: move\n"
+"- Space: jump/climb\n"
+"- Shift: sneak/go down\n"
+"- Q: drop item\n"
+"- I: inventory\n"
+"- Mouse: turn/look\n"
+"- Mouse left: dig/punch\n"
+"- Mouse right: place/use\n"
+"- Mouse wheel: select item\n"
+"- T: chat\n"
+msgstr ""
+"Varsayılanlar Kontroller:\n"
+"- WASD: Hareket et\n"
+"- Boşluk: Zıpla/Tırman\n"
+"- Shift: Sessiz yürü/Aşağı in\n"
+"- Q: Elindekini bırak\n"
+"- I: Envanter\n"
+"- Fare: Dön/Bak\n"
+"- Sol fare: Kaz/Vur\n"
+"- Sağ fare: Yerleştir/Kullan\n"
+"- Fare tekerleği: Araç seç\n"
+"- T: Sohbet\n"
+
+#: src/game.cpp
+msgid ""
+"Default Controls:\n"
+"No menu visible:\n"
+"- single tap: button activate\n"
+"- double tap: place/use\n"
+"- slide finger: look around\n"
+"Menu/Inventory visible:\n"
+"- double tap (outside):\n"
+" -->close\n"
+"- touch stack, touch slot:\n"
+" --> move stack\n"
+"- touch&drag, tap 2nd finger\n"
+" --> place single item to slot\n"
+msgstr ""
+"Varsayılan Kontroller:\n"
+"Tüm menüler gizli:\n"
+"- Tek tık: tuş etkin\n"
+"- Çift tık: yerleştir/kullan\n"
+"- Parmağı kaydır: etrafa bak\n"
+"Menu/Encanter görünür:\n"
+"- çift tık (dışarda):\n"
+" -->kapat\n"
+"- touch stack, touch slot:\n"
+" --> move stack\n"
+"- tut&bırak, iki parmağı kullan\n"
+" --> slotuna bir item bırak\n"
+
+#: src/game.cpp
+msgid "Exit to Menu"
+msgstr "Menüye dön"
+
+#: src/game.cpp
+msgid "Exit to OS"
+msgstr "Oyundan Çık"
 
 #: src/game.cpp
 msgid "Item definitions..."
@@ -810,11 +873,6 @@ msgid "MiB/s"
 msgstr ""
 
 #: src/game.cpp
-#, fuzzy
-msgid "Migrating world..."
-msgstr "İstemci oluşturuluyor..."
-
-#: src/game.cpp
 msgid "Node definitions..."
 msgstr "Blok tanımlamaları..."
 
@@ -825,10 +883,6 @@ msgstr "Adres çözümleniyor..."
 #: src/game.cpp
 msgid "Respawn"
 msgstr "Yeniden Canlan"
-
-#: src/game.cpp
-msgid "Save and Exit"
-msgstr ""
 
 #: src/game.cpp
 msgid "Shutting down..."
@@ -899,9 +953,7 @@ msgid "Key already in use"
 msgstr "Tuş zaten kullanımda"
 
 #: src/guiKeyChangeMenu.cpp
-#, fuzzy
-msgid ""
-"Keybindings. (If this menu screws up, remove stuff from multicraft.conf)"
+msgid "Keybindings. (If this menu screws up, remove stuff from minetest.conf)"
 msgstr "Tuş ayaları. ( Olağandışı durumlarda minetest.conf 'u düzenleyin )"
 
 #: src/guiKeyChangeMenu.cpp src/keycode.cpp
@@ -944,6 +996,10 @@ msgstr "Noclip aç/kapa"
 #: src/guiKeyChangeMenu.cpp
 msgid "Use"
 msgstr "Kullan"
+
+#: src/guiKeyChangeMenu.cpp src/keycode.cpp
+msgid "Zoom"
+msgstr "Yakınlaştır"
 
 #: src/guiKeyChangeMenu.cpp
 msgid "press key"
@@ -1261,10 +1317,6 @@ msgstr "X Button 1"
 msgid "X Button 2"
 msgstr "X Button 2"
 
-#: src/keycode.cpp
-msgid "Zoom"
-msgstr "Yakınlaştır"
-
 #: src/settings_translation_file.cpp
 msgid ""
 "(X,Y,Z) offset of fractal from world centre in units of 'scale'.\n"
@@ -1330,6 +1382,10 @@ msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid "Active Block Modifier interval"
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Active Block Modifiers"
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -1408,6 +1464,10 @@ msgid "Automaticaly report to the serverlist."
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid "Autorun key"
+msgstr ""
+
+#: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Backward key"
 msgstr "Geri"
@@ -1441,6 +1501,10 @@ msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid "Build inside player"
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Builtin"
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -1486,6 +1550,11 @@ msgid "Chat toggle key"
 msgstr "Tuşları değiştir"
 
 #: src/settings_translation_file.cpp
+#, fuzzy
+msgid "Chatcommands"
+msgstr "Komut"
+
+#: src/settings_translation_file.cpp
 msgid ""
 "Choice of 18 fractals from 9 formulas.\n"
 "1 = 4D \"Roundy\" mandelbrot set.\n"
@@ -1527,10 +1596,6 @@ msgid "Clean transparent textures"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-msgid "Client"
-msgstr "Çevirimiçi Oyna"
-
-#: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr ""
 
@@ -1566,14 +1631,14 @@ msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid ""
-"Comma-separated list of trusted mods that are allowed to access insecure\n"
-"functions even when mod security is on (via request_insecure_environment())."
+"Comma-separated list of mods that are allowed to access HTTP APIs, which\n"
+"allow them to upload and download data to/from the internet."
 msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid ""
-"Comma-seperated list of mods that are allowed to access HTTP APIs, which\n"
-"allow them to upload and download data to/from the internet."
+"Comma-separated list of trusted mods that are allowed to access insecure\n"
+"functions even when mod security is on (via request_insecure_environment())."
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -1729,6 +1794,10 @@ msgid "Default privileges"
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid "Default report format"
+msgstr ""
+
+#: src/settings_translation_file.cpp
 msgid ""
 "Default timeout for cURL, stated in milliseconds.\n"
 "Only has an effect if compiled with cURL."
@@ -1742,6 +1811,10 @@ msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid "Defines the maximal player transfer distance in blocks (0 = unlimited)."
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Delay in sending blocks after building"
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -1775,14 +1848,6 @@ msgid "Desynchronize block animation"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-msgid "Detailed mod profile data. Useful for mod developers."
-msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Detailed mod profiling"
-msgstr ""
-
-#: src/settings_translation_file.cpp
 msgid ""
 "Determines terrain shape.\n"
 "The 3 numbers in brackets control the scale of the\n"
@@ -1793,6 +1858,18 @@ msgstr ""
 #, fuzzy
 msgid "Disable anticheat"
 msgstr "Parçacıkları etkinleştir"
+
+#: src/settings_translation_file.cpp
+msgid "Disable escape sequences"
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid ""
+"Disable escape sequences, e.g. chat coloring.\n"
+"Use this if you want to run a server with pre-0.4.14 clients and you want to "
+"disable\n"
+"the escape sequences generated by mods."
+msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid "Disallow empty passwords"
@@ -1818,6 +1895,10 @@ msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid "Dump the mapgen debug infos."
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Enable Joysticks"
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -1907,6 +1988,14 @@ msgid ""
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid "Engine profiling data print interval"
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Entity methods"
+msgstr ""
+
+#: src/settings_translation_file.cpp
 msgid ""
 "Experimental option, might cause visible spaces between blocks\n"
 "when set to higher number than 0."
@@ -1968,7 +2057,17 @@ msgid "Field of view"
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid "Field of view for zoom"
+msgstr ""
+
+#: src/settings_translation_file.cpp
 msgid "Field of view in degrees."
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid ""
+"Field of view while zooming in degrees.\n"
+"This requires the \"zoom\" privilege on the server."
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -2098,10 +2197,6 @@ msgid "GUI scaling filter txr2img"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-msgid "Game"
-msgstr "Oyun"
-
-#: src/settings_translation_file.cpp
 msgid "Gamma"
 msgstr ""
 
@@ -2115,12 +2210,14 @@ msgid "Generate normalmaps"
 msgstr "Normal haritalar oluştur"
 
 #: src/settings_translation_file.cpp
+msgid "Global callbacks"
+msgstr ""
+
+#: src/settings_translation_file.cpp
 msgid ""
 "Global map generation attributes.\n"
 "In Mapgen v6 the 'decorations' flag controls all decorations except trees\n"
 "and junglegrass, in all other mapgens this flag controls all decorations.\n"
-"The default flags set in the engine are: caves, light, decorations\n"
-"The flags string modifies the engine defaults.\n"
 "Flags that are not specified in the flag string are not modified from the "
 "default.\n"
 "Flags starting with 'no' are used to explicitly disable them."
@@ -2152,6 +2249,15 @@ msgid ""
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid ""
+"Have the profiler instrument itself:\n"
+"* Instrument an empty function.\n"
+"This estimates the overhead, that instrumentation is adding (+1 function "
+"call).\n"
+"* Instrument the sampler being used to update the statistics."
+msgstr ""
+
+#: src/settings_translation_file.cpp
 msgid "Height component of the initial window size."
 msgstr ""
 
@@ -2176,15 +2282,6 @@ msgid ""
 "How large area of blocks are subject to the active block stuff, stated in "
 "mapblocks (16 nodes).\n"
 "In active blocks objects are loaded and ABMs run."
-msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid ""
-"How many blocks are flying in the wire simultaneously for the whole server."
-msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "How many blocks are flying in the wire simultaneously per client."
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -2283,6 +2380,40 @@ msgid "In-game chat console background color (R,G,B)."
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid ""
+"Instrument builtin.\n"
+"This is usually only needed by core/builtin contributors"
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Instrument chatcommands on registration."
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid ""
+"Instrument global callback functions on registration.\n"
+"(anything you pass to a minetest.register_*() function)"
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid ""
+"Instrument the action function of Active Block Modifiers on registration."
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid ""
+"Instrument the action function of Loading Block Modifiers on registration."
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Instrument the methods of entities on registration."
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Instrumentation"
+msgstr ""
+
+#: src/settings_translation_file.cpp
 msgid "Interval of saving important changes in the world, stated in seconds."
 msgstr ""
 
@@ -2315,6 +2446,14 @@ msgstr ""
 msgid ""
 "Iterations of the recursive function.\n"
 "Controls the amount of fine detail."
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Joystick button repetition interval"
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Joystick frustum sensitivity"
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -2478,6 +2617,13 @@ msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid ""
+"Key for toggling autorun.\n"
+"See http://irrlicht.sourceforge.net/docu/namespaceirr."
+"html#a54da2a0e231901735e3da1b0edf72eb3"
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid ""
 "Key for toggling cinematic mode.\n"
 "See http://irrlicht.sourceforge.net/docu/namespaceirr."
 "html#a54da2a0e231901735e3da1b0edf72eb3"
@@ -2513,7 +2659,7 @@ msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid ""
-"Key for toggling the camrea update. Only used for development\n"
+"Key for toggling the camera update. Only used for development\n"
 "See http://irrlicht.sourceforge.net/docu/namespaceirr."
 "html#a54da2a0e231901735e3da1b0edf72eb3"
 msgstr ""
@@ -2665,6 +2811,21 @@ msgid "Liquid update tick"
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid "Load the game profiler"
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid ""
+"Load the game profiler to collect game profiling data.\n"
+"Provides a /profiler command to access the compiled profile.\n"
+"Useful for mod developers and server operators."
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Loading Block Modifiers"
+msgstr ""
+
+#: src/settings_translation_file.cpp
 msgid "Main menu game manager"
 msgstr ""
 
@@ -2699,8 +2860,6 @@ msgid ""
 "'humid_rivers' modifies the humidity around rivers and in areas where water "
 "would tend to pool,\n"
 "it may interfere with delicately adjusted biomes.\n"
-"The default flags set in the engine are: altitude_chill, humid_rivers\n"
-"The flags string modifies the engine defaults.\n"
 "Flags that are not specified in the flag string are not modified from the "
 "default.\n"
 "Flags starting with 'no' are used to explicitly disable them."
@@ -2710,8 +2869,6 @@ msgstr ""
 msgid ""
 "Map generation attributes specific to Mapgen flat.\n"
 "Occasional lakes and hills can be added to the flat world.\n"
-"The default flags set in the engine are: none\n"
-"The flags string modifies the engine defaults.\n"
 "Flags that are not specified in the flag string are not modified from the "
 "default.\n"
 "Flags starting with 'no' are used to explicitly disable them."
@@ -2722,8 +2879,6 @@ msgid ""
 "Map generation attributes specific to Mapgen v6.\n"
 "When snowbiomes are enabled jungles are automatically enabled, the 'jungles' "
 "flag is ignored.\n"
-"The default flags set in the engine are: biomeblend, mudflow\n"
-"The flags string modifies the engine defaults.\n"
 "Flags that are not specified in the flag string are not modified from the "
 "default.\n"
 "Flags starting with 'no' are used to explicitly disable them."
@@ -2733,8 +2888,6 @@ msgstr ""
 msgid ""
 "Map generation attributes specific to Mapgen v7.\n"
 "The 'ridges' flag controls the rivers.\n"
-"The default flags set in the engine are: mountains, ridges\n"
-"The flags string modifies the engine defaults.\n"
 "Flags that are not specified in the flag string are not modified from the "
 "default.\n"
 "Flags starting with 'no' are used to explicitly disable them."
@@ -2755,10 +2908,6 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "Mapblock unload timeout"
 msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Mapgen"
 
 #: src/settings_translation_file.cpp
 #, fuzzy
@@ -3119,6 +3268,14 @@ msgid "Maximum hotbar width"
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid "Maximum number of blocks that are simultaneously sent in total."
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid "Maximum number of blocks that are simultaneously sent per client."
+msgstr ""
+
+#: src/settings_translation_file.cpp
 msgid "Maximum number of blocks that can be queued for loading."
 msgstr ""
 
@@ -3160,17 +3317,21 @@ msgid "Maximum number of statically stored objects in a block."
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid "Maximum objects per block"
+msgstr ""
+
+#: src/settings_translation_file.cpp
 msgid ""
 "Maximum proportion of current window to be used for hotbar.\n"
 "Useful if there's something to be displayed right or left of hotbar."
 msgstr ""
 
 #: src/settings_translation_file.cpp
-msgid "Maximum simultaneously blocks send per client"
+msgid "Maximum simultaneous block sends per client"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-msgid "Maximum simultaneously bocks send total"
+msgid "Maximum simultaneous block sends total"
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -3179,10 +3340,6 @@ msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid "Maximum users"
-msgstr ""
-
-#: src/settings_translation_file.cpp
-msgid "Maxmimum objects per block"
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -3226,10 +3383,6 @@ msgstr ""
 #, fuzzy
 msgid "Mipmapping"
 msgstr "Mip-Mapping"
-
-#: src/settings_translation_file.cpp
-msgid "Mod profiling"
-msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid "Modstore details URL"
@@ -3444,11 +3597,17 @@ msgid "Prevent mods from doing insecure things like running shell commands."
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid ""
+"Print the engine's profiling data in regular intervals (in seconds). 0 = "
+"disable. Useful for developers."
+msgstr ""
+
+#: src/settings_translation_file.cpp
 msgid "Privileges that players with basic_privs can grant"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-msgid "Profiler data print interval. 0 = disable. Useful for developers."
+msgid "Profiler"
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -3456,7 +3615,7 @@ msgid "Profiler toggle key"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-msgid "Profiling print interval"
+msgid "Profiling"
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -3490,6 +3649,11 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "Replaces the default main menu with a custom one."
 msgstr ""
+
+#: src/settings_translation_file.cpp
+#, fuzzy
+msgid "Report path"
+msgstr "Seç"
 
 #: src/settings_translation_file.cpp
 #, fuzzy
@@ -3661,7 +3825,7 @@ msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid ""
-"Shaders allow advanced visul effects and may increase performance on some "
+"Shaders allow advanced visual effects and may increase performance on some "
 "video cards.\n"
 "Thy only work with the OpenGL video backend."
 msgstr ""
@@ -3699,7 +3863,7 @@ msgstr "Pürüzsüz ışıklandırma"
 
 #: src/settings_translation_file.cpp
 msgid ""
-"Smooths camera when moving and looking around.\n"
+"Smooths camera when looking around. Also called look or mouse smoothing.\n"
 "Useful for recording videos."
 msgstr ""
 
@@ -3781,7 +3945,19 @@ msgid "The altitude at which temperature drops by 20C"
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid ""
+"The default format in which profiles are being saved,\n"
+"when calling `/profiler save [format]` without format."
+msgstr ""
+
+#: src/settings_translation_file.cpp
 msgid "The depth of dirt or other filler"
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid ""
+"The file path relative to your worldpath in which profiles will be saved "
+"to.\n"
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -3800,6 +3976,12 @@ msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid ""
+"The sensitivity of the joystick axes for moving the\n"
+"ingame view frustum around."
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid ""
 "The strength (darkness) of node ambient-occlusion shading.\n"
 "Lower is darker, Higher is lighter. The valid range of values for this\n"
 "setting is 0.25 to 4.0 inclusive. If the value is out of range it will be\n"
@@ -3811,6 +3993,12 @@ msgid ""
 "The time (in seconds) that the liquids queue may grow beyond processing\n"
 "capacity until an attempt is made to decrease its size by dumping old queue\n"
 "items.  A value of 0 disables the functionality."
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid ""
+"The time in seconds it takes between repeated events\n"
+"when holding down a joystick button combination."
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -3917,11 +4105,6 @@ msgstr ""
 #: src/settings_translation_file.cpp
 msgid "Use trilinear filtering when scaling textures."
 msgstr ""
-
-#: src/settings_translation_file.cpp
-#, fuzzy
-msgid "Useful for mod developers."
-msgstr "Ana geliştiriciler"
 
 #: src/settings_translation_file.cpp
 msgid "V-Sync"
@@ -4059,7 +4242,7 @@ msgid ""
 "When gui_scaling_filter_txr2img is true, copy those images\n"
 "from hardware to software for scaling.  When false, fall back\n"
 "to the old scaling method, for video drivers that don't\n"
-"propery support downloading textures back from hardware."
+"properly support downloading textures back from hardware."
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -4159,6 +4342,10 @@ msgstr ""
 msgid "cURL timeout"
 msgstr ""
 
+#, fuzzy
+#~ msgid "Useful for mod developers."
+#~ msgstr "Ana geliştiriciler"
+
 #~ msgid "No of course not!"
 #~ msgstr "Elbette hayır!"
 
@@ -4213,76 +4400,3 @@ msgstr ""
 #, fuzzy
 #~ msgid "Preload inventory textures"
 #~ msgstr "Dokular yükleniyor..."
-
-#~ msgid "Exit to OS"
-#~ msgstr "Oyundan Çık"
-
-#~ msgid "Exit to Menu"
-#~ msgstr "Menüye dön"
-
-#~ msgid ""
-#~ "Default Controls:\n"
-#~ "No menu visible:\n"
-#~ "- single tap: button activate\n"
-#~ "- double tap: place/use\n"
-#~ "- slide finger: look around\n"
-#~ "Menu/Inventory visible:\n"
-#~ "- double tap (outside):\n"
-#~ " -->close\n"
-#~ "- touch stack, touch slot:\n"
-#~ " --> move stack\n"
-#~ "- touch&drag, tap 2nd finger\n"
-#~ " --> place single item to slot\n"
-#~ msgstr ""
-#~ "Varsayılan Kontroller:\n"
-#~ "Tüm menüler gizli:\n"
-#~ "- Tek tık: tuş etkin\n"
-#~ "- Çift tık: yerleştir/kullan\n"
-#~ "- Parmağı kaydır: etrafa bak\n"
-#~ "Menu/Encanter görünür:\n"
-#~ "- çift tık (dışarda):\n"
-#~ " -->kapat\n"
-#~ "- touch stack, touch slot:\n"
-#~ " --> move stack\n"
-#~ "- tut&bırak, iki parmağı kullan\n"
-#~ " --> slotuna bir item bırak\n"
-
-#~ msgid ""
-#~ "Default Controls:\n"
-#~ "- WASD: move\n"
-#~ "- Space: jump/climb\n"
-#~ "- Shift: sneak/go down\n"
-#~ "- Q: drop item\n"
-#~ "- I: inventory\n"
-#~ "- Mouse: turn/look\n"
-#~ "- Mouse left: dig/punch\n"
-#~ "- Mouse right: place/use\n"
-#~ "- Mouse wheel: select item\n"
-#~ "- T: chat\n"
-#~ msgstr ""
-#~ "Varsayılanlar Kontroller:\n"
-#~ "- WASD: Hareket et\n"
-#~ "- Boşluk: Zıpla/Tırman\n"
-#~ "- Shift: Sessiz yürü/Aşağı in\n"
-#~ "- Q: Elindekini bırak\n"
-#~ "- I: Envanter\n"
-#~ "- Fare: Dön/Bak\n"
-#~ "- Sol fare: Kaz/Vur\n"
-#~ "- Sağ fare: Yerleştir/Kullan\n"
-#~ "- Fare tekerleği: Araç seç\n"
-#~ "- T: Sohbet\n"
-
-#~ msgid "Start Singleplayer"
-#~ msgstr "Tek kişilik oyunu başlat"
-
-#~ msgid "Main"
-#~ msgstr "Ana"
-
-#~ msgid "Config mods"
-#~ msgstr "Eklentileri ayarla"
-
-#~ msgid "Server"
-#~ msgstr "Sunucu Kur"
-
-#~ msgid "Enable Damage"
-#~ msgstr "Hasarı etkinleştir"
