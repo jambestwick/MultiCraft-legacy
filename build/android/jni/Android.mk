@@ -305,15 +305,15 @@ LOCAL_SRC_FILES += jni/src/jsoncpp/json/jsoncpp.cpp
 LOCAL_CFLAGS += -Wno-multichar -D_ANDROID -DLIBDIR -DBUILDING_LIBICONV 
 
 LOCAL_C_INCLUDES += \
-		deps/libiconv/include                     \
-		deps/libiconv/lib                     \
-		deps/libiconv/libcharset/include                     \
+		deps/libiconv/include                   \
+		deps/libiconv/lib                       \
+		deps/libiconv/libcharset/include
 		
 LOCAL_SRC_FILES += \
-		deps/libiconv/lib/iconv.c                        \
-		deps/libiconv/libcharset/lib/localcharset.c \
+		deps/libiconv/lib/iconv.c               \
+		deps/libiconv/libcharset/lib/localcharset.c
 
-LOCAL_STATIC_LIBRARIES := Irrlicht LevelDB freetype curl intl LuaJIT openal vorbis android_native_app_glue $(PROFILER_LIBS)
+LOCAL_STATIC_LIBRARIES := Irrlicht LevelDB freetype curl LuaJIT openal vorbis android_native_app_glue $(PROFILER_LIBS)
 
 LOCAL_LDLIBS := -lEGL -lGLESv1_CM -lGLESv2 -landroid -lOpenSLES
 

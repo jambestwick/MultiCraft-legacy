@@ -4580,7 +4580,7 @@ void Game::updateGui(float *statustext_time, const RunStats &stats,
 		guitext->setText(utf8_to_wide(os.str()).c_str());
 		guitext->setVisible(true);
 	} else {
-		guitext->setVisible(false);
+		guitext->setVisible(true);
 	}
 
 	if (guitext->isVisible()) {

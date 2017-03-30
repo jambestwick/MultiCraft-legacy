@@ -31,7 +31,7 @@ TARGET_LIBDIR = armeabi-v7a
 TARGET_TOOLCHAIN = arm-linux-androideabi
 TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto
 TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON) 
-TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
+TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
 CROSS_PREFIX = arm-linux-androideabi-
 
 ################################################################################
@@ -53,7 +53,7 @@ CROSS_PREFIX = arm-linux-androideabi-
 ASSETS_TIMESTAMP = $(ANDR_ROOT)/deps/assets_timestamp
 
 LEVELDB_URL = https://github.com/google/leveldb/archive/v$(LEVELDB_VER).zip
-LEVELDB_VER = 1.19
+LEVELDB_VER = 1.20
 LEVELDB_DIR = $(ANDR_ROOT)/deps/leveldb
 LEVELDB_LIB = $(LEVELDB_DIR)/out-static/libleveldb.a
 LEVELDB_TIMESTAMP = $(LEVELDB_DIR)/timestamp
@@ -81,7 +81,7 @@ IRRLICHT_TIMESTAMP = $(IRRLICHT_DIR)/timestamp
 IRRLICHT_TIMESTAMP_INT = $(ANDR_ROOT)/deps/irrlicht_timestamp
 IRRLICHT_URL_HTTP = https://github.com/zaki/irrlicht/archive/$(IRRLICHT_COMMIT).zip
 
-CURL_VERSION = 7.52.1
+CURL_VERSION = 7.53.1
 CURL_DIR = $(ANDR_ROOT)/deps/curl
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
@@ -95,14 +95,14 @@ FREETYPE_TIMESTAMP = $(FREETYPE_DIR)/timestamp
 FREETYPE_TIMESTAMP_INT = $(ANDR_ROOT)/deps/freetype_timestamp
 FREETYPE_URL_HTTP = https://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VERSION)/freetype-$(FREETYPE_VERSION).tar.bz2
 
-ICONV_VERSION = 1.14
+ICONV_VERSION = 1.15
 ICONV_DIR = $(ANDR_ROOT)/deps/libiconv
 ICONV_URL_HTTP = https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
 
 INTL_DIR = $(ANDR_ROOT)/deps/libintl/
 INTL_URL_HTTP = https://github.com/j-jorge/libintl-lite/archive/master.tar.gz
 
-SQLITE3_VERSION = 3160200
+SQLITE3_VERSION = 3170000
 SQLITE3_DIR = $(ANDR_ROOT)/deps/sqlite
 SQLITE3_URL = https://www.sqlite.org/2017/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 
@@ -189,8 +189,9 @@ $(OPENAL_LIB): $(OPENAL_TIMESTAMP)
 	${ANDROID_NDK}/ndk-build NDEBUG=${NDEBUG}                                  \
 		NDK_MODULE_PATH=${NDK_MODULE_PATH} APP_ABI=${TARGET_ABI}               \
 		TARGET_ARCH_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}             \
-		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}gcc \
-		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}g++ \
+		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}                              \
+		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}-gcc \
+		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}-g++ \
 		TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                \
 		TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                              \
 		TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                 \
@@ -234,8 +235,9 @@ $(VORBIS_LIB): $(VORBIS_TIMESTAMP)
 	${ANDROID_NDK}/ndk-build NDEBUG=${NDEBUG}                                  \
 		NDK_MODULE_PATH=${NDK_MODULE_PATH}                                     \
 		APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                     \
-		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}gcc \
-		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}g++ \
+		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}                              \
+		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}-gcc \
+		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}-g++ \
 		TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                \
 		TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                              \
 		TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                 \
@@ -372,7 +374,6 @@ iconv_download :
 		mv libiconv-${ICONV_VERSION} libiconv;                             \
 		cd libiconv;                                                       \
 		patch -p1 < ${ANDR_ROOT}/patches/libiconv_android.patch;           \
-		patch -p1 < ${ANDR_ROOT}/patches/libiconv_stdio.patch;             \
 		export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-iconv;                            \
 		${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh                    \
 		--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                    \
@@ -446,8 +447,9 @@ $(IRRLICHT_LIB): $(IRRLICHT_TIMESTAMP) $(FREETYPE_LIB)
 	${ANDROID_NDK}/ndk-build NDEBUG=${NDEBUG}                                  \
 		NDK_MODULE_PATH=${NDK_MODULE_PATH}                                     \
 		APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                     \
-		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}gcc \
-		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}g++ \
+		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}                              \
+		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}-gcc \
+		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}-g++ \
 		TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                \
 		TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                              \
 		TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                 \
@@ -677,13 +679,10 @@ apk: local.properties $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_LIB) $(LUAJIT_LIB) \
 	+@${ANDROID_NDK}/ndk-build NDK_MODULE_PATH=${NDK_MODULE_PATH}                \
 		GPROF=${GPROF} APP_ABI=${TARGET_ABI}                                   \
 		APP_PLATFORM=${APP_PLATFORM}                                           \
-		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}gcc \
-		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}g++ \
 		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}                              \
-		TARGET_LIBDIR=${TARGET_LIBDIR}                                         \
-		TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                \
-		TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                              \
-		TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                 \
+		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}-gcc \
+		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}-g++ \
+		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}  || exit 1;                 \
 	if [ ! -e ${APP_ROOT}/jniLibs ]; then                                      \
 		ln -s ${ANDR_ROOT}/libs ${APP_ROOT}/jniLibs || exit 1;                 \
 	fi;                                                                        \

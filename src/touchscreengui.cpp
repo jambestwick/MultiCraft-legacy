@@ -948,7 +948,7 @@ inline void TouchScreenGUI::storePointerPos(size_t ID, v2s32 pos)
 inline v2s32 TouchScreenGUI::loadPointerPos(size_t ID)
 {
 	std::map<size_t, v2s32>::const_iterator it = m_pointerpos.find(ID);
-	if (it == m_pointerpos.cend())
+	if (it == m_pointerpos.end())
 		return v2s32(0, 0);
 	return it->second;
 }
