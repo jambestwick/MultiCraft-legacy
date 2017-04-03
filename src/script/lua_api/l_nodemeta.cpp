@@ -346,7 +346,7 @@ void NodeMetaRef::Register(lua_State *L)
 }
 
 const char NodeMetaRef::className[] = "NodeMetaRef";
-const luaL_reg NodeMetaRef::methods[] = {
+const luaL_Reg NodeMetaRef::methods[] = {
 	luamethod(NodeMetaRef, get_string),
 	luamethod(NodeMetaRef, set_string),
 	luamethod(NodeMetaRef, get_int),

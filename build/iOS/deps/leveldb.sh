@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 . ../sdk.sh
-LEVELDB_VERSION=1.19
+LEVELDB_VERSION=1.20
 
 if [ ! -d leveldb-src ]; then
 	wget https://github.com/google/leveldb/archive/v$LEVELDB_VERSION.tar.gz
