@@ -1244,36 +1244,34 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 		JoystickController *joystick, bool singleplayermode)
 {
 
-#if !defined(__ANDROID__) && !defined(__IOS__)
+#ifdef __ANDROID__
 	float ypos = singleplayermode ? 0.5 : 0.1;
+#elif __IOS__
+	float ypos = 1.0;
 #else
 	float ypos = 1.0;
 #endif
-#ifdef __IOS__
-	float bsize = 3.5;
-#else
-	float bsize = 4.0;
-#endif
+	float bsize = 5.0;
 	std::ostringstream os;
 
 	os << FORMSPEC_VERSION_STRING  << SIZE_TAG
 		<< "bgcolor[#00000060;true]"
-		<< "button_exit[3.5," << (ypos++) << ";" << bsize << ",0.5;btn_continue;"
+		<< "button_exit[3.0," << (ypos++) << ";" << bsize << ",0.5;btn_continue;"
 		<< strgettext("Continue") << "]";
 #if !defined(__ANDROID__) && !defined(__IOS__)
 	if (!singleplayermode) {
-	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_change_password;"
+	os		<< "button_exit[3.0," << (ypos++) << ";4,0.5;btn_change_password;"
 			<< strgettext("Change Password") << "]";
 	}
-	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_sound;"
+	os		<< "button_exit[3.0," << (ypos++) << ";4,0.5;btn_sound;"
 			<< strgettext("Sound Volume") << "]";
-	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_key_config;"
+	os		<< "button_exit[3.0," << (ypos++) << ";4,0.5;btn_key_config;"
 			<< strgettext("Change Keys")  << "]";
 #endif
-	os		<< "button_exit[3.5," << (ypos++) << ";" << bsize << ",0.5;btn_exit_menu;"
+	os		<< "button_exit[3.0," << (ypos++) << ";" << bsize << ",0.5;btn_exit_menu;"
 			<< strgettext("Save and Exit") << "]";
 #ifndef __IOS__
-	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_exit_os;"
+	os		<< "button_exit[3.0," << (ypos++) << ";4,0.5;btn_exit_os;"
 			<< strgettext("Close game") << "]";
 #endif
 	os		<< "\n;]";
