@@ -1260,18 +1260,18 @@ static void show_pause_menu(GUIFormSpecMenu **cur_formspec,
 		<< strgettext("Continue") << "]";
 #if !defined(__ANDROID__) && !defined(__IOS__)
 	if (!singleplayermode) {
-	os		<< "button_exit[3.0," << (ypos++) << ";4,0.5;btn_change_password;"
+	os		<< "button_exit[3.0," << (ypos++) << ";" << bsize << ",0.5;btn_change_password;"
 			<< strgettext("Change Password") << "]";
 	}
-	os		<< "button_exit[3.0," << (ypos++) << ";4,0.5;btn_sound;"
+	os		<< "button_exit[3.0," << (ypos++) << ";" << bsize << ",0.5;btn_sound;"
 			<< strgettext("Sound Volume") << "]";
-	os		<< "button_exit[3.0," << (ypos++) << ";4,0.5;btn_key_config;"
+	os		<< "button_exit[3.0," << (ypos++) << ";" << bsize << ",0.5;btn_key_config;"
 			<< strgettext("Change Keys")  << "]";
 #endif
 	os		<< "button_exit[3.0," << (ypos++) << ";" << bsize << ",0.5;btn_exit_menu;"
 			<< strgettext("Save and Exit") << "]";
 #ifndef __IOS__
-	os		<< "button_exit[3.0," << (ypos++) << ";4,0.5;btn_exit_os;"
+	os		<< "button_exit[3.0," << (ypos++) << ";" << bsize << ",0.5;btn_exit_os;"
 			<< strgettext("Close game") << "]";
 #endif
 	os		<< "\n;]";

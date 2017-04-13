@@ -61,10 +61,9 @@ else
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 LOCAL_CFLAGS += \
 -mfpu=vfpv3-d16 -march=armv7-a -Ofast \
--fno-fast-math -funsafe-math-optimizations -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range \
 -fvisibility=hidden -flto
 LOCAL_CXXFLAGS += -mfpu=vfpv3-d16 -march=armv7-a -Ofast -fvisibility=hidden
-LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections
+LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
 endif
 
 endif
@@ -77,7 +76,6 @@ endif
 ifeq ($(TARGET_ARCH_ABI),x86)
 LOCAL_CFLAGS += \
 -fno-stack-protector -Ofast \
--fno-fast-math -funsafe-math-optimizations -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range \
 -fvisibility=hidden -flto
 LOCAL_CXXFLAGS += -Ofast -fvisibility=hidden
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections
@@ -285,9 +283,6 @@ LOCAL_SRC_FILES += \
 # Freetype2
 LOCAL_SRC_FILES += jni/src/cguittfont/xCGUITTFont.cpp
 
-# SQLite3
-LOCAL_SRC_FILES += deps/sqlite/sqlite3.c
-
 # libIntl
 LOCAL_SRC_FILES += deps/libintl/internal/libintl.cpp
 
@@ -299,7 +294,7 @@ LOCAL_SRC_FILES += \
 		jni/src/threading/thread.cpp
 
 # JSONCPP
-LOCAL_SRC_FILES += jni/src/jsoncpp/json/jsoncpp.cpp
+LOCAL_SRC_FILES += jni/src/jsoncpp/jsoncpp.cpp
 
 # libiconv
 LOCAL_CFLAGS += -Wno-multichar -D_ANDROID -DLIBDIR -DBUILDING_LIBICONV 
@@ -312,6 +307,11 @@ LOCAL_C_INCLUDES += \
 LOCAL_SRC_FILES += \
 		deps/libiconv/lib/iconv.c               \
 		deps/libiconv/libcharset/lib/localcharset.c
+
+# SQLite3
+LOCAL_CFLAGS += -fno-fast-math -funsafe-math-optimizations -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range
+
+LOCAL_SRC_FILES += deps/sqlite/sqlite3.c
 
 LOCAL_STATIC_LIBRARIES := Irrlicht LevelDB freetype curl LuaJIT openal vorbis android_native_app_glue $(PROFILER_LIBS)
 
