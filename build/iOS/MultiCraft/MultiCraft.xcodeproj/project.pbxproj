@@ -499,7 +499,7 @@
 		F8E6C6721DCA405000F64426 /* mini-gmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "mini-gmp.c"; path = "../../../../src/gmp/mini-gmp.c"; sourceTree = "<group>"; };
 		F8E6C6731DCA405000F64426 /* mini-gmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "mini-gmp.h"; path = "../../../../src/gmp/mini-gmp.h"; sourceTree = "<group>"; };
 		F8E6C6761DCA407400F64426 /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = json.h; path = ../../../../src/jsoncpp/json/json.h; sourceTree = "<group>"; };
-		F8E6C6771DCA407400F64426 /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = ../../../../src/jsoncpp/json/jsoncpp.cpp; sourceTree = "<group>"; };
+		F8E6C6771DCA407400F64426 /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = ../../../../src/jsoncpp/jsoncpp.cpp; sourceTree = "<group>"; };
 		F8E6C6D31DCA413A00F64426 /* clientopcodes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = clientopcodes.cpp; path = ../../../../src/network/clientopcodes.cpp; sourceTree = "<group>"; };
 		F8E6C6D41DCA413A00F64426 /* clientopcodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = clientopcodes.h; path = ../../../../src/network/clientopcodes.h; sourceTree = "<group>"; };
 		F8E6C6D51DCA413A00F64426 /* clientpackethandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = clientpackethandler.cpp; path = ../../../../src/network/clientpackethandler.cpp; sourceTree = "<group>"; };
@@ -1694,6 +1694,7 @@
 			baseConfigurationReference = 32528F14AAB9EA0E9CAB8526 /* Pods-MultiCraft.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				DEVELOPMENT_TEAM = R3RLJ9TW52;
 				ENABLE_BITCODE = NO;
@@ -1761,6 +1762,7 @@
 			baseConfigurationReference = 1E76DCA01B51A98F0CA4C480 /* Pods-MultiCraft.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				DEVELOPMENT_TEAM = R3RLJ9TW52;
 				ENABLE_BITCODE = NO;

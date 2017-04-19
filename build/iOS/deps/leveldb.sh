@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-. ../sdk.sh
+. sdk.sh
 LEVELDB_VERSION=1.20
 
 if [ ! -d leveldb-src ]; then

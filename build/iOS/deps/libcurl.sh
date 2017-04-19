@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-. ../sdk.sh
+. sdk.sh
 CURL_VERSION=7.53.1
 
 if [ ! -d libcurl-src ]; then

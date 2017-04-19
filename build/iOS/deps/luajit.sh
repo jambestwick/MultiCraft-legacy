@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-. ../sdk.sh
+. sdk.sh
 LUAJIT_VERSION=2.1
 
 if [ ! -d luajit-src ]; then

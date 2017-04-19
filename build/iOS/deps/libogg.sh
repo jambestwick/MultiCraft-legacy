@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-. ../sdk.sh
+. sdk.sh
 OGG_VERSION=1.3.2
 
 if [ ! -d libogg-src ]; then

@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-. ../sdk.sh
+. sdk.sh
 
 if [ ! -d intl-src ]; then
 	wget https://github.com/j-jorge/libintl-lite/archive/master.tar.gz

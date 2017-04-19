@@ -1,10 +1,8 @@
 #!/bin/bash -e
 
-cd deps
-
 ./irrlicht.sh
 ./libogg.sh
-./libvorbis.sh # depends on libogg
+./libvorbis.sh
 ./leveldb.sh
 ./freetype.sh
 ./luajit.sh

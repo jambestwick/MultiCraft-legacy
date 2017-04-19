@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-. ../sdk.sh
+. sdk.sh
 VORBIS_VERSION=1.3.5
 
 if [ ! -d libvorbis-src ]; then

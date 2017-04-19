@@ -671,7 +671,6 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 	}
 	else {
 		assert(event.TouchInput.Event == ETIE_MOVED);
-		size_t move_idx = event.TouchInput.ID;
 
 		if (loadPointerPos(event.TouchInput.ID) ==
 				v2s32(event.TouchInput.X, event.TouchInput.Y)) {
@@ -701,8 +700,6 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 
 					/* adapt to similar behaviour as pc screen */
 					double d         = g_settings->getFloat("mouse_sensitivity");
-					double old_yaw   = m_camera_yaw_change;
-					double old_pitch = m_camera_pitch;
 
 					m_camera_yaw_change -= dx * d;
 					m_camera_pitch = MYMIN(MYMAX(m_camera_pitch + (dy * d), -180), 180);

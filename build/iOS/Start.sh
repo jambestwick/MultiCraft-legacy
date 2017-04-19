@@ -6,7 +6,9 @@ echo "Starting build MultiCraft for iOS..."
 echo
 echo "Build Libraries:"
 
+cd deps
 ./libraries.sh
+cd ..
 
 echo
 echo "Creating Assets:"
