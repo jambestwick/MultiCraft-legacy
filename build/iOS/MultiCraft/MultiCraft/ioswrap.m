@@ -12,7 +12,7 @@ static uint32_t parse_version()
 	NSString *fullver = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 	NSString *revstr = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 
-	if([fullver length] != 3 + 2)
+	if([fullver length] != 3 + 2 + 1)
 		goto err;
 	version.major = [fullver characterAtIndex:0] - '0';
 	if([fullver characterAtIndex:1] != '.')
