@@ -33,13 +33,11 @@ import java.util.Locale;
 
 class WVersionManager {
     private static final String TAG = "WVersionManager";
-
+    private static WVersionManager.Callback sCallback = null;
     private CustomTagHandler customTagHandler;
-
     private String PREF_IGNORE_VERSION_CODE = "w.ignore.version.code";
     private String PREF_REMINDER_TIME = "w.reminder.time";
     private String PREF_LAUNCH_TIMES = "w.launch.times";
-
     private Activity activity;
     private Drawable icon;
     private String title;
@@ -53,16 +51,7 @@ class WVersionManager {
     private int mVersionCode;
     private AlertDialogButtonListener listener;
     private boolean mDialogCancelable = false;
-    private static WVersionManager.Callback sCallback = null;
     private ActivityListener al;
-
-    void setCallback(WVersionManager.Callback callback) {
-        sCallback = callback;
-    }
-
-    interface ActivityListener {
-        void isShowUpdateDialog(boolean flag);
-    }
 
     WVersionManager(Activity act) {
         this.activity = act;
@@ -70,6 +59,10 @@ class WVersionManager {
         this.listener = new AlertDialogButtonListener();
         this.customTagHandler = new CustomTagHandler();
         setLaunchTimes();
+    }
+
+    void setCallback(WVersionManager.Callback callback) {
+        sCallback = callback;
     }
 
     private Drawable getDefaultAppIcon() {
@@ -126,19 +119,24 @@ class WVersionManager {
         return updateNowLabel != null ? updateNowLabel : activity.getString(R.string.update);
     }
 
+    public void setUpdateNowLabel(String updateNowLabel) {
+        this.updateNowLabel = updateNowLabel;
+    }
 
     private String getRemindMeLaterLabel() {
         return remindMeLaterLabel != null ? remindMeLaterLabel : activity.getString(R.string.later);
     }
 
+    public void setRemindMeLaterLabel(String remindMeLaterLabel) {
+        this.remindMeLaterLabel = remindMeLaterLabel;
+    }
 
     private String getIgnoreThisVersionLabel() {
         return ignoreThisVersionLabel != null ? ignoreThisVersionLabel : activity.getString(R.string.ignore);
     }
 
-
-    private void setMessage(String message) {
-        this.message = message;
+    public void setIgnoreThisVersionLabel(String ignoreThisVersionLabel) {
+        this.ignoreThisVersionLabel = ignoreThisVersionLabel;
     }
 
     private String getMessage() {
@@ -146,29 +144,52 @@ class WVersionManager {
         return message != null ? message : defaultMessage;
     }
 
+    private void setMessage(String message) {
+        this.message = message;
+    }
+
     private String getTitle() {
         String defaultTitle = "New Update Available";
         return title != null ? title : defaultTitle;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     private Drawable getIcon() {
         return icon != null ? icon : getDefaultAppIcon();
     }
 
+    public void setIcon(Drawable icon) {
+        this.icon = icon;
+    }
+
     String getUpdateUrl() {
         return updateUrl != null ? updateUrl : getGooglePlayStoreUrl();
     }
 
+    private void setUpdateUrl(String updateUrl) {
+        this.updateUrl = updateUrl;
+    }
 
     private String getVersionContentUrl() {
         return versionContentUrl;
     }
 
+    void setVersionContentUrl(String versionContentUrl) {
+        this.versionContentUrl = versionContentUrl;
+    }
 
     int getReminderTimer() {
         return reminderTimer > 0 ? reminderTimer : 1;
     }
 
+    public void setReminderTimer(int minutes) {
+        if (minutes > 0) {
+            reminderTimer = minutes;
+        }
+    }
 
     void updateNow(String url) {
         if (url != null) {
@@ -183,10 +204,6 @@ class WVersionManager {
 
     }
 
-    void setVersionContentUrl(String versionContentUrl) {
-        this.versionContentUrl = versionContentUrl;
-    }
-
     void remindMeLater(int reminderTimer) {
         Calendar c = Calendar.getInstance();
 
@@ -196,13 +213,13 @@ class WVersionManager {
         setReminderTime(reminderTimeStamp);
     }
 
+    private long getReminderTime() {
+        return PreferenceManager.getDefaultSharedPreferences(activity).getLong(PREF_REMINDER_TIME, 0);
+    }
+
     private void setReminderTime(long reminderTimeStamp) {
         PreferenceManager.getDefaultSharedPreferences(activity).edit().putLong(PREF_REMINDER_TIME, reminderTimeStamp)
                 .apply();
-    }
-
-    private long getReminderTime() {
-        return PreferenceManager.getDefaultSharedPreferences(activity).getLong(PREF_REMINDER_TIME, 0);
     }
 
     void ignoreThisVersion() {
@@ -213,6 +230,50 @@ class WVersionManager {
     private String getGooglePlayStoreUrl() {
         String id = activity.getApplicationInfo().packageName; // current google play is using package name as id
         return "market://details?id=" + id;
+    }
+
+    private int getLaunchTimes() {
+        return PreferenceManager.getDefaultSharedPreferences(activity).getInt(PREF_LAUNCH_TIMES, 0);
+    }
+
+    private int getCurrentVersionCode() {
+        int currentVersionCode = 0;
+        PackageInfo pInfo;
+        try {
+            pInfo = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0);
+            currentVersionCode = pInfo.versionCode;
+        } catch (NameNotFoundException e) {
+            // return 0
+        }
+        return currentVersionCode;
+    }
+
+    private int getIgnoreVersionCode() {
+        return PreferenceManager.getDefaultSharedPreferences(activity).getInt(PREF_IGNORE_VERSION_CODE, 1);
+    }
+
+    private CustomTagHandler getCustomTagHandler() {
+        return customTagHandler;
+    }
+
+    private boolean isDialogCancelable() {
+        return mDialogCancelable;
+    }
+
+    public void setDialogCancelable(boolean dialogCancelable) {
+        mDialogCancelable = dialogCancelable;
+    }
+
+    interface ActivityListener {
+        void isShowUpdateDialog(boolean flag);
+    }
+
+    interface Callback {
+        void onPositive();
+
+        void onNegative();
+
+        void onRemind();
     }
 
     private class AlertDialogButtonListener implements DialogInterface.OnClickListener {
@@ -278,74 +339,51 @@ class WVersionManager {
             mVersionCode = 0;
             String content;
             String packageName;
-            try {
-                if (!result.startsWith("{")) { // for response who append with unknown char
-                    result = result.substring(1);
-                }
-                String mResult = result;
-                // json format from server:
-                JSONObject json = (JSONObject) new JSONTokener(mResult).nextValue();
-                mVersionCode = json.optInt("version_code");
-                String lang = Locale.getDefault().getLanguage();
-                if (lang.equals("ru")) {
-                    content = json.optString("content_ru");
-                } else {
-                    content = json.optString("content_en");
-                }
-                packageName = json.optString("package");
-                setUpdateUrl("market://details?id=" + packageName);
-                int currentVersionCode = getCurrentVersionCode();
-                if (currentVersionCode < mVersionCode) {
-                    if (mVersionCode != getIgnoreVersionCode()) {
-                        setMessage(content);
-                        al.isShowUpdateDialog(true);
-                    } else if (mVersionCode == getIgnoreVersionCode() && getLaunchTimes() % 3 == 0) {
-                        PreferenceManager.getDefaultSharedPreferences(activity).edit().putInt(PREF_LAUNCH_TIMES, 0)
-                                .apply();
-                        setMessage(content);
-                        al.isShowUpdateDialog(true);
+            if (result != null) {
+                try {
+                    if (!result.startsWith("{")) { // for response who append with unknown char
+                        result = result.substring(1);
+                    }
+                    String mResult = result;
+                    // json format from server:
+                    JSONObject json = (JSONObject) new JSONTokener(mResult).nextValue();
+                    mVersionCode = json.optInt("version_code");
+                    String lang = Locale.getDefault().getLanguage();
+                    if (lang.equals("ru")) {
+                        content = json.optString("content_ru");
+                    } else {
+                        content = json.optString("content_en");
+                    }
+                    packageName = json.optString("package");
+                    setUpdateUrl("market://details?id=" + packageName);
+                    int currentVersionCode = getCurrentVersionCode();
+                    if (currentVersionCode < mVersionCode) {
+                        if (mVersionCode != getIgnoreVersionCode()) {
+                            setMessage(content);
+                            al.isShowUpdateDialog(true);
+                        } else if (mVersionCode == getIgnoreVersionCode() && getLaunchTimes() % 3 == 0) {
+                            PreferenceManager.getDefaultSharedPreferences(activity).edit().putInt(PREF_LAUNCH_TIMES, 0)
+                                    .apply();
+                            setMessage(content);
+                            al.isShowUpdateDialog(true);
+                        } else {
+                            al.isShowUpdateDialog(false);
+                        }
                     } else {
                         al.isShowUpdateDialog(false);
                     }
-                } else {
+                } catch (JSONException e) {
+                    Log.e(TAG, "is your server response have valid json format?");
+                    al.isShowUpdateDialog(false);
+                } catch (Exception e) {
+                    Log.e(TAG, e.toString());
                     al.isShowUpdateDialog(false);
                 }
-            } catch (JSONException e) {
-                Log.e(TAG, "is your server response have valid json format?");
-            } catch (Exception e) {
-                Log.e(TAG, e.toString());
+            } else {
+                al.isShowUpdateDialog(false);
             }
         }
     }
-
-    private int getLaunchTimes() {
-        return PreferenceManager.getDefaultSharedPreferences(activity).getInt(PREF_LAUNCH_TIMES, 0);
-    }
-
-    private int getCurrentVersionCode() {
-        int currentVersionCode = 0;
-        PackageInfo pInfo;
-        try {
-            pInfo = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0);
-            currentVersionCode = pInfo.versionCode;
-        } catch (NameNotFoundException e) {
-            // return 0
-        }
-        return currentVersionCode;
-    }
-
-    private int getIgnoreVersionCode() {
-        return PreferenceManager.getDefaultSharedPreferences(activity).getInt(PREF_IGNORE_VERSION_CODE, 1);
-    }
-
-    private CustomTagHandler getCustomTagHandler() {
-        return customTagHandler;
-    }
-
-    private boolean isDialogCancelable() {
-        return mDialogCancelable;
-    }
-
 
     private class CustomTagHandler implements Html.TagHandler {
 
@@ -361,48 +399,5 @@ class WVersionManager {
                 }
             }
         }
-    }
-
-    interface Callback {
-        void onPositive();
-
-        void onNegative();
-
-        void onRemind();
-    }
-
-    public void setUpdateNowLabel(String updateNowLabel) {
-        this.updateNowLabel = updateNowLabel;
-    }
-
-    public void setRemindMeLaterLabel(String remindMeLaterLabel) {
-        this.remindMeLaterLabel = remindMeLaterLabel;
-    }
-
-    public void setIgnoreThisVersionLabel(String ignoreThisVersionLabel) {
-        this.ignoreThisVersionLabel = ignoreThisVersionLabel;
-    }
-
-    public void setIcon(Drawable icon) {
-        this.icon = icon;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    private void setUpdateUrl(String updateUrl) {
-        this.updateUrl = updateUrl;
-    }
-
-
-    public void setReminderTimer(int minutes) {
-        if (minutes > 0) {
-            reminderTimer = minutes;
-        }
-    }
-
-    public void setDialogCancelable(boolean dialogCancelable) {
-        mDialogCancelable = dialogCancelable;
     }
 }

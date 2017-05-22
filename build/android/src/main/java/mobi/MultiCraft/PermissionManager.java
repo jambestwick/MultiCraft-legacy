@@ -10,13 +10,15 @@ import java.util.ArrayList;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static mobi.MultiCraft.PreferencesHelper.TAG_RESTORE_BACKUP;
 import static mobi.MultiCraft.PreferencesHelper.getLaunchTimes;
+import static mobi.MultiCraft.PreferencesHelper.saveSettings;
 
 class PermissionManager {
-    private Activity activity;
-    private SharedPreferences sharedPreferences;
     static ArrayList<String> permissionsToRequest;
     static ArrayList<String> permissionsRejected;
+    private Activity activity;
+    private SharedPreferences sharedPreferences;
 
     PermissionManager(Activity activity) {
         this.activity = activity;
@@ -26,9 +28,7 @@ class PermissionManager {
     String[] requestPermissions() {
         ArrayList<String> permissions = new ArrayList<>();
         permissions.add(WRITE_EXTERNAL_STORAGE);
-        if (getLaunchTimes() > 2) {
-            permissions.add(ACCESS_COARSE_LOCATION);
-        }
+        permissions.add(ACCESS_COARSE_LOCATION);
         //filter out the permissions we have already accepted
         permissionsToRequest = findUnAskedPermissions(permissions);
         //get the permissions we have asked for before but are not granted..
@@ -46,10 +46,14 @@ class PermissionManager {
     }
 
     boolean hasPermission(String permission) {
-        return (ActivityCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED);
+        return ActivityCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     private boolean shouldWeAsk(String permission) {
+        if (getLaunchTimes() > 1 && permission.equals(WRITE_EXTERNAL_STORAGE)) {
+            sharedPreferences.edit().clear().apply();
+            saveSettings(TAG_RESTORE_BACKUP, true);
+        }
         return sharedPreferences.getBoolean(permission, true);
     }
 

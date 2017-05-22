@@ -16,7 +16,6 @@ import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-
 public class InputDialogActivity extends Activity {
     private AlertDialog alertDialog;
 
@@ -28,7 +27,7 @@ public class InputDialogActivity extends Activity {
         int editType = b.getInt("editType");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog, null);
+        View dialogView = inflater.inflate(R.layout.input_dialog, null);
         builder.setView(dialogView);
         final EditText editText = (EditText) dialogView.findViewById(R.id.editText);
         final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

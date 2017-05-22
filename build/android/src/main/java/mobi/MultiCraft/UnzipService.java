@@ -1,10 +1,10 @@
 package mobi.MultiCraft;
 
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import java.io.File;
@@ -40,7 +40,7 @@ public class UnzipService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification.Builder mBuilder = new Notification.Builder(this);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setContentTitle(getString(R.string.notification_title))
                 .setContentText(getString(R.string.notification_description)).setSmallIcon(R.drawable.update);
         String[] file = intent.getStringArrayExtra(EXTRA_KEY_IN_FILE);
