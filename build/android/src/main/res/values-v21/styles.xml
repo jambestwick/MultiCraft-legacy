@@ -18,5 +18,5 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="CustomLollipopDialogStyle" parent="android:Theme.Material.Light.Dialog.Alert"/>
+    <style name="CustomLollipopDialogStyle" parent="android:Theme.Material.Light.Dialog.Alert" />
 </resources>

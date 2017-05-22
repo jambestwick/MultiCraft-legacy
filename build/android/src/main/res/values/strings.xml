@@ -2,17 +2,14 @@
 <resources>
 
     <string name="app_name" translatable="false">MultiCraft</string>
-    <string name="ver" translatable="false">1.1.5</string>
-    <string name="google_app_id" translatable="false">312077575425</string>
+    <string name="ver" translatable="false">1.1.7</string>
+
     <!-- preparation for start -->
 
     <string name="rm_old">Preparing to update&#8230;</string>
     <string name="loading">Loading&#8230;</string>
     <string name="notification_title">Loading MultiCraft</string>
     <string name="notification_description">Less than 1 minute&#8230;</string>
-
-    <!-- free space dialog -->
-    <string name="not_enough_space">Not enough space for unpack game data.\nPlease free some space on the storage memory!</string>
 
     <!-- permission block -->
     <string name="explain">Game need permission to write files to storage memory.</string>
@@ -30,4 +27,6 @@
     <string name="later">Later</string>
     <string name="ignore">Ignore</string>
 
+    <!-- reminder -->
+    <string name="message">Message</string>
 </resources>

@@ -18,8 +18,8 @@ import java.util.Date;
 
 class RateMe {
 
-    private static final int INSTALL_DAYS = 3;
-    private static final int LAUNCH_TIMES = 2;
+    private static final int INSTALL_DAYS = 2;
+    private static final int LAUNCH_TIMES = 3;
     private static final boolean DEBUG = false;
     private static final String TAG = RateMe.class.getSimpleName();
     private static final String GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=";
@@ -78,7 +78,7 @@ class RateMe {
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         }
-        dialog.setContentView(R.layout.rate_layout);
+        dialog.setContentView(R.layout.rate_dialog);
         dialog.setTitle(R.string.rta_dialog_title);
 
         RatingBar ratingBar = (RatingBar) dialog.findViewById(R.id.ratingBar);
@@ -133,14 +133,12 @@ class RateMe {
 
     private static void storeInstallDate(final Context context, SharedPreferences.Editor editor) {
         Date installDate = new Date();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-            PackageManager packMan = context.getPackageManager();
-            try {
-                PackageInfo pkgInfo = packMan.getPackageInfo(context.getPackageName(), 0);
-                installDate = new Date(pkgInfo.firstInstallTime);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
+        PackageManager packMan = context.getPackageManager();
+        try {
+            PackageInfo pkgInfo = packMan.getPackageInfo(context.getPackageName(), 0);
+            installDate = new Date(pkgInfo.firstInstallTime);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
         editor.putLong(KEY_INSTALL_DATE, installDate.getTime());
         log("First install: " + installDate.toString());

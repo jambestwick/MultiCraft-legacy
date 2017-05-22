@@ -21,7 +21,8 @@ public class GameActivity extends NativeActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-//        startAd(this, true);
+//        if (!isAdsDisabled())
+//            startAd(this, true);
         messageReturnCode = -1;
         messageReturnValue = "";
         makeFullScreen();
@@ -47,7 +48,8 @@ public class GameActivity extends NativeActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-//        startAd(this, false);
+//        if (!isAdsDisabled())
+//            startAd(this, false);
     }
 
     @Override
