@@ -24,6 +24,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "util/timetaker.h"
 #include "fontengine.h"
 #include "guiscalingfilter.h"
+#include "filesys.h"
 
 typedef enum {
 	LEFT = -1,
@@ -377,10 +378,118 @@ void draw_top_bottom_3d_mode(Camera& camera, bool show_hud,
 	camera.getCameraNode()->setTarget(oldTarget);
 }
 
-void draw_plain(Camera &camera, bool show_hud, Hud &hud,
-		video::IVideoDriver *driver, bool draw_wield_tool,
-		Client &client, gui::IGUIEnvironment *guienv)
+void draw_pageflip_3d_mode(Camera& camera, bool show_hud,
+		Hud& hud, video::IVideoDriver* driver,
+		scene::ISceneManager* smgr, const v2u32& screensize,
+		bool draw_wield_tool, Client& client, gui::IGUIEnvironment* guienv,
+		video::SColor skycolor)
 {
+#if IRRLICHT_VERSION_MAJOR == 1 && IRRLICHT_VERSION_MINOR > 8
+	errorstream << "Pageflip 3D mode is not supported"
+		<< " with your Irrlicht version!" << std::endl;
+#else
+	/* preserve old setup*/
+	irr::core::vector3df oldPosition = camera.getCameraNode()->getPosition();
+	irr::core::vector3df oldTarget   = camera.getCameraNode()->getTarget();
+
+	irr::core::matrix4 startMatrix =
+			camera.getCameraNode()->getAbsoluteTransformation();
+	irr::core::vector3df focusPoint = (camera.getCameraNode()->getTarget()
+			- camera.getCameraNode()->getAbsolutePosition()).setLength(1)
+			+ camera.getCameraNode()->getAbsolutePosition();
+
+	//Left eye...
+	driver->setRenderTarget(irr::video::ERT_STEREO_LEFT_BUFFER);
+
+	irr::core::vector3df leftEye;
+	irr::core::matrix4 leftMove;
+	leftMove.setTranslation(
+			irr::core::vector3df(-g_settings->getFloat("3d_paralax_strength"),
+					0.0f, 0.0f));
+	leftEye = (startMatrix * leftMove).getTranslation();
+
+	//clear the depth buffer, and color
+	driver->beginScene(true, true, irr::video::SColor(200, 200, 200, 255));
+	camera.getCameraNode()->setPosition(leftEye);
+	camera.getCameraNode()->setTarget(focusPoint);
+	smgr->drawAll();
+	driver->setTransform(video::ETS_WORLD, core::IdentityMatrix);
+
+	if (show_hud) {
+		hud.drawSelectionMesh();
+		if (draw_wield_tool)
+			camera.drawWieldedTool(&leftMove);
+		hud.drawHotbar(client.getPlayerItem());
+		hud.drawLuaElements(camera.getOffset());
+		camera.drawNametags();
+	}
+
+	guienv->drawAll();
+
+	//Right eye...
+	driver->setRenderTarget(irr::video::ERT_STEREO_RIGHT_BUFFER);
+
+	irr::core::vector3df rightEye;
+	irr::core::matrix4 rightMove;
+	rightMove.setTranslation(
+			irr::core::vector3df(g_settings->getFloat("3d_paralax_strength"),
+					0.0f, 0.0f));
+	rightEye = (startMatrix * rightMove).getTranslation();
+
+	//clear the depth buffer, and color
+	driver->beginScene(true, true, irr::video::SColor(200, 200, 200, 255));
+	camera.getCameraNode()->setPosition(rightEye);
+	camera.getCameraNode()->setTarget(focusPoint);
+	smgr->drawAll();
+	driver->setTransform(video::ETS_WORLD, core::IdentityMatrix);
+
+	if (show_hud) {
+		hud.drawSelectionMesh();
+		if (draw_wield_tool)
+			camera.drawWieldedTool(&rightMove);
+		hud.drawHotbar(client.getPlayerItem());
+		hud.drawLuaElements(camera.getOffset());
+		camera.drawNametags();
+	}
+
+	guienv->drawAll();
+
+	camera.getCameraNode()->setPosition(oldPosition);
+	camera.getCameraNode()->setTarget(oldTarget);
+#endif
+}
+
+// returns (size / coef), rounded upwards
+inline int scaledown(int coef, int size)
+{
+	return (size + coef - 1) / coef;
+}
+
+void draw_plain(Camera &camera, bool show_hud,
+		Hud &hud, video::IVideoDriver *driver,
+		scene::ISceneManager *smgr, const v2u32 &screensize,
+		bool draw_wield_tool, Client &client, gui::IGUIEnvironment *guienv,
+		video::SColor skycolor)
+{
+	// Undersampling-specific stuff
+	static video::ITexture *image = NULL;
+	static v2u32 last_pixelated_size = v2u32(0, 0);
+	int undersampling = g_settings->getU16("undersampling");
+	v2u32 pixelated_size;
+	v2u32 dest_size;
+	if (undersampling > 0) {
+		pixelated_size = v2u32(scaledown(undersampling, screensize.X),
+				scaledown(undersampling, screensize.Y));
+		dest_size = v2u32(undersampling * pixelated_size.X, undersampling * pixelated_size.Y);
+		if (pixelated_size != last_pixelated_size) {
+			init_texture(driver, pixelated_size, &image, "mt_drawimage_img1");
+			last_pixelated_size = pixelated_size;
+		}
+		driver->setRenderTarget(image, true, true, skycolor);
+	}
+
+	// Render
+	smgr->drawAll();
 	driver->setTransform(video::ETS_WORLD, core::IdentityMatrix);
 	if (show_hud) {
 		hud.drawSelectionMesh();
@@ -388,11 +497,19 @@ void draw_plain(Camera &camera, bool show_hud, Hud &hud,
 			camera.drawWieldedTool();
 		}
 	}
+
+	// Upscale lowres render
+	if (undersampling > 0) {
+		driver->setRenderTarget(0, true, true);
+		driver->draw2DImage(image,
+				irr::core::rect<s32>(0, 0, dest_size.X, dest_size.Y),
+				irr::core::rect<s32>(0, 0, pixelated_size.X, pixelated_size.Y));
+	}
 }
 
 void draw_scene(video::IVideoDriver *driver, scene::ISceneManager *smgr,
-		Camera &camera, Client& client, LocalPlayer *player, Hud &hud,
-		Mapper &mapper, gui::IGUIEnvironment *guienv,
+		Camera &camera, Client &client, LocalPlayer *player, Hud &hud,
+		Minimap *mapper, gui::IGUIEnvironment *guienv,
 		const v2u32 &screensize, const video::SColor &skycolor,
 		bool show_hud, bool show_minimap)
 {
@@ -412,9 +529,7 @@ void draw_scene(video::IVideoDriver *driver, scene::ISceneManager *smgr,
 	catch(SettingNotFoundException) {}
 #endif
 
-	std::string draw_mode = g_settings->get("3d_mode");
-
-	smgr->drawAll();
+	const std::string &draw_mode = g_settings->get("3d_mode");
 
 	if (draw_mode == "anaglyph")
 	{
@@ -442,7 +557,7 @@ void draw_scene(video::IVideoDriver *driver, scene::ISceneManager *smgr,
 	}
 	else {
 		draw_plain(camera, show_hud, hud, driver,
-				draw_wield_tool, client, guienv);
+				smgr, screensize, draw_wield_tool, client, guienv, skycolor);
 	}
 
 	/*
@@ -462,8 +577,8 @@ void draw_scene(video::IVideoDriver *driver, scene::ISceneManager *smgr,
 		hud.drawLuaElements(camera.getOffset());
 		camera.drawNametags();
 
-		if (show_minimap)
-			mapper.drawMinimap();
+		if (mapper && show_minimap)
+			mapper->drawMinimap();
 	}
 
 	guienv->drawAll();
@@ -477,7 +592,8 @@ void draw_scene(video::IVideoDriver *driver, scene::ISceneManager *smgr,
 	Additionally, a progressbar can be drawn when percent is set between 0 and 100.
 */
 void draw_load_screen(const std::wstring &text, IrrlichtDevice* device,
-		gui::IGUIEnvironment* guienv, float dtime, int percent, bool clouds )
+		gui::IGUIEnvironment* guienv, ITextureSource *tsrc,
+		float dtime, int percent, bool clouds)
 {
 	video::IVideoDriver* driver    = device->getVideoDriver();
 	v2u32 screensize               = porting::getWindowSize();
@@ -550,9 +666,9 @@ void draw_load_screen(const std::wstring &text, IrrlichtDevice* device,
 			core::rect<s32>(0, 0, ((percent * img_size.Width) / 100), img_size.Height),
 			0, 0, true); // the actual progress
 	}
+
 	guienv->drawAll();
 	driver->endScene();
-
 	guitext->remove();
 
 	//return guitext;

@@ -44,10 +44,10 @@ const u8 *light_decode_table = light_LUT;
 void set_light_table(float gamma)
 {
 	static const float brightness_step = 255.0f / (LIGHT_MAX + 1);
-	
+
 	// this table is pure arbitrary values, made so that
 	// at gamma 2.2 the game looks not too dark at light=1,
-	// and mostly lineair for the rest of the scale.
+	// and mostly linear for the rest of the scale.
 	// we could try to inverse the gamma power function, but this
 	// is simpler and quicker.
 	static const int adjustments[LIGHT_MAX + 1] = {
@@ -82,3 +82,4 @@ void set_light_table(float gamma)
 	light_LUT[LIGHT_MAX] = 255;
 }
 #endif
+

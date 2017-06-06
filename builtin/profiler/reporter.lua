@@ -3,7 +3,7 @@
 --
 --This program is free software; you can redistribute it and/or modify
 --it under the terms of the GNU Lesser General Public License as published by
---the Free Software Foundation; either version 2.1 of the License, or
+--the Free Software Foundation; either version 3.0 of the License, or
 --(at your option) any later version.
 --
 --This program is distributed in the hope that it will be useful,
@@ -18,7 +18,7 @@
 local DIR_DELIM, LINE_DELIM = DIR_DELIM, "\n"
 local table, unpack, string, pairs, io, os = table, unpack, string, pairs, io, os
 local rep, sprintf, tonumber = string.rep, string.format, tonumber
-local core, setting_get = core, core.setting_get
+local core, settings = core, core.settings
 local reporter = {}
 
 ---
@@ -229,7 +229,7 @@ end
 
 local worldpath = core.get_worldpath()
 local function get_save_path(format, filter)
-	local report_path = setting_get("profiler.report_path") or ""
+	local report_path = settings:get("profiler.report_path") or ""
 	if report_path ~= "" then
 		core.mkdir(sprintf("%s%s%s", worldpath, DIR_DELIM, report_path))
 	end
@@ -249,7 +249,7 @@ end
 --
 function reporter.save(profile, format, filter)
 	if not format or format == "" then
-		format = setting_get("profiler.default_report_format") or "txt"
+		format = settings:get("profiler.default_report_format") or "txt"
 	end
 	if filter == "" then
 		filter = nil

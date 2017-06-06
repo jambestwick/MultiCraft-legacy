@@ -13,22 +13,22 @@ LOCAL_SRC_FILES := deps/leveldb/out-static/libleveldb.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := curl
+LOCAL_MODULE := Curl
 LOCAL_SRC_FILES := deps/curl/lib/.libs/libcurl.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := freetype
+LOCAL_MODULE := Freetype
 LOCAL_SRC_FILES := deps/freetype/objs/.libs/libfreetype.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := openal
+LOCAL_MODULE := OpenAL
 LOCAL_SRC_FILES := deps/openal-soft/libopenal.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := vorbis
+LOCAL_MODULE := Vorbis
 LOCAL_SRC_FILES := deps/libvorbis-android/obj/local/$(APP_ABI)/libvorbis.a
 include $(PREBUILT_STATIC_LIBRARY)
 
@@ -45,6 +45,7 @@ GPROF_DEF=-DGPROF
 endif
 
 LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_ \
+		-DJSONCPP_NO_LOCALE_SUPPORT      \
 		-DHAVE_TOUCHSCREENGUI            \
 		-DUSE_CURL=1                     \
 		-DUSE_SOUND=1                    \
@@ -84,9 +85,9 @@ endif
 LOCAL_C_INCLUDES := \
 		jni/src                                   \
 		jni/src/script                            \
-		jni/src/jsoncpp                           \
+		jni/lib/jsoncpp                           \
 		jni/src/cguittfont                        \
-		jni/src/gmp                               \
+		jni/lib/gmp                               \
 		deps/irrlicht/include                     \
 		deps/libintl                              \
 		deps/freetype/include                     \
@@ -103,6 +104,7 @@ LOCAL_SRC_FILES := \
 		jni/src/cavegen.cpp                       \
 		jni/src/chat.cpp                          \
 		jni/src/client.cpp                        \
+		jni/src/clientenvironment.cpp             \
 		jni/src/clientiface.cpp                   \
 		jni/src/clientmap.cpp                     \
 		jni/src/clientmedia.cpp                   \
@@ -118,6 +120,7 @@ LOCAL_SRC_FILES := \
 		jni/src/convert_json.cpp                  \
 		jni/src/craftdef.cpp                      \
 		jni/src/database-dummy.cpp                \
+		jni/src/database-files.cpp                \
 		jni/src/database-sqlite3.cpp              \
 		jni/src/database.cpp                      \
 		jni/src/debug.cpp                         \
@@ -126,6 +129,7 @@ LOCAL_SRC_FILES := \
 		jni/src/dungeongen.cpp                    \
 		jni/src/emerge.cpp                        \
 		jni/src/environment.cpp                   \
+		jni/src/face_position_cache.cpp           \
 		jni/src/filecache.cpp                     \
 		jni/src/filesys.cpp                       \
 		jni/src/fontengine.cpp                    \
@@ -148,6 +152,7 @@ LOCAL_SRC_FILES := \
 		jni/src/inventory.cpp                     \
 		jni/src/inventorymanager.cpp              \
 		jni/src/itemdef.cpp                       \
+		jni/src/itemstackmetadata.cpp             \
 		jni/src/keycode.cpp                       \
 		jni/src/light.cpp                         \
 		jni/src/localplayer.cpp                   \
@@ -168,6 +173,8 @@ LOCAL_SRC_FILES := \
 		jni/src/mapnode.cpp                       \
 		jni/src/mapsector.cpp                     \
 		jni/src/mesh.cpp                          \
+		jni/src/mesh_generator_thread.cpp         \
+		jni/src/metadata.cpp                      \
 		jni/src/mg_biome.cpp                      \
 		jni/src/mg_decoration.cpp                 \
 		jni/src/mg_ore.cpp                        \
@@ -188,12 +195,14 @@ LOCAL_SRC_FILES := \
 		jni/src/porting.cpp                       \
 		jni/src/profiler.cpp                      \
 		jni/src/quicktune.cpp                     \
+		jni/src/raycast.cpp                       \
 		jni/src/reflowscan.cpp                    \
 		jni/src/remoteplayer.cpp                  \
 		jni/src/rollback.cpp                      \
 		jni/src/rollback_interface.cpp            \
 		jni/src/serialization.cpp                 \
 		jni/src/server.cpp                        \
+		jni/src/serverenvironment.cpp             \
 		jni/src/serverlist.cpp                    \
 		jni/src/serverobject.cpp                  \
 		jni/src/shader.cpp                        \
@@ -203,6 +212,7 @@ LOCAL_SRC_FILES := \
 		jni/src/sound_openal.cpp                  \
 		jni/src/staticobject.cpp                  \
 		jni/src/subgame.cpp                       \
+		jni/src/tileanimation.cpp                 \
 		jni/src/tool.cpp                          \
 		jni/src/treegen.cpp                       \
 		jni/src/version.cpp                       \
@@ -225,9 +235,10 @@ LOCAL_SRC_FILES := \
 		jni/src/settings.cpp                      \
 		jni/src/wieldmesh.cpp                     \
 		jni/src/client/clientlauncher.cpp         \
+		jni/src/client/inputhandler.cpp           \
 		jni/src/client/tile.cpp                   \
 		jni/src/util/sha256.c                     \
-		jni/src/gmp/mini-gmp.c                    \
+		jni/lib/gmp/mini-gmp.c                    \
 		jni/src/client/joystick_controller.cpp    \
 		jni/src/irrlicht_changes/static_text.cpp
 
@@ -248,6 +259,7 @@ LOCAL_SRC_FILES += \
 		jni/src/script/common/c_types.cpp         \
 		jni/src/script/cpp_api/s_async.cpp        \
 		jni/src/script/cpp_api/s_base.cpp         \
+		jni/src/script/cpp_api/s_client.cpp       \
 		jni/src/script/cpp_api/s_entity.cpp       \
 		jni/src/script/cpp_api/s_env.cpp          \
 		jni/src/script/cpp_api/s_inventory.cpp    \
@@ -260,12 +272,18 @@ LOCAL_SRC_FILES += \
 		jni/src/script/cpp_api/s_server.cpp       \
 		jni/src/script/lua_api/l_areastore.cpp    \
 		jni/src/script/lua_api/l_base.cpp         \
+		jni/src/script/lua_api/l_camera.cpp       \
+		jni/src/script/lua_api/l_client.cpp       \
 		jni/src/script/lua_api/l_craft.cpp        \
 		jni/src/script/lua_api/l_env.cpp          \
 		jni/src/script/lua_api/l_inventory.cpp    \
 		jni/src/script/lua_api/l_item.cpp         \
+		jni/src/script/lua_api/l_itemstackmeta.cpp\
+		jni/src/script/lua_api/l_localplayer.cpp  \
 		jni/src/script/lua_api/l_mainmenu.cpp     \
 		jni/src/script/lua_api/l_mapgen.cpp       \
+		jni/src/script/lua_api/l_metadata.cpp     \
+		jni/src/script/lua_api/l_minimap.cpp      \
 		jni/src/script/lua_api/l_nodemeta.cpp     \
 		jni/src/script/lua_api/l_nodetimer.cpp    \
 		jni/src/script/lua_api/l_noise.cpp        \
@@ -274,10 +292,13 @@ LOCAL_SRC_FILES += \
 		jni/src/script/lua_api/l_rollback.cpp     \
 		jni/src/script/lua_api/l_server.cpp       \
 		jni/src/script/lua_api/l_settings.cpp     \
+		jni/src/script/lua_api/l_sound.cpp        \
 		jni/src/script/lua_api/l_http.cpp         \
+		jni/src/script/lua_api/l_storage.cpp      \
 		jni/src/script/lua_api/l_util.cpp         \
 		jni/src/script/lua_api/l_vmanip.cpp       \
-		jni/src/script/scripting_game.cpp         \
+		jni/src/script/scripting_client.cpp       \
+		jni/src/script/scripting_server.cpp       \
 		jni/src/script/scripting_mainmenu.cpp
 
 # Freetype2
@@ -294,7 +315,7 @@ LOCAL_SRC_FILES += \
 		jni/src/threading/thread.cpp
 
 # JSONCPP
-LOCAL_SRC_FILES += jni/src/jsoncpp/jsoncpp.cpp
+LOCAL_SRC_FILES += jni/lib/jsoncpp/jsoncpp.cpp
 
 # libiconv
 LOCAL_CFLAGS += -Wno-multichar -D_ANDROID -DLIBDIR -DBUILDING_LIBICONV 
@@ -313,7 +334,7 @@ LOCAL_CFLAGS += -fno-fast-math -funsafe-math-optimizations -ffinite-math-only -f
 
 LOCAL_SRC_FILES += deps/sqlite/sqlite3.c
 
-LOCAL_STATIC_LIBRARIES := Irrlicht LevelDB freetype curl LuaJIT openal vorbis android_native_app_glue $(PROFILER_LIBS)
+LOCAL_STATIC_LIBRARIES := Irrlicht LevelDB Freetype Curl LuaJIT OpenAL Vorbis android_native_app_glue $(PROFILER_LIBS)
 
 LOCAL_LDLIBS := -lEGL -lGLESv1_CM -lGLESv2 -landroid -lOpenSLES
 

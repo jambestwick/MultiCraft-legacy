@@ -74,7 +74,7 @@ static inline void push_areas(lua_State *L, const std::vector<Area *> &areas,
 static int deserialization_helper(lua_State *L, AreaStore *as,
 		std::istream &is)
 {
-	try {	
+	try {
 		as->deserialize(is);
 	} catch (const SerializationError &e) {
 		lua_pushboolean(L, false);

@@ -9,21 +9,28 @@ endif()
 project(MultiCraft)
 set(PROJECT_NAME_CAPITALIZED "MultiCraft")
 
+# Works only for cmake 3.1 and greater
+set(CMAKE_CXX_STANDARD 11)
 
 # Also remember to set PROTOCOL_VERSION in network/networkprotocol.h when releasing
 set(VERSION_MAJOR 1)
 set(VERSION_MINOR 1)
-set(VERSION_PATCH 7)
+set(VERSION_PATCH 8)
 set(VERSION_EXTRA "" CACHE STRING "Stuff to append to version string")
 
 # Change to false for releases
-set(DEVELOPMENT_BUILD FALSE)
+set(DEVELOPMENT_BUILD TRUE)
 
 set(VERSION_STRING "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 if(VERSION_EXTRA)
 	set(VERSION_STRING ${VERSION_STRING}-${VERSION_EXTRA})
 elseif(DEVELOPMENT_BUILD)
 	set(VERSION_STRING "${VERSION_STRING}-dev")
+endif()
+
+if (CMAKE_BUILD_TYPE STREQUAL Debug)
+	# Append "-debug" to version string
+	set(VERSION_STRING "${VERSION_STRING}-debug")
 endif()
 
 message(STATUS "*** Will build version ${VERSION_STRING} ***")
@@ -48,7 +55,6 @@ if(NOT CMAKE_BUILD_TYPE)
 	# Default to release
 	set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type: Debug or Release" FORCE)
 endif()
-
 
 # Included stuff
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
@@ -82,7 +88,7 @@ elseif(UNIX) # Linux, BSD etc
 		set(EXAMPLE_CONF_DIR ".")
 		set(MANDIR "unix/man")
 		set(XDG_APPS_DIR "unix/applications")
-		set(APPDATADIR "unix/appdata")
+		set(APPDATADIR "unix/metainfo")
 		set(ICONDIR "unix/icons")
 		set(LOCALEDIR "locale")
 	else()
@@ -92,7 +98,7 @@ elseif(UNIX) # Linux, BSD etc
 		set(MANDIR "${CMAKE_INSTALL_PREFIX}/share/man")
 		set(EXAMPLE_CONF_DIR ${DOCDIR})
 		set(XDG_APPS_DIR "${CMAKE_INSTALL_PREFIX}/share/applications")
-		set(APPDATADIR "${CMAKE_INSTALL_PREFIX}/share/appdata")
+		set(APPDATADIR "${CMAKE_INSTALL_PREFIX}/share/metainfo")
 		set(ICONDIR "${CMAKE_INSTALL_PREFIX}/share/icons")
 		set(LOCALEDIR "${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/locale")
 	endif()
@@ -152,6 +158,7 @@ endif()
 
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/builtin" DESTINATION "${SHAREDIR}")
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/client" DESTINATION "${SHAREDIR}")
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/clientmods" DESTINATION "${SHAREDIR}")
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/games" DESTINATION "${SHAREDIR}" PATTERN ".git*" EXCLUDE)
 
 if(BUILD_CLIENT)
@@ -172,7 +179,6 @@ if(UNIX AND NOT APPLE)
 	install(FILES "misc/MultiCraft.desktop" DESTINATION "${XDG_APPS_DIR}")
 	install(FILES "misc/MultiCraft.appdata.xml" DESTINATION "${APPDATADIR}")
 	install(FILES "misc/MultiCraft.svg" DESTINATION "${ICONDIR}/hicolor/scalable/apps")
- # ToDo
 	install(FILES "misc/MultiCraft-xorg-icon-128.png"
 		DESTINATION "${ICONDIR}/hicolor/128x128/apps"
 		RENAME "minetest.png")
@@ -183,6 +189,10 @@ if(APPLE)
 	install(FILES "misc/Info.plist" DESTINATION "${BUNDLE_PATH}/Contents")
 endif()
 
+# Library pack
+find_package(GMP REQUIRED)
+find_package(Json REQUIRED)
+find_package(Lua REQUIRED)
 
 # Subdirectories
 # Be sure to add all relevant definitions above this

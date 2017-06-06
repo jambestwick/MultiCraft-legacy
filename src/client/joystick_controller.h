@@ -4,7 +4,7 @@ Copyright (C) 2016 est31, <MTest31@outlook.com>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation; either version 2.1 of the License, or
+the Free Software Foundation; either version 3.0 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
@@ -98,6 +98,9 @@ class JoystickController {
 
 public:
 	JoystickController();
+
+	void onJoystickConnect(const std::vector<irr::SJoystickInfo> &joystick_infos);
+
 	bool handleEvent(const irr::SEvent::SJoystickEvent &ev);
 	void clear();
 
@@ -146,9 +149,13 @@ public:
 	f32 doubling_dtime;
 
 private:
-	const JoystickLayout *m_layout;
+	void setLayoutFromControllerName(const std::string &name);
+
+	JoystickLayout m_layout;
 
 	s16 m_axes_vals[JA_COUNT];
+
+	u8 m_joystick_id;
 
 	std::bitset<KeyType::INTERNAL_ENUM_COUNT> m_pressed_keys;
 

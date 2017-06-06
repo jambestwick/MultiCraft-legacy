@@ -16,9 +16,9 @@
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 mt_color_grey  = "#AAAAAA"
-mt_color_blue  = "#0000DD"
-mt_color_green = "#00DD00"
-mt_color_dark_green = "#003300"
+mt_color_blue  = "#6389FF"
+mt_color_green = "#72FF63"
+mt_color_dark_green = "#25C191"
 
 --for all other colors ask sfan5 to complete his work!
 
@@ -51,9 +51,9 @@ local tabs = {}
 
 --tabs.mods = dofile(menupath .. DIR_DELIM .. "tab_mods.lua")
 tabs.credits = dofile(menupath .. DIR_DELIM .. "tab_credits.lua")
-tabs.singleplayer = dofile(menupath .. DIR_DELIM .. "tab_singleplayer.lua")
-tabs.multiplayer = dofile(menupath .. DIR_DELIM .. "tab_multiplayer.lua")
-tabs.server = dofile(menupath .. DIR_DELIM .. "tab_server.lua")
+tabs.local_game = dofile(menupath .. DIR_DELIM .. "tab_local.lua")
+tabs.play_online = dofile(menupath .. DIR_DELIM .. "tab_online.lua")
+--tabs.server = dofile(menupath .. DIR_DELIM .. "tab_server.lua")
 if not use_simple_menu then
 	tabs.settings = dofile(menupath .. DIR_DELIM .. "tab_settings.lua")
 	tabs.texturepacks = dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
@@ -93,14 +93,13 @@ local function init_globals()
 	mm_texture.init()
 
 	-- Create main tabview
-	local tv_main = tabview_create("maintab", {x = 12, y = 5.2}, {x = 0, y = 0})
+	local tv_main = tabview_create("maintab", {x = 12, y = 5.4}, {x = 0, y = 0})
 
 	tv_main:set_autosave_tab(true)
-	tv_main:add(tabs.singleplayer)
+	tv_main:add(tabs.local_game)
 	
 if PLATFORM ~= "iOS" then
-	tv_main:add(tabs.multiplayer)
-	tv_main:add(tabs.server)
+	tv_main:add(tabs.play_online)
 end
 
 	if not use_simple_menu then
@@ -114,7 +113,7 @@ end
 	tv_main:set_global_event_handler(main_event_handler)
 	tv_main:set_fixed_size(false)
 
-	tv_main:set_tab(core.setting_get("maintab_LAST"))
+	tv_main:set_tab(core.settings:get("maintab_LAST"))
 	ui.set_default("maintab")
 	tv_main:show()
 

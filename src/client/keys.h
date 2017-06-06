@@ -4,7 +4,7 @@ Copyright (C) 2016 est31, <MTest31@outlook.com>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation; either version 2.1 of the License, or
+the Free Software Foundation; either version 3.0 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
@@ -20,11 +20,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #ifndef KEYS_HEADER
 #define KEYS_HEADER
 
-#include<list>
+#include <list>
 
-class KeyType {
+class KeyType
+{
 public:
-	enum T {
+	enum T
+	{
 		// Player movement
 		FORWARD,
 		BACKWARD,
@@ -42,11 +44,17 @@ public:
 		INVENTORY,
 		CHAT,
 		CMD,
+		CMD_LOCAL,
 		CONSOLE,
 		MINIMAP,
 		FREEMOVE,
 		FASTMOVE,
 		NOCLIP,
+		HOTBAR_PREV,
+		HOTBAR_NEXT,
+		MUTE,
+		INC_VOLUME,
+		DEC_VOLUME,
 		CINEMATIC,
 		SCREENSHOT,
 		TOGGLE_HUD,
@@ -81,6 +89,5 @@ public:
 };
 
 typedef KeyType::T GameKeyType;
-
 
 #endif

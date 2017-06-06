@@ -14,7 +14,7 @@ Default Controls
 - 0-9: Select item
 - Z: Zoom (needs zoom privilege)
 - T: Chat
-- /: Commad
+- /: Command
 
 - Esc: Pause menu/abort/exit (pauses only singleplayer game)
 - R: Enable/disable full range view
@@ -56,7 +56,7 @@ $bin   = /usr/bin
 $share = /usr/share/minetest
 $user  = ~/.minetest
 
-OS X:
+macOS:
 $bin   = Contents/MacOS
 $share = Contents/Resources
 $user  = Contents/User OR ~/Library/Application Support/MultiCraft
@@ -72,7 +72,9 @@ Configuration file:
     $user/MultiCraft.conf
 - It is created by MultiCraft when it is ran the first time.
 - A specific file can be specified on the command line:
-	--config <path-to-file>
+    --config <path-to-file>
+- A run-in-place build will look for the configuration file in
+    $location_of_exe/../minetest.conf and also $location_of_exe/../../minetest.conf
 
 Command-line options:
 ---------------------
@@ -88,7 +90,7 @@ For Fedora users:
 $ sudo dnf install make automake gcc gcc-c++ kernel-devel cmake libcurl* openal* libvorbis* libXxf86vm-devel libogg-devel freetype-devel mesa-libGL-devel zlib-devel jsoncpp-devel irrlicht-devel bzip2-libs gmp-devel sqlite-devel luajit-devel leveldb-devel ncurses-devel doxygen spatialindex-devel bzip2-devel
 
 You can install git for easily keeping your copy up to date.
-If you dont want git, read below on how to get the source without git.
+If you don’t want git, read below on how to get the source without git.
 This is an example for installing git on Debian/Ubuntu:
 $ sudo apt-get install git
 
@@ -139,7 +141,7 @@ ENABLE_FREETYPE     - Build with FreeType2; Allows using TTF fonts
 ENABLE_GETTEXT      - Build with Gettext; Allows using translations
 ENABLE_GLES         - Search for Open GLES headers & libraries and use them
 ENABLE_LEVELDB      - Build with LevelDB; Enables use of LevelDB map backend
-ENABLE_POSTGRESQL   - Build with libpq; Enables use of PostgreSQL map backend (PostgreSQL 9.5 or greater required)
+ENABLE_POSTGRESQL   - Build with libpq; Enables use of PostgreSQL map backend (PostgreSQL 9.5 or greater recommended)
 ENABLE_REDIS        - Build with libhiredis; Enables use of Redis map backend
 ENABLE_SPATIAL      - Build with LibSpatial; Speeds up AreaStores
 ENABLE_SOUND        - Build with OpenAL, libogg & libvorbis; in-game Sounds
@@ -173,7 +175,7 @@ IRRLICHT_LIBRARY                - Path to libIrrlicht.a/libIrrlicht.so/libIrrlic
 LEVELDB_INCLUDE_DIR             - Only when building with LevelDB; directory that contains db.h
 LEVELDB_LIBRARY                 - Only when building with LevelDB; path to libleveldb.a/libleveldb.so/libleveldb.dll.a
 LEVELDB_DLL                     - Only when building with LevelDB on Windows; path to libleveldb.dll
-POSTGRESQL_INCLUDE_DIR          - Only when building with PostgreSQL; directory that contains libpq-fe.h
+PostgreSQL_INCLUDE_DIR          - Only when building with PostgreSQL; directory that contains libpq-fe.h
 POSTGRESQL_LIBRARY              - Only when building with PostgreSQL; path to libpq.a/libpq.so
 REDIS_INCLUDE_DIR               - Only when building with Redis; directory that contains hiredis.h
 REDIS_LIBRARY                   - Only when building with Redis; path to libhiredis.a/libhiredis.so

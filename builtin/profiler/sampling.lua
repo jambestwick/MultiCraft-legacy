@@ -3,7 +3,7 @@
 --
 --This program is free software; you can redistribute it and/or modify
 --it under the terms of the GNU Lesser General Public License as published by
---the Free Software Foundation; either version 2.1 of the License, or
+--the Free Software Foundation; either version 3.0 of the License, or
 --(at your option) any later version.
 --
 --This program is distributed in the hope that it will be useful,
@@ -185,7 +185,7 @@ end
 function sampler.init()
 	sampler.reset()
 
-	if core.setting_getbool("instrument.profiler") then
+	if core.settings:get_bool("instrument.profiler") then
 		core.register_globalstep(function()
 			if logged_time == 0 then
 				return

@@ -4,7 +4,7 @@ Copyright (C) 2016 nerzhul, Loic Blot <loic.blot@unix-experience.fr>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation; either version 2.1 of the License, or
+the Free Software Foundation; either version 3.0 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
@@ -29,15 +29,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #endif
 
 #ifdef USE_UNORDERED_CONTAINERS
-	#include <unordered_map>
-	#include <unordered_set>
-	#define UNORDERED_MAP std::unordered_map
-	#define UNORDERED_SET std::unordered_set
+#include <unordered_map>
+#include <unordered_set>
+#define UNORDERED_MAP std::unordered_map
+#define UNORDERED_SET std::unordered_set
 #else
-	#include <map>
-	#include <set>
-	#define UNORDERED_MAP std::map
-	#define UNORDERED_SET std::set
+#include <map>
+#include <set>
+#define UNORDERED_MAP std::map
+#define UNORDERED_SET std::set
 #endif
 
 #endif

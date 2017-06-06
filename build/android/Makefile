@@ -52,18 +52,19 @@ CROSS_PREFIX = arm-linux-androideabi-
 
 ASSETS_TIMESTAMP = $(ANDR_ROOT)/deps/assets_timestamp
 
-LEVELDB_URL = https://github.com/google/leveldb/archive/v$(LEVELDB_VER).zip
-LEVELDB_VER = 1.20
+LEVELDB_VERSION = 1.20
 LEVELDB_DIR = $(ANDR_ROOT)/deps/leveldb
 LEVELDB_LIB = $(LEVELDB_DIR)/out-static/libleveldb.a
 LEVELDB_TIMESTAMP = $(LEVELDB_DIR)/timestamp
 LEVELDB_TIMESTAMP_INT = $(ANDR_ROOT)/deps/leveldb_timestamp
+LEVELDB_URL = https://github.com/google/leveldb/archive/v$(LEVELDB_VERSION).zip
 
+OPENAL_VERSION = 1.18.0
 OPENAL_DIR = $(ANDR_ROOT)/deps/openal-soft
 OPENAL_LIB = $(OPENAL_DIR)/libopenal.a
 OPENAL_TIMESTAMP = $(OPENAL_DIR)/timestamp
 OPENAL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/openal_timestamp
-OPENAL_URL_GIT = https://github.com/kcat/openal-soft
+OPENAL_URL = https://github.com/kcat/openal-soft/archive/openal-soft-$(OPENAL_VERSION).zip
 
 VORBIS_DIR = $(ANDR_ROOT)/deps/libvorbis-android
 VORBIS_LIB = $(VORBIS_DIR)/obj/local/$(TARGET_ABI)/libvorbis.a
@@ -85,12 +86,12 @@ CURL_TIMESTAMP = $(CURL_DIR)/timestamp
 CURL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/curl_timestamp
 CURL_URL_HTTP = http://dl.uxnr.de/mirror/curl/curl-${CURL_VERSION}.tar.bz2
 
-FREETYPE_VERSION = 2.7.1
+FREETYPE_VERSION = 2.8
 FREETYPE_DIR = $(ANDR_ROOT)/deps/freetype
 FREETYPE_LIB = $(FREETYPE_DIR)/objs/.libs/libfreetype.a
 FREETYPE_TIMESTAMP = $(FREETYPE_DIR)/timestamp
 FREETYPE_TIMESTAMP_INT = $(ANDR_ROOT)/deps/freetype_timestamp
-FREETYPE_URL_HTTP = https://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VERSION)/freetype-$(FREETYPE_VERSION).tar.bz2
+FREETYPE_URL_HTTP = http://download.savannah.gnu.org/releases/freetype/freetype-$(FREETYPE_VERSION).tar.bz2
 
 ICONV_VERSION = 1.15
 ICONV_DIR = $(ANDR_ROOT)/deps/libiconv
@@ -99,7 +100,7 @@ ICONV_URL_HTTP = https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).
 INTL_DIR = $(ANDR_ROOT)/deps/libintl/
 INTL_URL_HTTP = https://github.com/j-jorge/libintl-lite/archive/master.tar.gz
 
-SQLITE3_VERSION = 3180000
+SQLITE3_VERSION = 3190200
 SQLITE3_DIR = $(ANDR_ROOT)/deps/sqlite
 SQLITE3_URL = https://www.sqlite.org/2017/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 
@@ -164,7 +165,10 @@ openal_download :
 		echo "openal sources missing, downloading...";                         \
 		mkdir -p ${ANDR_ROOT}/deps;                                            \
 		cd ${ANDR_ROOT}/deps ;                                                 \
-		git clone ${OPENAL_URL_GIT} || exit 1;                                 \
+		wget ${OPENAL_URL} || exit 1;                                          \
+		unzip openal-soft-${OPENAL_VERSION}.zip || exit 1;                     \
+		rm openal-soft-${OPENAL_VERSION}.zip || exit 1;                        \
+		mv openal-soft-openal-soft-${OPENAL_VERSION} openal-soft || exit 1;    \
 		cd ${OPENAL_DIR};                                                      \
 		sed '/CMAKE_FIND_ROOT_PATH / s/^/#/' -i XCompile-Android.txt;          \
 	fi
@@ -264,13 +268,12 @@ leveldb_download :
 		mkdir -p ${ANDR_ROOT}/deps;                                            \
 		cd ${ANDR_ROOT}/deps ;                                                 \
 		wget ${LEVELDB_URL} || exit 1;                                         \
-		unzip v${LEVELDB_VER}.zip  || exit 1;                                  \
-		rm v${LEVELDB_VER}.zip || exit 1;                                      \
-		mv leveldb-${LEVELDB_VER} leveldb || exit 1;                           \
+		unzip v${LEVELDB_VERSION}.zip || exit 1;                               \
+		rm v${LEVELDB_VERSION}.zip || exit 1;                                  \
+		mv leveldb-${LEVELDB_VERSION} leveldb || exit 1;                       \
 	fi
 
 leveldb : $(LEVELDB_LIB)
-
 $(LEVELDB_LIB): $(LEVELDB_TIMESTAMP)
 	@REFRESH=0;                                                                \
 	if [ ! -e ${LEVELDB_TIMESTAMP_INT} ] ; then                                \
@@ -700,7 +703,10 @@ install_release:
 
 prep_srcdir :
 	@if [ ! -e ${ANDR_ROOT}/jni/src ]; then                                    \
-		ln -s ${PROJ_ROOT}/src ${ANDR_ROOT}/jni/src;                           \
+		ln -s ${PROJ_ROOT}/src ${ANDR_ROOT}/jni/src;                       \
+	fi;                                                                        \
+	if [ ! -e ${ANDR_ROOT}/jni/lib ]; then                                     \
+		ln -s ${PROJ_ROOT}/lib ${ANDR_ROOT}/jni/lib;                       \
 	fi
 
 clean_apk :

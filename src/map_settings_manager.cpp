@@ -4,7 +4,7 @@ Copyright (C) 2010-2013 kwolekr, Ryan Kwolek <kwolekr@minetest.net>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation; either version 2.1 of the License, or
+the Free Software Foundation; either version 3.0 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
@@ -25,14 +25,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "map_settings_manager.h"
 
-MapSettingsManager::MapSettingsManager(
-	Settings *user_settings, const std::string &map_meta_path)
+MapSettingsManager::MapSettingsManager(Settings *user_settings,
+		const std::string &map_meta_path):
+	mapgen_params(NULL),
+	m_map_meta_path(map_meta_path),
+	m_map_settings(new Settings()),
+	m_user_settings(user_settings)
 {
-	m_map_meta_path = map_meta_path;
-	m_user_settings = user_settings;
-	m_map_settings  = new Settings;
-	mapgen_params   = NULL;
-
 	assert(m_user_settings != NULL);
 }
 

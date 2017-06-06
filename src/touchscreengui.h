@@ -19,15 +19,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #ifndef TOUCHSCREENGUI_HEADER
 #define TOUCHSCREENGUI_HEADER
 
-#include <IGUIEnvironment.h>
-#include <IGUIButton.h>
 #include <IEventReceiver.h>
+#include <IGUIButton.h>
+#include <IGUIEnvironment.h>
 
-#include <vector>
 #include <map>
+#include <vector>
 
-#include "game.h"
 #include "client/tile.h"
+#include "game.h"
 
 //#define ENABLE_ANDROID_NOCLIP
 
@@ -67,18 +67,18 @@ typedef enum {
 #define MIN_DIG_TIME_MS 500
 #define BUTTON_REPEAT_DELAY 0.2f
 
-
 class TouchScreenGUI
 {
 public:
-	TouchScreenGUI(IrrlichtDevice *device, IEventReceiver* receiver);
+	TouchScreenGUI(IrrlichtDevice *device, IEventReceiver *receiver);
 	~TouchScreenGUI();
 
 	void translateEvent(const SEvent &event);
 
-	void init(ISimpleTextureSource* tsrc);
+	void init(ISimpleTextureSource *tsrc);
 
-	double getYawChange() {
+	double getYawChange()
+	{
 		double res = m_camera_yaw_change;
 		m_camera_yaw_change = 0;
 		return res;
@@ -111,18 +111,18 @@ private:
 	bool                    m_visible; // is the gui visible
 
 	/* value in degree */
-	double                  m_camera_yaw_change;
-	double                  m_camera_pitch;
+	double m_camera_yaw_change;
+	double m_camera_pitch;
 
-	line3d<f32>             m_shootline;
+	line3d<f32> m_shootline;
 
-	rect<s32>               m_control_pad_rect;
+	rect<s32> m_control_pad_rect;
 
-	size_t                  m_move_id;
-	bool                    m_move_has_really_moved;
-	s32                     m_move_downtime;
-	bool                    m_move_sent_as_mouse_event;
-	v2s32                   m_move_downlocation;
+	int m_move_id;
+	bool m_move_has_really_moved;
+	s64 m_move_downtime;
+	bool m_move_sent_as_mouse_event;
+	v2s32 m_move_downlocation;
 
 	struct button_info {
 		float            repeatcounter;
@@ -150,10 +150,11 @@ private:
 			float repeat_delay = BUTTON_REPEAT_DELAY);
 
 	/* load texture */
-	void loadButtonTexture(button_info* btn, const char* path, rect<s32> button_rect);
+	void loadButtonTexture(button_info *btn, const char *path, rect<s32> button_rect);
 
-	struct id_status{
-		size_t id;
+	struct id_status
+	{
+		int id;
 		int X;
 		int Y;
 	};
@@ -180,7 +181,8 @@ private:
 	int getGuiButtonSize();
 
 	/* doubleclick detection variables */
-	struct key_event {
+	struct key_event
+	{
 		unsigned int down_time;
 		s32 x;
 		s32 y;

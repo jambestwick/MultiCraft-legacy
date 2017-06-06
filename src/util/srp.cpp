@@ -43,11 +43,8 @@
 
 #if USE_SYSTEM_GMP
 	#include <gmp.h>
-#elif defined (__ANDROID__)
-//	#include <mpir.h>
-	#include <gmp/mini-gmp.h>
 #else
-	#include <gmp/mini-gmp.h>
+	#include <mini-gmp.h>
 #endif
 
 #include <util/sha2.h>
