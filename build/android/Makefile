@@ -27,12 +27,11 @@ VERSION_PATCH := $(shell cat $(PROJ_ROOT)/CMakeLists.txt | \
 
 TARGET_HOST = arm-linux
 TARGET_ABI = armeabi-v7a
-TARGET_LIBDIR = armeabi-v7a
 TARGET_TOOLCHAIN = arm-linux-androideabi
 TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto
 TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON) 
 TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
-CROSS_PREFIX = arm-linux-androideabi-
+CROSS_PREFIX = arm-linux-androideabi
 
 ################################################################################
 # toolchain config for x86
@@ -40,13 +39,11 @@ CROSS_PREFIX = arm-linux-androideabi-
 
 # TARGET_HOST = x86-linux
 # TARGET_ABI = x86
-# TARGET_LIBDIR = x86
 # TARGET_TOOLCHAIN = x86
 # TARGET_CFLAGS_ADDON = -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto
 # TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 # TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
-# TARGET_ARCH = x86
-# CROSS_PREFIX = i686-linux-android-
+# CROSS_PREFIX = i686-linux-android
 
 ################################################################################
 
@@ -197,7 +194,7 @@ $(OPENAL_LIB): $(OPENAL_TIMESTAMP)
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON} -fno-lto";                \
 	cmake .                                                                    \
 		-DCMAKE_TOOLCHAIN_FILE=XCompile-Android.txt -DLIBTYPE=STATIC           \
-		-DHOST=${TARGET_TOOLCHAIN} -DCMAKE_FIND_ROOT_PATH=$${TOOLCHAIN}        \
+		-DHOST=${CROSS_PREFIX} -DCMAKE_FIND_ROOT_PATH=$${TOOLCHAIN}        \
 		-DALSOFT_NO_CONFIG_UTIL=TRUE || exit 1;                                \
 	$(MAKE) || exit 1;                                                         \
 	touch ${OPENAL_TIMESTAMP};                                                 \
@@ -242,8 +239,8 @@ $(VORBIS_LIB): $(VORBIS_TIMESTAMP)
 		NDK_MODULE_PATH=${NDK_MODULE_PATH}                                     \
 		APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                     \
 		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}                              \
-		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}-gcc \
-		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}-g++ \
+		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${CROSS_PREFIX}-gcc \
+		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${CROSS_PREFIX}-g++ \
 		TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                \
 		TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                              \
 		TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                 \
@@ -291,8 +288,8 @@ $(LEVELDB_LIB): $(LEVELDB_TIMESTAMP)
 		--platform=${APP_PLATFORM}                                             \
 		--install-dir=$${TOOLCHAIN};                                           \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
-	export CC=${CROSS_PREFIX}gcc;                                              \
-	export CXX=${CROSS_PREFIX}g++;                                             \
+	export CC=${CROSS_PREFIX}-gcc;                                              \
+	export CXX=${CROSS_PREFIX}-g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
 	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                   \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                         \
@@ -349,14 +346,14 @@ $(FREETYPE_LIB) : $(FREETYPE_TIMESTAMP)
 		--platform=${APP_PLATFORM}                                                 \
 		--install-dir=$${TOOLCHAIN};                                               \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
-	export CXX=${CROSS_PREFIX}g++;                                             \
+	export CXX=${CROSS_PREFIX}-g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
 	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON} -fno-lto";          \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON} -fno-lto";                \
 	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
-	CC=${CROSS_PREFIX}gcc ./configure  --enable-static --disable-shared --host=${TARGET_HOST} \
+	CC=${CROSS_PREFIX}-gcc ./configure  --enable-static --disable-shared --host=${TARGET_HOST} \
 		--prefix=${TOOLCHAIN} --with-png=no --with-harfbuzz=no  || exit 1;     \
-	CC=${CROSS_PREFIX}gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST}-freetype $(MAKE) || exit 1; \
+	CC=${CROSS_PREFIX}-gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST}-freetype $(MAKE) || exit 1; \
 	touch ${FREETYPE_TIMESTAMP};                                               \
 	touch ${FREETYPE_TIMESTAMP_INT};                                           \
 	$(RM) -rf $${TOOLCHAIN};                                                   \
@@ -453,8 +450,8 @@ $(IRRLICHT_LIB): $(IRRLICHT_TIMESTAMP) $(FREETYPE_LIB)
 		NDK_MODULE_PATH=${NDK_MODULE_PATH}                                     \
 		APP_ABI=${TARGET_ABI} APP_PLATFORM=${APP_PLATFORM}                     \
 		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}                              \
-		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}-gcc \
-		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}-g++ \
+		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${CROSS_PREFIX}-gcc \
+		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${CROSS_PREFIX}-g++ \
 		TARGET_CFLAGS+="${TARGET_CFLAGS_ADDON}"                                \
 		TARGET_LDFLAGS+="${TARGET_LDFLAGS_ADDON}"                              \
 		TARGET_CXXFLAGS+="${TARGET_CXXFLAGS_ADDON}" || exit 1;                 \
@@ -507,8 +504,8 @@ $(CURL_LIB): $(CURL_TIMESTAMP)
 		--platform=${APP_PLATFORM}                                             \
 		--install-dir=$${TOOLCHAIN};                                           \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
-	export CC=${CROSS_PREFIX}gcc;                                              \
-	export CXX=${CROSS_PREFIX}g++;                                             \
+	export CC=${CROSS_PREFIX}-gcc;                                              \
+	export CXX=${CROSS_PREFIX}-g++;                                             \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
 	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON} -fno-lto";          \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON} -fno-lto";                \
@@ -603,7 +600,7 @@ $(LUAJIT_LIB): $(LUAJIT_TIMESTAMP)
 	export PATH="$${TOOLCHAIN}/bin:$${PATH} -fno-lto";                         \
 	export TARGET_FLAGS="${TARGET_CFLAGS_ADDON} -fno-lto";                     \
 	export TARGET_LDFLAGS="${TARGET_LDFLAGS_ADDON}";                           \
-	$(MAKE) CROSS=${CROSS_PREFIX} XCFLAGS="-DLUAJIT_DISABLE_FFI" HOST_CC="gcc -m32" BUILDMODE=static; \
+	$(MAKE) CROSS=${CROSS_PREFIX}- XCFLAGS="-DLUAJIT_DISABLE_FFI" HOST_CC="gcc -m32" BUILDMODE=static; \
 	touch ${LUAJIT_TIMESTAMP};                                                 \
 	touch ${LUAJIT_TIMESTAMP_INT};                                             \
 	$(RM) -rf $${TOOLCHAIN};                                                   \
@@ -681,8 +678,8 @@ apk: local.properties $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_LIB) $(LUAJIT_LIB) \
 		GPROF=${GPROF} APP_ABI=${TARGET_ABI}                                   \
 		APP_PLATFORM=${APP_PLATFORM}                                           \
 		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}                              \
-		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}-gcc \
-		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${TARGET_TOOLCHAIN}-g++ \
+		PRIVATE_CC=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${CROSS_PREFIX}-gcc \
+		PRIVATE_CXX=${NDK_MODULE_PATH}/${TARGET_TOOLCHAIN}-${COMPILER_VERSION}/prebuilt/linux-x86_64/bin/${CROSS_PREFIX}-g++ \
 		NDK_TOOLCHAIN_VERSION=${COMPILER_VERSION}  || exit 1;                 \
 	if [ ! -e ${APP_ROOT}/jniLibs ]; then                                      \
 		ln -s ${ANDR_ROOT}/libs ${APP_ROOT}/jniLibs || exit 1;                 \
