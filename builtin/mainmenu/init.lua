@@ -88,7 +88,7 @@ local function init_globals()
 	menudata.worldlist:add_sort_mechanism("alphabetic", sort_worlds_alphabetic)
 	menudata.worldlist:set_sortmode("alphabetic")
 
-	core.setting_set("menu_last_game", "default")
+	local default_game = "default"
 
 	mm_texture.init()
 

@@ -38,7 +38,7 @@ local function get_formspec(tabview, name, tabdata)
 	retval = retval ..
 			"button[8.7,4.5;3.30,0.5;play;".. fgettext("Play") .. "]" ..
 			"checkbox[0.0,4.25;cb_creative_mode;".. fgettext("Creative Mode") .. ";" ..
-			dump(core.setting_getbool("creative_mode")) .. "]"..
+			dump(core.settings:get_bool("creative_mode")) .. "]"..
 			"textlist[0,0;11.75,3.7;sp_worlds;" ..
 			menu_render_worldlist() ..
 			";" .. index .. ";true]"
@@ -73,15 +73,14 @@ local function main_button_handler(this, fields, name, tabdata)
 	end
 
     if fields["cb_creative_mode"] then
-            core.setting_set("creative_mode", fields["cb_creative_mode"])
+            core.settings:set("creative_mode", fields["cb_creative_mode"])
             local bool = fields["cb_creative_mode"]
             if bool == 'true' then
                 bool = 'false'
             else
                 bool = 'true'
             end
-                core.setting_set("enable_damage", bool)
-                core.setting_save()
+                core.settings:set("enable_damage", bool)
             return true
     end
 
