@@ -1,11 +1,18 @@
 #!/bin/bash
 set -e
 
-builddir="$( pwd )"
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+if [ $# -ne 1 ]; then
+	echo "Usage: $0 <build directory>"
+	exit 1
+fi
+builddir=$1
+mkdir -p $builddir
+builddir="$( cd "$builddir" && pwd )"
 packagedir=$builddir/packages
 libdir=$builddir/libs
 
-toolchain_file=$dir/toolchain_mingw64.cmake
+toolchain_file=$dir/toolchain_mingw.cmake
 irrlicht_version=1.8.4
 ogg_version=1.3.2
 vorbis_version=1.3.5
@@ -23,29 +30,28 @@ mkdir -p $libdir
 cd $builddir
 
 # Get stuff
-[ -e $packagedir/irrlicht-$irrlicht_version.zip ] || wget http://minetest.kitsunemimi.pw/irrlicht-$irrlicht_version-win64.zip \
+[ -e $packagedir/irrlicht-$irrlicht_version.zip ] || wget http://minetest.kitsunemimi.pw/irrlicht-$irrlicht_version-win32.zip \
 	-c -O $packagedir/irrlicht-$irrlicht_version.zip
-[ -e $packagedir/zlib-$zlib_version.zip ] || wget http://minetest.kitsunemimi.pw/zlib-$zlib_version-win64.zip \
+[ -e $packagedir/zlib-$zlib_version.zip ] || wget http://minetest.kitsunemimi.pw/zlib-$zlib_version-win32.zip \
 	-c -O $packagedir/zlib-$zlib_version.zip
-[ -e $packagedir/libogg-$ogg_version.zip ] || wget http://minetest.kitsunemimi.pw/libogg-$ogg_version-win64.zip \
+[ -e $packagedir/libogg-$ogg_version.zip ] || wget http://minetest.kitsunemimi.pw/libogg-$ogg_version-win32.zip \
 	-c -O $packagedir/libogg-$ogg_version.zip
-[ -e $packagedir/libvorbis-$vorbis_version.zip ] || wget http://minetest.kitsunemimi.pw/libvorbis-$vorbis_version-win64.zip \
+[ -e $packagedir/libvorbis-$vorbis_version.zip ] || wget http://minetest.kitsunemimi.pw/libvorbis-$vorbis_version-win32.zip \
 	-c -O $packagedir/libvorbis-$vorbis_version.zip
-[ -e $packagedir/curl-$curl_version.zip ] || wget http://minetest.kitsunemimi.pw/curl-$curl_version-win64.zip \
+[ -e $packagedir/curl-$curl_version.zip ] || wget http://minetest.kitsunemimi.pw/curl-$curl_version-win32.zip \
 	-c -O $packagedir/curl-$curl_version.zip
-[ -e $packagedir/gettext-$gettext_version.zip ] || wget http://minetest.kitsunemimi.pw/gettext-$gettext_version-win64.zip \
+[ -e $packagedir/gettext-$gettext_version.zip ] || wget http://minetest.kitsunemimi.pw/gettext-$gettext_version-win32.zip \
 	-c -O $packagedir/gettext-$gettext_version.zip
-[ -e $packagedir/freetype2-$freetype_version.zip ] || wget http://minetest.kitsunemimi.pw/freetype2-$freetype_version-win64.zip \
+[ -e $packagedir/freetype2-$freetype_version.zip ] || wget http://minetest.kitsunemimi.pw/freetype2-$freetype_version-win32.zip \
 	-c -O $packagedir/freetype2-$freetype_version.zip
-[ -e $packagedir/sqlite3-$sqlite3_version.zip ] || wget http://minetest.kitsunemimi.pw/sqlite3-$sqlite3_version-win64.zip \
+[ -e $packagedir/sqlite3-$sqlite3_version.zip ] || wget http://minetest.kitsunemimi.pw/sqlite3-$sqlite3_version-win32.zip \
 	-c -O $packagedir/sqlite3-$sqlite3_version.zip
-[ -e $packagedir/luajit-$luajit_version.zip ] || wget http://minetest.kitsunemimi.pw/luajit-$luajit_version-win64.zip \
+[ -e $packagedir/luajit-$luajit_version.zip ] || wget http://minetest.kitsunemimi.pw/luajit-$luajit_version-win32.zip \
 	-c -O $packagedir/luajit-$luajit_version.zip
-[ -e $packagedir/libleveldb-$leveldb_version.zip ] || wget http://minetest.kitsunemimi.pw/libleveldb-$leveldb_version-win64.zip \
+[ -e $packagedir/libleveldb-$leveldb_version.zip ] || wget http://minetest.kitsunemimi.pw/libleveldb-$leveldb_version-win32.zip \
 	-c -O $packagedir/libleveldb-$leveldb_version.zip
-[ -e $packagedir/openal_stripped.zip ] || wget http://minetest.kitsunemimi.pw/openal_stripped64.zip \
+[ -e $packagedir/openal_stripped.zip ] || wget http://minetest.kitsunemimi.pw/openal_stripped.zip \
 	-c -O $packagedir/openal_stripped.zip
-
 
 # Extract stuff
 cd $libdir
@@ -61,28 +67,31 @@ cd $libdir
 [ -d luajit ] || unzip -o $packagedir/luajit-$luajit_version.zip -d luajit
 [ -d leveldb ] || unzip -o $packagedir/libleveldb-$leveldb_version.zip -d leveldb
 
-# Get MultiCraft
+# Get the source
 cd $builddir
+[ -d MultiCraft ] || ln -s "$EXISTING_DIR" MultiCraft
 
 # Build the thing
+cd MultiCraft
 [ -d _build ] && rm -Rf _build/
 mkdir _build
 cd _build
+# TODO: gettext is currently disabled
 cmake .. \
-	-DCMAKE_TOOLCHAIN_FILE=$toolchain_file \
 	-DCMAKE_INSTALL_PREFIX=/tmp \
-	-DVERSION_EXTRA=$git_hash \
 	-DBUILD_CLIENT=1 -DBUILD_SERVER=0 \
+	-DCMAKE_TOOLCHAIN_FILE=$toolchain_file \
+	-DRUN_IN_PLACE=0 \
 	\
 	-DENABLE_SOUND=1 \
 	-DENABLE_CURL=1 \
-	-DENABLE_GETTEXT=1 \
+	-DENABLE_GETTEXT=0 \
 	-DENABLE_FREETYPE=1 \
 	-DENABLE_LEVELDB=1 \
 	\
 	-DIRRLICHT_INCLUDE_DIR=$libdir/irrlicht/include \
-	-DIRRLICHT_LIBRARY=$libdir/irrlicht/lib/Win64-gcc/libIrrlicht.dll.a \
-	-DIRRLICHT_DLL=$libdir/irrlicht/bin/Win64-gcc/Irrlicht.dll \
+	-DIRRLICHT_LIBRARY=$libdir/irrlicht/lib/Win32-gcc/libIrrlicht.dll.a \
+	-DIRRLICHT_DLL=$libdir/irrlicht/bin/Win32-gcc/Irrlicht.dll \
 	\
 	-DZLIB_INCLUDE_DIR=$libdir/zlib/include \
 	-DZLIB_LIBRARIES=$libdir/zlib/lib/libz.dll.a \
@@ -128,6 +137,6 @@ cmake .. \
 	-DLEVELDB_LIBRARY=$libdir/leveldb/lib/libleveldb.dll.a \
 	-DLEVELDB_DLL=$libdir/leveldb/bin/libleveldb.dll
 
-make package -j8
+make package -j2
 
 # EOF
