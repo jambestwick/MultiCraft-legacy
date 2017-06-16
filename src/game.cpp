@@ -60,9 +60,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "irrlicht_changes/static_text.h"
 #include "version.h"
 
-//#include "mapblock_mesh.h"
 #include "database.h"
-//#include "map.h"
 
 #include "script/scripting_client.h"
 
@@ -4607,15 +4605,15 @@ void Game::pauseGame()
 	g_touchscreengui->handleReleaseAll();
 	if (g_menumgr.pausesGame())
 		return;
-	show_pause_menu(&current_formspec, client, gamedef, texture_src, device, &input->joystick, simple_singleplayer_mode);
+	//show_pause_menu(&current_formspec, client, gamedef, texture_src, device, &input->joystick, simple_singleplayer_mode);
 }
 
 void Game::customStatustext(const std::wstring &text, float time)
 {
 	if (!runData_ptr)
 		return;
-	statustext = text;
-	if(statustext == L"")
+m_statustext = text;
+	if(m_statustext == L"")
 		runData_ptr->statustext_time = 0;
 	else
 		runData_ptr->statustext_time = time;
@@ -4708,7 +4706,6 @@ void Game::showPauseMenu()
 #else
 	float ypos = simple_singleplayer_mode ? 0.7f : 0.1f;
 #endif
-	float bsize = 5.0;
 	std::ostringstream os;
 
 	os << FORMSPEC_VERSION_STRING  << SIZE_TAG

@@ -80,7 +80,7 @@ local function main_button_handler(this, fields, name, tabdata)
 			world_doubleclick = true
 		end
 		if event.type == "CHG" then
-			core.settings:set("mainmenu_last_selected_world",
+			core.setting_set("mainmenu_last_selected_world",
 				menudata.worldlist:get_raw_index(core.get_textlist_index("srv_worlds")))
 			return true
 		end
@@ -91,7 +91,7 @@ local function main_button_handler(this, fields, name, tabdata)
 	end
 
 	if fields["cb_creative_mode"] then
-		core.settings:set("creative_mode", fields["cb_creative_mode"])
+		core.setting_set("creative_mode", fields["cb_creative_mode"])
 		local selected = core.get_textlist_index("srv_worlds")
 		menu_worldmt(selected, "creative_mode", fields["cb_creative_mode"])
 
@@ -99,7 +99,7 @@ local function main_button_handler(this, fields, name, tabdata)
 	end
 
 	if fields["cb_enable_damage"] then
-		core.settings:set("enable_damage", fields["cb_enable_damage"])
+		core.setting_set("enable_damage", fields["cb_enable_damage"])
 		local selected = core.get_textlist_index("srv_worlds")
 		menu_worldmt(selected, "enable_damage", fields["cb_enable_damage"])
 
@@ -107,7 +107,7 @@ local function main_button_handler(this, fields, name, tabdata)
 	end
 
 	if fields["cb_server_announce"] then
-		core.settings:set("server_announce", fields["cb_server_announce"])
+		core.setting_set("server_announce", fields["cb_server_announce"])
 		local selected = core.get_textlist_index("srv_worlds")
 		menu_worldmt(selected, "server_announce", fields["cb_server_announce"])
 
@@ -125,16 +125,16 @@ local function main_button_handler(this, fields, name, tabdata)
 			gamedata.port           = fields["te_serverport"]
 			gamedata.address        = ""
 
-			core.settings:set("port",gamedata.port)
+			core.setting_set("port",gamedata.port)
 			if fields["te_serveraddr"] ~= nil then
-				core.settings:set("bind_address",fields["te_serveraddr"])
+				core.setting_set("bind_address",fields["te_serveraddr"])
 			end
 
 			--update last game
 			local world = menudata.worldlist:get_raw_element(gamedata.selected_world)
 			if world then
 				local game, index = gamemgr.find_by_gameid(world.gameid)
-				core.settings:set("menu_last_game", game.id)
+				core.setting_set("menu_last_game", game.id)
 			end
 			
 			core.start()

@@ -682,10 +682,6 @@ msgstr "Покачивание растений"
 msgid "Waving Water"
 msgstr "Волны на воде"
 
-#: builtin/mainmenu/tab_singleplayer.lua
-msgid "Creative Mode"
-msgstr "Режим творчества"
-
 #: builtin/mainmenu/tab_texturepacks.lua
 msgid "No information available"
 msgstr "Описание отсутствует"
@@ -889,12 +885,12 @@ msgstr ""
 "--> Положить один предмет в ячейку\n"
 
 #: src/game.cpp
-msgid "Exit to Menu"
-msgstr "Выход в меню"
-
-#: src/game.cpp
 msgid "Exit to OS"
 msgstr "Выход в ОС"
+
+#: src/game.cpp
+msgid "Exit to Menu"
+msgstr "Выход в меню"
 
 #: src/game.cpp
 msgid "Game info:"
@@ -5524,77 +5520,3 @@ msgstr "cURL тайм-аут"
 #~ "Включите немного более низкую поверхность воды, чтобы она\n"
 #~ "не заполняла блок полностью. Учтите, что это не совсем оптимизировано,\n"
 #~ "и мягкое освещение на поверхности воды не работает с этим."
-
-#~ msgid "Exit to OS"
-#~ msgstr "Выход в ОС"
-
-#~ msgid "Exit to Menu"
-#~ msgstr "Выход в меню"
-
-#~ msgid ""
-#~ "Default Controls:\n"
-#~ "No menu visible:\n"
-#~ "- single tap: button activate\n"
-#~ "- double tap: place/use\n"
-#~ "- slide finger: look around\n"
-#~ "Menu/Inventory visible:\n"
-#~ "- double tap (outside):\n"
-#~ " -->close\n"
-#~ "- touch stack, touch slot:\n"
-#~ " --> move stack\n"
-#~ "- touch&drag, tap 2nd finger\n"
-#~ " --> place single item to slot\n"
-#~ msgstr ""
-#~ "Управление по умолчанию:\n"
-#~ "Не в меню:\n"
-#~ "- одно нажатие: кнопка активаций\n"
-#~ "- двойное нажатие: положить/использовать\n"
-#~ "- скольжение пальцем: осмотреться\n"
-#~ "В меню/инвертаре:\n"
-#~ "- двойное нажатие (вне меню)\n"
-#~ "--> закрыть меню\n"
-#~ "- Нажать на стопку, затем на ячейку:\n"
-#~ "--> Двигать стопку\n"
-#~ "- Потащить одним пальцем стопку в нужную ячейку, нажать вторым пальцем на "
-#~ "экран:\n"
-#~ "--> Положить один предмет в ячейку\n"
-
-#~ msgid ""
-#~ "Default Controls:\n"
-#~ "- WASD: move\n"
-#~ "- Space: jump/climb\n"
-#~ "- Shift: sneak/go down\n"
-#~ "- Q: drop item\n"
-#~ "- I: inventory\n"
-#~ "- Mouse: turn/look\n"
-#~ "- Mouse left: dig/punch\n"
-#~ "- Mouse right: place/use\n"
-#~ "- Mouse wheel: select item\n"
-#~ "- T: chat\n"
-#~ msgstr ""
-#~ "Управление по умолчанию:\n"
-#~ "- WASD: движение\n"
-#~ "- Пробел: прыжок/вверх\n"
-#~ "- Shift: красться/вниз\n"
-#~ "- Q: бросить предмет\n"
-#~ "- I: инвентарь\n"
-#~ "- Мышка: поворот\n"
-#~ "- ЛКМ: копать/удар\n"
-#~ "- ПКМ: поставить/использовать\n"
-#~ "- Колесико мыши: выбор предмета\n"
-#~ "- T: чат\n"
-
-#~ msgid "Start Singleplayer"
-#~ msgstr "Начать одиночную игру"
-
-#~ msgid "Main"
-#~ msgstr "Главное меню"
-
-#~ msgid "Config mods"
-#~ msgstr "Настройка модов"
-
-#~ msgid "Server"
-#~ msgstr "Сервер"
-
-#~ msgid "Enable Damage"
-#~ msgstr "Разрешить увечья"

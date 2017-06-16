@@ -470,7 +470,7 @@ void set_default_settings(Settings *settings)
 	// 5.5" (iPhone Plus)
 	if ([SDVersion deviceSize] == Screen5Dot5inch) {
 		settings->setDefault("hud_scaling", "0.7");
-		settings->setDefault("gui_scaling", "1.4");
+		settings->setDefault("gui_scaling", "1.3");
 		settings->setDefault("mouse_sensitivity", "0.3");
 	};
 
