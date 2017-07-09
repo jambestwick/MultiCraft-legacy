@@ -32,6 +32,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "lua_api/l_localplayer.h"
 #include "lua_api/l_camera.h"
 
+#ifndef DISABLE_CSM
+
 ClientScripting::ClientScripting(Client *client):
 	ScriptApiBase()
 {
@@ -86,3 +88,5 @@ void ClientScripting::on_camera_ready(Camera *camera)
 {
 	LuaCamera::create(getStack(), camera);
 }
+
+#endif

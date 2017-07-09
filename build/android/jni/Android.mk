@@ -53,7 +53,8 @@ LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_ \
 		-DUSE_GETTEXT=1                  \
 		-DUSE_LEVELDB=1                  \
 		$(GPROF_DEF)                     \
-		-pipe
+		-pipe                            \
+		-DDISABLE_CSM
 
 ifndef NDEBUG
 LOCAL_CFLAGS += -g -D_DEBUG -O0 -fno-omit-frame-pointer

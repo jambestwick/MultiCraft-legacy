@@ -126,10 +126,12 @@ bool Camera::successfullyCreated(std::string &error_message)
 	} else {
 		error_message.clear();
 	}
-	
+
+#ifndef DISABLE_CSM
 	if (g_settings->getBool("enable_client_modding")) {
 		m_client->getScript()->on_camera_ready(this);
 	}
+#endif
 	return error_message.empty();
 }
 

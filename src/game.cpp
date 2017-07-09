@@ -172,6 +172,18 @@ struct LocalFormspecHandler : public TextDest
 			}
 		}
 
+#ifdef DISABLE_CSM
+		if (m_formname == "MT_DEATH_SCREEN") {
+			assert(m_client);
+
+			if (fields.find("btn_respawn") != fields.end() ||
+					fields.find("quit") != fields.end()) {
+				m_client->sendRespawn();
+				return;
+			}
+		}
+#endif
+
 		// Don't disable this part when modding is disabled, it's used in builtin
 		m_client->getScript()->on_formspec_input(m_formname, fields);
 	}
@@ -1347,6 +1359,9 @@ protected:
 
 private:
 	void showPauseMenu();
+#ifdef DISABLE_CSM
+	void showDeathScreen();
+#endif
 
 	InputHandler *input;
 
@@ -3216,8 +3231,13 @@ void Game::processClientEvents(CameraOrientation *cam)
 			break;
 
 		case CE_DEATHSCREEN:
+#ifdef DISABLE_CSM
+			showDeathScreen();
+			chat_backend->addMessage(L"", L"You died.");
+#else
 			// This should be enabled for death formspec in builtin
 			client->getScript()->on_death();
+#endif
 
 			/* Handle visualization */
 			runData.damage_flash = 0;
@@ -4784,6 +4804,27 @@ void Game::showPauseMenu()
 	current_formspec->setFocus("btn_continue");
 	current_formspec->doPause = true;
 }
+
+#ifdef DISABLE_CSM
+void Game::showDeathScreen()
+{
+	std::string formspec =
+		std::string(FORMSPEC_VERSION_STRING) +
+		SIZE_TAG
+		"bgcolor[#320000b4;true]"
+		"label[4.85,1.35;" + gettext("You died.") + "]"
+		"button_exit[4,3;3,0.5;btn_respawn;" + gettext("Respawn") + "]"
+		;
+
+	/* Create menu */
+	/* Note: FormspecFormSource and LocalFormspecHandler
+	 * are deleted by guiFormSpecMenu                     */
+	FormspecFormSource *fs_src = new FormspecFormSource(formspec);
+	LocalFormspecHandler *txt_dst = new LocalFormspecHandler("MT_DEATH_SCREEN");
+
+	create_formspec_menu(&current_formspec, client, device, &input->joystick, fs_src, txt_dst);
+}
+#endif
 
 /****************************************************************************/
 /****************************************************************************
