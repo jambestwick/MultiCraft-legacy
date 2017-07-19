@@ -73,15 +73,14 @@ local function main_button_handler(this, fields, name, tabdata)
 	end
 
     if fields["cb_creative_mode"] then
-            core.setting_set("creative_mode", fields["cb_creative_mode"])
+            core.settings:set("creative_mode", fields["cb_creative_mode"])
             local bool = fields["cb_creative_mode"]
             if bool == 'true' then
                 bool = 'false'
             else
                 bool = 'true'
             end
-                core.setting_set("enable_damage", bool)
-                core.setting_save()
+                core.settings:set("enable_damage", bool)
             return true
     end
 
