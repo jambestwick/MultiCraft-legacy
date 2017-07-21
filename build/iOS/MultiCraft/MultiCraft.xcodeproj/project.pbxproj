@@ -1832,6 +1832,7 @@
 					"USE_SYSTEM_GMP=0",
 					"USE_REDIS=0",
 					"HAVE_TOUCHSCREENGUI=1",
+					"DISABLE_CSM=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1900,6 +1901,7 @@
 					"USE_SYSTEM_GMP=0",
 					"USE_REDIS=0",
 					"HAVE_TOUCHSCREENGUI=1",
+					"DISABLE_CSM=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
