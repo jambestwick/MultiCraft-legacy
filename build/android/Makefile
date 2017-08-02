@@ -56,7 +56,7 @@ LEVELDB_TIMESTAMP = $(LEVELDB_DIR)/timestamp
 LEVELDB_TIMESTAMP_INT = $(ANDR_ROOT)/deps/leveldb_timestamp
 LEVELDB_URL = https://github.com/google/leveldb/archive/v$(LEVELDB_VERSION).zip
 
-OPENAL_VERSION = 1.18.0
+OPENAL_VERSION = 1.18.1
 OPENAL_DIR = $(ANDR_ROOT)/deps/openal-soft
 OPENAL_LIB = $(OPENAL_DIR)/libopenal.a
 OPENAL_TIMESTAMP = $(OPENAL_DIR)/timestamp
@@ -97,7 +97,7 @@ ICONV_URL_HTTP = https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).
 INTL_DIR = $(ANDR_ROOT)/deps/libintl/
 INTL_URL_HTTP = https://github.com/j-jorge/libintl-lite/archive/master.tar.gz
 
-SQLITE3_VERSION = 3190200
+SQLITE3_VERSION = 3190300
 SQLITE3_DIR = $(ANDR_ROOT)/deps/sqlite
 SQLITE3_URL = https://www.sqlite.org/2017/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 
@@ -194,7 +194,7 @@ $(OPENAL_LIB): $(OPENAL_TIMESTAMP)
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON} -fno-lto";                \
 	cmake .                                                                    \
 		-DCMAKE_TOOLCHAIN_FILE=XCompile-Android.txt -DLIBTYPE=STATIC           \
-		-DHOST=${CROSS_PREFIX} -DCMAKE_FIND_ROOT_PATH=$${TOOLCHAIN}        \
+		-DHOST=${CROSS_PREFIX} -DCMAKE_FIND_ROOT_PATH=$${TOOLCHAIN}            \
 		-DALSOFT_NO_CONFIG_UTIL=TRUE || exit 1;                                \
 	$(MAKE) || exit 1;                                                         \
 	touch ${OPENAL_TIMESTAMP};                                                 \
@@ -510,7 +510,11 @@ $(CURL_LIB): $(CURL_TIMESTAMP)
 	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON} -fno-lto";          \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON} -fno-lto";                \
 	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
-	./configure --host=${TARGET_HOST} --enable-static --disable-shared;        \
+	./configure --host=${TARGET_HOST} --enable-static --disable-shared         \
+	--disable-debug  --disable-dependency-tracking -disable-ftp \
+	--disable-ldap --disable-ldaps --disable-rtsp --disable-proxy --disable-dict \
+	--disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smtp \
+	--disable-gopher --disable-sspi --disable-manual --disable-zlib --without-zlib; \
 	$(MAKE) -s || exit 1;                                                      \
 	touch ${CURL_TIMESTAMP};                                                   \
 	touch ${CURL_TIMESTAMP_INT};                                               \

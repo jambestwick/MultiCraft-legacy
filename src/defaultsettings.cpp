@@ -369,6 +369,7 @@ void set_default_settings(Settings *settings)
 #if defined(__ANDROID__) || defined(__IOS__)
 	settings->setDefault("screen_w", "0");
 	settings->setDefault("screen_h", "0");
+	settings->setDefault("fps_max", "35");
 	settings->setDefault("enable_shaders", "false");
 	settings->setDefault("fullscreen", "true");
 	settings->setDefault("video_driver", "ogles1");
@@ -387,7 +388,6 @@ void set_default_settings(Settings *settings)
 #endif
 
 #ifdef __ANDROID__
-	settings->setDefault("fps_max", "35");
 	settings->setDefault("viewing_range", "30");
 	settings->setDefault("smooth_lighting", "false");
 	settings->setDefault("selectionbox_width", "6");
@@ -395,6 +395,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("emergequeue_limit_generate", "8");
 	settings->setDefault("touchtarget", "true");
 	settings->setDefault("enable_3d_clouds", "false");
+	settings->setDefault("inventory_image_hack", "false");
 
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");
@@ -436,7 +437,6 @@ void set_default_settings(Settings *settings)
 #endif
 
 #ifdef __IOS__
-	settings->setDefault("fps_max", "35");
 	settings->setDefault("viewing_range", "50");
 	settings->setDefault("selectionbox_width", "3");
 	settings->setDefault("smooth_lighting", "true");
