@@ -30,11 +30,9 @@ local function get_formspec(tabview, name, tabdata)
 				tonumber(core.settings:get("mainmenu_last_selected_world"))
 				)
 
-	if PLATFORM ~= "iOS" then
 		retval = retval ..
 			"button[3.5,4.5;2.6,0.5;world_delete;".. fgettext("Delete") .. "]" ..
 			"button[6,4.5;2.8,0.5;world_create;".. fgettext("New") .. "]"
-	end
 	retval = retval ..
 			"button[8.7,4.5;3.30,0.5;play;".. fgettext("Play") .. "]" ..
 			"checkbox[0.0,4.25;cb_creative_mode;".. fgettext("Creative Mode") .. ";" ..
