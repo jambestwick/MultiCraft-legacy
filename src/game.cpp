@@ -4717,15 +4717,15 @@ void Game::showPauseMenu()
 		<< "bgcolor[#00000060;true]"
 		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_continue;"
 		<< strgettext("Continue") << "]";
-
-	if (!simple_singleplayer_mode) {
+	
 #if !defined(__ANDROID__) && !defined(__IOS__)
+	if (!simple_singleplayer_mode) {
 		os << "button_exit[4," << (ypos++) << ";3,0.5;btn_change_password;"
 			<< strgettext("Change Password") << "]";
-#endif
 	} else {
 		os << "field[4.5,0;3,1.0;;" << strgettext("Game paused") << ";]";
 	}
+#endif
 
 #if !defined(__ANDROID__) && !defined(__IOS__)
 	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_sound;"
