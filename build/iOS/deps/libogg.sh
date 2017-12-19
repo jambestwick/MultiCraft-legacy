@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 . sdk.sh
-OGG_VERSION=1.3.2
+OGG_VERSION=1.3.3
 
 if [ ! -d libogg-src ]; then
 	wget http://downloads.xiph.org/releases/ogg/libogg-$OGG_VERSION.tar.gz

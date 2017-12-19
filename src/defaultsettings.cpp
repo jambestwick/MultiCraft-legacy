@@ -468,11 +468,17 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("hud_scaling", "0.6");
 		settings->setDefault("gui_scaling", "1.2");
 		settings->setDefault("mouse_sensitivity", "0.25");
-	}
+	};
 	// 5.5" (iPhone Plus)
 	if ([SDVersion deviceSize] == Screen5Dot5inch) {
 		settings->setDefault("hud_scaling", "0.7");
 		settings->setDefault("gui_scaling", "1.3");
+		settings->setDefault("mouse_sensitivity", "0.3");
+	};
+	// 5.8" (iPhone X)
+	if ([SDVersion deviceSize] == Screen5Dot8inch) {
+		settings->setDefault("hud_scaling", "0.7");
+		settings->setDefault("gui_scaling", "1.5");
 		settings->setDefault("mouse_sensitivity", "0.3");
 	};
 
