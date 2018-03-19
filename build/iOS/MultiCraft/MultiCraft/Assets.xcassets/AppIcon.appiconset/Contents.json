@@ -91,9 +91,9 @@
       "scale" : "2x"
     },
     {
-      "size" : "1024x1024",
       "idiom" : "ios-marketing",
-      "filename" : "MultiCraft_newicon_IOS_1024.jpg",
+      "size" : "1024x1024",
+      "filename" : "AppStore.jpg",
       "scale" : "1x"
     }
   ],

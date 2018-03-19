@@ -898,7 +898,7 @@ msgstr "Информация о игре:"
 
 #: src/game.cpp
 msgid "Game paused"
-msgstr "Игра приостановлена"
+msgstr "Пауза"
 
 #: src/game.cpp
 msgid "Hosting server"

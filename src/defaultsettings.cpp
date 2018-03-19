@@ -450,8 +450,8 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("mouse_sensitivity", "0.2");
 	// 3.5" (old iPhone's)
 	if ([SDVersion deviceSize] == Screen3Dot5inch) {
-		settings->setDefault("hud_scaling", "0.4");
-		settings->setDefault("gui_scaling", "0.9");
+		settings->setDefault("hud_scaling", "0.5");
+		settings->setDefault("gui_scaling", "1.0");
 		settings->setDefault("mouse_sensitivity", "0.2");
 		settings->setDefault("enable_3d_clouds", "false");
 		settings->setDefault("smooth_lighting", "false");
@@ -459,9 +459,10 @@ void set_default_settings(Settings *settings)
 	// 4" (iPhone 5)
 	if ([SDVersion deviceSize] == Screen4inch) {
 		settings->setDefault("hud_scaling", "0.5");
-		settings->setDefault("gui_scaling", "1.1");
+		settings->setDefault("gui_scaling", "1.2");
 		settings->setDefault("mouse_sensitivity", "0.23");
 		settings->setDefault("enable_3d_clouds", "false");
+		settings->setDefault("smooth_lighting", "false");
 	};
 	// 4.7" (iPhone)
 	if ([SDVersion deviceSize] == Screen4Dot7inch) {
@@ -478,7 +479,7 @@ void set_default_settings(Settings *settings)
 	// 5.8" (iPhone X)
 	if ([SDVersion deviceSize] == Screen5Dot8inch) {
 		settings->setDefault("hud_scaling", "0.7");
-		settings->setDefault("gui_scaling", "1.5");
+		settings->setDefault("gui_scaling", "1.4");
 		settings->setDefault("mouse_sensitivity", "0.3");
 	};
 
