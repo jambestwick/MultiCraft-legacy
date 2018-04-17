@@ -374,6 +374,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("fullscreen", "true");
 	settings->setDefault("video_driver", "ogles1");
 	settings->setDefault("touchscreen_threshold", "20");
+	settings->setDefault("fixed_virtual_joystick", "true");
 	settings->setDefault("max_block_generate_distance", "3");
 	settings->setDefault("pause_fps_max", "5");
 	settings->setDefault("doubletap_jump", "true");
@@ -450,6 +451,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("mouse_sensitivity", "0.2");
 	// 3.5" (old iPhone's)
 	if ([SDVersion deviceSize] == Screen3Dot5inch) {
+		settings->setDefault("viewing_range", "30");
 		settings->setDefault("hud_scaling", "0.5");
 		settings->setDefault("gui_scaling", "1.0");
 		settings->setDefault("mouse_sensitivity", "0.2");
@@ -478,8 +480,9 @@ void set_default_settings(Settings *settings)
 	};
 	// 5.8" (iPhone X)
 	if ([SDVersion deviceSize] == Screen5Dot8inch) {
+		settings->setDefault("viewing_range", "75");
 		settings->setDefault("hud_scaling", "0.7");
-		settings->setDefault("gui_scaling", "1.4");
+		settings->setDefault("gui_scaling", "1.3");
 		settings->setDefault("mouse_sensitivity", "0.3");
 	};
 
