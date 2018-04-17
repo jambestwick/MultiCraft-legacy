@@ -4884,6 +4884,13 @@ void external_pause_game()
 	g_game->pauseGame();
 }
 
+void external_exit_game()
+{
+	if (!g_game)
+		return;
+	g_gamecallback->disconnect();
+}
+
 void external_statustext(const char *text, float duration)
 {
 	if (!g_game)

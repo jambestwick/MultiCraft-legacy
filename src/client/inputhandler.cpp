@@ -22,6 +22,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "inputhandler.h"
 #include "mainmenumanager.h"
 
+#ifdef __IOS__
+extern void external_exit_game();
+#endif
+
 bool MyEventReceiver::OnEvent(const SEvent &event)
 {
 	/*
@@ -54,6 +58,15 @@ bool MyEventReceiver::OnEvent(const SEvent &event)
 	// case of touchscreengui we have to handle different events
 	if (m_touchscreengui && event.EventType == irr::EET_TOUCH_INPUT_EVENT) {
 		m_touchscreengui->translateEvent(event);
+		return true;
+	}
+#endif
+
+#ifdef __IOS__
+	if (event.EventType == irr::EET_APPLICATION_EVENT) {
+		if (event.ApplicationEvent.EventType == irr::EAET_WILL_PAUSE)
+			external_exit_game();
+
 		return true;
 	}
 #endif

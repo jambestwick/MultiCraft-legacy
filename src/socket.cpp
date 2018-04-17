@@ -348,6 +348,11 @@ bool UDPSocket::init(bool ipv6, bool noExceptions)
 
 	setTimeoutMs(0);
 
+#ifdef __IOS__
+	int val = 1;
+	setsockopt(m_handle, SOL_SOCKET, SO_NOSIGPIPE, &val, sizeof(val));
+#endif
+
 	return true;
 }
 

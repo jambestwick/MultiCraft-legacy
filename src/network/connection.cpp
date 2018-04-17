@@ -2166,6 +2166,9 @@ void ConnectionReceiveThread::receive()
 			Address sender;
 			s32 received_size = m_connection->m_udpSocket.Receive(sender, *packetdata, packet_maxsize);
 
+			if (received_size == -1)
+				break;
+
 			if ((received_size < BASE_HEADER_SIZE) ||
 				(readU32(&packetdata[0]) != m_connection->GetProtocolID()))
 			{
