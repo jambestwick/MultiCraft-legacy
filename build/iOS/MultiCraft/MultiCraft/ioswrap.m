@@ -119,7 +119,7 @@ void ioswrap_assets()
 	win.rootViewController = viewc;
 	[win makeKeyAndVisible];
 
-	loading_alert(viewc, @"Extracting...");
+	loading_alert(viewc, NSLocalizedString(@"alert_extracting", @""));
 	for(int i = 0; assets[i].name != NULL; i++) {
 		ioswrap_paths(assets[i].path, buf, sizeof(buf));
 		NSString *destpath = [NSString stringWithUTF8String:buf];
