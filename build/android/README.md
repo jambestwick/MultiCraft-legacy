@@ -61,8 +61,8 @@ following software packages. The version number in parenthesis denotes the
 version that was tested at the time this README was drafted; newer/older
 versions may or may not work.
 
-* android SDK (24.4.1)
-* android NDK (r11c)
+* android SDK (26.1.1)
+* android NDK (r16b)
 * wget
 * g++-multilib
 * m4

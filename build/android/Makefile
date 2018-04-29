@@ -29,8 +29,8 @@ VERSION_PATCH := $(shell cat $(PROJ_ROOT)/CMakeLists.txt | \
 TARGET_HOST = arm-linux
 TARGET_ABI = armeabi-v7a
 TARGET_TOOLCHAIN = arm-linux-androideabi
-TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -march=armv7-a -Ofast -fdata-sections -ffunction-sections -flto -D__ANDROID_API__=$(API)
-TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON) -fvisibility=hidden
+TARGET_CFLAGS_ADDON = -mfpu=vfpv4 -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto -D__ANDROID_API__=$(API)
+TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
 CROSS_PREFIX = arm-linux-androideabi
 
@@ -41,9 +41,9 @@ CROSS_PREFIX = arm-linux-androideabi
 # TARGET_HOST = x86-linux
 # TARGET_ABI = x86
 # TARGET_TOOLCHAIN = x86
-# TARGET_CFLAGS_ADDON = -Ofast -fdata-sections -ffunction-sections -flto -D__ANDROID_API__=$(API)
-# TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON) -fvisibility=hidden
-# TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections
+# TARGET_CFLAGS_ADDON = -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto -D__ANDROID_API__=$(API)
+# TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
+# TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
 # CROSS_PREFIX = i686-linux-android
 
 ################################################################################
@@ -57,7 +57,7 @@ LEVELDB_TIMESTAMP = $(LEVELDB_DIR)/timestamp
 LEVELDB_TIMESTAMP_INT = $(ANDR_ROOT)/deps/leveldb_timestamp
 LEVELDB_URL = https://github.com/google/leveldb/archive/v$(LEVELDB_VERSION).zip
 
-OPENAL_VERSION = 1.18.1
+OPENAL_VERSION = 1.18.2
 OPENAL_DIR = $(ANDR_ROOT)/deps/openal-soft
 OPENAL_LIB = $(OPENAL_DIR)/libopenal.a
 OPENAL_TIMESTAMP = $(OPENAL_DIR)/timestamp
@@ -77,14 +77,14 @@ IRRLICHT_TIMESTAMP = $(IRRLICHT_DIR)/timestamp
 IRRLICHT_TIMESTAMP_INT = $(ANDR_ROOT)/deps/irrlicht_timestamp
 IRRLICHT_URL_HTTP = https://github.com/zaki/irrlicht/archive/$(IRRLICHT_COMMIT).zip
 
-CURL_VERSION = 7.53.1
+CURL_VERSION = 7.59.0
 CURL_DIR = $(ANDR_ROOT)/deps/curl
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
 CURL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/curl_timestamp
 CURL_URL_HTTP = http://dl.uxnr.de/mirror/curl/curl-${CURL_VERSION}.tar.bz2
 
-FREETYPE_VERSION = 2.8
+FREETYPE_VERSION = 2.9
 FREETYPE_DIR = $(ANDR_ROOT)/deps/freetype
 FREETYPE_LIB = $(FREETYPE_DIR)/objs/.libs/libfreetype.a
 FREETYPE_TIMESTAMP = $(FREETYPE_DIR)/timestamp
@@ -98,9 +98,9 @@ ICONV_URL_HTTP = https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).
 INTL_DIR = $(ANDR_ROOT)/deps/libintl/
 INTL_URL_HTTP = https://github.com/j-jorge/libintl-lite/archive/master.tar.gz
 
-SQLITE3_VERSION = 3190300
+SQLITE3_VERSION = 3230100
 SQLITE3_DIR = $(ANDR_ROOT)/deps/sqlite
-SQLITE3_URL = https://www.sqlite.org/2017/sqlite-amalgamation-$(SQLITE3_VERSION).zip
+SQLITE3_URL = https://www.sqlite.org/2018/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 
 LUAJIT_GIT_BRANCH = v2.1
 LUAJIT_DIR = $(ANDR_ROOT)/deps/luajit
@@ -338,12 +338,12 @@ $(FREETYPE_LIB) : $(FREETYPE_TIMESTAMP)
 		--platform=${APP_PLATFORM}                                                 \
 		--install-dir=$${TOOLCHAIN};                                               \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
-	export CXX=${CROSS_PREFIX}-g++;                                             \
+	export CXX=${CROSS_PREFIX}-g++;                                            \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
 	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON} -fno-lto";          \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON} -fno-lto";                \
 	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      \
-	CC=${CROSS_PREFIX}-gcc ./configure  --enable-static --disable-shared --host=${TARGET_HOST} \
+	CC=${CROSS_PREFIX}-gcc ./configure --enable-static --disable-shared --host=${TARGET_HOST} \
 		--prefix=${TOOLCHAIN} --with-png=no --with-harfbuzz=no  || exit 1;     \
 	CC=${CROSS_PREFIX}-gcc ANDROID_DEV=/tmp/ndk-${TARGET_HOST}-freetype $(MAKE) || exit 1; \
 	touch ${FREETYPE_TIMESTAMP};                                               \
@@ -491,8 +491,8 @@ $(CURL_LIB): $(CURL_TIMESTAMP)
 		--platform=${APP_PLATFORM}                                             \
 		--install-dir=$${TOOLCHAIN};                                           \
 	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                  \
-	export CC=${CROSS_PREFIX}-gcc;                                              \
-	export CXX=${CROSS_PREFIX}-g++;                                             \
+	export CC=${CROSS_PREFIX}-gcc;                                             \
+	export CXX=${CROSS_PREFIX}-g++;                                            \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                  \
 	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON} -fno-lto";          \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON} -fno-lto";                \
@@ -666,7 +666,7 @@ clean_assets :
 apk: local.properties $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_LIB) $(LUAJIT_LIB) \
 	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h \
 	$(ANDR_ROOT)/jni/src/android_version_githash.h sqlite3_download intl_download iconv_download assets
-	${ANDROID_NDK}/ndk-build                                                   \
+	+ ${ANDROID_NDK}/ndk-build                                                   \
 		TARGET_LIBDIR=${TARGET_LIBDIR}                                         \
 		APP_PLATFORM=${APP_PLATFORM} TARGET_ABI=${TARGET_ABI} || exit 1;       \
 	if [ ! -e ${APP_ROOT}/jniLibs ]; then                                      \

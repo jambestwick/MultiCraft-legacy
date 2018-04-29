@@ -7,7 +7,7 @@
 -LOCAL_CFLAGS += -fexpensive-optimizations -O3
 +ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 +LOCAL_CFLAGS    += -mfpu=vfpv4 -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto
-+LOCAL_CXXFLAGS += -mfpu=vfpv4 -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto
++LOCAL_CXXFLAGS += $(LOCAL_CFLAGS)
 +LOCAL_LDFLAGS   += -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
 +endif
 +ifeq ($(TARGET_ARCH_ABI),x86)

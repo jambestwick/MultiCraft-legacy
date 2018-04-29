@@ -138,6 +138,10 @@ void ClientEnvironment::step(float dtime)
 		dtime = 0.5;
 
 	f32 dtime_downcount = dtime;
+    
+    // The player does not sink when swimming
+	free_move |= (lplayer->in_liquid || lplayer->in_liquid_stable)
+					&& (fabs(lplayer->getSpeed().X) > .1 || fabs(lplayer->getSpeed().Z > .1));
 
 	/*
 		Stuff that has a maximum time increment

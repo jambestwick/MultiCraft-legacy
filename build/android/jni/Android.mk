@@ -53,18 +53,17 @@ LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_ \
 		-DUSE_GETTEXT=1                  \
 		-DUSE_LEVELDB=1                  \
 		$(GPROF_DEF)                     \
-		-pipe                            \
-		-DDISABLE_CSM
+		-pipe
 
 ifndef NDEBUG
 LOCAL_CFLAGS += -g -D_DEBUG -O0 -fno-omit-frame-pointer
 else
 
-ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+ifeq ($(TARGET_ABI),armeabi-v7a)
 LOCAL_CFLAGS += \
--mfpu=vfpv3-d16 -march=armv7-a -Ofast \
--fvisibility=hidden -flto
-LOCAL_CXXFLAGS += -mfpu=vfpv3-d16 -march=armv7-a -Ofast -fvisibility=hidden
+-mfpu=vfpv4 -march=armv7-a -Ofast \
+-fdata-sections -ffunction-sections -fvisibility=hidden -flto
+LOCAL_CXXFLAGS += $(LOCAL_CFLAGS)
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
 endif
 
@@ -75,12 +74,12 @@ PROFILER_LIBS := android-ndk-profiler
 LOCAL_CFLAGS += -pg
 endif
 
-ifeq ($(TARGET_ARCH_ABI),x86)
+ifeq ($(TARGET_ABI),x86)
 LOCAL_CFLAGS += \
 -fno-stack-protector -Ofast \
--fvisibility=hidden -flto
-LOCAL_CXXFLAGS += -Ofast -fvisibility=hidden
-LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections
+-fdata-sections -ffunction-sections -fvisibility=hidden -flto
+LOCAL_CXXFLAGS += $(LOCAL_CFLAGS)
+LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
 endif
 
 LOCAL_C_INCLUDES := \
