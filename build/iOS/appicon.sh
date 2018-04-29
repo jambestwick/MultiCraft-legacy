@@ -2,6 +2,7 @@
 
 # Generates different AppIcon images with correct dimensions
 # (brew package: imagemagick)
+# (install: brew install imagemagick)
 SIZES="76 120 152 167 180"
 SRCFILE=icon.png
 DSTDIR=MultiCraft/MultiCraft/Assets.xcassets/AppIcon.appiconset

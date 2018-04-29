@@ -28,8 +28,8 @@
     #define STATIC_SHAREDIR ""
     #define VERSION_MAJOR 1
     #define VERSION_MINOR 1
-    #define VERSION_PATCH 4
-    #define VERSION_STRING "1.1.4"
+    #define VERSION_PATCH 5
+    #define VERSION_STRING "1.1.5"
     #ifdef NDEBUG
         #define BUILD_TYPE "Release"
     #else

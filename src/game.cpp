@@ -4707,7 +4707,7 @@ void Game::showPauseMenu()
 #ifdef __ANDROID__
 	float ypos = simple_singleplayer_mode ? 0.5f : 0.1f;
 #elif __IOS__
-	float ypos = 1.0;
+	float ypos = 1.5;
 #else
 	float ypos = simple_singleplayer_mode ? 0.7f : 0.1f;
 #endif
@@ -4715,29 +4715,29 @@ void Game::showPauseMenu()
 
 	os << FORMSPEC_VERSION_STRING  << SIZE_TAG
 		<< "bgcolor[#00000060;true]"
-		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_continue;"
+		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_continue;"
 		<< strgettext("Continue") << "]";
 	
-#if !defined(__ANDROID__) && !defined(__IOS__)
 	if (!simple_singleplayer_mode) {
-		os << "button_exit[4," << (ypos++) << ";3,0.5;btn_change_password;"
-			<< strgettext("Change Password") << "]";
-	} else {
-		os << "field[4.5,0;3,1.0;;" << strgettext("Game paused") << ";]";
-	}
+#if !defined(__ANDROID__) && !defined(__IOS__)
+	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_change_password;"
+		<< strgettext("Change Password") << "]";
 #endif
+	} else {
+	os		<< "field[5.1,0;4,1.0;;" << strgettext("Pause") << ";]";
+	}
 
 #if !defined(__ANDROID__) && !defined(__IOS__)
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_sound;"
+	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_sound;"
 		<< strgettext("Sound Volume") << "]";
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_key_config;"
+	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_key_config;"
 		<< strgettext("Change Keys")  << "]";
 #endif
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_menu;"
+	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_exit_menu;"
 		<< strgettext("Save and Exit") << "]"
 #ifndef __IOS__
 ; // LoL
-	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_os;"
+	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_exit_os;"
 		<< strgettext("Close game")   << "]"
 #endif
 /*		<< "textarea[7.5,0.25;3.9,6.25;;" << control_text << ";]
@@ -4797,8 +4797,8 @@ void Game::showDeathScreen()
 		std::string(FORMSPEC_VERSION_STRING) +
 		SIZE_TAG
 		"bgcolor[#320000b4;true]"
-		"label[4.85,1.35;" + gettext("You died.") + "]"
-		"button_exit[4,3;3,0.5;btn_respawn;" + gettext("Respawn") + "]"
+		"label[4.4,1.35;" + gettext("You died.") + "]"
+		"button_exit[3.5,3;4,0.5;btn_respawn;" + gettext("Respawn") + "]"
 		;
 
 	/* Create menu */

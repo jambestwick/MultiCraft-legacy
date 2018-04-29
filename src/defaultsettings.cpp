@@ -442,7 +442,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("viewing_range", "50");
 	settings->setDefault("selectionbox_width", "3");
 	settings->setDefault("smooth_lighting", "true");
-	settings->setDefault("touchtarget", "false");
+	settings->setDefault("touchtarget", "true");
 	settings->setDefault("mono_font_path", porting::getDataPath("fonts" DIR_DELIM "retrovillenc.ttf"));
 	settings->setDefault("fallback_font_path", porting::getDataPath("fonts" DIR_DELIM "retrovillenc.ttf"));
 
@@ -485,7 +485,7 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("hud_scaling", "0.7");
 		settings->setDefault("gui_scaling", "1.3");
 		settings->setDefault("mouse_sensitivity", "0.3");
-		settings->setDefault("hud_move_upwards", "20");
+		settings->setDefault("hud_move_upwards", "15");
 	};
 
 	// Auto-detect language on iOS
