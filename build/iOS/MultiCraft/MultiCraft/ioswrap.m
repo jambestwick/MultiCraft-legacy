@@ -148,6 +148,7 @@ extract:
 	}
 
 	loading_alert(viewc, nil);
+	win.backgroundColor = [UIColor blackColor];
 }
 
 void ioswrap_size(unsigned int *dest)
