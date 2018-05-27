@@ -5,7 +5,8 @@ target 'MultiCraft' do
   pod 'SSZipArchive'
   pod 'SDVersion'
 
-  pod 'Appodeal/Core'
-  pod 'Appodeal/Interstitial'
-  pod 'Appodeal/Video'
+
+  pod 'Appodeal/Core', '2.4.1-Beta2'
+  pod 'Appodeal/Interstitial', '2.4.1-Beta2'
+  pod 'Appodeal/Video', '2.4.1-Beta2'
 end

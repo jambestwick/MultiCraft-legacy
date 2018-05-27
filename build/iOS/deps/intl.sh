@@ -12,7 +12,7 @@ fi
 cd intl-src
 
 cd internal
-$IOS_CC $IOS_FLAGS -O3 -Wall -c libintl.cpp -o libintl.o
+$IOS_CC $IOS_FLAGS -Wall -c libintl.cpp -o libintl.o
 lipo libintl.o -create -output ../libintl.a
 cd ..
 
