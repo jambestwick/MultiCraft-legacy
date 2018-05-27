@@ -85,7 +85,7 @@ cmake .. \
 	\
 	-DENABLE_SOUND=1 \
 	-DENABLE_CURL=1 \
-	-DENABLE_GETTEXT=1 \
+	-DENABLE_GETTEXT=0 \
 	-DENABLE_FREETYPE=1 \
 	-DENABLE_LEVELDB=1 \
 	\
@@ -137,6 +137,6 @@ cmake .. \
 	-DLEVELDB_LIBRARY=$libdir/leveldb/lib/libleveldb.dll.a \
 	-DLEVELDB_DLL=$libdir/leveldb/bin/libleveldb.dll
 
-make package -j2
+make package -j $(nproc)
 
 # EOF

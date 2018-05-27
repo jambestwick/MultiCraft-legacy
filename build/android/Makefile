@@ -7,7 +7,7 @@ SHELL := /bin/bash
 # GPROF = 1
 
 # build for build platform
-API = 19
+API = 16
 APP_PLATFORM = android-$(API)
 COMPILER_VERSION = 4.9
 
@@ -84,7 +84,7 @@ CURL_TIMESTAMP = $(CURL_DIR)/timestamp
 CURL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/curl_timestamp
 CURL_URL_HTTP = http://dl.uxnr.de/mirror/curl/curl-${CURL_VERSION}.tar.bz2
 
-FREETYPE_VERSION = 2.9
+FREETYPE_VERSION = 2.9.1
 FREETYPE_DIR = $(ANDR_ROOT)/deps/freetype
 FREETYPE_LIB = $(FREETYPE_DIR)/objs/.libs/libfreetype.a
 FREETYPE_TIMESTAMP = $(FREETYPE_DIR)/timestamp
@@ -95,8 +95,8 @@ ICONV_VERSION = 1.15
 ICONV_DIR = $(ANDR_ROOT)/deps/libiconv
 ICONV_URL_HTTP = https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
 
-INTL_DIR = $(ANDR_ROOT)/deps/libintl/
-INTL_URL_HTTP = https://github.com/j-jorge/libintl-lite/archive/master.tar.gz
+INTL_DIR = $(ANDR_ROOT)/deps/libintl
+INTL_URL_GIT = https://github.com/j-jorge/libintl-lite.git
 
 SQLITE3_VERSION = 3230100
 SQLITE3_DIR = $(ANDR_ROOT)/deps/sqlite
@@ -174,7 +174,7 @@ openal_download :
 openal : $(OPENAL_LIB)
 
 $(OPENAL_LIB): $(OPENAL_TIMESTAMP)
-	+ @REFRESH=0;                                                               \
+	+@REFRESH=0;								\
 	if [ ! -e ${OPENAL_TIMESTAMP_INT} ] ; then                                 \
 		REFRESH=1;                                                             \
 	fi;                                                                        \
@@ -223,7 +223,7 @@ vorbis_download :
 vorbis : $(VORBIS_LIB)
 
 $(VORBIS_LIB): $(VORBIS_TIMESTAMP)
-	+ @REFRESH=0;                                                               \
+	+@REFRESH=0;								\
 	if [ ! -e ${VORBIS_TIMESTAMP_INT} ] ; then                                 \
 		echo "${VORBIS_TIMESTAMP_INT} doesn't exist";                          \
 		REFRESH=1;                                                             \
@@ -317,7 +317,7 @@ freetype_download :
 freetype : $(FREETYPE_LIB)
 
 $(FREETYPE_LIB) : $(FREETYPE_TIMESTAMP)
-	+ @REFRESH=0;                                                                \
+	+@REFRESH=0;								\
 	if [ ! -e ${FREETYPE_TIMESTAMP_INT} ] ; then                               \
 		REFRESH=1;                                                             \
 	fi;                                                                        \
@@ -357,36 +357,33 @@ clean_freetype :
 	$(RM) -rf ${FREETYPE_DIR}
 
 iconv_download :
-	@if [ ! -d ${ICONV_DIR} ] ; then                                        \
-		echo "iconv sources missing, downloading...";                      \
-		mkdir -p ${ANDR_ROOT}/deps;                                        \
-		cd ${ANDR_ROOT}/deps;                                              \
-		wget ${ICONV_URL_HTTP} || exit 1;                                  \
-		tar -xzf libiconv-${ICONV_VERSION}.tar.gz || exit 1;               \
-		rm libiconv-${ICONV_VERSION}.tar.gz;                               \
-		mv libiconv-${ICONV_VERSION} libiconv;                             \
-		cd libiconv;                                                       \
-		patch -p1 < ${ANDR_ROOT}/patches/libiconv_android.patch;           \
-		export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-iconv;                    \
-		${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh            \
-			--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}                    \
-			--platform=${APP_PLATFORM}                                             \
-			--install-dir=$${TOOLCHAIN};                                           \
-		./configure || exit 1;                                             \
+	@if [ ! -d ${ICONV_DIR} ] ; then					\
+		echo "iconv sources missing, downloading...";				\
+		mkdir -p ${ANDR_ROOT}/deps;						\
+		cd ${ANDR_ROOT}/deps;							\
+		wget ${ICONV_URL_HTTP} || exit 1;					\
+		tar -xzf libiconv-${ICONV_VERSION}.tar.gz || exit 1;			\
+		rm libiconv-${ICONV_VERSION}.tar.gz;					\
+		mv libiconv-${ICONV_VERSION} libiconv;					\
+		cd libiconv;								\
+		patch -p1 < ${ANDR_ROOT}/patches/libiconv_android.patch;		\
+		export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-iconv;				\
+		${ANDROID_NDK}/build/tools/make-standalone-toolchain.sh			\
+			--toolchain=${TARGET_TOOLCHAIN}-${COMPILER_VERSION}			\
+			--platform=${APP_PLATFORM}						\
+			--install-dir=$${TOOLCHAIN};						\
+		./configure || exit 1;							\
 	fi
 
 clean_iconv :
 	$(RM) -rf ${ICONV_DIR}
 
 intl_download :
-	@if [ ! -d ${INTL_DIR} ] ; then                                        \
-		echo "libintl sources missing, downloading...";                    \
-		mkdir -p ${ANDR_ROOT}/deps;                                        \
-		cd ${ANDR_ROOT}/deps;                                              \
-		wget ${INTL_URL_HTTP} -O libintl.tar.gz || exit 1;                 \
-		tar -xzf libintl.tar.gz || exit 1;                                 \
-		rm libintl.tar.gz;                                                 \
-		mv libintl-lite-master libintl;                                    \
+	@if [ ! -d ${INTL_DIR} ] ; then						\
+		echo "libintl sources missing, downloading...";				\
+		mkdir -p ${ANDR_ROOT}/deps;						\
+		cd ${ANDR_ROOT}/deps;							\
+		git clone ${INTL_URL_GIT} libintl || exit 1;					\
 	fi
 
 clean_intl :
@@ -398,7 +395,7 @@ clean_intl :
 #      -Vivante Corporation GC1000 core (e.g. Galaxy Tab 3)
 
 irrlicht_download :
-	@if [ ! -d "deps/irrlicht" ] ; then                                        \
+	@if [ ! -d "deps/irrlicht" ] ; then					\
 		echo "irrlicht sources missing, downloading...";                       \
 		mkdir -p ${ANDR_ROOT}/deps;                                            \
 		cd deps;                                                               \
@@ -424,7 +421,7 @@ $(IRRLICHT_TIMESTAMP) : irrlicht_download
 irrlicht : $(IRRLICHT_LIB)
 
 $(IRRLICHT_LIB): $(IRRLICHT_TIMESTAMP) $(FREETYPE_LIB)
-	+ @REFRESH=0;                                                                \
+	+@REFRESH=0;								\
 	if [ ! -e ${IRRLICHT_TIMESTAMP_INT} ] ; then                               \
 		REFRESH=1;                                                             \
 	fi;                                                                        \
@@ -553,7 +550,7 @@ $(ASSETS_TIMESTAMP) : $(IRRLICHT_LIB)
 	if [ ! -e $(ASSETS_TIMESTAMP) ] ; then                                     \
 		touch $(ASSETS_TIMESTAMP);                                             \
 	fi
-	
+
 $(LUAJIT_TIMESTAMP) : luajit_download
 	@LAST_MODIF=$$(find ${LUAJIT_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
 	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                     \
@@ -666,16 +663,16 @@ clean_assets :
 apk: local.properties $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_LIB) $(LUAJIT_LIB) \
 	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h \
 	$(ANDR_ROOT)/jni/src/android_version_githash.h sqlite3_download intl_download iconv_download assets
-	+ ${ANDROID_NDK}/ndk-build                                                   \
-		TARGET_LIBDIR=${TARGET_LIBDIR}                                         \
-		APP_PLATFORM=${APP_PLATFORM} TARGET_ABI=${TARGET_ABI} || exit 1;       \
-	if [ ! -e ${APP_ROOT}/jniLibs ]; then                                      \
-		ln -s ${ANDR_ROOT}/libs ${APP_ROOT}/jniLibs || exit 1;                 \
-	fi;                                                                        \
-	export VERSION_STR="${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" && \
-	export BUILD_TYPE_C=$$(echo "$${BUILD_TYPE}" | sed 's/./\U&/') &&          \
-#	gradle assemble$$BUILD_TYPE_C &&                                           \
-	echo "APK stored at: build/outputs/apk/MultiCraft-$$BUILD_TYPE.apk" &&     \
+	+@${ANDROID_NDK}/ndk-build						\
+		TARGET_LIBDIR=${TARGET_LIBDIR}						\
+		APP_PLATFORM=${APP_PLATFORM} TARGET_ABI=${TARGET_ABI} || exit 1;	\
+	if [ ! -e ${APP_ROOT}/jniLibs ]; then					\
+		ln -s ${ANDR_ROOT}/libs ${APP_ROOT}/jniLibs || exit 1;			\
+	fi;									\
+	export VERSION_STR="${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" &&\
+	export BUILD_TYPE_C=$$(echo "$${BUILD_TYPE}" | sed 's/./\U&/') &&	\
+#	gradle assemble$$BUILD_TYPE_C &&					\
+	echo "APK stored at: build/outputs/apk/MultiCraft-$$BUILD_TYPE.apk" &&	\
 	echo "You can install it with \`make install_$$BUILD_TYPE\`"
 
 # These Intentionally doesn't depend on their respective build steps,
@@ -687,62 +684,62 @@ install_release:
 	${ANDROID_SDK}/platform-tools/adb install -r build/outputs/apk/MultiCraft-release.apk
 
 prep_srcdir :
-	@if [ ! -e ${ANDR_ROOT}/jni/src ]; then                                    \
-		ln -s ${PROJ_ROOT}/src ${ANDR_ROOT}/jni/src;                       \
-	fi;                                                                        \
-	if [ ! -e ${ANDR_ROOT}/jni/lib ]; then                                     \
-		ln -s ${PROJ_ROOT}/lib ${ANDR_ROOT}/jni/lib;                       \
+	@if [ ! -e ${ANDR_ROOT}/jni/src ]; then					\
+		ln -s ${PROJ_ROOT}/src ${ANDR_ROOT}/jni/src;				\
+	fi;									\
+	if [ ! -e ${ANDR_ROOT}/jni/lib ]; then 					\
+		ln -s ${PROJ_ROOT}/lib ${ANDR_ROOT}/jni/lib;				\
 	fi
 
 clean_apk :
 #	gradle clean
 
 clean_all :
-	@$(MAKE) clean_apk;                                                        \
-	$(MAKE) clean_assets;                                                      \
-	sleep 1;                                                                   \
+	@$(MAKE) clean_apk;							\
+	$(MAKE) clean_assets;							\
+	sleep 1;								\
 	$(RM) -r gen libs obj deps bin Debug and_env jni/src
-	
+
 clean_src :
 	$(RM) -r gen libs obj bin Debug and_env jni/src
 
 $(ANDR_ROOT)/jni/src/android_version_githash.h : prep_srcdir
-	@export VERSION_FILE=${ANDR_ROOT}/jni/src/android_version_githash.h;        \
-	export VERSION_FILE_NEW=$${VERSION_FILE}.new;                              \
-	{                                                                          \
-	echo "#ifndef ANDROID_MT_VERSION_GITHASH_H";                               \
-	echo "#define ANDROID_MT_VERSION_GITHASH_H";                               \
-	export GITHASH=$$(git rev-parse --short=8 HEAD);                           \
-	export VERSION_STR="${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}";   \
-	echo "#define VERSION_GITHASH \"$$VERSION_STR-$$GITHASH-Android\"";        \
-	echo "#endif";                                                             \
-	} > "$${VERSION_FILE_NEW}";                                                \
-	if ! cmp -s $${VERSION_FILE} $${VERSION_FILE_NEW}; then                    \
-		echo "android_version_githash.h changed, updating...";             \
-		mv "$${VERSION_FILE_NEW}" "$${VERSION_FILE}";                      \
-	else                                                                       \
-		rm "$${VERSION_FILE_NEW}";                                         \
+	@export VERSION_FILE=${ANDR_ROOT}/jni/src/android_version_githash.h;	\
+	export VERSION_FILE_NEW=$${VERSION_FILE}.new;				\
+	{									\
+	echo "#ifndef ANDROID_MT_VERSION_GITHASH_H";				\
+	echo "#define ANDROID_MT_VERSION_GITHASH_H";				\
+	export GITHASH=$$(git rev-parse --short=8 HEAD);			\
+	export VERSION_STR="${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}";\
+	echo "#define VERSION_GITHASH \"$$VERSION_STR-$$GITHASH-Android\"";	\
+	echo "#endif";								\
+	} > "$${VERSION_FILE_NEW}";						\
+	if ! cmp -s $${VERSION_FILE} $${VERSION_FILE_NEW}; then			\
+		echo "android_version_githash.h changed, updating...";			\
+		mv "$${VERSION_FILE_NEW}" "$${VERSION_FILE}";				\
+	else									\
+		rm "$${VERSION_FILE_NEW}";						\
 	fi
 
 
 $(ANDR_ROOT)/jni/src/android_version.h : prep_srcdir
-	@export VERSION_FILE=${ANDR_ROOT}/jni/src/android_version.h;                \
-	export VERSION_FILE_NEW=$${VERSION_FILE}.new;                              \
-	{                                                                          \
-	echo "#ifndef ANDROID_MT_VERSION_H";                                       \
-	echo "#define ANDROID_MT_VERSION_H";                                       \
-	echo "#define VERSION_MAJOR ${VERSION_MAJOR}";                             \
-	echo "#define VERSION_MINOR ${VERSION_MINOR}";                             \
-	echo "#define VERSION_PATCH ${VERSION_PATCH}";                             \
-	echo "#define VERSION_STRING STR(VERSION_MAJOR) \".\" STR(VERSION_MINOR)   \
-	\".\" STR(VERSION_PATCH)";                                                 \
-	echo "#endif";                                                             \
-	} > $${VERSION_FILE_NEW};                                                  \
-	if ! cmp -s $${VERSION_FILE} $${VERSION_FILE_NEW}; then                    \
-		echo "android_version.h changed, updating...";                     \
-		mv "$${VERSION_FILE_NEW}" "$${VERSION_FILE}";                      \
-	else                                                                       \
-		rm "$${VERSION_FILE_NEW}";                                         \
+	@export VERSION_FILE=${ANDR_ROOT}/jni/src/android_version.h;		\
+	export VERSION_FILE_NEW=$${VERSION_FILE}.new;				\
+	{									\
+	echo "#ifndef ANDROID_MT_VERSION_H";					\
+	echo "#define ANDROID_MT_VERSION_H";					\
+	echo "#define VERSION_MAJOR ${VERSION_MAJOR}";				\
+	echo "#define VERSION_MINOR ${VERSION_MINOR}";				\
+	echo "#define VERSION_PATCH ${VERSION_PATCH}";				\
+	echo "#define VERSION_STRING STR(VERSION_MAJOR) \".\" STR(VERSION_MINOR)\
+	\".\" STR(VERSION_PATCH)";						\
+	echo "#endif";								\
+	} > $${VERSION_FILE_NEW};						\
+	if ! cmp -s $${VERSION_FILE} $${VERSION_FILE_NEW}; then			\
+		echo "android_version.h changed, updating...";			\
+		mv "$${VERSION_FILE_NEW}" "$${VERSION_FILE}";			\
+	else									\
+		rm "$${VERSION_FILE_NEW}";						\
 	fi
 
 clean : clean_apk clean_assets

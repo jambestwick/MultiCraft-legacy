@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
-bit=32
-#bit=64
+#bit=32
+bit=64
 
 mingw=/tmp/mingw${bit}
 if [ ! -d $mingw ]; then
