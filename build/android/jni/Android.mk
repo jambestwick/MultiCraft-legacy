@@ -61,7 +61,7 @@ else
 
 ifeq ($(TARGET_ABI),armeabi-v7a)
 LOCAL_CFLAGS += \
--mfpu=vfpv4 -march=armv7-a -Ofast \
+-mfpu=vfpv3-d16 -march=armv7-a -Ofast \
 -fdata-sections -ffunction-sections -fvisibility=hidden -flto
 LOCAL_CXXFLAGS += $(LOCAL_CFLAGS)
 LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
