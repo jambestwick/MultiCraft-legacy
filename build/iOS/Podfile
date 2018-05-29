@@ -9,4 +9,5 @@ target 'MultiCraft' do
   pod 'Appodeal/Core', '2.4.1-Beta2'
   pod 'Appodeal/Interstitial', '2.4.1-Beta2'
   pod 'Appodeal/Video', '2.4.1-Beta2'
+  pod 'PersonalizedAdConsent', :git => 'https://github.com/MultiCraftProject/googleads-consent-sdk-ios'
 end
