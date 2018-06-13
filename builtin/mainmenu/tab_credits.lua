@@ -20,6 +20,7 @@
 local multicraft_developers = {
 	"Maksim Gamarnik (MoNTE48) <MoNTE48@mail.ua>",
 	"Bektur Mambetov (ubulem) <berkut87@gmail.com>",
+	"Alexander  Zavrin (Ransom.00)",
 	"sfan5 <sfan5@live.de>",
 }
 

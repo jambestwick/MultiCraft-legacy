@@ -374,6 +374,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_shaders", "false");
 	settings->setDefault("fullscreen", "true");
 	settings->setDefault("video_driver", "ogles1");
+	settings->setDefault("touchtarget", "true");
 	settings->setDefault("touchscreen_threshold", "20");
 	settings->setDefault("fixed_virtual_joystick", "true");
 	settings->setDefault("max_block_generate_distance", "3");
@@ -395,7 +396,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("selectionbox_width", "6");
 	settings->setDefault("emergequeue_limit_diskonly", "8");
 	settings->setDefault("emergequeue_limit_generate", "8");
-	settings->setDefault("touchtarget", "true");
 	settings->setDefault("enable_3d_clouds", "false");
 	settings->setDefault("inventory_image_hack", "false");
 
@@ -442,7 +442,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("viewing_range", "50");
 	settings->setDefault("selectionbox_width", "3");
 	settings->setDefault("smooth_lighting", "true");
-	settings->setDefault("touchtarget", "true");
 	settings->setDefault("mono_font_path", porting::getDataPath("fonts" DIR_DELIM "retrovillenc.ttf"));
 	settings->setDefault("fallback_font_path", porting::getDataPath("fonts" DIR_DELIM "retrovillenc.ttf"));
 

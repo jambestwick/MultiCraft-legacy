@@ -33,6 +33,11 @@ find $DEST -type d -name '.git' -print0 | xargs -0 -- rm -r
 find $DEST -type f -name '.git*' -delete
 find $DEST -type f -name '.DS_Store' -delete
 
+# remove broken languages
+find $DEST -type d -name 'ja' -print0 | xargs -0 -- rm -r
+find $DEST -type d -name 'ko' -print0 | xargs -0 -- rm -r
+find $DEST -type d -name 'he' -print0 | xargs -0 -- rm -r
+
 echo "Creating assets.zip"
 ZIPDEST=$FOLDER/assets.zip
 rm -f $ZIPDEST
@@ -46,5 +51,4 @@ echo "Creating worlds.zip"
 ZIPDEST=$FOLDER/worlds.zip
 rm -f $ZIPDEST
 
-cd ../..; zip -9r $ZIPDEST -- worlds
-
+cd ../..; zip -0r $ZIPDEST -- worlds
