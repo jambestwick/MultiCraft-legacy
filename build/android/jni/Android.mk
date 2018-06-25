@@ -38,13 +38,13 @@ LOCAL_SRC_FILES := deps/luajit/src/libluajit.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := multicraft
+LOCAL_MODULE := MultiCraft
 
 ifdef GPROF
 GPROF_DEF=-DGPROF
 endif
 
-LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_ \
+LOCAL_CFLAGS := \
 		-DJSONCPP_NO_LOCALE_SUPPORT      \
 		-DHAVE_TOUCHSCREENGUI            \
 		-DUSE_CURL=1                     \
@@ -55,32 +55,26 @@ LOCAL_CFLAGS := -D_IRR_ANDROID_PLATFORM_ \
 		$(GPROF_DEF)                     \
 		-pipe
 
-ifndef NDEBUG
-LOCAL_CFLAGS += -g -D_DEBUG -O0 -fno-omit-frame-pointer
-else
-
 ifeq ($(TARGET_ABI),armeabi-v7a)
-LOCAL_CFLAGS += \
--mfpu=vfpv3-d16 -march=armv7-a -Ofast \
--fdata-sections -ffunction-sections -fvisibility=hidden -flto
-LOCAL_CXXFLAGS += $(LOCAL_CFLAGS)
-LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
-endif
-
-endif
-
-ifdef GPROF
-PROFILER_LIBS := android-ndk-profiler
-LOCAL_CFLAGS += -pg
+LOCAL_CFLAGS += -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb
 endif
 
 ifeq ($(TARGET_ABI),x86)
-LOCAL_CFLAGS += \
--fno-stack-protector -Ofast \
--fdata-sections -ffunction-sections -fvisibility=hidden -flto
-LOCAL_CXXFLAGS += $(LOCAL_CFLAGS)
-LOCAL_LDFLAGS = -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
+LOCAL_CFLAGS += -march=i686 -mtune=intel -mssse3 -mfpmath=sse -m32 -funroll-loops
 endif
+
+ifndef NDEBUG
+LOCAL_CFLAGS := -g -D_DEBUG -O0 -fno-omit-frame-pointer
+endif
+
+ifdef GPROF
+		PROFILER_LIBS := android-ndk-profiler
+		LOCAL_CFLAGS += -pg
+endif
+
+LOCAL_CFLAGS		+= -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto
+LOCAL_CXXFLAGS	:= $(LOCAL_CFLAGS)
+LOCAL_LDFLAGS		:= -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
 
 LOCAL_C_INCLUDES := \
 		jni/src                                   \
@@ -318,13 +312,13 @@ LOCAL_SRC_FILES += \
 LOCAL_SRC_FILES += jni/lib/jsoncpp/jsoncpp.cpp
 
 # libiconv
-LOCAL_CFLAGS += -Wno-multichar -D_ANDROID -DLIBDIR -DBUILDING_LIBICONV 
+LOCAL_CFLAGS += -D_ANDROID -DLIBDIR -DBUILDING_LIBICONV
 
 LOCAL_C_INCLUDES += \
 		deps/libiconv/include                   \
 		deps/libiconv/lib                       \
 		deps/libiconv/libcharset/include
-		
+
 LOCAL_SRC_FILES += \
 		deps/libiconv/lib/iconv.c               \
 		deps/libiconv/libcharset/lib/localcharset.c

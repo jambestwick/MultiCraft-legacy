@@ -9,7 +9,7 @@ import android.view.WindowManager;
 
 public class GameActivity extends NativeActivity {
     static {
-        System.loadLibrary("multicraft");
+        System.loadLibrary("MultiCraft");
     }
 
     private int messageReturnCode;

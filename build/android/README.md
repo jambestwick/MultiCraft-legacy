@@ -33,7 +33,7 @@ When a menu or inventory is displayed:
 Special settings
 ----------------
 There are some settings especially useful for Android users. MultiCraft's config
-file can usually be found at /sdcard/Android/data/mobi.MultiCraft.
+file can usually be found at /sdcard/Android/data/mobi.MultiCraft/files.
 
 * gui_scaling: this is a user-specified scaling factor for the GUI- In case
                main menu is too big or small on your device, try changing this
@@ -61,8 +61,8 @@ following software packages. The version number in parenthesis denotes the
 version that was tested at the time this README was drafted; newer/older
 versions may or may not work.
 
-* android SDK (26.1.1)
-* android NDK (r16b)
+* android SDK (27+)
+* android NDK (r17b)
 * wget
 * g++-multilib
 * m4
@@ -91,7 +91,7 @@ Release build:
 
 * Once your keystore is setup, enter build/android subdirectory and create a new
   file "ant.properties" there. Add following lines to that file:
-  
+
   > key.store=<path to your keystore>
   > key.alias=MultiCraft
 
@@ -104,10 +104,10 @@ Other things that may be nice to know
 ------------
 * The environment for Android development tools is saved within Android build
   build folder. If you want direct access to it do:
-  
+
   > make envpaths
   > . and_env
-  
+
   After you've done this you'll have your path and path variables set correct
   to use adb and all other Android development tools
 
@@ -122,7 +122,7 @@ Other things that may be nice to know
   > make clean_irrlicht
 
 
-After compiling you need to archive files in assets into three zips - Files.zip, games.zip and worlds.zip. 
+After compiling you need to archive files in assets into three zips - Files.zip, games.zip and worlds.zip.
 games.zip must contain "games" folder.
 worlds.zip must contain "worlds" folder and "multicraf.conf" text file.
 Finally, remaining files must be packed into Files.zip.

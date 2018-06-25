@@ -5,4 +5,4 @@ NDK_TOOLCHAIN_VERSION := 4.9
 APP_DEPRECATED_HEADERS := true
 APP_MODULES := Irrlicht
 
-APP_CPPFLAGS +=  -fexceptions
+APP_CPPFLAGS += -fexceptions -frtti

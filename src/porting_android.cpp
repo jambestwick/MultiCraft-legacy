@@ -47,7 +47,6 @@ void android_main(android_app *app)
 	Thread::setName("Main");
 
 	try {
-		app_dummy();
 		char *argv[] = {strdup(PROJECT_NAME), NULL};
 		main(ARRLEN(argv) - 1, argv);
 		free(argv[0]);
@@ -136,7 +135,7 @@ void initAndroid()
 	/* in the start-up code */
 	__android_log_print(ANDROID_LOG_ERROR, PROJECT_NAME_C,
 			"Initializing GPROF profiler");
-	monstartup("libmulticraft.so");
+	monstartup("libMultiCraft.so");
 #endif
 }
 
@@ -206,7 +205,7 @@ void initializePathsAndroid()
 			cls_File, mt_getAbsPath, "getCacheDir");
 	path_storage = getAndroidPath(cls_Env, NULL, cls_File, mt_getAbsPath,
 			"getExternalStorageDirectory");
-	path_user    = path_storage + DIR_DELIM + "Android/data/mobi.MultiCraft/Files";
+	path_user    = path_storage + DIR_DELIM + "Android/data/mobi.MultiCraft/files";
 	path_share   = path_user;
 	path_locale  = path_user + DIR_DELIM + "locale";
 }

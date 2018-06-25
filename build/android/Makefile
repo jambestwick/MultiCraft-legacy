@@ -29,7 +29,7 @@ VERSION_PATCH := $(shell cat $(PROJ_ROOT)/CMakeLists.txt | \
 TARGET_HOST = arm-linux
 TARGET_ABI = armeabi-v7a
 TARGET_TOOLCHAIN = arm-linux-androideabi
-TARGET_CFLAGS_ADDON = -mfpu=vfpv3-d16 -march=armv7-a -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto -D__ANDROID_API__=$(API)
+TARGET_CFLAGS_ADDON = -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto -D__ANDROID_API__=$(API)
 TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
 CROSS_PREFIX = arm-linux-androideabi
@@ -41,7 +41,7 @@ CROSS_PREFIX = arm-linux-androideabi
 # TARGET_HOST = x86-linux
 # TARGET_ABI = x86
 # TARGET_TOOLCHAIN = x86
-# TARGET_CFLAGS_ADDON = -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto -D__ANDROID_API__=$(API)
+# TARGET_CFLAGS_ADDON = -march=i686 -mtune=intel -mssse3 -mfpmath=sse -m32 -Ofast -funroll-loops -fdata-sections -ffunction-sections -fvisibility=hidden -flto -D__ANDROID_API__=$(API)
 # TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
 # TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
 # CROSS_PREFIX = i686-linux-android
@@ -98,7 +98,7 @@ ICONV_URL_HTTP = https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).
 INTL_DIR = $(ANDR_ROOT)/deps/libintl
 INTL_URL_GIT = https://github.com/j-jorge/libintl-lite.git
 
-SQLITE3_VERSION = 3230100
+SQLITE3_VERSION = 3240000
 SQLITE3_DIR = $(ANDR_ROOT)/deps/sqlite
 SQLITE3_URL = https://www.sqlite.org/2018/sqlite-amalgamation-$(SQLITE3_VERSION).zip
 
@@ -234,7 +234,7 @@ $(VORBIS_LIB): $(VORBIS_TIMESTAMP)
 	if [ $$REFRESH -ne 0 ] ; then                                              \
 	echo "changed timestamp for vorbis detected building...";                  \
 	cd ${VORBIS_DIR};                                                          \
-	${ANDROID_NDK}/ndk-build NDEBUG=${NDEBUG}                                  \
+	${ANDROID_NDK}/ndk-build NDEBUG=${NDEBUG} TARGET_ABI=${TARGET_ABI}	   \
 		NDK_APPLICATION_MK=${ANDR_ROOT}/jni/Deps.mk || exit 1;                 \
 	touch ${VORBIS_TIMESTAMP};                                                 \
 	touch ${VORBIS_TIMESTAMP_INT};                                             \

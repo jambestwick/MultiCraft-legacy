@@ -550,6 +550,12 @@ void ClientLauncher::main_menu(MainMenuData *menudata)
 
 bool ClientLauncher::create_engine_device()
 {
+	#ifdef __ANDROID__
+		// set correct resolution
+		g_settings->setU16("screen_w", porting::getDisplaySize().X);
+		g_settings->setU16("screen_h", porting::getDisplaySize().Y);
+	#endif
+
 	// Resolution selection
 	bool fullscreen = g_settings->getBool("fullscreen");
 	u16 screen_w = g_settings->getU16("screen_w");
