@@ -60,22 +60,13 @@ u64 murmur_hash_64_ua(const void *key, int len, unsigned int seed)
 	const int r = 47;
 	u64 h = seed ^ (len * m);
 
-#if defined(__IOS__) // make sure memcpy() will not assume align
 	const u8 *data = (const u8 *)key;
-	const u8 *end = data + ( (unsigned int)len & ~7 );
-#else
-	const u64 *data = (const u64 *)key;
-	const u64 *end = data + (len / 8);
-#endif
+	const u8 *end = data + (len / 8) * 8;
 
 	while (data != end) {
 		u64 k;
 		memcpy(&k, data, sizeof(u64));
-#ifdef __IOS__
 		data += sizeof(u64);
-#else
-		data++;
-#endif
 
 		k *= m;
 		k ^= k >> r;
