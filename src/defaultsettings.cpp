@@ -178,6 +178,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("ambient_occlusion_gamma", "2.2");
 	settings->setDefault("enable_shaders", "true");
 	settings->setDefault("enable_particles", "true");
+	settings->setDefault("screen_dpi", "72");
 
 	settings->setDefault("enable_minimap", "true");
 	settings->setDefault("minimap_shape_round", "true");
@@ -263,8 +264,8 @@ void set_default_settings(Settings *settings)
 	// Network
 	settings->setDefault("enable_ipv6", "true");
 	settings->setDefault("ipv6_server", "false");
-	settings->setDefault("workaround_window_size","5");
-	settings->setDefault("max_packets_per_iteration","1024");
+	settings->setDefault("workaround_window_size", "5");
+	settings->setDefault("max_packets_per_iteration", "1024");
 	settings->setDefault("port", "30000");
 	settings->setDefault("strict_protocol_version_checking", "false");
 	settings->setDefault("player_transfer_distance", "0");
@@ -388,10 +389,11 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("abm_interval", "2.0");
 	settings->setDefault("cloud_radius", "6");
 	settings->setDefault("client_unload_unused_data_timeout", "60");
+	settings->setDefault("curl_verify_cert", "false");
 #endif
 
 #ifdef __ANDROID__
-	settings->setDefault("viewing_range", "30");
+	settings->setDefault("viewing_range", "35");
 	settings->setDefault("smooth_lighting", "false");
 	settings->setDefault("selectionbox_width", "6");
 	settings->setDefault("emergequeue_limit_diskonly", "8");
@@ -401,32 +403,27 @@ void set_default_settings(Settings *settings)
 
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");
-	
-	settings->setDefault("curl_verify_cert","false");
-	
-	//For other devices
-	settings->setDefault("gui_scaling", "1.2");
-	
-	// check for screen
+
+	// check screen size
 	float x_inches = ((double) porting::getDisplaySize().X /
 					  (160 * porting::getDisplayDensity()));
-	if (x_inches < 5) {
-		// all phones
-		settings->setDefault("hud_scaling", "0.6");
-		settings->setDefault("mouse_sensitivity", "0.15");
-	}
-	if (x_inches < 3.7) {
+	if (x_inches <= 3.7) {
 		// small 4" phones
 		settings->setDefault("hud_scaling", "0.5");
 		settings->setDefault("gui_scaling", "1.0");
-		settings->setDefault("mouse_sensitivity", "0.2");
-	}
-	if (x_inches > 5) {
+		settings->setDefault("mouse_sensitivity", "0.25");
+	} else if (x_inches > 3.7 && x_inches < 5) {
+		// all phones
+		settings->setDefault("hud_scaling", "0.6");
+		settings->setDefault("gui_scaling", "1.2");
+		settings->setDefault("mouse_sensitivity", "0.15");
+	} else if (x_inches >= 5) {
 		// tablets
 		settings->setDefault("hud_scaling", "0.85");
+		settings->setDefault("gui_scaling", "1.2");
 		settings->setDefault("mouse_sensitivity", "0.2");
 	}
-	
+
 	// Auto-detect language on Android
 	// FIXME: this code should be in init_gettext() ideally
 	char lang[3] = {0};
@@ -434,8 +431,6 @@ void set_default_settings(Settings *settings)
 	if (!lang[0])
 		errorstream << "Language auto-detection failed!" << std::endl;
 	settings->setDefault("language", lang);
-#else
-	settings->setDefault("screen_dpi", "72");
 #endif
 
 #ifdef __IOS__
@@ -445,47 +440,44 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("mono_font_path", porting::getDataPath("fonts" DIR_DELIM "retrovillenc.ttf"));
 	settings->setDefault("fallback_font_path", porting::getDataPath("fonts" DIR_DELIM "retrovillenc.ttf"));
 
-	// For iPad =)
+	// iPad
 	settings->setDefault("hud_scaling", "0.8");
 	settings->setDefault("gui_scaling", "1.1");
 	settings->setDefault("mouse_sensitivity", "0.2");
-	// 3.5" (old iPhone's)
+
 	if ([SDVersion deviceSize] == Screen3Dot5inch) {
-		settings->setDefault("viewing_range", "30");
+		// 3.5" (old iPhone's)
+		settings->setDefault("viewing_range", "25");
 		settings->setDefault("hud_scaling", "0.5");
 		settings->setDefault("gui_scaling", "1.0");
 		settings->setDefault("mouse_sensitivity", "0.2");
 		settings->setDefault("enable_3d_clouds", "false");
 		settings->setDefault("smooth_lighting", "false");
-	};
+	} else if ([SDVersion deviceSize] == Screen4inch) {
 	// 4" (iPhone 5)
-	if ([SDVersion deviceSize] == Screen4inch) {
 		settings->setDefault("hud_scaling", "0.5");
 		settings->setDefault("gui_scaling", "1.2");
 		settings->setDefault("mouse_sensitivity", "0.23");
 		settings->setDefault("enable_3d_clouds", "false");
 		settings->setDefault("smooth_lighting", "false");
-	};
-	// 4.7" (iPhone)
-	if ([SDVersion deviceSize] == Screen4Dot7inch) {
+	} else if ([SDVersion deviceSize] == Screen4Dot7inch) {
+		// 4.7" (iPhone)
 		settings->setDefault("hud_scaling", "0.6");
 		settings->setDefault("gui_scaling", "1.2");
 		settings->setDefault("mouse_sensitivity", "0.25");
-	};
-	// 5.5" (iPhone Plus)
-	if ([SDVersion deviceSize] == Screen5Dot5inch) {
+	} else if ([SDVersion deviceSize] == Screen5Dot5inch) {
+		// 5.5" (iPhone Plus)
 		settings->setDefault("hud_scaling", "0.7");
 		settings->setDefault("gui_scaling", "1.3");
 		settings->setDefault("mouse_sensitivity", "0.3");
-	};
-	// 5.8" (iPhone X)
-	if ([SDVersion deviceSize] == Screen5Dot8inch) {
+	} else if ([SDVersion deviceSize] == Screen5Dot8inch) {
+		// 5.8" (iPhone X)
 		settings->setDefault("viewing_range", "75");
 		settings->setDefault("hud_scaling", "0.7");
 		settings->setDefault("gui_scaling", "1.3");
 		settings->setDefault("mouse_sensitivity", "0.3");
 		settings->setDefault("hud_move_upwards", "15");
-	};
+	}
 
 	// Auto-detect language on iOS
 	char lang[3] = {0};

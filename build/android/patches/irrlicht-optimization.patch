@@ -9,7 +9,7 @@
 +LOCAL_CFLAGS   += -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb
 +endif
 +ifeq ($(TARGET_ABI),x86)
-+LOCAL_CFLAGS   += -march=i686 -mtune=intel -mssse3 -mfpmath=sse -m32 -funroll-loops -fno-stack-protector
++LOCAL_CFLAGS   += -march=i686 -mtune=intel -mssse3 -mfpmath=sse -m32 -funroll-loops
 +endif
 +LOCAL_CFLAGS		+= -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto
 +LOCAL_CXXFLAGS := $(LOCAL_CFLAGS)

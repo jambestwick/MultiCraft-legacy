@@ -2795,7 +2795,10 @@ void Game::toggleFreeMove()
 
 void Game::toggleFreeMoveAlt()
 {
+	bool free_move = !g_settings->getBool("free_move");
+	bool creative = !g_settings->getBool("creative_mode");
 	if (m_cache_doubletap_jump && runData.jump_timer < 0.15f)
+		if (!free_move || !creative)
 		toggleFreeMove();
 
 	runData.reset_jump_timer = true;
