@@ -43,7 +43,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "server.h"
 #include "database.h"
 #include "database-dummy.h"
-#include "database-sqlite3.h"
 #include "script/scripting_server.h"
 #include <deque>
 #include <queue>
@@ -2293,8 +2292,6 @@ MapDatabase *ServerMap::createDatabase(
 	const std::string &savedir,
 	Settings &conf)
 {
-	if (name == "sqlite3")
-		return new MapDatabaseSQLite3(savedir);
 	if (name == "dummy")
 		return new Database_Dummy();
 	#if USE_LEVELDB
@@ -2313,7 +2310,7 @@ MapDatabase *ServerMap::createDatabase(
 	}
 	#endif
 	else
-		throw BaseException(std::string("Database backend ") + name + " not supported.");
+		throw ModError(std::string("Database backend ") + name + " not supported.");
 }
 
 void ServerMap::beginSave()

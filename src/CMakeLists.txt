@@ -232,7 +232,7 @@ if(ENABLE_REDIS)
 endif(ENABLE_REDIS)
 
 
-find_package(SQLite3 REQUIRED)
+#find_package(SQLite3 REQUIRED)
 
 OPTION(ENABLE_SPATIAL "Enable SpatialIndex AreaStore backend" TRUE)
 set(USE_SPATIAL FALSE)
@@ -381,7 +381,6 @@ set(common_SRCS
 	database-leveldb.cpp
 	database-postgresql.cpp
 	database-redis.cpp
-	database-sqlite3.cpp
 	database.cpp
 	debug.cpp
 	defaultsettings.cpp
@@ -434,7 +433,6 @@ set(common_SRCS
 	reflowscan.cpp
 	remoteplayer.cpp
 	raycast.cpp
-	rollback.cpp
 	rollback_interface.cpp
 	serialization.cpp
 	server.cpp
@@ -551,7 +549,6 @@ include_directories(
 	${PNG_INCLUDE_DIR}
 	${GETTEXT_INCLUDE_DIR}
 	${SOUND_INCLUDE_DIRS}
-	${SQLITE3_INCLUDE_DIR}
 	${LUA_INCLUDE_DIR}
 	${GMP_INCLUDE_DIR}
 	${JSON_INCLUDE_DIR}
@@ -586,7 +583,6 @@ if(BUILD_CLIENT)
 		${X11_LIBRARIES}
 		${GETTEXT_LIBRARY}
 		${SOUND_LIBRARIES}
-		${SQLITE3_LIBRARY}
 		${LUA_LIBRARY}
 		${GMP_LIBRARY}
 		${JSON_LIBRARY}
@@ -647,7 +643,6 @@ if(BUILD_SERVER)
 	target_link_libraries(
 		${PROJECT_NAME}server
 		${ZLIB_LIBRARIES}
-		${SQLITE3_LIBRARY}
 		${JSON_LIBRARY}
 		${GETTEXT_LIBRARY}
 		${LUA_LIBRARY}
@@ -802,9 +797,6 @@ if(WIN32)
 	endif()
 	if(FREETYPE_DLL)
 		install(FILES ${FREETYPE_DLL} DESTINATION ${BINDIR})
-	endif()
-	if(SQLITE3_DLL)
-		install(FILES ${SQLITE3_DLL} DESTINATION ${BINDIR})
 	endif()
 	if(LEVELDB_DLL)
 		install(FILES ${LEVELDB_DLL} DESTINATION ${BINDIR})
