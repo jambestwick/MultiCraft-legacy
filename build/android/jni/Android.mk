@@ -44,17 +44,6 @@ ifdef GPROF
 GPROF_DEF=-DGPROF
 endif
 
-LOCAL_CFLAGS := \
-		-DJSONCPP_NO_LOCALE_SUPPORT      \
-		-DHAVE_TOUCHSCREENGUI            \
-		-DUSE_CURL=1                     \
-		-DUSE_SOUND=1                    \
-		-DUSE_FREETYPE=1                 \
-		-DUSE_GETTEXT=1                  \
-		-DUSE_LEVELDB=1                  \
-		$(GPROF_DEF)                     \
-		-pipe
-
 ifeq ($(TARGET_ABI),armeabi-v7a)
 LOCAL_CFLAGS += -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb
 endif
@@ -66,6 +55,17 @@ endif
 ifndef NDEBUG
 LOCAL_CFLAGS := -g -D_DEBUG -O0 -fno-omit-frame-pointer
 endif
+
+LOCAL_CFLAGS := \
+		-DJSONCPP_NO_LOCALE_SUPPORT      \
+		-DHAVE_TOUCHSCREENGUI            \
+		-DUSE_CURL=1                     \
+		-DUSE_SOUND=1                    \
+		-DUSE_FREETYPE=1                 \
+		-DUSE_GETTEXT=1                  \
+		-DUSE_LEVELDB=1                  \
+		$(GPROF_DEF)                     \
+		-pipe
 
 ifdef GPROF
 		PROFILER_LIBS := android-ndk-profiler
