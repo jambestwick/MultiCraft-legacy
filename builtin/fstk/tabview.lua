@@ -60,7 +60,7 @@ local function get_bg(tsize, tabname)
 	tabname = tabname or "common"
 	return "background[0,0;" .. tsize.width .. "," .. tsize.height .. ";" ..
 		core.formspec_escape(defaulttexturedir ..
-			"multicraft_" .. tabname .. "_bg.png") .. ";true]"
+			"bg_" .. tabname .. ".png") .. ";true]"
 end
 
 --------------------------------------------------------------------------------

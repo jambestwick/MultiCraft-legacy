@@ -33,8 +33,10 @@ local function get_formspec(tabview, name, tabdata)
 
 	local retval =
 		-- Search
-		"field[0.15,0.5;6.05,0.27;te_search;;"..core.formspec_escape(tabdata.search_for).."]"..
-		"button[5.8,0.25;2,0.1;btn_mp_search;" .. fgettext("Search") .. "]" ..
+		"field[0.15,0.075;5.91,1;te_search;;" .. core.formspec_escape(tabdata.search_for) .. "]" ..
+		"button[5.62,-0.25;1.5,1;btn_mp_search;" .. fgettext("Search") .. "]" ..
+		"image_button[6.97,-.165;.83,.83;" .. core.formspec_escape(defaulttexturedir .. "refresh.png")
+			.. ";btn_mp_refresh;" .. fgettext("") .. "]" ..
 
 		-- Address / Port
 		"label[7.75,-0.25;" .. fgettext("Address / Port") .. "]" ..
@@ -296,6 +298,11 @@ local function main_button_handler(tabview, fields, name, tabdata)
 			core.settings:set("address",     first_server.address)
 			core.settings:set("remote_port", first_server.port)
 		end
+		return true
+	end
+
+	if fields.btn_mp_refresh then
+		asyncOnlineFavourites()
 		return true
 	end
 

@@ -31,22 +31,22 @@ local function get_formspec(tabview, name, tabdata)
 				)
 
 		retval = retval ..
-			"image_button[0,4.8;3.375,0.9;" ..
+			"image_button[0,4.84;3.31,0.92;" ..
 				core.formspec_escape(defaulttexturedir ..
-					"multicraft_local_delete_btn.png") .. ";world_delete;;true;false]" ..
-			"image_button[3.12,4.8;3.375,0.9;" ..
+					"blank.png") .. ";world_delete;;true;false]" ..
+			"image_button[3.14,4.84;3.3,0.92;" ..
 				core.formspec_escape(defaulttexturedir ..
-					"multicraft_local_new_btn.png") .. ";world_create;;true;false]"
+					"blank.png") .. ";world_create;;true;false]"
 
 	local creative_mode = core.settings:get_bool("creative_mode")
 
 	retval = retval ..
-			"image_button[6.8,1.5;5,1.3;" ..
+			"image_button[6.72,1.43;4.96,1.41;" ..
 				core.formspec_escape(defaulttexturedir ..
-					"multicraft_local_play_btn.png") .. ";play;;true;false]" ..
-			"image_button[7.5,3.15;3.8,0.95;" ..
+					"blank.png") .. ";play;;true;false]" ..
+			"image_button[7.33,3.09;3.73,0.86;" ..
 				core.formspec_escape(defaulttexturedir ..
-					"multicraft_local_creative_" ..
+					"local_creative_" ..
 					tostring(creative_mode) .. "_btn.png") ..
 					";cb_creative_mode;;true;false]" ..
 			"textlist[0,0;6.24,4.6;sp_worlds;" ..
