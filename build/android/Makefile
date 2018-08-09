@@ -77,7 +77,7 @@ IRRLICHT_TIMESTAMP = $(IRRLICHT_DIR)/timestamp
 IRRLICHT_TIMESTAMP_INT = $(ANDR_ROOT)/deps/irrlicht_timestamp
 IRRLICHT_URL_HTTP = https://github.com/zaki/irrlicht/archive/$(IRRLICHT_COMMIT).zip
 
-CURL_VERSION = 7.60.0
+CURL_VERSION = 7.61.0
 CURL_DIR = $(ANDR_ROOT)/deps/curl
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
@@ -130,7 +130,7 @@ delconfig:
 
 local.properties:
 	@echo "Please specify path of ANDROID NDK";                                   \
-	echo "e.g. $$HOME/Android/ndk-r14b/";                                         \
+	echo "e.g. $$HOME/Android/ndk-r17b/";                                         \
 	read ANDROID_NDK ;                                                            \
 	if [ ! -d $$ANDROID_NDK ] ; then                                              \
 		echo "$$ANDROID_NDK is not a valid folder";                            			\

@@ -1335,7 +1335,7 @@ bool TextureSource::generateImagePart(std::string part_of_name,
 				*/			
 #if defined(__ANDROID__) || defined(__IOS__)
 				video::IImage *img_crack = m_sourcecache.getOrLoad(
-					"crack_anylength_android.png", m_device);
+					"crack_anylength_touch.png", m_device);
 #else
 				video::IImage *img_crack = m_sourcecache.getOrLoad(
 					"crack_anylength.png", m_device);
