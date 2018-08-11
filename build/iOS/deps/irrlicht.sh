@@ -3,7 +3,7 @@
 . sdk.sh
 
 [ ! -d irrlicht-src ] && \
-	svn co -r 5604 svn://svn.code.sf.net/p/irrlicht/code/branches/ogl-es irrlicht-src
+	svn co -r 5622 svn://svn.code.sf.net/p/irrlicht/code/branches/ogl-es irrlicht-src
 
 cd irrlicht-src/
 
