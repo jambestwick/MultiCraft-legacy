@@ -1169,6 +1169,11 @@ max_out_chat_queue_size = 20
 
 ## Mapgen
 
+#    Available map generators, can be used to restrict mapgens unsuitable
+#    for specific platforms and devices
+
+# mapgens_available = v6, v7p, flat
+
 #    Name of map generator to be used when creating a new world.
 #    Creating a world in the main menu will override this.
 #    type: enum values: v5, v6, v7, flat, valleys, fractal, singlenode

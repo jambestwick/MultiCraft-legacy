@@ -383,6 +383,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("abm_interval", "2.0");
 	settings->setDefault("client_unload_unused_data_timeout", "60");
 	settings->setDefault("curl_verify_cert", "false");
+	settings->setDefault("mapgens_available", "v6, v7p, flat");
 #endif
 
 #ifdef __ANDROID__

@@ -16,8 +16,15 @@
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 local function create_world_formspec(dialogdata)
-	local mapgens = core.get_mapgen_names()
-
+	local mapgens = {}
+	local mapgens_available = core.settings:get("mapgens_available")
+	if mapgens_available then
+		for mg in string.gmatch(mapgens_available, '[^,%s]+') do
+			table.insert(mapgens, mg)
+		end
+	else
+		mapgens = core.get_mapgen_names()
+	end
 	local current_seed = core.settings:get("fixed_map_seed") or ""
 	local current_mg   = core.settings:get("mg_name")
 
