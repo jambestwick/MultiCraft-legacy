@@ -39,31 +39,33 @@ using namespace irr::core;
 
 extern Settings *g_settings;
 
-const char* touchgui_button_imagenames[] = {
-	"up_one.png",
-	"up_two.png",
-	"up_three.png",
-	"down_one.png",
-	"down_two.png",
-	"down_three.png",
-	"left.png",
-	"right.png",
-	"inventory.png",
-	"drop.png",
-	"jump.png",
-	"down.png",
+const char *touchgui_button_imagenames[][2] = {
+	{"up_one.png", "up_one_press.png"},
+	{"up_two.png", "up_two_press.png"},
+	{"up_three.png", "up_three_press.png"},
+	{"down_one.png", "down_one_press.png"},
+	{"down_two.png", "down_two_press.png"},
+	{"down_three.png", "down_three_press.png"},
+	{"left.png", "left_press_press.png"},
+	{"right.png", "right_press_press.png"},
+	{"inventory.png", "inventory.png"},
+	{"drop.png", "drop.png"},
+	{"jump.png", "jump.png"},
+	{"down.png", "down.png"},
 /*#ifdef ENABLE_ANDROID_NOCLIP
-	"fly_btn.png",
-	"noclip_btn.png",
+	{"noclip_btn.png", "noclip_btn.png"},
+	{"fast_btn.png", "fast_btn.png"},
 #endif*/
-	"minimap_btn.png",
-//	"debug_btn.png",
-	"chat.png",
-//	"camera.png",
-	"rangeview.png",
-	"rangeview_ios.png",
-	"empty.png",
-	"escape.png",
+	{"minimap_btn.png", "minimap_btn.png"},
+	{"chat.png", "chat.png"},
+//	{"camera.png", "camera.png"},
+#ifdef __IOS__
+	{"rangeview_ios.png", "rangeview_ios.png"},
+#else
+	{"rangeview.png", "rangeview.png"},
+#endif
+	{"empty.png", "empty.png"},
+	{"escape.png", "escape.png"}
 };
 
 static irr::EKEY_CODE id2keycode(touch_gui_button_id id)
@@ -107,19 +109,13 @@ static irr::EKEY_CODE id2keycode(touch_gui_button_id id)
 			key = "sneak";
 			break;
 /*#ifdef ENABLE_ANDROID_NOCLIP
-		case fly_id:
-			key = "freemove";
-			break;
 		case noclip_id:
 			key = "noclip";
 			break;
 		case fast_id:
 			key = "fast";
 			break;
-#endif
-		case debug_id:
-			key = "toggle_debug";
-			break;*/
+#endif*/
 		case minimap_id:
 			key = "minimap";
 			break;
@@ -130,9 +126,6 @@ static irr::EKEY_CODE id2keycode(touch_gui_button_id id)
 			key = "camera_mode";
 			break;*/
 		case range_id:
-			key = "rangeselect";
-			break;
-		case range_ios_id:
 			key = "rangeselect";
 			break;
 		case empty_id:
@@ -165,22 +158,34 @@ TouchScreenGUI::TouchScreenGUI(IrrlichtDevice *device, IEventReceiver* receiver)
 		m_screensize = device->getVideoDriver()->getScreenSize();
 }
 
-void TouchScreenGUI::loadButtonTexture(button_info* btn, const char* path, rect<s32> button_rect)
+void TouchScreenGUI::loadButtonTexture(button_info* btn,
+		touch_gui_button_id id, rect<s32> button_rect)
 {
+	const char *path = touchgui_button_imagenames[id][0];
+	const char *path_pressed = touchgui_button_imagenames[id][1];
+
 	unsigned int tid;
 	video::ITexture *texture = guiScalingImageButton(m_device->getVideoDriver(),
 			m_texturesource->getTexture(path, &tid), button_rect.getWidth(),
 			button_rect.getHeight());
+
+	video::ITexture *texture_pressed = texture;
+	if (strcmp(path, path_pressed) != 0) {
+		texture_pressed = guiScalingImageButton(m_device->getVideoDriver(),
+				m_texturesource->getTexture(path_pressed, &tid),
+				button_rect.getWidth(), button_rect.getHeight());
+		texture_pressed = (texture_pressed) ? texture_pressed : texture;
+	}
 	if (texture) {
 		btn->guibutton->setUseAlphaChannel(true);
 		if (g_settings->getBool("gui_scaling_filter")) {
 			rect<s32> txr_rect = rect<s32>(0, 0, button_rect.getWidth(), button_rect.getHeight());
 			btn->guibutton->setImage(texture, txr_rect);
-			btn->guibutton->setPressedImage(texture, txr_rect);
+			btn->guibutton->setPressedImage(texture_pressed, txr_rect);
 			btn->guibutton->setScaleImage(false);
 		} else {
 			btn->guibutton->setImage(texture);
-			btn->guibutton->setPressedImage(texture);
+			btn->guibutton->setPressedImage(texture_pressed);
 			btn->guibutton->setScaleImage(true);
 		}
 		btn->guibutton->setDrawBorder(false);
@@ -201,7 +206,7 @@ void TouchScreenGUI::initButton(touch_gui_button_id id, rect<s32> button_rect,
 	btn->immediate_release = immediate_release;
 	btn->ids.clear();
 
-	loadButtonTexture(btn,touchgui_button_imagenames[id],button_rect);
+	loadButtonTexture(btn, id, button_rect);
 }
 
 static int getMaxControlPadSize(float density) {
@@ -322,14 +327,6 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 	                  L"x", false, SLOW_BUTTON_REPEAT);
 
 /*#ifdef ENABLE_ANDROID_NOCLIP
-	 // init fly button 
-	initButton(fly_id,
-			rect<s32>(m_screensize.X - (0.75*button_size),
-					m_screensize.Y - (3.25*button_size),
-					m_screensize.X,
-	                m_screensize.Y - (button_size*2.5)),
-			L"fly", false, SLOW_BUTTON_REPEAT);
-
 	// init noclip button 
 	initButton(noclip_id,
 			rect<s32>(m_screensize.X - (0.75*button_size),
@@ -346,9 +343,6 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 			L"fast", false, SLOW_BUTTON_REPEAT);
 #endif*/
 
-			
-
-
 #ifdef __IOS__
 // iOS bar
 	/* init pause button */
@@ -359,7 +353,7 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 		L"Exit", false, SLOW_BUTTON_REPEAT);
 	
 	/* init rangeselect button */
-	initButton(range_ios_id,
+	initButton(range_id,
 			   rect<s32>(m_screensize.X / 2, 0,
 						 m_screensize.X / 2 + (button_size * 0.75),
 						 (button_size * 0.75)),
@@ -395,7 +389,7 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 			L"Chat", false, SLOW_BUTTON_REPEAT);
 #endif
 
-		/* init camera button */
+	/* init camera button */
 	/*initButton(camera_id,
 			rect<s32>(0, 0,
 					0.75*button_size, 0.75*button_size),
@@ -483,6 +477,19 @@ bool TouchScreenGUI::isReleaseHUDButton(size_t eventID)
 	return false;
 }
 
+void TouchScreenGUI::setButtonState(touch_gui_button_id id, bool is_pressed)
+{
+	/*if (id == forward_one || id == forward_three) {
+		m_buttons[forward_two].guibutton->setPressed(is_pressed);
+	}
+	else if (id == backward_one || id == backward_three) {
+		m_buttons[backward_two].guibutton->setPressed(is_pressed);
+	}*/
+	//else {
+		m_buttons[id].guibutton->setPressed(is_pressed);
+	//}
+}
+
 void TouchScreenGUI::handleButtonEvent(touch_gui_button_id button,
 		size_t eventID, bool action)
 {
@@ -504,6 +511,8 @@ void TouchScreenGUI::handleButtonEvent(touch_gui_button_id button,
 		if (btn->ids.size() > 1) return;
 
 		btn->repeatcounter = 0;
+		setButtonState(button, true);
+
 		translated->KeyInput.PressedDown = true;
 		translated->KeyInput.Key = btn->keycode;
 		m_receiver->OnEvent(*translated);
@@ -519,6 +528,7 @@ void TouchScreenGUI::handleButtonEvent(touch_gui_button_id button,
 
 		if (btn->ids.size() > 0)  { return; }
 
+		setButtonState(button, false);
 		translated->KeyInput.PressedDown = false;
 		btn->repeatcounter               = -1;
 		m_receiver->OnEvent(*translated);

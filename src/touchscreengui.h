@@ -48,17 +48,14 @@ typedef enum {
 	drop_id,
 	jump_id,
 	crunch_id,
-#ifdef ENABLE_ANDROID_NOCLIP
-	fly_id,
+/*#ifdef ENABLE_ANDROID_NOCLIP
 	noclip_id,
 	fast_id,
-#endif
+#endif*/
 	minimap_id,
-//	debug_id,
 	chat_id,
 //	camera_id,
 	range_id,
-	range_ios_id,
 	empty_id,
 	escape_id,
 	after_last_element_id
@@ -155,6 +152,9 @@ private:
 	/* gui button by eventID */
 	touch_gui_button_id getButtonID(size_t eventID);
 
+	/* set button pressed state */
+	void setButtonState(touch_gui_button_id id, bool is_pressed);
+
 	/* check if a button has changed */
 	void handleChangedButton(const SEvent &event);
 
@@ -164,7 +164,8 @@ private:
 			float repeat_delay = BUTTON_REPEAT_DELAY);
 
 	/* load texture */
-	void loadButtonTexture(button_info *btn, const char *path, rect<s32> button_rect);
+	void loadButtonTexture(button_info *btn, touch_gui_button_id id,
+			rect<s32> button_rect);
 
 	struct id_status
 	{
