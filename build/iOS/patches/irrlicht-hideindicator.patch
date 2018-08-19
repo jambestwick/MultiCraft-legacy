@@ -1,0 +1,29 @@
+--- source/Irrlicht/CIrrDeviceiOS.mm.orig	2018-08-19 12:49:52.000000000 +0200
++++ source/Irrlicht/CIrrDeviceiOS.mm	2018-08-19 12:54:20.000000000 +0200
+@@ -28,6 +28,17 @@
+ {
+ 	class CIrrDeviceiOS;
+ }
++
++/* IrrUIViewController */
++
++@interface IrrUIViewController : UIViewController
++@end
++
++@implementation IrrUIViewController
++- (BOOL)prefersHomeIndicatorAutoHidden {
++	return YES;
++}
++@end
+ 
+ /* CIrrDelegateiOS */
+ 
+@@ -704,7 +715,7 @@
+ 			if (externalView == nil)
+ 			{
+ 				dataStorage->Window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+-				dataStorage->ViewController = [[UIViewController alloc] init];
++				dataStorage->ViewController = [[IrrUIViewController alloc] init];
+ 				dataStorage->Window.rootViewController = dataStorage->ViewController;
+ 				
+ 				[dataStorage->Window makeKeyAndVisible];
