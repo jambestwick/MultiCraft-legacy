@@ -347,7 +347,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("liquid_update", "1.0");
 
 	// Mapgen
-	settings->setDefault("mg_name", "v6");
+	settings->setDefault("mg_name", "v7p");
 	settings->setDefault("water_level", "1");
 	settings->setDefault("mapgen_limit", "31000");
 	settings->setDefault("chunksize", "5");
@@ -445,22 +445,22 @@ void set_default_settings(Settings *settings)
 	} else if ([SDVersion deviceSize] == Screen4inch) {
 	// 4" (iPhone 5)
 		settings->setDefault("hud_scaling", "0.5");
-		settings->setDefault("gui_scaling", "1.2");
+		settings->setDefault("gui_scaling", "1.1");
 		settings->setDefault("mouse_sensitivity", "0.23");
 	} else if ([SDVersion deviceSize] == Screen4Dot7inch) {
 		// 4.7" (iPhone)
 		settings->setDefault("hud_scaling", "0.6");
-		settings->setDefault("gui_scaling", "1.2");
+		settings->setDefault("gui_scaling", "1.1");
 		settings->setDefault("mouse_sensitivity", "0.25");
 	} else if ([SDVersion deviceSize] == Screen5Dot5inch) {
 		// 5.5" (iPhone Plus)
 		settings->setDefault("hud_scaling", "0.7");
-		settings->setDefault("gui_scaling", "1.3");
+		settings->setDefault("gui_scaling", "1.2");
 		settings->setDefault("mouse_sensitivity", "0.3");
 	} else if ([SDVersion deviceSize] == Screen5Dot8inch) {
 		// 5.8" (iPhone X)
-		settings->setDefault("hud_scaling", "0.7");
-		settings->setDefault("gui_scaling", "1.3");
+		settings->setDefault("hud_scaling", "0.8");
+		settings->setDefault("gui_scaling", "1.2");
 		settings->setDefault("mouse_sensitivity", "0.3");
 		settings->setDefault("hud_move_upwards", "15");
 	} else {
