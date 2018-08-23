@@ -26,6 +26,7 @@ gtags.files
 .idea/*
 # Codelite
 *.project
+desktop.ini
 
 ## Files related to minetest development cycle
 /*.patch
