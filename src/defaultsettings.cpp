@@ -365,8 +365,11 @@ void set_default_settings(Settings *settings)
 
 	settings->setDefault("high_precision_fpu", "true");
 	settings->setDefault("enable_console", "false");
-	settings->setDefault("mainmenu_last_selected_world", "1");
 
+	settings->setDefault("mainmenu_last_selected_world", "1");
+	settings->setDefault("inventory_image_hack", "false");
+
+	// Mobile Platform
 #if defined(__ANDROID__) || defined(__IOS__)
 	settings->setDefault("screen_w", "0");
 	settings->setDefault("screen_h", "0");
@@ -378,7 +381,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("touchscreen_threshold", "20");
 	settings->setDefault("fixed_virtual_joystick", "true");
 	settings->setDefault("doubletap_jump", "true");
-	settings->setDefault("gui_scaling_filter_txr2img", "false");
 	settings->setDefault("max_simultaneous_block_sends_per_client", "5");
 	settings->setDefault("abm_interval", "2.0");
 	settings->setDefault("client_unload_unused_data_timeout", "60");
@@ -386,6 +388,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("mapgens_available", "v6, v7p, flat");
 #endif
 
+	// Android Settings
 #ifdef __ANDROID__
 	settings->setDefault("viewing_range", "35");
 	settings->setDefault("pause_fps_max", "5");
@@ -399,7 +402,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("client_mapblock_limit", "250");
 	settings->setDefault("enable_3d_clouds", "false");
 	settings->setDefault("cloud_radius", "6");
-	settings->setDefault("inventory_image_hack", "false");
+	settings->setDefault("gui_scaling_filter_txr2img", "false");
 	// set font_path
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");
@@ -432,7 +435,11 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("language", lang);
 #endif
 
+	// iOS Settings
 #ifdef __IOS__
+	settings->setDefault("mg_name", "v7p");
+	settings->setDefault("emergequeue_limit_diskonly", "16");
+	settings->setDefault("emergequeue_limit_generate", "16");
 	// set font_path
 	settings->setDefault("mono_font_path", porting::getDataPath("fonts" DIR_DELIM "retrovillenc.ttf"));
 	settings->setDefault("fallback_font_path", porting::getDataPath("fonts" DIR_DELIM "retrovillenc.ttf"));
@@ -443,7 +450,7 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("hud_scaling", "0.5");
 		settings->setDefault("gui_scaling", "1.0");
 	} else if ([SDVersion deviceSize] == Screen4inch) {
-	// 4" (iPhone 5)
+		// 4" (iPhone 5)
 		settings->setDefault("hud_scaling", "0.5");
 		settings->setDefault("gui_scaling", "1.1");
 		settings->setDefault("mouse_sensitivity", "0.23");
@@ -457,45 +464,49 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("hud_scaling", "0.7");
 		settings->setDefault("gui_scaling", "1.2");
 		settings->setDefault("mouse_sensitivity", "0.3");
-	} else if ([SDVersion deviceSize] == Screen5Dot8inch) {
-		// 5.8" (iPhone X)
+	} else if (([SDVersion deviceSize] == Screen5Dot8inch) || ([SDVersion deviceSize] == Screen6Dot1inch) || ([SDVersion deviceSize] == Screen6Dot5inch)) {
+		// 5.8+" (iPhone X-series)
 		settings->setDefault("hud_scaling", "0.8");
 		settings->setDefault("gui_scaling", "1.2");
-		settings->setDefault("mouse_sensitivity", "0.3");
-		settings->setDefault("hud_move_upwards", "15");
+		settings->setDefault("mouse_sensitivity", "0.35");
 	} else {
 		// iPad
 		settings->setDefault("hud_scaling", "0.8");
 		settings->setDefault("gui_scaling", "1.1");
 	}
 
+	// Move the HUD up for the iPhone X-series and new iPad Pro
+	if (([SDVersion deviceVersion] == iPhoneX) || ([SDVersion deviceVersion] == iPhoneXS) || ([SDVersion deviceVersion] == iPhoneXSMax) || ([SDVersion deviceVersion] == iPhoneXR) || ([SDVersion deviceVersion] ==  iPadPro11Inch) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch3Gen)) {
+		settings->setDefault("hud_move_upwards", "10");
+	}
+
 	// set the optimal settings depending on the model
 	if (([SDVersion deviceVersion] == iPhone4S) || ([SDVersion deviceVersion] == iPhone5) || ([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPodTouch5Gen) || ([SDVersion deviceVersion] == iPad2) || ([SDVersion deviceVersion] == iPad3) || ([SDVersion deviceVersion] == iPadMini) || ([SDVersion deviceVersion] == iPadMini2)) {
-			// minimal settings
-			settings->setDefault("smooth_lighting", "false");
-			settings->setDefault("viewing_range", "25");
-			settings->setDefault("enable_3d_clouds", "false");
-			settings->setDefault("cloud_radius", "6");
-			settings->setDefault("pause_fps_max", "5");
-			settings->setDefault("chunksize", "3");
-			settings->setDefault("client_mapblock_limit", "250");
-			settings->setDefault("active_block_range", "1");
-			settings->setDefault("max_block_generate_distance", "2");
+		// minimal settings
+		settings->setDefault("smooth_lighting", "false");
+		settings->setDefault("viewing_range", "25");
+		settings->setDefault("enable_3d_clouds", "false");
+		settings->setDefault("cloud_radius", "6");
+		settings->setDefault("pause_fps_max", "5");
+		settings->setDefault("chunksize", "3");
+		settings->setDefault("client_mapblock_limit", "250");
+		settings->setDefault("active_block_range", "1");
+		settings->setDefault("max_block_generate_distance", "2");
 	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) || ([SDVersion deviceVersion] == iPodTouch6Gen) || ([SDVersion deviceVersion] == iPad4) || ([SDVersion deviceVersion] == iPadMini3) || ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir))  {
-			// medium settings
-			settings->setDefault("viewing_range", "50");
-			settings->setDefault("chunksize", "3");
-			settings->setDefault("cloud_radius", "6");
-			settings->setDefault("client_mapblock_limit", "500");
-			settings->setDefault("active_block_range", "1");
-			settings->setDefault("max_block_generate_distance", "3");
+		// medium settings
+		settings->setDefault("viewing_range", "50");
+		settings->setDefault("chunksize", "3");
+		settings->setDefault("cloud_radius", "6");
+		settings->setDefault("client_mapblock_limit", "500");
+		settings->setDefault("active_block_range", "1");
+		settings->setDefault("max_block_generate_distance", "3");
 	} else {
-/*} else if (([SDVersion deviceVersion] == iPhone8) || ([SDVersion deviceVersion] == iPhone8Plus) || ([SDVersion deviceVersion] == iPhoneX) || ([SDVersion deviceVersion] == iPadPro9Dot7Inch) || ()([SDVersion deviceVersion] == iPadPro12Dot9Inch) || ([SDVersion deviceVersion] == iPadPro10Dot5Inch) || ([SDVersion deviceVersion] == iPadAir2) || ([SDVersion deviceVersion] == iPad5)|| ([SDVersion deviceVersion] == iPad6)) {*/
-			// high settings
-			settings->setDefault("viewing_range", "75");
-			settings->setDefault("client_mapblock_limit", "1000");
-			settings->setDefault("active_block_range", "2");
-			settings->setDefault("max_block_generate_distance", "5");
+	/*} else if (([SDVersion deviceVersion] == iPhone8) || ([SDVersion deviceVersion] == iPhone8Plus) || ([SDVersion deviceVersion] == iPhoneX) || ([SDVersion deviceVersion] == iPadPro9Dot7Inch) || ()([SDVersion deviceVersion] == iPadPro12Dot9Inch) || ([SDVersion deviceVersion] == iPadPro10Dot5Inch) || ([SDVersion deviceVersion] == iPadAir2) || ([SDVersion deviceVersion] == iPad5)|| ([SDVersion deviceVersion] == iPad6)) {*/
+		// high settings
+		settings->setDefault("viewing_range", "75");
+		settings->setDefault("client_mapblock_limit", "1000");
+		settings->setDefault("active_block_range", "2");
+		settings->setDefault("max_block_generate_distance", "5");
 	}
 
 	// Auto-detect language on iOS

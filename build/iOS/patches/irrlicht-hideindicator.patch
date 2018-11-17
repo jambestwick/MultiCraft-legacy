@@ -11,8 +11,8 @@
 +@end
 +
 +@implementation IrrUIViewController
-+- (BOOL)prefersHomeIndicatorAutoHidden {
-+	return YES;
++- (UIRectEdge)preferredScreenEdgesDeferringSystemGestures {
++	return UIRectEdgeAll;
 +}
 +@end
  

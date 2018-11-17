@@ -13,8 +13,11 @@ fi
 cd libcurl-src
 
 CC=$IOS_CC CFLAGS=$IOS_FLAGS \
-./configure --host=arm-apple-darwin --prefix=/ \
-	--disable-shared --enable-static \
+./configure --host=arm-apple-darwin --prefix=/ --disable-shared --enable-static \
+	--disable-debug  --disable-dependency-tracking -disable-ftp 									\
+	--disable-ldap --disable-ldaps --disable-rtsp --disable-proxy --disable-dict 	\
+	--disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smtp 	\
+	--disable-gopher --disable-sspi --disable-manual --disable-zlib --without-zlib \
 	--with-darwinssl
 make -j$(sysctl -n hw.ncpu)
 

@@ -7,4 +7,4 @@ osver=8.0
 export IOS_COMPILER=$(xcrun --sdk $sdk --find clang)
 export IOS_CC=$IOS_COMPILER
 export IOS_CXX=$IOS_COMPILER
-export IOS_FLAGS="-isysroot $(xcrun --sdk $sdk --show-sdk-path) -arch armv7 -arch arm64 -miphoneos-version-min=$osver -fvisibility=hidden -fdata-sections -ffunction-sections -flto -Ofast"
+export IOS_FLAGS="-isysroot $(xcrun --sdk $sdk --show-sdk-path) -arch armv7 -arch arm64 -miphoneos-version-min=$osver -fvisibility=hidden -fdata-sections -ffunction-sections -fvisibility=hidden -flto -Ofast"
