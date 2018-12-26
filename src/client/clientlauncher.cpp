@@ -36,11 +36,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "clientlauncher.h"
 #include "version.h"
 
-#if 0 // toggle to 1 for ads
-#define ADS
-#include "ads.h"
-#endif
-
 #ifdef __IOS__
 namespace irr {
 	class CIrrDeviceiOS : public IrrlichtDevice {
@@ -48,6 +43,9 @@ namespace irr {
 		void *getViewController();
 	};
 }
+#endif
+#if defined(__ANDROID__) || defined(__IOS__)
+#include "porting.h"
 #endif
 
 /* mainmenumanager.h
@@ -267,6 +265,9 @@ bool ClientLauncher::run(GameParams &game_params, const Settings &cmd_args)
 #endif
 #ifdef ADS
 			ads_enable(false);
+#endif
+#if defined(__ANDROID__) || defined(__IOS__)
+			porting::notifyExitGame();
 #endif
 
 		} //try

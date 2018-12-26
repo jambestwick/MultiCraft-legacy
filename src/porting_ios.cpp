@@ -61,8 +61,19 @@ namespace porting {
 		ioswrap_get_dialog(&str);
 		return std::string(str);
 	}
+	
+	void notifyServerConnect(bool is_multiplayer) {
+	#ifdef ADS
+		ads_allow(!is_multiplayer);
+	#endif
+	}
+	
+	void notifyExitGame() {
+	#ifdef ADS
+		ads_allow(true);
+	#endif
+	}
 }
-
 
 extern int real_main(int argc, char *argv[]);
 

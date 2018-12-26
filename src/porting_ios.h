@@ -5,6 +5,11 @@
 #error This file should only be included on iOS
 #endif
 
+#if 0 // toggle to 1 for ads
+#define ADS
+#include "ads.h"
+#endif
+
 namespace porting {
     void initializePathsiOS();
     void copyAssets();
@@ -14,6 +19,10 @@ namespace porting {
 						 const std::string &current, int editType);
 	int getInputDialogState();
 	std::string getInputDialogValue();
+
+  	inline void notifyAbortLoading() {}
+	void notifyServerConnect(bool is_multiplayer);
+	void notifyExitGame();
 }
 
 #endif

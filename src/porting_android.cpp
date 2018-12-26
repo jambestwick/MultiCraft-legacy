@@ -80,6 +80,7 @@ extern "C" {
 namespace porting {
 
 std::string path_storage = DIR_DELIM "sdcard" DIR_DELIM;
+int device_memory_max = 0;
 
 android_app* app_global;
 JNIEnv*      jnienv;
@@ -258,6 +259,59 @@ std::string getInputDialogValue()
 	jnienv->ReleaseStringUTFChars((jstring) result, javachars);
 
 	return text;
+}
+
+int getMemoryMax()
+{
+	if (device_memory_max == 0) {
+		jmethodID getMemory = jnienv->GetMethodID(nativeActivity,
+				"getMemoryMax", "()I");
+
+		if (getMemory == 0)
+			assert("porting::getMemoryMax unable to find java method" == 0);
+
+		device_memory_max = jnienv->CallIntMethod(
+				app_global->activity->clazz, getMemory);
+	}
+	return device_memory_max;
+}
+
+void notifyAbortLoading()
+{
+	jmethodID notifyAbort = jnienv->GetMethodID(nativeActivity,
+			"notifyAbortLoading", "()V");
+
+	if (notifyAbort == 0) {
+		assert("porting::notifyAbortLoading unable to find java method" == 0);
+	}
+
+	jnienv->CallVoidMethod(app_global->activity->clazz, notifyAbort);
+}
+
+void notifyServerConnect(bool is_multiplayer)
+{
+	jmethodID notifyConnect = jnienv->GetMethodID(nativeActivity,
+			"notifyServerConnect", "(Z)V");
+
+	if (notifyConnect == 0) {
+		assert("porting::notifyServerConnect unable to find java method" == 0);
+	}
+
+	jboolean param = (jboolean)is_multiplayer;
+
+	jnienv->CallVoidMethod(app_global->activity->clazz, notifyConnect, param);
+}
+
+void notifyExitGame()
+{
+	jmethodID notifyExit = jnienv->GetMethodID(nativeActivity,
+			"notifyExitGame", "()V");
+
+	if (notifyExit == 0) {
+		assert("porting::notifyExitGame unable to find java method" == 0);
+	}
+
+	jnienv->CallVoidMethod(app_global->activity->clazz, notifyExit);
 }
 
 #ifndef SERVER

@@ -38,13 +38,13 @@ CROSS_PREFIX = arm-linux-androideabi
 # toolchain config for x86
 ################################################################################
 
-# TARGET_HOST = x86-linux
-# TARGET_ABI = x86
-# TARGET_TOOLCHAIN = x86
-# TARGET_CFLAGS_ADDON = -march=i686 -mtune=intel -mssse3 -mfpmath=sse -m32 -Ofast -funroll-loops -fdata-sections -ffunction-sections -fvisibility=hidden -flto -D__ANDROID_API__=$(API)
-# TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
-# TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
-# CROSS_PREFIX = i686-linux-android
+#TARGET_HOST = x86-linux
+#TARGET_ABI = x86
+#TARGET_TOOLCHAIN = x86
+#TARGET_CFLAGS_ADDON = -march=i686 -mtune=intel -mssse3 -mfpmath=sse -m32 -Ofast -funroll-loops -fdata-sections -ffunction-sections -fvisibility=hidden -flto -D__ANDROID_API__=$(API)
+#TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON)
+#TARGET_LDFLAGS_ADDON = -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
+#CROSS_PREFIX = i686-linux-android
 
 ################################################################################
 
@@ -57,7 +57,7 @@ LEVELDB_TIMESTAMP = $(LEVELDB_DIR)/timestamp
 LEVELDB_TIMESTAMP_INT = $(ANDR_ROOT)/deps/leveldb_timestamp
 LEVELDB_URL = https://github.com/google/leveldb/archive/v$(LEVELDB_VERSION).zip
 
-OPENAL_VERSION = 1.18.2
+OPENAL_VERSION = 1.19.1
 OPENAL_DIR = $(ANDR_ROOT)/deps/openal-soft
 OPENAL_LIB = $(OPENAL_DIR)/libopenal.a
 OPENAL_TIMESTAMP = $(OPENAL_DIR)/timestamp
@@ -77,7 +77,7 @@ IRRLICHT_TIMESTAMP = $(IRRLICHT_DIR)/timestamp
 IRRLICHT_TIMESTAMP_INT = $(ANDR_ROOT)/deps/irrlicht_timestamp
 IRRLICHT_URL_HTTP = https://github.com/zaki/irrlicht/archive/$(IRRLICHT_COMMIT).zip
 
-CURL_VERSION = 7.61.0
+CURL_VERSION = 7.62.0
 CURL_DIR = $(ANDR_ROOT)/deps/curl
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp

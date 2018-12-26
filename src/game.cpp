@@ -1459,7 +1459,7 @@ private:
 	bool m_invert_mouse;
 	bool m_first_loop_after_window_activation;
 	bool m_camera_offset_changed;
-	
+
 #if defined(__ANDROID__) || defined(__IOS__)
 	bool show_minimap;
 	bool m_cache_hold_aux1;
@@ -1619,7 +1619,7 @@ bool Game::startup(bool *kill,
 	runData.time_from_last_punch = 10.0;
 	runData.profiler_max_page = 3;
 	runData.update_wielded_item_trigger = true;
-	
+
 	memset(&flags, 0, sizeof(flags));
 	flags.show_chat = true;
 	flags.show_hud = true;
@@ -1903,6 +1903,10 @@ bool Game::createClient(const std::string &playername,
 		}
 		return false;
 	}
+
+	#if defined(__ANDROID__) || defined(__IOS__)
+		porting::notifyServerConnect(!simple_singleplayer_mode);
+	#endif
 
 	GameGlobalShaderConstantSetterFactory *scsf = new GameGlobalShaderConstantSetterFactory(
 			&flags.force_fog_off, &runData.fog_range, client);
@@ -4042,7 +4046,7 @@ void Game::handleDigging(const PointedThing &pointed, const v3s16 &nodepos,
 		bool is_valid_position;
 		MapNode wasnode = map.getNodeNoEx(nodepos, &is_valid_position);
 		if (is_valid_position) {
-			if (client->moddingEnabled() && 
+			if (client->moddingEnabled() &&
 			    		client->getScript()->on_dignode(nodepos, wasnode)) {
 				return;
 			}
@@ -4693,7 +4697,7 @@ void Game::showPauseMenu()
 		<< "bgcolor[#00000060;true]"
 		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_continue;"
 		<< strgettext("Continue") << "]";
-	
+
 	if (!simple_singleplayer_mode) {
 #if !defined(__ANDROID__) && !defined(__IOS__)
 	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_change_password;"
