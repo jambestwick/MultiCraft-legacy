@@ -119,6 +119,9 @@ ScriptApiBase::ScriptApiBase() :
 
 	m_environment = NULL;
 	m_guiengine = NULL;
+
+	// Make sure Lua uses the right locale
+	setlocale(LC_NUMERIC, "C");
 }
 
 ScriptApiBase::~ScriptApiBase()
@@ -322,6 +325,10 @@ void ScriptApiBase::objectrefGetOrCreate(lua_State *L,
 		ObjectRef::create(L, cobj);
 	} else {
 		push_objectRef(L, cobj->getId());
+		if (cobj->isGone())
+			warningstream << "ScriptApiBase::objectrefGetOrCreate(): "
+					<< "Pushing ObjectRef to removed/deactivated object"
+					<< ", this is probably a bug." << std::endl;
 	}
 }
 

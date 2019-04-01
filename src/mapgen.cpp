@@ -815,7 +815,16 @@ void MapgenBasic::dustTopNodes()
 		}
 
 		content_t c = vm->m_data[vi].getContent();
-		if (!ndef->get(c).buildable_to && c != CONTENT_IGNORE && c != biome->c_dust) {
+		NodeDrawType dtype = ndef->get(c).drawtype;
+		// Only place on walkable cubic non-liquid nodes
+		// Dust check needed due to vertical overgeneration
+		if ((dtype == NDT_NORMAL ||
+				dtype == NDT_ALLFACES_OPTIONAL ||
+				dtype == NDT_GLASSLIKE_FRAMED_OPTIONAL ||
+				dtype == NDT_GLASSLIKE ||
+				dtype == NDT_GLASSLIKE_FRAMED ||
+				dtype == NDT_ALLFACES) &&
+				ndef->get(c).walkable && c != biome->c_dust) {
 			vm->m_area.add_y(em, vi, 1);
 			vm->m_data[vi] = MapNode(biome->c_dust);
 		}
@@ -979,8 +988,7 @@ bool GenerateNotifier::addEvent(GenNotifyType type, v3s16 pos, u32 id)
 
 
 void GenerateNotifier::getEvents(
-	std::map<std::string, std::vector<v3s16> > &event_map,
-	bool peek_events)
+	std::map<std::string, std::vector<v3s16> > &event_map)
 {
 	std::list<GenNotifyEvent>::iterator it;
 
@@ -992,9 +1000,12 @@ void GenerateNotifier::getEvents(
 
 		event_map[name].push_back(gn.pos);
 	}
+}
 
-	if (!peek_events)
-		m_notify_events.clear();
+
+void GenerateNotifier::clearEvents()
+{
+	m_notify_events.clear();
 }
 
 
@@ -1055,16 +1066,15 @@ void MapgenParams::writeParams(Settings *settings) const
 		bparams->writeParams(settings);
 }
 
-// Calculate edges of outermost generated mapchunks (less than
-// 'mapgen_limit'), and corresponding exact limits for SAO entities.
+
+// Calculate exact edges of the outermost mapchunks that are within the
+// set 'mapgen_limit'.
 void MapgenParams::calcMapgenEdges()
 {
 	// Central chunk offset, in blocks
 	s16 ccoff_b = -chunksize / 2;
-
 	// Chunksize, in nodes
 	s32 csize_n = chunksize * MAP_BLOCKSIZE;
-
 	// Minp/maxp of central chunk, in nodes
 	s16 ccmin = ccoff_b * MAP_BLOCKSIZE;
 	s16 ccmax = ccmin + csize_n - 1;
@@ -1083,25 +1093,17 @@ void MapgenParams::calcMapgenEdges()
 	s16 numcmin = MYMAX((ccfmin - mapgen_limit_min) / csize_n, 0);
 	s16 numcmax = MYMAX((mapgen_limit_max - ccfmax) / csize_n, 0);
 	// Mapgen edges, in nodes
-	// These values may be useful later as additional class members
-	s16 mapgen_edge_min = ccmin - numcmin * csize_n;
-	s16 mapgen_edge_max = ccmax + numcmax * csize_n;
-	// SAO position limits, in Irrlicht units
-	m_sao_limit_min = mapgen_edge_min * BS - 3.0f;
-	m_sao_limit_max = mapgen_edge_max * BS + 3.0f;
+	mapgen_edge_min = ccmin - numcmin * csize_n;
+	mapgen_edge_max = ccmax + numcmax * csize_n;
+
+	m_mapgen_edges_calculated = true;
 }
 
 
-bool MapgenParams::saoPosOverLimit(const v3f &p)
+s32 MapgenParams::getSpawnRangeMax()
 {
-	if (!m_sao_limit_calculated) {
+	if (!m_mapgen_edges_calculated)
 		calcMapgenEdges();
-		m_sao_limit_calculated = true;
-	}
-	return p.X < m_sao_limit_min ||
-		p.X > m_sao_limit_max ||
-		p.Y < m_sao_limit_min ||
-		p.Y > m_sao_limit_max ||
-		p.Z < m_sao_limit_min ||
-		p.Z > m_sao_limit_max;
+
+	return MYMIN(-mapgen_edge_min, mapgen_edge_max);
 }

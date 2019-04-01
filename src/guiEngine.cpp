@@ -86,24 +86,30 @@ MenuTextureSource::~MenuTextureSource()
 /******************************************************************************/
 video::ITexture* MenuTextureSource::getTexture(const std::string &name, u32 *id)
 {
-	if(id)
+	if (id)
 		*id = 0;
-	if(name.empty())
+
+	if (name.empty())
 		return NULL;
+
 	m_to_delete.insert(name);
 
 #if defined(__ANDROID__) || defined(__IOS__)
-	if (m_driver->findTexture(name.c_str()) != NULL)
-		return m_driver->findTexture(name.c_str());
-	video::IImage *image = m_driver->createImageFromFile(name.c_str());
-	if (image) {
-		image = Align2Npot2(image, m_driver);
-		video::ITexture* retval = m_driver->addTexture(name.c_str(), image);
-		image->drop();
+	video::ITexture *retval = m_driver->findTexture(name.c_str());
+	if (retval)
 		return retval;
-	}
-#endif
+
+	video::IImage *image = m_driver->createImageFromFile(name.c_str());
+	if (!image)
+		return NULL;
+
+	image = Align2Npot2(image, m_driver);
+	retval = m_driver->addTexture(name.c_str(), image);
+	image->drop();
+	return retval;
+#else
 	return m_driver->getTexture(name.c_str());
+#endif
 }
 
 /******************************************************************************/

@@ -146,7 +146,10 @@ EmergeManager::~EmergeManager()
 		}
 
 		delete thread;
-		delete m_mapgens[i];
+
+		// Mapgen init might not be finished if there is an error during startup.
+		if (m_mapgens.size() > i)
+			delete m_mapgens[i];
 	}
 
 	delete biomemgr;
@@ -569,6 +572,12 @@ MapBlock *EmergeThread::finishGen(v3s16 pos, BlockMakeData *bmdata,
 	} catch (LuaError &e) {
 		m_server->setAsyncFatalError("Lua: finishGen" + std::string(e.what()));
 	}
+
+	/*
+		Clear generate notifier events
+	*/
+	Mapgen *mg = m_emerge->getCurrentMapgen();
+	mg->gennotify.clearEvents();
 
 	EMERGE_DBG_OUT("ended up with: " << analyze_block(block));
 

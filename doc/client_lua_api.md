@@ -628,6 +628,9 @@ Minetest namespace reference
   version entirely. To check for the presence of engine features, test
   whether the functions exported by the wanted features exist. For example:
   `if minetest.nodeupdate then ... end`.
+* `minetest.sha1(data, [raw])`: returns the sha1 hash of data
+    * `data`: string of data to hash
+    * `raw`: return raw bytes instead of hex digits, default: false
 
 ### Logging
 * `minetest.debug(...)`
@@ -1117,15 +1120,15 @@ The following functions provide escape sequences:
       `minetest.get_color_escape_sequence(color) ..
        message ..
        minetest.get_color_escape_sequence("#ffffff")`
-* `color.get_background_escape_sequence(color)`
+* `minetest.get_background_escape_sequence(color)`
     * `color` is a [ColorString](#colorstring)
     * The escape sequence sets the background of the whole text element to
       `color`. Only defined for item descriptions and tooltips.
-* `color.strip_foreground_colors(str)`
+* `minetest.strip_foreground_colors(str)`
     * Removes foreground colors added by `get_color_escape_sequence`.
-* `color.strip_background_colors(str)`
+* `minetest.strip_background_colors(str)`
     * Removes background colors added by `get_background_escape_sequence`.
-* `color.strip_colors(str)`
+* `minetest.strip_colors(str)`
     * Removes all color escape sequences.
 
 `ColorString`

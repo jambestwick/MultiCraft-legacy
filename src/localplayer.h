@@ -22,6 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "player.h"
 #include "environment.h"
+#include "constants.h"
 #include <list>
 
 class Client;
@@ -46,6 +47,8 @@ public:
 
 	ClientActiveObject *parent;
 
+	// Initialize hp to 0, so that no hearts will be shown if server
+	// doesn't support health points
 	u16 hp;
 	bool isAttached;
 	bool touching_ground;
@@ -108,7 +111,7 @@ public:
 
 	void setCAO(GenericCAO *toset)
 	{
-		assert(m_cao == NULL); // Pre-condition
+		assert(!m_cao); // Pre-condition
 		m_cao = toset;
 	}
 
@@ -140,30 +143,31 @@ public:
 private:
 	void accelerateHorizontal(const v3f &target_speed, const f32 max_increase);
 	void accelerateVertical(const v3f &target_speed, const f32 max_increase);
+	bool updateSneakNode(Map *map, const v3f &position, const v3f &sneak_max);
 
 	v3f m_position;
+	v3s16 m_standing_node;
 
 	v3s16 m_sneak_node;
-	// Stores the max player uplift by m_sneak_node
-	// To support temporary option for old move code
-	f32 m_sneak_node_bb_ymax;
 	// Stores the top bounding box of m_sneak_node
 	aabb3f m_sneak_node_bb_top;
 	// Whether the player is allowed to sneak
 	bool m_sneak_node_exists;
-	// Whether recalculation of m_sneak_node and its top bbox is needed
-	bool m_need_to_get_new_sneak_node;
 	// Whether a "sneak ladder" structure is detected at the players pos
 	// see detectSneakLadder() in the .cpp for more info (always false if disabled)
 	bool m_sneak_ladder_detected;
-	// Whether a 2-node-up ledge is detected at the players pos,
-	// see detectLedge() in the .cpp for more info (always false if disabled).
-	bool m_ledge_detected;
 
+	// ***** Variables for temporary option of the old move code *****
+	// Stores the max player uplift by m_sneak_node
+	f32 m_sneak_node_bb_ymax;
+	// Whether recalculation of m_sneak_node and its top bbox is needed
+	bool m_need_to_get_new_sneak_node;
 	// Node below player, used to determine whether it has been removed,
 	// and its old type
 	v3s16 m_old_node_below;
 	std::string m_old_node_below_type;
+	// ***** End of variables for temporary option *****
+
 	bool m_can_jump;
 	u16 m_breath;
 	f32 m_yaw;

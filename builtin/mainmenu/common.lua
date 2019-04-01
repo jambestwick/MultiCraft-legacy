@@ -249,7 +249,7 @@ end
 
 --------------------------------------------------------------------------------
 function text2textlist(xpos, ypos, width, height, tl_name, textlen, text, transparency)
-	local textlines = core.wrap_text(text, textlen)
+	local textlines = core.wrap_text(text, textlen, true)
 	local retval = "textlist[" .. xpos .. "," .. ypos .. ";" .. width ..
 			"," .. height .. ";" .. tl_name .. ";"
 

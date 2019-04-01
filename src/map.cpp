@@ -1377,11 +1377,6 @@ s16 ServerMap::getWaterLevel()
 	return getMapgenParams()->water_level;
 }
 
-bool ServerMap::saoPositionOverLimit(const v3f &p)
-{
-	return getMapgenParams()->saoPosOverLimit(p);
-}
-
 bool ServerMap::blockpos_over_mapgen_limit(v3s16 p)
 {
 	const s16 mapgen_limit_bp = rangelim(
@@ -2734,6 +2729,7 @@ void MMVManip::blitBackAll(std::map<v3s16, MapBlock*> *modified_blocks,
 			continue;
 
 		block->copyFrom(*this);
+		block->raiseModified(MOD_STATE_WRITE_NEEDED, MOD_REASON_VMANIP);
 
 		if(modified_blocks)
 			(*modified_blocks)[p] = block;

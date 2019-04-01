@@ -159,7 +159,8 @@ enum MaterialType{
 	TILE_MATERIAL_LIQUID_TRANSPARENT,
 	TILE_MATERIAL_LIQUID_OPAQUE,
 	TILE_MATERIAL_WAVING_LEAVES,
-	TILE_MATERIAL_WAVING_PLANTS
+	TILE_MATERIAL_WAVING_PLANTS,
+	TILE_MATERIAL_OPAQUE
 };
 
 // Material flags
@@ -243,17 +244,19 @@ struct TileLayer
 	void applyMaterialOptions(video::SMaterial &material) const
 	{
 		switch (material_type) {
+		case TILE_MATERIAL_OPAQUE:
+		case TILE_MATERIAL_LIQUID_OPAQUE:
+			material.MaterialType = video::EMT_SOLID;
+			break;
 		case TILE_MATERIAL_BASIC:
 		case TILE_MATERIAL_WAVING_LEAVES:
 		case TILE_MATERIAL_WAVING_PLANTS:
+			material.MaterialTypeParam = 0.5;
 			material.MaterialType = video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF;
 			break;
 		case TILE_MATERIAL_ALPHA:
 		case TILE_MATERIAL_LIQUID_TRANSPARENT:
 			material.MaterialType = video::EMT_TRANSPARENT_ALPHA_CHANNEL;
-			break;
-		case TILE_MATERIAL_LIQUID_OPAQUE:
-			material.MaterialType = video::EMT_SOLID;
 			break;
 		}
 		material.BackfaceCulling = (material_flags & MATERIAL_FLAG_BACKFACE_CULLING)

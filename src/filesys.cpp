@@ -27,6 +27,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "log.h"
 #include "config.h"
 #include "porting.h"
+#ifdef __ANDROID__
+#include "settings.h" // For g_settings
+#endif
 
 namespace fs
 {
@@ -741,4 +744,3 @@ bool Rename(const std::string &from, const std::string &to)
 }
 
 } // namespace fs
-

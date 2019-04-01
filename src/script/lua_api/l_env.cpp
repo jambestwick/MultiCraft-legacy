@@ -291,8 +291,7 @@ int ModApiEnvMod::l_place_node(lua_State *L)
 	pointed.type = POINTEDTHING_NODE;
 	pointed.node_abovesurface = pos;
 	pointed.node_undersurface = pos + v3s16(0,-1,0);
-	// Place it with a NULL placer (appears in Lua as a non-functional
-	// ObjectRef)
+	// Place it with a NULL placer (appears in Lua as nil)
 	bool success = scriptIfaceItem->item_OnPlace(item, NULL, pointed);
 	lua_pushboolean(L, success);
 	return 1;
@@ -537,9 +536,11 @@ int ModApiEnvMod::l_get_objects_inside_radius(lua_State *L)
 	std::vector<u16>::const_iterator iter = ids.begin();
 	for(u32 i = 0; iter != ids.end(); ++iter) {
 		ServerActiveObject *obj = env->getActiveObject(*iter);
-		// Insert object reference into table
-		script->objectrefGetOrCreate(L, obj);
-		lua_rawseti(L, -2, ++i);
+		if (!obj->isGone()) {
+			// Insert object reference into table
+			script->objectrefGetOrCreate(L, obj);
+			lua_rawseti(L, -2, ++i);
+		}
 	}
 	return 1;
 }
@@ -651,38 +652,47 @@ int ModApiEnvMod::l_find_nodes_in_area(lua_State *L)
 	INodeDefManager *ndef = getServer(L)->ndef();
 	v3s16 minp = read_v3s16(L, 1);
 	v3s16 maxp = read_v3s16(L, 2);
+	sortBoxVerticies(minp, maxp);
+
+	v3s16 cube = maxp - minp + 1;
+	// Volume limit equal to 8 default mapchunks, (80 * 2) ^ 3 = 4,096,000
+	if ((u64)cube.X * (u64)cube.Y * (u64)cube.Z > 4096000) {
+		luaL_error(L, "find_nodes_in_area(): area volume"
+				" exceeds allowed value of 4096000");
+		return 0;
+	}
+
 	std::set<content_t> filter;
-	if(lua_istable(L, 3)) {
-		int table = 3;
+	if (lua_istable(L, 3)) {
 		lua_pushnil(L);
-		while(lua_next(L, table) != 0) {
+		while (lua_next(L, 3) != 0) {
 			// key at index -2 and value at index -1
 			luaL_checktype(L, -1, LUA_TSTRING);
 			ndef->getIds(lua_tostring(L, -1), filter);
 			// removes value, keeps key for next iteration
 			lua_pop(L, 1);
 		}
-	} else if(lua_isstring(L, 3)) {
+	} else if (lua_isstring(L, 3)) {
 		ndef->getIds(lua_tostring(L, 3), filter);
 	}
 
-	std::map<content_t, u16> individual_count;
+	UNORDERED_MAP<content_t, u32> individual_count;
 
 	lua_newtable(L);
 	u64 i = 0;
 	for (s16 x = minp.X; x <= maxp.X; x++)
-		for (s16 y = minp.Y; y <= maxp.Y; y++)
-			for (s16 z = minp.Z; z <= maxp.Z; z++) {
-				v3s16 p(x, y, z);
-				content_t c = env->getMap().getNodeNoEx(p).getContent();
-				if (filter.count(c) != 0) {
-					push_v3s16(L, p);
-					lua_rawseti(L, -2, ++i);
-					individual_count[c]++;
-				}
+	for (s16 y = minp.Y; y <= maxp.Y; y++)
+	for (s16 z = minp.Z; z <= maxp.Z; z++) {
+		v3s16 p(x, y, z);
+		content_t c = env->getMap().getNodeNoEx(p).getContent();
+		if (filter.count(c) != 0) {
+			push_v3s16(L, p);
+			lua_rawseti(L, -2, ++i);
+			individual_count[c]++;
+		}
 	}
 	lua_newtable(L);
-	for (std::set<content_t>::iterator it = filter.begin();
+	for (std::set<content_t>::const_iterator it = filter.begin();
 			it != filter.end(); ++it) {
 		lua_pushnumber(L, individual_count[*it]);
 		lua_setfield(L, -2, ndef->get(*it).name.c_str());
@@ -706,12 +716,21 @@ int ModApiEnvMod::l_find_nodes_in_area_under_air(lua_State *L)
 	INodeDefManager *ndef = getServer(L)->ndef();
 	v3s16 minp = read_v3s16(L, 1);
 	v3s16 maxp = read_v3s16(L, 2);
+	sortBoxVerticies(minp, maxp);
+
+	v3s16 cube = maxp - minp + 1;
+	// Volume limit equal to 8 default mapchunks, (80 * 2) ^ 3 = 4,096,000
+	if ((u64)cube.X * (u64)cube.Y * (u64)cube.Z > 4096000) {
+		luaL_error(L, "find_nodes_in_area_under_air(): area volume"
+				" exceeds allowed value of 4096000");
+		return 0;
+	}
+
 	std::set<content_t> filter;
 
 	if (lua_istable(L, 3)) {
-		int table = 3;
 		lua_pushnil(L);
-		while(lua_next(L, table) != 0) {
+		while (lua_next(L, 3) != 0) {
 			// key at index -2 and value at index -1
 			luaL_checktype(L, -1, LUA_TSTRING);
 			ndef->getIds(lua_tostring(L, -1), filter);
@@ -732,7 +751,7 @@ int ModApiEnvMod::l_find_nodes_in_area_under_air(lua_State *L)
 		for (; y <= maxp.Y; y++) {
 			v3s16 psurf(x, y + 1, z);
 			content_t csurf = env->getMap().getNodeNoEx(psurf).getContent();
-			if(c != CONTENT_AIR && csurf == CONTENT_AIR &&
+			if (c != CONTENT_AIR && csurf == CONTENT_AIR &&
 					filter.count(c) != 0) {
 				push_v3s16(L, v3s16(x, y, z));
 				lua_rawseti(L, -2, ++i);

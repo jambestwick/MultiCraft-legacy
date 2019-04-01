@@ -326,16 +326,13 @@ Server::Server(
 
 Server::~Server()
 {
-	infostream<<"Server destructing"<<std::endl;
+	infostream << "Server destructing" << std::endl;
 
 	// Send shutdown message
 	SendChatMessage(PEER_ID_INEXISTENT, L"*** Server shutting down");
 
 	{
 		MutexAutoLock envlock(m_env_mutex);
-
-		// Execute script shutdown hooks
-		m_script->on_shutdown();
 
 		infostream << "Server: Saving players" << std::endl;
 		m_env->saveLoadedPlayers();
@@ -352,6 +349,20 @@ Server::~Server()
 		}
 		m_env->kickAllPlayers(SERVER_ACCESSDENIED_SHUTDOWN,
 			kick_msg, reconnect);
+	}
+
+	// Do this before stopping the server in case mapgen callbacks need to access
+	// server-controlled resources (like ModStorages). Also do them before
+	// shutdown callbacks since they may modify state that is finalized in a
+	// callback.
+	m_emerge->stopThreads();
+
+	{
+		MutexAutoLock envlock(m_env_mutex);
+
+		// Execute script shutdown hooks
+		infostream << "Executing shutdown hooks" << std::endl;
+		m_script->on_shutdown();
 
 		infostream << "Server: Saving environment metadata" << std::endl;
 		m_env->saveMeta();
@@ -360,10 +371,6 @@ Server::~Server()
 	// Stop threads
 	stop();
 	delete m_thread;
-
-	// stop all emerge threads before deleting players that may have
-	// requested blocks to be emerged
-	m_emerge->stopThreads();
 
 	// Delete things in the reverse order of creation
 	delete m_emerge;
@@ -376,7 +383,7 @@ Server::~Server()
 	delete m_craftdef;
 
 	// Deinitialize scripting
-	infostream<<"Server: Deinitializing scripting"<<std::endl;
+	infostream << "Server: Deinitializing scripting" << std::endl;
 	delete m_script;
 
 	// Delete detached inventories
@@ -1635,15 +1642,20 @@ void Server::SendInventory(PlayerSAO* playerSAO)
 void Server::SendChatMessage(u16 peer_id, const std::wstring &message)
 {
 	DSTACK(FUNCTION_NAME);
-
-	NetworkPacket pkt(TOCLIENT_CHAT_MESSAGE, 0, peer_id);
-	pkt << message;
-
 	if (peer_id != PEER_ID_INEXISTENT) {
+		NetworkPacket pkt(TOCLIENT_CHAT_MESSAGE, 0, peer_id);
+
+		if (m_clients.getProtocolVersion(peer_id) < 27)
+			pkt << unescape_enriched(message);
+		else
+			pkt << message;
+
 		Send(&pkt);
-	}
-	else {
-		m_clients.sendToAll(&pkt);
+	} else {
+		std::vector<u16> clients = m_clients.getClientIDs();
+		for (std::vector<u16>::iterator it = clients.begin();
+				it != clients.end(); ++it)
+			SendChatMessage(*it, message);
 	}
 }
 
@@ -2862,11 +2874,14 @@ void Server::handleChatInterfaceEvent(ChatEvent *evt)
 }
 
 std::wstring Server::handleChat(const std::string &name, const std::wstring &wname,
-	const std::wstring &wmessage, bool check_shout_priv, RemotePlayer *player)
+	std::wstring wmessage, bool check_shout_priv, RemotePlayer *player)
 {
 	// If something goes wrong, this player is to blame
 	RollbackScopeActor rollback_scope(m_rollback,
 		std::string("player:") + name);
+
+	if (g_settings->getBool("strip_color_codes"))
+		wmessage = unescape_enriched(wmessage);
 
 	if (player) {
 		switch (player->canSendChatMessage()) {
@@ -2922,7 +2937,7 @@ std::wstring Server::handleChat(const std::string &name, const std::wstring &wna
 		/*
 			Send the message to others
 		*/
-		actionstream << "CHAT: " << wide_to_narrow(line) << std::endl;
+		actionstream << "CHAT: " << wide_to_narrow(unescape_enriched(line)) << std::endl;
 
 		std::vector<u16> clients = m_clients.getClientIDs();
 
@@ -3502,10 +3517,12 @@ v3f Server::findSpawnPos()
 	}
 
 	bool is_good = false;
+	// Limit spawn range to mapgen edges (determined by 'mapgen_limit')
+	s32 range_max = map.getMapgenParams()->getSpawnRangeMax();
 
 	// Try to find a good place a few times
 	for(s32 i = 0; i < 4000 && !is_good; i++) {
-		s32 range = 1 + i;
+		s32 range = MYMIN(1 + i, range_max);
 		// We're going to try to throw the player to this position
 		v2s16 nodepos2d = v2s16(
 			-range + (myrand() % (range * 2)),
@@ -3552,7 +3569,7 @@ void Server::requestShutdown(const std::string &msg, bool reconnect, float delay
 	if (delay == 0.0f) {
 	// No delay, shutdown immediately
 		m_shutdown_requested = true;
-		// only print to the infostream, a chat message saying 
+		// only print to the infostream, a chat message saying
 		// "Server Shutting Down" is sent when the server destructs.
 		infostream << "*** Immediate Server shutdown requested." << std::endl;
 	} else if (delay < 0.0f && m_shutdown_timer > 0.0f) {

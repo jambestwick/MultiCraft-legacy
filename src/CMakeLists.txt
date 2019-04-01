@@ -268,7 +268,7 @@ if(WIN32)
 	else() # Probably MinGW = GCC
 		set(PLATFORM_LIBS "")
 	endif()
-	set(PLATFORM_LIBS ws2_32.lib shlwapi.lib ${PLATFORM_LIBS})
+	set(PLATFORM_LIBS ws2_32.lib version.lib shlwapi.lib ${PLATFORM_LIBS})
 
 	# Zlib stuff
 	set(ZLIB_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/../../zlib/zlib-1.2.5"
@@ -325,10 +325,12 @@ else()
 		endif(HAVE_LIBRT)
 	endif(APPLE)
 
+	if(NOT APPLE)
 	# This way Xxf86vm is found on OpenBSD too
-	find_library(XXF86VM_LIBRARY Xxf86vm)
-	mark_as_advanced(XXF86VM_LIBRARY)
-	set(CLIENT_PLATFORM_LIBS ${CLIENT_PLATFORM_LIBS} ${XXF86VM_LIBRARY})
+		find_library(XXF86VM_LIBRARY Xxf86vm)
+		mark_as_advanced(XXF86VM_LIBRARY)
+		set(CLIENT_PLATFORM_LIBS ${CLIENT_PLATFORM_LIBS} ${XXF86VM_LIBRARY})
+	endif(NOT APPLE)
 
 	# Prefer local iconv if installed
 	find_library(ICONV_LIBRARY iconv)

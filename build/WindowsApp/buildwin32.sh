@@ -139,4 +139,7 @@ cmake .. \
 
 make package -j $(nproc)
 
+[ "x$NO_PACKAGE" = "x" ] && make package
+
+exit 0
 # EOF

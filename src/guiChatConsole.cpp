@@ -204,8 +204,8 @@ void GUIChatConsole::draw()
 		// scale current console height to new window size
 		if (m_screensize.Y != 0)
 			m_height = m_height * screensize.Y / m_screensize.Y;
-		m_desired_height = m_desired_height_fraction * m_screensize.Y;
 		m_screensize = screensize;
+		m_desired_height = m_desired_height_fraction * m_screensize.Y;
 		reformatConsole();
 	}
 
@@ -231,6 +231,7 @@ void GUIChatConsole::reformatConsole()
 	s32 rows = m_desired_height / m_fontsize.Y - 1; // make room for the input prompt
 	if (cols <= 0 || rows <= 0)
 		cols = rows = 0;
+	recalculateConsolePosition();
 	m_chat_backend->reformat(cols, rows);
 }
 

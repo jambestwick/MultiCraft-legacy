@@ -481,12 +481,13 @@ private:
 	void RespawnPlayer(u16 peer_id);
 	void DeleteClient(u16 peer_id, ClientDeletionReason reason);
 	void UpdateCrafting(RemotePlayer *player);
+	bool checkInteractDistance(RemotePlayer *player, const f32 d, const std::string what);
 
 	void handleChatInterfaceEvent(ChatEvent *evt);
 
 	// This returns the answer to the sender of wmessage, or "" if there is none
 	std::wstring handleChat(const std::string &name, const std::wstring &wname,
-		const std::wstring &wmessage,
+		std::wstring wmessage_input,
 		bool check_shout_priv = false,
 		RemotePlayer *player = NULL);
 	void handleAdminChat(const ChatEventChat *evt);

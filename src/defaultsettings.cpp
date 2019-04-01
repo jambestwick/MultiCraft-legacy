@@ -129,8 +129,9 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("fps_max", "60");
 	settings->setDefault("pause_fps_max", "10");
 	settings->setDefault("viewing_range", "100");
-	settings->setDefault("screen_w", "800");
-	settings->setDefault("screen_h", "600");
+	settings->setDefault("near_plane", "0.1");
+	settings->setDefault("screenW", "800");
+	settings->setDefault("screenH", "600");
 	settings->setDefault("autosave_screensize", "true");
 	settings->setDefault("fullscreen", "false");
 	settings->setDefault("fullscreen_bpp", "24");
@@ -259,6 +260,7 @@ void set_default_settings(Settings *settings)
 
 	// Server
 	settings->setDefault("disable_escape_sequences", "false");
+	settings->setDefault("strip_color_codes", "false");
 
 	// Network
 	settings->setDefault("enable_ipv6", "true");
@@ -371,8 +373,8 @@ void set_default_settings(Settings *settings)
 
 	// Mobile Platform
 #if defined(__ANDROID__) || defined(__IOS__)
-	settings->setDefault("screen_w", "0");
-	settings->setDefault("screen_h", "0");
+	settings->setDefault("screenW", "0");
+	settings->setDefault("screenH", "0");
 	settings->setDefault("fps_max", "35");
 	settings->setDefault("enable_shaders", "false");
 	settings->setDefault("fullscreen", "true");

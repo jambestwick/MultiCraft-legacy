@@ -373,13 +373,10 @@ void StringBuffer::push_back(char c)
 			flush(std::string(buffer, buffer_index));
 		buffer_index = 0;
 	} else {
-		int index = buffer_index;
-		buffer[index++] = c;
-		if (index >= BUFFER_LENGTH) {
+		buffer[buffer_index++] = c;
+		if (buffer_index >= BUFFER_LENGTH) {
 			flush(std::string(buffer, buffer_index));
 			buffer_index = 0;
-		} else {
-			buffer_index = index;
 		}
 	}
 }

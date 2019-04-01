@@ -1,4 +1,4 @@
-Minetest Lua Modding API Reference 0.4.16
+Minetest Lua Modding API Reference 0.4.17
 =========================================
 * More information at <http://www.minetest.net/>
 * Developer Wiki: <http://dev.minetest.net/>
@@ -211,7 +211,8 @@ when registering it.
 
 The `:` prefix can also be used for maintaining backwards compatibility.
 
-### Aliases
+Aliases
+-------
 Aliases can be added by using `minetest.register_alias(name, convert_to)` or
 `minetest.register_alias_force(name, convert_to)`.
 
@@ -231,6 +232,75 @@ you have an item called `epiclylongmodname:stuff`, you could do
     minetest.register_alias("stuff", "epiclylongmodname:stuff")
 
 and be able to use `/giveme stuff`.
+
+Mapgen aliases
+--------------
+In a game, a certain number of these must be set to tell core mapgens which
+of the game's nodes are to be used by the core mapgens. For example:
+
+    minetest.register_alias("mapgen_stone", "default:stone")
+
+### Aliases needed for all mapgens except Mapgen v6
+
+Base terrain:
+
+"mapgen_stone"
+"mapgen_water_source"
+"mapgen_river_water_source"
+
+Caves:
+
+"mapgen_lava_source"
+
+Dungeons:
+
+Only needed for registered biomes where 'node_stone' is stone:
+"mapgen_cobble"
+"mapgen_stair_cobble"
+"mapgen_mossycobble"
+Only needed for registered biomes where 'node_stone' is desert stone:
+"mapgen_desert_stone"
+"mapgen_stair_desert_stone"
+Only needed for registered biomes where 'node_stone' is sandstone:
+"mapgen_sandstone"
+"mapgen_sandstonebrick"
+"mapgen_stair_sandstone_block"
+
+### Aliases needed for Mapgen v6
+
+Terrain and biomes:
+
+"mapgen_stone"
+"mapgen_water_source"
+"mapgen_lava_source"
+"mapgen_dirt"
+"mapgen_dirt_with_grass"
+"mapgen_sand"
+"mapgen_gravel"
+"mapgen_desert_stone"
+"mapgen_desert_sand"
+"mapgen_dirt_with_snow"
+"mapgen_snowblock"
+"mapgen_snow"
+"mapgen_ice"
+
+Flora:
+
+"mapgen_tree"
+"mapgen_leaves"
+"mapgen_apple"
+"mapgen_jungletree"
+"mapgen_jungleleaves"
+"mapgen_junglegrass"
+"mapgen_pine_tree"
+"mapgen_pine_needles"
+
+Dungeons:
+
+"mapgen_cobble"
+"mapgen_stair_cobble"
+"mapgen_mossycobble"
+"mapgen_stair_desert_stone"
 
 Textures
 --------
@@ -531,9 +601,26 @@ for conversion.
 If the `ItemStack`'s metadata contains the `color` field, it will be
 lost on placement, because nodes on the map can only use palettes.
 
-If the `ItemStack`'s metadata contains the `palette_index` field, you
-currently must manually convert between it and the node's `param2` with
-custom `on_place` and `on_dig` callbacks.
+If the `ItemStack`'s metadata contains the `palette_index` field, it is
+automatically transferred between node and item forms by the engine,
+when a player digs or places a colored node.
+You can disable this feature by setting the `drop` field of the node
+to itself (without metadata).
+To transfer the color to a special drop, you need a drop table.
+Example:
+
+    minetest.register_node("mod:stone", {
+        description = "Stone",
+        tiles = {"default_stone.png"},
+        paramtype2 = "color",
+        palette = "palette.png",
+        drop = {
+            items = {
+                -- assume that mod:cobblestone also has the same palette
+                {items = {"mod:cobblestone"}, inherit_color = true },
+            }
+        }
+    })
 
 ### Colored items in craft recipes
 Craft recipes only support item strings, but fortunately item strings
@@ -578,7 +665,7 @@ Example (colored grass block):
         description = "Dirt with Grass",
         -- Regular tiles, as usual
         -- The dirt tile disables palette coloring
-        tiles = {{name = "default_grass.png"}, 
+        tiles = {{name = "default_grass.png"},
             {name = "default_dirt.png", color = "white"}},
         -- Overlay tiles: define them in the same style
         -- The top and bottom tile does not have overlay
@@ -792,6 +879,11 @@ node definition:
       0 = y+    1 = z+    2 = z-    3 = x+    4 = x-    5 = y-
       facedir modulo 4 = rotation around that axis
     paramtype2 == "leveled"
+    ^ Only valid for "nodebox" with type = "leveled".
+        The level of the top face of the nodebox is stored in param2.
+        The other faces are defined by 'fixed = {}' like 'type = "fixed"' nodeboxes.
+        The nodebox height is param2 / 64 nodes.
+        The maximum accepted value of param2 is 127.
     paramtype2 == "degrotate"
     ^ The rotation of this node is stored in param2. Plants are rotated this way.
       Values range 0 - 179. The value stored in param2 is multiplied by two to
@@ -2060,15 +2152,15 @@ The following functions provide escape sequences:
       `minetest.get_color_escape_sequence(color) ..
        message ..
        minetest.get_color_escape_sequence("#ffffff")`
-* `color.get_background_escape_sequence(color)`
+* `minetest.get_background_escape_sequence(color)`
     * `color` is a ColorString
     * The escape sequence sets the background of the whole text element to
       `color`. Only defined for item descriptions and tooltips.
-* `color.strip_foreground_colors(str)`
+* `minetest.strip_foreground_colors(str)`
     * Removes foreground colors added by `get_color_escape_sequence`.
-* `color.strip_background_colors(str)`
+* `minetest.strip_background_colors(str)`
     * Removes background colors added by `get_background_escape_sequence`.
-* `color.strip_colors(str)`
+* `minetest.strip_colors(str)`
     * Removes all color escape sequences.
 
 Spatial Vectors
@@ -2111,9 +2203,11 @@ Helper functions
     * e.g. `string:split("a,b", ",") == {"a","b"}`
 * `string:trim()`
     * e.g. `string.trim("\n \t\tfoo bar\t ") == "foo bar"`
-* `minetest.wrap_text(str, limit)`: returns a string
-    * Adds new lines to the string to keep it within the specified character limit
+* `minetest.wrap_text(str, limit, [as_table])`: returns a string or table
+    * Adds newlines to the string to keep it within the specified character limit
+      Note that returned lines may be longer than the limit since it only splits at word borders.
     * limit: Maximal amount of characters in one line
+    * as_table: optional, if true return table of lines instead of string
 * `minetest.pos_to_string({x=X,y=Y,z=Z}, decimal_places))`: returns string `"(X,Y,Z)"`
     * Convert position to a printable string
       Optional: 'decimal_places' will round the x, y and z of the pos to the given decimal place.
@@ -2181,7 +2275,7 @@ Helper functions
                 max_jitter = 0.5,          -- maximum packet time jitter
                 avg_jitter = 0.03,         -- average packet time jitter
                 connection_uptime = 200,   -- seconds since client connected
-                prot_vers = 31,            -- protocol version used by client
+                protocol_version = 32,     -- protocol version used by client
                 -- following information is available on debug build only!!!
                 -- DO NOT USE IN MODS
                 --ser_vers = 26,             -- serialization version used by client
@@ -2199,6 +2293,10 @@ Helper functions
       * nil: return all entries,
       * true: return only subdirectory names, or
       * false: return only file names.
+* `minetest.safe_file_write(path, content)`: returns boolean indicating success
+    * Replaces contents of file at path with new contents in a safe (atomic) way.
+      Use this instead of below code when writing e.g. database files:
+      `local f = io.open(path, "wb"); f:write(content); f:close()`
 * `minetest.get_version()`: returns a table containing components of the
    engine version.  Components:
     * `project`: Name of the project, eg, "Minetest"
@@ -2210,6 +2308,9 @@ Helper functions
   version entirely. To check for the presence of engine features, test
   whether the functions exported by the wanted features exist. For example:
   `if minetest.nodeupdate then ... end`.
+* `minetest.sha1(data, [raw])`: returns the sha1 hash of data
+    * `data`: string of data to hash
+    * `raw`: return raw bytes instead of hex digits, default: false
 
 ### Logging
 * `minetest.debug(...)`
@@ -2229,6 +2330,8 @@ Call these functions only at load time!
 * `minetest.register_craftitem(name, item definition)`
 * `minetest.unregister_item(name)`
 * `minetest.register_alias(name, convert_to)`
+    * Also use this to set the 'mapgen aliases' needed in a game for the core
+    * mapgens. See 'Mapgen aliases' section above.
 * `minetest.register_alias_force(name, convert_to)`
 * `minetest.register_craft(recipe)`
     * Check recipe table syntax for different types below.
@@ -2263,6 +2366,7 @@ Call these functions only at load time!
 * `minetest.register_on_placenode(func(pos, newnode, placer, oldnode, itemstack, pointed_thing))`
     * Called when a node has been placed
     * If return `true` no item is taken from `itemstack`
+    * `placer` may be any valid ObjectRef or nil.
     * **Not recommended**; use `on_construct` or `after_place_node` in node definition
       whenever possible
 * `minetest.register_on_dignode(func(pos, oldnode, digger))`
@@ -2356,8 +2460,9 @@ Call these functions only at load time!
     * `definition`: `{ description = "description text", give_to_singleplayer = boolean}`
       the default of `give_to_singleplayer` is true
     * To allow players with `basic_privs` to grant, see `basic_privs` minetest.conf setting.
-* `minetest.register_authentication_handler(handler)`
-    * See `minetest.builtin_auth_handler` in `builtin.lua` for reference
+* `minetest.register_authentication_handler(authentication handler definition)`
+    * Registers an auth handler that overrides the builtin one
+    * This function can be called by a single mod once only.
 
 ### Setting-related
 * `minetest.settings`: Settings object containing all of the settings from the
@@ -2366,37 +2471,44 @@ Call these functions only at load time!
   parses it as a position (in the format `(1,2,3)`). Returns a position or nil.
 
 ### Authentication
-* `minetest.notify_authentication_modified(name)`
-    * Should be called by the authentication handler if privileges changes.
-    * To report everybody, set `name=nil`.
-* `minetest.check_password_entry(name, entry, password)`
-    * Returns true if the "db entry" for a player with name matches given
-    * password, false otherwise.
-    * The "db entry" is the usually player-individual value that is derived
-    * from the player's chosen password and stored on the server in order to allow
-    * authentication whenever the player desires to log in.
-    * Only use this function for making it possible to log in via the password from
-    * via protocols like IRC, other uses for inside the game are frowned upon.
-* `minetest.get_password_hash(name, raw_password)`
-    * Convert a name-password pair to a password hash that Minetest can use.
-    * The returned value alone is not a good basis for password checks based
-    * on comparing the password hash in the database with the password hash
-    * from the function, with an externally provided password, as the hash
-    * in the db might use the new SRP verifier format.
-    * For this purpose, use `minetest.check_password_entry` instead.
 * `minetest.string_to_privs(str)`: returns `{priv1=true,...}`
 * `minetest.privs_to_string(privs)`: returns `"priv1,priv2,..."`
     * Convert between two privilege representations
-* `minetest.set_player_password(name, password_hash)`
-* `minetest.set_player_privs(name, {priv1=true,...})`
 * `minetest.get_player_privs(name) -> {priv1=true,...}`
-* `minetest.auth_reload()`
 * `minetest.check_player_privs(player_or_name, ...)`: returns `bool, missing_privs`
     * A quickhand for checking privileges.
-	* `player_or_name`: Either a Player object or the name of a player.
-	* `...` is either a list of strings, e.g. `"priva", "privb"` or
-	  a table, e.g. `{ priva = true, privb = true }`.
-* `minetest.get_player_ip(name)`: returns an IP address string
+    * `player_or_name`: Either a Player object or the name of a player.
+    * `...` is either a list of strings, e.g. `"priva", "privb"` or
+      a table, e.g. `{ priva = true, privb = true }`.
+
+* `minetest.check_password_entry(name, entry, password)`
+    * Returns true if the "password entry" for a player with name matches given
+      password, false otherwise.
+    * The "password entry" is the password representation generated by the engine
+      as returned as part of a `get_auth()` call on the auth handler.
+    * Only use this function for making it possible to log in via password from
+      external protocols such as IRC, other uses are frowned upon.
+* `minetest.get_password_hash(name, raw_password)`
+    * Convert a name-password pair to a password hash that Minetest can use.
+    * The returned value alone is not a good basis for password checks based
+      on comparing the password hash in the database with the password hash
+      from the function, with an externally provided password, as the hash
+      in the db might use the new SRP verifier format.
+    * For this purpose, use `minetest.check_password_entry` instead.
+* `minetest.get_player_ip(name)`: returns an IP address string for the player `name`
+    * The player needs to be online for this to be successful.
+
+* `minetest.get_auth_handler()`: Return the currently active auth handler
+    * See the `Authentication handler definition`
+    * Use this to e.g. get the authentication data for a player:
+      `local auth_data = minetest.get_auth_handler().get_auth(playername)`
+* `minetest.notify_authentication_modified(name)`
+    * Must be called by the authentication handler for privilege changes.
+    * `name`: string; if omitted, all auth data should be considered modified
+* `minetest.set_player_password(name, password_hash)`: Set password hash of player `name`
+* `minetest.set_player_privs(name, {priv1=true,...})`: Set privileges of player `name`
+* `minetest.auth_reload()`
+    * See `reload()` in authentication handler definition
 
 `minetest.set_player_password`, `minetest_set_player_privs`, `minetest_get_player_privs`
 and `minetest.auth_reload` call the authetification handler.
@@ -2462,12 +2574,15 @@ and `minetest.auth_reload` call the authetification handler.
     * `nodenames`: e.g. `{"ignore", "group:tree"}` or `"default:dirt"`
     * `search_center` is an optional boolean (default: `false`)
       If true `pos` is also checked for the nodes
-* `minetest.find_nodes_in_area(minp, maxp, nodenames)`: returns a list of positions
-    * returns as second value a table with the count of the individual nodes found
+* `minetest.find_nodes_in_area(pos1, pos2, nodenames)`: returns a list of positions
     * `nodenames`: e.g. `{"ignore", "group:tree"}` or `"default:dirt"`
-* `minetest.find_nodes_in_area_under_air(minp, maxp, nodenames)`: returns a list of positions
-    * returned positions are nodes with a node air above
+    * First return value: Table with all node positions
+    * Second return value: Table with the count of each node with the node name as index
+    * Area volume is limited to 4,096,000 nodes
+* `minetest.find_nodes_in_area_under_air(pos1, pos2, nodenames)`: returns a list of positions
     * `nodenames`: e.g. `{"ignore", "group:tree"}` or `"default:dirt"`
+    * Return value: Table with all node positions with a node air above
+    * Area volume is limited to 4,096,000 nodes
 * `minetest.get_perlin(noiseparams)`
 * `minetest.get_perlin(seeddiff, octaves, persistence, scale)`
     * Return world-specific perlin noise (`int(worldseed)+seeddiff`)
@@ -2676,6 +2791,13 @@ and `minetest.auth_reload` call the authetification handler.
     * Convert a vector into a yaw (angle)
 * `minetest.yaw_to_dir(yaw)`
     * Convert yaw (angle) to a vector
+* `minetest.is_colored_paramtype(ptype)`
+    * Returns a boolean. Returns `true` if the given `paramtype2` contains color
+      information (`color`, `colorwallmounted` or `colorfacedir`).
+* `minetest.strip_param2_color(param2, paramtype2)`
+    * Removes everything but the color information from the
+      given `param2` value.
+    * Returns `nil` if the given `paramtype2` does not contain color information
 * `minetest.get_node_drops(nodename, toolname)`
     * Returns list of item names.
     * **Note**: This will be removed or modified in a future version.
@@ -2711,9 +2833,9 @@ and `minetest.auth_reload` call the authetification handler.
     * Example query for `"default:gold_ingot"` will return table:
 
             {
-                [1]={type = "cooking", width = 3, output = "default:gold_ingot",
+                [1]={method = "cooking", width = 3, output = "default:gold_ingot",
                 items = {1 = "default:gold_lump"}},
-                [2]={type = "normal", width = 1, output = "default:gold_ingot 9",
+                [2]={method = "normal", width = 1, output = "default:gold_ingot 9",
                 items = {1 = "default:goldblock"}}
             }
 * `minetest.handle_node_drops(pos, drops, digger)`
@@ -2735,9 +2857,11 @@ and `minetest.auth_reload` call the authetification handler.
 ### Defaults for the `on_*` item definition functions
 These functions return the leftover itemstack.
 
-* `minetest.item_place_node(itemstack, placer, pointed_thing, param2)`
+* `minetest.item_place_node(itemstack, placer, pointed_thing[, param2, prevent_after_place])`
     * Place item as a node
     * `param2` overrides `facedir` and wallmounted `param2`
+    * `prevent_after_place`: if set to `true`, `after_place_node` is not called
+      for the newly placed node to prevent a callback and placement loop
     * returns `itemstack, success`
 * `minetest.item_place_object(itemstack, placer, pointed_thing)`
     * Place item as-is
@@ -2893,6 +3017,7 @@ These functions return the leftover itemstack.
 
 ### Misc.
 * `minetest.get_connected_players()`: returns list of `ObjectRefs`
+* `minetest.is_player(o)`: boolean, whether `o` is a player
 * `minetest.player_exists(name)`: boolean, whether player exists (regardless of online status)
 * `minetest.hud_replace_builtin(name, hud_definition)`
     * Replaces definition of a builtin hud element
@@ -2960,6 +3085,7 @@ These functions return the leftover itemstack.
     * Returns true, if player `name` shouldn't be abled to dig at `pos` or do other
       actions, defineable by mods, due to some mod-defined ownership-like concept.
       Returns false or nil, if the player is allowed to do such actions.
+    * `name` will be "" for non-players or unknown players.
     * This function should be overridden by protection mods and should be used to
       check if a player can interact at a position.
     * This function should call the old version of itself if the position is not
@@ -2976,25 +3102,29 @@ These functions return the leftover itemstack.
 * `minetest.record_protection_violation(pos, name)`
      * This function calls functions registered with
        `minetest.register_on_protection_violation`.
-* `minetest.rotate_and_place(itemstack, placer, pointed_thing, infinitestacks, orient_flags)`
+* `minetest.rotate_and_place(itemstack, placer, pointed_thing[, infinitestacks,
+        orient_flags, prevent_after_place])`
     * Attempt to predict the desired orientation of the facedir-capable node
-      defined by `itemstack`, and place it accordingly (on-wall, on the floor, or
-      hanging from the ceiling). Stacks are handled normally if the `infinitestacks`
-      field is false or omitted (else, the itemstack is not changed). `orient_flags`
-      is an optional table containing extra tweaks to the placement code:
-        * `invert_wall`:   if `true`, place wall-orientation on the ground and ground-
-    orientation on the wall.
+      defined by `itemstack`, and place it accordingly (on-wall, on the floor,
+      or hanging from the ceiling).
+    * `infinitestacks`: if `true`, the itemstack is not changed. Otherwise the
+      stacks are handled normally.
+    * `orient_flags`: Optional table containing extra tweaks to the placement code:
+        * `invert_wall`:   if `true`, place wall-orientation on the ground and
+          ground-orientation on the wall.
         * `force_wall` :   if `true`, always place the node in wall orientation.
         * `force_ceiling`: if `true`, always place on the ceiling.
         * `force_floor`:   if `true`, always place the node on the floor.
-        * `force_facedir`: if `true`, forcefully reset the facedir to north when placing on
-          the floor or ceiling
-        * The first four options are mutually-exclusive; the last in the list takes
-          precedence over the first.
+        * `force_facedir`: if `true`, forcefully reset the facedir to north
+          when placing on the floor or ceiling.
+        * The first four options are mutually-exclusive; the last in the list
+          takes precedence over the first.
+    * `prevent_after_place` is directly passed to `minetest.item_place_node`
+    * Returns the new itemstack after placement
 * `minetest.rotate_node(itemstack, placer, pointed_thing)`
-    * calls `rotate_and_place()` with infinitestacks set according to the state of
-       the creative mode setting, and checks for "sneak" to set the `invert_wall`
-       parameter.
+    * calls `rotate_and_place()` with `infinitestacks` set according to the state
+      of the creative mode setting, checks for "sneak" to set the `invert_wall`
+      parameter and `prevent_after_place` set to `true`.
 
 * `minetest.forceload_block(pos[, transient])`
     * forceloads the position `pos`.
@@ -3150,7 +3280,7 @@ This is basically a reference to a C++ `ServerActiveObject`
 * `set_attach(parent, bone, position, rotation)`
     * `bone`: string
     * `position`: `{x=num, y=num, z=num}` (relative)
-    * `rotation`: `{x=num, y=num, z=num}`
+    * `rotation`: `{x=num, y=num, z=num}` = Rotation on each axis, in degrees
 * `get_attach()`: returns parent, bone, position, rotation or nil if it isn't attached
 * `set_detach()`
 * `set_bone_position(bone, position, rotation)`
@@ -3218,7 +3348,7 @@ This is basically a reference to a C++ `ServerActiveObject`
         * `11`: bubbles bar is not shown
 * `set_attribute(attribute, value)`:
     * Sets an extra attribute with value on player.
-    * `value` must be a string.
+    * `value` must be a string, or a number which will be converted to a string.
     * If `value` is `nil`, remove attribute from player.
 * `get_attribute(attribute)`:
     * Returns value (a string) for extra attribute.
@@ -3322,8 +3452,9 @@ An `InvRef` is a reference to an inventory.
 * `add_item(listname, stack)`: add item somewhere in list, returns leftover `ItemStack`
 * `room_for_item(listname, stack):` returns `true` if the stack of items
   can be fully added to the list
-* `contains_item(listname, stack)`: returns `true` if the stack of items
-  can be fully taken from the list
+* `contains_item(listname, stack, [match_meta])`: returns `true` if
+  the stack of items can be fully taken from the list.
+  If `match_meta` is false, only the items' names are compared (default: `false`).
 * `remove_item(listname, stack)`: take as many items as specified from the list,
   returns the items that were actually removed (as an `ItemStack`) -- note that
   any item metadata is ignored, so attempting to remove a specific unique
@@ -4212,6 +4343,7 @@ Definition tables
                 {
                     items = {"foo:bar", "baz:frob"},  -- Items to drop.
                     rarity = 1,  -- Probability of dropping is 1 / rarity.
+                    inherit_color = true, -- To inherit palette color from the node
                 },
             },
         },
@@ -4242,6 +4374,7 @@ Definition tables
         ^ Called after constructing node when node was placed using
           minetest.item_place_node / minetest.place_node
         ^ If return true no item is taken from itemstack
+	^ `placer` may be any valid ObjectRef or nil
         ^ default: nil ]]
         after_dig_node = func(pos, oldnode, oldmetadata, digger), --[[
         ^ oldmetadata is in table format
@@ -4257,9 +4390,11 @@ Definition tables
         ^ By default: Calls minetest.register_on_punchnode callbacks ]]
         on_rightclick = func(pos, node, clicker, itemstack, pointed_thing), --[[
         ^ default: nil
-        ^ if defined, itemstack will hold clicker's wielded item
+        ^ itemstack will hold clicker's wielded item
         ^ Shall return the leftover itemstack
-        ^ Note: pointed_thing can be nil, if a mod calls this function ]]
+        ^ Note: pointed_thing can be nil, if a mod calls this function
+          This function does not get triggered by clients <=0.4.16 if the
+          "formspec" node metadata field is set ]]
 
         on_dig = func(pos, node, digger), --[[
         ^ default: minetest.node_dig
@@ -4673,4 +4808,26 @@ The Biome API is still in an experimental phase and subject to change.
         code = 200,
      -- ^ HTTP status code
         data = "response"
+    }
+
+### Authentication handler definition
+
+    {
+        get_auth = func(name),
+    --  ^ Get authentication data for existing player `name` (`nil` if player doesn't exist)
+    --  ^ returns following structure `{password=<string>, privileges=<table>, last_login=<number or nil>}`
+        create_auth = func(name, password),
+    --  ^ Create new auth data for player `name`
+    --  ^ Note that `password` is not plain-text but an arbitrary representation decided by the engine
+        set_password = func(name, password),
+    --  ^ Set password of player `name` to `password`
+           Auth data should be created if not present
+        set_privileges = func(name, privileges),
+    --  ^ Set privileges of player `name`
+    --  ^ `privileges` is in table form, auth data should be created if not present
+        reload = func(),
+    --  ^ Reload authentication data from the storage location
+    --  ^ Returns boolean indicating success
+        record_login = func(name),
+    --  ^ Called when player joins, used for keeping track of last_login
     }

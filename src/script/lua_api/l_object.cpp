@@ -23,6 +23,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "lua_api/l_item.h"
 #include "common/c_converter.h"
 #include "common/c_content.h"
+#include "util/cpp11_container.h"
 #include "log.h"
 #include "tool.h"
 #include "serverobject.h"
@@ -138,15 +139,15 @@ int ObjectRef::l_remove(lua_State *L)
 		return 0;
 
 	const UNORDERED_SET<int> &child_ids = co->getAttachmentChildIds();
-	UNORDERED_SET<int>::const_iterator it;
-	for (it = child_ids.begin(); it != child_ids.end(); ++it) {
+	for (UNORDERED_SET<int>::const_iterator it = child_ids.begin(); it != child_ids.end();
+			++it) {
 		// Child can be NULL if it was deleted earlier
 		if (ServerActiveObject *child = env->getActiveObject(*it))
 			child->setAttachment(0, "", v3f(0, 0, 0), v3f(0, 0, 0));
 	}
 
-	verbosestream<<"ObjectRef::l_remove(): id="<<co->getId()<<std::endl;
-	co->m_removed = true;
+	verbosestream << "ObjectRef::l_remove(): id=" << co->getId() << std::endl;
+	co->m_pending_removal = true;
 	return 0;
 }
 

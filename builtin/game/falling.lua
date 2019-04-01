@@ -60,8 +60,13 @@ core.register_entity(":__builtin:falling_node", {
 		local pos = self.object:getpos()
 		-- Position of bottom center point
 		local bcp = {x = pos.x, y = pos.y - 0.7, z = pos.z}
-		-- Avoid bugs caused by an unloaded node below
+		-- 'bcn' is nil for unloaded nodes
 		local bcn = core.get_node_or_nil(bcp)
+		-- Delete on contact with ignore at world edges
+		if bcn and bcn.name == "ignore" then
+			self.object:remove()
+			return
+		end
 		local bcd = bcn and core.registered_nodes[bcn.name]
 		if bcn and
 				(not bcd or bcd.walkable or
@@ -93,7 +98,7 @@ core.register_entity(":__builtin:falling_node", {
 				core.remove_node(np)
 				if nd and nd.buildable_to == false then
 					-- Add dropped items
-					local drops = core.get_node_drops(n2.name, "")
+					local drops = core.get_node_drops(n2, "")
 					for _, dropped_item in pairs(drops) do
 						core.add_item(np, dropped_item)
 					end
@@ -145,9 +150,9 @@ function core.spawn_falling_node(pos)
 end
 
 local function drop_attached_node(p)
-	local nn = core.get_node(p).name
+	local n = core.get_node(p)
 	core.remove_node(p)
-	for _, item in pairs(core.get_node_drops(nn, "")) do
+	for _, item in pairs(core.get_node_drops(n, "")) do
 		local pos = {
 			x = p.x + math.random()/2 - 0.25,
 			y = p.y + math.random()/2 - 0.25,
