@@ -70,7 +70,7 @@ VORBIS_TIMESTAMP = $(VORBIS_DIR)/timestamp
 VORBIS_TIMESTAMP_INT = $(ANDR_ROOT)/deps/vorbis_timestamp
 VORBIS_URL_GIT = https://github.com/MoNTE48/libvorbis-android
 
-IRRLICHT_COMMIT = 58fa0cf3419c2733159fc3c6253634bedada3bfe
+IRRLICHT_COMMIT = 990d475fbbb2653c95b992937906eb49960d02fb
 IRRLICHT_DIR = $(ANDR_ROOT)/deps/irrlicht
 IRRLICHT_LIB = $(IRRLICHT_DIR)/lib/Android/libIrrlicht.a
 IRRLICHT_TIMESTAMP = $(IRRLICHT_DIR)/timestamp
@@ -89,7 +89,8 @@ FREETYPE_DIR = $(ANDR_ROOT)/deps/freetype
 FREETYPE_LIB = $(FREETYPE_DIR)/objs/.libs/libfreetype.a
 FREETYPE_TIMESTAMP = $(FREETYPE_DIR)/timestamp
 FREETYPE_TIMESTAMP_INT = $(ANDR_ROOT)/deps/freetype_timestamp
-FREETYPE_URL_HTTP = http://download.savannah.gnu.org/releases/freetype/freetype-$(FREETYPE_VERSION).tar.bz2
+FREETYPE_URL_HTTP = https://sourceforge.net/projects/freetype/files/freetype2/2.10.0/freetype-$(FREETYPE_VERSION).tar.bz2
+
 
 ICONV_VERSION = 1.15
 ICONV_DIR = $(ANDR_ROOT)/deps/libiconv
@@ -403,9 +404,10 @@ irrlicht_download :
 		mkdir -p lib/Android;                                                  			\
 		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-touchcount.patch   || exit 1;			\
 		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-back_button.patch  || exit 1;			\
-		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-texturehack.patch  || exit 1;			\
+#		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-texturehack.patch  || exit 1;			\
 		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-optimization.patch || exit 1;			\
 		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-native_activity.patch || exit 1; 	\
+		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-roundingerror.patch || exit 1; 		\
 	fi
 
 $(IRRLICHT_TIMESTAMP) : irrlicht_download

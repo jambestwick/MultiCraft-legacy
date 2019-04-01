@@ -1140,13 +1140,29 @@ video::IImage * Align2Npot2(video::IImage * image,
 	core::dimension2d<u32> dim = image->getDimension();
 
 	// Only GLES2 is trusted to correctly report npot support
-	// Note: we cache the boolean result. GL context will never change on Android.
-	static const bool hasNPotSupport = get_GL_major_version() > 1 &&
-		glGetString(GL_EXTENSIONS) && 
-		strstr(glGetString(GL_EXTENSIONS), "GL_OES_texture_npot");
-	
-	if (hasNPotSupport)
+
+	/* F*cking nrz. Broke something again - https://github.com/minetest/minetest/pull/8070
+jni/../jni/src/client/tile.cpp:1151:35: error: invalid conversion from 'const GLubyte* {aka const unsigned char*}' to 'const char*' [-fpermissive]
+	strstr(glGetString(GL_EXTENSIONS), "GL_OES_texture_npot");
+*/
+// Back
+std::string extensions = (char*) glGetString(GL_EXTENSIONS);
+
+// Note: we cache the boolean result. GL context will never change on Android.
+/* Revert
+static const bool hasNPotSupport = get_GL_major_version() > 1 &&
+	glGetString(GL_EXTENSIONS) &&
+	strstr(glGetString(GL_EXTENSIONS), "GL_OES_texture_npot");
+
+if (hasNPotSupport)
+*/
+// Back
+if (get_GL_major_version() > 1 &&
+			extensions.find("GL_OES_texture_npot") != std::string::npos) {
+
+// Working :)
 		return image;
+}
 
 	unsigned int height = npot2(dim.Height);
 	unsigned int width  = npot2(dim.Width);
@@ -1333,7 +1349,7 @@ bool TextureSource::generateImagePart(std::string part_of_name,
 
 					It is an image with a number of cracking stages
 					horizontally tiled.
-				*/			
+				*/
 #if defined(__ANDROID__) || defined(__IOS__)
 				video::IImage *img_crack = m_sourcecache.getOrLoad(
 					"crack_anylength_touch.png", m_device);

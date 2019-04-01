@@ -230,7 +230,6 @@ LOCAL_SRC_FILES := \
 		jni/src/client/inputhandler.cpp           \
 		jni/src/client/tile.cpp                   \
 		jni/src/util/sha256.c                     \
-		jni/lib/gmp/mini-gmp.c                    \
 		jni/src/client/joystick_controller.cpp    \
 		jni/src/irrlicht_changes/static_text.cpp
 
@@ -295,6 +294,9 @@ LOCAL_SRC_FILES += \
 
 # Freetype2
 LOCAL_SRC_FILES += jni/src/cguittfont/xCGUITTFont.cpp
+
+# GMP
+LOCAL_SRC_FILES += jni/lib/gmp/mini-gmp.c
 
 # libIntl
 LOCAL_SRC_FILES += deps/libintl/internal/libintl.cpp
