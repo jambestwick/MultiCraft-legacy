@@ -411,7 +411,7 @@ void set_default_settings(Settings *settings)
 
 	// check screen size
 	float x_inches = ((double) porting::getDisplaySize().X /
-					  (160 * porting::getDisplayDensity()));
+										(160 * porting::getDisplayDensity()));
 	if (x_inches <= 3.7) {
 		// small 4" phones
 		settings->setDefault("hud_scaling", "0.5");

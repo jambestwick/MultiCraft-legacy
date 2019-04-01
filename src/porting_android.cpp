@@ -68,10 +68,10 @@ void android_main(android_app *app)
 /* TODO this doesn't work as expected, no idea why but there's a workaround   */
 /* for it right now */
 extern "C" {
-	JNIEXPORT void JNICALL Java_mobi_MultiCraft_GameActivity_putMessageBoxResult(
+	JNIEXPORT void JNICALL Java_com_multicraft_game_GameActivity_putMessageBoxResult(
 			JNIEnv *env, jclass j_this, jstring text)
 	{
-		errorstream << "Java_mobi_MultiCraft_GameActivity_putMessageBoxResult got: "
+		errorstream << "Java_com_multicraft_game_GameActivity_putMessageBoxResult got: "
 				<< std::string((const char*)env->GetStringChars(text,0))
 				<< std::endl;
 	}
@@ -125,7 +125,7 @@ void initAndroid()
 		exit(-1);
 	}
 
-	nativeActivity = findClass("mobi/MultiCraft/GameActivity");
+	nativeActivity = findClass("com/multicraft/game/GameActivity");
 	if (nativeActivity == 0) {
 		errorstream <<
 			"porting::initAndroid unable to find java native activity class" <<
@@ -206,7 +206,7 @@ void initializePathsAndroid()
 			cls_File, mt_getAbsPath, "getCacheDir");
 	path_storage = getAndroidPath(cls_Env, NULL, cls_File, mt_getAbsPath,
 			"getExternalStorageDirectory");
-	path_user    = path_storage + DIR_DELIM + "Android/data/mobi.MultiCraft/files";
+	path_user    = path_storage + DIR_DELIM + "Android/data/com.multicraft.game/files";
 	path_share   = path_user;
 	path_locale  = path_user + DIR_DELIM + "locale";
 }

@@ -1,5 +1,6 @@
 /*
 Copyright (C) 2014 sapier
+Copyright (C) 2014-2019 Maksim Gamarnik [MoNTE48] MoNTE48@mail.ua
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -57,9 +58,9 @@ const char* touchgui_button_imagenames[] = {
 	"noclip_btn.png",
 #endif*/
 	"minimap_btn.png",
-//	"debug_btn.png",
+//"debug_btn.png",
 	"chat.png",
-//	"camera.png",
+//"camera.png",
 	"rangeview.png",
 	"rangeview_ios.png",
 	"empty.png",
@@ -150,7 +151,7 @@ TouchScreenGUI *g_touchscreengui;
 TouchScreenGUI::TouchScreenGUI(IrrlichtDevice *device, IEventReceiver* receiver):
 	m_device(device),
 	m_guienv(device->getGUIEnvironment()),
-//	m_camera_yaw(0.0),
+//m_camera_yaw(0.0),
 	m_camera_pitch(0.0),
 	m_visible(false),
 	m_move_id(-1),
@@ -222,7 +223,7 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 
 	u32 control_pad_size =
 			MYMIN((2 * m_screensize.Y) / 3,
-	              getMaxControlPadSize(porting::getDisplayDensity()));
+						getMaxControlPadSize(porting::getDisplayDensity()));
 
 	u32 button_size      = getGuiButtonSize();
 	m_visible            = true;
@@ -292,17 +293,17 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 	/* init inventory button */
 	initButton(inventory_id,
 			rect<s32>(m_screensize.X-(button_size),
-					m_screensize.Y-(button_size),
-					m_screensize.X,
-					m_screensize.Y),
+								m_screensize.Y-(button_size),
+								m_screensize.X,
+								m_screensize.Y),
 			L"inv", false, SLOW_BUTTON_REPEAT);
 
 	/* init drop button */
 	initButton(drop_id,
-	           rect<s32>(m_screensize.X-(0.75*button_size),
-					   m_screensize.Y/2-(1.5*button_size),
-					   m_screensize.X,
-					   m_screensize.Y/2-(0.75*button_size)),
+			rect<s32>(m_screensize.X-(0.75*button_size),
+								m_screensize.Y/2-(1.5*button_size),
+								m_screensize.X,
+								m_screensize.Y/2-(0.75*button_size)),
 			L"drop", false, SLOW_BUTTON_REPEAT);
 
 	/* init crunch button */
@@ -315,77 +316,74 @@ void TouchScreenGUI::init(ISimpleTextureSource* tsrc)
 
 	/* init jump button */
 	initButton(jump_id,
-	           rect<s32>(m_screensize.X-(button_size*2),
-					   m_screensize.Y-(button_size*2),
-					   m_screensize.X-(button_size),
-					   m_screensize.Y-(button_size)),
-	                  L"x", false, SLOW_BUTTON_REPEAT);
+			rect<s32>(m_screensize.X-(button_size*2),
+						 		m_screensize.Y-(button_size*2),
+								m_screensize.X-(button_size),
+								m_screensize.Y-(button_size)),
+			L"x", false, SLOW_BUTTON_REPEAT);
 
 /*#ifdef ENABLE_ANDROID_NOCLIP
 	 // init fly button
 	initButton(fly_id,
 			rect<s32>(m_screensize.X - (0.75*button_size),
-					m_screensize.Y - (3.25*button_size),
-					m_screensize.X,
-	                m_screensize.Y - (button_size*2.5)),
+								m_screensize.Y - (3.25*button_size),
+								m_screensize.X,
+								m_screensize.Y - (button_size*2.5)),
 			L"fly", false, SLOW_BUTTON_REPEAT);
 
 	// init noclip button
 	initButton(noclip_id,
 			rect<s32>(m_screensize.X - (0.75*button_size),
-					m_screensize.Y - (4.75*button_size),
-					m_screensize.X,
-					m_screensize.Y - (button_size*4)),
+								m_screensize.Y - (4.75*button_size),
+								m_screensize.X,
+								m_screensize.Y - (button_size*4)),
 			L"clip", false, SLOW_BUTTON_REPEAT);
 	// init fast button
 	initButton(fast_id,
 			rect<s32>(m_screensize.X - (0.75*button_size),
-	                  m_screensize.Y - (4*button_size),
-					  m_screensize.X,
-	                  m_screensize.Y - (button_size*3.25)),
+								m_screensize.Y - (4*button_size),
+								m_screensize.X,
+								m_screensize.Y - (button_size*3.25)),
 			L"fast", false, SLOW_BUTTON_REPEAT);
 #endif*/
-
-
 
 
 #ifdef __IOS__
 // iOS bar
 	/* init pause button */
 	initButton(escape_id,
-				rect<s32>(m_screensize.X / 2 - (button_size * 0.75), 0,
-				m_screensize.X / 2,
-				(button_size * 0.75)),
+		rect<s32>(m_screensize.X / 2 - (button_size * 0.75), 0,
+							m_screensize.X / 2, (button_size * 0.75)),
 		L"Exit", false, SLOW_BUTTON_REPEAT);
 
 	/* init rangeselect button */
 	initButton(range_ios_id,
-			   rect<s32>(m_screensize.X / 2, 0,
-						 m_screensize.X / 2 + (button_size * 0.75),
-						 (button_size * 0.75)),
-			   L"far", false, SLOW_BUTTON_REPEAT);
+		rect<s32>(m_screensize.X / 2, 0,
+							m_screensize.X / 2 + (button_size * 0.75),
+							(button_size * 0.75)),
+		L"far", false, SLOW_BUTTON_REPEAT);
 	/* init chat button */
 	initButton(chat_id,
-			   rect<s32>(m_screensize.X / 2 + (button_size * 0.75), 0,
-						 m_screensize.X / 2 + (button_size * 1.5),
-						 (button_size * 0.75)),
-			   L"Chat", false, SLOW_BUTTON_REPEAT);
+		rect<s32>(m_screensize.X / 2 + (button_size * 0.75), 0,
+							m_screensize.X / 2 + (button_size * 1.5),
+							(button_size * 0.75)),
+		L"Chat", false, SLOW_BUTTON_REPEAT);
 
 #else
 // Android and Windows bar
 	/* init rangeselect button */
 	initButton(range_id,
-			   rect<s32>(m_screensize.X / 2 - (button_size * 1.125), 0,
-						 m_screensize.X / 2 - (button_size * 0.375),
-						 (button_size * 0.75)),
-			   L"far", false, SLOW_BUTTON_REPEAT);
+		rect<s32>(m_screensize.X / 2 - (button_size * 1.125), 0,
+							m_screensize.X / 2 - (button_size * 0.375),
+							(button_size * 0.75)),
+		L"far", false, SLOW_BUTTON_REPEAT);
 
 	/* init minimap button */
 	initButton(minimap_id,
-			   rect<s32>(m_screensize.X / 2 - (button_size * 0.375), 0,
-						 m_screensize.X / 2 + (button_size * 0.375),
-						 (button_size * 0.75)),
-			   L"minimap", false, SLOW_BUTTON_REPEAT);
+		rect<s32>(m_screensize.X / 2 - (button_size * 0.375), 0,
+						 	m_screensize.X / 2 + (button_size * 0.375),
+							(button_size * 0.75)),
+		L"minimap", false, SLOW_BUTTON_REPEAT);
 
 	/* init chat button */
 	initButton(chat_id,
@@ -557,7 +555,7 @@ void TouchScreenGUI::handleReleaseEvent(size_t evt_id)
 			m_receiver->OnEvent(*translated);
 			delete translated;
 	} else if (m_control_pad_rect.isPointInside(v2s32(m_move_downlocation.X, m_move_downlocation.Y))) {
- 			// ignore events inside the control pad not already handled
+			// ignore events inside the control pad not already handled
 	} else if (!m_move_has_really_moved) {
 			SEvent* translated = new SEvent;
 			memset(translated, 0, sizeof(SEvent));

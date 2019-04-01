@@ -1,3 +1,24 @@
+/*
+MultiCraft
+
+Copyright (C) 2014-2019 Maksim Gamarnik [MoNTE48] MoNTE48@mail.ua
+Copyright (C) 2016-2019 sfan5
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation; either version 3.0 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
+
 #include <string>
 
 #include "porting.h"
@@ -7,40 +28,40 @@
 static void *uiviewcontroller;
 
 namespace porting {
-    void initializePathsiOS() {
-        char buf[128];
+		void initializePathsiOS() {
+				char buf[128];
 
-        ioswrap_paths(PATH_DOCUMENTS, buf, sizeof(buf));
-        path_user = std::string(buf);
+				ioswrap_paths(PATH_DOCUMENTS, buf, sizeof(buf));
+				path_user = std::string(buf);
 		ioswrap_paths(PATH_LIBRARY_SUPPORT, buf, sizeof(buf));
 		path_share = std::string(buf);
 		path_locale = std::string(buf) + "/locale";
-        ioswrap_paths(PATH_LIBRARY_CACHE, buf, sizeof(buf));
-        path_cache = std::string(buf);
-    }
+				ioswrap_paths(PATH_LIBRARY_CACHE, buf, sizeof(buf));
+				path_cache = std::string(buf);
+		}
 
-    void copyAssets() {
+		void copyAssets() {
 		ioswrap_assets();
-    }
+		}
 
-    float getDisplayDensity() {
-        return 1.0;
-    }
+		float getDisplayDensity() {
+				return 1.0;
+		}
 
-    v2u32 getDisplaySize() {
-        static bool firstrun = true;
-        static v2u32 retval;
+		v2u32 getDisplaySize() {
+				static bool firstrun = true;
+				static v2u32 retval;
 
-        if(firstrun) {
-            unsigned int values[2];
-            ioswrap_size(values);
-            retval.X = values[0];
-            retval.Y = values[1];
-            firstrun = false;
-        }
+				if(firstrun) {
+						unsigned int values[2];
+						ioswrap_size(values);
+						retval.X = values[0];
+						retval.Y = values[1];
+						firstrun = false;
+				}
 
-        return retval;
-    }
+				return retval;
+		}
 
 	void setViewController(void *v) {
 		uiviewcontroller = v;
@@ -61,13 +82,13 @@ namespace porting {
 		ioswrap_get_dialog(&str);
 		return std::string(str);
 	}
-	
+
 	void notifyServerConnect(bool is_multiplayer) {
 	#ifdef ADS
 		ads_allow(!is_multiplayer);
 	#endif
 	}
-	
+
 	void notifyExitGame() {
 	#ifdef ADS
 		ads_allow(true);

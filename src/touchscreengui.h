@@ -1,5 +1,6 @@
 /*
 Copyright (C) 2014 sapier
+Copyright (C) 2014-2019 Maksim Gamarnik [MoNTE48] MoNTE48@mail.ua
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -54,9 +55,9 @@ typedef enum {
 	fast_id,
 #endif
 	minimap_id,
-//	debug_id,
+//debug_id,
 	chat_id,
-//	camera_id,
+//camera_id,
 	range_id,
 	range_ios_id,
 	empty_id,
