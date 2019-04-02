@@ -130,8 +130,8 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("pause_fps_max", "10");
 	settings->setDefault("viewing_range", "100");
 	settings->setDefault("near_plane", "0.1");
-	settings->setDefault("screenW", "800");
-	settings->setDefault("screenH", "600");
+	settings->setDefault("screen_w", "800");
+	settings->setDefault("screen_h", "600");
 	settings->setDefault("autosave_screensize", "true");
 	settings->setDefault("fullscreen", "false");
 	settings->setDefault("fullscreen_bpp", "24");
@@ -373,11 +373,11 @@ void set_default_settings(Settings *settings)
 
 	// Mobile Platform
 #if defined(__ANDROID__) || defined(__IOS__)
-	settings->setDefault("screenW", "0");
-	settings->setDefault("screenH", "0");
+	settings->setDefault("screen_w", "0");
+	settings->setDefault("screen_h", "0");
+	settings->setDefault("fullscreen", "true");
 	settings->setDefault("fps_max", "35");
 	settings->setDefault("enable_shaders", "false");
-	settings->setDefault("fullscreen", "true");
 	settings->setDefault("video_driver", "ogles1");
 	settings->setDefault("touchtarget", "true");
 	settings->setDefault("touchscreen_threshold", "20");
@@ -411,7 +411,7 @@ void set_default_settings(Settings *settings)
 
 	// check screen size
 	float x_inches = ((double) porting::getDisplaySize().X /
-										(160 * porting::getDisplayDensity()));
+					  (160 * porting::getDisplayDensity()));
 	if (x_inches <= 3.7) {
 		// small 4" phones
 		settings->setDefault("hud_scaling", "0.5");
@@ -455,7 +455,7 @@ void set_default_settings(Settings *settings)
 		// 4" (iPhone 5)
 		settings->setDefault("hud_scaling", "0.5");
 		settings->setDefault("gui_scaling", "1.1");
-		settings->setDefault("mouse_sensitivity", "0.23");
+		settings->setDefault("mouse_sensitivity", "0.24");
 	} else if ([SDVersion deviceSize] == Screen4Dot7inch) {
 		// 4.7" (iPhone)
 		settings->setDefault("hud_scaling", "0.6");
@@ -503,7 +503,6 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("active_block_range", "1");
 		settings->setDefault("max_block_generate_distance", "3");
 	} else {
-	/*} else if (([SDVersion deviceVersion] == iPhone8) || ([SDVersion deviceVersion] == iPhone8Plus) || ([SDVersion deviceVersion] == iPhoneX) || ([SDVersion deviceVersion] == iPadPro9Dot7Inch) || ()([SDVersion deviceVersion] == iPadPro12Dot9Inch) || ([SDVersion deviceVersion] == iPadPro10Dot5Inch) || ([SDVersion deviceVersion] == iPadAir2) || ([SDVersion deviceVersion] == iPad5)|| ([SDVersion deviceVersion] == iPad6)) {*/
 		// high settings
 		settings->setDefault("viewing_range", "75");
 		settings->setDefault("client_mapblock_limit", "1000");

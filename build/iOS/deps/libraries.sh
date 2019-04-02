@@ -5,7 +5,7 @@
 ./libvorbis.sh
 ./leveldb.sh
 ./freetype.sh
-./luajit.sh
+#./luajit.sh
 ./intl.sh
 ./libcurl.sh
 

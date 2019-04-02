@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -17,9 +19,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.25</string>
+	<string>1.1.26</string>
 	<key>CFBundleVersion</key>
-	<string>40</string>
+	<string>43</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -28,11 +30,11 @@
 		<true/>
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
-	<string>Advertising</string>
+	<string>MultiCraft needs your calendar to provide personalised advertising experience tailored to you</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>MultiCraft needs your location to provide personalised advertising experience tailored to you</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Advertising</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Advertising</string>
+	<string>MultiCraft needs your location to provide personalised advertising experience tailored to you</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -27,7 +27,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "log.h"
 #include "config.h"
 #include "porting.h"
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__IOS__)
 #include "settings.h" // For g_settings
 #endif
 

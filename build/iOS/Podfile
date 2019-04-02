@@ -2,14 +2,10 @@ project 'MultiCraft/MultiCraft.xcodeproj'
 platform :ios, '9.0'
 
 target 'MultiCraft' do
-	source 'https://github.com/appodeal/CocoaPods.git'
-	source 'https://github.com/CocoaPods/Specs.git'
+	pod 'SSZipArchive'
+	pod 'SDVersion', :git => 'https://github.com/MoNTE48/SDVersion'
+	pod 'LuaJITPod', :git => 'https://github.com/MoNTE48/LuaJITPod'
 
-  pod 'SSZipArchive'
-  pod 'SDVersion', :git => 'https://github.com/skitudeiosdevelopers/SDVersion'
-
-  pod 'Appodeal/Core', '2.5.0-Beta'
-  pod 'Appodeal/Interstitial', '2.5.0-Beta'
-  pod 'Appodeal/Video', '2.5.0-Beta'
-  pod 'PersonalizedAdConsent', :git => 'https://github.com/MultiCraftProject/googleads-consent-sdk-ios'
+	pod 'Appodeal/Interstitial', '2.5.3-Beta'
+	pod 'PersonalizedAdConsent', :git => 'https://github.com/MultiCraftProject/googleads-consent-sdk-ios'
 end
