@@ -107,6 +107,17 @@ Vattic's Terms:
 
 --- --- ---
 
+Copyright (C) 2014 HiTeeN
+
+https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/resource-packs/1242446-faithful-64x64
+
+You can use my texture pack on the following conditions:
+You must specify a link on this topic in their publications.
+If your package contains more than 80% of my textures, you have no right to publish them.
+
+--- --- ---
+
+
 JThread:
 =================================
 
@@ -264,5 +275,3 @@ product, an acknowledgment in the product documentation is required.
 be misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source distribution.
-
---- --- ---
