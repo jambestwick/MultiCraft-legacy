@@ -191,7 +191,7 @@ void Sky::render()
 		video::SColor cloudyfogcolor = m_bgcolor;
 		
 		// Draw far cloudy fog thing blended with skycolor
-		for (u32 j = 0; j < 4; j++) {
+/*		for (u32 j = 0; j < 4; j++) {
 			video::SColor c = cloudyfogcolor.getInterpolated(m_skycolor, 0.45);
 			vertices[0] = video::S3DVertex(-1, 0.08, -1, 0, 0, 1, c, t, t);
 			vertices[1] = video::S3DVertex( 1, 0.08, -1, 0, 0, 1, c, o, t);
@@ -212,10 +212,10 @@ void Sky::render()
 					vertices[i].Pos.rotateXZBy(-180);
 			}
 			driver->drawIndexedTriangleFan(&vertices[0], 4, indices, 2);
-		}
+		}*/
 
 		// Draw far cloudy fog thing
-		for (u32 j = 0; j < 4; j++) {
+/*		for (u32 j = 0; j < 4; j++) {
 			video::SColor c = cloudyfogcolor;
 			vertices[0] = video::S3DVertex(-1, -1.0, -1, 0, 0, 1, c, t, t);
 			vertices[1] = video::S3DVertex( 1, -1.0, -1, 0, 0, 1, c, o, t);
@@ -236,7 +236,7 @@ void Sky::render()
 					vertices[i].Pos.rotateXZBy(-180);
 			}
 			driver->drawIndexedTriangleFan(&vertices[0], 4, indices, 2);
-		}
+		}*/
 
 		// Draw bottom far cloudy fog thing
 		video::SColor c = cloudyfogcolor;
@@ -502,7 +502,7 @@ void Sky::render()
 		
 		// Draw far cloudy fog thing below east and west horizons
 		for (u32 j = 0; j < 2; j++) {
-			video::SColor c = cloudyfogcolor;
+			video::SColor c = m_skycolor;
 			vertices[0] = video::S3DVertex(-1, -1.0,  -1, 0, 0, 1, c, t, t);
 			vertices[1] = video::S3DVertex( 1, -1.0,  -1, 0, 0, 1, c, o, t);
 			vertices[2] = video::S3DVertex( 1, -0.02, -1, 0, 0, 1, c, o, o);
@@ -560,12 +560,12 @@ void Sky::update(float time_of_day, float time_brightness,
 	video::SColorf cloudcolor_bright_dawn_f(1.0, 0.7, 0.5);
 	*/
 
-	video::SColorf bgcolor_bright_normal_f = video::SColor(255, 155, 193, 240);
+	video::SColorf bgcolor_bright_normal_f = video::SColor(255, 2, 145, 255);
 	video::SColorf bgcolor_bright_indoor_f = video::SColor(255, 100, 100, 100);
-	video::SColorf bgcolor_bright_dawn_f = video::SColor(255, 186, 193, 240);
+	video::SColorf bgcolor_bright_dawn_f = video::SColor(255, 180, 186, 255);
 	video::SColorf bgcolor_bright_night_f = video::SColor(255, 64, 144, 255);
 
-	video::SColorf skycolor_bright_normal_f = video::SColor(255, 2, 138, 255);
+	video::SColorf skycolor_bright_normal_f = video::SColor(255, 2, 145, 255);
 	video::SColorf skycolor_bright_dawn_f = video::SColor(255, 180, 186, 255);
 	video::SColorf skycolor_bright_night_f = video::SColor(255, 0, 107, 255);
 	

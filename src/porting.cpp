@@ -621,9 +621,9 @@ bool setWindowIcon(IrrlichtDevice *device)
 	HWND hWnd; // Window handle
 
 	switch (device->getVideoDriver()->getDriverType()) {
-	case video::EDT_DIRECT3D8:
+/*	case video::EDT_DIRECT3D8:
 		hWnd = reinterpret_cast<HWND>(exposedData.D3D8.HWnd);
-		break;
+		break;*/
 	case video::EDT_DIRECT3D9:
 		hWnd = reinterpret_cast<HWND>(exposedData.D3D9.HWnd);
 		break;

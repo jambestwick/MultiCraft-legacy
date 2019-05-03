@@ -182,7 +182,7 @@ if(UNIX AND NOT APPLE)
 	install(FILES "misc/MultiCraft.svg" DESTINATION "${ICONDIR}/hicolor/scalable/apps")
 	install(FILES "misc/MultiCraft-xorg-icon-128.png"
 		DESTINATION "${ICONDIR}/hicolor/128x128/apps"
-		RENAME "minetest.png")
+		RENAME "MultiCraft.png")
 endif()
 
 if(APPLE)

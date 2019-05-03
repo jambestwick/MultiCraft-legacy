@@ -232,8 +232,6 @@ if(ENABLE_REDIS)
 endif(ENABLE_REDIS)
 
 
-#find_package(SQLite3 REQUIRED)
-
 OPTION(ENABLE_SPATIAL "Enable SpatialIndex AreaStore backend" TRUE)
 set(USE_SPATIAL FALSE)
 
@@ -259,6 +257,8 @@ add_definitions(-DUSE_CMAKE_CONFIG_H)
 
 if(WIN32)
 	# Windows
+		# Add SQLITE3
+		find_package(SQLite3 REQUIRED)
 	if(MSVC) # MSVC Specifics
 		set(PLATFORM_LIBS dbghelp.lib ${PLATFORM_LIBS})
 		# Surpress some useless warnings
@@ -383,6 +383,7 @@ set(common_SRCS
 	database-leveldb.cpp
 	database-postgresql.cpp
 	database-redis.cpp
+	database-sqlite3.cpp
 	database.cpp
 	debug.cpp
 	defaultsettings.cpp
@@ -459,7 +460,6 @@ set(common_SRCS
 	${UTIL_SRCS}
 	${UNITTEST_SRCS}
 )
-
 
 # This gives us the icon and file version information
 if(WIN32)
@@ -558,6 +558,9 @@ include_directories(
 	${PROJECT_SOURCE_DIR}/script
 )
 
+if(WIN32)
+	include_directories(${SQLITE3_INCLUDE_DIR})
+endif()
 
 if(USE_FREETYPE)
 	include_directories(${FREETYPE_INCLUDE_DIRS} ${CGUITTFONT_INCLUDE_DIR})
@@ -592,6 +595,12 @@ if(BUILD_CLIENT)
 		${PLATFORM_LIBS}
 		${CLIENT_PLATFORM_LIBS}
 	)
+	if(WIN32)
+		target_link_libraries(
+		${client_LIBS}
+		${SQLITE3_LIBRARY}
+		)
+	endif()
 	if(APPLE)
 		target_link_libraries(
 			${client_LIBS}
@@ -800,8 +809,14 @@ if(WIN32)
 	if(FREETYPE_DLL)
 		install(FILES ${FREETYPE_DLL} DESTINATION ${BINDIR})
 	endif()
+	if(SQLITE3_DLL)	
+		install(FILES ${SQLITE3_DLL} DESTINATION ${BINDIR})	
+	endif()
 	if(LEVELDB_DLL)
 		install(FILES ${LEVELDB_DLL} DESTINATION ${BINDIR})
+	endif()
+	if(LUA_DLL)
+		install(FILES ${LUA_DLL} DESTINATION ${BINDIR})
 	endif()
 endif()
 

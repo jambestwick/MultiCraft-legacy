@@ -39,6 +39,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "gameparams.h"
 #include "database-dummy.h"
 #include "database-files.h"
+#ifdef _WIN32
+#include "database-sqlite3.h"
+#endif
 #if USE_POSTGRESQL
 #include "database-postgresql.h"
 #endif
@@ -2168,7 +2171,9 @@ PlayerDatabase *ServerEnvironment::openPlayerDatabase(const std::string &name,
 		const std::string &savedir, const Settings &conf)
 {
 
-	if (name == "dummy")
+	if (name == "sqlite3")
+		return new PlayerDatabaseSQLite3(savedir);	
+	else if (name == "dummy")
 		return new Database_Dummy();
 #if USE_POSTGRESQL
 	else if (name == "postgresql") {
