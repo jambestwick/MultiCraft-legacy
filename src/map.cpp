@@ -2290,8 +2290,10 @@ MapDatabase *ServerMap::createDatabase(
 	const std::string &savedir,
 	Settings &conf)
 {
+	#ifdef _WIN32
 	if (name == "sqlite3")	
 		return new MapDatabaseSQLite3(savedir);
+	#endif
 	if (name == "dummy")
 		return new Database_Dummy();
 	#if USE_LEVELDB

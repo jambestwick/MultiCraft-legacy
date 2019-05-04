@@ -2170,10 +2170,12 @@ bool ServerEnvironment::saveStaticToBlock(
 PlayerDatabase *ServerEnvironment::openPlayerDatabase(const std::string &name,
 		const std::string &savedir, const Settings &conf)
 {
-
+#ifdef _WIN32
 	if (name == "sqlite3")
 		return new PlayerDatabaseSQLite3(savedir);	
-	else if (name == "dummy")
+	else 
+#endif
+	if (name == "dummy")
 		return new Database_Dummy();
 #if USE_POSTGRESQL
 	else if (name == "postgresql") {

@@ -383,7 +383,6 @@ set(common_SRCS
 	database-leveldb.cpp
 	database-postgresql.cpp
 	database-redis.cpp
-	database-sqlite3.cpp
 	database.cpp
 	debug.cpp
 	defaultsettings.cpp
@@ -463,6 +462,7 @@ set(common_SRCS
 
 # This gives us the icon and file version information
 if(WIN32)
+	set(common_SRCS ${common_SRCS} database-sqlite3.cpp)
 	set(WINRESOURCE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/../misc/winresource.rc")
 	set(MINETEST_EXE_MANIFEST_FILE "${CMAKE_CURRENT_SOURCE_DIR}/../misc/minetest.exe.manifest")
 	if(MINGW)
