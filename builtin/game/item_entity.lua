@@ -212,6 +212,7 @@ core.register_entity(":__builtin:item", {
 			end
 		end
 
+		local nn = node and node.name or ""
 		if nn == "default:lava_flowing" or nn == "default:lava_source" then
 			minetest.sound_play("default_cool_lava", {
 				pos=self.object:getpos(),
