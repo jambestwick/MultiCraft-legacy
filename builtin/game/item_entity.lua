@@ -211,14 +211,17 @@ core.register_entity(":__builtin:item", {
 				self.object:set_properties({physical = true})
 			end
 		end
-
+		
+		local node = minetest.get_node_or_nil(self.object:get_pos())
+		if not node then
+			return
+		end
 		if minetest.get_item_group(node.name, "lava") > 0 then
 			minetest.sound_play("default_cool_lava", {
 				pos = self.object:get_pos(),
 				max_hear_distance = 8,
 			})
 			self.object:remove()
-			return
 			minetest.add_particlespawner({
 				amount = 3,
 				time = 0.1,
@@ -235,6 +238,7 @@ core.register_entity(":__builtin:item", {
 				collisiondetection = true,
 				texture = "item_smoke.png"
 			})
+		return
 		end
 	end,
 
