@@ -1,4 +1,4 @@
-package mobi.MultiCraft;
+package com.multicraft.game;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
 
 public class InputDialogActivity extends Activity {
     private AlertDialog alertDialog;

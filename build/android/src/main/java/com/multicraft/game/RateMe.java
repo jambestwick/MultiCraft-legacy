@@ -1,4 +1,4 @@
-package mobi.MultiCraft;
+package com.multicraft.game;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -20,7 +20,7 @@ import java.util.Date;
 
 class RateMe {
 
-    private static final int INSTALL_DAYS = 2;
+    private static final int INSTALL_DAYS = 3;
     private static final int LAUNCH_TIMES = 3;
     private static final boolean DEBUG = false;
     private static final String TAG = RateMe.class.getSimpleName();
@@ -91,7 +91,7 @@ class RateMe {
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                if (rating >= 3) {
+                if (rating >= 4) {
                     if (sCallback != null) {
                         sCallback.onPositive("RateMe");
                     }
@@ -113,7 +113,7 @@ class RateMe {
             @Override
             public void onCancel(DialogInterface dialog) {
                 if (sCallback != null) {
-                    sCallback.onCancelled("RateMe");
+                    sCallback.onNeutral("RateMe");
                 }
                 clearSharedPreferences(activity);
             }

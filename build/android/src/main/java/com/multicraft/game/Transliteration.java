@@ -1,4 +1,4 @@
-package mobi.MultiCraft;
+package com.multicraft.game;
 
 class Transliteration {
 
@@ -56,7 +56,7 @@ class Transliteration {
      * Не русские символы останутся прежними.
      */
     static String toLatin(String text) {
-        char charBuffer[] = text.toCharArray();
+	    char[] charBuffer = text.toCharArray();
         StringBuilder sb = new StringBuilder(text.length());
         for (char symbol : charBuffer) {
             int i = symbol - START_CHAR;

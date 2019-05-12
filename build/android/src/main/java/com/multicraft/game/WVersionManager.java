@@ -1,9 +1,8 @@
-package mobi.MultiCraft;
+package com.multicraft.game;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -13,8 +12,8 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.Html;
-import android.util.Log;
-import android.view.ContextThemeWrapper;
+
+import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,8 +30,8 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.Locale;
 
-class WVersionManager {
-    private static final String TAG = "WVersionManager";
+
+class WVersionManager implements DialogsCallback {
     private DialogsCallback sCallback = null;
     private CustomTagHandler customTagHandler;
     private String PREF_IGNORE_VERSION_CODE = "w.ignore.version.code";
@@ -42,21 +41,14 @@ class WVersionManager {
     private Drawable icon;
     private String title;
     private String message;
-    private String updateNowLabel;
-    private String remindMeLaterLabel;
-    private String ignoreThisVersionLabel;
     private String updateUrl;
     private String versionContentUrl;
-    private int reminderTimer;
     private int mVersionCode;
-    private AlertDialogButtonListener listener;
-    private boolean mDialogCancelable = false;
     private ActivityListener al;
 
     WVersionManager(Activity act) {
         this.activity = act;
         al = (ActivityListener) act;
-        this.listener = new AlertDialogButtonListener();
         this.customTagHandler = new CustomTagHandler();
         setLaunchTimes();
     }
@@ -72,7 +64,7 @@ class WVersionManager {
     void checkVersion() {
         String versionContentUrl = getVersionContentUrl();
         if (versionContentUrl == null) {
-            Log.e(TAG, "Please set versionContentUrl first");
+            Crashlytics.log("Please set versionContentUrl first");
             return;
         }
 
@@ -89,22 +81,15 @@ class WVersionManager {
     }
 
     void showDialog() {
-        ContextThemeWrapper ctw = new ContextThemeWrapper(activity, R.style.CustomLollipopDialogStyle);
-        AlertDialog.Builder builder = new AlertDialog.Builder(ctw);
-        builder.setIcon(getIcon());
-        builder.setTitle(getTitle());
-        builder.setMessage(Html.fromHtml(getMessage(), null, getCustomTagHandler()));
-
-        builder.setPositiveButton(getUpdateNowLabel(), listener);
-        builder.setNeutralButton(getRemindMeLaterLabel(), listener);
-        builder.setNegativeButton(getIgnoreThisVersionLabel(), listener);
-
-        builder.setCancelable(isDialogCancelable());
-
-        AlertDialog dialog = builder.create();
-        if (activity != null && !activity.isFinishing()) {
-            dialog.show();
-        }
+        AlertDialogHelper dialogHelper = new AlertDialogHelper(activity);
+        dialogHelper.setListener(this);
+        dialogHelper.setIcon(getIcon());
+        dialogHelper.setTitle(getTitle());
+        dialogHelper.setMessage(Html.fromHtml(getMessage(), null, getCustomTagHandler()));
+        dialogHelper.setButtonPositive(getUpdateNowLabel());
+        dialogHelper.setButtonNeutral(getRemindMeLaterLabel());
+        dialogHelper.setButtonNegative(getIgnoreThisVersionLabel());
+        dialogHelper.showAlert("WVersionManager");
     }
 
     private void setLaunchTimes() {
@@ -115,27 +100,15 @@ class WVersionManager {
     }
 
     private String getUpdateNowLabel() {
-        return updateNowLabel != null ? updateNowLabel : activity.getString(R.string.update);
-    }
-
-    public void setUpdateNowLabel(String updateNowLabel) {
-        this.updateNowLabel = updateNowLabel;
+        return activity.getString(R.string.update);
     }
 
     private String getRemindMeLaterLabel() {
-        return remindMeLaterLabel != null ? remindMeLaterLabel : activity.getString(R.string.later);
-    }
-
-    public void setRemindMeLaterLabel(String remindMeLaterLabel) {
-        this.remindMeLaterLabel = remindMeLaterLabel;
+        return activity.getString(R.string.later);
     }
 
     private String getIgnoreThisVersionLabel() {
-        return ignoreThisVersionLabel != null ? ignoreThisVersionLabel : activity.getString(R.string.ignore);
-    }
-
-    public void setIgnoreThisVersionLabel(String ignoreThisVersionLabel) {
-        this.ignoreThisVersionLabel = ignoreThisVersionLabel;
+        return activity.getString(R.string.ignore);
     }
 
     private String getMessage() {
@@ -181,13 +154,7 @@ class WVersionManager {
     }
 
     int getReminderTimer() {
-        return reminderTimer > 0 ? reminderTimer : 1;
-    }
-
-    public void setReminderTimer(int minutes) {
-        if (minutes > 0) {
-            reminderTimer = minutes;
-        }
+        return 1;
     }
 
     void updateNow(String url) {
@@ -197,7 +164,7 @@ class WVersionManager {
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 activity.startActivity(intent);
             } catch (Exception e) {
-                Log.e(TAG, "is update url correct?" + e);
+                Crashlytics.logException(e);
             }
         }
 
@@ -255,43 +222,26 @@ class WVersionManager {
         return customTagHandler;
     }
 
-    private boolean isDialogCancelable() {
-        return mDialogCancelable;
+    @Override
+    public void onPositive(String source) {
+        sCallback.onPositive("WVersionManager");
     }
 
-    public void setDialogCancelable(boolean dialogCancelable) {
-        mDialogCancelable = dialogCancelable;
+    @Override
+    public void onNegative(String source) {
+        sCallback.onNegative("WVersionManager");
+    }
+
+    @Override
+    public void onNeutral(String source) {
+        sCallback.onNeutral("WVersionManager");
     }
 
     interface ActivityListener {
         void isShowUpdateDialog(boolean flag);
     }
 
-    private class AlertDialogButtonListener implements DialogInterface.OnClickListener {
-
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            switch (which) {
-                case AlertDialog.BUTTON_POSITIVE:
-                    if (sCallback != null) {
-                        sCallback.onPositive("WVersionManager");
-                    }
-                    break;
-                case AlertDialog.BUTTON_NEUTRAL:
-                    if (sCallback != null) {
-                        sCallback.onCancelled("WVersionManager");
-                    }
-                    remindMeLater(getReminderTimer());
-                    break;
-                case AlertDialog.BUTTON_NEGATIVE:
-                    if (sCallback != null) {
-                        sCallback.onNegative("WVersionManager");
-                    }
-                    break;
-            }
-        }
-    }
-
+    @SuppressLint("StaticFieldLeak")
     private class VersionContentRequest extends AsyncTask<String, Void, String> {
         Context context;
 
@@ -316,22 +266,22 @@ class WVersionManager {
                 result = bo.toString();
                 bo.close();
             } catch (MalformedURLException e) {
-                Log.e("WTF", "Malformed content: " + e.getMessage());
+                Crashlytics.logException(e);
             } catch (ProtocolException e) {
-                Log.e("WTF", "Protocol error: " + e.getMessage());
+                Crashlytics.logException(e);
             } catch (IOException e) {
-                Log.e("WTF", "IO error: " + e.getMessage());
+                Crashlytics.logException(e);
             }
             return result;
         }
 
         @Override
         protected void onPostExecute(String result) {
+            PreferencesHelper pf = PreferencesHelper.getInstance(activity);
             mVersionCode = 0;
-            String content;
-            String packageName;
             if (result != null) {
                 try {
+                    String content;
                     if (!result.startsWith("{")) { // for response who append with unknown char
                         result = result.substring(1);
                     }
@@ -345,8 +295,12 @@ class WVersionManager {
                     } else {
                         content = json.optString("content_en");
                     }
-                    packageName = json.optString("package");
+                    String packageName = json.optString("package");
                     setUpdateUrl("market://details?id=" + packageName);
+                    int adsDelay = json.optInt("ads_delay");
+                    int adsRepeat = json.optInt("ads_repeat");
+                    pf.saveSettings(PreferencesHelper.ADS_DELAY, adsDelay);
+                    pf.saveSettings(PreferencesHelper.ADS_REPEAT, adsRepeat);
                     int currentVersionCode = getCurrentVersionCode();
                     if (currentVersionCode < mVersionCode) {
                         if (mVersionCode != getIgnoreVersionCode()) {
@@ -364,10 +318,10 @@ class WVersionManager {
                         al.isShowUpdateDialog(false);
                     }
                 } catch (JSONException e) {
-                    Log.e(TAG, "is your server response have valid json format?");
+                    Crashlytics.logException(e);
                     al.isShowUpdateDialog(false);
                 } catch (Exception e) {
-                    Log.e(TAG, e.toString());
+                    Crashlytics.logException(e);
                     al.isShowUpdateDialog(false);
                 }
             } else {

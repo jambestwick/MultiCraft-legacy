@@ -1,5 +1,4 @@
-package mobi.MultiCraft;
-
+package com.multicraft.game;
 
 public interface CallBackListener {
     void updateViews(int text, int textVisibility, int progressVisibility);

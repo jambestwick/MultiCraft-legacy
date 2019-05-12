@@ -1,6 +1,6 @@
-package mobi.MultiCraft;
+package com.multicraft.game;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -15,15 +15,14 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -35,37 +34,43 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
+
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-
-import static mobi.MultiCraft.PreferencesHelper.TAG_BUILD_NUMBER;
-import static mobi.MultiCraft.PreferencesHelper.TAG_CONSENT_ASKED;
-import static mobi.MultiCraft.PreferencesHelper.TAG_LAUNCH_TIMES;
-import static mobi.MultiCraft.PreferencesHelper.TAG_SHORTCUT_CREATED;
+import static com.multicraft.game.PreferencesHelper.TAG_BUILD_NUMBER;
+import static com.multicraft.game.PreferencesHelper.TAG_CONSENT_ASKED;
+import static com.multicraft.game.PreferencesHelper.TAG_COPY_WORLDS;
+import static com.multicraft.game.PreferencesHelper.TAG_LAUNCH_TIMES;
+import static com.multicraft.game.PreferencesHelper.TAG_SHORTCUT_CREATED;
 
 public class MainActivity extends Activity implements WVersionManager.ActivityListener, CallBackListener, DialogsCallback {
     public final static int REQUEST_CODE = 104;
-    private final static String TAG = "Error";
     private final static String CREATE_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
-    private final static String FILES = Environment.getExternalStorageDirectory() + "/Files.zip";
-    private final static String WORLDS = Environment.getExternalStorageDirectory() + "/worlds.zip";
-    private final static String GAMES = Environment.getExternalStorageDirectory() + "/games.zip";
+    private final static String EXTERNAL_STORAGE = Environment.getExternalStorageDirectory().toString();
+    private final static String FILES = EXTERNAL_STORAGE + "/Files.zip";
+    private final static String WORLDS = EXTERNAL_STORAGE + "/worlds.zip";
+    private final static String GAMES = EXTERNAL_STORAGE + "/games.zip";
     private final static String NOMEDIA = ".nomedia";
-    private final static int COARSE_LOCATION_RESULT = 100;
-    private final static int WRITE_EXTERNAL_RESULT = 101;
-    private final static int ALL_PERMISSIONS_RESULT = 102;
-    private static final String UPDATE_LINK = "https://raw.githubusercontent.com/MoNTE48/MultiCraft-links/master/ver.txt";
+    private static final String UPDATE_LINK = "https://raw.githubusercontent.com/ubulem/coronahtml5/master/ver.txt";
     private static final String[] EU_COUNTRIES = new String[]{
             "AT", "BE", "BG", "HR", "CY", "CZ",
             "DK", "EE", "FI", "FR", "DE", "GR",
             "HU", "IE", "IT", "LV", "LT", "LU",
             "MT", "NL", "PL", "PT", "RO", "SK",
             "SI", "ES", "SE", "GB", "IS", "LI", "NO"};
-    private static String dataFolder = "/Android/data/mobi.MultiCraft/files/";
-    public static String unzipLocation = Environment.getExternalStorageDirectory() + dataFolder;
+    private static String dataFolder = "/Android/data/com.multicraft.game/files/";
+    public static String unzipLocation = EXTERNAL_STORAGE + dataFolder;
+    private static String worldPath = EXTERNAL_STORAGE + "/Android/data/mobi.MultiCraft/files/worlds";
     private int height, width;
     private boolean consent;
     private ProgressBar mProgressBar;
@@ -73,8 +78,6 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
     private TextView mLoading;
     private ImageView iv;
     private WVersionManager versionManager = null;
-    private ConnectionDialogListener connListener;
-    private PermissionManager pm = null;
     private PreferencesHelper pf;
     private BroadcastReceiver myReceiver = new BroadcastReceiver() {
         @Override
@@ -84,10 +87,15 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
                 progress = intent.getIntExtra(UnzipService.ACTION_PROGRESS, 0);
             }
             if (progress >= 0) {
-                mProgressBar.setVisibility(View.VISIBLE);
-                mProgressBar.setProgress(progress);
+                if (mProgressBar != null) {
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    mProgressBar.setProgress(progress);
+                }
             } else {
                 createNomedia();
+                File folder = new File(worldPath);
+                if (folder.exists() && !pf.isWorldsCopied())
+                    copyWorldsToNewFolder();
                 runGame();
             }
         }
@@ -107,7 +115,7 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
             return;
         }
         addLaunchTimes();
-        getPermissions();
+        askStoragePermissions();
     }
 
     @Override
@@ -123,6 +131,17 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
     }
 
     //helpful utilities
+    private void copyWorldsToNewFolder() {
+        File source = new File(worldPath);
+        File dest = new File(unzipLocation + "worlds");
+        try {
+            FileUtils.copyDirectory(source, dest);
+            pf.saveSettings(TAG_COPY_WORLDS, true);
+        } catch (IOException e) {
+            Crashlytics.logException(e);
+        }
+    }
+
     private void addLaunchTimes() {
         int i = pf.getLaunchTimes();
         i++;
@@ -149,7 +168,7 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
             try {
                 myFile.createNewFile();
             } catch (IOException e) {
-                Log.e(TAG, "nomedia has not been created: " + e.getMessage());
+                Crashlytics.logException(e);
             }
     }
 
@@ -179,7 +198,7 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
             addIntent.setAction(CREATE_SHORTCUT);
             getApplicationContext().sendBroadcast(addIntent);
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Shortcut cannot be created");
+            Crashlytics.logException(e);
         }
     }
 
@@ -231,7 +250,7 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
     }
 
     private void askGdpr() {
-        if (pf.isAskConsent() && isGdprSubject() && pf.isAdsEnabled())
+        if (pf.isAskConsent() && isGdprSubject())
             showGdprDialog();
         else {
             consent = true;
@@ -240,74 +259,149 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
     }
 
     private void init() {
-        RateMe.onStart(this);
-        if (pf.isCreateShortcut() && Build.VERSION.SDK_INT < 26)
-            addShortcut();
         mProgressBar = findViewById(R.id.PB1);
         mProgressBarIndeterminate = findViewById(R.id.PB2);
         mLoading = findViewById(R.id.tv_progress_circle);
         Drawable draw = ContextCompat.getDrawable(this, R.drawable.custom_progress_bar);
         mProgressBar.setProgressDrawable(draw);
-        connListener = new ConnectionDialogListener();
+        RateMe.onStart(this);
+        if (pf.isCreateShortcut() && Build.VERSION.SDK_INT < 26)
+            addShortcut();
         createDataFolder();
         checkAppVersion();
     }
 
     //permission block
-    private void getPermissions() {
-        pm = new PermissionManager(this);
-        String[] permList = pm.requestPermissions();
-        if (permList.length > 0) {
-            ActivityCompat.requestPermissions(this, permList, ALL_PERMISSIONS_RESULT);
-        } else {
-            askGdpr();
-        }
+    private void askStoragePermissions() {
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                if (pf.getLaunchTimes() % 3 == 1) {
+                    askLocationPermissions();
+                } else askGdpr();
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                if (TedPermission.canRequestPermission(MainActivity.this, WRITE_EXTERNAL_STORAGE))
+                    askStorageRationalePermissions();
+                else askStorageWhenDoNotShow();
+            }
+        };
+        TedPermission.with(this)
+                .setPermissionListener(permissionlistener)
+                .setPermissions(WRITE_EXTERNAL_STORAGE)
+                .check();
     }
 
-    private void requestPermissionAfterExplain() {
-        Toast.makeText(this, R.string.explain, Toast.LENGTH_LONG).show();
-        ActivityCompat.requestPermissions(MainActivity.this,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_RESULT);
+    //storage permissions block
+    private void askStorageRationalePermissions() {
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                if (pf.getLaunchTimes() % 3 == 1) {
+                    askLocationPermissions();
+                } else askGdpr();
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                finish();
+            }
+        };
+        TedPermission.with(this)
+                .setPermissionListener(permissionlistener)
+                .setPermissions(WRITE_EXTERNAL_STORAGE)
+                .setRationaleMessage(R.string.explain)
+                .setDeniedMessage(R.string.denied)
+                .setDeniedCloseButtonText(R.string.close_game)
+                .setGotoSettingButtonText(R.string.settings)
+                .check();
     }
 
-    private void requestStoragePermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            requestPermissionAfterExplain();
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    WRITE_EXTERNAL_RESULT);
-        }
+    private void askStorageWhenDoNotShow() {
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                if (pf.getLaunchTimes() % 3 == 1) {
+                    askLocationPermissions();
+                } else askGdpr();
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                finish();
+            }
+        };
+        TedPermission.with(this)
+                .setPermissionListener(permissionlistener)
+                .setPermissions(WRITE_EXTERNAL_STORAGE)
+                .setDeniedMessage(R.string.denied)
+                .setDeniedCloseButtonText(R.string.close_game)
+                .setGotoSettingButtonText(R.string.settings)
+                .check();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case WRITE_EXTERNAL_RESULT:
-                if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    askGdpr();
-                } else {
-                    requestStoragePermission();
-                }
-                break;
-            case COARSE_LOCATION_RESULT:
-                break;
-            case ALL_PERMISSIONS_RESULT:
-                for (String perms : PermissionManager.permissionsToRequest) {
-                    if (!pm.hasPermission(perms)) {
-                        PermissionManager.permissionsRejected.add(perms);
-                    }
-                }
-                if (PermissionManager.permissionsRejected.size() == 0) {
-                    askGdpr();
-                } else if (!Arrays.asList(PermissionManager.permissionsRejected.toArray()).contains(WRITE_EXTERNAL_STORAGE)) {
-                    Toast.makeText(this, R.string.location, Toast.LENGTH_SHORT).show();
-                    askGdpr();
-                } else {
-                    requestStoragePermission();
-                }
-                break;
-        }
+    //location permissions block
+    private void askLocationPermissions() {
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                askGdpr();
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                if (TedPermission.canRequestPermission(MainActivity.this, ACCESS_COARSE_LOCATION))
+                    askLocationRationalePermissions();
+                else askLocationWhenDoNotShow();
+            }
+        };
+        TedPermission.with(this)
+                .setPermissionListener(permissionlistener)
+                .setPermissions(ACCESS_COARSE_LOCATION)
+                .check();
+    }
+
+    private void askLocationRationalePermissions() {
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                askGdpr();
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                askGdpr();
+            }
+        };
+        TedPermission.with(this)
+                .setPermissionListener(permissionlistener)
+                .setPermissions(ACCESS_COARSE_LOCATION)
+                .setRationaleMessage(R.string.location)
+                .check();
+    }
+
+    private void askLocationWhenDoNotShow() {
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                if (pf.getLaunchTimes() % 3 == 1) {
+                    askLocationPermissions();
+                } else askGdpr();
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                askGdpr();
+            }
+        };
+        TedPermission.with(this)
+                .setPermissionListener(permissionlistener)
+                .setPermissions(ACCESS_COARSE_LOCATION)
+                .setDeniedMessage(R.string.location)
+                .setGotoSettingButtonText(R.string.settings)
+                .check();
     }
 
     //game logic
@@ -317,8 +411,7 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
             RateMe.showRateDialog();
             RateMe.setListener(this);
         } else {
-            // startBillingActivity();
-            startNative();
+            getNativeResolutionAndStart();
         }
     }
 
@@ -339,26 +432,34 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
 
     }
 
+    private void getNativeResolutionAndStart() {
+        getDefaultResolution();
+        startNative();
+    }
+
     private void runGame() {
         deleteZip(FILES, WORLDS, GAMES);
         pf.saveSettings(TAG_BUILD_NUMBER, getString(R.string.ver));
-        CheckConnectionTask cct = new CheckConnectionTask(this);
+        final CheckConnectionTask cct = new CheckConnectionTask(this);
         cct.setListener(this);
         cct.execute();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (cct.getStatus() == AsyncTask.Status.RUNNING) {
+                    cct.cancel(true);
+                    onEvent("CheckConnectionTask", "false");
+                }
+            }
+        }, 2500);
     }
 
-    /*private void startBillingActivity() {
-        Intent intent = new Intent(this, BillingActivity.class);
-        startActivityForResult(intent, REQUEST_CODE);
-    }*/
-
     private void startNative() {
-        /*if (pf.isAdsEnabled()) {
-            initAd(MainActivity.this, consent);
-        }*/
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("height", height);
         intent.putExtra("width", width);
+        intent.putExtra("consent", consent);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
@@ -375,8 +476,7 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        getDefaultResolution();
-        startNative();
+        getNativeResolutionAndStart();
     }
 
     private void prepareToRun(boolean isAll) {
@@ -385,12 +485,12 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
         if (isAll) {
             dt.execute(unzipLocation);
         } else {
-            dt.execute(unzipLocation + "builtin", unzipLocation + "games", unzipLocation + "textures", unzipLocation + "debug.txt");
+            dt.execute(unzipLocation + "builtin", unzipLocation + "games", unzipLocation + "textures"/*, unzipLocation + "debug.txt"*/);
         }
     }
 
     private void checkAppVersion() {
-        if (!pf.isRestored() && pf.getBuildNumber().equals(getString(R.string.ver))) {
+        if (pf.getBuildNumber().equals(getString(R.string.ver))) {
             addImageView(1);
             runGame();
         } else if (pf.getBuildNumber().equals("0")) {
@@ -433,7 +533,7 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
         ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.CustomLollipopDialogStyle);
         AlertDialog.Builder builder = new AlertDialog.Builder(ctw);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.gdpr_dialog, null);
+        @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.gdpr_dialog, null);
         builder.setView(dialogView)
                 .setPositiveButton(R.string.gdpr_agree, new DialogInterface.OnClickListener() {
                     @Override
@@ -463,26 +563,21 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
     }
 
     void showConnectionDialog() {
-        ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.CustomLollipopDialogStyle);
-        AlertDialog.Builder builder = new AlertDialog.Builder(ctw);
-        builder.setMessage(getString(R.string.conn_message));
-
-        builder.setPositiveButton(getString(R.string.conn_wifi), connListener);
-        builder.setNegativeButton(getString(R.string.conn_mobile), connListener);
-        builder.setNeutralButton(getString(R.string.ignore), connListener);
-
-        builder.setCancelable(false);
-
-        AlertDialog dialog = builder.create();
-        if (!isFinishing()) {
-            dialog.show();
-        }
+        AlertDialogHelper dialogHelper = new AlertDialogHelper(this);
+        dialogHelper.setListener(this);
+        dialogHelper.setMessage(getString(R.string.conn_message));
+        dialogHelper.setButtonPositive(getString(R.string.conn_wifi));
+        dialogHelper.setButtonNegative(getString(R.string.conn_mobile));
+        dialogHelper.setButtonNeutral(getString(R.string.ignore));
+        dialogHelper.showAlert("ConnectionDialog");
     }
 
     @Override
     public void onPositive(String source) {
         if ("RateMe".equals(source)) {
             finish();
+        } else if ("ConnectionDialog".equals(source)) {
+            startActivityForResult(new Intent(Settings.ACTION_WIFI_SETTINGS), REQUEST_CODE);
         } else {
             versionManager.updateNow(versionManager.getUpdateUrl());
             finish();
@@ -493,8 +588,9 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
     public void onNegative(String source) {
         if ("RateMe".equals(source)) {
             Toast.makeText(MainActivity.this, R.string.sad, Toast.LENGTH_LONG).show();
-            // startBillingActivity();
-            startNative();
+            getNativeResolutionAndStart();
+        } else if ("ConnectionDialog".equals(source)) {
+            startActivityForResult(new Intent(Settings.ACTION_WIRELESS_SETTINGS), REQUEST_CODE);
         } else {
             versionManager.ignoreThisVersion();
             checkRateDialog();
@@ -502,32 +598,15 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
     }
 
     @Override
-    public void onCancelled(String source) {
+    public void onNeutral(String source) {
         if ("RateMe".equals(source)) {
-            // startBillingActivity();
-            startNative();
+            getNativeResolutionAndStart();
+        } else if ("ConnectionDialog".equals(source)) {
+            getNativeResolutionAndStart();
         } else {
             versionManager.remindMeLater(versionManager.getReminderTimer());
             checkRateDialog();
         }
     }
 
-    private class ConnectionDialogListener implements DialogInterface.OnClickListener {
-
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            switch (which) {
-                case AlertDialog.BUTTON_POSITIVE:
-                    startActivityForResult(new Intent(Settings.ACTION_WIFI_SETTINGS), REQUEST_CODE);
-                    break;
-                case AlertDialog.BUTTON_NEUTRAL:
-                    getDefaultResolution();
-                    startNative();
-                    break;
-                case AlertDialog.BUTTON_NEGATIVE:
-                    startActivityForResult(new Intent(Settings.ACTION_WIRELESS_SETTINGS), REQUEST_CODE);
-                    break;
-            }
-        }
-    }
 }

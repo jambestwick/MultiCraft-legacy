@@ -1,8 +1,9 @@
-package mobi.MultiCraft;
+package com.multicraft.game;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
+
+import com.crashlytics.android.Crashlytics;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -42,9 +43,9 @@ public class CheckConnectionTask extends AsyncTask<Void, Void, Boolean> {
             urlc.setRequestProperty("Connection", "close");
             urlc.setConnectTimeout(timeout);
             urlc.connect();
-            return urlc.getResponseCode() == 204 && urlc.getContentLength() == 0;
+            return urlc.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT && urlc.getContentLength() == 0;
         } catch (IOException e) {
-            Log.e("WTF", "IOException " + e.getMessage());
+            Crashlytics.logException(e);
         }
         return false;
     }
@@ -54,4 +55,3 @@ public class CheckConnectionTask extends AsyncTask<Void, Void, Boolean> {
                 isGoogleAvailable("http://g.cn/generate_204", 1000);
     }
 }
-

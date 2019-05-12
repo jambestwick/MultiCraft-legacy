@@ -1,20 +1,33 @@
-package mobi.MultiCraft;
+package com.multicraft.game;
 
+import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.app.NativeActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.crashlytics.android.Crashlytics;
+
+/*import static com.multicraft.game.AdManager.initAd;
+import static com.multicraft.game.AdManager.setAdsCallback;
+import static com.multicraft.game.AdManager.startAd;
+import static com.multicraft.game.AdManager.stopAd;*/
+
 public class GameActivity extends NativeActivity {
     static {
         System.loadLibrary("MultiCraft");
+        //System.loadLibrary("c++_shared");
     }
 
     private int messageReturnCode;
     private String messageReturnValue;
     private int height, width;
+    private boolean consent;
 
     public static native void putMessageBoxResult(String text);
 
@@ -24,13 +37,12 @@ public class GameActivity extends NativeActivity {
         Bundle bundle = getIntent().getExtras();
         height = bundle != null ? bundle.getInt("height", 0) : getResources().getDisplayMetrics().heightPixels;
         width = bundle != null ? bundle.getInt("width", 0) : getResources().getDisplayMetrics().widthPixels;
-        // pf = PreferencesHelper.getInstance(this);
-        // if (pf.isAdsEnabled()) setAdsCallbacks(this);
+        consent = bundle == null || bundle.getBoolean("consent", true);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         messageReturnCode = -1;
         messageReturnValue = "";
+        new AdInitTask().execute();
     }
-
 
     public void makeFullScreen() {
         if (Build.VERSION.SDK_INT >= 19) {
@@ -51,10 +63,8 @@ public class GameActivity extends NativeActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        /*if (pf.isAdsEnabled()) {
-            stopAd();
-            startAd(this, false);
-        }*/
+		/*stopAd();
+		startAd(this, false);*/
     }
 
     @Override
@@ -66,8 +76,7 @@ public class GameActivity extends NativeActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        /*if (pf.isAdsEnabled())
-            stopAd();*/
+        /*stopAd();*/
     }
 
     @Override
@@ -121,6 +130,44 @@ public class GameActivity extends NativeActivity {
 
     public int getDisplayWidth() {
         return width;
+    }
+
+    public int getMemoryMax() {
+        ActivityManager actManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+        if (actManager != null) {
+            actManager.getMemoryInfo(memInfo);
+            return (int) Math.floor(memInfo.totalMem / 1024 * 1024 * 1024 * 1.0);
+        } else {
+            Crashlytics.log(1, "RAM", "Cannot get RAM");
+            return 1;
+        }
+
+    }
+
+    public void notifyServerConnect(boolean isMultiplayer) {
+    }
+
+    public void notifyAbortLoading() {
+
+    }
+
+    public void notifyExitGame() {
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    class AdInitTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            /*initAd(GameActivity.this, consent);*/
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            /*setAdsCallback(GameActivity.this);*/
+        }
     }
 
 }

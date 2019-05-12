@@ -1,8 +1,11 @@
-package mobi.MultiCraft;
+package com.multicraft.game;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
+
+import com.crashlytics.android.Crashlytics;
+
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,12 +40,10 @@ public class DeleteTask extends AsyncTask<String, Void, Void> {
     private void deleteFiles(String path) {
         File file = new File(path);
         if (file.exists()) {
-            String deleteCmd = "rm -r " + path;
-            Runtime runtime = Runtime.getRuntime();
             try {
-                runtime.exec(deleteCmd);
+                FileUtils.deleteDirectory(file);
             } catch (IOException e) {
-                Log.e("WTF", "delete files failed: " + e.getLocalizedMessage());
+                Crashlytics.logException(e);
             }
         }
     }

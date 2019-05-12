@@ -1,4 +1,4 @@
-package mobi.MultiCraft;
+package com.multicraft.game;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -7,9 +7,9 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 
-import java.io.BufferedInputStream;
+import com.crashlytics.android.Crashlytics;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -26,17 +26,24 @@ public class UnzipService extends IntentService {
     public static final String ACTION_PROGRESS = "progress";
     private NotificationManager mNotifyManager;
     private int id = 1;
-    private int percent = 0;
-    private int size;
 
     public UnzipService() {
-        super("mobi.MultiCraft.UnzipService");
+        super("com.multicraft.game.UnzipService");
     }
+
+    private void isDir(String dir, String unzipLocation) {
+        File f = new File(unzipLocation + dir);
+
+        if (!f.isDirectory()) {
+            f.mkdirs();
+        }
+    }
+
 
     @Override
     protected void onHandleIntent(Intent intent) {
         createNotification();
-        unzipLoop(intent);
+        unzip(intent);
 
     }
 
@@ -78,51 +85,44 @@ public class UnzipService extends IntentService {
         mNotifyManager.notify(id, builder.build());
     }
 
-    private void unzipLoop(Intent intent) {
-        String[] zips = intent.getStringArrayExtra(EXTRA_KEY_IN_FILE);
+    private void unzip(Intent intent) {
+        String[] file = intent.getStringArrayExtra(EXTRA_KEY_IN_FILE);
         String location = intent.getStringExtra(EXTRA_KEY_IN_LOCATION);
-        size = getSummarySize(zips);
-        try {
-            for (String z : zips) {
-                unzipFile(z, location);
-            }
-        } catch (IOException e) {
-            Log.e("WTF", e.getMessage() == null ? "Unzip failed" : e.getMessage());
-        }
-    }
-
-    @SuppressWarnings("TryFinallyCanBeTryWithResources")
-    private void unzipFile(String zipFile, String targetDirectory) throws IOException {
-        ZipInputStream zis = new ZipInputStream(
-                new BufferedInputStream(new FileInputStream(zipFile)));
-        try {
-            ZipEntry ze;
-            int count;
-            byte[] buffer = new byte[8192];
-            while ((ze = zis.getNextEntry()) != null) {
-                File file = new File(targetDirectory, ze.getName());
-                File dir = ze.isDirectory() ? file : file.getParentFile();
-                if (!dir.isDirectory() && !dir.mkdirs())
-                    throw new FileNotFoundException("Failed to ensure directory: " +
-                            dir.getAbsolutePath());
-                if (ze.isDirectory()) {
-                    percent++;
-                    continue;
-                }
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
+        int per = 0;
+        int size = getSummarySize(file);
+        for (String f : file) {
+            try {
                 try {
-                    while ((count = zis.read(buffer)) != -1) {
-                        fileOutputStream.write(buffer, 0, count);
-                        percent++;
-                        int progress = 100 * percent / size;
-                        publishProgress(progress);
+                    FileInputStream fin = new FileInputStream(f);
+                    ZipInputStream zin = new ZipInputStream(fin);
+                    ZipEntry ze;
+                    while ((ze = zin.getNextEntry()) != null) {
+                        if (ze.isDirectory()) {
+                            per++;
+                            isDir(ze.getName(), location);
+                        } else {
+                            per++;
+                            int progress = 100 * per / size;
+                            // send update
+                            publishProgress(progress);
+                            FileOutputStream f_out = new FileOutputStream(location + ze.getName());
+                            byte[] buffer = new byte[8192];
+                            int len;
+                            while ((len = zin.read(buffer)) != -1) {
+                                f_out.write(buffer, 0, len);
+                            }
+                            f_out.close();
+                            zin.closeEntry();
+                            f_out.close();
+                        }
                     }
-                } finally {
-                    fileOutputStream.close();
+                    zin.close();
+                } catch (FileNotFoundException e) {
+                    Crashlytics.logException(e);
                 }
+            } catch (IOException e) {
+                Crashlytics.logException(e);
             }
-        } finally {
-            zis.close();
         }
     }
 
@@ -139,7 +139,7 @@ public class UnzipService extends IntentService {
                 ZipFile zipSize = new ZipFile(z);
                 size += zipSize.size();
             } catch (IOException e) {
-                Log.e("WTF", e.getMessage() == null ? "Unzip failed" : e.getMessage());
+                Crashlytics.logException(e);
             }
         }
         return size;
