@@ -99,7 +99,8 @@ function ui.update()
 		formspec = "size[12,5]" ..
 				"label[0.5,0;" .. error_title ..
 				"]textlist[0.2,0.8;11.5,3.5;;" .. formspec ..
-				"]button[4.5,4.6;3,0.5;btn_error_confirm;" .. fgettext("Ok") .. "]"
+				"]button[6,4.6;3,0.5;btn_reconnect_no;" .. fgettext("Main menu") .. "]" ..
+				"button[3,4.6;3,0.5;btn_reconnect_yes;" .. fgettext("Reconnect") .. "]
 	else
 		local active_toplevel_ui_elements = 0
 		for key,value in pairs(ui.childlist) do
@@ -177,6 +178,11 @@ end
 --------------------------------------------------------------------------------
 core.button_handler = function(fields)
 	if fields["btn_reconnect_yes"] then
+		if core.settings:get("maintab_LAST") == "local" then
+			gamedata.singleplayer = true
+			gamedata.selected_world =
+				tonumber(core.settings:get("mainmenu_last_selected_world"))
+		end
 		gamedata.reconnect_requested = false
 		gamedata.errormessage = nil
 		gamedata.do_reconnect = true
