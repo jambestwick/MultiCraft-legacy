@@ -33,37 +33,40 @@ local function get_formspec(tabview, name, tabdata)
 
 	local retval =
 		-- Search
-		"field[0.2,0.1;5.81,1;te_search;;" .. core.formspec_escape(tabdata.search_for) .. "]" ..
-		"button[5.62,-0.22;1.5,1;btn_mp_search;" .. fgettext("Search") .. "]" ..
-		"image_button[6.97,-0.125;.83,.83;" .. core.formspec_escape(defaulttexturedir .. "refresh.png")
+		"field[0.2,0.1;5.71,1;te_search;;" .. core.formspec_escape(tabdata.search_for) .. "]" ..
+		"image_button[5.52,-0.125;0.85,0.85;" .. core.formspec_escape(defaulttexturedir .. "search.png")
+			.. ";btn_mp_search;" .. "]" ..
+		"image_button[6.26,-0.125;0.85,0.85;" .. core.formspec_escape(defaulttexturedir .. "refresh.png")
 			.. ";btn_mp_refresh;" .. "]" ..
 
 		-- Address / Port
-		"label[7.75,-0.3;" .. fgettext("Address / Port") .. "]" ..
-		"field[8,0.6;3.2,0.5;te_address;;" ..
+		"label[7.1,-0.3;" .. fgettext("Address:") .. "]" ..
+		"label[10.22,-0.3;" .. fgettext("Port:") .. "]" ..
+		"field[7.4,0.6;3.2,0.5;te_address;;" ..
 			core.formspec_escape(core.settings:get("address")) .. "]" ..
-		"field[11.1,0.6;1.35,0.5;te_port;;" ..
+		"field[10.5,0.6;1.85,0.5;te_port;;" ..
 			core.formspec_escape(core.settings:get("remote_port")) .. "]" ..
 
 		-- Name / Password
-		"label[7.75,0.85;" .. fgettext("Name / Password") .. "]" ..
-		"field[8,1.75;2.85,0.5;te_name;;" ..
+		"label[7.1,0.85;" .. fgettext("Name:") .. "]" ..
+		"label[10.22,0.85;" .. fgettext("Password:") .. "]" ..
+		"field[7.4,1.75;2.86,0.5;te_name;;" ..
 			core.formspec_escape(core.settings:get("name")) .. "]" ..
-		"pwdfield[10.73,1.75;1.72,0.5;te_pwd;]" ..
+		"pwdfield[10.5,1.8;1.86,0.5;te_pwd;]" ..
 
 		-- Description Background
-		"box[7.7,2.1;4.25,2.65;#999999]"..
+		"box[7.1,2.1;4.8,2.65;#999999]"..
 
 		-- Connect
-		"button[9.9,5;2.25,0.5;btn_mp_connect;" .. fgettext("Connect") .. "]"
+		"button[9.4,5;2.7,0.5;btn_mp_connect;" .. fgettext("Connect") .. "]"
 
 	if tabdata.fav_selected and fav_selected then
 		if gamedata.fav then
-			retval = retval .. "button[7.7,5;2.3,0.5;btn_delete_favorite;" ..
+			retval = retval .. "button[7.1,5;2.3,0.5;btn_delete_favorite;" ..
 				fgettext("Del. Favorite") .. "]"
 		end
 		if fav_selected.description then
-			retval = retval .. "textarea[8.1,2.3;4.23,2.9;;" ..
+			retval = retval .. "textarea[7.5,2.3;4.8,2.9;;" ..
 				core.formspec_escape((gamedata.serverdescription or ""), true) .. ";]"
 		end
 	end
@@ -81,7 +84,7 @@ local function get_formspec(tabview, name, tabdata)
 		image_column(fgettext("PvP enabled"), "pvp") .. ",padding=0.25;" ..
 		"color,span=1;" ..
 		"text,padding=1]" ..
-		"table[-0.09,0.7;7.7,4.9;favourites;"
+		"table[-0.09,0.7;7,4.9;favourites;"
 
 	if menudata.search_result then
 		for i = 1, #menudata.search_result do

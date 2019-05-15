@@ -235,7 +235,6 @@ core.register_entity(":__builtin:item", {
 				maxexptime = 6,
 				minsize = 2,
 				maxsize = 4,
-				collisiondetection = true,
 				texture = "item_smoke.png"
 			})
 		return

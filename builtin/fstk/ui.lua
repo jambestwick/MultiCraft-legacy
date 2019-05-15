@@ -100,7 +100,7 @@ function ui.update()
 				"label[0.5,0;" .. error_title ..
 				"]textlist[0.2,0.8;11.5,3.5;;" .. formspec ..
 				"]button[6,4.6;3,0.5;btn_reconnect_no;" .. fgettext("Main menu") .. "]" ..
-				"button[3,4.6;3,0.5;btn_reconnect_yes;" .. fgettext("Reconnect") .. "]
+				"button[3,4.6;3,0.5;btn_reconnect_yes;" .. fgettext("Restart") .. "]"
 	else
 		local active_toplevel_ui_elements = 0
 		for key,value in pairs(ui.childlist) do
