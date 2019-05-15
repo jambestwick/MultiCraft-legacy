@@ -35,8 +35,8 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("language", "");
 	settings->setDefault("name", "");
 	settings->setDefault("bind_address", "");
-	settings->setDefault("serverlist_url", "servers.minetest.net");
-	settings->setDefault("serverlist_url_2", "");
+	settings->setDefault("serverlist_url", "servers.multicraft.world");
+	settings->setDefault("serverlist_url_2", "servers.minetest.net");
 
 	// Client
 	settings->setDefault("address", "");
@@ -350,7 +350,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("liquid_update", "1.0");
 
 	// Mapgen
-	settings->setDefault("mg_name", "v6");
+	settings->setDefault("mg_name", "v7p");
 	settings->setDefault("water_level", "1");
 	settings->setDefault("mapgen_limit", "31000");
 	settings->setDefault("chunksize", "5");

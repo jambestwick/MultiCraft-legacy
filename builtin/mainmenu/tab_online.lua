@@ -73,6 +73,7 @@ local function get_formspec(tabview, name, tabdata)
 
 	--favourites
 	retval = retval .. "tablecolumns[" ..
+		image_column(fgettext(""), "server_id") .. ";" ..
 		image_column(fgettext("Favorite"), "favorite") .. ";" ..
 		image_column(fgettext("Ping")) .. ",padding=0.25;" ..
 		"color,span=3;" ..
@@ -102,26 +103,29 @@ local function get_formspec(tabview, name, tabdata)
 				retval = retval .. ","
 			end
 
-			retval = retval .. render_serverlist_row(server, server.is_favorite)
+			retval = retval .. render_serverlist_row(server, server.is_favorite,
+					server.server_id ~= nil)
 		end
 	elseif #menudata.favorites > 0 then
 		local favs = core.get_favorites("local")
 		if #favs > 0 then
 			for i = 1, #favs do
-			for j = 1, #menudata.favorites do
-				if menudata.favorites[j].address == favs[i].address and
-						menudata.favorites[j].port == favs[i].port then
-					table.insert(menudata.favorites, i, table.remove(menudata.favorites, j))
+				for j = 1, #menudata.favorites do
+					if menudata.favorites[j].address == favs[i].address and
+							menudata.favorites[j].port == favs[i].port then
+						table.insert(menudata.favorites, i, table.remove(menudata.favorites, j))
+					end
 				end
-			end
 				if favs[i].address ~= menudata.favorites[i].address then
 					table.insert(menudata.favorites, i, favs[i])
 				end
 			end
 		end
-		retval = retval .. render_serverlist_row(menudata.favorites[1], (#favs > 0))
+		retval = retval .. render_serverlist_row(menudata.favorites[1], (#favs > 0),
+				menudata.favorites[1].server_id ~= nil)
 		for i = 2, #menudata.favorites do
-			retval = retval .. "," .. render_serverlist_row(menudata.favorites[i], (i <= #favs))
+			retval = retval .. "," .. render_serverlist_row(menudata.favorites[i],
+					(i <= #favs), menudata.favorites[i].server_id ~= nil)
 		end
 	end
 
