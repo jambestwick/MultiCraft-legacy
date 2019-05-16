@@ -86,7 +86,7 @@ function ui.update()
 		formspec = "size[12,5]" ..
 				"label[0.5,0;" .. fgettext("The server has requested a reconnect:") ..
 				"]textlist[0.2,0.8;11.5,3.5;;" .. formspec ..
-				"]button[6,4.6;3,0.5;btn_reconnect_no;" .. fgettext("Main menu") .. "]" ..
+				"]button[6,4.6;3,0.5;btn_reconnect_no;" .. fgettext("Close") .. "]" ..
 				"button[3,4.6;3,0.5;btn_reconnect_yes;" .. fgettext("Reconnect") .. "]"
 	elseif gamedata ~= nil and gamedata.errormessage ~= nil then
 		formspec = wordwrap_quickhack(gamedata.errormessage)
@@ -96,11 +96,16 @@ function ui.update()
 		else
 			error_title = fgettext("An error occured:")
 		end
+		if core.settings:get("maintab_LAST") == "local" then
+			restart_btn = "]button[6,4.6;3,0.5;btn_reconnect_no;" .. fgettext("Close") .. "]" ..
+				"button[3,4.6;3,0.5;btn_reconnect_yes;" .. fgettext("Restart") .. "]"
+		else
+			restart_btn = "]button[4.5,4.6;3,0.5;btn_error_confirm;" .. fgettext("Close") .. "]"
+		end
 		formspec = "size[12,5]" ..
 				"label[0.5,0;" .. error_title ..
 				"]textlist[0.2,0.8;11.5,3.5;;" .. formspec ..
-				"]button[6,4.6;3,0.5;btn_reconnect_no;" .. fgettext("Main menu") .. "]" ..
-				"button[3,4.6;3,0.5;btn_reconnect_yes;" .. fgettext("Restart") .. "]"
+				restart_btn
 	else
 		local active_toplevel_ui_elements = 0
 		for key,value in pairs(ui.childlist) do
