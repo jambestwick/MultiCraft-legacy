@@ -625,6 +625,11 @@ int ModApiMainMenu::l_delete_favorite(lua_State *L)
 
 	if(listtype == "online") {
 		servers = ServerList::getOnline(g_settings->get("serverlist_url"));
+		std::string aux_list = g_settings->get("serverlist_url_2");
+		if (!aux_list.empty()) {
+			std::vector<ServerListSpec> aux = ServerList::getOnline(aux_list);
+			servers.insert(servers.end(), aux.begin(), aux.end());
+		}
 	} else {
 		servers = ServerList::getLocal();
 	}
