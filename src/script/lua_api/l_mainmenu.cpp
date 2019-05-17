@@ -480,10 +480,11 @@ int ModApiMainMenu::l_get_favorites(lua_State *L)
 	for (unsigned int i = 0; i < servers.size(); i++)
 	{
 		// only list compatible servers
-		if (!servers[i]["proto_min"].asString().size() ||
+		if (listtype == "online" && (
+				!servers[i]["proto_min"].asString().size() ||
 				!servers[i]["proto_max"].asString().size() ||
 				servers[i]["proto_min"].asInt() > CLIENT_PROTOCOL_VERSION_MAX ||
-				servers[i]["proto_max"].asInt() < CLIENT_PROTOCOL_VERSION_MIN)
+				servers[i]["proto_max"].asInt() < CLIENT_PROTOCOL_VERSION_MIN))
 			continue;
 
 		lua_pushnumber(L,index);

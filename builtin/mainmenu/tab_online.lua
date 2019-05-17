@@ -73,7 +73,7 @@ local function get_formspec(tabview, name, tabdata)
 
 	--favourites
 	retval = retval .. "tablecolumns[" ..
-		image_column(fgettext(""), "server_id") .. ";" ..
+		image_column(fgettext("")) .. ";" ..
 		image_column(fgettext("Favorite"), "favorite") .. ";" ..
 		image_column(fgettext("Ping")) .. ",padding=0.25;" ..
 		"color,span=3;" ..
