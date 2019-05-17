@@ -34,9 +34,9 @@ local function get_formspec(tabview, name, tabdata)
 	local retval =
 		-- Search
 		"field[0.2,0.1;5.71,1;te_search;;" .. core.formspec_escape(tabdata.search_for) .. "]" ..
-		"image_button[5.52,-0.125;0.85,0.85;" .. core.formspec_escape(defaulttexturedir .. "search.png")
+		"image_button[5.52,-0.13;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "search.png")
 			.. ";btn_mp_search;" .. "]" ..
-		"image_button[6.26,-0.125;0.85,0.85;" .. core.formspec_escape(defaulttexturedir .. "refresh.png")
+		"image_button[6.26,-0.13;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "refresh.png")
 			.. ";btn_mp_refresh;" .. "]" ..
 
 		-- Address / Port
@@ -58,12 +58,12 @@ local function get_formspec(tabview, name, tabdata)
 		"box[7.1,2.1;4.8,2.65;#999999]"..
 
 		-- Connect
-		"button[9.4,5;2.7,0.5;btn_mp_connect;" .. fgettext("Connect") .. "]"
+		"button[9.4,5.045;2.7,0.505;btn_mp_connect;" .. fgettext("Connect") .. "]"
 
 	if tabdata.fav_selected and fav_selected then
 		if gamedata.fav then
-			retval = retval .. "button[7.1,5;2.3,0.5;btn_delete_favorite;" ..
-				fgettext("Del. Favorite") .. "]"
+			retval = retval .. "image_button[7.1,4.91;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "trash.png")
+				.. ";btn_delete_favorite;" .. "]"
 		end
 		if fav_selected.description then
 			retval = retval .. "textarea[7.5,2.3;4.8,2.9;;" ..
