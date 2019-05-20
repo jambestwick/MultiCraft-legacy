@@ -79,16 +79,16 @@ end
 --------------------------------------------------------------------------------
 function ui.update()
 	local formspec = ""
+	local restart_btn
 
 	-- handle errors
-	if gamedata ~= nil and gamedata.reconnect_requested then
-		if core.settings:get_bool("auto_connect") == true then
-			gamedata.reconnect_requested = false
-			gamedata.errormessage = nil
-			gamedata.do_reconnect = true
-			core.start()
-			return
-		end
+	if gamedata ~= nil and gamedata.errormessage ~= nil and core.settings:get_bool("auto_connect") == true then
+		gamedata.reconnect_requested = false
+		gamedata.errormessage = nil
+		gamedata.do_reconnect = true
+		core.start()
+		return
+	elseif gamedata ~= nil and gamedata.reconnect_requested then
 		formspec = wordwrap_quickhack(gamedata.errormessage or "")
 		formspec = "size[12,5]" ..
 				"label[0.5,0;" .. fgettext("The server has requested a reconnect:") ..

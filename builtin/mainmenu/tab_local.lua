@@ -114,6 +114,7 @@ local function main_button_handler(this, fields, name, tabdata)
 				gamedata.port           = fields["te_serverport"]
 				gamedata.address        = ""
 
+				core.settings:set_bool("auto_connect", false)
 				core.settings:set("port",gamedata.port)
 				if fields["te_serveraddr"] ~= nil then
 					core.settings:set("bind_address",fields["te_serveraddr"])
