@@ -50,9 +50,9 @@ local function get_formspec(tabview, name, tabdata)
 		-- Name / Password
 		"label[7.1,0.85;" .. fgettext("Name:") .. "]" ..
 		"label[10.22,0.85;" .. fgettext("Password:") .. "]" ..
-		"field[7.4,1.75;2.86,0.5;te_name;;" ..
+		"field[7.4,1.75;3.2,0.5;te_name;;" ..
 			core.formspec_escape(core.settings:get("name")) .. "]" ..
-		"pwdfield[10.5,1.8;1.86,0.5;te_pwd;]" ..
+		"pwdfield[10.5,1.8;1.86,0.39;te_pwd;]" ..
 
 		-- Description Background
 		"box[7.1,2.1;4.8,2.65;#999999]"..
@@ -72,7 +72,9 @@ local function get_formspec(tabview, name, tabdata)
 	end
 
 	--favourites
-	retval = retval .. "tablecolumns[" ..
+	retval = retval ..
+		"tableoptions[background=#00000000;border=false]" ..
+		"tablecolumns[" ..
 		image_column(fgettext("")) .. ";" ..
 		image_column(fgettext("Favorite"), "favorite") .. ";" ..
 		image_column(fgettext("Ping")) .. ",padding=0.25;" ..

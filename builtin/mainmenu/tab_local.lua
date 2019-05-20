@@ -49,7 +49,7 @@ local function get_formspec(tabview, name, tabdata)
 					"local_creative_" ..
 					tostring(creative_mode) .. "_btn.png") ..
 					";cb_creative_mode;;true;false]" ..
-			"textlist[0,0;6.24,4.6;sp_worlds;" ..
+			"textlist[-0.025,0.01;6.3,4.63;sp_worlds;" ..
 			menu_render_worldlist() ..
 			";" .. index .. ";true]"
 	return retval
