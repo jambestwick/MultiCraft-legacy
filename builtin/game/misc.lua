@@ -230,7 +230,7 @@ function core.cancel_shutdown_requests()
 	core.request_shutdown("", false, -1)
 end
 
-local hud, timer = {}, {}
+local hud, timer, wield = {}, {}, {}
 local timeout = 2
 
 local function add_text(player)
@@ -258,16 +258,19 @@ core.register_globalstep(function(dtime)
 		local wielded_item = player:get_wielded_item()
 		local wielded_item_name = wielded_item:get_name()
 
-		if timer[player_name] and timer[player_name] < timeout then
-			timer[player_name] = timer[player_name] + dtime
-			if timer[player_name] > timeout and hud[player_name] then
-				player:hud_change(hud[player_name], "text", "")
-			end
+		timer[player_name] = timer[player_name] and timer[player_name] + dtime or 0
+		wield[player_name] = wield[player_name] or ""
+
+		if timer[player_name] > timeout and hud[player_name] then
+			player:hud_change(hud[player_name], "text", "")
+			timer[player_name] = 0
+			return
 		end
 
-		timer[player_name] = 0
+		if hud[player_name] and wielded_item_name ~= wield[player_name] then
+			wield[player_name] = wielded_item_name
+			timer[player_name] = 0
 
-		if hud[player_name] then
 			local def = core.registered_items[wielded_item_name]
 			local meta = wielded_item:get_meta()
 			local meta_desc = meta:get_string("description")

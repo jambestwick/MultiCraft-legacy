@@ -75,7 +75,6 @@ local function get_formspec(tabview, name, tabdata)
 	retval = retval ..
 		"tableoptions[background=#00000000;border=false]" ..
 		"tablecolumns[" ..
-		image_column(fgettext("")) .. ";" ..
 		image_column(fgettext("Favorite"), "favorite") .. ";" ..
 		image_column(fgettext("Ping")) .. ",padding=0.25;" ..
 		"color,span=3;" ..

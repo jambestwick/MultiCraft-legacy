@@ -98,18 +98,15 @@ function render_serverlist_row(spec, is_favorite, is_approved)
 	local details = ""
 	local grey_out = not is_server_protocol_compat(spec.proto_min, spec.proto_max)
 
-	if is_approved then
-		details = "6,"
-	else
-		details = "7,"
-	end
-
 	if is_favorite then
-		details = details .. "1,"
+		details = "1,"
 	else
-		details = details .. "0,"
+		if is_approved then
+			details = "6,"
+		else
+			details = "7,"
+		end
 	end
-
 
 	if spec.ping then
 		local ping = spec.ping * 1000
