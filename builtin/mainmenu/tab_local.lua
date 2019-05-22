@@ -106,7 +106,7 @@ local function main_button_handler(this, fields, name, tabdata)
 	if fields["play"] ~= nil or world_doubleclick or fields["key_enter"] then
 		local selected = core.get_textlist_index("sp_worlds")
 		gamedata.selected_world = menudata.worldlist:get_raw_index(selected)
-		core.settings:set_bool("auto_connect", false)
+		core.settings:set("maintab_LAST", "local")
 
 		if core.settings:get_bool("enable_server") then
 			if selected ~= nil and gamedata.selected_world ~= 0 then
@@ -115,6 +115,7 @@ local function main_button_handler(this, fields, name, tabdata)
 				gamedata.port           = fields["te_serverport"]
 				gamedata.address        = ""
 
+				core.settings:set_bool("auto_connect", false)
 				core.settings:set("port",gamedata.port)
 				if fields["te_serveraddr"] ~= nil then
 					core.settings:set("bind_address",fields["te_serveraddr"])
@@ -135,6 +136,8 @@ local function main_button_handler(this, fields, name, tabdata)
 		else
 			if selected ~= nil and gamedata.selected_world ~= 0 then
 				gamedata.singleplayer = true
+				core.settings:set_bool("auto_connect", true)
+				core.settings:set("connect_time", os.time())
 				core.start()
 			else
 				gamedata.errormessage =

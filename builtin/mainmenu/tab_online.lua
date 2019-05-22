@@ -350,6 +350,8 @@ local function main_button_handler(tabview, fields, name, tabdata)
 		end
 
 		core.settings:set_bool("auto_connect", auto_connect)
+		core.settings:set("connect_time", os.time())
+		core.settings:set("maintab_LAST", "online")
 		core.settings:set("address",     fields.te_address)
 		core.settings:set("remote_port", fields.te_port)
 

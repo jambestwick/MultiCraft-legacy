@@ -81,14 +81,26 @@ function ui.update()
 	local formspec = ""
 	local restart_btn
 
-	-- handle errors
-	if gamedata ~= nil and gamedata.errormessage ~= nil and core.settings:get_bool("auto_connect") == true then
+	-- attempt auto restart
+	if gamedata ~= nil and gamedata.errormessage ~= nil and
+			core.settings:get_bool("auto_connect") == true and
+			tonumber(core.settings:get("connect_time")) < os.time() - 30 --[[and
+			not string.find(gamedata.errormessage, "Access denied")]] then
+		if core.settings:get("maintab_LAST") == "local" then
+			gamedata.singleplayer = true
+			gamedata.selected_world =
+				tonumber(core.settings:get("mainmenu_last_selected_world"))
+		end
+		core.settings:set("connect_time", os.time())
 		gamedata.reconnect_requested = false
 		gamedata.errormessage = nil
 		gamedata.do_reconnect = true
 		core.start()
 		return
-	elseif gamedata ~= nil and gamedata.reconnect_requested then
+	end
+
+	-- handle errors
+	if gamedata ~= nil and gamedata.reconnect_requested then
 		formspec = wordwrap_quickhack(gamedata.errormessage or "")
 		formspec = "size[12,5]" ..
 				"label[0.5,0;" .. fgettext("The server has requested a reconnect:") ..
@@ -195,6 +207,7 @@ core.button_handler = function(fields)
 			gamedata.selected_world =
 				tonumber(core.settings:get("mainmenu_last_selected_world"))
 		end
+		core.settings:set("connect_time", os.time())
 		gamedata.reconnect_requested = false
 		gamedata.errormessage = nil
 		gamedata.do_reconnect = true
