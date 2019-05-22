@@ -548,7 +548,7 @@ public:
 	static void playerDamage(MtEvent *e, void *data)
 	{
 		SoundMaker *sm = (SoundMaker *)data;
-		sm->m_sound->playSound(SimpleSoundSpec("player_damage", 0.5), false);
+		sm->m_sound->playSound(SimpleSoundSpec("player_damage", 1.0), false);
 	}
 
 	static void playerFallingDamage(MtEvent *e, void *data)
@@ -965,11 +965,7 @@ static inline void create_formspec_menu(GUIFormSpecMenu **cur_formspec,
 
 }
 
-#if defined(__ANDROID__) || defined(__IOS__)
-#define SIZE_TAG "size[11,5.5]"
-#else
-#define SIZE_TAG "size[11,5.5,true]" // Fixed size on desktop
-#endif
+#define SIZE_TAG "size[11,5.5,true]"
 
 /******************************************************************************/
 static void updateChat(Client &client, f32 dtime, bool show_debug,
@@ -4759,12 +4755,12 @@ void Game::showPauseMenu()
 		<< strgettext("Change Keys")  << "]";
 #endif
 	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_exit_menu;"
-		<< strgettext("Save and Exit") << "]"
+		<< strgettext("Save and Exit") << "]";
 #ifndef __IOS__
-; // LoL
 	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_exit_os;"
-		<< strgettext("Close game")   << "]"
+		<< strgettext("Close game")   << "]";
 #endif
+
 /*		<< "textarea[7.5,0.25;3.9,6.25;;" << control_text << ";]
 		<< "textarea[0.4,0.25;3.9,6.25;;" << PROJECT_NAME_C " " VERSION_STRING "\n"
 		<< "\n"

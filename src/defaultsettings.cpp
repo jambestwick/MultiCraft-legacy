@@ -388,7 +388,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("abm_interval", "2.0");
 	settings->setDefault("client_unload_unused_data_timeout", "60");
 	settings->setDefault("curl_verify_cert", "false");
-	settings->setDefault("mapgens_available", "v6, v7p, flat");
+	settings->setDefault("mapgens_available", "v7p, v6, flat");
 #endif
 
 	// Android Settings
@@ -440,9 +440,9 @@ void set_default_settings(Settings *settings)
 
 	// iOS Settings
 #ifdef __IOS__
-	settings->setDefault("mg_name", "v7p");
 	settings->setDefault("emergequeue_limit_diskonly", "16");
 	settings->setDefault("emergequeue_limit_generate", "16");
+	settings->setDefault("gui_scaling_filter_txr2img", "false");
 	// set font_path
 	settings->setDefault("mono_font_path", porting::getDataPath("fonts" DIR_DELIM "retrovillenc.ttf"));
 	settings->setDefault("fallback_font_path", porting::getDataPath("fonts" DIR_DELIM "retrovillenc.ttf"));
@@ -451,26 +451,21 @@ void set_default_settings(Settings *settings)
 	if ([SDVersion deviceSize] == Screen3Dot5inch) {
 		// 3.5" (old iPhone's)
 		settings->setDefault("hud_scaling", "0.5");
-		settings->setDefault("gui_scaling", "1.0");
 	} else if ([SDVersion deviceSize] == Screen4inch) {
 		// 4" (iPhone 5)
 		settings->setDefault("hud_scaling", "0.5");
-		settings->setDefault("gui_scaling", "1.1");
-		settings->setDefault("mouse_sensitivity", "0.24");
+		settings->setDefault("mouse_sensitivity", "0.25");
 	} else if ([SDVersion deviceSize] == Screen4Dot7inch) {
 		// 4.7" (iPhone)
 		settings->setDefault("hud_scaling", "0.6");
-		settings->setDefault("gui_scaling", "1.1");
 		settings->setDefault("mouse_sensitivity", "0.25");
 	} else if ([SDVersion deviceSize] == Screen5Dot5inch) {
 		// 5.5" (iPhone Plus)
 		settings->setDefault("hud_scaling", "0.7");
-		settings->setDefault("gui_scaling", "1.2");
 		settings->setDefault("mouse_sensitivity", "0.3");
 	} else if (([SDVersion deviceSize] == Screen5Dot8inch) || ([SDVersion deviceSize] == Screen6Dot1inch) || ([SDVersion deviceSize] == Screen6Dot5inch)) {
 		// 5.8+" (iPhone X-series)
 		settings->setDefault("hud_scaling", "0.8");
-		settings->setDefault("gui_scaling", "1.3");
 		settings->setDefault("mouse_sensitivity", "0.35");
 	} else {
 		// iPad

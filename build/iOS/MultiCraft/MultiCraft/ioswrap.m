@@ -6,30 +6,14 @@
 // returns the app version as an integer
 static uint32_t parse_version()
 {
-	struct {
-		uint8_t major, minor, patch, revision;
-	} version;
-	NSString *fullver = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 	NSString *revstr = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-
-	if([fullver length] != 3 + 2 + 1)
-		goto err;
-	version.major = [fullver characterAtIndex:0] - '0';
-	if([fullver characterAtIndex:1] != '.')
-		goto err;
-	version.minor = [fullver characterAtIndex:2] - '0';
-	if([fullver characterAtIndex:3] != '.')
-		goto err;
-	version.patch = [fullver characterAtIndex:4] - '0';
-	version.revision = [revstr intValue];
-
-	uint32_t ret = version.revision | (version.patch << 8) | (version.minor << 16) | (version.major << 24);
-	NSLog(@"App version %@-%@  ->  %u", fullver, revstr, ret);
+	uint8_t revision = [revstr intValue];
+	
+	// compatibility with old versions, DON'T CHANGE
+	uint32_t ret = revision | (2 << 24);
+	
+	NSLog(@"App revision %@  ->  %u", revstr, ret);
 	return ret;
-
-err:
-	NSLog(@"VERSION PARSING ERROR: Only versions in the format x.x.x can be used");
-	exit(1);
 }
 
 static uint32_t read_version(NSString *path)
