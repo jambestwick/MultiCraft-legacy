@@ -81,11 +81,11 @@ local function get_formspec(tabview, name, tabdata)
 		"text,align=right;" ..                -- clients
 		"text,align=center,padding=0.25;" ..  -- "/"
 		"text,align=right,padding=0.25;" ..   -- clients_max
-		image_column(fgettext("Creative mode"), "creative") .. ",padding=1;" ..
+		image_column(fgettext("Creative mode"), "creative") .. ",padding=0.25;" ..
 		image_column(fgettext("Damage enabled"), "damage") .. ",padding=0.25;" ..
 		image_column(fgettext("PvP enabled"), "pvp") .. ",padding=0.25;" ..
 		"color,span=1;" ..
-		"text,padding=1]" ..
+		"text,padding=0.25]" ..
 		"table[-0.09,0.7;7,4.9;favourites;"
 
 	if menudata.search_result then
