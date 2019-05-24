@@ -55,7 +55,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("client_unload_unused_data_timeout", "600");
 	settings->setDefault("client_mapblock_limit", "5000");
 	settings->setDefault("enable_build_where_you_stand", "false" );
-	settings->setDefault("send_pre_v25_init", "false");
+	settings->setDefault("send_pre_v25_init", "true");
 	settings->setDefault("curl_timeout", "5000");
 	settings->setDefault("curl_parallel_limit", "8");
 	settings->setDefault("curl_file_download_timeout", "300000");
@@ -128,10 +128,10 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("tooltip_show_delay", "400");
 	settings->setDefault("zoom_fov", "15");
 	settings->setDefault("fps_max", "60");
-	settings->setDefault("pause_fps_max", "10");
+	settings->setDefault("pause_fps_max", "15");
 	settings->setDefault("viewing_range", "100");
 	settings->setDefault("near_plane", "0.1");
-	settings->setDefault("screen_w", "800");
+	settings->setDefault("screen_w", "1024");
 	settings->setDefault("screen_h", "600");
 	settings->setDefault("autosave_screensize", "true");
 	settings->setDefault("fullscreen", "false");
@@ -236,7 +236,7 @@ void set_default_settings(Settings *settings)
 
 #if USE_FREETYPE
 	settings->setDefault("freetype", "true");
-	settings->setDefault("font_path", porting::getDataPath("fonts" DIR_DELIM "retrovillenc.ttf"));
+	settings->setDefault("font_path", porting::getDataPath("fonts" DIR_DELIM "Retron2000.ttf"));
 	settings->setDefault("font_shadow", "1");
 	settings->setDefault("font_shadow_alpha", "127");
 	settings->setDefault("mono_font_path", porting::getDataPath("fonts" DIR_DELIM "Cousine-Regular.ttf"));
@@ -245,7 +245,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("fallback_font_shadow", "1");
 	settings->setDefault("fallback_font_shadow_alpha", "128");
 
-	std::string font_size_str = std::to_string(TTF_DEFAULT_FONT_SIZE -5 );
+	std::string font_size_str = std::to_string(TTF_DEFAULT_FONT_SIZE + 4);
 
 	settings->setDefault("fallback_font_size", font_size_str);
 #else
@@ -272,7 +272,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("strict_protocol_version_checking", "false");
 	settings->setDefault("player_transfer_distance", "0");
 	settings->setDefault("max_simultaneous_block_sends_per_client", "10");
-	settings->setDefault("max_simultaneous_block_sends_server_total", "40");
+	settings->setDefault("max_simultaneous_block_sends_server_total", "1000");
 	settings->setDefault("time_send_interval", "5");
 
 	settings->setDefault("default_game", "default");
@@ -282,7 +282,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("show_statusline_on_connect", "true");
 	settings->setDefault("enable_damage", "true");
 	settings->setDefault("default_password", "");
-	settings->setDefault("default_privs", "interact, shout");
+	settings->setDefault("default_privs", "interact, shout, home");
 	settings->setDefault("enable_pvp", "true");
 	settings->setDefault("disallow_empty_password", "false");
 	settings->setDefault("disable_anticheat", "false");
@@ -298,11 +298,11 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("ask_reconnect_on_crash", "false");
 
 	settings->setDefault("profiler_print_interval", "0");
-	settings->setDefault("active_object_send_range_blocks", "3");
+	settings->setDefault("active_object_send_range_blocks", "4");
 	settings->setDefault("active_block_range", "3");
 	//settings->setDefault("max_simultaneous_block_sends_per_client", "1");
 	// This causes frametime jitter on client side, or does it?
-	settings->setDefault("max_block_send_distance", "9");
+	settings->setDefault("max_block_send_distance", "10");
 	settings->setDefault("block_send_optimize_distance", "4");
 	settings->setDefault("server_side_occlusion_culling", "true");
 	settings->setDefault("max_clearobjects_extra_loaded_blocks", "4096");
@@ -322,9 +322,9 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("ignore_world_load_errors", "false");
 	settings->setDefault("remote_media", "");
 	settings->setDefault("debug_log_level", "warning");
-	settings->setDefault("emergequeue_limit_total", "256");
-	settings->setDefault("emergequeue_limit_diskonly", "32");
-	settings->setDefault("emergequeue_limit_generate", "32");
+	settings->setDefault("emergequeue_limit_total", "512");
+	settings->setDefault("emergequeue_limit_diskonly", "64");
+	settings->setDefault("emergequeue_limit_generate", "64");
 	settings->setDefault("num_emerge_threads", "1");
 	settings->setDefault("secure.enable_security", "true");
 	settings->setDefault("secure.trusted_mods", "");
@@ -333,7 +333,7 @@ void set_default_settings(Settings *settings)
 	// Physics
 	settings->setDefault("movement_acceleration_default", "3");
 	settings->setDefault("movement_acceleration_air", "2");
-	settings->setDefault("movement_acceleration_fast", "10");
+	settings->setDefault("movement_acceleration_fast", "20");
 	settings->setDefault("movement_speed_walk", "4");
 	settings->setDefault("movement_speed_crouch", "1.35");
 	settings->setDefault("movement_speed_fast", "20");
@@ -341,7 +341,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("movement_speed_jump", "6.5");
 	settings->setDefault("movement_liquid_fluidity", "1");
 	settings->setDefault("movement_liquid_fluidity_smooth", "0.5");
-	settings->setDefault("movement_liquid_sink", "10");
+	settings->setDefault("movement_liquid_sink", "20");
 	settings->setDefault("movement_gravity", "9.81");
 
 	// Liquids
@@ -356,7 +356,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("chunksize", "5");
 	settings->setDefault("mg_flags", "dungeons");
 	settings->setDefault("fixed_map_seed", "");
-	settings->setDefault("max_block_generate_distance", "7");
+	settings->setDefault("max_block_generate_distance", "8");
 	settings->setDefault("enable_mapgen_debug_info", "false");
 
 	// Server list announcing
@@ -394,7 +394,7 @@ void set_default_settings(Settings *settings)
 	// Android Settings
 #ifdef __ANDROID__
 	settings->setDefault("viewing_range", "35");
-	settings->setDefault("pause_fps_max", "5");
+	settings->setDefault("pause_fps_max", "10");
 	settings->setDefault("smooth_lighting", "false");
 	settings->setDefault("selectionbox_width", "6");
 	settings->setDefault("emergequeue_limit_diskonly", "8");
@@ -444,8 +444,8 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("emergequeue_limit_generate", "16");
 	settings->setDefault("gui_scaling_filter_txr2img", "false");
 	// set font_path
-	settings->setDefault("mono_font_path", porting::getDataPath("fonts" DIR_DELIM "retrovillenc.ttf"));
-	settings->setDefault("fallback_font_path", porting::getDataPath("fonts" DIR_DELIM "retrovillenc.ttf"));
+	settings->setDefault("mono_font_path", font_path));
+	settings->setDefault("fallback_font_path", font_path));
 
 	// set the size of the elements depending on the screen size
 	if ([SDVersion deviceSize] == Screen3Dot5inch) {
@@ -495,6 +495,7 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("viewing_range", "50");
 		settings->setDefault("chunksize", "3");
 		settings->setDefault("cloud_radius", "6");
+		settings->setDefault("pause_fps_max", "10");
 		settings->setDefault("client_mapblock_limit", "500");
 		settings->setDefault("active_block_range", "1");
 		settings->setDefault("max_block_generate_distance", "3");
