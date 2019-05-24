@@ -457,8 +457,11 @@ set(common_SRCS
 	${JTHREAD_SRCS}
 	${common_SCRIPT_SRCS}
 	${UTIL_SRCS}
-	${UNITTEST_SRCS}
 )
+
+if((CMAKE_BUILD_TYPE MATCHES "Debug") OR (CMAKE_BUILD_TYPE MATCHES "SemiDebug") OR (CMAKE_BUILD_TYPE MATCHES "RelWithDebInfo"))
+	set(common_SRCS ${common_SRCS} ${UNITTEST_SRCS})
+endif()
 
 # This gives us the icon and file version information
 if(WIN32)
@@ -531,8 +534,12 @@ set(client_SRCS
 	sky.cpp
 	wieldmesh.cpp
 	${client_SCRIPT_SRCS}
-	${UNITTEST_CLIENT_SRCS}
 )
+
+if((CMAKE_BUILD_TYPE MATCHES "Debug") OR (CMAKE_BUILD_TYPE MATCHES "SemiDebug") OR (CMAKE_BUILD_TYPE MATCHES "RelWithDebInfo"))
+		set(client_SRCS ${client_SRCS} ${UNITTEST_CLIENT_SRCS})
+endif()
+
 list(SORT client_SRCS)
 
 # Server sources
@@ -765,7 +772,7 @@ else()
 	if(CMAKE_SYSTEM_NAME MATCHES "(Darwin|FreeBSD)")
 		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
 	else()
-		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -ffast-math -fomit-frame-pointer")
+		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -flto")
 	endif(CMAKE_SYSTEM_NAME MATCHES "(Darwin|FreeBSD)")
 	set(CMAKE_CXX_FLAGS_SEMIDEBUG "-g -O1 -Wall -Wabi ${WARNING_FLAGS} ${OTHER_FLAGS}")
 	set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -Wall -Wabi ${WARNING_FLAGS} ${OTHER_FLAGS}")
