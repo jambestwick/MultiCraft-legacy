@@ -1168,6 +1168,7 @@ struct GameRunData {
 	float repeat_rightclick_timer;
 	float object_hit_delay_timer;
 	float time_from_last_punch;
+	float pause_game_timer;
 	ClientActiveObject *selected_object;
 
 	float jump_timer;
@@ -3154,6 +3155,15 @@ void Game::updatePlayerControl(const CameraOrientation &cam)
 
 inline void Game::step(f32 *dtime)
 {
+#if defined(__ANDROID__) || defined(__IOS__)
+	if (g_menumgr.pausesGame()) {
+		runData.pause_game_timer += *dtime;
+		if (runData.pause_game_timer > 120.f) {
+			g_gamecallback->disconnect();
+			return;
+		}
+	}
+#endif
 	bool can_be_and_is_paused =
 			(simple_singleplayer_mode && g_menumgr.pausesGame());
 
@@ -4812,6 +4822,8 @@ void Game::showPauseMenu()
 
 	if (simple_singleplayer_mode)
 		pauseAnimation(true);
+
+	runData.pause_game_timer = 0;
 }
 
 #ifdef DISABLE_CSM
