@@ -1,5 +1,5 @@
 -- cache setting
-local enable_damage = core.settings:get_bool("enable_damage")
+--[[local enable_damage = core.settings:get_bool("enable_damage")
 
 local health_bar_definition =
 {
@@ -162,4 +162,69 @@ end
 
 core.register_on_joinplayer(initialize_builtin_statbars)
 core.register_on_leaveplayer(cleanup_builtin_statbars)
-core.register_playerevent(player_event_handler)
+core.register_playerevent(player_event_handler)]]
+
+-- Hud Item name
+
+local hud, timer, wield = {}, {}, {}
+local timeout = 2
+local textposition
+
+core.register_on_joinplayer(function(player)
+	if PLATFORM == "iOS" then
+		textposition = {x = 0.5, y = 0.89}
+	else
+		textposition = {x = 0.5, y = 0.975}
+	end
+end)
+
+local function add_text(player)
+	local player_name = player:get_player_name()
+	hud[player_name] = player:hud_add({
+		hud_elem_type = "text",
+		position = textposition,
+		offset = {x = 0, y = -75},
+		alignment = {x = 0, y = 0},
+		number = 0xFFFFFF,
+		text = "",
+	})
+end
+
+core.register_on_joinplayer(function(player)
+	core.after(1, add_text, player)
+end)
+
+core.register_globalstep(function(dtime)
+	local players = core.get_connected_players()
+	for i = 1, #players do
+		local player = players[i]
+		local player_name = player:get_player_name()
+
+		local wielded_item = player:get_wielded_item()
+		local wielded_item_name = wielded_item:get_name()
+
+		timer[player_name] = timer[player_name] and timer[player_name] + dtime or 0
+		wield[player_name] = wield[player_name] or ""
+
+		if timer[player_name] > timeout and hud[player_name] then
+			player:hud_change(hud[player_name], "text", "")
+			timer[player_name] = 0
+			return
+		end
+
+		if hud[player_name] and wielded_item_name ~= wield[player_name] then
+			wield[player_name] = wielded_item_name
+			timer[player_name] = 0
+
+			local def = core.registered_items[wielded_item_name]
+			local meta = wielded_item:get_meta()
+			local meta_desc = meta:get_string("description")
+			meta_desc = meta_desc:gsub("\27", ""):gsub("%(c@#%w%w%w%w%w%w%)", "")
+
+			local description = meta_desc ~= "" and meta_desc or
+				(def and (def.description:match("(.-)\n") or def.description) or "")
+
+			player:hud_change(hud[player_name], "text", description)
+		end
+	end
+end)
