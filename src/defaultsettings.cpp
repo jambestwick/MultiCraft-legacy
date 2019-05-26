@@ -245,7 +245,11 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("fallback_font_shadow", "1");
 	settings->setDefault("fallback_font_shadow_alpha", "128");
 
-	std::string font_size_str = std::to_string(TTF_DEFAULT_FONT_SIZE + 4);
+#if defined(__ANDROID__) || defined(__IOS__)
+	std::string font_size_str = std::to_string(TTF_DEFAULT_FONT_SIZE - 3);
+#else
+	std::string font_size_str = std::to_string(TTF_DEFAULT_FONT_SIZE + 2);
+#endif
 
 	settings->setDefault("fallback_font_size", font_size_str);
 #else
@@ -444,8 +448,8 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("emergequeue_limit_generate", "16");
 	settings->setDefault("gui_scaling_filter_txr2img", "false");
 	// set font_path
-	settings->setDefault("mono_font_path", font_path));
-	settings->setDefault("fallback_font_path", font_path));
+	settings->setDefault("mono_font_path", g_settings->get("font_path"));
+	settings->setDefault("fallback_font_path", g_settings->get("font_path"));
 
 	// set the size of the elements depending on the screen size
 	if ([SDVersion deviceSize] == Screen3Dot5inch) {

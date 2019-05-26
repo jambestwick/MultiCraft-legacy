@@ -100,7 +100,7 @@ local function create_world_buttonhandler(this, fields)
 			core.settings:set("fixed_map_seed", fields["te_seed"])
 
 			if not menudata.worldlist:uid_exists_raw(worldname) then
-				core.settings:set("mg_name","v6")
+				core.settings:set("mg_name",fields["dd_mapgen"])
 				message = core.create_world(worldname,gameindex)
 			else
 				message = fgettext("A world named \"$1\" already exists", worldname)
