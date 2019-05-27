@@ -115,7 +115,8 @@ function ui.update()
 		else
 			error_title = fgettext("An error occured:")
 		end
-		if core.settings:get("maintab_LAST") == "local" then
+		if core.settings:get("maintab_LAST") == "local" and
+				tonumber(core.settings:get("connect_time")) < os.time() - 30 then
 			restart_btn = "]button[6,4.6;3,0.5;btn_reconnect_no;" .. fgettext("Close") .. "]" ..
 				"button[3,4.6;3,0.5;btn_reconnect_yes;" .. fgettext("Restart") .. "]"
 		else
