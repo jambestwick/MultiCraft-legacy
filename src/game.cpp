@@ -2188,7 +2188,7 @@ bool Game::connectToServer(const std::string &playername,
 
 			wait_time += dtime;
 			// Only time out if we aren't waiting for the server we started
-			if ((*address != "") && (wait_time > 10)) {
+			if ((*address != "") && (wait_time > 15)) {
 				bool sent_old_init = g_settings->getFlag("send_pre_v25_init");
 				// If no pre v25 init was sent, and no answer was received,
 				// but the low level connection could be established
@@ -4620,6 +4620,7 @@ void Game::pauseGame()
 	if (g_menumgr.pausesGame())
 		return;
 	showPauseMenu();
+	runData.pause_game_timer = 0;
 }
 
 void Game::customStatustext(const std::wstring &text, float time)

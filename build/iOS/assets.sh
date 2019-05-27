@@ -12,7 +12,7 @@ for dir in builtin textures; do
 	cp -r ../../$dir $DEST/$dir
 done
 mkdir -p $DEST/fonts
-cp ../../fonts/retrovillenc.ttf $DEST/fonts/ # no PNG fonts because freetype
+cp ../../fonts/Retron2000.ttf $DEST/fonts/ # no PNG fonts because freetype
 mkdir -p $DEST/games
 cp -r ../../games/default $DEST/games/default
 pushd ../../po

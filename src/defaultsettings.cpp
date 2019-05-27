@@ -392,6 +392,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("abm_interval", "2.0");
 	settings->setDefault("client_unload_unused_data_timeout", "60");
 	settings->setDefault("curl_verify_cert", "false");
+	settings->setDefault("gui_scaling_filter_txr2img", "false");
 	settings->setDefault("mapgens_available", "v7p, v6, flat");
 #endif
 
@@ -409,7 +410,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("client_mapblock_limit", "250");
 	settings->setDefault("enable_3d_clouds", "false");
 	settings->setDefault("cloud_radius", "6");
-	settings->setDefault("gui_scaling_filter_txr2img", "false");
 	// set font_path
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");
@@ -446,7 +446,6 @@ void set_default_settings(Settings *settings)
 #ifdef __IOS__
 	settings->setDefault("emergequeue_limit_diskonly", "16");
 	settings->setDefault("emergequeue_limit_generate", "16");
-	settings->setDefault("gui_scaling_filter_txr2img", "false");
 	// set font_path
 	settings->setDefault("mono_font_path", g_settings->get("font_path"));
 	settings->setDefault("fallback_font_path", g_settings->get("font_path"));
@@ -474,7 +473,6 @@ void set_default_settings(Settings *settings)
 	} else {
 		// iPad
 		settings->setDefault("hud_scaling", "0.8");
-		settings->setDefault("gui_scaling", "1.1");
 	}
 
 	// Move the HUD up for the iPhone X-series and new iPad Pro

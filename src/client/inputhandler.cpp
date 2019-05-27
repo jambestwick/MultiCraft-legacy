@@ -23,6 +23,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "mainmenumanager.h"
 
 #ifdef __IOS__
+#include "porting_ios.h"
 extern void external_pause_game();
 #endif
 
@@ -64,9 +65,16 @@ bool MyEventReceiver::OnEvent(const SEvent &event)
 
 #ifdef __IOS__
 	if (event.EventType == irr::EET_APPLICATION_EVENT) {
-		if (event.ApplicationEvent.EventType == irr::EAET_WILL_PAUSE)
+		if (event.ApplicationEvent.EventType == irr::EAET_WILL_PAUSE) {
 			external_pause_game();
-
+		#ifdef ADS
+			ads_set_paused(true);
+		#endif
+		}
+		#ifdef ADS
+		if (event.ApplicationEvent.EventType == irr::EAET_DID_RESUME)
+			ads_set_paused(false);
+		#endif
 		return true;
 	}
 #endif

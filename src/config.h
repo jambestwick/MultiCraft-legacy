@@ -27,9 +27,9 @@
     #define PROJECT_NAME_C "MultiCraft"
     #define STATIC_SHAREDIR ""
     #define VERSION_MAJOR 1
-    #define VERSION_MINOR 1
-    #define VERSION_PATCH 10
-    #define VERSION_STRING "1.1.10"
+    #define VERSION_MINOR 2
+    #define VERSION_PATCH 0
+	#define VERSION_STRING "1.2.0"
     #ifdef NDEBUG
         #define BUILD_TYPE "Release"
     #else
