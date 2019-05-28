@@ -1164,10 +1164,20 @@ void Client::handleCommand_HudSetParam(NetworkPacket* pkt)
 
 	if (param == HUD_PARAM_HOTBAR_ITEMCOUNT && value.size() == 4) {
 		s32 hotbar_itemcount = readS32((u8*) value.c_str());
-		if (hotbar_itemcount > 0 && hotbar_itemcount <= HUD_HOTBAR_ITEMCOUNT_MAX)
-			player->hud_hotbar_itemcount = hotbar_itemcount;
+		if (hotbar_itemcount > 0 && hotbar_itemcount <= HUD_HOTBAR_ITEMCOUNT_MAX) {
+			// Hotbar over 8 is not supported by touch controls. This is not a hack, but a quick fix
+			#if defined(__ANDROID__) || defined(__IOS__)
+				player->hud_hotbar_itemcount = 8;
+			#else
+				player->hud_hotbar_itemcount = hotbar_itemcount;
+			#endif
+		}
 	}
 	else if (param == HUD_PARAM_HOTBAR_IMAGE) {
+		// Set the touch interface to fit the size
+		#if defined(__ANDROID__) || defined(__IOS__)
+			std::string value = "gui_hotbar_touch.png";
+		#endif
 		// If value not empty verify image exists in texture source
 		if (value != "" && !getTextureSource()->isKnownSourceImage(value)) {
 			errorstream << "Server sent wrong Hud hotbar image (sent value: '"
@@ -1177,6 +1187,10 @@ void Client::handleCommand_HudSetParam(NetworkPacket* pkt)
 		player->hotbar_image = value;
 	}
 	else if (param == HUD_PARAM_HOTBAR_SELECTED_IMAGE) {
+		// Selection texture too...
+		#if defined(__ANDROID__) || defined(__IOS__)
+			std::string value = "gui_hotbar_selected.png";
+		#endif
 		// If value not empty verify image exists in texture source
 		if (value != "" && !getTextureSource()->isKnownSourceImage(value)) {
 			errorstream << "Server sent wrong Hud hotbar selected image (sent value: '"
