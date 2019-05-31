@@ -9,6 +9,6 @@ target 'MultiCraft' do
 	pod 'SDVersion', :git => 'https://github.com/MoNTE48/SDVersion'
 	pod 'LuaJITPod', :git => 'https://github.com/MoNTE48/LuaJITPod'
 
-	pod 'Appodeal/Interstitial', '2.5.3-Beta'
+	pod 'Appodeal/Interstitial', '2.5.4-Beta'
 	pod 'PersonalizedAdConsent', :git => 'https://github.com/MultiCraftProject/googleads-consent-sdk-ios'
 end

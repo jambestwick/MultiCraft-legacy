@@ -118,7 +118,7 @@ void ioswrap_assets()
 			goto extract;
 #endif
 		uint32_t v_disk = read_version(destpath);
-		if(v_runtime = v_disk) {
+		if(v_runtime == v_disk) {
 			NSLog(@"%s: skipping update (%d)", assets[i].name, v_disk);
 			continue;
 		}

@@ -466,7 +466,7 @@ bool TouchScreenGUI::isReleaseHUDButton(size_t eventID)
 	std::map<size_t,irr::EKEY_CODE>::iterator iter = m_hud_ids.find(eventID);
 
 	if (iter != m_hud_ids.end()) {
-		SEvent* translated = new SEvent();
+		SEvent *translated = new SEvent();
 		memset(translated, 0, sizeof(SEvent));
 		translated->EventType            = irr::EET_KEY_INPUT_EVENT;
 		translated->KeyInput.Key         = iter->second;
