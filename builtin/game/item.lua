@@ -458,9 +458,9 @@ function core.item_drop(itemstack, dropper, pos)
 			obj:get_luaentity().dropped_by = dropper:get_player_name()
 		else
 			obj:set_velocity({
-				x = math.random(-2.5, 2.5),
-				y = math.random(1, 4),
-				z = math.random(-2.5, 2.5)
+				x = math.random(-2, 2),
+				y = math.random(2, 4),
+				z = math.random(-2, 2)
 			})
 		end
 		return itemstack
