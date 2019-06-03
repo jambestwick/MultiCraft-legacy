@@ -921,7 +921,8 @@ void PlayerSAO::step(float dtime, bool send_recommended)
 		MapNode n = m_env->getMap().getNodeNoEx(p);
 		const ContentFeatures &c = m_env->getGameDef()->ndef()->get(n);
 		// If node generates drown
-		if (c.drowning > 0 && m_hp > 0) {
+		bool noclip = m_privs.count("noclip") && g_settings->getBool("noclip");
+		if (c.drowning > 0 && m_hp > 0 &&!noclip) {
 			if (m_breath > 0)
 				setBreath(m_breath - 1);
 

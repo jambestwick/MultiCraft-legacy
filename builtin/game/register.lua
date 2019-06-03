@@ -351,6 +351,7 @@ core.register_node(":air", {
 	floodable = true,
 	air_equivalent = true,
 	drop = "",
+	drowning = 0,
 	groups = {not_in_creative_inventory=1},
 })
 
@@ -367,6 +368,7 @@ core.register_node(":ignore", {
 	buildable_to = true, -- A way to remove accidentally placed ignores
 	air_equivalent = true,
 	drop = "",
+	drowning = 0,
 	groups = {not_in_creative_inventory=1},
 })
 

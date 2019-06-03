@@ -45,14 +45,14 @@ core.register_on_joinplayer(function(player)
 	local player_name = player:get_player_name()
 	player_list[player_name] = player
 	if not minetest.is_singleplayer() then
-		core.chat_send_all("*** " .. player_name .. " joined the game.")
+		core.chat_send_all("=> " .. player_name .. " has joined the server")
 	end
 end)
 
 core.register_on_leaveplayer(function(player, timed_out)
 	local player_name = player:get_player_name()
 	player_list[player_name] = nil
-	local announcement = "*** " ..  player_name .. " left the game."
+	local announcement = "<= " ..  player_name .. " left the server"
 	if timed_out then
 		announcement = announcement .. " (timed out)"
 	end

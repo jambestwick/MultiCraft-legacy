@@ -965,7 +965,7 @@ static inline void create_formspec_menu(GUIFormSpecMenu **cur_formspec,
 
 }
 
-#define SIZE_TAG "size[11,5.5,true]"
+#define SIZE_TAG "size[11,5.5]"
 
 /******************************************************************************/
 static void updateChat(Client &client, f32 dtime, bool show_debug,
@@ -4741,7 +4741,7 @@ void Game::showPauseMenu()
 #elif __IOS__
 	float ypos = 1.5;
 #else
-	float ypos = simple_singleplayer_mode ? 0.7f : 0.1f;
+	float ypos = simple_singleplayer_mode ? 0.5f : 0.1f;
 #endif
 	std::ostringstream os;
 
@@ -4749,17 +4749,12 @@ void Game::showPauseMenu()
 		<< "bgcolor[#00000060;true]"
 		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_continue;"
 		<< strgettext("Continue") << "]";
-
+		
+#if !defined(__ANDROID__) && !defined(__IOS__)
 	if (!simple_singleplayer_mode) {
-#if !defined(__ANDROID__) && !defined(__IOS__)
-	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_change_password;"
-		<< strgettext("Change Password") << "]";
-#endif
-	} else {
-	os		<< "field[5.1,0;4,1.0;;" << strgettext("Pause") << ";]";
+		os << "button_exit[3.5," << (ypos++) << ";4,0.5;btn_change_password;"
+			<< strgettext("Change Password") << "]";
 	}
-
-#if !defined(__ANDROID__) && !defined(__IOS__)
 	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_sound;"
 		<< strgettext("Sound Volume") << "]";
 	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_key_config;"
