@@ -55,7 +55,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("client_unload_unused_data_timeout", "600");
 	settings->setDefault("client_mapblock_limit", "5000");
 	settings->setDefault("enable_build_where_you_stand", "false" );
-	settings->setDefault("send_pre_v25_init", "true");
+	settings->setDefault("send_pre_v25_init", "false");
 	settings->setDefault("curl_timeout", "5000");
 	settings->setDefault("curl_parallel_limit", "8");
 	settings->setDefault("curl_file_download_timeout", "300000");
@@ -63,9 +63,10 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_remote_media_server", "true");
 	settings->setDefault("enable_client_modding", "false");
 	settings->setDefault("max_out_chat_queue_size", "20");
+	settings->setDefault("connection_timeout", "20");
 
 	// Keymap
-	settings->setDefault("remote_port", "30000");
+	settings->setDefault("remote_port", "40000");
 	settings->setDefault("keymap_forward", "KEY_KEY_W");
 	settings->setDefault("keymap_autorun", "");
 	settings->setDefault("keymap_backward", "KEY_KEY_S");
@@ -272,7 +273,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("ipv6_server", "false");
 	settings->setDefault("workaround_window_size", "5");
 	settings->setDefault("max_packets_per_iteration", "1024");
-	settings->setDefault("port", "30000");
+	settings->setDefault("port", "40000");
 	settings->setDefault("strict_protocol_version_checking", "false");
 	settings->setDefault("player_transfer_distance", "0");
 	settings->setDefault("max_simultaneous_block_sends_per_client", "10");

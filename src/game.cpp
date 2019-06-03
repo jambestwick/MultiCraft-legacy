@@ -2195,7 +2195,7 @@ bool Game::connectToServer(const std::string &playername,
 
 			wait_time += dtime;
 			// Only time out if we aren't waiting for the server we started
-			if ((*address != "") && (wait_time > 15)) {
+			if ((*address != "") && (wait_time > g_settings->getS32("connection_timeout"))) {
 				bool sent_old_init = g_settings->getFlag("send_pre_v25_init");
 				// If no pre v25 init was sent, and no answer was received,
 				// but the low level connection could be established
