@@ -545,6 +545,12 @@ public:
 		sm->m_sound->playSound(sm->m_ndef->get(nde->n).sound_dug, false);
 	}
 
+	static void objectPunch(MtEvent *e, void *data)
+	{
+		SoundMaker *sm = (SoundMaker *)data;
+		sm->m_sound->playSound(SimpleSoundSpec("player_punch", 1.0), false);
+	}
+
 	static void playerDamage(MtEvent *e, void *data)
 	{
 		SoundMaker *sm = (SoundMaker *)data;
@@ -565,6 +571,7 @@ public:
 		mgr->reg("CameraPunchLeft", SoundMaker::cameraPunchLeft, this);
 		mgr->reg("CameraPunchRight", SoundMaker::cameraPunchRight, this);
 		mgr->reg("NodeDug", SoundMaker::nodeDug, this);
+		mgr->reg("ObjectPunch", SoundMaker::objectPunch, this);
 		mgr->reg("PlayerDamage", SoundMaker::playerDamage, this);
 		mgr->reg("PlayerFallingDamage", SoundMaker::playerFallingDamage, this);
 	}
@@ -3972,6 +3979,7 @@ void Game::handlePointingAtObject(const PointedThing &pointed, const ItemStack &
 		}
 
 		if (do_punch_damage) {
+			client->event()->put(new SimpleTriggerEvent("ObjectPunch"));
 			// Report direct punch
 			v3f objpos = runData.selected_object->getPosition();
 			v3f dir = (objpos - player_position).normalize();
@@ -4749,7 +4757,7 @@ void Game::showPauseMenu()
 		<< "bgcolor[#00000060;true]"
 		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_continue;"
 		<< strgettext("Continue") << "]";
-		
+
 #if !defined(__ANDROID__) && !defined(__IOS__)
 	if (!simple_singleplayer_mode) {
 		os << "button_exit[3.5," << (ypos++) << ";4,0.5;btn_change_password;"
