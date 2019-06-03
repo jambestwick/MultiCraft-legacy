@@ -29,6 +29,7 @@ class Client;
 class Environment;
 class GenericCAO;
 class ClientActiveObject;
+class ClientEnvironment;
 class IGameDef;
 
 enum LocalPlayerAnimations
@@ -78,7 +79,7 @@ public:
 	void old_move(f32 dtime, Environment *env, f32 pos_max_d,
 			std::vector<CollisionInfo> *collision_info);
 
-	void applyControl(float dtime);
+	void applyControl(float dtime, ClientEnvironment *env);
 
 	v3s16 getStandingNodePos();
 	v3s16 getFootstepNodePos();
@@ -144,6 +145,7 @@ private:
 	void accelerateHorizontal(const v3f &target_speed, const f32 max_increase);
 	void accelerateVertical(const v3f &target_speed, const f32 max_increase);
 	bool updateSneakNode(Map *map, const v3f &position, const v3f &sneak_max);
+	float getSlipFactor(Environment *env, const v3f &speedH);
 
 	v3f m_position;
 	v3s16 m_standing_node;

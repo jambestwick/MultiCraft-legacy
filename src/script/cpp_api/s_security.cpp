@@ -222,6 +222,7 @@ void ScriptApiSecurity::initializeSecurityClient()
 		"core",
 		"collectgarbage",
 		"DIR_DELIM",
+		"PLATFORM",
 		"error",
 		"getfenv",
 		"ipairs",

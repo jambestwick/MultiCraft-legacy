@@ -518,7 +518,7 @@ void LocalPlayer::move(f32 dtime, Environment *env, f32 pos_max_d)
 	move(dtime, env, pos_max_d, NULL);
 }
 
-void LocalPlayer::applyControl(float dtime)
+void LocalPlayer::applyControl(float dtime, ClientEnvironment *env)
 {
 	// Clear stuff
 	swimming_vertical = false;
@@ -734,8 +734,13 @@ void LocalPlayer::applyControl(float dtime)
 	else
 		incH = incV = movement_acceleration_default * BS * dtime;
 
+	float slip_factor = 1.0f;
+	if (!free_move && !in_liquid && !in_liquid_stable)
+		slip_factor = getSlipFactor(env, speedH);
+
 	// Accelerate to target speed with maximum increment
-	accelerateHorizontal(speedH * physics_override_speed, incH * physics_override_speed);
+	accelerateHorizontal(speedH * physics_override_speed,
+			incH * physics_override_speed * slip_factor);
 	accelerateVertical(speedV * physics_override_speed, incV * physics_override_speed);
 }
 
@@ -770,7 +775,8 @@ v3f LocalPlayer::getEyeOffset() const
 }
 
 // Horizontal acceleration (X and Z), Y direction is ignored
-void LocalPlayer::accelerateHorizontal(const v3f &target_speed, const f32 max_increase)
+void LocalPlayer::accelerateHorizontal(const v3f &target_speed,
+		const f32 max_increase)
 {
         if (max_increase == 0)
                 return;
@@ -1101,4 +1107,25 @@ void LocalPlayer::old_move(f32 dtime, Environment *env, f32 pos_max_d,
 		setSpeed(m_speed);
 		m_can_jump = false;
 	}
+}
+
+float LocalPlayer::getSlipFactor(Environment *env, const v3f &speedH)
+{
+
+	// Slip on slippery nodes
+	const INodeDefManager *nodemgr = env->getGameDef()->ndef();
+	Map *map = &env->getMap();
+	const ContentFeatures &f = nodemgr->get(map->getNodeNoEx(
+			getStandingNodePos()));
+	int slippery = 0;
+	if (f.walkable)
+		slippery = itemgroup_get(f.groups, "slippery");
+
+	if (slippery >= 1) {
+		if (speedH == v3f(0.0f)) {
+			slippery = slippery * 2;
+		}
+		return core::clamp(1.0f / (slippery + 1), 0.001f, 1.0f);
+	}
+	return 1.0f;
 }

@@ -4485,7 +4485,7 @@ void Game::updateGui(const RunStats &stats, f32 dtime, const CameraOrientation &
 		s32 status_width  = guitext_status->getTextWidth();
 		s32 status_height = guitext_status->getTextHeight();
 #if defined(__ANDROID__) || defined(__IOS__)
-		s32 status_y = screensize.Y - 320 * g_settings->getFloat("hud_scaling");
+		s32 status_y = screensize.Y - 250 * g_settings->getFloat("hud_scaling");
 #else
 		s32 status_y = screensize.Y - 150;
 #endif
