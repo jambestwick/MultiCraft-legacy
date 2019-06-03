@@ -197,7 +197,7 @@ function core.get_node_drops(node, toolname)
 		return {nodename}
 	elseif type(drop) == "string" then
 		-- itemstring drop
-		return {drop}
+		return drop ~= "" and {drop} or {}
 	elseif drop.items == nil then
 		-- drop = {} to disable default drop
 		return {}
@@ -715,7 +715,7 @@ core.nodedef_default = {
 	liquid_alternative_flowing = "",
 	liquid_alternative_source = "",
 	liquid_viscosity = 0,
-	drowning = 4,
+	drowning = 0,
 	light_source = 0,
 	damage_per_second = 0,
 	selection_box = {type="regular"},
