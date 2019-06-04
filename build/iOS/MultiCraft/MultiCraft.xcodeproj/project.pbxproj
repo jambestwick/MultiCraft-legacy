@@ -297,7 +297,7 @@
 		F81F6BE41DDC7D99000B9E21 /* libintl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libintl.a; path = ../deps/intl/libintl.a; sourceTree = "<group>"; };
 		F84D3A931DE79AB400ADE1A0 /* ads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ads.h; path = ../../Ads/ads.h; sourceTree = "<group>"; };
 		F84D3A941DE79AB400ADE1A0 /* ads.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ads.mm; path = ../../Ads/ads.mm; sourceTree = "<group>"; };
-		F85119A61F4476FC00BFA9AF /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../deps/libcurl/lib/libcurl.a; sourceTree = "<group>"; };
+		F85119A61F4476FC00BFA9AF /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../Pods/libCurlPod/lib/libcurl.a; sourceTree = "<group>"; };
 		F856B5C21F55F7EE00FE9494 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg.png; path = ../../../../textures/base/bg.png; sourceTree = "<group>"; };
 		F85722881DDC74B700308383 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../Pods/LuaJITPod/lib/libluajit.a; sourceTree = "<group>"; };
 		F87DC8B8210887C600393B64 /* mapgen_v7p.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapgen_v7p.h; path = ../../../../src/mapgen_v7p.h; sourceTree = "<group>"; };
@@ -1401,7 +1401,7 @@
 			};
 			buildConfigurationList = F8E6C4D41DCA3B7900F64426 /* Build configuration list for PBXProject "MultiCraft" */;
 			compatibilityVersion = "Xcode 10.0";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -1845,7 +1845,7 @@
 					"${SRCROOT}/../deps/freetype/include/freetype2",
 					"${SRCROOT}/../Pods/LuaJITPod/include",
 					"${SRCROOT}/../deps/intl/include",
-					"${SRCROOT}/../deps/libcurl/include",
+					"${SRCROOT}/../Pods/libCurlPod/include",
 				);
 				INFOPLIST_FILE = MultiCraft/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1876,7 +1876,7 @@
 					"-L${SRCROOT}/../deps/freetype/lib",
 					"-L${SRCROOT}/../Pods/LuaJITPod/lib",
 					"-L${SRCROOT}/../deps/intl",
-					"-L${SRCROOT}/../deps/libcurl/lib",
+					"-L${SRCROOT}/../Pods/libCurlPod/lib",
 					"-Wl,-dead_strip",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mobi.MultiCraft;
@@ -1928,7 +1928,7 @@
 					"${SRCROOT}/../deps/freetype/include/freetype2",
 					"${SRCROOT}/../Pods/LuaJITPod/include",
 					"${SRCROOT}/../deps/intl/include",
-					"${SRCROOT}/../deps/libcurl/include",
+					"${SRCROOT}/../Pods/libCurlPod/include",
 				);
 				INFOPLIST_FILE = MultiCraft/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1959,7 +1959,7 @@
 					"-L${SRCROOT}/../deps/freetype/lib",
 					"-L${SRCROOT}/../Pods/LuaJITPod/lib",
 					"-L${SRCROOT}/../deps/intl",
-					"-L${SRCROOT}/../deps/libcurl/lib",
+					"-L${SRCROOT}/../Pods/libCurlPod/lib",
 					"-Wl,-dead_strip",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mobi.MultiCraft;

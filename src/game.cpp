@@ -2292,7 +2292,11 @@ bool Game::getServerContent(bool *aborted)
 			std::stringstream message;
 			std::fixed(message);
 			message.precision(0);
-			message << gettext("Media...") << " " << (client->mediaReceiveProgress()*100) << "%";
+			if (client->mediaReceiveProgress() > 0) {
+				message << gettext("Media... ") << (client->mediaReceiveProgress() * 100) << "%";
+			} else {
+				message << gettext("Media...");
+			}
 			message.precision(2);
 
 			if ((USE_CURL == 0) ||
@@ -4150,7 +4154,7 @@ void Game::updateFrame(ProfilerGraph *graph, RunStats *stats, f32 dtime,
 	if (draw_control->range_all) {
 		runData.fog_range = 100000 * BS;
 		#if defined(__ANDROID__) || defined(__IOS__)
-			runData.fog_range = 0.9 * draw_control->wanted_range * 4 * BS;
+			runData.fog_range = 4 * draw_control->wanted_range * BS;
 		#endif
 	} else {
 		runData.fog_range = draw_control->wanted_range * BS;
@@ -4492,11 +4496,7 @@ void Game::updateGui(const RunStats &stats, f32 dtime, const CameraOrientation &
 	if (!m_statustext.empty()) {
 		s32 status_width  = guitext_status->getTextWidth();
 		s32 status_height = guitext_status->getTextHeight();
-#if defined(__ANDROID__) || defined(__IOS__)
-		s32 status_y = screensize.Y - 250 * g_settings->getFloat("hud_scaling");
-#else
-		s32 status_y = screensize.Y - 150;
-#endif
+		s32 status_y = screensize.Y - 150 * g_settings->getFloat("hud_scaling");
 		s32 status_x = (screensize.X - status_width) / 2;
 		core::rect<s32> rect(
 				status_x , status_y - status_height,
