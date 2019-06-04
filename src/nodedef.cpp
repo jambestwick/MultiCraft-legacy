@@ -1260,14 +1260,8 @@ content_t CNodeDefManager::set(const std::string &name, const ContentFeatures &d
 {
 	// Pre-conditions
 	assert(name != "");
+	assert(name != "ignore");
 	assert(name == def.name);
-
-	// Don't allow redefining ignore (but allow air and unknown)
-	if (name == "ignore") {
-		warningstream << "NodeDefManager: Ignoring "
-			"CONTENT_IGNORE redefinition"<<std::endl;
-		return CONTENT_IGNORE;
-	}
 
 	content_t id = CONTENT_IGNORE;
 	if (!m_name_id_mapping.getId(name, id)) { // ignore aliases
