@@ -142,7 +142,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("leaves_style", "fancy");
 	settings->setDefault("connected_glass", "false");
 	settings->setDefault("smooth_lighting", "true");
-	settings->setDefault("display_gamma", "2.2");
+	settings->setDefault("display_gamma", "3.0");
 	settings->setDefault("texture_path", "");
 	settings->setDefault("shader_path", "");
 	settings->setDefault("video_driver", "opengl");
@@ -277,7 +277,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("strict_protocol_version_checking", "false");
 	settings->setDefault("player_transfer_distance", "0");
 	settings->setDefault("max_simultaneous_block_sends_per_client", "10");
-	settings->setDefault("max_simultaneous_block_sends_server_total", "1000");
+	settings->setDefault("max_simultaneous_block_sends_server_total", "10000");
 	settings->setDefault("time_send_interval", "5");
 
 	settings->setDefault("default_game", "default");
@@ -316,7 +316,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("max_objects_per_block", "16");
 	settings->setDefault("server_map_save_interval", "5.3");
 	settings->setDefault("chat_message_max_size", "500");
-	settings->setDefault("chat_message_limit_per_10sec", "8.0");
+	settings->setDefault("chat_message_limit_per_10sec", "5.0");
 	settings->setDefault("chat_message_limit_trigger_kick", "50");
 	settings->setDefault("sqlite_synchronous", "2");
 	settings->setDefault("full_block_send_enable_min_time_from_building", "2.0");
@@ -387,11 +387,9 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("video_driver", "ogles1");
 	settings->setDefault("touchtarget", "true");
 	settings->setDefault("touchscreen_threshold", "20");
-	settings->setDefault("fixed_virtual_joystick", "true");
 	settings->setDefault("doubletap_jump", "true");
-	settings->setDefault("max_simultaneous_block_sends_per_client", "5");
 	settings->setDefault("abm_interval", "2.0");
-	settings->setDefault("client_unload_unused_data_timeout", "60");
+	settings->setDefault("dedicated_server_step", "0.2");
 	settings->setDefault("curl_verify_cert", "false");
 	settings->setDefault("gui_scaling_filter_txr2img", "false");
 	settings->setDefault("mapgens_available", "v7p, v6, flat");
@@ -482,7 +480,7 @@ void set_default_settings(Settings *settings)
 	}
 
 	// set the optimal settings depending on the model
-	if (([SDVersion deviceVersion] == iPhone4S) || ([SDVersion deviceVersion] == iPhone5) || ([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPodTouch5Gen) || ([SDVersion deviceVersion] == iPad2) || ([SDVersion deviceVersion] == iPad3) || ([SDVersion deviceVersion] == iPadMini) || ([SDVersion deviceVersion] == iPadMini2)) {
+	if (([SDVersion deviceVersion] == iPhone4S) || ([SDVersion deviceVersion] == iPhone5) || ([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPodTouch5Gen) || ([SDVersion deviceVersion] == iPodTouch6Gen) || ([SDVersion deviceVersion] == iPad2) || ([SDVersion deviceVersion] == iPad3) || ([SDVersion deviceVersion] == iPadMini) || ([SDVersion deviceVersion] == iPadMini2)) {
 		// minimal settings
 		settings->setDefault("smooth_lighting", "false");
 		settings->setDefault("viewing_range", "25");
@@ -493,7 +491,7 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("client_mapblock_limit", "250");
 		settings->setDefault("active_block_range", "1");
 		settings->setDefault("max_block_generate_distance", "2");
-	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) || ([SDVersion deviceVersion] == iPodTouch6Gen) || ([SDVersion deviceVersion] == iPad4) || ([SDVersion deviceVersion] == iPadMini3) || ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir))  {
+	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) || ([SDVersion deviceVersion] == iPad4) || ([SDVersion deviceVersion] == iPadMini3) || ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir))  {
 		// medium settings
 		settings->setDefault("viewing_range", "50");
 		settings->setDefault("chunksize", "3");
