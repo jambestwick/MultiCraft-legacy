@@ -36,10 +36,10 @@
 		4B35A9F41EEE017000274961 /* scripting_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B35A9F21EEE017000274961 /* scripting_client.cpp */; };
 		4B35A9F71EEE018D00274961 /* scripting_server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B35A9F51EEE018D00274961 /* scripting_server.cpp */; };
 		844B495F228606B200EB60EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844B495D228606B200EB60EF /* Main.storyboard */; };
+		8465A76522A7D4500095B7CA /* libintl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8465A76422A7D4500095B7CA /* libintl.cpp */; };
 		849C4F86209656D3005EB041 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 849C4F85209656D2005EB041 /* ru.lproj */; };
 		EB4367AE23CAD13A43ADF4B1 /* libPods-MultiCraft.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8758CE009FCB7E91F4C84C28 /* libPods-MultiCraft.a */; };
 		F810D7052080E48100D109B8 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = F810D7042080E48000D109B8 /* en.lproj */; };
-		F81F6BE51DDC7D99000B9E21 /* libintl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F81F6BE41DDC7D99000B9E21 /* libintl.a */; };
 		F84D3A951DE79AB400ADE1A0 /* ads.mm in Sources */ = {isa = PBXBuildFile; fileRef = F84D3A941DE79AB400ADE1A0 /* ads.mm */; };
 		F85119A71F4476FC00BFA9AF /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F85119A61F4476FC00BFA9AF /* libcurl.a */; };
 		F856B5C31F55F7EE00FE9494 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F856B5C21F55F7EE00FE9494 /* bg.png */; };
@@ -229,7 +229,6 @@
 		F8E6C7D11DCA433E00F64426 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D01DCA433E00F64426 /* libiconv.tbd */; };
 		F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D41DCA476800F64426 /* libIrrlicht.a */; };
 		F8E6C7D71DCA477600F64426 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D61DCA477600F64426 /* libfreetype.a */; };
-		F8E6C7D91DCA478500F64426 /* libleveldb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D81DCA478500F64426 /* libleveldb.a */; };
 		F8E6C7DB1DCA479200F64426 /* libogg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7DA1DCA479200F64426 /* libogg.a */; };
 		F8E6C7DD1DCA47A300F64426 /* libvorbis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7DC1DCA47A300F64426 /* libvorbis.a */; };
 		F8E6C7DF1DCA47AF00F64426 /* libvorbisfile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7DE1DCA47AF00F64426 /* libvorbisfile.a */; };
@@ -291,10 +290,13 @@
 		4B35A9F51EEE018D00274961 /* scripting_server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = scripting_server.cpp; path = ../../../../src/script/scripting_server.cpp; sourceTree = "<group>"; };
 		4B35A9F61EEE018D00274961 /* scripting_server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scripting_server.h; path = ../../../../src/script/scripting_server.h; sourceTree = "<group>"; };
 		844B495E228606B200EB60EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8465A76122A7D4500095B7CA /* MessageCatalog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MessageCatalog.hpp; sourceTree = "<group>"; };
+		8465A76222A7D4500095B7CA /* libintl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libintl.h; sourceTree = "<group>"; };
+		8465A76322A7D4500095B7CA /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Util.hpp; sourceTree = "<group>"; };
+		8465A76422A7D4500095B7CA /* libintl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = libintl.cpp; sourceTree = "<group>"; };
 		849C4F85209656D2005EB041 /* ru.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ru.lproj; sourceTree = "<group>"; };
 		8758CE009FCB7E91F4C84C28 /* libPods-MultiCraft.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MultiCraft.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F810D7042080E48000D109B8 /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
-		F81F6BE41DDC7D99000B9E21 /* libintl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libintl.a; path = ../deps/intl/libintl.a; sourceTree = "<group>"; };
 		F84D3A931DE79AB400ADE1A0 /* ads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ads.h; path = ../../Ads/ads.h; sourceTree = "<group>"; };
 		F84D3A941DE79AB400ADE1A0 /* ads.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ads.mm; path = ../../Ads/ads.mm; sourceTree = "<group>"; };
 		F85119A61F4476FC00BFA9AF /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../Pods/libCurlPod/lib/libcurl.a; sourceTree = "<group>"; };
@@ -701,10 +703,9 @@
 		F8E6C7D01DCA433E00F64426 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		F8E6C7D41DCA476800F64426 /* libIrrlicht.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrlicht.a; path = ../deps/irrlicht/libIrrlicht.a; sourceTree = "<group>"; };
 		F8E6C7D61DCA477600F64426 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../deps/freetype/lib/libfreetype.a; sourceTree = "<group>"; };
-		F8E6C7D81DCA478500F64426 /* libleveldb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libleveldb.a; path = ../deps/leveldb/lib/libleveldb.a; sourceTree = "<group>"; };
-		F8E6C7DA1DCA479200F64426 /* libogg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libogg.a; path = ../deps/libogg/lib/libogg.a; sourceTree = "<group>"; };
-		F8E6C7DC1DCA47A300F64426 /* libvorbis.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbis.a; path = ../deps/libvorbis/lib/libvorbis.a; sourceTree = "<group>"; };
-		F8E6C7DE1DCA47AF00F64426 /* libvorbisfile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbisfile.a; path = ../deps/libvorbis/lib/libvorbisfile.a; sourceTree = "<group>"; };
+		F8E6C7DA1DCA479200F64426 /* libogg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libogg.a; path = ../Pods/libOggVorbisPod/lib/libogg.a; sourceTree = "<group>"; };
+		F8E6C7DC1DCA47A300F64426 /* libvorbis.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbis.a; path = ../Pods/libOggVorbisPod/lib/libvorbis.a; sourceTree = "<group>"; };
+		F8E6C7DE1DCA47AF00F64426 /* libvorbisfile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbisfile.a; path = ../Pods/libOggVorbisPod/lib/libvorbisfile.a; sourceTree = "<group>"; };
 		F8E6C7E01DCA4EB300F64426 /* assets.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = assets.zip; path = ../../assets.zip; sourceTree = "<group>"; };
 		F8E6C7E21DCA511700F64426 /* worlds.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = worlds.zip; path = ../../worlds.zip; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -723,12 +724,10 @@
 				F8E6C7D11DCA433E00F64426 /* libiconv.tbd in Frameworks */,
 				F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */,
 				F8E6C7D71DCA477600F64426 /* libfreetype.a in Frameworks */,
-				F8E6C7D91DCA478500F64426 /* libleveldb.a in Frameworks */,
 				F8E6C7DB1DCA479200F64426 /* libogg.a in Frameworks */,
 				F8E6C7DD1DCA47A300F64426 /* libvorbis.a in Frameworks */,
 				F8E6C7DF1DCA47AF00F64426 /* libvorbisfile.a in Frameworks */,
 				F85722891DDC74B700308383 /* libluajit.a in Frameworks */,
-				F81F6BE51DDC7D99000B9E21 /* libintl.a in Frameworks */,
 				F85119A71F4476FC00BFA9AF /* libcurl.a in Frameworks */,
 				EB4367AE23CAD13A43ADF4B1 /* libPods-MultiCraft.a in Frameworks */,
 			);
@@ -744,6 +743,18 @@
 				4B35A9D41EEDDE1600274961 /* mini-gmp.h */,
 			);
 			name = gmp;
+			sourceTree = "<group>";
+		};
+		8465A76022A7D4500095B7CA /* intl */ = {
+			isa = PBXGroup;
+			children = (
+				8465A76122A7D4500095B7CA /* MessageCatalog.hpp */,
+				8465A76222A7D4500095B7CA /* libintl.h */,
+				8465A76322A7D4500095B7CA /* Util.hpp */,
+				8465A76422A7D4500095B7CA /* libintl.cpp */,
+			);
+			name = intl;
+			path = ../../../../lib/intl;
 			sourceTree = "<group>";
 		};
 		87D06CD2CC310BE5E73639F4 /* Pods */ = {
@@ -1095,6 +1106,7 @@
 				F8E6C5F01DCA3F9900F64426 /* voxelalgorithms.h */,
 				F8E6C5F11DCA3F9900F64426 /* wieldmesh.cpp */,
 				F8E6C5F21DCA3F9900F64426 /* wieldmesh.h */,
+				8465A76022A7D4500095B7CA /* intl */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -1337,12 +1349,10 @@
 			isa = PBXGroup;
 			children = (
 				F85119A61F4476FC00BFA9AF /* libcurl.a */,
-				F81F6BE41DDC7D99000B9E21 /* libintl.a */,
 				F85722881DDC74B700308383 /* libluajit.a */,
 				F8E6C7DE1DCA47AF00F64426 /* libvorbisfile.a */,
 				F8E6C7DC1DCA47A300F64426 /* libvorbis.a */,
 				F8E6C7DA1DCA479200F64426 /* libogg.a */,
-				F8E6C7D81DCA478500F64426 /* libleveldb.a */,
 				F8E6C7D61DCA477600F64426 /* libfreetype.a */,
 				F8E6C7D41DCA476800F64426 /* libIrrlicht.a */,
 				F8E6C7D01DCA433E00F64426 /* libiconv.tbd */,
@@ -1516,6 +1526,7 @@
 				F8E6C61E1DCA3F9900F64426 /* guiTable.cpp in Sources */,
 				F8E6C6291DCA3F9900F64426 /* localplayer.cpp in Sources */,
 				4B35A9C81EEDD22500274961 /* tileanimation.cpp in Sources */,
+				8465A76522A7D4500095B7CA /* libintl.cpp in Sources */,
 				F8E6C6221DCA3F9900F64426 /* imagefilters.cpp in Sources */,
 				F8E6C74D1DCA420A00F64426 /* l_mainmenu.cpp in Sources */,
 				F8E6C5F71DCA3F9900F64426 /* client.cpp in Sources */,
@@ -1732,6 +1743,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1782,6 +1794,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1839,9 +1852,7 @@
 					"${SRCROOT}/../../../src/jsoncpp",
 					"${SRCROOT}/../../../src/script",
 					"${SRCROOT}/../deps/irrlicht/include",
-					"${SRCROOT}/../deps/libogg/include",
-					"${SRCROOT}/../deps/libvorbis/include",
-					"${SRCROOT}/../deps/leveldb/include",
+					"${SRCROOT}/../Pods/libOggVorbisPod/include",
 					"${SRCROOT}/../deps/freetype/include/freetype2",
 					"${SRCROOT}/../Pods/LuaJITPod/include",
 					"${SRCROOT}/../deps/intl/include",
@@ -1870,9 +1881,7 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-L${SRCROOT}/../deps/irrlicht",
-					"-L$(SRCROOT)/../deps/libogg/lib",
-					"-L$(SRCROOT)/../deps/libvorbis/lib",
-					"-L${SRCROOT}/../deps/leveldb/lib",
+					"-L$(SRCROOT)/../Pods/libOggVorbisPod/lib",
 					"-L${SRCROOT}/../deps/freetype/lib",
 					"-L${SRCROOT}/../Pods/LuaJITPod/lib",
 					"-L${SRCROOT}/../deps/intl",
@@ -1922,9 +1931,7 @@
 					"${SRCROOT}/../../../src/jsoncpp",
 					"${SRCROOT}/../../../src/script",
 					"${SRCROOT}/../deps/irrlicht/include",
-					"${SRCROOT}/../deps/libogg/include",
-					"${SRCROOT}/../deps/libvorbis/include",
-					"${SRCROOT}/../deps/leveldb/include",
+					"${SRCROOT}/../Pods/libOggVorbisPod/include",
 					"${SRCROOT}/../deps/freetype/include/freetype2",
 					"${SRCROOT}/../Pods/LuaJITPod/include",
 					"${SRCROOT}/../deps/intl/include",
@@ -1953,9 +1960,7 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-L${SRCROOT}/../deps/irrlicht",
-					"-L$(SRCROOT)/../deps/libogg/lib",
-					"-L$(SRCROOT)/../deps/libvorbis/lib",
-					"-L${SRCROOT}/../deps/leveldb/lib",
+					"-L$(SRCROOT)/../Pods/libOggVorbisPod/lib",
 					"-L${SRCROOT}/../deps/freetype/lib",
 					"-L${SRCROOT}/../Pods/LuaJITPod/lib",
 					"-L${SRCROOT}/../deps/intl",

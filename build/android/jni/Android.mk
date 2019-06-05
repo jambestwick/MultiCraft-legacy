@@ -79,11 +79,11 @@ LOCAL_LDFLAGS		:= -Wl,--no-warn-mismatch,--gc-sections,--icf=safe
 LOCAL_C_INCLUDES := \
 		jni/src                                   \
 		jni/src/script                            \
+		jni/lib/intl                              \
 		jni/lib/jsoncpp                           \
 		jni/src/cguittfont                        \
 		jni/lib/gmp                               \
 		deps/irrlicht/include                     \
-		deps/libintl                              \
 		deps/freetype/include                     \
 		deps/curl/include                         \
 		deps/openal-soft/include                  \
@@ -299,7 +299,7 @@ LOCAL_SRC_FILES += jni/src/cguittfont/xCGUITTFont.cpp
 LOCAL_SRC_FILES += jni/lib/gmp/mini-gmp.c
 
 # libIntl
-LOCAL_SRC_FILES += deps/libintl/internal/libintl.cpp
+LOCAL_SRC_FILES += jni/lib/intl/libintl.cpp
 
 # Threading
 LOCAL_SRC_FILES += \

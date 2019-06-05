@@ -234,22 +234,6 @@ void init_gettext(const char *path, const std::string &configured_language,
 	//errorstream << "Gettext debug: domainname = " << tdomain << "; codeset = "<< codeset << std::endl;
 #endif // defined(_WIN32)
 
-#if defined(__ANDROID__) || defined(__IOS__)
-	// On Android we use libintl-lite, we need to load .mo files manually
-	if (!configured_language.empty()) {
-		std::string mopath = path;
-		mopath += DIR_DELIM + configured_language
-				+ DIR_DELIM + "LC_MESSAGES"
-				+ DIR_DELIM + PROJECT_NAME
-				+ ".mo";
-		infostream << "Loading translations from file: " << mopath << std::endl;
-		int r = loadMessageCatalog(name.c_str(), mopath.c_str());
-		infostream << "  " << ( (r == 1)?"success":"failed" ) << std::endl;
-	} else {
-		infostream << "Language not configured, skipping load." << std::endl;
-	}
-#endif // defined(__ANDROID__)
-
 #else
 	/* set current system default locale */
 	setlocale(LC_ALL, "");

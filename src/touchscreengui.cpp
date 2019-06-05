@@ -206,7 +206,7 @@ void TouchScreenGUI::initButton(touch_gui_button_id id, rect<s32> button_rect,
 }
 
 static int getMaxControlPadSize(float density) {
-	return 280 * density * g_settings->getFloat("hud_scaling");
+	return 260 * density * g_settings->getFloat("hud_scaling");
 }
 
 int TouchScreenGUI::getGuiButtonSize()
@@ -848,8 +848,9 @@ void TouchScreenGUI::step(float dtime)
 			btn->repeatcounter += dtime;
 
 			/* in case we're moving around digging does not happen */
+			/* If the sneak button is required, it will not let you interact!
 			if (m_move_id != -1)
-				m_move_has_really_moved = true;
+				m_move_has_really_moved = true;*/
 
 			if (btn->repeatcounter < btn->repeatdelay) continue;
 

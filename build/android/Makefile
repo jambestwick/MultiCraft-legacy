@@ -95,9 +95,6 @@ ICONV_VERSION = 1.16
 ICONV_DIR = $(ANDR_ROOT)/deps/libiconv
 ICONV_URL_HTTP = https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
 
-INTL_DIR = $(ANDR_ROOT)/deps/libintl
-INTL_URL_GIT = https://github.com/j-jorge/libintl-lite.git
-
 LUAJIT_GIT_BRANCH = v2.1
 LUAJIT_DIR = $(ANDR_ROOT)/deps/luajit
 LUAJIT_LIB = $(LUAJIT_DIR)src/libluajit.a
@@ -374,17 +371,6 @@ iconv_download :
 clean_iconv :
 	$(RM) -rf ${ICONV_DIR}
 
-intl_download :
-	@if [ ! -d ${INTL_DIR} ] ; then																								\
-		echo "libintl sources missing, downloading...";															\
-		mkdir -p ${ANDR_ROOT}/deps;																									\
-		cd ${ANDR_ROOT}/deps;																												\
-		git clone ${INTL_URL_GIT} libintl || exit 1;																\
-	fi
-
-clean_intl :
-	$(RM) -rf ${INTL_DIR}
-
 #Note: Texturehack patch is required for gpu's not supporting color format
 #      correctly. Known bad GPU:
 #      -geforce on emulator
@@ -644,7 +630,7 @@ clean_assets :
 
 apk: local.properties $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_LIB) $(LUAJIT_LIB) 	\
 	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir $(ANDR_ROOT)/jni/src/android_version.h \
-	$(ANDR_ROOT)/jni/src/android_version_githash.h intl_download iconv_download assets
+	$(ANDR_ROOT)/jni/src/android_version_githash.h iconv_download assets
 	+@${ANDROID_NDK}/ndk-build																										\
 		TARGET_LIBDIR=${TARGET_LIBDIR}																							\
 		APP_PLATFORM=${APP_PLATFORM} TARGET_ABI=${TARGET_ABI} || exit 1;						\

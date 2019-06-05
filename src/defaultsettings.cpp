@@ -393,6 +393,20 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("curl_verify_cert", "false");
 	settings->setDefault("gui_scaling_filter_txr2img", "false");
 	settings->setDefault("mapgens_available", "v7p, v6, flat");
+
+	// FIXME: this code should be in init_gettext() ideally
+	char lang[3] = {0};
+	#ifdef __ANDROID__
+		// Auto-detect language on Android
+		AConfiguration_getLanguage(porting::app_global->config, lang);
+	#elif __IOS__
+		// Auto-detect language on iOS
+		NSString *syslang = [[NSLocale preferredLanguages] objectAtIndex:0];
+		[syslang getBytes:lang maxLength:2 usedLength:nil encoding:NSASCIIStringEncoding options:0 range:NSMakeRange(0, 2) remainingRange:nil];
+	#endif
+	if (!lang[0])
+		errorstream << "Language auto-detection failed!" << std::endl;
+	settings->setDefault("language", lang);
 #endif
 
 	// Android Settings
@@ -431,14 +445,6 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("hud_scaling", "0.85");
 		settings->setDefault("gui_scaling", "1.2");
 	}
-
-	// Auto-detect language on Android
-	// FIXME: this code should be in init_gettext() ideally
-	char lang[3] = {0};
-	AConfiguration_getLanguage(porting::app_global->config, lang);
-	if (!lang[0])
-		errorstream << "Language auto-detection failed!" << std::endl;
-	settings->setDefault("language", lang);
 #endif
 
 	// iOS Settings
@@ -452,26 +458,26 @@ void set_default_settings(Settings *settings)
 	// set the size of the elements depending on the screen size
 	if ([SDVersion deviceSize] == Screen3Dot5inch) {
 		// 3.5" (old iPhone's)
-		settings->setDefault("hud_scaling", "0.5");
+		settings->setDefault("hud_scaling", "0.55");
 	} else if ([SDVersion deviceSize] == Screen4inch) {
 		// 4" (iPhone 5)
-		settings->setDefault("hud_scaling", "0.5");
-		settings->setDefault("mouse_sensitivity", "0.25");
+		settings->setDefault("hud_scaling", "0.55");
+		settings->setDefault("mouse_sensitivity", "0.3");
 	} else if ([SDVersion deviceSize] == Screen4Dot7inch) {
 		// 4.7" (iPhone)
-		settings->setDefault("hud_scaling", "0.6");
+		settings->setDefault("hud_scaling", "0.65");
 		settings->setDefault("mouse_sensitivity", "0.25");
 	} else if ([SDVersion deviceSize] == Screen5Dot5inch) {
 		// 5.5" (iPhone Plus)
-		settings->setDefault("hud_scaling", "0.7");
+		settings->setDefault("hud_scaling", "0.75");
 		settings->setDefault("mouse_sensitivity", "0.3");
 	} else if (([SDVersion deviceSize] == Screen5Dot8inch) || ([SDVersion deviceSize] == Screen6Dot1inch) || ([SDVersion deviceSize] == Screen6Dot5inch)) {
 		// 5.8+" (iPhone X-series)
-		settings->setDefault("hud_scaling", "0.8");
+		settings->setDefault("hud_scaling", "0.85");
 		settings->setDefault("mouse_sensitivity", "0.35");
 	} else {
 		// iPad
-		settings->setDefault("hud_scaling", "0.8");
+		settings->setDefault("hud_scaling", "0.9");
 	}
 
 	// Move the HUD up for the iPhone X-series and new iPad Pro
@@ -507,14 +513,6 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("active_block_range", "2");
 		settings->setDefault("max_block_generate_distance", "5");
 	}
-
-	// Auto-detect language on iOS
-	char lang[3] = {0};
-	NSString *syslang = [[NSLocale preferredLanguages] objectAtIndex:0];
-	[syslang getBytes:lang maxLength:2 usedLength:nil encoding:NSASCIIStringEncoding options:0 range:NSMakeRange(0, 2) remainingRange:nil];
-	if (!lang[0])
-		errorstream << "Language auto-detection failed!" << std::endl;
-	settings->setDefault("language", lang);
 #endif
 }
 
