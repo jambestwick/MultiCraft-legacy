@@ -478,10 +478,10 @@ $(CURL_LIB): $(CURL_TIMESTAMP)
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON} -fno-lto";                		\
 	export LDFLAGS="$${LDFLAGS} ${TARGET_LDFLAGS_ADDON}";                      		\
 	./configure --host=${TARGET_HOST} --enable-static --disable-shared         		\
-	--disable-debug  --disable-dependency-tracking -disable-ftp 									\
+	--disable-debug --disable-verbose --disable-dependency-tracking --disable-ftp \
 	--disable-ldap --disable-ldaps --disable-rtsp --disable-proxy --disable-dict 	\
 	--disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smtp 	\
-	--disable-gopher --disable-sspi --disable-manual --disable-zlib --without-zlib; \
+	--disable-gopher --disable-sspi --disable-manual;                             \
 	$(MAKE) -s || exit 1;                                                      		\
 	touch ${CURL_TIMESTAMP};                                                  	 	\
 	touch ${CURL_TIMESTAMP_INT};                                               		\

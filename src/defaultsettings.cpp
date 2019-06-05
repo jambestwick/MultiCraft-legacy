@@ -432,18 +432,15 @@ void set_default_settings(Settings *settings)
 					  (160 * porting::getDisplayDensity()));
 	if (x_inches <= 3.7) {
 		// small 4" phones
-		settings->setDefault("hud_scaling", "0.5");
-		settings->setDefault("gui_scaling", "1.0");
+		settings->setDefault("hud_scaling", "0.55");
 		settings->setDefault("mouse_sensitivity", "0.25");
 	} else if (x_inches > 3.7 && x_inches < 5) {
 		// all phones
-		settings->setDefault("hud_scaling", "0.6");
-		settings->setDefault("gui_scaling", "1.2");
+		settings->setDefault("hud_scaling", "0.65");
 		settings->setDefault("mouse_sensitivity", "0.15");
 	} else if (x_inches >= 5) {
 		// tablets
-		settings->setDefault("hud_scaling", "0.85");
-		settings->setDefault("gui_scaling", "1.2");
+		settings->setDefault("hud_scaling", "0.9");
 	}
 #endif
 

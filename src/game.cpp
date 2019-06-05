@@ -4496,7 +4496,11 @@ void Game::updateGui(const RunStats &stats, f32 dtime, const CameraOrientation &
 	if (!m_statustext.empty()) {
 		s32 status_width  = guitext_status->getTextWidth();
 		s32 status_height = guitext_status->getTextHeight();
+#ifdef __ANDROID__
+		s32 status_y = screensize.Y - 350;
+#else
 		s32 status_y = screensize.Y - 150 * g_settings->getFloat("hud_scaling");
+#endif
 		s32 status_x = (screensize.X - status_width) / 2;
 		core::rect<s32> rect(
 				status_x , status_y - status_height,

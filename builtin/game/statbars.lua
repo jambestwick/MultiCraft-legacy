@@ -168,21 +168,12 @@ core.register_playerevent(player_event_handler)]]
 
 local hud, timer, wield = {}, {}, {}
 local timeout = 2
-local textposition
-
-core.register_on_joinplayer(function(player)
-	if PLATFORM == "iOS" then
-		textposition = {x = 0.5, y = 0.89}
-	else
-		textposition = {x = 0.5, y = 0.975}
-	end
-end)
 
 local function add_text(player)
 	local player_name = player:get_player_name()
 	hud[player_name] = player:hud_add({
 		hud_elem_type = "text",
-		position = textposition,
+		position = {x = 0.5, y = 0.975},
 		offset = {x = 0, y = -75},
 		alignment = {x = 0, y = 0},
 		number = 0xFFFFFF,
