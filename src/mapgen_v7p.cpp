@@ -168,7 +168,7 @@ int MapgenV7P::getSpawnLevelAtPoint(v2s16 p)
 	if (spflags & MGV7P_MOUNTAINS)
 		y = MYMAX(mountainLevelAtPoint(p.X, p.Y), y);
 
-	if (y < water_level || y > water_level + 16)
+	if (y <= water_level || y > water_level + 16)
 		return MAX_MAP_GENERATION_LIMIT; // Unsuitable spawn point
 	else
 		return y + 2; // +2 because surface is at y and due to biome 'dust'

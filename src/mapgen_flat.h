@@ -26,6 +26,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////// Mapgen Flat flags
 #define MGFLAT_LAKES 0x01
 #define MGFLAT_HILLS 0x02
+#define MGFLAT_CAVES 0x04
 
 class BiomeManager;
 
@@ -63,6 +64,7 @@ public:
 
 	virtual void makeChunk(BlockMakeData *data);
 	int getSpawnLevelAtPoint(v2s16 p);
+	void generateBedrock();
 	s16 generateTerrain();
 
 private:
@@ -73,6 +75,9 @@ private:
 	float hill_threshold;
 	float hill_steepness;
 	Noise *noise_terrain;
+	
+	s16 bedrock_level;
+	content_t c_bedrock;
 };
 
 #endif

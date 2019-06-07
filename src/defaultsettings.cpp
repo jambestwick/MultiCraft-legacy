@@ -360,6 +360,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("mapgen_limit", "31000");
 	settings->setDefault("chunksize", "5");
 	settings->setDefault("mg_flags", "dungeons");
+	settings->setDefault("mgflat_spflags", "nocaves");
 	settings->setDefault("fixed_map_seed", "");
 	settings->setDefault("max_block_generate_distance", "8");
 	settings->setDefault("projecting_dungeons", "false");

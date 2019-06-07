@@ -42,6 +42,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 FlagDesc flagdesc_mapgen_flat[] = {
 	{"lakes", MGFLAT_LAKES},
 	{"hills", MGFLAT_HILLS},
+	{"caves", MGFLAT_CAVES},
 	{NULL,    0}
 };
 
@@ -68,6 +69,10 @@ MapgenFlat::MapgenFlat(int mapgenid, MapgenFlatParams *params, EmergeManager *em
 	// 3D noise
 	MapgenBasic::np_cave1 = params->np_cave1;
 	MapgenBasic::np_cave2 = params->np_cave2;
+	
+	bedrock_level = water_level - 64;
+	// Resolve additional nodes
+	c_bedrock = ndef->getId("mapgen_bedrock");
 }
 
 
@@ -83,7 +88,7 @@ MapgenFlat::~MapgenFlat()
 MapgenFlatParams::MapgenFlatParams()
 {
 	spflags          = 0;
-	ground_level     = 8;
+	ground_level     = 2;
 	large_cave_depth = -33;
 	cave_width       = 0.09;
 	lake_threshold   = -0.45;
@@ -187,35 +192,40 @@ void MapgenFlat::makeChunk(BlockMakeData *data)
 
 	blockseed = getBlockSeed2(full_node_min, seed);
 
-	// Generate base terrain, mountains, and ridges with initial heightmaps
-	s16 stone_surface_max_y = generateTerrain();
+	if (node_max.Y <= bedrock_level) {
+		// Only generate bedrock
+		generateBedrock();
+	} else {
+		// Generate base and mountain terrain
+		s16 stone_surface_max_y = generateTerrain();
 
-	// Create heightmap
-	updateHeightmap(node_min, node_max);
+		// Create heightmap
+		updateHeightmap(node_min, node_max);
 
-	// Init biome generator, place biome-specific nodes, and build biomemap
-	biomegen->calcBiomeNoise(node_min);
-	MgStoneType stone_type = generateBiomes();
+		// Init biome generator, place biome-specific nodes, and build biomemap
+		biomegen->calcBiomeNoise(node_min);
+		MgStoneType stone_type = generateBiomes();
 
-	if (flags & MG_CAVES)
-		generateCaves(stone_surface_max_y, large_cave_depth);
+		if (flags & MGFLAT_CAVES)
+			generateCaves(stone_surface_max_y, large_cave_depth);
 
-	if (flags & MG_DUNGEONS)
-		generateDungeons(stone_surface_max_y, stone_type);
+		if (flags & MG_DUNGEONS)
+			generateDungeons(stone_surface_max_y, stone_type);
 
-	// Generate the registered decorations
-	if (flags & MG_DECORATIONS)
-		m_emerge->decomgr->placeAllDecos(this, blockseed, node_min, node_max);
+		// Generate the registered decorations
+		if (flags & MG_DECORATIONS)
+			m_emerge->decomgr->placeAllDecos(this, blockseed, node_min, node_max);
 
-	// Generate the registered ores
-	m_emerge->oremgr->placeAllOres(this, blockseed, node_min, node_max);
+		// Generate the registered ores
+		m_emerge->oremgr->placeAllOres(this, blockseed, node_min, node_max);
 
-	// Sprinkle some dust on top after everything else was generated
-	dustTopNodes();
+		// Sprinkle some dust on top after everything else was generated
+		dustTopNodes();
 
-	//printf("makeChunk: %dms\n", t.stop());
+		//printf("makeChunk: %dms\n", t.stop());
 
-	updateLiquid(&data->transforming_liquid, full_node_min, full_node_max);
+		updateLiquid(&data->transforming_liquid, full_node_min, full_node_max);
+	}
 
 	if (flags & MG_LIGHT)
 		calcLighting(node_min - v3s16(0, 1, 0), node_max + v3s16(0, 1, 0),
@@ -227,11 +237,26 @@ void MapgenFlat::makeChunk(BlockMakeData *data)
 	this->generating = false;
 }
 
+void MapgenFlat::generateBedrock()
+{
+	MapNode n_bedrock(c_bedrock);
+	
+	for (s16 z = node_min.Z; z <= node_max.Z; z++)
+		for (s16 y = node_min.Y - 1; y <= node_max.Y + 1; y++) {
+			u32 vi = vm->m_area.index(node_min.X, y, z);
+			
+			for (s16 x = node_min.X; x <= node_max.X; x++, vi++) {
+				if (vm->m_data[vi].getContent() == CONTENT_IGNORE)
+					vm->m_data[vi] = n_bedrock;
+			}
+		}
+}
 
 s16 MapgenFlat::generateTerrain()
 {
 	MapNode n_air(CONTENT_AIR);
 	MapNode n_stone(c_stone);
+	MapNode n_bedrock(c_bedrock);
 	MapNode n_water(c_water_source);
 
 	v3s16 em = vm->m_area.getExtent();
@@ -256,10 +281,14 @@ s16 MapgenFlat::generateTerrain()
 		}
 
 		u32 vi = vm->m_area.index(x, node_min.Y - 1, z);
+
 		for (s16 y = node_min.Y - 1; y <= node_max.Y + 1; y++) {
 			if (vm->m_data[vi].getContent() == CONTENT_IGNORE) {
 				if (y <= stone_level) {
-					vm->m_data[vi] = n_stone;
+					if (y <= bedrock_level)
+						vm->m_data[vi] = n_bedrock; // Bedrock
+					else
+						vm->m_data[vi] = n_stone; // Base and mountain terrain
 					if (y > stone_surface_max_y)
 						stone_surface_max_y = y;
 				} else if (y <= water_level) {

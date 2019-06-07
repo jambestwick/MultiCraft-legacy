@@ -28,8 +28,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "util/string.h"
 #include "util/container.h"
 
-#define MAPGEN_DEFAULT MAPGEN_V7
-#define MAPGEN_DEFAULT_NAME "v7"
+#define MAPGEN_DEFAULT MAPGEN_V7P
+#define MAPGEN_DEFAULT_NAME "v7p"
 
 /////////////////// Mapgen flags
 #define MG_TREES       0x01  // Deprecated. Moved into mgv6 flags
