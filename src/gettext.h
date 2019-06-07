@@ -24,11 +24,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #if USE_GETTEXT
 //	#include <libgnuintl.h>
-	#if defined(__ANDROID__) || defined(__IOS__)
-		#include "libintl.h"
-	#else
-		#include <libintl.h>
-	#endif
+	#include <libintl.h>
 #else
 	// In certain environments, some standard headers like <iomanip>
 	// and <locale> include libintl.h. If libintl.h is included after
