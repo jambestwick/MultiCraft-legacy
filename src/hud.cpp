@@ -328,16 +328,23 @@ void Hud::drawLuaElements(const v3s16 &camera_offset)
 				core::rect<s32> size(0, 0, e->scale.X, text_height * e->scale.Y);
 				std::wstring text = unescape_enriched(utf8_to_wide(e->text));
 				core::dimension2d<u32> textsize = font->getDimension(text.c_str());
-				v2s32 offset((e->align.X - 1.0) * (textsize.Width / 2),
+				if (e->pos.X == 0.5) {
+					v2s32 offset((e->align.X - 1.0) * (textsize.Width / 2),
 #if defined(__ANDROID__)
-							 (e->align.Y - 1.0) * (textsize.Height) * 4);
+								 (e->align.Y - 1.0) * (textsize.Height) * 4);
 #elif defined(__IOS__)
-							 (e->align.Y - 1.0) * (textsize.Height) * 3);
+								 (e->align.Y - 1.0) * (textsize.Height) * 3);
 #else
-							 (e->align.Y - 1.0) * (textsize.Height / 2));
+								 (e->align.Y - 1.0) * (textsize.Height / 2));
 #endif
-				v2s32 offs(e->offset.X, e->offset.Y);
-				font->draw(text.c_str(), size + pos + offset + offs, color);
+					v2s32 offs(e->offset.X, e->offset.Y);
+					font->draw(text.c_str(), size + pos + offset + offs, color);
+				} else {
+					v2s32 offset((e->align.X - 1.0) * (textsize.Width / 2),
+								 (e->align.Y - 1.0) * (textsize.Height / 2));
+					v2s32 offs(e->offset.X, e->offset.Y);
+					font->draw(text.c_str(), size + pos + offset + offs, color);
+				}
 				break; }
 			case HUD_ELEM_STATBAR: {
 				v2s32 offs(e->offset.X, e->offset.Y);
