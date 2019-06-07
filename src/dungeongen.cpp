@@ -96,6 +96,8 @@ void DungeonGen::generate(MMVManip *vm, u32 bseed, v3s16 nmin, v3s16 nmax)
 	float nval_density = NoisePerlin3D(&dp.np_density, nmin.X, nmin.Y, nmin.Z, dp.seed);
 	if (nval_density < 1.0f)
 		return;
+	
+	static const bool preserve_ignore = !g_settings->getBool("projecting_dungeons");
 
 	this->vm = vm;
 	this->blockseed = bseed;
@@ -105,14 +107,16 @@ void DungeonGen::generate(MMVManip *vm, u32 bseed, v3s16 nmin, v3s16 nmax)
 	vm->clearFlag(VMANIP_FLAG_DUNGEON_INSIDE | VMANIP_FLAG_DUNGEON_PRESERVE);
 
 	if (dp.only_in_ground) {
-		// Set all air and water to be untouchable
-		// to make dungeons open to caves and open air
+		// Set all air and water to be untouchable to make dungeons open to
+		// caves and open air. Optionally set ignore to be untouchable to
+		// prevent protruding dungeons.
 		for (s16 z = nmin.Z; z <= nmax.Z; z++) {
 			for (s16 y = nmin.Y; y <= nmax.Y; y++) {
 				u32 i = vm->m_area.index(nmin.X, y, z);
 				for (s16 x = nmin.X; x <= nmax.X; x++) {
 					content_t c = vm->m_data[i].getContent();
 					if (c == CONTENT_AIR || c == dp.c_water ||
+							(preserve_ignore && c == CONTENT_IGNORE) ||
 							c == dp.c_river_water)
 						vm->m_flags[i] |= VMANIP_FLAG_DUNGEON_PRESERVE;
 					i++;
@@ -154,7 +158,7 @@ void DungeonGen::makeDungeon(v3s16 start_padding)
 	/*
 		Find place for first room.
 		There is a 1 in 4 chance of the first room being 'large',
-		all other rooms are not 'large'.
+		all other rooms are noif (dp.only_in_ground) {t 'large'.
 	*/
 	bool fits = false;
 	for (u32 i = 0; i < 100 && !fits; i++) {
