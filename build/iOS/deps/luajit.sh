@@ -12,21 +12,16 @@ fi
 
 cd luajit-src
 
-if [ ! -f .patched ]; then
-patch -p0 <../../patches/luajit.patch
-touch .patched
-fi
-
 # 32-bit
 make -j$(sysctl -n hw.ncpu) \
-  HOST_CC="clang -m32 -arch i386" CROSS="$(dirname $IOS_CC)/" \
+  DEFAULT_CC=clang HOST_CC="clang -m32 -arch i386" CROSS="$(dirname $IOS_CC)/" \
   TARGET_FLAGS="${IOS_FLAGS_LUA/-arch arm64/}" TARGET_SYS=iOS \
   -j$(sysctl -n hw.ncpu)
 mv src/libluajit.a tmp32.a
 make clean
 # 64-bit
 make -j$(sysctl -n hw.ncpu) \
-  HOST_CC=clang CROSS="$(dirname $IOS_CC)/" \
+  DEFAULT_CC=clang HOST_CC=clang CROSS="$(dirname $IOS_CC)/" \
   TARGET_FLAGS="${IOS_FLAGS_LUA/-arch armv7/}" TARGET_SYS=iOS \
   -j$(sysctl -n hw.ncpu)
 mv src/libluajit.a tmp64.a
