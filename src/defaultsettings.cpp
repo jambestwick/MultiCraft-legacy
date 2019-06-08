@@ -424,6 +424,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("max_block_generate_distance", "3");
 	settings->setDefault("client_mapblock_limit", "250");
 	settings->setDefault("enable_3d_clouds", "false");
+	settings->setDefault("debug_log_level", "error");
 	settings->setDefault("cloud_radius", "6");
 	// set font_path
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
@@ -450,6 +451,7 @@ void set_default_settings(Settings *settings)
 #ifdef __IOS__
 	settings->setDefault("emergequeue_limit_diskonly", "16");
 	settings->setDefault("emergequeue_limit_generate", "16");
+	settings->setDefault("debug_log_level", "none");
 	// set font_path
 	settings->setDefault("mono_font_path", g_settings->get("font_path"));
 	settings->setDefault("fallback_font_path", g_settings->get("font_path"));

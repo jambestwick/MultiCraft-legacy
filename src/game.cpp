@@ -2206,13 +2206,7 @@ bool Game::connectToServer(const std::string &playername,
 						(client->getProtoVersion() == 0) &&
 						client->connectedToServer()) {
 					*error_message = "Connection failure: init packet not "
-					"recognized by server.\n"
-					"Most likely the server uses an old protocol version (<v25).\n"
-					"Please ask the server owner to update to 0.4.13 or later.\n"
-					"To still connect to the server in the meantime,\n"
-					"you can enable the 'send_pre_v25_init' setting by editing minetest.conf,\n"
-					"or by enabling the 'Client -> Network -> Support older Servers'\n"
-					"entry in the advanced settings menu.";
+					"recognized by server.";
 				} else {
 					*error_message = "Connection timed out.";
 				}
