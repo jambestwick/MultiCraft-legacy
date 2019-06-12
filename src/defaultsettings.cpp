@@ -132,8 +132,8 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("pause_fps_max", "15");
 	settings->setDefault("viewing_range", "100");
 	settings->setDefault("near_plane", "0.1");
-	settings->setDefault("screen_w", "1024");
-	settings->setDefault("screen_h", "600");
+	settings->setDefault("screenW", "1024");
+	settings->setDefault("screenH", "600");
 	settings->setDefault("autosave_screensize", "true");
 	settings->setDefault("fullscreen", "false");
 	settings->setDefault("fullscreen_bpp", "24");
@@ -153,7 +153,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("view_bobbing_amount", "1.0");
 	settings->setDefault("fall_bobbing_amount", "1.0");
 	settings->setDefault("enable_3d_clouds", "true");
-	settings->setDefault("cloud_height", "180");
+	settings->setDefault("cloud_height", "120");
 	settings->setDefault("cloud_radius", "12");
 	settings->setDefault("menu_clouds", "false");
 	settings->setDefault("opaque_water", "false");
@@ -174,7 +174,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("hud_hotbar_max_width", "1.0");
 	settings->setDefault("hud_move_upwards", "0");
 	settings->setDefault("enable_local_map_saving", "false");
-	settings->setDefault("show_entity_selectionbox", "show_entity_selectionbox");
+	settings->setDefault("show_entity_selectionbox", "false");
 	settings->setDefault("texture_clean_transparent", "false");
 	settings->setDefault("texture_min_size", "32");
 	settings->setDefault("ambient_occlusion_gamma", "2.2");
@@ -381,8 +381,8 @@ void set_default_settings(Settings *settings)
 
 	// Mobile Platform
 #if defined(__ANDROID__) || defined(__IOS__)
-	settings->setDefault("screen_w", "0");
-	settings->setDefault("screen_h", "0");
+	settings->setDefault("screenW", "0");
+	settings->setDefault("screenH", "0");
 	settings->setDefault("fullscreen", "true");
 	settings->setDefault("fps_max", "35");
 	settings->setDefault("enable_shaders", "false");

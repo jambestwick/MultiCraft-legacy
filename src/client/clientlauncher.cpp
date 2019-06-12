@@ -551,16 +551,16 @@ void ClientLauncher::main_menu(MainMenuData *menudata)
 
 bool ClientLauncher::create_engine_device()
 {
-	#ifdef __ANDROID__
+	#if defined(__ANDROID__) || defined(__IOS__)
 		// set correct resolution
-		g_settings->setU16("screen_w", porting::getDisplaySize().X);
-		g_settings->setU16("screen_h", porting::getDisplaySize().Y);
+		g_settings->setU16("screenW", porting::getDisplaySize().X);
+		g_settings->setU16("screenH", porting::getDisplaySize().Y);
 	#endif
 
 	// Resolution selection
 	bool fullscreen = g_settings->getBool("fullscreen");
-	u16 screen_w = g_settings->getU16("screen_w");
-	u16 screen_h = g_settings->getU16("screen_h");
+	u16 screenW = g_settings->getU16("screenW");
+	u16 screenH = g_settings->getU16("screenH");
 
 	// bpp, fsaa, vsync
 	bool vsync = g_settings->getBool("vsync");
@@ -587,7 +587,7 @@ bool ClientLauncher::create_engine_device()
 
 	SIrrlichtCreationParameters params = SIrrlichtCreationParameters();
 	params.DriverType    = driverType;
-	params.WindowSize    = core::dimension2d<u32>(screen_w, screen_h);
+	params.WindowSize    = core::dimension2d<u32>(screenW, screenH);
 	params.Bits          = bits;
 	params.AntiAlias     = fsaa;
 	params.Fullscreen    = fullscreen;

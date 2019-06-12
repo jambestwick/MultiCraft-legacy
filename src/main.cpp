@@ -828,7 +828,7 @@ static bool run_dedicated_server(const GameParams &game_params, const Settings &
 		if (!name_ok) {
 			if (admin_nick.empty()) {
 				errorstream << "No name given for admin. "
-					<< "Please check your MultiCraft.conf that it "
+					<< "Please check your multicraft.conf that it "
 					<< "contains a 'name = ' to your main admin account."
 					<< std::endl;
 			} else {

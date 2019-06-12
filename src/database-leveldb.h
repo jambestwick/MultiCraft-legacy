@@ -41,7 +41,6 @@ public:
 
 	void beginSave() {}
 	void endSave() {}
-
 private:
 	leveldb::DB *m_database;
 };

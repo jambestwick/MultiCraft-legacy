@@ -40,7 +40,6 @@ public:
 
 	void beginSave() {}
 	void endSave() {}
-
 private:
 	std::map<s64, std::string> m_database;
 };

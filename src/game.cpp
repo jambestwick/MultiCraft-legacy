@@ -1689,8 +1689,8 @@ void Game::run()
 			&& client->checkPrivilege("fast");
 #endif
 
-	irr::core::dimension2d<u32> previous_screen_size(g_settings->getU16("screen_w"),
-		g_settings->getU16("screen_h"));
+	irr::core::dimension2d<u32> previous_screen_size(g_settings->getU16("screenW"),
+		g_settings->getU16("screenH"));
 
 	while (device->run()
 			&& !(*kill || g_gamecallback->shutdown_requested
@@ -1704,8 +1704,8 @@ void Game::run()
 		if (previous_screen_size != current_screen_size &&
 				current_screen_size != irr::core::dimension2d<u32>(0,0) &&
 				g_settings->getBool("autosave_screensize")) {
-			g_settings->setU16("screen_w", current_screen_size.Width);
-			g_settings->setU16("screen_h", current_screen_size.Height);
+			g_settings->setU16("screenW", current_screen_size.Width);
+			g_settings->setU16("screenH", current_screen_size.Height);
 			previous_screen_size = current_screen_size;
 		}
 
@@ -2499,7 +2499,7 @@ void Game::processUserInput(f32 dtime)
 	// Reset input if window not active or some menu is active
 	if (!device->isWindowActive() || isMenuActive() || guienv->hasFocus(gui_chat_console)) {
 		input->clear();
-#if defined(HAVE_TOUCHSCREENGUI) && !defined(__IOS__)
+#ifdef HAVE_TOUCHSCREENGUI
 		g_touchscreengui->hide();
 #endif
 	}
@@ -2526,7 +2526,7 @@ void Game::processUserInput(f32 dtime)
 #endif
 
 	// Increase timer for double tap of "keymap_jump"
-	if (m_cache_doubletap_jump && runData.jump_timer <= 0.15)
+	if (m_cache_doubletap_jump && runData.jump_timer <= 0.15f)
 		runData.jump_timer += dtime;
 
 	processKeyInput();

@@ -24,12 +24,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "gettext.h"
 #include "util/string.h"
 #include "log.h"
-#include "filesys.h"
 
 #if USE_GETTEXT && defined(_MSC_VER)
 #include <windows.h>
 #include <map>
 #include <direct.h>
+#include "filesys.h"
 
 #define setlocale(category, localename) \
 	setlocale(category, MSVC_LocaleLookup(localename))

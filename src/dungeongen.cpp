@@ -158,7 +158,7 @@ void DungeonGen::makeDungeon(v3s16 start_padding)
 	/*
 		Find place for first room.
 		There is a 1 in 4 chance of the first room being 'large',
-		all other rooms are noif (dp.only_in_ground) {t 'large'.
+		all other rooms are not 'large'.
 	*/
 	bool fits = false;
 	for (u32 i = 0; i < 100 && !fits; i++) {

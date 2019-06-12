@@ -1002,13 +1002,14 @@ void MapgenV6::placeTreesAndJungleGrass()
 				continue;
 
 			v3s16 p(x, y, z);
-			// Trees grow only on mud and grass
+			// Trees grow only on mud and grass and snowblock
 			{
 				u32 i = vm->m_area.index(p);
 				content_t c = vm->m_data[i].getContent();
 				if (c != c_dirt &&
 						c != c_dirt_with_grass &&
-						c != c_dirt_with_snow)
+						c != c_dirt_with_snow &&
+						c != c_snowblock)
 					continue;
 			}
 			p.Y++;
@@ -1063,15 +1064,15 @@ void MapgenV6::growGrass() // Add surface nodes
 		content_t c = vm->m_data[i].getContent();
 		if (surface_y >= water_level - 20) {
 			if (bt == BT_TAIGA && c == c_dirt) {
+				vm->m_data[i] = n_snowblock;
+				vm->m_area.add_y(em, i, -1);
 				vm->m_data[i] = n_dirt_with_snow;
 			} else if (bt == BT_TUNDRA) {
 				if (c == c_dirt) {
-					vm->m_data[i] = n_snowblock;
-					vm->m_area.add_y(em, i, -1);
 					vm->m_data[i] = n_dirt_with_snow;
 				} else if (c == c_stone && surface_y < node_max.Y) {
 					vm->m_area.add_y(em, i, 1);
-					vm->m_data[i] = n_snowblock;
+					vm->m_data[i] = n_snow;
 				}
 			} else if (c == c_dirt) {
 				vm->m_data[i] = n_dirt_with_grass;

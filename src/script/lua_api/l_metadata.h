@@ -32,7 +32,6 @@ class MetaDataRef : public ModApiBase
 {
 public:
 	virtual ~MetaDataRef() {}
-
 protected:
 	static MetaDataRef *checkobject(lua_State *L, int narg);
 
