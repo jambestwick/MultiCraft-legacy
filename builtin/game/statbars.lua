@@ -172,12 +172,11 @@ local timeout = 2
 local function add_text(player)
 	local player_name = player:get_player_name()
 	hud[player_name] = player:hud_add({
-		hud_elem_type = "text",
-		position = {x = 0.5, y = 0.975},
-		offset = {x = 0, y = -100},
-		alignment = {x = 0, y = 0},
-		number = 0xFFFFFF,
-		text = "",
+		hud_elem_type	= "text",
+		position		= {x = 0.5, y = 0.91},
+		offset			= {x = 0, y = -25},
+		alignment		= {x = 0, y = 0},
+		number			= 0xFFFFFF,
 	})
 end
 
