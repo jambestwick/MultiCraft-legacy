@@ -146,6 +146,7 @@ private:
 	void accelerateVertical(const v3f &target_speed, const f32 max_increase);
 	bool updateSneakNode(Map *map, const v3f &position, const v3f &sneak_max);
 	float getSlipFactor(Environment *env, const v3f &speedH);
+	float getSpeedFactor(Environment *env);
 
 	v3f m_position;
 	v3s16 m_standing_node;

@@ -922,7 +922,8 @@ void PlayerSAO::step(float dtime, bool send_recommended)
 		const ContentFeatures &c = m_env->getGameDef()->ndef()->get(n);
 		// If node generates drown
 		bool noclip = m_privs.count("noclip") && g_settings->getBool("noclip");
-		if (c.drowning > 0 && m_hp > 0 &&!noclip) {
+		int drowning = c.walkable ? 1 : c.drowning;
+		if (drowning > 0 && m_hp > 0 && !noclip) {
 			if (m_breath > 0)
 				setBreath(m_breath - 1);
 
@@ -940,7 +941,8 @@ void PlayerSAO::step(float dtime, bool send_recommended)
 		MapNode n = m_env->getMap().getNodeNoEx(p);
 		const ContentFeatures &c = m_env->getGameDef()->ndef()->get(n);
 		// If player is alive & no drowning, breath
-		if (m_hp > 0 && m_breath < PLAYER_MAX_BREATH && c.drowning == 0)
+		int drowning = c.walkable ? 1 : c.drowning;
+		if (m_hp > 0 && m_breath < PLAYER_MAX_BREATH && drowning == 0)
 			setBreath(m_breath + 1);
 	}
 

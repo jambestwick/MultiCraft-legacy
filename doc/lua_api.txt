@@ -1517,6 +1517,9 @@ Another example: Make red wool from white wool and red dye:
   connect to each other
 * `slippery`: Players and items will slide on the node.
   Only use `slippery = 3` for now to ensure forwards compatibility.
+ * `speed`: Changes movement speed for players and items will moving on the node in percents.
+    * `speed = -10`: to slow down  the movement (min. -99%)
+    * `speed =  10`: to speed up the movement (max. 1000%)
 
 ### Known damage and digging time defining groups
 * `crumbly`: dirt, sand
