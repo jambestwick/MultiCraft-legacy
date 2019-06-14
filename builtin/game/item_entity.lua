@@ -199,7 +199,7 @@ core.register_entity(":__builtin:item", {
 		if own_stack:get_free_space() == 0 then
 			return
 		end
-		local objects = core.get_objects_inside_radius(pos, 0.1)
+		local objects = core.get_objects_inside_radius(pos, 0.25)
 		for k, obj in pairs(objects) do
 			local entity = obj:get_luaentity()
 			if entity and entity.name == "__builtin:item" then
