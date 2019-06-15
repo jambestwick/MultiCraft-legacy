@@ -31,6 +31,7 @@ assert(loadfile(gamepath.."falling.lua"))(builtin_shared)
 dofile(gamepath.."features.lua")
 dofile(gamepath.."voxelarea.lua")
 dofile(gamepath.."forceloading.lua")
+dofile(gamepath.."hud.lua")
 dofile(gamepath.."statbars.lua")
 
 profiler = nil

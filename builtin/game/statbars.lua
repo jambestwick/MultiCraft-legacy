@@ -1,26 +1,32 @@
 -- cache setting
---[[local enable_damage = core.settings:get_bool("enable_damage")
+local enable_damage = core.settings:get_bool("enable_damage")
 
-local health_bar_definition =
-{
-	hud_elem_type = "statbar",
-	position = { x=0.5, y=1 },
-	text = "server_flags_damage.png",
-	number = 20,
-	direction = 0,
-	size = { x=24, y=24 },
-	offset = { x=(-10*24)-25, y=-(48+24+16)},
-}
+local health_bar_definition = {}
+
+if enable_damage then
+	hud.register("health", {
+		hud_elem_type = "statbar",
+		position = {x = 0.5, y = 1},
+		text = "heart.png",
+		number = 20,
+		direction = 0,
+		alignment = {x = -1, y = -1},
+		size = {x = 24, y = 24},
+		offset = {x = -249,	y = -109},
+		background = "heart_bg.png",
+	})
+end
 
 local breath_bar_definition =
 {
 	hud_elem_type = "statbar",
-	position = { x=0.5, y=1 },
-	text = "halo.png",
+	position = {x = 0.5, y = 1},
+	text = "bubble.png",
 	number = 20,
 	direction = 0,
-	size = { x=24, y=24 },
-	offset = {x=25,y=-(48+24+16)},
+	alignment = {x = -1, y = -1},
+	size = {x = 24, y = 24},
+	offset = {x = 8, y = -134},
 }
 
 local hud_ids = {}
@@ -101,7 +107,7 @@ local function player_event_handler(player,eventname)
 		initialize_builtin_statbars(player)
 
 		if hud_ids[name].id_healthbar ~= nil then
-			player:hud_change(hud_ids[name].id_healthbar,"number",player:get_hp())
+			hud.change_item(player, "health", {number = player:get_hp()})
 			return true
 		end
 	end
@@ -162,7 +168,7 @@ end
 
 core.register_on_joinplayer(initialize_builtin_statbars)
 core.register_on_leaveplayer(cleanup_builtin_statbars)
-core.register_playerevent(player_event_handler)]]
+core.register_playerevent(player_event_handler)
 
 -- Hud Item name
 
