@@ -1023,12 +1023,12 @@ minetest.register_chatcommand("setspawn", {
 			return false, "Player not found"
 		end
 		local pos = player:get_pos()
-		local x = pos.x
-		local y = pos.y
-		local z = pos.z
+		local x = math.floor(pos.x)
+		local y = math.floor(pos.y)
+		local z = math.floor(pos.z)
 		local pos_string = x..","..y..","..z
 		local pos_string_2 = "Setting spawn point to ("..x..", "..y..", "..z..")"
-		minetest.setting_set("static_spawnpoint",pos_string)
+		minetest.setting_set("static_spawnpoint", pos_string)
 		spawn_spawnpos = pos
 		minetest.setting_save()
 		return true, pos_string_2

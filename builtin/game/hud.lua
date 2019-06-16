@@ -15,10 +15,9 @@
 --with this program; if not, write to the Free Software Foundation, Inc.,
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-hud = {}
+hud, hud_id = {}, {}
 
 -- keep id handling internal
-local hud_id = {} -- hud item ids
 local sb_bg = {} -- statbar background ids
 
 -- localize often used table

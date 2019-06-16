@@ -53,7 +53,7 @@ local function initialize_builtin_statbars(player)
 	if player:hud_get_flags().healthbar and enable_damage then
  		if hud_ids[name].id_healthbar == nil then
 			health_bar_definition.number = player:get_hp()
-			hud_ids[name].id_healthbar  = player:hud_add(health_bar_definition)
+			hud_ids[name].id_healthbar = player:hud_add(health_bar_definition)
 		end
 	else
 		if hud_ids[name].id_healthbar ~= nil then
@@ -94,7 +94,7 @@ local function cleanup_builtin_statbars(player)
 	hud_ids[name] = nil
 end
 
-local function player_event_handler(player,eventname)
+local function player_event_handler(player, eventname)
 	assert(player:is_player())
 
 	local name = player:get_player_name()
@@ -106,7 +106,7 @@ local function player_event_handler(player,eventname)
 	if eventname == "health_changed" then
 		initialize_builtin_statbars(player)
 
-		if hud_ids[name].id_healthbar ~= nil then
+		if hud_id[name.."_".."health"] ~= nil then
 			hud.change_item(player, "health", {number = player:get_hp()})
 			return true
 		end
@@ -166,7 +166,6 @@ function core.hud_replace_builtin(name, definition)
 	return false
 end
 
-core.register_on_joinplayer(initialize_builtin_statbars)
 core.register_on_leaveplayer(cleanup_builtin_statbars)
 core.register_playerevent(player_event_handler)
 
@@ -187,6 +186,7 @@ local function add_text(player)
 end
 
 core.register_on_joinplayer(function(player)
+	initialize_builtin_statbars(player)
 	core.after(1, add_text, player)
 end)
 

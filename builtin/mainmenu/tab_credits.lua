@@ -23,7 +23,7 @@ local multicraft_developers = {
 	"Alexander Zavrin (Ransom.00)",
 	"sfan5 <sfan5@live.de>",
 	"Stuart Jones (stujones11) <stujones111@gmail.com>",
-	"paramat",
+	"Jean-Patrick Guerrero (kilbith) <jeanpatrick.guerrero@gmail.com>",
 	"And other people who helped make the world better!",
 }
 
