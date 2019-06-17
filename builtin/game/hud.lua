@@ -37,11 +37,6 @@ function hud.register(name, def)
 		return false
 	end
 
-	--TODO: allow other elements
-	if def.hud_elem_type ~= "statbar" then
-		throw_error("The given HUD element is no statbar")
-		return false
-	end
 	if items[name] ~= nil then
 		throw_error("A statbar with that name already exists")
 		return false
@@ -49,7 +44,7 @@ function hud.register(name, def)
 
 	-- actually register
 	-- add background first since draworder is based on id :\
-	if def.hud_elem_type == "statbar" and def.background ~= nil then
+	if --[[def.hud_elem_type == "statbar" and]] def.background ~= nil then
 		sb_bg[name] = table.copy(def)
 		sb_bg[name].text = def.background
 		if not def.autohide_bg and def.max then

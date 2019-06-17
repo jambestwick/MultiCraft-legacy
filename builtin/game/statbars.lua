@@ -6,27 +6,25 @@ local health_bar_definition = {}
 if enable_damage then
 	hud.register("health", {
 		hud_elem_type = "statbar",
-		position = {x = 0.5, y = 1},
-		text = "heart.png",
-		number = 20,
-		direction = 0,
-		alignment = {x = -1, y = -1},
-		size = {x = 24, y = 24},
-		offset = {x = -249,	y = -109},
-		background = "heart_bg.png",
+		position      = {x =  0.5, y =  1},
+		alignment     = {x = -1,   y = -1},
+		offset        = {x = -247, y = -108},
+		size          = {x =  24,  y =  24},
+		text          = "heart.png",
+		background    = "heart_bg.png",
+		number        = 20,
 	})
 end
 
 local breath_bar_definition =
 {
 	hud_elem_type = "statbar",
-	position = {x = 0.5, y = 1},
-	text = "bubble.png",
-	number = 20,
-	direction = 0,
-	alignment = {x = -1, y = -1},
-	size = {x = 24, y = 24},
-	offset = {x = 8, y = -134},
+	position      = {x =  0.5, y = 1},
+	alignment     = {x = -1,   y = -1},
+	offset        = {x =  10,  y = -134},
+	size          = {x =  24,  y = 24},
+	text          = "bubble.png",
+	number        = 20,
 }
 
 local hud_ids = {}
@@ -171,23 +169,20 @@ core.register_playerevent(player_event_handler)
 
 -- Hud Item name
 
-local hud, timer, wield = {}, {}, {}
+local timer, wield = {}, {}
 local timeout = 2
 
-local function add_text(player)
-	local player_name = player:get_player_name()
-	hud[player_name] = player:hud_add({
-		hud_elem_type	= "text",
-		position		= {x = 0.5, y = 0.91},
-		offset			= {x = 0, y = -25},
-		alignment		= {x = 0, y = 0},
-		number			= 0xFFFFFF,
-	})
-end
+hud.register("itemname", {
+	hud_elem_type = "text",
+	position      = {x = 0.5,  y =  1},
+	alignment     = {x = 0,    y = -10},
+	offset        = {x = 0,    y = -50},
+	number        = 0xFFFFFF,
+	text          = ""
+})
 
 core.register_on_joinplayer(function(player)
 	initialize_builtin_statbars(player)
-	core.after(1, add_text, player)
 end)
 
 core.register_globalstep(function(dtime)
@@ -202,13 +197,13 @@ core.register_globalstep(function(dtime)
 		timer[player_name] = timer[player_name] and timer[player_name] + dtime or 0
 		wield[player_name] = wield[player_name] or ""
 
-		if timer[player_name] > timeout and hud[player_name] then
-			player:hud_change(hud[player_name], "text", "")
+		if timer[player_name] > timeout and player then
+			hud.change_item(player, "itemname", {text = ""})
 			timer[player_name] = 0
 			return
 		end
 
-		if hud[player_name] and wielded_item_name ~= wield[player_name] then
+		if player and wielded_item_name ~= wield[player_name] then
 			wield[player_name] = wielded_item_name
 			timer[player_name] = 0
 
@@ -220,7 +215,7 @@ core.register_globalstep(function(dtime)
 			local description = meta_desc ~= "" and meta_desc or
 				(def and (def.description:match("(.-)\n") or def.description) or "")
 
-			player:hud_change(hud[player_name], "text", description)
+			hud.change_item(player, "itemname", {text = description})
 		end
 	end
 end)
