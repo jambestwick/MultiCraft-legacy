@@ -97,7 +97,7 @@ return {
 	cbf_formspec = function(tabview, name, tabdata)
 	local version = core.get_version()
 		return "label[0.1,-0.1;MultiCraft Open Source Project, ver. " .. version.string .. "]" ..
-			"label[0.1,0.3;Copyright (c) 2014-2019 MultiCraft Developement Team]" ..
+			"label[0.1,0.3;Copyright (c) 2014-2019 MultiCraft Development Team]" ..
 			"label[0.1,0.7;Home page: https://github.com/MultiCraftProject/MultiCraft]" ..
 			"label[0.1,1.1;Licence: LGPLv3.0+ and CC-BY-SA 3.0]" ..
 			"tablecolumns[color;text]" ..

@@ -2,9 +2,9 @@ MultiCraft Open Source Project:
 =================================
 
 LGPLv3.0+, CC-BY-SA 3.0 and a little bit proprietary textures. The list in the file nearby.
-You can use these textures without restriction within MultiCraft Project.
-You can not use them in another project.
-They are an integral part of this project and created exclusively for him.
+You can use these textures without restriction in the MultiCraft Project.
+You cannot use them in another project.
+They are an integral part of this project and are created or purchased exclusively for it.
 
 --- --- ---
 
