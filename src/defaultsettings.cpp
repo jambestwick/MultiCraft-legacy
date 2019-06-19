@@ -133,7 +133,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("viewing_range", "100");
 	settings->setDefault("near_plane", "0.1");
 	settings->setDefault("screenW", "1024");
-	settings->setDefault("screenH", "600");
+	settings->setDefault("screenH", "768");
 	settings->setDefault("autosave_screensize", "true");
 	settings->setDefault("fullscreen", "false");
 	settings->setDefault("fullscreen_bpp", "24");
@@ -160,9 +160,8 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("console_height", "1.0");
 	settings->setDefault("console_color", "(0,0,0)");
 	settings->setDefault("console_alpha", "200");
-	settings->setDefault("selectionbox_color", "(255,255,255)");
-	settings->setDefault("selectionbox_width", "4");
 	settings->setDefault("selectionbox_color", "(0,0,0)");
+	settings->setDefault("selectionbox_width", "4");
 	settings->setDefault("node_highlighting", "box");
 	settings->setDefault("crosshair_color", "(255,255,255)");
 	settings->setDefault("crosshair_alpha", "255");
@@ -173,6 +172,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("desynchronize_mapblock_texture_animation", "true");
 	settings->setDefault("hud_hotbar_max_width", "1.0");
 	settings->setDefault("hud_move_upwards", "0");
+	settings->setDefault("round_screen", "0");
 	settings->setDefault("enable_local_map_saving", "false");
 	settings->setDefault("show_entity_selectionbox", "false");
 	settings->setDefault("texture_clean_transparent", "false");
@@ -484,6 +484,7 @@ void set_default_settings(Settings *settings)
 	// Move the HUD up for the iPhone X-series and new iPad Pro
 	if (([SDVersion deviceVersion] == iPhoneX) || ([SDVersion deviceVersion] == iPhoneXS) || ([SDVersion deviceVersion] == iPhoneXSMax) || ([SDVersion deviceVersion] == iPhoneXR) || ([SDVersion deviceVersion] ==  iPadPro11Inch) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch3Gen)) {
 		settings->setDefault("hud_move_upwards", "10");
+		settings->setDefault("round_screen", "15");
 	}
 
 	// set the optimal settings depending on the model

@@ -1734,22 +1734,14 @@ void GenericCAO::processMessage(const std::string &data)
 
 		if (damage > 0)
 		{
-			if (m_hp <= 0)
+			if (m_hp > 0)
 			{
-				// TODO: Execute defined fast response
-				// As there is no definition, make a smoke puff
-				//disable
-				//ClientSimpleObject *simple = createSmokePuff(
-				//		m_smgr, m_env, m_position,
-				//		m_prop.visual_size * BS);
-				//m_env->addSimpleObject(simple);
-			} else {
 				// TODO: Execute defined fast response
 				// Flashing shall suffice as there is no definition
 				m_reset_textures_timer = 0.05;
 				if(damage >= 2)
-					m_reset_textures_timer += 0.05 * damage;
-				updateTextures(m_current_texture_modifier + "^[brighten");
+					m_reset_textures_timer += 0.5 * damage;
+				updateTextures(m_current_texture_modifier + "^[colorize:#FF000085");
 			}
 		}
 	} else if (cmd == GENERIC_CMD_UPDATE_ARMOR_GROUPS) {
@@ -1805,21 +1797,14 @@ bool GenericCAO::directReportPunch(v3f dir, const ItemStack *punchitem,
 			m_hp -= result.damage;
 		} else {
 			m_hp = 0;
-			// TODO: Execute defined fast response
-			// As there is no definition, make a smoke puff
-			//disable
-			//ClientSimpleObject *simple = createSmokePuff(
-			//		m_smgr, m_env, m_position,
-			//		m_prop.visual_size * BS);
-			//m_env->addSimpleObject(simple);
 		}
 		// TODO: Execute defined fast response
 		// Flashing shall suffice as there is no definition
 		if (m_reset_textures_timer < 0) {
 			m_reset_textures_timer = 0.05;
 			if (result.damage >= 2)
-				m_reset_textures_timer += 0.05 * result.damage;
-			updateTextures(m_current_texture_modifier + "^[brighten");
+				m_reset_textures_timer += 1.0 * result.damage;
+			updateTextures(m_current_texture_modifier + "^[colorize:#FF000085");
 		}
 	}
 

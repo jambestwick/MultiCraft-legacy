@@ -1012,7 +1012,7 @@ static void updateChat(Client &client, f32 dtime, bool show_debug,
 	s32 chat_y = 5 + line_height;
 
 	if (show_debug)
-		chat_y += 2 * line_height;
+		chat_y += line_height;
 
 	// first pass to calculate height of text to be set
 	s32 width = std::min(g_fontengine->getTextWidth(recent_chat.c_str()) + 10,
@@ -2305,6 +2305,7 @@ bool Game::getServerContent(bool *aborted)
 
 				message << " (" << cur << ' ' << cur_unit << ")";
 			}
+
 			progress = 30 + client->mediaReceiveProgress() * 35 + 0.5;
 			draw_load_screen(utf8_to_wide(message.str()), device,
 					guienv, texture_src, dtime, progress);
@@ -4429,8 +4430,8 @@ void Game::updateGui(const RunStats &stats, f32 dtime, const CameraOrientation &
 
 	if (guitext->isVisible()) {
 		core::rect<s32> rect(
-				5,              5,
-				screensize.X,   5 + g_fontengine->getTextHeight()
+				5 + g_settings->getU16("round_screen"), 5,
+				screensize.X, 5 + g_fontengine->getTextHeight()
 		);
 		guitext->setRelativePosition(rect);
 	}
@@ -4742,9 +4743,7 @@ void Game::showPauseMenu()
 	str_formspec_escape(control_text);
 #endif
 
-#ifdef __ANDROID__
-	float ypos = simple_singleplayer_mode ? 0.5f : 0.1f;
-#elif __IOS__
+#ifdef __IOS__
 	float ypos = 1.5;
 #else
 	float ypos = simple_singleplayer_mode ? 0.5f : 0.1f;
