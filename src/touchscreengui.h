@@ -55,9 +55,9 @@ typedef enum {
 	fast_id,
 #endif
 	minimap_id,
-//debug_id,
+//	debug_id,
 	chat_id,
-//camera_id,
+//	camera_id,
 	range_id,
 	range_ios_id,
 	empty_id,
@@ -68,6 +68,17 @@ typedef enum {
 #define MIN_DIG_TIME_MS 500
 #define BUTTON_REPEAT_DELAY 0.2f
 
+extern const char **touchgui_button_imagenames;
+
+struct button_info
+{
+		float            repeatcounter;
+		float            repeatdelay;
+		irr::EKEY_CODE   keycode;
+		std::vector<size_t> ids;
+		IGUIButton *guibutton = NULL;
+		bool             immediate_release;
+	};
 class TouchScreenGUI
 {
 public:
@@ -116,7 +127,7 @@ private:
 	ISimpleTextureSource*   m_texturesource;
 	v2u32                   m_screensize;
 	std::map<int,rect<s32> > m_hud_rects;
-	std::map<size_t,irr::EKEY_CODE> m_hud_ids;
+	std::map<size_t, irr::EKEY_CODE> m_hud_ids;
 	bool                    m_visible; // is the gui visible
 
 	/* value in degree */
@@ -138,15 +149,6 @@ private:
 	s64 m_move_downtime;
 	bool m_move_sent_as_mouse_event;
 	v2s32 m_move_downlocation;
-
-	struct button_info {
-		float            repeatcounter;
-		float            repeatdelay;
-		irr::EKEY_CODE   keycode;
-		std::vector<size_t> ids;
-		IGUIButton*      guibutton;
-		bool             immediate_release;
-	};
 
 	button_info m_buttons[after_last_element_id];
 
@@ -209,8 +211,6 @@ private:
 	/* array for doubletap detection */
 	key_event m_key_events[2];
 
-	void storePointerPos(size_t ID, v2s32 pos);
-	v2s32 loadPointerPos(size_t ID);
 };
 extern TouchScreenGUI *g_touchscreengui;
 #endif
