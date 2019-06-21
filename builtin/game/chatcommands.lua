@@ -82,7 +82,7 @@ core.register_chatcommand("me", {
 core.register_chatcommand("admin", {
 	description = "Show the name of the server owner",
 	func = function(name)
-		local admin = minetest.settings:get("name")
+		local admin = core.settings:get("name")
 		if admin then
 			return true, "The administrator of this server is "..admin.."."
 		else
@@ -104,7 +104,7 @@ core.register_chatcommand("privs", {
 })
 
 local function handle_grant_command(caller, grantname, grantprivstr)
-	local caller_privs = minetest.get_player_privs(caller)
+	local caller_privs = core.get_player_privs(caller)
 	if not (caller_privs.privs or caller_privs.basic_privs) then
 		return false, "Your privileges are insufficient."
 	end
@@ -969,43 +969,47 @@ core.register_chatcommand("clearinv", {
 	end,
 })
 
-minetest.register_chatcommand("killme", {
-	description = "Kill yourself to respawn",
-	func = function(name)
-		local player = minetest.get_player_by_name(name)
-		if player then
-			if minetest.settings:get_bool("enable_damage") then
-				player:set_hp(0)
-				return true
-			else
-				for _, callback in pairs(core.registered_on_respawnplayers) do
-					if callback(player) then
-						return true
-					end
-				end
-
-				-- There doesn't seem to be a way to get a default spawn pos from the lua API
-				return false, "No static_spawnpoint defined"
-			end
+local function handle_kill_command(killer, victim)
+	if core.settings:get_bool("enable_damage") == false then
+		return false, "Players can't be killed, damage has been disabled."
+	end
+	local victimref = core.get_player_by_name(victim)
+	if victimref == nil then
+		return false, string.format("Player %s is not online.", victim)
+	elseif victimref:get_hp() <= 0 then
+		if killer == victim then
+			return false, "You are already dead."
 		else
-			-- Show error message if used when not logged in, eg: from IRC mod
-			return false, "You need to be online to be killed!"
+			return false, string.format("%s is already dead.", victim)
 		end
 	end
+	if not killer == victim then
+		core.log("action", string.format("%s killed %s", killer, victim))
+	end
+	-- Kill victim
+	victimref:set_hp(0)
+	return true, string.format("%s has been killed.", victim)
+end
+
+core.register_chatcommand("kill", {
+	params = "[<name>]",
+	description = "Kill player or yourself",
+	privs = {server=true},
+	func = function(name, param)
+		return handle_kill_command(name, param == "" and name or param)
+	end,
 })
 
-local spawn_spawnpos = minetest.setting_get_pos("static_spawnpoint")
-
-minetest.register_chatcommand("spawn", {
+core.register_chatcommand("spawn", {
 	params = "",
 	description = "Teleport to the spawn point",
 	func = function(name, param)
-		local player = minetest.get_player_by_name(name)
+		local player = core.get_player_by_name(name)
 		if not player then
-			return false, "Player not found"
+			return false, "Command called by invalid player"
 		end
-		if spawn_spawnpos then
-			player:set_pos(spawn_spawnpos)
+		if core.setting_get_pos("static_spawnpoint") then
+			player:set_pos(core.setting_get_pos("static_spawnpoint"))
 			return true, "Teleporting to spawn..."
 		else
 			return false, "The spawn point is not set!"
@@ -1013,24 +1017,22 @@ minetest.register_chatcommand("spawn", {
 	end,
 })
 
-minetest.register_chatcommand("setspawn", {
+core.register_chatcommand("setspawn", {
 	params = "",
 	description = "Sets the spawn point to your current position",
 	privs = {server = true},
 	func = function(name, param)
-		local player = minetest.get_player_by_name(name)
+		local player = core.get_player_by_name(name)
 		if not player then
-			return false, "Player not found"
+			return false, "Command called by invalid player"
 		end
-		local pos = player:get_pos()
-		local x = math.floor(pos.x)
-		local y = math.floor(pos.y)
-		local z = math.floor(pos.z)
-		local pos_string = x..","..y..","..z
-		local pos_string_2 = "Setting spawn point to ("..x..", "..y..", "..z..")"
-		minetest.setting_set("static_spawnpoint", pos_string)
-		spawn_spawnpos = pos
-		minetest.setting_save()
-		return true, pos_string_2
+		local pos = vector.round(player:get_pos())
+		local x = pos.x
+		local y = pos.y
+		local z = pos.z
+		local pos_to_string = x..","..y..","..z
+		core.setting_set("static_spawnpoint", pos_to_string)
+		core.setting_save()
+		return true, "Setting spawn point to ("..x..", "..y..", "..z..")"
 	end,
 })

@@ -44,7 +44,7 @@ local player_list = {}
 core.register_on_joinplayer(function(player)
 	local player_name = player:get_player_name()
 	player_list[player_name] = player
-	if not minetest.is_singleplayer() then
+	if not core.is_singleplayer() then
 		core.chat_send_all("=> " .. player_name .. " has joined the server")
 	end
 end)
@@ -79,8 +79,8 @@ function core.is_player(player)
 end
 
 
-function minetest.player_exists(name)
-	return minetest.get_auth_handler().get_auth(name) ~= nil
+function core.player_exists(name)
+	return core.get_auth_handler().get_auth(name) ~= nil
 end
 
 -- Returns two position vectors representing a box of `radius` in each
@@ -181,7 +181,7 @@ function core.intersects_protection(minp, maxp, player_name, interval)
 		elseif maxp[c] == minp[c] then
 			d[c] = 1 -- Any value larger than 0 to avoid division by zero
 		else -- maxp[c] < minp[c], print error and treat as protection intersected
-			minetest.log("error", "maxp < minp in 'minetest.intersects_protection()'")
+			core.log("error", "maxp < minp in 'minetest.intersects_protection()'")
 			return true
 		end
 	end
@@ -234,7 +234,7 @@ function core.http_add_fetch(httpenv)
 end
 
 function core.close_formspec(player_name, formname)
-	return minetest.show_formspec(player_name, formname, "")
+	return core.show_formspec(player_name, formname, "")
 end
 
 function core.cancel_shutdown_requests()

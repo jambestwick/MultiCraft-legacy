@@ -579,9 +579,9 @@ function core.item_eat(hp_change, replace_with_item)
 			local pos = user:get_pos()
 			pos.y = pos.y + 1.5
 			local itemname = itemstack:get_name()
-			local texture = minetest.registered_items[itemname].inventory_image
-			minetest.sound_play("player_eat", {pos = pos, max_hear_distance = 10, gain = 0.3})
-			minetest.add_particlespawner({
+			local texture = core.registered_items[itemname].inventory_image
+			core.sound_play("player_eat", {pos = pos, max_hear_distance = 10, gain = 0.3})
+			core.add_particlespawner({
 				amount = 20,
 				time = 0.1,
 				minpos = {x = pos.x, y = pos.y, z = pos.z},

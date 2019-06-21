@@ -228,14 +228,14 @@ core.register_entity(":__builtin:item", {
 			end
 		end
 
-		local node = minetest.get_node_or_nil(self.object:get_pos())
+		local node = core.get_node_or_nil(self.object:get_pos())
 		if not node then
 			return
 		end
-		if minetest.get_item_group(node.name, "lava") > 0 then
-			minetest.sound_play("default_cool_lava", {pos = pos, max_hear_distance = 10})
+		if core.get_item_group(node.name, "lava") > 0 then
+			core.sound_play("default_cool_lava", {pos = pos, max_hear_distance = 10})
 			self.object:remove()
-			minetest.add_particlespawner({
+			core.add_particlespawner({
 				amount = 3,
 				time = 0.1,
 				minpos = {x = pos.x - 0.1, y = pos.y + 0.1, z = pos.z - 0.1 },

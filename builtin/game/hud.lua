@@ -24,7 +24,7 @@ local sb_bg = {} -- statbar background ids
 local items = {}
 
 local function throw_error(msg)
-	minetest.log("error", "HUD[error]: " .. msg)
+	core.log("error", "HUD[error]: " .. msg)
 end
 
 --
@@ -156,7 +156,7 @@ local function add_hud_item(player, name, def)
 	hud_id[i_name].id = player:hud_add(def)
 end
 
-minetest.register_on_joinplayer(function(player)
+core.register_on_joinplayer(function(player)
 	-- add the backgrounds for statbars
 	for _,item in pairs(sb_bg) do
 		add_hud_item(player, _.."_bg", item)
