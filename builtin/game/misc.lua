@@ -102,6 +102,17 @@ function core.get_player_radius_area(player_name, radius)
 	return p1, p2
 end
 
+function core.is_valid_pos(pos)
+	if pos then
+		for _, v in pairs({"x", "y", "z"}) do
+			if not pos[v] or pos[v] < -32000 or pos[v] > 32000 then
+				return
+			end
+		end
+		return true
+	end
+end
+
 function core.hash_node_position(pos)
 	return (pos.z+32768)*65536*65536 + (pos.y+32768)*65536 + pos.x+32768
 end
