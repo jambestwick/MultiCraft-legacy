@@ -17,6 +17,22 @@ end
 local time_to_live = tonumber(core.settings:get("item_entity_ttl")) or 900
 local gravity = tonumber(core.settings:get("movement_gravity")) or 9.81
 
+core.register_entity(":__builtin:throwing_item", {
+	physical = true,
+	visual = "wielditem",
+	collisionbox = {0,0,0, 0,0,0},
+	textures = {""},
+	visual_size = {x=0.4, y=0.4},
+	is_visible = false,
+	on_activate = function(self, staticdata)
+		if staticdata == "expired" then
+			self.object:remove()
+		end
+	end,
+	get_staticdata = function()
+		return "expired"
+	end,
+})
 
 core.register_entity(":__builtin:item", {
 	initial_properties = {

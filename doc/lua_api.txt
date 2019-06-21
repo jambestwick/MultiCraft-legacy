@@ -2565,6 +2565,18 @@ and `minetest.auth_reload` call the authetification handler.
     * Returns `ObjectRef`, or `nil` if failed
 * `minetest.add_item(pos, item)`: Spawn item
     * Returns `ObjectRef`, or `nil` if failed
+* `minetest.item_throw(name, thrower, speed, accel, func(thrower, pos, dir, obj)`
+	* Returns an `ObjectRef` or `nil` if failed
+	* `name`: entity name or itemstring
+	* `thrower`: player `ObjectRef`
+	* `speed`: optional, default = 19
+	* `accel`: optional, default = -3
+	* `func`: optional, function called when the item has landed
+		* `thrower`: player `ObjectRef`
+		* `pos`: landing position
+		* `dir`: direction of travel
+		* `obj`: hit entity or player `ObjectRef`, may be nil
+	Note: the entity will be automatically removed upon landing
 * `minetest.get_player_by_name(name)`: Get an `ObjectRef` to a player
 * `minetest.get_objects_inside_radius(pos, radius)`
     * `radius`: using an euclidean metric
@@ -2725,6 +2737,9 @@ and `minetest.auth_reload` call the authetification handler.
       unattached `group:attached_node` node to fall.
     * spread these updates to neighbours and can cause a cascade
       of nodes to fall.
+* `minetest.is_valid_pos(pos)`
+	* Returns `true` if the position lies within the range -32000 to 32000
+
 
 ### Inventory
 `minetest.get_inventory(location)`: returns an `InvRef`
