@@ -330,9 +330,9 @@ core.register_item(":unknown", {
 })
 
 core.register_node(":air", {
-	description = "Air (you hacker you!)",
-	inventory_image = "air.png",
-	wield_image = "air.png",
+	description = "Air",
+	inventory_image = "blank.png",
+	wield_image = "blank.png",
 	drawtype = "airlike",
 	paramtype = "light",
 	sunlight_propagates = true,
