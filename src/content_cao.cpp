@@ -43,6 +43,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "camera.h" // CameraModes
 #include "wieldmesh.h"
 #include "log.h"
+#include "itemgroup.h"
 #include <algorithm>
 
 class Settings;
@@ -1790,6 +1791,12 @@ bool GenericCAO::directReportPunch(v3f dir, const ItemStack *punchitem,
 			punchitem,
 			time_from_last_punch);
 
+	if (!itemgroup_get(m_armor_groups, "silent")) {
+		SimpleSoundSpec spec;
+		spec.name = "player_punch";
+		spec.gain = 1.0f;
+		m_client->sound()->playSoundAt(spec, false, getPosition());
+	}
 	if(result.did_punch && result.damage != 0)
 	{
 		if(result.damage < m_hp)
