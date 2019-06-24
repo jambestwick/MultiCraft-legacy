@@ -56,13 +56,13 @@ local function create_world_formspec(dialogdata)
 		"size[11.5,3.75,false]" ..
 		"background[0,0;11.5,3;" .. core.formspec_escape(defaulttexturedir ..
         "bg_dialog.png") .. ";true]" ..
-		"label[2,0;" .. fgettext("World name") .. "]"..
+		"label[1.5,0;" .. fgettext("World name:") .. "]"..
 		"field[4.5,0.4;6,0.5;te_world_name;;]" ..
 
-		"label[2,1;" .. fgettext("Seed") .. "]"..
+		"label[1.5,1;" .. fgettext("Seed:") .. "]"..
 		"field[4.5,1.4;6,0.5;te_seed;;".. current_seed .. "]" ..
 
-		"label[2,2;" .. fgettext("Mapgen") .. "]"..
+		"label[1.5,2;" .. fgettext("Mapgen:") .. "]"..
 		"dropdown[4.2,2;6.3;dd_mapgen;" .. mglist .. ";" .. selindex .. "]" ..
 
 		"dropdown[600.2,6;6.3;games;" .. gamemgr.gamelist() .. ";1]" ..

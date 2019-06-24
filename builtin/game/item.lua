@@ -514,6 +514,9 @@ function core.item_drop(itemstack, dropper, pos)
 	local dropper_is_player = dropper and dropper:is_player()
 	local p = table.copy(pos)
 	local cnt = itemstack:get_count()
+	if not core.is_valid_pos(p) then
+		return
+	end
 	if dropper_is_player then
 		p.y = p.y + 1.2
 		if dropper:get_player_control().sneak then

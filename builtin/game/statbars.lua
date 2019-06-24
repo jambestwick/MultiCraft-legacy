@@ -21,7 +21,7 @@ local breath_bar_definition =
 	hud_elem_type = "statbar",
 	position      = {x =  0.5, y = 1},
 	alignment     = {x = -1,   y = -1},
-	offset        = {x =  10,  y = -134},
+	offset        = {x =  8,  y = -134},
 	size          = {x =  24,  y = 24},
 	text          = "bubble.png",
 	number        = 20,

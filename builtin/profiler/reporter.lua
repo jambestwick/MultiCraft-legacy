@@ -73,7 +73,7 @@ local Formatter = {
 	end
 }
 
-local widths = { 55, 9, 9, 9, 5, 5, 5 }
+local widths = { 50, 8, 8, 8, 5, 5, 5 }
 local txt_row_format = sprintf(" %%-%ds | %%%ds | %%%ds | %%%ds | %%%ds | %%%ds | %%%ds", unpack(widths))
 
 local HR = {}

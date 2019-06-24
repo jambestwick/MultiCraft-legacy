@@ -36,11 +36,13 @@ dofile(basepath .. DIR_DELIM .. "fstk" .. DIR_DELIM .. "ui.lua")
 dofile(menupath .. DIR_DELIM .. "common.lua")
 dofile(menupath .. DIR_DELIM .. "gamemgr.lua")
 dofile(menupath .. DIR_DELIM .. "textures.lua")
+
 dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
 --dofile(menupath .. DIR_DELIM .. "dlg_delete_mod.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
 --dofile(menupath .. DIR_DELIM .. "dlg_rename_modpack.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_config_world.lua")
+
 if not use_simple_menu then
 	dofile(menupath .. DIR_DELIM .. "modmgr.lua")
 --	dofile(menupath .. DIR_DELIM .. "store.lua")
@@ -88,14 +90,11 @@ local function init_globals()
 	menudata.worldlist:add_sort_mechanism("alphabetic", sort_worlds_alphabetic)
 	menudata.worldlist:set_sortmode("alphabetic")
 
-	local default_game = "default"
-
 	mm_texture.init()
 
 	-- Create main tabview
 	local tv_main = tabview_create("maintab", {x = 12, y = 5.4}, {x = 0, y = 0})
 
-	tv_main:set_autosave_tab(true)
 	tv_main:add(tabs.local_game)
 	tv_main:add(tabs.play_online)
 
@@ -107,15 +106,19 @@ local function init_globals()
 	--tv_main:add(tabs.mods)
 	tv_main:add(tabs.credits)
 
+	tv_main:set_autosave_tab(true)
 	tv_main:set_global_event_handler(main_event_handler)
 	tv_main:set_fixed_size(false)
 
-	tv_main:set_tab(core.settings:get("maintab_LAST"))
+	local last_tab = core.settings:get("maintab_LAST")
+	if last_tab and tv_main.current_tab ~= last_tab then
+		tv_main:set_tab(last_tab)
+	end
 	ui.set_default("maintab")
 	tv_main:show()
 
 	-- Create modstore ui
-	--if PLATFORM == "Android" then
+	--if use_simple_menu then
 	--	modstore.init({x = 12, y = 6}, 3, 2)
 	--else
 	--	modstore.init({x = 12, y = 8}, 4, 3)

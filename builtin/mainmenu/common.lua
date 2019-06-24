@@ -35,7 +35,7 @@ common_update_cached_supp_proto()
 
 --------------------------------------------------------------------------------
 local function render_client_count(n)
-	if     n > 99 then return '99+'
+	if     n > 999 then return '999'
 	elseif n >= 0 then return tostring(n)
 	else return '?' end
 end
@@ -54,14 +54,16 @@ end
 function image_column(tooltip, flagname)
 	return "image,tooltip=" .. core.formspec_escape(tooltip) .. "," ..
 		"0=" .. core.formspec_escape(defaulttexturedir .. "blank.png") .. "," ..
-		"1=" .. core.formspec_escape(defaulttexturedir ..
-			(flagname and "server_flags_" .. flagname .. ".png" or "blank.png")) .. "," ..
-		"2=" .. core.formspec_escape(defaulttexturedir .. "server_ping_4.png") .. "," ..
-		"3=" .. core.formspec_escape(defaulttexturedir .. "server_ping_3.png") .. "," ..
-		"4=" .. core.formspec_escape(defaulttexturedir .. "server_ping_2.png") .. "," ..
-		"5=" .. core.formspec_escape(defaulttexturedir .. "server_ping_1.png") .. "," ..
-		"6=" .. core.formspec_escape(defaulttexturedir .. "server_flags_mc.png") .. "," ..
-		"7=" .. core.formspec_escape(defaulttexturedir .. "server_flags_mt.png")
+		"1=" .. core.formspec_escape(defaulttexturedir .. "server_flags_favorite.png") .. "," ..
+		"2=" .. core.formspec_escape(defaulttexturedir .. "server_flags_mc.png") .. "," ..
+		"3=" .. core.formspec_escape(defaulttexturedir .. "server_flags_mt.png") .. "," ..
+		"4=" .. core.formspec_escape(defaulttexturedir .. "server_flags_damage.png") .. "," ..
+		"5=" .. core.formspec_escape(defaulttexturedir .. "server_flags_creative.png") .. "," ..
+		"6=" .. core.formspec_escape(defaulttexturedir .. "server_flags_pvp.png") .. "," ..
+		"14=" .. core.formspec_escape(defaulttexturedir .. "server_ping_4.png") .. "," ..
+		"13=" .. core.formspec_escape(defaulttexturedir .. "server_ping_3.png") .. "," ..
+		"12=" .. core.formspec_escape(defaulttexturedir .. "server_ping_2.png") .. "," ..
+		"11=" .. core.formspec_escape(defaulttexturedir .. "server_ping_1.png")
 end
 
 --------------------------------------------------------------------------------
@@ -102,22 +104,22 @@ function render_serverlist_row(spec, is_favorite, is_approved)
 		details = "1,"
 	else
 		if is_approved then
-			details = "6,"
+			details = "2,"
 		else
-			details = "7,"
+			details = "3,"
 		end
 	end
 
 	if spec.ping then
 		local ping = spec.ping * 1000
 		if ping <= 50 then
-			details = details .. "2,"
+			details = details .. "14,"
 		elseif ping <= 100 then
-			details = details .. "3,"
+			details = details .. "13,"
 		elseif ping <= 250 then
-			details = details .. "4,"
+			details = details .. "12,"
 		else
-			details = details .. "5,"
+			details = details .. "11,"
 		end
 	else
 		details = details .. "0,"
@@ -134,7 +136,7 @@ function render_serverlist_row(spec, is_favorite, is_approved)
 		elseif clients_percent <= 60  then clients_color = '#a1e587' -- 0-60%: green
 		elseif clients_percent <= 90  then clients_color = '#ffdc97' -- 60-90%: yellow
 		elseif clients_percent == 100 then clients_color = '#dd5b5b' -- full server: red (darker)
-		else				   clients_color = '#ffba97' -- 90-100%: orange
+		else				               clients_color = '#ffba97' -- 90-100%: orange
 		end
 
 		details = details .. clients_color .. ',' ..
@@ -147,20 +149,14 @@ function render_serverlist_row(spec, is_favorite, is_approved)
 		details = details .. ',?,/,?,'
 	end
 
-	if spec.creative then
-		details = details .. "1,"
-	else
-		details = details .. "0,"
-	end
-
 	if spec.damage then
-		details = details .. "1,"
+		details = details .. "4,"
 	else
-		details = details .. "0,"
+		details = details .. "5,"
 	end
 
 	if spec.pvp then
-		details = details .. "1,"
+		details = details .. "6,"
 	else
 		details = details .. "0,"
 	end
