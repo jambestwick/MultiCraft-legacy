@@ -18,7 +18,7 @@ local time_to_live = tonumber(core.settings:get("item_entity_ttl")) or 900
 local gravity = tonumber(core.settings:get("movement_gravity")) or 9.81
 
 core.register_entity(":__builtin:throwing_item", {
-	physical = true,
+	physical = false,
 	visual = "wielditem",
 	collisionbox = {0,0,0, 0,0,0},
 	textures = {""},

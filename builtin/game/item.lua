@@ -450,8 +450,19 @@ local function item_throw_step(entity, dtime)
 		return
 	end
 	local hit_object = nil
-	local node = minetest.get_node({x=pos.x, y=pos.y - 1, z=pos.z})
-	local objs = minetest.get_objects_inside_radius(pos, 1)
+	local dir = vector.normalize(entity.object:get_velocity())
+	local pos2 = vector.add(pos, vector.multiply(dir, 3))
+	local _, node_pos = minetest.line_of_sight(pos, pos2)
+	if node_pos then
+		local def = minetest.get_node(node_pos)
+		if def then
+			pos = vector.subtract(node_pos, vector.multiply(dir, 1.5))
+			entity.object:move_to(pos)
+		else
+			node_pos = nil
+		end
+	end
+	local objs = minetest.get_objects_inside_radius(pos, 1.5)
 	for _, obj in pairs(objs) do
 		if obj:is_player() then
 			local name = obj:get_player_name()
@@ -463,7 +474,7 @@ local function item_throw_step(entity, dtime)
 			hit_object = obj
 		end
 	end
-	if hit_object or (node.name ~= "air" and node.name ~= "ignore") then
+	if hit_object or node_pos then
 		local player = core.get_player_by_name(entity.thrower)
 		entity.on_impact(player, pos, entity.throw_direction, hit_object)
 		entity.object:remove()
