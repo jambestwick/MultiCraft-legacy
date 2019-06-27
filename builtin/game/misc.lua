@@ -102,10 +102,11 @@ function core.get_player_radius_area(player_name, radius)
 	return p1, p2
 end
 
+local mapgen_limit = tonumber(core.settings:get("mapgen_limit"))
 function core.is_valid_pos(pos)
 	if pos then
 		for _, v in pairs({"x", "y", "z"}) do
-			if not pos[v] or pos[v] < -32000 or pos[v] > 32000 then
+			if not pos[v] or pos[v] < -mapgen_limit or pos[v] > mapgen_limit then
 				return
 			end
 		end
