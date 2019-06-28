@@ -187,7 +187,7 @@ end)
 
 
 local time = 0
-local update_time = 0.5
+local update_time = 1
 core.register_globalstep(function(dtime)
 	time = time + dtime
 	if time > update_time then
