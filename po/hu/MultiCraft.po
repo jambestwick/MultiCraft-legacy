@@ -524,7 +524,7 @@ msgstr ""
 
 #: builtin/mainmenu/tab_online.lua
 #, fuzzy
-msgid "Play Online"
+msgid "Multiplayer"
 msgstr "Játékos neve"
 
 #: builtin/mainmenu/tab_online.lua builtin/mainmenu/tab_simple_main.lua

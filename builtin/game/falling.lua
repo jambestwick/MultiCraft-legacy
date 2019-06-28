@@ -19,6 +19,7 @@ core.register_entity(":__builtin:falling_node", {
 
 	node = {},
 	meta = {},
+	timer = 0,
 
 	set_node = function(self, node, meta)
 		self.node = node
@@ -124,6 +125,12 @@ core.register_entity(":__builtin:falling_node", {
 		if vector.equals(vel, {x = 0, y = 0, z = 0}) then
 			local npos = self.object:get_pos()
 			self.object:set_pos(vector.round(npos))
+		end
+		-- Drop node if does not fall within 5 seconds
+		self.timer = self.timer + dtime
+		if self.timer > 5 then
+			core.add_item(pos, self.node)
+			self.object:remove()
 		end
 	end
 })

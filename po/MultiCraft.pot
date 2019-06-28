@@ -514,7 +514,7 @@ msgid "PvP enabled"
 msgstr ""
 
 #: builtin/mainmenu/tab_online.lua
-msgid "Play Online"
+msgid "Multiplayer"
 msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua

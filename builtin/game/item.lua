@@ -530,7 +530,7 @@ function core.item_drop(itemstack, dropper, pos)
 	end
 	if dropper_is_player then
 		p.y = p.y + 1.2
-		if dropper:get_player_control().sneak then
+		if not dropper:get_player_control().sneak then
 			cnt = 1
 		end
 	end

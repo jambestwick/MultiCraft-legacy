@@ -37,7 +37,7 @@ local function get_formspec(tabview, name, tabdata)
 		"image_button[5.52,-0.13;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "search.png")
 			.. ";btn_mp_search;" .. "]" ..
 		"image_button[6.26,-0.13;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "refresh.png")
-			.. ";btn_mp_refresh;" .. "]" ..
+			.. ";btn_mp_refresh;;;true]" ..
 
 		-- Address / Port
 		"label[7.1,-0.3;" .. fgettext("Address:") .. "]" ..
@@ -63,7 +63,7 @@ local function get_formspec(tabview, name, tabdata)
 	if tabdata.fav_selected and fav_selected then
 		if gamedata.fav then
 			retval = retval .. "image_button[7.1,4.91;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "trash.png")
-				.. ";btn_delete_favorite;" .. "]"
+				.. ";btn_delete_favorite;;;true]"
 		end
 		if fav_selected.description then
 			retval = retval .. "textarea[7.5,2.3;4.8,2.9;;" ..
@@ -368,7 +368,7 @@ end
 --------------------------------------------------------------------------------
 return {
 	name = "online",
-	caption = fgettext("Play Online"),
+	caption = fgettext("Multiplayer"),
 	cbf_formspec = get_formspec,
 	cbf_button_handler = main_button_handler,
 	on_change = on_change

@@ -519,7 +519,7 @@ msgstr ""
 
 #: builtin/mainmenu/tab_online.lua
 #, fuzzy
-msgid "Play Online"
+msgid "Multiplayer"
 msgstr "플레이어 이름"
 
 #: builtin/mainmenu/tab_online.lua builtin/mainmenu/tab_simple_main.lua

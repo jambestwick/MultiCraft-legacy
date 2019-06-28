@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: minetest\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-21 17:39+0200\n"
-"PO-Revision-Date: 2017-05-10 03:36+0000\n"
-"Last-Translator: Unknown <abjinah@gmail.com>\n"
-"Language-Team: Dhivehi <https://hosted.weblate.org/projects/minetest/"
-"minetest/dv/>\n"
-"Language: dv\n"
+"PO-Revision-Date: 2017-05-31 07:56+0000\n"
+"Last-Translator: texmex <josefsahlberg+minetest@gmail.com>\n"
+"Language-Team: Swedish "
+"<https://hosted.weblate.org/projects/minetest/minetest/sv/>\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.14-dev\n"
+"X-Generator: Weblate 2.14.1\n"
 
 #: builtin/client/init.lua
 msgid "Respawn"
@@ -25,61 +25,60 @@ msgstr ""
 
 #: builtin/client/init.lua
 msgid "You died."
-msgstr ""
+msgstr "Du dog."
 
 #: builtin/fstk/ui.lua
 msgid "An error occured in a Lua script, such as a mod:"
-msgstr "mod eh fadha Lua script eh gai massala eh dhimaa vejje"
+msgstr "Ett fel uppstod i ett Lua-skript, såsom en mod:"
 
 #: builtin/fstk/ui.lua
 msgid "An error occured:"
-msgstr "massala eh dhimaa vejje"
+msgstr "Ett fel uppstod:"
 
 #: builtin/fstk/ui.lua
 msgid "Main menu"
-msgstr "maigandu menu"
+msgstr "Huvudmeny"
 
 #: builtin/fstk/ui.lua builtin/mainmenu/store.lua
 msgid "Ok"
-msgstr "emme rangalhu"
+msgstr "Ok"
 
 #: builtin/fstk/ui.lua
 msgid "Reconnect"
-msgstr "aa gulhumeh"
+msgstr "Återanslut"
 
 #: builtin/fstk/ui.lua
 msgid "The server has requested a reconnect:"
-msgstr "server in aa gulhumakah edhijje"
+msgstr "Servern har begärt en återanslutning:"
 
 #: builtin/mainmenu/common.lua src/game.cpp
 msgid "Loading..."
-msgstr "loadvanee"
+msgstr "Laddar..."
 
 #: builtin/mainmenu/common.lua
 msgid "Protocol version mismatch. "
-msgstr "Protocol vattharuge fushuerumeh. "
+msgstr "Protokollversionen matchar ej. "
 
 #: builtin/mainmenu/common.lua
 msgid "Server enforces protocol version $1. "
-msgstr "Server in protocol $1 ah baarualhaa "
+msgstr "Servern tvingar protokollversion $1."
 
 #: builtin/mainmenu/common.lua
 msgid "Server supports protocol versions between $1 and $2. "
-msgstr ""
-"$1 aai $2 ge dhemedhu gaivaa protocol ge vattharuthakah server ijaabadhey "
+msgstr "Servern stöder protokollversioner mellan $1 och $2. "
 
 #: builtin/mainmenu/common.lua
 msgid "Try reenabling public serverlist and check your internet connection."
-msgstr "aammu serverlist alun jessumah fahu masakkai kurey"
+msgstr ""
+"Försök återaktivera allmän serverlista och kolla din internetanslutning."
 
 #: builtin/mainmenu/common.lua
 msgid "We only support protocol version $1."
-msgstr "Aharemen hamaekani ijaabadheny protocol $1 ah."
+msgstr "Vi stöder endast protokollversion $1."
 
 #: builtin/mainmenu/common.lua
 msgid "We support protocol versions between version $1 and $2."
-msgstr ""
-"Aharamen protocol ge $1 aai $2 ge dhemedhu gaivaa vattharu thakah ijaabadhen."
+msgstr "Vi stöder protokollversioner mellan version $1 och $2."
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_create_world.lua
 #: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
@@ -87,37 +86,37 @@ msgstr ""
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 #: src/guiPasswordChange.cpp src/keycode.cpp
 msgid "Cancel"
-msgstr "baathilkurey"
+msgstr "Avbryt"
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/tab_mods.lua
 #, fuzzy
 msgid "Dependencies:"
-msgstr "Baroasavaa:"
+msgstr "Kräver:"
 
 #: builtin/mainmenu/dlg_config_world.lua
 msgid "Disable MP"
-msgstr "MP nivvaalaa"
+msgstr "Avaktivera flera spelare"
 
 #: builtin/mainmenu/dlg_config_world.lua
 #, fuzzy
 msgid "Disable all"
-msgstr "MP nivvaalaa"
+msgstr "Avaktivera flera spelare"
 
 #: builtin/mainmenu/dlg_config_world.lua
 msgid "Enable MP"
-msgstr "MP jassaa"
+msgstr "Aktivera flera spelare"
 
 #: builtin/mainmenu/dlg_config_world.lua
 msgid "Enable all"
-msgstr "Hurihaa echcheh jassaa"
+msgstr "Aktivera alla"
 
 #: builtin/mainmenu/dlg_config_world.lua
 msgid ""
 "Failed to enable mod \"$1\" as it contains disallowed characters. Only "
 "chararacters [a-z0-9_] are allowed."
 msgstr ""
-"Manaa akuru thah hurumuge sababun mod \"$1\" eh nujessunu. Hamaekani huddha "
-"ee akuruthah[a in z ah adhi 0 in 9 kah]"
+"Misslyckades aktivera mod \"$1\" eftersom det innehåller otillåtna tecken. "
+"Endast tecknen [a-z0-9_] är tillåtna."
 
 #: builtin/mainmenu/dlg_config_world.lua
 msgid "Mod:"
@@ -125,208 +124,212 @@ msgstr "Mod:"
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/tab_mods.lua
 msgid "Optional dependencies:"
-msgstr ""
+msgstr "Stödjer:"
 
 #: builtin/mainmenu/dlg_config_world.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/guiKeyChangeMenu.cpp
 msgid "Save"
-msgstr "Save kurey"
+msgstr "Spara"
 
 #: builtin/mainmenu/dlg_config_world.lua
 msgid "World:"
-msgstr "dhuniye:"
+msgstr "Värld:"
 
 #: builtin/mainmenu/dlg_config_world.lua
 msgid "enabled"
-msgstr "ޖައްސާފަ"
+msgstr "aktiverad"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "A world named \"$1\" already exists"
-msgstr ""
+msgstr "En värld med namnet \"$1\" finns redan"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Create"
-msgstr "Ufaddhaa"
+msgstr "Skapa"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Download a subgame, such as minetest_game, from minetest.net"
-msgstr ""
+msgstr "Ladda ner ett underspel, såsom minetest_game, från minetest.net"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Download one from minetest.net"
-msgstr "Ekathi minetest.net in download kurey"
+msgstr "Ladda ner ett från minetest.net"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
 msgid "Game"
-msgstr "Game"
+msgstr "Spel"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
 msgid "Mapgen"
-msgstr "Mapufaddhaa"
+msgstr "Kartgenerator"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
-msgstr ""
+msgstr "Inget världnamn angett eller inget spel valt"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Seed"
-msgstr "o'"
+msgstr "Frö"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
-msgstr ""
-"Inzaaru: Minimal development test amaazukurevifai vanee hamaekani "
-"developerunnah"
+msgstr "Varning: Minimala utvecklingstestet är endast avsett för utvecklare."
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "World name"
-msgstr "Dhuniyeygen nan"
+msgstr "Världnamn"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."
-msgstr "Thibaa ge evvess subgame eh alhifaeh nei."
+msgstr "Du har inga underspel installerade."
 
 #: builtin/mainmenu/dlg_delete_mod.lua
 msgid "Are you sure you want to delete \"$1\"?"
-msgstr ""
+msgstr "Är du säker på att du vill radera \"$1\"?"
 
 #: builtin/mainmenu/dlg_delete_mod.lua builtin/mainmenu/dlg_delete_world.lua
 #: builtin/mainmenu/tab_local.lua src/keycode.cpp
 msgid "Delete"
-msgstr ""
+msgstr "Radera"
 
 #: builtin/mainmenu/dlg_delete_mod.lua
 msgid "Modmgr: failed to delete \"$1\""
-msgstr ""
+msgstr "Modhanterare: misslyckades radera \"$1\""
 
 #: builtin/mainmenu/dlg_delete_mod.lua
 msgid "Modmgr: invalid modpath \"$1\""
-msgstr ""
+msgstr "Modhanterare: ogiltig modsökväg \"$1\""
 
 #: builtin/mainmenu/dlg_delete_world.lua
 msgid "Delete World \"$1\"?"
-msgstr ""
+msgstr "Radera värld \"$1\"?"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"
-msgstr ""
+msgstr "Acceptera"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Rename Modpack:"
-msgstr ""
+msgstr "Döp om modpaket:"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "\"$1\" is not a valid flag."
-msgstr ""
+msgstr "\"$1\" är inte en giltig flagga."
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "(No description of setting given)"
-msgstr ""
+msgstr "(Ingen beskrivning av inställning angiven)"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "< Back to Settings page"
-msgstr ""
+msgstr "< Tillbaka till inställningssidan"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Browse"
-msgstr ""
+msgstr "Bläddra"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Disabled"
-msgstr ""
+msgstr "Avaktiverad"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Edit"
-msgstr ""
+msgstr "Redigera"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Enabled"
-msgstr ""
+msgstr "Aktiverad"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Format is 3 numbers separated by commas and inside brackets."
-msgstr ""
+msgstr "Formatet är tre nummer separerade med komma och inom paranteser."
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid ""
 "Format: <offset>, <scale>, (<spreadX>, <spreadY>, <spreadZ>), <seed>, "
 "<octaves>, <persistence>"
 msgstr ""
+"Format: <förskjutning>, <skala>, (<spridningX>, <spridningY>, <spridningZ>), "
+"<frö>, <oktaver>, <framhärdande>"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Games"
-msgstr ""
+msgstr "Spel"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua builtin/mainmenu/tab_mods.lua
 msgid "Mods"
-msgstr ""
+msgstr "Moddar"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Optionally the lacunarity can be appended with a leading comma."
-msgstr ""
+msgstr "Takförhållandet kan eventuellt läggas till med ett främre kommatecken."
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Please enter a comma seperated list of flags."
-msgstr ""
+msgstr "Var vänlig ange ett kommaseparerad lista med flaggor."
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Please enter a valid integer."
-msgstr ""
+msgstr "Var vänligen ange ett giltigt heltal."
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Please enter a valid number."
-msgstr ""
+msgstr "Var vänligen ange ett giltigt nummer."
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Possible values are: "
-msgstr ""
+msgstr "Möjliga värden är: "
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Restore Default"
-msgstr ""
+msgstr "Återställ standard"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua builtin/mainmenu/store.lua
 #: builtin/mainmenu/tab_online.lua
 msgid "Search"
-msgstr ""
+msgstr "Sök"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Select path"
-msgstr ""
+msgstr "Välj sökväg"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
 msgid "Show technical names"
-msgstr ""
+msgstr "Visa tekniska namn"
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
+#, fuzzy
 msgid "The value must be at least $1."
-msgstr ""
+msgstr "Värdet måste vara högre än $1."
 
 #: builtin/mainmenu/dlg_settings_advanced.lua
+#, fuzzy
 msgid "The value must not be larger than $1."
-msgstr ""
+msgstr "Värdet måste vara lägre än $1."
 
 #: builtin/mainmenu/modmgr.lua
 msgid ""
 "\n"
 "Install Mod: unsupported filetype \"$1\" or broken archive"
 msgstr ""
+"\n"
+"Modinstallation: ej stöd filtyp \"$1\" eller trasigt arkiv"
 
 #: builtin/mainmenu/modmgr.lua
 msgid "Failed to install $1 to $2"
-msgstr ""
+msgstr "Misslyckades installera $1 till $2"
 
 #: builtin/mainmenu/modmgr.lua
 msgid "Install Mod: file: \"$1\""
-msgstr ""
+msgstr "Modinstallation: fil: \"$1\""
 
 #: builtin/mainmenu/modmgr.lua
 msgid "Install Mod: unable to find real modname for: $1"
-msgstr ""
+msgstr "Modinstallation: lyckas ej hitta riktiga modnamnet för: $1"
 
 #: builtin/mainmenu/modmgr.lua
 msgid "Install Mod: unable to find suitable foldername for modpack $1"
-msgstr ""
+msgstr "Modinstallation: lyckas ej hitta lämpligt mappnamn för modpaket $1"
 
 #: builtin/mainmenu/modmgr.lua
 msgid "Subgame Mods"
@@ -338,55 +341,55 @@ msgstr ""
 
 #: builtin/mainmenu/store.lua
 msgid "Downloading $1, please wait..."
-msgstr ""
+msgstr "Laddar ner $1, var vänligen vänta..."
 
 #: builtin/mainmenu/store.lua
 msgid "Install"
-msgstr ""
+msgstr "Installera"
 
 #: builtin/mainmenu/store.lua
 msgid "Page $1 of $2"
-msgstr ""
+msgstr "Sida $1 av $2"
 
 #: builtin/mainmenu/store.lua
 msgid "Rating"
-msgstr ""
+msgstr "Omdöme"
 
 #: builtin/mainmenu/store.lua
 msgid "Shortname:"
-msgstr ""
+msgstr "Kort namn:"
 
 #: builtin/mainmenu/store.lua
 msgid "Successfully installed:"
-msgstr ""
+msgstr "Lyckades installera:"
 
 #: builtin/mainmenu/store.lua
 msgid "Unsorted"
-msgstr ""
+msgstr "Osorterat"
 
 #: builtin/mainmenu/store.lua
 msgid "re-Install"
-msgstr ""
+msgstr "Ominstallera"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Active Contributors"
-msgstr ""
+msgstr "Aktiva bidragsgivare"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Core Developers"
-msgstr ""
+msgstr "Kärnutvecklare"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Credits"
-msgstr ""
+msgstr "Medverkande"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Contributors"
-msgstr ""
+msgstr "Före detta bidragsgivare"
 
 #: builtin/mainmenu/tab_credits.lua
 msgid "Previous Core Developers"
-msgstr ""
+msgstr "Före detta kärnutvecklare"
 
 #: builtin/mainmenu/tab_local.lua
 msgid "Announce Server"
@@ -394,69 +397,71 @@ msgstr ""
 
 #: builtin/mainmenu/tab_local.lua
 msgid "Bind Address"
-msgstr ""
+msgstr "Bindningsadress"
 
 #: builtin/mainmenu/tab_local.lua
 msgid "Configure"
-msgstr ""
+msgstr "Konfigurera"
 
 #: builtin/mainmenu/tab_local.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Creative Mode"
-msgstr ""
+msgstr "Kreativt läge"
 
 #: builtin/mainmenu/tab_local.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Enable Damage"
-msgstr ""
+msgstr "Aktivera skada"
 
 #: builtin/mainmenu/tab_local.lua
 #, fuzzy
 msgid "Host Game"
-msgstr "Game foruvaa"
+msgstr "Göm spel"
 
 #: builtin/mainmenu/tab_local.lua
+#, fuzzy
 msgid "Host Server"
-msgstr ""
+msgstr "Server"
 
 #: builtin/mainmenu/tab_local.lua
+#, fuzzy
 msgid "Local Game"
-msgstr ""
+msgstr "Starta spel"
 
 #: builtin/mainmenu/tab_local.lua
 msgid "Name/Password"
-msgstr ""
+msgstr "Namn/Lösenord"
 
 #: builtin/mainmenu/tab_local.lua
 msgid "New"
-msgstr ""
+msgstr "Ny"
 
 #: builtin/mainmenu/tab_local.lua
 msgid "No world created or selected!"
-msgstr ""
+msgstr "Ingen värld skapad eller vald!"
 
 #: builtin/mainmenu/tab_local.lua
 #, fuzzy
 msgid "Play Game"
-msgstr "Game"
+msgstr "Starta spel"
 
 #: builtin/mainmenu/tab_local.lua
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 #: builtin/mainmenu/tab_local.lua
 msgid "Select World:"
-msgstr ""
+msgstr "Välj värd:"
 
 #: builtin/mainmenu/tab_local.lua
 msgid "Server Port"
-msgstr ""
+msgstr "Serverport"
 
 #: builtin/mainmenu/tab_mods.lua
 msgid "Installed Mods:"
-msgstr ""
+msgstr "Installerade moddar:"
 
 #: builtin/mainmenu/tab_mods.lua
 msgid "Mod information:"
-msgstr ""
+msgstr "Modinformation:"
 
 #: builtin/mainmenu/tab_mods.lua
 msgid "No dependencies."
@@ -464,87 +469,87 @@ msgstr ""
 
 #: builtin/mainmenu/tab_mods.lua
 msgid "No mod description available"
-msgstr ""
+msgstr "Ingen modbeskrivning tillgänglig"
 
 #: builtin/mainmenu/tab_mods.lua
 msgid "Rename"
-msgstr ""
+msgstr "Döp om"
 
 #: builtin/mainmenu/tab_mods.lua
 msgid "Select Mod File:"
-msgstr ""
+msgstr "Välj modfil:"
 
 #: builtin/mainmenu/tab_mods.lua
 msgid "Uninstall selected mod"
-msgstr ""
+msgstr "Avinstallera vald mod"
 
 #: builtin/mainmenu/tab_mods.lua
 msgid "Uninstall selected modpack"
-msgstr ""
+msgstr "Avinstallera valt modpaket"
 
 #: builtin/mainmenu/tab_online.lua
 msgid "Address / Port"
-msgstr ""
+msgstr "Adress / Port"
 
 #: builtin/mainmenu/tab_online.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Connect"
-msgstr ""
+msgstr "Anslut"
 
 #: builtin/mainmenu/tab_online.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Creative mode"
-msgstr ""
+msgstr "Kreativt läge"
 
 #: builtin/mainmenu/tab_online.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Damage enabled"
-msgstr ""
+msgstr "Skada aktiverad"
 
 #: builtin/mainmenu/tab_online.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Del. Favorite"
-msgstr ""
+msgstr "Radera favoritmarkering"
 
 #: builtin/mainmenu/tab_online.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Favorite"
-msgstr ""
+msgstr "Favoritmarkera"
 
 #: builtin/mainmenu/tab_online.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Name / Password"
-msgstr ""
+msgstr "Namn / Lösenord"
 
 #: builtin/mainmenu/tab_online.lua builtin/mainmenu/tab_simple_main.lua
 msgid "Ping"
 msgstr ""
 
 #: builtin/mainmenu/tab_online.lua
-msgid "Play Online"
-msgstr ""
+msgid "Multiplayer"
+msgstr "Spela online"
 
 #: builtin/mainmenu/tab_online.lua builtin/mainmenu/tab_simple_main.lua
 msgid "PvP enabled"
-msgstr ""
+msgstr "PvP aktiverat"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "2x"
-msgstr ""
+msgstr "2x"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "3D Clouds"
-msgstr ""
+msgstr "3D-moln"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "4x"
-msgstr ""
+msgstr "4x"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "8x"
-msgstr ""
+msgstr "8x"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Avancerade inställningar"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Antialiasing:"
-msgstr ""
+msgstr "Kantutjämning:"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Are you sure to reset your singleplayer world?"
@@ -556,7 +561,7 @@ msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Bilinear Filter"
-msgstr ""
+msgstr "Bilinjärt filter"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Bump Mapping"
@@ -572,7 +577,7 @@ msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Fancy Leaves"
-msgstr ""
+msgstr "Snygga löv"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Mipmap"
@@ -584,11 +589,11 @@ msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "No"
-msgstr ""
+msgstr "Nej"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "No Filter"
-msgstr ""
+msgstr "Inget filter"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "No Mipmap"
@@ -596,11 +601,11 @@ msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Node Highlighting"
-msgstr ""
+msgstr "Nodframlyft"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Node Outlining"
-msgstr ""
+msgstr "Nodlinjering"
 
 #: builtin/mainmenu/tab_settings.lua builtin/mainmenu/tab_texturepacks.lua
 msgid "None"
@@ -612,11 +617,11 @@ msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Opaque Leaves"
-msgstr ""
+msgstr "Ogenomskinliga löv"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Opaque Water"
-msgstr ""
+msgstr "Ogenomskinligt vatten"
 
 #: builtin/mainmenu/tab_settings.lua src/settings_translation_file.cpp
 msgid "Parallax Occlusion"
@@ -636,7 +641,7 @@ msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Settings"
-msgstr ""
+msgstr "Inställningar"
 
 #: builtin/mainmenu/tab_settings.lua src/settings_translation_file.cpp
 msgid "Shaders"
@@ -644,7 +649,7 @@ msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Simple Leaves"
-msgstr ""
+msgstr "Enkla löv"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Smooth Lighting"
@@ -668,7 +673,7 @@ msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Trilinear Filter"
-msgstr ""
+msgstr "Trilinjärt filter"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Waving Leaves"
@@ -777,28 +782,33 @@ msgid ""
 msgstr ""
 
 #: src/game.cpp
+#, fuzzy
 msgid "- Address: "
-msgstr ""
+msgstr "Bindningsadress"
 
 #: src/game.cpp
+#, fuzzy
 msgid "- Creative Mode: "
-msgstr ""
+msgstr "Kreativt läge"
 
 #: src/game.cpp
+#, fuzzy
 msgid "- Damage: "
-msgstr ""
+msgstr "Aktivera skada"
 
 #: src/game.cpp
 msgid "- Mode: "
 msgstr ""
 
 #: src/game.cpp
+#, fuzzy
 msgid "- Port: "
-msgstr ""
+msgstr "Port"
 
 #: src/game.cpp
+#, fuzzy
 msgid "- Public: "
-msgstr ""
+msgstr "Allmän"
 
 #: src/game.cpp
 msgid "- PvP: "
@@ -880,8 +890,9 @@ msgid "Game info:"
 msgstr ""
 
 #: src/game.cpp
+#, fuzzy
 msgid "Game paused"
-msgstr ""
+msgstr "Spel"
 
 #: src/game.cpp
 msgid "Hosting server"
@@ -1153,8 +1164,9 @@ msgid "Home"
 msgstr ""
 
 #: src/keycode.cpp
+#, fuzzy
 msgid "IME Accept"
-msgstr ""
+msgstr "Acceptera"
 
 #: src/keycode.cpp
 msgid "IME Convert"
@@ -1710,15 +1722,16 @@ msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid "Client"
-msgstr ""
+msgstr "Klient"
 
 #: src/settings_translation_file.cpp
 msgid "Client and Server"
 msgstr ""
 
 #: src/settings_translation_file.cpp
+#, fuzzy
 msgid "Client modding"
-msgstr ""
+msgstr "Klient"
 
 #: src/settings_translation_file.cpp
 msgid "Climbing speed"
@@ -1848,7 +1861,7 @@ msgstr ""
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Creative"
-msgstr "Ufaddhaa"
+msgstr "Skapa"
 
 #: src/settings_translation_file.cpp
 msgid "Crosshair alpha"
@@ -4023,8 +4036,9 @@ msgid ""
 msgstr ""
 
 #: src/settings_translation_file.cpp
+#, fuzzy
 msgid "Shader path"
-msgstr ""
+msgstr "Välj sökväg"
 
 #: src/settings_translation_file.cpp
 msgid ""
@@ -4685,4 +4699,4 @@ msgid "cURL timeout"
 msgstr ""
 
 #~ msgid "Hide mp content"
-#~ msgstr "mp ge thakethi foruvaa"
+#~ msgstr "Göm flerspelarinnehåll"

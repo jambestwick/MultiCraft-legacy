@@ -519,7 +519,7 @@ msgid "PvP enabled"
 msgstr "PvP omogočeno"
 
 #: builtin/mainmenu/tab_online.lua
-msgid "Play Online"
+msgid "Multiplayer"
 msgstr "Igraj preko spleta"
 
 #: builtin/mainmenu/tab_settings.lua

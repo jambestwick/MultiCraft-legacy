@@ -419,8 +419,8 @@ msgid "Host Server"
 msgstr "Запустить сервер"
 
 #: builtin/mainmenu/tab_local.lua
-msgid "Single Player"
-msgstr "Одиночная"
+msgid "Singleplayer"
+msgstr "Одиночная игра"
 
 #: builtin/mainmenu/tab_local.lua
 msgid "Name/Password"
@@ -515,8 +515,8 @@ msgid "Ping"
 msgstr "Пинг"
 
 #: builtin/mainmenu/tab_online.lua
-msgid "Play Online"
-msgstr "Играть онлайн"
+msgid "Multiplayer"
+msgstr "Мультиплеер"
 
 #: builtin/mainmenu/tab_online.lua builtin/mainmenu/tab_simple_main.lua
 msgid "PvP enabled"

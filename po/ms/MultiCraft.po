@@ -515,7 +515,7 @@ msgid "Ping"
 msgstr "Ping"
 
 #: builtin/mainmenu/tab_online.lua
-msgid "Play Online"
+msgid "Multiplayer"
 msgstr "Main Dalam Talian"
 
 #: builtin/mainmenu/tab_online.lua builtin/mainmenu/tab_simple_main.lua
