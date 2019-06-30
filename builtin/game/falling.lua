@@ -197,7 +197,7 @@ end
 
 function core.check_single_for_falling(p)
 	local n = core.get_node(p)
-	if core.get_item_group(n.name, "falling_node") ~= 0 then
+	if core.get_item_group(n.name, "falling_node") ~= 0 and core.is_singleplayer() then
 		local p_bottom = {x = p.x, y = p.y - 1, z = p.z}
 		-- Only spawn falling node if node below is loaded
 		local n_bottom = core.get_node_or_nil(p_bottom)
@@ -220,6 +220,13 @@ function core.check_single_for_falling(p)
 			end
 			core.remove_node(p)
 			spawn_falling_node(p, n, metatable)
+			return true
+		end
+	end
+
+	if core.get_item_group(n.name, "falling_node") ~= 0 and not core.is_singleplayer() then
+		if not builtin_shared.check_attached_node(p, n) then
+			drop_attached_node(p)
 			return true
 		end
 	end
