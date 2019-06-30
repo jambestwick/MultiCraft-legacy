@@ -556,6 +556,99 @@ core.registered_on_protection_violation, core.register_on_protection_violation =
 core.registered_on_item_eats, core.register_on_item_eat = make_registration()
 core.registered_on_punchplayers, core.register_on_punchplayer = make_registration()
 
+-- Player step iterration
+
+players_per_step = core.settings:get("players_per_globalstep")
+players_per_step = players_per_step and tonumber(players_per_step) or 20
+
+local player_iter = nil
+local player_iter_forced = nil
+local playerstep_iter = nil
+local playerstep_funcs = {}
+local playerstep_funcs_forced = {}
+local playernames = {}
+local playernames_forced = {}
+
+core.register_playerstep = function(func, force)
+	local funcs = force and playerstep_funcs_forced or playerstep_funcs
+	funcs[#funcs + 1] = func
+end
+
+local function table_iter(t)
+	local i = 0
+	local n = table.getn(t)
+	return function ()
+		i = i + 1
+		if i <= n then
+			return t[i]
+		end
+	end
+end
+
+function core.get_player_iter()
+	local names = {}
+	for player in table_iter(core.get_connected_players()) do
+		local name = player:get_player_name()
+		if name then
+			names[#names + 1] = name
+		end
+	end
+	return table_iter(names)
+end
+
+local function get_playerstep_func()
+	if playerstep_iter == nil then
+		playerstep_iter = table_iter(playerstep_funcs)
+		playernames = {}
+		for _ = 1, players_per_step do
+			if player_iter == nil then
+				player_iter = core.get_player_iter()
+			end
+			local name = player_iter()
+			if not name then
+				player_iter = nil
+				break
+			end
+			playernames[#playernames + 1] = name
+		end
+	end
+	local func = playerstep_iter()
+	playerstep_iter = func and playerstep_iter
+	return func or get_playerstep_func()
+end
+
+-- Run playerstep callbacks
+
+core.register_globalstep(function(dtime)
+	-- Run forced callbacks
+	if #playerstep_funcs_forced ~= 0 then
+		playernames_forced = {}
+		for _ = 1, players_per_step do
+			if player_iter_forced == nil then
+				player_iter_forced = core.get_player_iter()
+			end
+			local name = player_iter_forced()
+			if not name then
+				player_iter_forced = nil
+				break
+			end
+			playernames_forced[#playernames_forced + 1] = name
+		end
+		for func in table_iter(playerstep_funcs_forced) do
+			if type(func) == "function" then
+				func(dtime, playernames_forced)
+			end
+		end
+	end
+	if #playerstep_funcs ~= 0 then
+		-- Run single step callbacks
+		local func = get_playerstep_func()
+		if type(func) == "function" then
+			func(dtime, playernames)
+		end
+	end
+end)
+
 --
 -- Compatibility for on_mapgen_init()
 --

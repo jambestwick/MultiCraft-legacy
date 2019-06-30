@@ -185,16 +185,9 @@ core.register_on_joinplayer(function(player)
 	initialize_builtin_statbars(player)
 end)
 
-
-local time = 0
-local update_time = 1
-core.register_globalstep(function(dtime)
-	time = time + dtime
-	if time > update_time then
-	
-	local players = core.get_connected_players()
-	for i = 1, #players do
-		local player = players[i]
+minetest.register_playerstep(function(dtime, playernames)
+	for _, name in pairs(playernames) do
+		local player = minetest.get_player_by_name(name)
 		local player_name = player:get_player_name()
 
 		local wielded_item = player:get_wielded_item()
@@ -224,6 +217,4 @@ core.register_globalstep(function(dtime)
 			hud.change_item(player, "itemname", {text = description})
 		end
 	end
-	time = 0
-	end
-end)
+end, minetest.is_singleplayer()) -- Force step in singlplayer mode only

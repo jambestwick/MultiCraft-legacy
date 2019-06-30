@@ -1115,6 +1115,10 @@
 #    type: float
 # dedicated_server_step = 0.1
 
+#    Maxumim number of players to process per step, see `minetest.register_playerstep`
+#    type: int
+# players_per_globalstep = 20
+
 #    Time in between active block management cycles
 #    type: float
 # active_block_mgmt_interval = 2.0
