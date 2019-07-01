@@ -1914,6 +1914,7 @@ examples.
 * Fields are a set height, but will be vertically centred on `h`
 * Position and size units are inventory slots
 * `name` is the name of the field as returned in fields to `on_receive_fields`
+* `!name` to receive an event from each key pressed
 * `label`, if not blank, will be text printed on the top left above the field
 * `default` is the default value of the field
     * `default` may contain variable references such as `${text}'` which

@@ -1006,6 +1006,10 @@ void GUIFormSpecMenu::parseSimpleField(parserData* data,
 	std::string label = parts[1];
 	std::string default_val = parts[2];
 
+	bool is_dynamic = (name.length() > 0 && name[0] == '!');
+	if (is_dynamic)
+		name = name.substr(1);
+
 	core::rect<s32> rect;
 
 	if(data->explicit_size)
@@ -1031,6 +1035,8 @@ void GUIFormSpecMenu::parseSimpleField(parserData* data,
 		utf8_to_wide(unescape_string(default_val)),
 		258+m_fields.size()
 	);
+
+	spec.is_dynamic = is_dynamic;
 
 	if (name == "")
 	{
@@ -1094,6 +1100,10 @@ void GUIFormSpecMenu::parseTextArea(parserData* data, std::vector<std::string>& 
 	std::string label = parts[3];
 	std::string default_val = parts[4];
 
+	bool is_dynamic = (name.length() > 0 && name[0] == '!');
+	if (is_dynamic)
+		name = name.substr(1);
+
 	MY_CHECKPOS(type,0);
 	MY_CHECKGEOM(type,1);
 
@@ -1134,6 +1144,8 @@ void GUIFormSpecMenu::parseTextArea(parserData* data, std::vector<std::string>& 
 		utf8_to_wide(unescape_string(default_val)),
 		258+m_fields.size()
 	);
+
+	spec.is_dynamic = is_dynamic;
 
 	if (name == "")
 	{
@@ -3815,6 +3827,20 @@ bool GUIFormSpecMenu::OnEvent(const SEvent& event)
 					acceptInput(quit_mode_no);
 					s.fdefault = L"";
 				}
+			}
+		}
+		
+	if (event.GUIEvent.EventType == gui::EGET_EDITBOX_CHANGED) {
+		if (event.GUIEvent.Caller->getID() > 257) {
+			for (GUIFormSpecMenu::FieldSpec &s : m_fields) {
+					if (s.ftype == f_Unknown && s.is_dynamic &&
+							s.fid == event.GUIEvent.Caller->getID()) {
+						s.send = true;
+						acceptInput();
+						s.send = false;
+					}
+				}
+				return true;
 			}
 		}
 
