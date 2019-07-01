@@ -2372,7 +2372,7 @@ Call these functions only at load time!
 	* Note: This callback should not be rate limited or players may be missed!
 		* See the [fire] mod for an example of how this may be done reliably
 * `minetest.get_player_iter()`
-	* Returns a player name iterrator, as used by `minetest.register_playerstep`
+	* Returns a player name iterator, as used by `minetest.register_playerstep`
 	* See `builtin/game/register.lua` for example usage
 * `minetest.register_on_shutdown(func())`
     * Called before server shutdown

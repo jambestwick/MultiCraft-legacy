@@ -556,7 +556,7 @@ core.registered_on_protection_violation, core.register_on_protection_violation =
 core.registered_on_item_eats, core.register_on_item_eat = make_registration()
 core.registered_on_punchplayers, core.register_on_punchplayer = make_registration()
 
--- Player step iterration
+-- Player step iteration
 
 players_per_step = core.settings:get("players_per_globalstep")
 players_per_step = players_per_step and tonumber(players_per_step) or 20
