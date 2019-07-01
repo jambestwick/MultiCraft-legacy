@@ -67,18 +67,17 @@ local function save_auth_file()
 		assert(type(stuff.privileges) == "table")
 		assert(stuff.last_login == nil or type(stuff.last_login) == "number")
 	end
-	local content = {}
+	local file, errmsg = io.open(core.auth_file_path, 'w+b')
+	if not file then
+		error(core.auth_file_path.." could not be opened for writing: "..errmsg)
+	end
 	for name, stuff in pairs(core.auth_table) do
 		local priv_string = core.privs_to_string(stuff.privileges)
 		local parts = {name, stuff.password, priv_string, stuff.last_login or ""}
-		content[#content + 1] = table.concat(parts, ":")
+		file:write(table.concat(parts, ":").."\n")
 	end
-	if not core.safe_file_write(core.auth_file_path, table.concat(content, "\n")) then
-		error(core.auth_file_path.." could not be written to")
-	end
+	io.close(file)
 end
-
-read_auth_file()
 
 core.builtin_auth_handler = {
 	get_auth = function(name)
@@ -119,6 +118,7 @@ core.builtin_auth_handler = {
 		}
 	end,
 	create_auth = function(name, password)
+		core.log("action", "Adding password entry for player " .. name)
 		assert(type(name) == "string")
 		assert(type(password) == "string")
 		core.log('info', "Built-in authentication handler adding player '"..name.."'")
@@ -127,21 +127,22 @@ core.builtin_auth_handler = {
 			privileges = core.string_to_privs(core.settings:get("default_privs")),
 			last_login = os.time(),
 		}
-		save_auth_file()
 	end,
 	set_password = function(name, password)
 		assert(type(name) == "string")
 		assert(type(password) == "string")
 		if not core.auth_table[name] then
+			core.log("action", "Setting password for new player " .. name)
 			core.builtin_auth_handler.create_auth(name, password)
 		else
+			core.log("action", "Setting password for existing player " .. name )
 			core.log('info', "Built-in authentication handler setting password of player '"..name.."'")
 			core.auth_table[name].password = password
-			save_auth_file()
 		end
 		return true
 	end,
 	set_privileges = function(name, privileges)
+		core.log("action", "Setting privileges for player " .. name )
 		assert(type(name) == "string")
 		assert(type(privileges) == "table")
 		if not core.auth_table[name] then
@@ -151,16 +152,21 @@ core.builtin_auth_handler = {
 		end
 		core.auth_table[name].privileges = privileges
 		core.notify_authentication_modified(name)
-		save_auth_file()
 	end,
 	reload = function()
+		core.log("action", "Reading authentication data from disk")
 		read_auth_file()
 		return true
 	end,
+	commit = function()
+		core.log("action", "Writing authentication data to disk")
+		save_auth_file()
+		return true
+	end,
 	record_login = function(name)
+		core.log("action", "Recording login time for player " .. name )
 		assert(type(name) == "string")
 		assert(core.auth_table[name]).last_login = os.time()
-		save_auth_file()
 	end,
 }
 
@@ -190,12 +196,18 @@ end
 core.set_player_password = auth_pass("set_password")
 core.set_player_privs    = auth_pass("set_privileges")
 core.auth_reload         = auth_pass("reload")
+core.auth_commit         = auth_pass("commit")
 
+core.auth_reload()
 
 local record_login = auth_pass("record_login")
 
 core.register_on_joinplayer(function(player)
 	record_login(player:get_player_name())
+end)
+
+core.register_on_shutdown(function()
+	core.auth_commit()
 end)
 
 core.register_on_prejoinplayer(function(name, ip)
@@ -214,3 +226,14 @@ core.register_on_prejoinplayer(function(name, ip)
 		end
 	end
 end)
+
+-- Autosave
+if not core.is_singleplayer() then
+	local save_interval = tonumber(core.settings:get("server_map_save_interval"))
+	local function auto_save()
+		core.auth_commit()
+		core.after(save_interval * 2, auto_save)
+	end
+
+	core.after(60, auto_save)
+end

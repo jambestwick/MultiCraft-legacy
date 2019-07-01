@@ -304,6 +304,16 @@ core.register_chatcommand("remove_player", {
 	end,
 })
 
+core.register_chatcommand("auth_save", {
+	params = "",
+	description = "Write authentication data to disk",
+	privs = {server=true},
+	func = function(name, param)
+		local done = core.auth_save()
+		return done, (done and "Authentication data successfully saved to disk." or "Failed to write the auth.txt file.")
+	end,
+})
+
 core.register_chatcommand("teleport", {
 	params = "<X>,<Y>,<Z> | <to_name> | (<name> <X>,<Y>,<Z>) | (<name> <to_name>)",
 	description = "Teleport to player or position",
