@@ -765,6 +765,7 @@ core.register_chatcommand("rollback", {
 
 core.register_chatcommand("status", {
 	description = "Print server status",
+	privs = {server=true},
 	func = function(name, param)
 		return true, core.get_server_status()
 	end,

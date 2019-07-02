@@ -188,33 +188,33 @@ end)
 minetest.register_playerstep(function(dtime, playernames)
 	for _, name in pairs(playernames) do
 		local player = minetest.get_player_by_name(name)
-		local player_name = player:get_player_name()
+		if player and player:is_player() then
+			local wielded_item = player:get_wielded_item()
+			local wielded_item_name = wielded_item:get_name()
 
-		local wielded_item = player:get_wielded_item()
-		local wielded_item_name = wielded_item:get_name()
+			timer[player] = timer[player] and timer[player] + dtime or 0
+			wield[player] = wield[player] or ""
 
-		timer[player_name] = timer[player_name] and timer[player_name] + dtime or 0
-		wield[player_name] = wield[player_name] or ""
+			if timer[player] > timeout and player then
+				hud.change_item(player, "itemname", {text = ""})
+				timer[player] = 0
+				return
+			end
 
-		if timer[player_name] > timeout and player then
-			hud.change_item(player, "itemname", {text = ""})
-			timer[player_name] = 0
-			return
-		end
+			if player and wielded_item_name ~= wield[player] then
+				wield[player] = wielded_item_name
+				timer[player] = 0
 
-		if player and wielded_item_name ~= wield[player_name] then
-			wield[player_name] = wielded_item_name
-			timer[player_name] = 0
+				local def = core.registered_items[wielded_item_name]
+				local meta = wielded_item:get_meta()
+				local meta_desc = meta:get_string("description")
+				meta_desc = meta_desc:gsub("\27", ""):gsub("%(c@#%w%w%w%w%w%w%)", "")
 
-			local def = core.registered_items[wielded_item_name]
-			local meta = wielded_item:get_meta()
-			local meta_desc = meta:get_string("description")
-			meta_desc = meta_desc:gsub("\27", ""):gsub("%(c@#%w%w%w%w%w%w%)", "")
+				local description = meta_desc ~= "" and meta_desc or
+					(def and (def.description:match("(.-)\n") or def.description) or "")
 
-			local description = meta_desc ~= "" and meta_desc or
-				(def and (def.description:match("(.-)\n") or def.description) or "")
-
-			hud.change_item(player, "itemname", {text = description})
+				hud.change_item(player, "itemname", {text = description})
+			end
 		end
 	end
 end, minetest.is_singleplayer()) -- Force step in singlplayer mode only
