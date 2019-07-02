@@ -497,6 +497,12 @@ void LocalPlayer::move(f32 dtime, Environment *env, f32 pos_max_d,
 			|| sneak_can_jump;
 	if (itemgroup_get(f.groups, "disable_jump"))
 		m_can_jump = false;
+	// Determine that the legs are inside the node
+	v3s16 pos = getStandingNodePos();
+	const ContentFeatures &f1 = nodemgr->get(map->getNodeNoEx(
+		pos + v3s16(0, 1, 0)));
+	if (itemgroup_get(f1.groups, "disable_jump"))
+		m_can_jump = false;
 
 	// Jump key pressed while jumping off from a bouncy block
 	if (m_can_jump && control.jump && itemgroup_get(f.groups, "bouncy") &&
