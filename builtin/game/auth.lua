@@ -232,7 +232,7 @@ if not core.is_singleplayer() then
 	local save_interval = tonumber(core.settings:get("server_map_save_interval"))
 	local function auto_save()
 		core.auth_commit()
-		core.after(save_interval * 2, auto_save)
+		core.after(save_interval * 3, auto_save)
 	end
 
 	core.after(60, auto_save)

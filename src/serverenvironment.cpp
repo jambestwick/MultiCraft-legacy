@@ -542,9 +542,6 @@ void ServerEnvironment::kickAllPlayers(AccessDeniedCode reason,
 
 void ServerEnvironment::saveLoadedPlayers()
 {
-	std::string players_path = m_path_world + DIR_DELIM + "players";
-	fs::CreateDir(players_path);
-
 	for (std::vector<RemotePlayer *>::iterator it = m_players.begin();
 		it != m_players.end();
 		++it) {
@@ -663,7 +660,7 @@ void ServerEnvironment::loadMeta()
 
 	setTimeOfDay(args.exists("time_of_day") ?
 		// set day to morning by default
-		args.getU64("time_of_day") : 9000);
+		args.getU64("time_of_day") : 6000);
 
 	m_last_clear_objects_time = args.exists("last_clear_objects_time") ?
 		// If missing, do as if clearObjects was never called
@@ -1084,7 +1081,7 @@ void ServerEnvironment::clearObjects(ClearObjectsMode mode)
 		loadable_blocks = loaded_blocks;
 	}
 
-	infostream << "ServerEnvironment::clearObjects(): "
+	actionstream << "ServerEnvironment::clearObjects(): "
 		<< "Now clearing objects in " << loadable_blocks.size()
 		<< " blocks" << std::endl;
 
@@ -1132,7 +1129,7 @@ void ServerEnvironment::clearObjects(ClearObjectsMode mode)
 			num_blocks_checked % report_interval == 0) {
 			float percent = 100.0 * (float)num_blocks_checked /
 				loadable_blocks.size();
-			infostream << "ServerEnvironment::clearObjects(): "
+			actionstream  << "ServerEnvironment::clearObjects(): "
 				<< "Cleared " << num_objs_cleared << " objects"
 				<< " in " << num_blocks_cleared << " blocks ("
 				<< percent << "%)" << std::endl;
@@ -1154,7 +1151,7 @@ void ServerEnvironment::clearObjects(ClearObjectsMode mode)
 
 	m_last_clear_objects_time = m_game_time;
 
-	infostream << "ServerEnvironment::clearObjects(): "
+	actionstream << "ServerEnvironment::clearObjects(): "
 		<< "Finished: Cleared " << num_objs_cleared << " objects"
 		<< " in " << num_blocks_cleared << " blocks" << std::endl;
 }
