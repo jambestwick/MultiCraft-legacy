@@ -506,6 +506,7 @@ function core.item_throw(name, thrower, speed, accel, on_impact)
 			local s = speed or 19 -- default speed
 			local a = accel or -3 -- default acceleration
 			local dir = thrower:get_look_dir()
+			local gravity = tonumber(core.settings:get("movement_gravity")) or 9.81
 			ent.thrower = thrower:get_player_name()
 			ent.throw_timer = 0
 			ent.throw_direction = dir
@@ -513,7 +514,7 @@ function core.item_throw(name, thrower, speed, accel, on_impact)
 			ent.on_impact = on_impact and on_impact or function() end
 			obj:set_properties(properties)
 			obj:set_velocity({x=dir.x * s, y=dir.y * s, z=dir.z * s})
-			obj:set_acceleration({x=dir.x * a, y=-9.81, z=dir.z * a})
+			obj:set_acceleration({x=dir.x * a, y=-gravity, z=dir.z * a})
 			return obj
 		else
 			obj:remove()

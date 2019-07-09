@@ -40,7 +40,7 @@ core.register_entity(":__builtin:falling_node", {
 
 	on_activate = function(self, staticdata)
 		self.object:set_armor_groups({immortal = 1})
-		
+
 		local ds = core.deserialize(staticdata)
 		if ds and ds.node then
 			self:set_node(ds.node, ds.meta)
@@ -54,8 +54,9 @@ core.register_entity(":__builtin:falling_node", {
 	on_step = function(self, dtime)
 		-- Set gravity
 		local acceleration = self.object:get_acceleration()
-		if not vector.equals(acceleration, {x = 0, y = -9.81, z = 0}) then
-			self.object:setacceleration({x = 0, y = -9.81, z = 0})
+		local gravity = tonumber(core.settings:get("movement_gravity")) or 9.81
+		if not vector.equals(acceleration, {x = 0, y = -gravity, z = 0}) then
+			self.object:setacceleration({x = 0, y = -gravity, z = 0})
 		end
 		-- Turn to actual node when colliding with ground, or continue to move
 		local pos = self.object:get_pos()
@@ -110,11 +111,15 @@ core.register_entity(":__builtin:falling_node", {
 				end
 			end
 			-- Create node and remove entity
-			if core.registered_nodes[self.node.name] then
+			local def = core.registered_nodes[self.node.name]
+			if def then
 				core.add_node(np, self.node)
 				if self.meta then
 					local meta = core.get_meta(np)
 					meta:from_table(self.meta)
+				end
+				if def.sounds and def.sounds.place and def.sounds.place.name then
+					core.sound_play(def.sounds.place, {pos = np})
 				end
 			end
 			self.object:remove()
@@ -327,19 +332,3 @@ local function on_punchnode(p, node)
 	core.check_for_falling(p)
 end
 core.register_on_punchnode(on_punchnode)
-
---
--- Globally exported functions
---
-
--- TODO remove this function after the 0.4.15 release
-function nodeupdate(p)
-	core.log("deprecated", "nodeupdate: deprecated, please use core.check_for_falling instead")
-	core.check_for_falling(p)
-end
-
--- TODO remove this function after the 0.4.15 release
-function nodeupdate_single(p)
-	core.log("deprecated", "nodeupdate_single: deprecated, please use core.check_single_for_falling instead")
-	core.check_single_for_falling(p)
-end

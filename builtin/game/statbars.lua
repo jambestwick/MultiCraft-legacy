@@ -1,30 +1,25 @@
 -- cache setting
 local enable_damage = core.settings:get_bool("enable_damage")
 
-local health_bar_definition = {}
+local health_bar_definition = {
+	hud_elem_type = "statbar",
+	position      = {x =  0.5, y =  1},
+	alignment     = {x = -1,   y = -1},
+	offset        = {x = -247, y = -108},
+	size          = {x =  24,  y =  24},
+	text          = "heart.png",
+	background    = "heart_bg.png",
+	number        = 20
+}
 
-if enable_damage then
-	hud.register("health", {
-		hud_elem_type = "statbar",
-		position      = {x =  0.5, y =  1},
-		alignment     = {x = -1,   y = -1},
-		offset        = {x = -247, y = -108},
-		size          = {x =  24,  y =  24},
-		text          = "heart.png",
-		background    = "heart_bg.png",
-		number        = 20,
-	})
-end
-
-local breath_bar_definition =
-{
+local breath_bar_definition = {
 	hud_elem_type = "statbar",
 	position      = {x =  0.5, y = 1},
 	alignment     = {x = -1,   y = -1},
 	offset        = {x =  8,  y = -134},
 	size          = {x =  24,  y = 24},
 	text          = "bubble.png",
-	number        = 20,
+	number        = 20
 }
 
 local hud_ids = {}
@@ -50,8 +45,10 @@ local function initialize_builtin_statbars(player)
 
 	if player:hud_get_flags().healthbar and enable_damage then
  		if hud_ids[name].id_healthbar == nil then
-			health_bar_definition.number = player:get_hp()
-			hud_ids[name].id_healthbar = player:hud_add(health_bar_definition)
+			hud_ids[name].id_healthbar = hud.register("health", health_bar_definition)
+			minetest.after(0, function()
+				hud.change_item(player, "health", {number = player:get_hp()})
+			end)
 		end
 	else
 		if hud_ids[name].id_healthbar ~= nil then
@@ -127,7 +124,7 @@ local function player_event_handler(player, eventname)
 	return false
 end
 
-function core.hud_replace_builtin(name, definition)
+--[[function core.hud_replace_builtin(name, definition)
 
 	if definition == nil or
 		type(definition) ~= "table" or
@@ -162,13 +159,15 @@ function core.hud_replace_builtin(name, definition)
 	end
 
 	return false
+end]]
+
+if enable_damage then
+	core.register_on_joinplayer(initialize_builtin_statbars)
+	core.register_on_leaveplayer(cleanup_builtin_statbars)
+	core.register_playerevent(player_event_handler)
 end
 
-core.register_on_leaveplayer(cleanup_builtin_statbars)
-core.register_playerevent(player_event_handler)
-
 -- Hud Item name
-
 local timer, wield = {}, {}
 local timeout = 2
 
@@ -181,10 +180,6 @@ hud.register("itemname", {
 	text          = ""
 })
 
-core.register_on_joinplayer(function(player)
-	initialize_builtin_statbars(player)
-end)
-
 minetest.register_playerstep(function(dtime, playernames)
 	for _, name in pairs(playernames) do
 		local player = minetest.get_player_by_name(name)
@@ -195,7 +190,7 @@ minetest.register_playerstep(function(dtime, playernames)
 			timer[player] = timer[player] and timer[player] + dtime or 0
 			wield[player] = wield[player] or ""
 
-			if timer[player] > timeout and player then
+			if timer[player] > timeout then
 				hud.change_item(player, "itemname", {text = ""})
 				timer[player] = 0
 				return
