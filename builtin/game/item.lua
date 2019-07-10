@@ -592,27 +592,27 @@ function core.item_eat(hp_change, replace_with_item)
 	return function(itemstack, user, pointed_thing)  -- closure
 		if user then
 			local pos = user:get_pos()
-			pos.y = pos.y + 1.5
+			pos.y = pos.y + 1.3
 			local itemname = itemstack:get_name()
 			local texture = core.registered_items[itemname].inventory_image
-			core.sound_play("player_eat", {pos = pos, max_hear_distance = 10, gain = 0.3})
+			local dir = user:get_look_dir()
 			core.add_particlespawner({
 				amount = 20,
 				time = 0.1,
-				minpos = {x = pos.x, y = pos.y, z = pos.z},
-				maxpos = {x = pos.x, y = pos.y, z = pos.z},
-				minvel = {x = -1, y = 1, z = -1},
-				maxvel = {x = 1, y = 2, z = 1},
+				minpos = pos,
+				maxpos = pos,
+				minvel = {x = dir.x - 1, y = 2, z = dir.z - 1},
+				maxvel = {x = dir.x + 1, y = 2, z = dir.z + 1},
 				minacc = {x = 0, y = -5, z = 0},
 				maxacc = {x = 0, y = -9, z = 0},
 				minexptime = 1,
 				maxexptime = 1,
 				minsize = 1,
 				maxsize = 1,
-				collisiondetection = true,
 				vertical = false,
 				texture = texture,
 			})
+			core.sound_play("player_eat", {pos = pos, max_hear_distance = 10, gain = 0.3})
 			return core.do_item_eat(hp_change, replace_with_item, itemstack, user, pointed_thing)
 		end
 	end
