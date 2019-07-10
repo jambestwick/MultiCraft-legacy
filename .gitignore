@@ -102,6 +102,7 @@ build/android/obj
 build/android/local.properties
 build/android/.gradle
 timestamp
+.idea
 
 ## iOS build files
 build/iOS/MultiCraft/MultiCraft.xcodeproj/xcuserdata

@@ -96,11 +96,11 @@ namespace porting {
 	}
 }
 
-extern int real_main(int argc, char *argv[]);
+extern int main(int argc, char *argv[]);
 
 void irrlicht_main() {
 	static const char *args[] = {
 		PROJECT_NAME,
 	};
-	real_main(1, (char**) args);
+	main(1, (char**) args);
 }

@@ -391,10 +391,11 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("touchscreen_threshold", "20");
 	settings->setDefault("doubletap_jump", "true");
 	settings->setDefault("abm_interval", "2.0");
-	settings->setDefault("dedicated_server_step", "0.2");
+	settings->setDefault("emergequeue_limit_diskonly", "16");
+	settings->setDefault("emergequeue_limit_generate", "16");
 	settings->setDefault("curl_verify_cert", "false");
 	settings->setDefault("gui_scaling_filter_txr2img", "false");
-	settings->setDefault("mapgens_available", "v7p, v6, flat");
+	settings->setDefault("mapgens_available", "v7p, flat");
 
 	// FIXME: this code should be in init_gettext() ideally
 	char lang[3] = {0};
@@ -417,8 +418,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("pause_fps_max", "10");
 	settings->setDefault("smooth_lighting", "false");
 	settings->setDefault("selectionbox_width", "6");
-	settings->setDefault("emergequeue_limit_diskonly", "8");
-	settings->setDefault("emergequeue_limit_generate", "8");
 	settings->setDefault("chunksize", "3");
 	settings->setDefault("active_block_range", "1");
 	settings->setDefault("max_block_generate_distance", "3");
@@ -439,7 +438,7 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("mouse_sensitivity", "0.25");
 	} else if (x_inches > 3.7 && x_inches < 5) {
 		// all phones
-		settings->setDefault("hud_scaling", "0.65");
+		settings->setDefault("hud_scaling", "0.7");
 		settings->setDefault("mouse_sensitivity", "0.15");
 	} else if (x_inches >= 5) {
 		// tablets
@@ -449,8 +448,6 @@ void set_default_settings(Settings *settings)
 
 	// iOS Settings
 #ifdef __IOS__
-	settings->setDefault("emergequeue_limit_diskonly", "16");
-	settings->setDefault("emergequeue_limit_generate", "16");
 	settings->setDefault("debug_log_level", "none");
 	// set font_path
 	settings->setDefault("mono_font_path", g_settings->get("font_path"));

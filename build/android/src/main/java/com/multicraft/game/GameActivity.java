@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -20,8 +21,16 @@ import static com.multicraft.game.AdManager.stopAd;*/
 
 public class GameActivity extends NativeActivity {
     static {
-        System.loadLibrary("MultiCraft");
-        //System.loadLibrary("c++_shared");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (TextUtils.join(", ", Build.SUPPORTED_ABIS).contains("64")) {
+                //System.loadLibrary("c++_shared");  // uncomment when upgrading to Clang
+                System.loadLibrary("MultiCraft");
+            } else {
+                System.loadLibrary("MultiCraft");
+            }
+        } else {
+            System.loadLibrary("MultiCraft");
+        }
     }
 
     private int messageReturnCode;

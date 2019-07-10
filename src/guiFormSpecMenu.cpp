@@ -3707,14 +3707,14 @@ bool GUIFormSpecMenu::OnEvent(const SEvent& event)
 			m_invmgr->inventoryAction(a);
 		} else if (craft_amount > 0) {
 			assert(s.isValid());
-			
+
 			// if there are no items selected or the selected item
 			// belongs to craftresult list, proceed with crafting
 			if (m_selected_item == NULL ||
 					!m_selected_item->isValid() || m_selected_item->listname == "craftresult") {
-				
+
 				m_selected_content_guess = ItemStack(); // Clear
-				
+
 				assert(inv_s);
 
 				// Send IACTION_CRAFT
@@ -3829,10 +3829,11 @@ bool GUIFormSpecMenu::OnEvent(const SEvent& event)
 				}
 			}
 		}
-		
-	if (event.GUIEvent.EventType == gui::EGET_EDITBOX_CHANGED) {
-		if (event.GUIEvent.Caller->getID() > 257) {
-			for (GUIFormSpecMenu::FieldSpec &s : m_fields) {
+
+		if (event.GUIEvent.EventType == gui::EGET_EDITBOX_CHANGED) {
+			if (event.GUIEvent.Caller->getID() > 257) {
+				for (u32 i = 0; i < m_fields.size(); i++) {
+					FieldSpec &s = m_fields[i];
 					if (s.ftype == f_Unknown && s.is_dynamic &&
 							s.fid == event.GUIEvent.Caller->getID()) {
 						s.send = true;
