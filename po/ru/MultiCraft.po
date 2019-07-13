@@ -953,8 +953,8 @@ msgid "Shutting down..."
 msgstr "Завершение..."
 
 #: src/game.cpp
-msgid "Singleplayer"
-msgstr "Одиночная игра"
+#msgid "Singleplayer"
+#msgstr "Одиночная игра"
 
 #: src/game.cpp
 msgid "Sound Volume"

@@ -37,7 +37,7 @@ end
 
 local function quick_flow_logic(node, pos_testing, direction)
 	local node_testing = core.get_node_or_nil(pos_testing)
-	if node_testing == nil then
+	if not node_testing then
 		node_testing = core.registered_nodes["default:dirt"]
 	end
 	if core.registered_nodes[node_testing.name].liquidtype ~= "flowing"

@@ -175,7 +175,7 @@ hud.register("itemname", {
 	hud_elem_type = "text",
 	position      = {x = 0.5,  y =  1},
 	alignment     = {x = 0,    y = -10},
-	offset        = {x = 0,    y = -50},
+	offset        = {x = 0,    y = -25},
 	number        = 0xFFFFFF,
 	text          = ""
 })
