@@ -112,7 +112,11 @@ FileLogOutput file_log_output;
 
 static OptionList allowed_options;
 
+#ifdef __IOS__
+int real_main(int argc, char *argv[])
+#else
 int main(int argc, char *argv[])
+#endif
 {
 	int retval;
 	debug_set_exception_handler();

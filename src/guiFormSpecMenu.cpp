@@ -1006,9 +1006,7 @@ void GUIFormSpecMenu::parseSimpleField(parserData* data,
 	std::string label = parts[1];
 	std::string default_val = parts[2];
 
-	bool is_dynamic = (name.length() > 0 && name[0] == '!');
-	if (is_dynamic)
-		name = name.substr(1);
+	bool is_dynamic = (name.length() > 0 && name[0] == 'D');
 
 	core::rect<s32> rect;
 
@@ -1100,9 +1098,7 @@ void GUIFormSpecMenu::parseTextArea(parserData* data, std::vector<std::string>& 
 	std::string label = parts[3];
 	std::string default_val = parts[4];
 
-	bool is_dynamic = (name.length() > 0 && name[0] == '!');
-	if (is_dynamic)
-		name = name.substr(1);
+	bool is_dynamic = (name.length() > 0 && name[0] == 'D');
 
 	MY_CHECKPOS(type,0);
 	MY_CHECKGEOM(type,1);
@@ -3830,21 +3826,6 @@ bool GUIFormSpecMenu::OnEvent(const SEvent& event)
 			}
 		}
 
-		if (event.GUIEvent.EventType == gui::EGET_EDITBOX_CHANGED) {
-			if (event.GUIEvent.Caller->getID() > 257) {
-				for (u32 i = 0; i < m_fields.size(); i++) {
-					FieldSpec &s = m_fields[i];
-					if (s.ftype == f_Unknown && s.is_dynamic &&
-							s.fid == event.GUIEvent.Caller->getID()) {
-						s.send = true;
-						acceptInput();
-						s.send = false;
-					}
-				}
-				return true;
-			}
-		}
-
 		if (event.GUIEvent.EventType == gui::EGET_EDITBOX_ENTER) {
 			if (event.GUIEvent.Caller->getID() > 257) {
 				bool close_on_enter = true;
@@ -3875,18 +3856,19 @@ bool GUIFormSpecMenu::OnEvent(const SEvent& event)
 			}
 		}
 
-		if (event.GUIEvent.EventType == gui::EGET_TABLE_CHANGED) {
+		if (event.GUIEvent.EventType == gui::EGET_TABLE_CHANGED || event.GUIEvent.EventType == gui::EGET_EDITBOX_CHANGED) {
 			int current_id = event.GUIEvent.Caller->getID();
 			if (current_id > 257) {
-				// find the element that was clicked
+				// find the element that was clicked or changed
 				for (u32 i = 0; i < m_fields.size(); i++) {
 					FieldSpec &s = m_fields[i];
 					// if it's a table, set the send field
 					// so lua knows which table was changed
-					if ((s.ftype == f_Table) && (s.fid == current_id)) {
+					if ((s.ftype == f_Table && s.fid == current_id) ||
+						(s.ftype == f_Unknown && s.is_dynamic && s.fid == current_id)) {
 						s.send = true;
 						acceptInput();
-						s.send=false;
+						s.send = false;
 					}
 				}
 				return true;

@@ -17,8 +17,8 @@
 	#define PROJECT_NAME_C "MultiCraft"
 	#define STATIC_SHAREDIR ""
 	#define VERSION_MAJOR 1
-	#define VERSION_MINOR 2
-	#define VERSION_PATCH 2
+	#define VERSION_MINOR 3
+	#define VERSION_PATCH 0
 	#define VERSION_STRING STR(VERSION_MAJOR) "." STR(VERSION_MINOR) "." STR(VERSION_PATCH)
 #endif
 

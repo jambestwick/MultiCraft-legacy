@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 . sdk.sh
-FREETYPE_VERSION=2.10.0
+FREETYPE_VERSION=2.10.1
 
 if [ ! -d freetype-src ]; then
 	wget http://download.savannah.gnu.org/releases/freetype/freetype-$FREETYPE_VERSION.tar.gz

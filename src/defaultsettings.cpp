@@ -450,6 +450,8 @@ void set_default_settings(Settings *settings)
 	// iOS Settings
 #ifdef __IOS__
 	settings->setDefault("debug_log_level", "none");
+	settings->setDefault("autosave_screensize", "false");
+
 	// set font_path
 	settings->setDefault("mono_font_path", g_settings->get("font_path"));
 	settings->setDefault("fallback_font_path", g_settings->get("font_path"));

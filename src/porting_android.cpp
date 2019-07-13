@@ -314,7 +314,6 @@ void notifyExitGame()
 	jnienv->CallVoidMethod(app_global->activity->clazz, notifyExit);
 }
 
-#ifndef SERVER
 float getDisplayDensity()
 {
 	static bool firstrun = true;
@@ -364,5 +363,4 @@ v2u32 getDisplaySize()
 	}
 	return retval;
 }
-#endif // ndef SERVER
 }
