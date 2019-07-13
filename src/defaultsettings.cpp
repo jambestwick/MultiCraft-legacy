@@ -245,12 +245,8 @@ void set_default_settings(Settings *settings)
 
 	settings->setDefault("fallback_font_shadow", "1");
 	settings->setDefault("fallback_font_shadow_alpha", "128");
-
-#if defined(__ANDROID__) || defined(__IOS__)
-	std::string font_size_str = std::to_string(TTF_DEFAULT_FONT_SIZE - 3);
-#else
-	std::string font_size_str = std::to_string(TTF_DEFAULT_FONT_SIZE + 2);
-#endif
+	
+	std::string font_size_str = std::to_string(TTF_DEFAULT_FONT_SIZE);
 
 	settings->setDefault("fallback_font_size", font_size_str);
 #else
@@ -377,7 +373,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_console", "false");
 
 	settings->setDefault("mainmenu_last_selected_world", "1");
-	settings->setDefault("inventory_image_hack", "false");
+	settings->setDefault("mapgens_available", "v7p, flat, v7, v6");
 
 	// Mobile Platform
 #if defined(__ANDROID__) || defined(__IOS__)
@@ -428,6 +424,11 @@ void set_default_settings(Settings *settings)
 	// set font_path
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");
+	
+	// FIXME: bad solution 'con(62/1)RE-SENDING timed-out RELIABLE to 127.0.0.1(t/o=0.1)'
+	#ifdef __aarch64__
+		settings->setDefault("max_packets_per_iteration", "8");
+	#endif
 
 	// check screen size
 	float x_inches = ((double) porting::getDisplaySize().X /
