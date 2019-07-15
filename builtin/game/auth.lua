@@ -152,7 +152,7 @@ core.builtin_auth_handler = {
 		core.notify_authentication_modified(name)
 	end,
 	reload = function()
-		core.log("action", "[AUTH] Writing authentication data to disk")
+		core.log("action", "[AUTH] Reading authentication data from disk")
 		read_auth_file()
 		return true
 	end,
@@ -231,6 +231,5 @@ if not core.is_singleplayer() then
 		core.auth_commit()
 		core.after(save_interval, auto_save)
 	end
-
 	core.after(save_interval, auto_save)
 end
