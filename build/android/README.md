@@ -1,5 +1,5 @@
-MultiCraft Android version
-=====================
+MultiCraft: Android version
+===========================
 
 Controls
 --------
@@ -38,18 +38,6 @@ file can usually be found at /sdcard/Android/data/mobi.MultiCraft/files.
 * gui_scaling: this is a user-specified scaling factor for the GUI- In case
                main menu is too big or small on your device, try changing this
                value.
-* inventory_image_hack: if your inventory items are messed up, try setting
-               this to true
-
-Known issues
-------------
-Not all issues are fixed by now:
-
-* Unable to exit from volume menu -- don't use the volume menu, use Android's
-  volume controls instead.
-* 512 MB RAM seems to be inadequate -- this depends on the server you join.
-  Try to play on more lightweight servers.
-
 
 Requirements
 ------------
@@ -61,11 +49,12 @@ following software packages. The version number in parenthesis denotes the
 version that was tested at the time this README was drafted; newer/older
 versions may or may not work.
 
-* android SDK (27+)
-* android NDK (r17b)
+* android SDK (28+)
+* android NDK (r17c)
 * wget
 * g++-multilib
 * m4
+* gettext
 
 Additionally, you'll need to have an Internet connection available on the
 build system, as the Android build will download some source packages.
@@ -122,7 +111,9 @@ Other things that may be nice to know
   > make clean_irrlicht
 
 
-After compiling you need to archive files in assets into three zips - Files.zip, games.zip and worlds.zip.
-games.zip must contain "games" folder.
-worlds.zip must contain "worlds" folder and "multicraf.conf" text file.
-Finally, remaining files must be packed into Files.zip.
+  The new build system MultiCraft Android is still WIP, but it is fully functional and is designed to speed up and simplify the work, as well as adding the possibility of cross-platform build.
+  The Makefile is no longer used and will be removed in future releases. Use the "Start" script, which will automatically load pre-assembled dependencies, prepare localization files and archive all necessary files.
+  Then you can use "./gradlew assemblerelease" or "./graldew assembledebug" from the command line or use Android Studio and click the build button.
+
+  When using gradlew, the newest NDK will be downloaded and installed automatically. Or you can create a local.properties file and specify sdk.dir and ndk.dir yourself.
+  The script will automatically create an APK for all the architectures specified in build.gradle.

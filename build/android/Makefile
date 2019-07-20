@@ -26,20 +26,20 @@
 # toolchain config for ARMv7 (Clang)
 ######################################################################################
 
-API = 16
-TARGET_HOST = arm-linux
-TARGET_ABI = armeabi-v7a
-TARGET_ARCH = arm
-TARGET_TOOLCHAIN = arm-linux-androideabi
-TARGET_CFLAGS_ADDON = -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -fexceptions -D__ANDROID_API__=$(API) -fpic
-TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON) -frtti
-CROSS_PREFIX = arm-linux-androideabi
-CROSS_CC = clang
-CROSS_CXX = clang++
-HOST_CC = "gcc -m32" # required for LuaJIT
-COMPILER_VERSION = clang
-APP_STL = c++_shared
-APP_STL_LIB = libc++
+#API = 16
+#TARGET_HOST = arm-linux
+#TARGET_ABI = armeabi-v7a
+#TARGET_ARCH = arm
+#TARGET_TOOLCHAIN = arm-linux-androideabi
+#TARGET_CFLAGS_ADDON = -mthumb -Ofast -fdata-sections -ffunction-sections -fvisibility=hidden -fexceptions -D__ANDROID_API__=$(API)
+#TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON) -frtti
+#CROSS_PREFIX = arm-linux-androideabi
+#CROSS_CC = clang
+#CROSS_CXX = clang++
+#HOST_CC = "gcc -m32" # required for LuaJIT
+#COMPILER_VERSION = clang
+#APP_STL = c++_shared
+#APP_STL_LIB = libc++
 
 ######################################################################################
 # toolchain config for ARM64 (gcc, NDK r17c)
@@ -64,20 +64,20 @@ APP_STL_LIB = libc++
 # toolchain config for ARM64 (Clang)
 ######################################################################################
 
-#API = 21
-#TARGET_HOST = arm-linux
-#TARGET_ABI = arm64-v8a
-#TARGET_ARCH = arm64
-#TARGET_TOOLCHAIN = aarch64-linux-android
-#TARGET_CFLAGS_ADDON = -Ofast -fvisibility=hidden -fexceptions -D__ANDROID_API__=$(API)
-#TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON) -frtti
-#CROSS_PREFIX = aarch64-linux-android
-#CROSS_CC = clang
-#CROSS_CXX = clang++
-#HOST_CC = "gcc -m64" # required for LuaJIT
-#COMPILER_VERSION = clang
-#APP_STL = c++_shared
-#APP_STL_LIB = libc++
+API = 21
+TARGET_HOST = arm-linux
+TARGET_ABI = arm64-v8a
+TARGET_ARCH = arm64
+TARGET_TOOLCHAIN = aarch64-linux-android
+TARGET_CFLAGS_ADDON = -Ofast -fvisibility=hidden -fexceptions -D__ANDROID_API__=$(API)
+TARGET_CXXFLAGS_ADDON = $(TARGET_CFLAGS_ADDON) -frtti
+CROSS_PREFIX = aarch64-linux-android
+CROSS_CC = clang
+CROSS_CXX = clang++
+HOST_CC = "gcc -m64" # required for LuaJIT
+COMPILER_VERSION = clang
+APP_STL = c++_shared
+APP_STL_LIB = libc++
 
 ######################################################################################
 # toolchain config for x86 (gcc, NDK r17c)
@@ -129,12 +129,12 @@ LEVELDB_TIMESTAMP = $(LEVELDB_DIR)/timestamp
 LEVELDB_TIMESTAMP_INT = $(ANDR_ROOT)/deps/leveldb_timestamp
 LEVELDB_URL = https://github.com/google/leveldb/archive/v$(LEVELDB_VERSION).zip
 
-OPENAL_VERSION = 1.19.1
+OPENAL_VERSION = v1.19
 OPENAL_DIR = $(ANDR_ROOT)/deps/openal-soft
 OPENAL_LIB = $(OPENAL_DIR)/libopenal.a
 OPENAL_TIMESTAMP = $(OPENAL_DIR)/timestamp
 OPENAL_TIMESTAMP_INT = $(ANDR_ROOT)/deps/openal_timestamp
-OPENAL_URL = https://github.com/kcat/openal-soft/archive/openal-soft-$(OPENAL_VERSION).zip
+OPENAL_URL_GIT = https://github.com/kcat/openal-soft/
 
 VORBIS_DIR = $(ANDR_ROOT)/deps/libvorbis-android
 VORBIS_LIB = $(VORBIS_DIR)/obj/local/$(TARGET_ABI)/libvorbis.a
@@ -142,14 +142,14 @@ VORBIS_TIMESTAMP = $(VORBIS_DIR)/timestamp
 VORBIS_TIMESTAMP_INT = $(ANDR_ROOT)/deps/vorbis_timestamp
 VORBIS_URL_GIT = https://github.com/MoNTE48/libvorbis-android
 
-IRRLICHT_COMMIT = 237eb07bf4b6957f2e103adcaf835e6a2afe3486
+IRRLICHT_COMMIT = ogl-es
 IRRLICHT_DIR = $(ANDR_ROOT)/deps/irrlicht
 IRRLICHT_LIB = $(IRRLICHT_DIR)/lib/Android/libIrrlicht.a
 IRRLICHT_TIMESTAMP = $(IRRLICHT_DIR)/timestamp
 IRRLICHT_TIMESTAMP_INT = $(ANDR_ROOT)/deps/irrlicht_timestamp
 IRRLICHT_URL_HTTP = https://github.com/zaki/irrlicht/archive/$(IRRLICHT_COMMIT).zip
 
-CURL_VERSION = 7.65.1
+CURL_VERSION = 7.65.3
 CURL_DIR = $(ANDR_ROOT)/deps/curl
 CURL_LIB = $(CURL_DIR)/lib/.libs/libcurl.a
 CURL_TIMESTAMP = $(CURL_DIR)/timestamp
@@ -174,6 +174,13 @@ LUAJIT_TIMESTAMP = $(LUAJIT_DIR)/timestamp
 LUAJIT_TIMESTAMP_INT = $(ANDR_ROOT)/deps/luajit_timestamp
 LUAJIT_URL_GIT = https://github.com/LuaJIT/LuaJIT.git
 
+GMP_VERSION = 6.1.2
+GMP_DIR = $(ANDR_ROOT)/deps/gmp
+GMP_LIB = $(GMP_DIR)/usr/lib/libgmp.a
+GMP_TIMESTAMP = $(GMP_DIR)/timestamp
+GMP_TIMESTAMP_INT = $(ANDR_ROOT)/deps/gmp_timestamp
+GMP_URL_HTTP = https://gmplib.org/download/gmp/gmp-$(GMP_VERSION).tar.xz
+
 ASSETS_TIMESTAMP = $(ANDR_ROOT)/deps/assets_timestamp
 
 ######################################################################################
@@ -187,7 +194,7 @@ ANDROID_SDK = $(shell grep '^sdk\.dir' local.properties | sed 's/^.*=[[:space:]]
 ANDROID_NDK = $(shell grep '^ndk\.dir' local.properties | sed 's/^.*=[[:space:]]*//')
 
 debug : local.properties
-	export NDEBUG=;                                                                 \
+	export NDEBUG=0;                                                                 \
 	export BUILD_TYPE=debug;                                                        \
 	$(MAKE) apk
 
@@ -234,10 +241,7 @@ openal_download :
 		echo "openal sources missing, downloading...";                              \
 		mkdir -p ${ANDR_ROOT}/deps;                                                 \
 		cd ${ANDR_ROOT}/deps ;                                                      \
-		wget ${OPENAL_URL} || exit 1;                                               \
-		unzip openal-soft-${OPENAL_VERSION}.zip || exit 1;                          \
-		rm openal-soft-${OPENAL_VERSION}.zip || exit 1;                             \
-		mv openal-soft-openal-soft-${OPENAL_VERSION} openal-soft || exit 1;         \
+		git clone --branch ${OPENAL_VERSION} ${OPENAL_URL_GIT} openal-soft || exit 1; \
 		cd ${OPENAL_DIR};                                                           \
 		sed '/CMAKE_FIND_ROOT_PATH / s/^/#/' -i XCompile-Android.txt;               \
 		sed '/CMAKE_C_COMPILER/ s/-gcc"/-clang"/' -i XCompile-Android.txt;          \
@@ -426,7 +430,7 @@ $(FREETYPE_LIB) : $(FREETYPE_TIMESTAMP)
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                       \
 	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                        \
 	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                              \
-	CC=${CROSS_CC} ./configure --enable-static --disable-shared --host=${TARGET_HOST} \
+	CC=${CROSS_CC} ./configure --enable-static --disable-shared --host=${TARGET_TOOLCHAIN} \
 		--prefix=${TOOLCHAIN} --with-png=no --with-harfbuzz=no  || exit 1;          \
 	CC=${CROSS_CC} ANDROID_DEV=/tmp/ndk-${TARGET_HOST}-freetype $(MAKE) || exit 1;  \
 	touch ${FREETYPE_TIMESTAMP};                                                    \
@@ -440,83 +444,83 @@ clean_freetype :
 	$(RM) -rf ${FREETYPE_DIR}
 
 iconv_download :
-	@if [ ! -d ${ICONV_DIR} ] ; then                                               \
-		echo "iconv sources missing, downloading...";                              \
-		mkdir -p ${ANDR_ROOT}/deps;                                                \
-		cd ${ANDR_ROOT}/deps;                                                      \
-		wget ${ICONV_URL_HTTP} || exit 1;                                          \
-		tar -xzf libiconv-${ICONV_VERSION}.tar.gz || exit 1;                       \
-		rm libiconv-${ICONV_VERSION}.tar.gz;                                       \
-		mv libiconv-${ICONV_VERSION} libiconv;                                     \
-		cd libiconv;                                                               \
-		patch -p1 < ${ANDR_ROOT}/patches/libiconv_android.patch;                   \
-		export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-iconv;                            \
-		${ANDROID_NDK}/build/tools/make_standalone_toolchain.py                    \
-			--arch ${TARGET_ARCH}                                                  \
-			--api ${API}                                                           \
-			--stl=${APP_STL_LIB}                                                   \
-			--install-dir=$${TOOLCHAIN};                                           \
-		./configure || exit 1;                                                     \
+	@if [ ! -d ${ICONV_DIR} ] ; then                                                \
+		echo "iconv sources missing, downloading...";                               \
+		mkdir -p ${ANDR_ROOT}/deps;                                                 \
+		cd ${ANDR_ROOT}/deps;                                                       \
+		wget ${ICONV_URL_HTTP} || exit 1;                                           \
+		tar -xzf libiconv-${ICONV_VERSION}.tar.gz || exit 1;                        \
+		rm libiconv-${ICONV_VERSION}.tar.gz;                                        \
+		mv libiconv-${ICONV_VERSION} libiconv;                                      \
+		cd libiconv;                                                                \
+		patch -p1 < ${ANDR_ROOT}/patches/libiconv_android.patch;                    \
+		export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-iconv;                             \
+		${ANDROID_NDK}/build/tools/make_standalone_toolchain.py                     \
+			--arch ${TARGET_ARCH}                                                   \
+			--api ${API}                                                            \
+			--stl=${APP_STL_LIB}                                                    \
+			--install-dir=$${TOOLCHAIN};                                            \
+		./configure || exit 1;                                                      \
 	fi
 
 clean_iconv :
 	$(RM) -rf ${ICONV_DIR}
 
 irrlicht_download :
-	@if [ ! -d "deps/irrlicht" ] ; then                                            \
-		echo "irrlicht sources missing, downloading...";                           \
-		mkdir -p ${ANDR_ROOT}/deps;                                                \
-		cd deps;                                                                   \
-		wget ${IRRLICHT_URL_HTTP} || exit 1;                                       \
-		unzip ${IRRLICHT_COMMIT}.zip || exit 1;                                    \
-		rm ${IRRLICHT_COMMIT}.zip;                                                 \
-		mv irrlicht-${IRRLICHT_COMMIT} irrlicht;                                   \
-		cd irrlicht;                                                               \
-		mkdir -p lib/Android;                                                      \
-		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-touchcount.patch      || exit 1; \
-		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-back_button.patch     || exit 1; \
-		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-native_activity.patch || exit 1; \
-		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-roundingerror.patch   || exit 1; \
+	@if [ ! -d "deps/irrlicht" ] ; then                                             \
+		echo "irrlicht sources missing, downloading...";                            \
+		mkdir -p ${ANDR_ROOT}/deps;                                                 \
+		cd deps;                                                                    \
+		wget ${IRRLICHT_URL_HTTP} || exit 1;                                        \
+		unzip ${IRRLICHT_COMMIT}.zip || exit 1;                                     \
+		rm ${IRRLICHT_COMMIT}.zip;                                                  \
+		mv irrlicht-${IRRLICHT_COMMIT} irrlicht;                                    \
+		cd irrlicht;                                                                \
+		mkdir -p lib/Android;                                                       \
+		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-touchcount.patch      || exit 1;  \
+		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-back_button.patch     || exit 1;  \
+		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-native_activity.patch || exit 1;  \
+		patch -p1 < ${ANDR_ROOT}/patches/irrlicht-roundingerror.patch   || exit 1;  \
 	fi
 
 $(IRRLICHT_TIMESTAMP) : irrlicht_download
 	@LAST_MODIF=$$(find ${IRRLICHT_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
-	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                         \
-		touch ${IRRLICHT_TIMESTAMP};                                               \
+	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                          \
+		touch ${IRRLICHT_TIMESTAMP};                                                \
 	fi
 
 irrlicht : $(IRRLICHT_LIB)
 
 $(IRRLICHT_LIB): $(IRRLICHT_TIMESTAMP) $(FREETYPE_LIB)
-	+@REFRESH=0;                                                                   \
-	if [ ! -e ${IRRLICHT_TIMESTAMP_INT} ] ; then                                   \
-		REFRESH=1;                                                                 \
-	fi;                                                                            \
-	if [ ! -e ${IRRLICHT_LIB} ] ; then                                             \
-		REFRESH=1;                                                                 \
-	fi;                                                                            \
-	if [ ${IRRLICHT_TIMESTAMP} -nt ${IRRLICHT_TIMESTAMP_INT} ] ; then              \
-		REFRESH=1;                                                                 \
-	fi;                                                                            \
-	if [ $$REFRESH -ne 0 ] ; then                                                  \
-	mkdir -p ${IRRLICHT_DIR};                                                      \
-	echo "changed timestamp for irrlicht detected building...";                    \
-	cd deps/irrlicht/source/Irrlicht/Android;                                      \
-	export APP_PLATFORM=${APP_PLATFORM};                                           \
-	export TARGET_ABI=${TARGET_ABI};                                               \
-	${ANDROID_NDK}/ndk-build                                                       \
-		NDEBUG=${NDEBUG}                                                           \
-		APP_PLATFORM=${APP_PLATFORM}                                               \
-		TARGET_ABI=${TARGET_ABI}                                                   \
-		APP_STL=${APP_STL}                                                         \
-		COMPILER_VERSION=${COMPILER_VERSION}                                       \
-		TARGET_CPPFLAGS_ADDON="${TARGET_CXXFLAGS_ADDON}"                           \
-		TARGET_CFLAGS_ADDON="${TARGET_CFLAGS_ADDON}"                               \
-		NDK_APPLICATION_MK=${ANDR_ROOT}/jni/Irrlicht.mk || exit 1;                 \
-	touch ${IRRLICHT_TIMESTAMP};                                                   \
-	touch ${IRRLICHT_TIMESTAMP_INT};                                               \
-	else                                                                           \
-		echo "nothing to be done for irrlicht";                                    \
+	+@REFRESH=0;                                                                    \
+	if [ ! -e ${IRRLICHT_TIMESTAMP_INT} ] ; then                                    \
+		REFRESH=1;                                                                  \
+	fi;                                                                             \
+	if [ ! -e ${IRRLICHT_LIB} ] ; then                                              \
+		REFRESH=1;                                                                  \
+	fi;                                                                             \
+	if [ ${IRRLICHT_TIMESTAMP} -nt ${IRRLICHT_TIMESTAMP_INT} ] ; then               \
+		REFRESH=1;                                                                  \
+	fi;                                                                             \
+	if [ $$REFRESH -ne 0 ] ; then                                                   \
+	mkdir -p ${IRRLICHT_DIR};                                                       \
+	echo "changed timestamp for irrlicht detected building...";                     \
+	cd deps/irrlicht/source/Irrlicht/Android;                                       \
+	export APP_PLATFORM=${APP_PLATFORM};                                            \
+	export TARGET_ABI=${TARGET_ABI};                                                \
+	${ANDROID_NDK}/ndk-build                                                        \
+		NDEBUG=${NDEBUG}                                                            \
+		APP_PLATFORM=${APP_PLATFORM}                                                \
+		TARGET_ABI=${TARGET_ABI}                                                    \
+		APP_STL=${APP_STL}                                                          \
+		COMPILER_VERSION=${COMPILER_VERSION}                                        \
+		TARGET_CPPFLAGS_ADDON="${TARGET_CXXFLAGS_ADDON}"                            \
+		TARGET_CFLAGS_ADDON="${TARGET_CFLAGS_ADDON}"                                \
+		NDK_APPLICATION_MK=${ANDR_ROOT}/jni/Irrlicht.mk || exit 1;                  \
+	touch ${IRRLICHT_TIMESTAMP};                                                    \
+	touch ${IRRLICHT_TIMESTAMP_INT};                                                \
+	else                                                                            \
+		echo "nothing to be done for irrlicht";                                     \
 	fi
 
 clean_irrlicht :
@@ -567,7 +571,7 @@ $(CURL_LIB): $(CURL_TIMESTAMP)
 	export CXX=${CROSS_CXX};                                                       \
 	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                      \
 	export CPPFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                       \
-	./configure --host=${TARGET_HOST} --enable-static --disable-shared             \
+	./configure --host=${TARGET_TOOLCHAIN} --enable-static --disable-shared        \
 	--disable-debug --disable-verbose --disable-dependency-tracking --disable-ftp  \
 	--disable-ldap --disable-ldaps --disable-rtsp --disable-proxy --disable-dict   \
 	--disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smtp   \
@@ -658,6 +662,64 @@ $(LUAJIT_LIB): $(LUAJIT_TIMESTAMP)
 clean_luajit:
 	$(RM) -R deps/luajit
 
+$(GMP_TIMESTAMP) : gmp_download
+	@LAST_MODIF=$$(find ${GMP_DIR} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "); \
+	if [ $$(basename $$LAST_MODIF) != "timestamp" ] ; then                         \
+		touch ${GMP_TIMESTAMP};                                                    \
+	fi
+
+gmp_download :
+	@if [ ! -d "${GMP_DIR}" ] ; then                                               \
+		echo "gmp sources missing, downloading...";                                \
+		mkdir -p ${ANDR_ROOT}/deps;                                                \
+		cd deps;                                                                   \
+		mkdir gmp;                                                                 \
+		wget ${GMP_URL_HTTP} || exit 1;                                            \
+		tar -xJf gmp-${GMP_VERSION}.tar.xz -C gmp --strip-components=1 || exit 1;  \
+		rm gmp-${GMP_VERSION}.tar.xz;                                              \
+	fi
+
+gmp : $(GMP_LIB)
+
+$(GMP_LIB): $(GMP_TIMESTAMP)
+	@REFRESH=0;                                                                    \
+	if [ ! -e ${GMP_TIMESTAMP_INT} ] ; then                                        \
+		REFRESH=1;                                                                 \
+	fi;                                                                            \
+	if [ ! -e ${GMP_LIB} ] ; then                                                  \
+		REFRESH=1;                                                                 \
+	fi;                                                                            \
+	if [ ${GMP_TIMESTAMP} -nt ${GMP_TIMESTAMP_INT} ] ; then                        \
+		REFRESH=1;                                                                 \
+	fi;                                                                            \
+	if [ $$REFRESH -ne 0 ] ; then                                                  \
+	mkdir -p ${GMP_DIR};                                                           \
+	echo "changed timestamp for gmp detected building...";                         \
+	cd deps/gmp;                                                                   \
+	export TOOLCHAIN=/tmp/ndk-${TARGET_HOST}-gmp;                                  \
+	${ANDROID_NDK}/build/tools/make_standalone_toolchain.py                        \
+		--arch ${TARGET_ARCH}                                                      \
+		--api ${API}                                                               \
+		--stl=${APP_STL_LIB}                                                       \
+		--install-dir=$${TOOLCHAIN};                                               \
+	export PATH="$${TOOLCHAIN}/bin:$${PATH}";                                      \
+	export CC=${CROSS_CC};                                                         \
+	export CXX=${CROSS_CXX};                                                       \
+	export TARGET_OS=OS_ANDROID_CROSSCOMPILE;                                      \
+	export CFLAGS="$${CFLAGS} ${TARGET_CFLAGS_ADDON}";                             \
+	export CXXFLAGS="$${CPPFLAGS} ${TARGET_CXXFLAGS_ADDON}";                       \
+	./configure --host=${TARGET_TOOLCHAIN} --enable-static --disable-shared --prefix=/usr; \
+	$(MAKE) install DESTDIR=/${GMP_DIR} || exit 1;                                 \
+	touch ${GMP_TIMESTAMP};                                                        \
+	touch ${GMP_TIMESTAMP_INT};                                                    \
+	$(RM) -rf $${TOOLCHAIN};                                                       \
+	else                                                                           \
+		echo "nothing to be done for gmp";                                         \
+	fi
+
+clean_gmp:
+	$(RM) -R deps/gmp
+
 assets : $(ASSETS_TIMESTAMP)
 	@REFRESH=0;                                                                    \
 	if [ ! -e ${ASSETS_TIMESTAMP}.old ] ; then                                     \
@@ -718,9 +780,10 @@ assets : $(ASSETS_TIMESTAMP)
 clean_assets :
 	@$(RM) -r ${APP_ROOT}/assets
 
-apk: local.properties $(IRRLICHT_LIB) $(CURL_LIB) $(LEVELDB_LIB) $(LUAJIT_LIB)    \
+apk: local.properties $(IRRLICHT_LIB) $(CURL_LIB) $(GMP_LIB) $(LEVELDB_LIB) $(LUAJIT_LIB) \
 	$(OPENAL_LIB) $(VORBIS_LIB) prep_srcdir iconv_download assets
-	+@${ANDROID_NDK}/ndk-build                                                    \
+	+@cd native; \
+	${ANDROID_NDK}ndk-build                                                       \
 		APP_STL=${APP_STL} COMPILER_VERSION=${COMPILER_VERSION}                   \
 		APP_PLATFORM=${APP_PLATFORM} TARGET_ABI=${TARGET_ABI} || exit 1;          \
 	if [ ! -e ${APP_ROOT}/jniLibs ]; then                                         \

@@ -101,8 +101,11 @@ build/android/src/main/jniLibs
 build/android/obj
 build/android/local.properties
 build/android/.gradle
+build/android/native/build
+build/android/native/deps
 timestamp
 .idea
+.externalNativeBuild
 
 ## iOS build files
 build/iOS/MultiCraft/MultiCraft.xcodeproj/xcuserdata
