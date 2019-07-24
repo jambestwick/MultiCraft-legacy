@@ -43,13 +43,13 @@ local function initialize_builtin_statbars(player)
 		player:hud_set_flags(player:hud_get_flags())
 	end
 
-	if player:hud_get_flags().healthbar and enable_damage then
- 		if hud_ids[name].id_healthbar == nil then
-			hud_ids[name].id_healthbar = hud.register("health", health_bar_definition)
+	if player:hud_get_flags().healthbar then
+ 		--if hud_ids[name].id_healthbar == nil then
+			--hud_ids[name].id_healthbar = hud.register("health", health_bar_definition)
 			minetest.after(0, function()
 				hud.change_item(player, "health", {number = player:get_hp()})
 			end)
-		end
+		--end
 	else
 		if hud_ids[name].id_healthbar ~= nil then
 			player:hud_remove(hud_ids[name].id_healthbar)
@@ -58,7 +58,7 @@ local function initialize_builtin_statbars(player)
 	end
 
 	if (player:get_breath() < 11) then
-		if player:hud_get_flags().breathbar and enable_damage then
+		if player:hud_get_flags().breathbar then
 			if hud_ids[name].id_breathbar == nil then
 				hud_ids[name].id_breathbar = player:hud_add(breath_bar_definition)
 			end
@@ -162,6 +162,7 @@ end
 end]]
 
 if enable_damage then
+	hud.register("health", health_bar_definition)
 	core.register_on_joinplayer(initialize_builtin_statbars)
 	core.register_on_leaveplayer(cleanup_builtin_statbars)
 	core.register_playerevent(player_event_handler)
@@ -212,4 +213,4 @@ minetest.register_playerstep(function(dtime, playernames)
 			end
 		end
 	end
-end, minetest.is_singleplayer()) -- Force step in singlplayer mode only
+end, true)

@@ -38,7 +38,7 @@ function hud.register(name, def)
 	end
 
 	if items[name] ~= nil then
-		throw_error("A statbar with that name already exists")
+		throw_error("A statbar with name " .. name .. " already exists")
 		return false
 	end
 
