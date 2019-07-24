@@ -79,16 +79,29 @@ struct MapgenDesc {
 //// Built-in mapgens
 ////
 
-static MapgenDesc g_reg_mapgens[] = {
-	{"v5",         true},
-	{"v6",         true},
-	{"v7",         true},
-	{"v7p",        true},
-	{"flat",       true},
-	{"fractal",    true},
-	{"valleys",    true},
-	{"singlenode", true},
-};
+#if defined(__ANDROID__) || defined(__IOS__)
+	static MapgenDesc g_reg_mapgens[] = {
+		{"v7p",        true},
+		{"flat",       true},
+		{"valleys",    true},
+		{"v5",         false},
+		{"v6",         false},
+		{"v7",         false},
+		{"fractal",    false},
+		{"singlenode", false},
+	};
+#else
+	static MapgenDesc g_reg_mapgens[] = {
+		{"v7p",        true},
+		{"flat",       true},
+		{"valleys",    true},
+		{"v5",         true},
+		{"v6",         true},
+		{"v7",         true},
+		{"fractal",    true},
+		{"singlenode", true},
+	};
+#endif
 
 STATIC_ASSERT(
 	ARRLEN(g_reg_mapgens) == MAPGEN_INVALID,

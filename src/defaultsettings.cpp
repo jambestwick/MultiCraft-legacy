@@ -373,7 +373,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("enable_console", "false");
 
 	settings->setDefault("mainmenu_last_selected_world", "1");
-	settings->setDefault("mapgens_available", "v7p, flat, v7, v6");
 
 	// Mobile Platform
 #if defined(__ANDROID__) || defined(__IOS__)
@@ -391,7 +390,6 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("emergequeue_limit_generate", "16");
 	settings->setDefault("curl_verify_cert", "false");
 	settings->setDefault("gui_scaling_filter_txr2img", "false");
-	settings->setDefault("mapgens_available", "v7p, flat");
 
 	// FIXME: this code should be in init_gettext() ideally
 	char lang[3] = {0};
