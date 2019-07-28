@@ -105,6 +105,9 @@ function core.register_entity(name, prototype)
 	prototype.mod_origin = core.get_current_modname() or "??"
 end
 
+-- Intllib
+Sl = intllib.make_gettext_pair("locales");
+
 function core.register_item(name, itemdef)
 	-- Check name
 	if name == nil then
@@ -149,6 +152,11 @@ function core.register_item(name, itemdef)
 	-- Flowing liquid uses param2
 	if itemdef.type == "node" and itemdef.liquidtype == "flowing" then
 		itemdef.paramtype2 = "flowingliquid"
+	end
+
+	-- Intllib
+	if itemdef.description and itemdef.description ~= "" then
+		itemdef.description = Sl(itemdef.description)
 	end
 
 	-- BEGIN Legacy stuff
