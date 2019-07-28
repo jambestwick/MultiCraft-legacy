@@ -17,4 +17,3 @@ function core.create_detached_inventory(name, callbacks, player_name)
 	core.detached_inventories[name] = stuff
 	return core.create_detached_inventory_raw(name, player_name)
 end
-

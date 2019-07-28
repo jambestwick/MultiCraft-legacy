@@ -14,4 +14,3 @@ function core.job_processor(serialized_func, serialized_param)
 
 	return retval or core.serialize(nil)
 end
-

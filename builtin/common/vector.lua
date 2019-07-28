@@ -1,4 +1,3 @@
-
 vector = {}
 
 function vector.new(a, b, c)

@@ -17,7 +17,7 @@
 
 --------------------------------------------------------------------------------
 local function get_formspec(tabview, name, tabdata)
-	
+
 	local index = menudata.worldlist:get_current_index(
 				tonumber(core.setting_get("mainmenu_last_selected_world"))
 				)
@@ -43,7 +43,7 @@ local function get_formspec(tabview, name, tabdata)
 			"checkbox[0.25,1.15;cb_server_announce;" .. fgettext("Public") .. ";"
 		return retval
 	end
-		
+
 	local bind_addr = core.setting_get("bind_address")
 	if bind_addr ~= nil and bind_addr ~= "" then
 		retval = retval ..
@@ -56,12 +56,12 @@ local function get_formspec(tabview, name, tabdata)
 			"field[0.55,5.2;3.5,0.5;te_serverport;" .. fgettext("Server Port") .. ";" ..
 			core.formspec_escape(core.setting_get("port")) .. "]"
 	end
-	
+
 	retval = retval ..
 		"textlist[4,0.25;7.5,3.7;srv_worlds;" ..
 		menu_render_worldlist() ..
 		";" .. index .. ";true]"
-	
+
 	return retval
 end
 
@@ -136,7 +136,7 @@ local function main_button_handler(this, fields, name, tabdata)
 				local game, index = gamemgr.find_by_gameid(world.gameid)
 				core.settings:set("menu_last_game", game.id)
 			end
-			
+
 			core.start()
 		else
 			gamedata.errormessage =
@@ -168,7 +168,7 @@ local function main_button_handler(this, fields, name, tabdata)
 				this:hide()
 			end
 		end
-		
+
 		return true
 	end
 
@@ -178,7 +178,7 @@ local function main_button_handler(this, fields, name, tabdata)
 			local configdialog =
 				create_configure_world_dlg(
 						menudata.worldlist:get_raw_index(selected))
-			
+
 			if (configdialog ~= nil) then
 				configdialog:set_parent(this)
 				configdialog:show()

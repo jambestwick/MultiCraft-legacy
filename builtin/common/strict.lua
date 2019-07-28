@@ -1,4 +1,3 @@
-
 -- Always warn when creating a global variable, even outside of a function.
 -- This ignores mod namespaces (variables with the same name as the current mod).
 local WARN_INIT = false
@@ -54,4 +53,3 @@ function meta:__index(name)
 end
 
 setmetatable(_G, meta)
-

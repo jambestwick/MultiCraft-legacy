@@ -611,4 +611,3 @@ function modstore.activate_search_tab(type, old_tab, new_tab)
 		data = filterlist.get_list(modstore.searchlist),
 	}
 end
-

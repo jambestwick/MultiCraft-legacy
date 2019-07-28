@@ -47,7 +47,7 @@ local function create_world_formspec(dialogdata)
 	local retval =
 		"size[11.5,3.75,false]" ..
 		"background[0,0;11.5,3;" .. core.formspec_escape(defaulttexturedir ..
-        "bg_dialog.png") .. ";true]" ..
+		"bg_dialog.png") .. ";true]" ..
 		"label[1.5,0;" .. fgettext("World name:") .. "]"..
 		"field[4.5,0.4;6,0.5;te_world_name;;]" ..
 
@@ -69,20 +69,20 @@ end
 local function create_world_buttonhandler(this, fields)
 
 	if fields["world_create_cancel"] then
-                this:delete()
-                return true
-        end
+		this:delete()
+		return true
+	end
 
 	if fields["world_create_confirm"] or
 		fields["key_enter"] then
 
 		local worldname = fields["te_world_name"]
 		local gameindex
-                for i,item in ipairs(gamemgr.games) do
-                    if item.name == fields["games"] then
-                       gameindex = i
-                    end
-                end
+			for i, item in ipairs(gamemgr.games) do
+				if item.name == fields["games"] then
+					gameindex = i
+				end
+			end
 
 		if gameindex ~= nil and
 			worldname ~= "" then
@@ -121,10 +121,8 @@ local function create_world_buttonhandler(this, fields)
 		return true
 	end
 
-
 	return false
 end
-
 
 function create_create_world_dlg(update_worldlistfilter)
 	local retval = dialog_create("sp_create_world",
