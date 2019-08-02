@@ -65,7 +65,7 @@ doc/doxygen_*
 ## Build files
 CMakeFiles
 Makefile
-!build/android/Makefile
+!build/android/deprecated/Makefile
 cmake_install.cmake
 CMakeCache.txt
 CPackConfig.cmake
@@ -76,7 +76,6 @@ src/cmake_config.h
 src/cmake_config_githash.h
 src/lua/build/
 locale/
-!games/*/*/*/locale
 .directory
 .gradle/
 *.cbp
@@ -92,16 +91,12 @@ cmake-build-debug/
 cmake-build-release/
 
 ## Android build files
-build/android/src/main/assets
 build/android/build
-build/android/deps
-build/android/libs
-build/android/jni/lib
-build/android/jni/src
-build/android/src/main/jniLibs
-build/android/obj
+build/android/release
 build/android/local.properties
 build/android/.gradle
+build/android/app/src/main/assets
+build/android/app/build
 build/android/native/build
 build/android/native/deps
 timestamp
@@ -111,15 +106,13 @@ timestamp
 ## iOS build files
 build/iOS/MultiCraft/MultiCraft.xcodeproj/xcuserdata
 build/iOS/MultiCraft/MultiCraft.xcodeproj/project.xcworkspace
-# build/iOS/MultiCraft/MultiCraft/Assets.xcassets/AppIcon.appiconset/*.png
 build/iOS/MultiCraft.xcworkspace
 build/iOS/Pods
 build/iOS/Podfile.lock
 build/iOS/deps/*
 !build/iOS/deps/*.sh
-build/iOS/assets.zip
-build/iOS/worlds.zip
+build/iOS/*.zip
 build/iOS/Ads
 
 ## WindowsApp files
-build/WindowsApp/multicraft-windows.zip
+build/WindowsApp/*.zip
