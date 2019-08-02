@@ -422,11 +422,6 @@ void set_default_settings(Settings *settings)
 	// set font_path
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");
-	
-	// FIXME: bad solution 'con(62/1)RE-SENDING timed-out RELIABLE to 127.0.0.1(t/o=0.1)'
-	#ifdef __aarch64__
-		settings->setDefault("max_packets_per_iteration", "8");
-	#endif
 
 	// check screen size
 	float x_inches = ((double) porting::getDisplaySize().X /

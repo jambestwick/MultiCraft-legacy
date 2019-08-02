@@ -66,11 +66,7 @@ static inline float CALC_DTIME(u64 lasttime, u64 curtime)
  */
 #define MAX_RELIABLE_WINDOW_SIZE 0x8000
  /* starting value for window size */
-#if defined(__ANDROID__) || defined(__aarch64__)
-#define MIN_RELIABLE_WINDOW_SIZE 0x4
-#else
 #define MIN_RELIABLE_WINDOW_SIZE 0x40
-#endif
 
 #define MAX_UDP_PEERS 65535
 

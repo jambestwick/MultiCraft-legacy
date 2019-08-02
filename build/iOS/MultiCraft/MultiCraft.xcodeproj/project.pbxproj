@@ -254,7 +254,6 @@
 		F8E6C7C91DCA430300F64426 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7C81DCA430300F64426 /* OpenGLES.framework */; };
 		F8E6C7CB1DCA430B00F64426 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7CA1DCA430B00F64426 /* OpenAL.framework */; };
 		F8E6C7CD1DCA431B00F64426 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7CC1DCA431B00F64426 /* Foundation.framework */; };
-		F8E6C7CF1DCA432200F64426 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7CE1DCA432200F64426 /* CoreMotion.framework */; };
 		F8E6C7D11DCA433E00F64426 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D01DCA433E00F64426 /* libiconv.tbd */; };
 		F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D41DCA476800F64426 /* libIrrlicht.a */; };
 		F8E6C7D71DCA477600F64426 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D61DCA477600F64426 /* libfreetype.a */; };
@@ -801,7 +800,6 @@
 				F8E6C7C91DCA430300F64426 /* OpenGLES.framework in Frameworks */,
 				F8E6C7CB1DCA430B00F64426 /* OpenAL.framework in Frameworks */,
 				F8E6C7CD1DCA431B00F64426 /* Foundation.framework in Frameworks */,
-				F8E6C7CF1DCA432200F64426 /* CoreMotion.framework in Frameworks */,
 				F8E6C7D11DCA433E00F64426 /* libiconv.tbd in Frameworks */,
 				F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */,
 				F8E6C7D71DCA477600F64426 /* libfreetype.a in Frameworks */,
