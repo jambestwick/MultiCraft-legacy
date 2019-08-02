@@ -2616,10 +2616,7 @@ void GUIFormSpecMenu::drawMenu()
 			NULL, m_client, IT_ROT_HOVERED);
 	}
 
-/* TODO find way to show tooltips on touchscreen */
-#ifndef HAVE_TOUCHSCREENGUI
 	m_pointer = m_device->getCursorControl()->getPosition();
-#endif
 
 	/*
 		Draw static text elements
@@ -2713,7 +2710,7 @@ void GUIFormSpecMenu::showTooltip(const std::wstring &text,
 	v2u32 screenSize = Environment->getVideoDriver()->getScreenSize();
 	int tooltip_offset_x = m_btn_height;
 	int tooltip_offset_y = m_btn_height;
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__IOS__)
 	tooltip_offset_x *= 3;
 	tooltip_offset_y  = 0;
 	if (m_pointer.X > (s32)screenSize.X / 2)
@@ -3074,61 +3071,58 @@ bool GUIFormSpecMenu::preprocessEvent(const SEvent& event)
 
 #if defined(__ANDROID__) || defined(__IOS__)
 	// display software keyboard when clicking edit boxes
-	if (event.EventType == EET_MOUSE_INPUT_EVENT
-			&& event.MouseInput.Event == EMIE_LMOUSE_PRESSED_DOWN) {
+	if (event.EventType == EET_MOUSE_INPUT_EVENT &&
+		event.MouseInput.Event == EMIE_LMOUSE_PRESSED_DOWN) {
 		gui::IGUIElement *hovered =
-			Environment->getRootGUIElement()->getElementFromPoint(
-				core::position2d<s32>(event.MouseInput.X, event.MouseInput.Y));
+		Environment->getRootGUIElement()->getElementFromPoint(
+															  core::position2d<s32>(event.MouseInput.X, event.MouseInput.Y));
 		if ((hovered) && (hovered->getType() == irr::gui::EGUIET_EDIT_BOX)) {
 			bool retval = hovered->OnEvent(event);
-			if (retval) {
+			if (retval)
 				Environment->setFocus(hovered);
-			}
+
+			std::string field_name = getNameByID(hovered->getID());
+			// read-only field
+			if (field_name.empty())
+				return retval;
+
 			m_JavaDialogFieldName = getNameByID(hovered->getID());
-			std::string message   = gettext("Enter ");
-			std::string label     = wide_to_utf8(getLabelByID(hovered->getID()));
-			if (label == "") {
+			std::string message = gettext("Enter ");
+			std::string label = wide_to_utf8(getLabelByID(hovered->getID()));
+			if (label.empty())
 				label = "text";
-			}
 			message += gettext(label.c_str());
 
-			/* single line text input */
+			// single line text input
 			int type = 2;
 
-			/* multi line text input */
-			if (((gui::IGUIEditBox*) hovered)->isMultiLineEnabled()) {
+			// multi line text input
+			if (((gui::IGUIEditBox *)hovered)->isMultiLineEnabled())
 				type = 1;
-			}
 
-			/* passwords are always single line */
-			if (((gui::IGUIEditBox*) hovered)->isPasswordBox()) {
+			// passwords are always single line
+			if (((gui::IGUIEditBox *)hovered)->isPasswordBox())
 				type = 3;
-			}
 
 			porting::showInputDialog(gettext("ok"), "",
-					wide_to_utf8(((gui::IGUIEditBox*) hovered)->getText()),
-					type);
+									 wide_to_utf8(((gui::IGUIEditBox *)hovered)->getText()),	type);
 			return retval;
 		}
 	}
 
-	if (event.EventType == EET_TOUCH_INPUT_EVENT)
-	{
+	if (event.EventType == EET_TOUCH_INPUT_EVENT) {
 		SEvent translated;
 		memset(&translated, 0, sizeof(SEvent));
-		translated.EventType   = EET_MOUSE_INPUT_EVENT;
-		gui::IGUIElement* root = Environment->getRootGUIElement();
+		translated.EventType = EET_MOUSE_INPUT_EVENT;
+		gui::IGUIElement *root = Environment->getRootGUIElement();
 
 		if (!root) {
-			errorstream
-			<< "GUIFormSpecMenu::preprocessEvent unable to get root element"
-			<< std::endl;
+			errorstream << "GUIModalMenu::preprocessEvent"
+			<< " unable to get root element" << std::endl;
 			return false;
 		}
-		gui::IGUIElement* hovered = root->getElementFromPoint(
-			core::position2d<s32>(
-					event.TouchInput.X,
-					event.TouchInput.Y));
+		gui::IGUIElement *hovered = root->getElementFromPoint(
+															  core::position2d<s32>(event.TouchInput.X, event.TouchInput.Y));
 
 		translated.MouseInput.X = event.TouchInput.X;
 		translated.MouseInput.Y = event.TouchInput.Y;
@@ -3139,13 +3133,13 @@ bool GUIFormSpecMenu::preprocessEvent(const SEvent& event)
 		if (event.TouchInput.touchedCount == 1) {
 			switch (event.TouchInput.Event) {
 				case ETIE_PRESSED_DOWN:
-					m_pointer = v2s32(event.TouchInput.X,event.TouchInput.Y);
+					m_pointer = v2s32(event.TouchInput.X, event.TouchInput.Y);
 					translated.MouseInput.Event = EMIE_LMOUSE_PRESSED_DOWN;
 					translated.MouseInput.ButtonStates = EMBSM_LEFT;
 					m_down_pos = m_pointer;
 					break;
 				case ETIE_MOVED:
-					m_pointer = v2s32(event.TouchInput.X,event.TouchInput.Y);
+					m_pointer = v2s32(event.TouchInput.X, event.TouchInput.Y);
 					translated.MouseInput.Event = EMIE_MOUSE_MOVED;
 					translated.MouseInput.ButtonStates = EMBSM_LEFT;
 					break;
@@ -3153,30 +3147,29 @@ bool GUIFormSpecMenu::preprocessEvent(const SEvent& event)
 					translated.MouseInput.Event = EMIE_LMOUSE_LEFT_UP;
 					translated.MouseInput.ButtonStates = 0;
 					hovered = root->getElementFromPoint(m_down_pos);
-					/* we don't have a valid pointer element use last
-					 * known pointer pos */
+					// we don't have a valid pointer element use last
+					// known pointer pos
 					translated.MouseInput.X = m_pointer.X;
 					translated.MouseInput.Y = m_pointer.Y;
 
-					/* reset down pos */
-					m_down_pos = v2s32(0,0);
+					// reset down pos
+					m_down_pos = v2s32(0, 0);
 					break;
 				default:
 					dont_send_event = true;
-					//this is not supposed to happen
-					errorstream
-					<< "GUIFormSpecMenu::preprocessEvent unexpected usecase Event="
+					// this is not supposed to happen
+					errorstream << "GUIModalMenu::preprocessEvent"
+					<< " unexpected usecase Event="
 					<< event.TouchInput.Event << std::endl;
 			}
-		} else if ( (event.TouchInput.touchedCount == 2) &&
-				(event.TouchInput.Event == ETIE_PRESSED_DOWN) ) {
+		} else if ((event.TouchInput.touchedCount == 2) &&
+				   (event.TouchInput.Event == ETIE_PRESSED_DOWN)) {
 			hovered = root->getElementFromPoint(m_down_pos);
 
 			translated.MouseInput.Event = EMIE_RMOUSE_PRESSED_DOWN;
 			translated.MouseInput.ButtonStates = EMBSM_LEFT | EMBSM_RIGHT;
 			translated.MouseInput.X = m_pointer.X;
 			translated.MouseInput.Y = m_pointer.Y;
-
 			if (hovered) {
 				hovered->OnEvent(translated);
 			}
@@ -3184,27 +3177,27 @@ bool GUIFormSpecMenu::preprocessEvent(const SEvent& event)
 			translated.MouseInput.Event = EMIE_RMOUSE_LEFT_UP;
 			translated.MouseInput.ButtonStates = EMBSM_LEFT;
 
-
 			if (hovered) {
 				hovered->OnEvent(translated);
 			}
 			dont_send_event = true;
 		}
-		/* ignore unhandled 2 touch events ... accidental moving for example */
+		// ignore unhandled 2 touch events ... accidental moving for example
 		else if (event.TouchInput.touchedCount == 2) {
 			dont_send_event = true;
 		}
-		else if (event.TouchInput.touchedCount > 3) {
-			infostream
-			<< "GUIFormSpecMenu::preprocessEvent to many multitouch events "
-			<< event.TouchInput.touchedCount << " ignoring them" << std::endl;
+		else if (event.TouchInput.touchedCount > 2) {
+			errorstream << "GUIModalMenu::preprocessEvent"
+			<< " to many multitouch events "
+			<< event.TouchInput.touchedCount << " ignoring them"
+			<< std::endl;
 		}
 
 		if (dont_send_event) {
 			return true;
 		}
 
-		/* check if translated event needs to be preprocessed again */
+		// check if translated event needs to be preprocessed again
 		if (preprocessEvent(translated)) {
 			return true;
 		}
@@ -3213,14 +3206,14 @@ bool GUIFormSpecMenu::preprocessEvent(const SEvent& event)
 			bool retval = hovered->OnEvent(translated);
 
 			if (event.TouchInput.Event == ETIE_LEFT_UP) {
-				/* reset pointer */
-				m_pointer = v2s32(0,0);
+				// reset pointer
+				//m_pointer = v2s32(0, 0);
 			}
 			drop();
 			return retval;
 		}
 	}
-	#endif
+#endif
 
 	if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT) {
 		/* TODO add a check like:
@@ -3501,8 +3494,16 @@ bool GUIFormSpecMenu::OnEvent(const SEvent& event)
 						move_amount = 1;
 					else if (button == 2)  // middle
 						move_amount = MYMIN(m_selected_amount, 10);
-					else  // left
+					else {  // left
+#ifdef HAVE_TOUCHSCREENGUI
+						if (s.listname == "craft")
+							move_amount = 1;
+						else
+							move_amount = m_selected_amount;
+#else
 						move_amount = m_selected_amount;
+#endif
+					}
 
 					if (identical) {
 						if (move_amount >= m_selected_amount)
