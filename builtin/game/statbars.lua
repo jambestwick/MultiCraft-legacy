@@ -44,12 +44,9 @@ local function initialize_builtin_statbars(player)
 	end
 
 	if player:hud_get_flags().healthbar then
- 		--if hud_ids[name].id_healthbar == nil then
-			--hud_ids[name].id_healthbar = hud.register("health", health_bar_definition)
-			minetest.after(0, function()
-				hud.change_item(player, "health", {number = player:get_hp()})
-			end)
-		--end
+		minetest.after(0, function()
+			hud.change_item(player, "health", {number = player:get_hp()})
+		end)
 	else
 		if hud_ids[name].id_healthbar ~= nil then
 			player:hud_remove(hud_ids[name].id_healthbar)
