@@ -876,6 +876,27 @@ server_map_save_interval (Map save interval) float 5.3
 #    Kick player if send more than X messages per 10 seconds.
 # chat_message_limit_trigger_kick int 50
 
+[**Hunger]
+
+hunger.tick            (time in seconds after that 1 saturation point is taken) float 600
+hunger.tick_min        (stamina ticks won't reduce saturation below this level) int 4
+hunger.health_tick     (time in seconds after player gets healed/damaged)       float 4
+hunger.move_tick       (time in seconds after the movement is checked)          float 0.5
+hunger.poison_tick     (time in seconds between poison damage)                  float 1
+hunger.exhaust_dig     (exhaustion for digging a node)                          float 3
+hunger.exhaust_place   (exhaustion for placing a node)                          float 1
+hunger.exhaust_move    (exhaustion for moving)                                  float 2
+hunger.exhaust_jump    (exhaustion for jumping)                                 float 3
+hunger.exhaust_craft   (exhaustion for crafting)                                float 1
+hunger.exhaust_punch   (exhaustion for punching)                                float 5
+hunger.exhaust_lvl     (exhaustion level at which saturation gets lowered)      float 192
+hunger.heal            (amount of HP a player gains per hunger.health_tick)     int 1 0 20
+hunger.heal_lvl        (minimum saturation needed for healing)                  int 5 1 20
+hunger.starve          (amount of HP a player loses per hunger.health_tick)     int 1 0 20
+hunger.starve_lvl      (maximum stamina needed for starving)                    int 3 0 19
+hunger.level_max       (maximum stamina level)                                  int 21 2 21
+hunger.visual_max      (hud bar only extends to 20)                             int 20 2 20
+
 [**Physics]
 
 movement_acceleration_default (Default acceleration) float 3

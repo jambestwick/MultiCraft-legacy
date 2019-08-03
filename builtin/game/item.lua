@@ -556,35 +556,7 @@ function core.item_drop(itemstack, dropper, pos)
 	-- environment failed
 end
 
-function core.do_item_eat(hp_change, replace_with_item, itemstack, user, pointed_thing)
-	for _, callback in pairs(core.registered_on_item_eats) do
-		local result = callback(hp_change, replace_with_item, itemstack, user, pointed_thing)
-		if result then
-			return result
-		end
-	end
-	if itemstack:take_item() ~= nil then
-		user:set_hp(user:get_hp() + hp_change)
-
-		if replace_with_item then
-			if itemstack:is_empty() then
-				itemstack:add_item(replace_with_item)
-			else
-				local inv = user:get_inventory()
-				-- Check if inv is null, since non-players don't have one
-				if inv and inv:room_for_item("main", {name=replace_with_item}) then
-					inv:add_item("main", replace_with_item)
-				else
-					local pos = user:get_pos()
-					pos.y = math.floor(pos.y + 0.5)
-					core.add_item(pos, replace_with_item)
-				end
-			end
-		end
-	end
-	return itemstack
-end
-
+local enable_damage = minetest.settings:get_bool("enable_damage")
 function core.item_eat(hp_change, replace_with_item)
 	return function(itemstack, user, pointed_thing)  -- closure
 		if user then
@@ -610,7 +582,9 @@ function core.item_eat(hp_change, replace_with_item)
 				texture = texture,
 			})
 			core.sound_play("player_eat", {pos = pos, max_hear_distance = 10, gain = 0.3})
-			return core.do_item_eat(hp_change, replace_with_item, itemstack, user, pointed_thing)
+			if enable_damage then
+				return core.do_item_eat(hp_change, replace_with_item, itemstack, user, pointed_thing)
+			end
 		end
 	end
 end
