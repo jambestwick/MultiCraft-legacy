@@ -1,7 +1,7 @@
-MultiCraft Open Source Project:
-=================================
+MultiCraft Open Source Project
+==============================
 
-LGPLv3.0+, CC-BY-SA 3.0 and a little bit proprietary textures. The list in the file nearby.
+LGPLv3.0+, CC-BY-SA 4.0 and a little bit proprietary textures. The list in the file nearby.
 You can use these textures without restriction in the MultiCraft Project.
 You cannot use them in another project.
 They are an integral part of this project and are created or purchased exclusively for it.
@@ -9,7 +9,7 @@ They are an integral part of this project and are created or purchased exclusive
 --- --- ---
 
 License of Minetest textures and sounds:
-=================================
+========================================
 
 This applies to textures and sounds contained in the main Minetest
 distribution.
@@ -18,7 +18,7 @@ Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
 http://creativecommons.org/licenses/by-sa/3.0/
 
 Authors of media files:
-=================================
+=======================
 Everything not listed in here:
 Copyright (C) 2010-2012 celeron55, Perttu Ahola <celeron55@gmail.com>
 
@@ -27,7 +27,7 @@ erlehmann:
   misc/minetest.svg
 
 License of Minetest source code:
-=================================
+================================
 
 Minetest
 Copyright (C) 2010-2018 celeron55, Perttu Ahola <celeron55@gmail.com>
@@ -49,7 +49,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 --- --- ---
 
 License of media (textures):
-=================================
+============================
 Copyright (C) 2013 Vattic
 
 http://www.minecraftforum.net/topic/72747-/
@@ -93,7 +93,7 @@ If your package contains more than 80% of my textures, you have no right to publ
 
 
 Irrlicht:
-=================================
+=========
 
 This program uses the Irrlicht Engine. http://irrlicht.sourceforge.net/
 
@@ -121,7 +121,7 @@ it freely, subject to the following restrictions:
 --- --- ---
 
 JThread:
-=================================
+========
 
 This program uses the JThread library. License for JThread follows:
 
@@ -148,7 +148,7 @@ IN THE SOFTWARE.
 --- --- ---
 
 Lua:
-=================================
+====
 
 Lua is licensed under the terms of the MIT license reproduced below.
 This means that Lua is free software and can be used for both academic
@@ -179,7 +179,7 @@ THE SOFTWARE.
 --- --- ---
 
 Fonts:
-=================================
+======
 
 DejaVu Sans Mono:
 
