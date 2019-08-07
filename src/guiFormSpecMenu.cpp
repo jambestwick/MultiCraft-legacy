@@ -2616,7 +2616,10 @@ void GUIFormSpecMenu::drawMenu()
 			NULL, m_client, IT_ROT_HOVERED);
 	}
 
+/* TODO find way to show tooltips on touchscreen */
+#ifndef HAVE_TOUCHSCREENGUI
 	m_pointer = m_device->getCursorControl()->getPosition();
+#endif
 
 	/*
 		Draw static text elements
@@ -3182,15 +3185,9 @@ bool GUIFormSpecMenu::preprocessEvent(const SEvent& event)
 			}
 			dont_send_event = true;
 		}
-		// ignore unhandled 2 touch events ... accidental moving for example
-		else if (event.TouchInput.touchedCount == 2) {
+		// ignore unhandled 2 touch events, accidental moving for example
+		else if (event.TouchInput.touchedCount >= 2) {
 			dont_send_event = true;
-		}
-		else if (event.TouchInput.touchedCount > 2) {
-			errorstream << "GUIModalMenu::preprocessEvent"
-			<< " to many multitouch events "
-			<< event.TouchInput.touchedCount << " ignoring them"
-			<< std::endl;
 		}
 
 		if (dont_send_event) {
@@ -3207,7 +3204,7 @@ bool GUIFormSpecMenu::preprocessEvent(const SEvent& event)
 
 			if (event.TouchInput.Event == ETIE_LEFT_UP) {
 				// reset pointer
-				//m_pointer = v2s32(0, 0);
+				m_pointer = v2s32(0, 0);
 			}
 			drop();
 			return retval;

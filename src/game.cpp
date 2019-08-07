@@ -3838,9 +3838,12 @@ void Game::handlePointingAtNode(const PointedThing &pointed,
 
 	ClientMap &map = client->getEnv().getClientMap();
 
+	bool digging = false;
 	if (runData.nodig_delay_timer <= 0.0 && isLeftPressed()
 			&& client->checkPrivilege("interact")) {
 		handleDigging(pointed, nodepos, playeritem_toolcap, dtime);
+		digging = true;
+		runData.noplace_delay_timer = 1.0;
 	}
 
 	// This should be done after digging handling
@@ -3857,22 +3860,10 @@ void Game::handlePointingAtNode(const PointedThing &pointed,
 		}
 	}
 
-	bool digging = false;
-
-	if (runData.nodig_delay_timer <= 0.0 && isLeftPressed()
-			&& client->checkPrivilege("interact")) {
-		handleDigging(pointed, nodepos, playeritem_toolcap, dtime);
-		digging = true;
-		runData.noplace_delay_timer = 1.0;
-	}
-
-	bool place = (input->getRightClicked() || input->getLeftReleased() ||
+	if ((getRightClicked() ||
 				  runData.repeat_rightclick_timer >= m_repeat_right_click_time) &&
-				  client->checkPrivilege("interact");
-	place &= !digging;
-	place &= runData.noplace_delay_timer <= 0.0;
-
-	if (place) {
+				  !digging && runData.noplace_delay_timer <= 0.0 &&
+		client->checkPrivilege("interact")) {
 		runData.repeat_rightclick_timer = 0;
 		infostream << "Ground right-clicked" << std::endl;
 
@@ -3952,7 +3943,11 @@ void Game::handlePointingAtObject(const PointedThing &pointed, const ItemStack &
 		playeritem.getDefinition(itemdef_manager);
 	bool nohit_enabled = ((ItemGroupList) playeritem_def.groups)["nohit"] != 0;
 
+#ifdef HAVE_TOUCHSCREENGUI
+	if (input->getRightClicked() && !nohit_enabled) {
+#else
 	if (input->getLeftState() && !nohit_enabled) {
+#endif
 		bool do_punch = false;
 		bool do_punch_damage = false;
 
@@ -3989,7 +3984,11 @@ void Game::handlePointingAtObject(const PointedThing &pointed, const ItemStack &
 			if (!disable_send)
 				client->interact(0, pointed);
 		}
+#ifdef HAVE_TOUCHSCREENGUI
+	} else if (input->getLeftClicked() || (input->getRightClicked() && nohit_enabled)) {
+#else
 	} else if (input->getRightClicked() || (input->getLeftClicked() && nohit_enabled)) {
+#endif
 		infostream << "Right-clicked object" << std::endl;
 		client->interact(3, pointed);  // place
 	}
@@ -4141,7 +4140,7 @@ void Game::updateFrame(ProfilerGraph *graph, RunStats *stats, f32 dtime,
 	if (draw_control->range_all) {
 		runData.fog_range = 100000 * BS;
 		#if defined(__ANDROID__) || defined(__IOS__)
-			runData.fog_range = 4 * draw_control->wanted_range * BS;
+			runData.fog_range = draw_control->wanted_range * BS * 4;
 		#endif
 	} else {
 		runData.fog_range = draw_control->wanted_range * BS;
