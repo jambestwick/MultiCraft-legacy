@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.ContextThemeWrapper;
 import android.view.Display;
@@ -61,6 +62,7 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
     private final static String FILES = EXTERNAL_STORAGE + "/Files.zip";
     private final static String WORLDS = EXTERNAL_STORAGE + "/worlds.zip";
     private final static String GAMES = EXTERNAL_STORAGE + "/games.zip";
+    private final static String CACHE = EXTERNAL_STORAGE + "/cache.zip";
     private final static String NOMEDIA = ".nomedia";
     private static final String UPDATE_LINK = "https://raw.githubusercontent.com/MoNTE48/MultiCraft-links/master/Android.json";
     private static final String[] EU_COUNTRIES = new String[]{
@@ -132,6 +134,14 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
     }
 
     //helpful utilities
+    private boolean isArm64() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return TextUtils.join(", ", Build.SUPPORTED_ABIS).contains("64");
+        } else {
+            return false;
+        }
+    }
+
     private void copyWorldsToNewFolder() {
         File source = new File(worldPath);
         File dest = new File(unzipLocation + "worlds");
@@ -277,9 +287,9 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                if (pf.getLaunchTimes() % 3 == 1) {
+                /*if (pf.getLaunchTimes() % 3 == 1) {
                     askLocationPermissions();
-                } else askGdpr();
+                } else*/ askGdpr();
             }
 
             @Override
@@ -300,9 +310,9 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                if (pf.getLaunchTimes() % 3 == 1) {
+                /*if (pf.getLaunchTimes() % 3 == 1) {
                     askLocationPermissions();
-                } else askGdpr();
+                } else*/ askGdpr();
             }
 
             @Override
@@ -324,9 +334,9 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                if (pf.getLaunchTimes() % 3 == 1) {
+                /*if (pf.getLaunchTimes() % 3 == 1) {
                     askLocationPermissions();
-                } else askGdpr();
+                } else*/ askGdpr();
             }
 
             @Override
@@ -387,9 +397,9 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                if (pf.getLaunchTimes() % 3 == 1) {
+                /*if (pf.getLaunchTimes() % 3 == 1) {
                     askLocationPermissions();
-                } else askGdpr();
+                } else*/ askGdpr();
             }
 
             @Override
@@ -486,7 +496,10 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
         if (isAll) {
             dt.execute(unzipLocation);
         } else {
-            dt.execute(unzipLocation + "builtin", unzipLocation + "games", unzipLocation + "debug.txt");
+            if (isArm64())
+                dt.execute(unzipLocation + "cache", unzipLocation + "builtin", unzipLocation + "games", unzipLocation + "debug.txt");
+            else
+                dt.execute(unzipLocation + "builtin", unzipLocation + "games", unzipLocation + "debug.txt");
         }
     }
 
@@ -517,9 +530,15 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
             CopyZipTask cpt = new CopyZipTask(this);
             cpt.setListener(this);
             if (unzipLocation.equals(param)) {
-                cpt.execute(FILES, WORLDS, GAMES);
+                if (isArm64())
+                    cpt.execute(FILES, WORLDS, GAMES, CACHE);
+                else
+                    cpt.execute(FILES, WORLDS, GAMES);
             } else {
-                cpt.execute(FILES, GAMES);
+                if (isArm64())
+                    cpt.execute(FILES, GAMES, CACHE);
+                else
+                    cpt.execute(FILES, GAMES);
             }
         } else if ("CheckConnectionTask".equals(source)) {
             if ("true".equals(param)) {

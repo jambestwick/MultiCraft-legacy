@@ -42,7 +42,7 @@ public class DeleteTask extends AsyncTask<String, Void, Void> {
         if (file.exists()) {
             try {
                 if (file.isDirectory())
-                FileUtils.deleteDirectory(file);
+                    FileUtils.deleteDirectory(file);
                 else FileUtils.deleteQuietly(file);
             } catch (IOException e) {
                 Crashlytics.logException(e);
