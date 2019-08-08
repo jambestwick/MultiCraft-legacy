@@ -38,16 +38,14 @@ local function get_formspec(tabview, name, tabdata)
 				core.formspec_escape(defaulttexturedir ..
 					"blank.png") .. ";world_create;;true;false]"
 
-	local creative_mode = core.settings:get_bool("creative_mode")
-
+	local creative_checkbox = core.settings:get_bool("creative_mode") and "local_creative_checkbox.png" or "blank.png"
 	retval = retval ..
 			"image_button[6.72,1.43;4.96,1.41;" ..
 				core.formspec_escape(defaulttexturedir ..
 					"blank.png") .. ";play;;true;false]" ..
 			"image_button[7.33,3.09;3.73,0.86;" ..
 				core.formspec_escape(defaulttexturedir ..
-					"local_creative_" ..
-					tostring(creative_mode) .. "_btn.png") ..
+					creative_checkbox) ..
 					";cb_creative_mode;;true;false]" ..
 			"textlist[-0.01,0;6.28,4.64;sp_worlds;" ..
 			menu_render_worldlist() ..
