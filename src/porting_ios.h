@@ -33,16 +33,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace porting {
 	void initializePathsiOS();
+
 	void copyAssets();
+
 	void setViewController(void *v);
 
 	void showInputDialog(const std::string &acceptButton, const std::string &hint,
-						 const std::string &current, int editType);
+	                     const std::string &current, int editType);
+
 	int getInputDialogState();
+
 	std::string getInputDialogValue();
 
 	inline void notifyAbortLoading() {}
+
 	void notifyServerConnect(bool is_multiplayer);
+
 	void notifyExitGame();
 }
 

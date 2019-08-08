@@ -31,22 +31,23 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace porting {
 /** java app **/
-extern android_app *app_global;
+	extern android_app *app_global;
 
 /** java <-> c++ interaction interface **/
-extern JNIEnv *jnienv;
+	extern JNIEnv *jnienv;
 
 /**
  * do initialization required on android only
  */
-void initAndroid();
-void cleanupAndroid();
+	void initAndroid();
+
+	void cleanupAndroid();
 
 /**
  * Initializes path_* variables for Android
  * @param env Android JNI environment
  */
-void initializePathsAndroid();
+	void initializePathsAndroid();
 
 
 /**
@@ -57,42 +58,42 @@ void initializePathsAndroid();
  * @param editType type of texfield
  * (1==multiline text input; 2==single line text input; 3=password field)
  */
-void showInputDialog(const std::string& acceptButton,
-		const  std::string& hint, const std::string& current, int editType);
+	void showInputDialog(const std::string &acceptButton,
+	                     const std::string &hint, const std::string &current, int editType);
 
 /**
  * WORKAROUND for not working callbacks from java -> c++
  * get current state of input dialog
  */
-int getInputDialogState();
+	int getInputDialogState();
 
 /**
  * WORKAROUND for not working callbacks from java -> c++
  * get text in current input dialog
  */
-std::string getInputDialogValue();
+	std::string getInputDialogValue();
 
 
 /**
  * get max device RAM as integer value
  * returns -1 on failure
  */
-int getMemoryMax();
+	int getMemoryMax();
 
 /**
 * notify java that font loading failded
 */
-void notifyAbortLoading();
+	void notifyAbortLoading();
 
 /**
 * notify java on server connection
 */
-void notifyServerConnect(bool is_multiplayer);
+	void notifyServerConnect(bool is_multiplayer);
 
 /**
 * notify java on game exit.
 */
-void notifyExitGame();
+	void notifyExitGame();
 
 }
 

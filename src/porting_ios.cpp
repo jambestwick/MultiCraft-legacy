@@ -45,14 +45,14 @@ namespace porting {
 	}
 
 	float getDisplayDensity() {
-			return 1;
+		return 1;
 	}
 
 	v2u32 getDisplaySize() {
 		static bool firstrun = true;
 		static v2u32 retval;
 
-		if(firstrun) {
+		if (firstrun) {
 			unsigned int values[2];
 			ioswrap_size(values);
 			retval.X = values[0];
@@ -68,8 +68,7 @@ namespace porting {
 	}
 
 	void showInputDialog(const std::string &acceptButton, const std::string &hint,
-						 const std::string &current, int editType)
-	{
+						 const std::string &current, int editType) {
 		ioswrap_show_dialog(uiviewcontroller, acceptButton.c_str(), hint.c_str(), current.c_str(), editType);
 	}
 
@@ -84,15 +83,15 @@ namespace porting {
 	}
 
 	void notifyServerConnect(bool is_multiplayer) {
-	#ifdef ADS
+#ifdef ADS
 		ads_allow(!is_multiplayer);
-	#endif
+#endif
 	}
 
 	void notifyExitGame() {
-	#ifdef ADS
+#ifdef ADS
 		ads_allow(true);
-	#endif
+#endif
 	}
 }
 
@@ -100,7 +99,7 @@ extern int real_main(int argc, char *argv[]);
 
 void irrlicht_main() {
 	static const char *args[] = {
-		PROJECT_NAME,
+			PROJECT_NAME,
 	};
-	real_main(1, (char**) args);
+	real_main(1, (char **) args);
 }
