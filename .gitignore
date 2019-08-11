@@ -97,6 +97,7 @@ build/android/local.properties
 build/android/.gradle
 build/android/app/src/main/assets
 build/android/app/build
+build/android/native/.*
 build/android/native/build
 build/android/native/deps
 timestamp
