@@ -2007,6 +2007,8 @@
 					"-fvisibility=hidden",
 					"-fdata-sections",
 					"-ffunction-sections",
+					"-fno-unwind-tables",
+					"-fno-asynchronous-unwind-tables",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = (
@@ -2102,6 +2104,8 @@
 					"-fvisibility=hidden",
 					"-fdata-sections",
 					"-ffunction-sections",
+					"-fno-unwind-tables",
+					"-fno-asynchronous-unwind-tables",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = (

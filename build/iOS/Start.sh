@@ -28,3 +28,4 @@ pod install
 
 echo
 echo "All done! You can continue in Xcode!"
+open MultiCraft.xcworkspace
