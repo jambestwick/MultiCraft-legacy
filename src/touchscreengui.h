@@ -175,9 +175,6 @@ private:
 	// handle pressed hud buttons
 	bool isHUDButton(const SEvent &event);
 
-	// handle released hud buttons
-	bool isReleaseHUDButton(size_t eventID);
-
 	// handle quick touch
 	bool quickTapDetection();
 
