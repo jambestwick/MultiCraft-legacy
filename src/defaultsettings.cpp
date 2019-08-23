@@ -153,7 +153,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("view_bobbing_amount", "1.0");
 	settings->setDefault("fall_bobbing_amount", "1.0");
 	settings->setDefault("enable_3d_clouds", "true");
-	settings->setDefault("cloud_height", "120");
+	settings->setDefault("cloud_height", "128");
 	settings->setDefault("cloud_radius", "12");
 	settings->setDefault("menu_clouds", "false");
 	settings->setDefault("opaque_water", "false");
@@ -172,6 +172,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("desynchronize_mapblock_texture_animation", "true");
 	settings->setDefault("hud_hotbar_max_width", "1.0");
 	settings->setDefault("hud_move_upwards", "0");
+	settings->setDefault("hud_small", "false");
 	settings->setDefault("round_screen", "0");
 	settings->setDefault("enable_local_map_saving", "false");
 	settings->setDefault("show_entity_selectionbox", "false");
@@ -430,10 +431,12 @@ void set_default_settings(Settings *settings)
 		// small 4" phones
 		settings->setDefault("hud_scaling", "0.55");
 		settings->setDefault("mouse_sensitivity", "0.25");
+		settings->setDefault("hud_small", "true");
 	} else if (x_inches > 3.7 && x_inches < 5) {
 		// all phones
 		settings->setDefault("hud_scaling", "0.7");
 		settings->setDefault("mouse_sensitivity", "0.15");
+		settings->setDefault("hud_small", "true");
 	} else if (x_inches >= 5) {
 		// tablets
 		settings->setDefault("hud_scaling", "0.9");
@@ -452,23 +455,28 @@ void set_default_settings(Settings *settings)
 	// set the size of the elements depending on the screen size
 	if ([SDVersion deviceSize] == Screen3Dot5inch) {
 		// 3.5" (old iPhone's)
-		settings->setDefault("hud_scaling", "0.55");
+		settings->setDefault("hud_scaling", "0.5");
+		settings->setDefault("hud_small", "true");
 	} else if ([SDVersion deviceSize] == Screen4inch) {
 		// 4" (iPhone 5)
 		settings->setDefault("hud_scaling", "0.55");
-		settings->setDefault("mouse_sensitivity", "0.3");
+		settings->setDefault("mouse_sensitivity", "0.33");
+		settings->setDefault("hud_small", "true");
 	} else if ([SDVersion deviceSize] == Screen4Dot7inch) {
 		// 4.7" (iPhone)
 		settings->setDefault("hud_scaling", "0.65");
-		settings->setDefault("mouse_sensitivity", "0.25");
+		settings->setDefault("mouse_sensitivity", "0.27");
+		settings->setDefault("hud_small", "true");
 	} else if ([SDVersion deviceSize] == Screen5Dot5inch) {
 		// 5.5" (iPhone Plus)
 		settings->setDefault("hud_scaling", "0.75");
 		settings->setDefault("mouse_sensitivity", "0.3");
+		settings->setDefault("hud_small", "true");
 	} else if (([SDVersion deviceSize] == Screen5Dot8inch) || ([SDVersion deviceSize] == Screen6Dot1inch) || ([SDVersion deviceSize] == Screen6Dot5inch)) {
 		// 5.8+" (iPhone X-series)
 		settings->setDefault("hud_scaling", "0.85");
 		settings->setDefault("mouse_sensitivity", "0.35");
+		settings->setDefault("hud_small", "true");
 	} else {
 		// iPad
 		settings->setDefault("hud_scaling", "0.9");
@@ -489,7 +497,7 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("cloud_radius", "6");
 		settings->setDefault("pause_fps_max", "5");
 		settings->setDefault("chunksize", "3");
-		settings->setDefault("client_mapblock_limit", "250");
+		settings->setDefault("client_mapblock_limit", "200");
 		settings->setDefault("active_block_range", "1");
 		settings->setDefault("max_block_generate_distance", "2");
 	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) || ([SDVersion deviceVersion] == iPad4) || ([SDVersion deviceVersion] == iPadMini3) || ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir))  {
@@ -499,13 +507,12 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("cloud_radius", "6");
 		settings->setDefault("pause_fps_max", "10");
 		settings->setDefault("client_mapblock_limit", "500");
-		settings->setDefault("active_block_range", "1");
+		settings->setDefault("active_block_range", "2");
 		settings->setDefault("max_block_generate_distance", "3");
 	} else {
 		// high settings
 		settings->setDefault("viewing_range", "75");
 		settings->setDefault("client_mapblock_limit", "1000");
-		settings->setDefault("active_block_range", "2");
 		settings->setDefault("max_block_generate_distance", "5");
 	}
 #endif

@@ -41,7 +41,6 @@
 		EB4367AE23CAD13A43ADF4B1 /* libPods-MultiCraft.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8758CE009FCB7E91F4C84C28 /* libPods-MultiCraft.a */; };
 		F810D7052080E48100D109B8 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = F810D7042080E48000D109B8 /* en.lproj */; };
 		F84D3A951DE79AB400ADE1A0 /* ads.mm in Sources */ = {isa = PBXBuildFile; fileRef = F84D3A941DE79AB400ADE1A0 /* ads.mm */; };
-		F85119A71F4476FC00BFA9AF /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F85119A61F4476FC00BFA9AF /* libcurl.a */; };
 		F856B5C31F55F7EE00FE9494 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F856B5C21F55F7EE00FE9494 /* bg.png */; };
 		F87DC8BA210887C700393B64 /* mapgen_v7p.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F87DC8B9210887C700393B64 /* mapgen_v7p.cpp */; };
 		F8E6C4E91DCA3B7900F64426 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8E6C4E81DCA3B7900F64426 /* Assets.xcassets */; };
@@ -257,9 +256,6 @@
 		F8E6C7D11DCA433E00F64426 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D01DCA433E00F64426 /* libiconv.tbd */; };
 		F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D41DCA476800F64426 /* libIrrlicht.a */; };
 		F8E6C7D71DCA477600F64426 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D61DCA477600F64426 /* libfreetype.a */; };
-		F8E6C7DB1DCA479200F64426 /* libogg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7DA1DCA479200F64426 /* libogg.a */; };
-		F8E6C7DD1DCA47A300F64426 /* libvorbis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7DC1DCA47A300F64426 /* libvorbis.a */; };
-		F8E6C7DF1DCA47AF00F64426 /* libvorbisfile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7DE1DCA47AF00F64426 /* libvorbisfile.a */; };
 		F8E6C7E11DCA4EB300F64426 /* assets.zip in Resources */ = {isa = PBXBuildFile; fileRef = F8E6C7E01DCA4EB300F64426 /* assets.zip */; };
 		F8E6C7E31DCA511700F64426 /* worlds.zip in Resources */ = {isa = PBXBuildFile; fileRef = F8E6C7E21DCA511700F64426 /* worlds.zip */; };
 /* End PBXBuildFile section */
@@ -803,10 +799,6 @@
 				F8E6C7D11DCA433E00F64426 /* libiconv.tbd in Frameworks */,
 				F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */,
 				F8E6C7D71DCA477600F64426 /* libfreetype.a in Frameworks */,
-				F8E6C7DB1DCA479200F64426 /* libogg.a in Frameworks */,
-				F8E6C7DD1DCA47A300F64426 /* libvorbis.a in Frameworks */,
-				F8E6C7DF1DCA47AF00F64426 /* libvorbisfile.a in Frameworks */,
-				F85119A71F4476FC00BFA9AF /* libcurl.a in Frameworks */,
 				EB4367AE23CAD13A43ADF4B1 /* libPods-MultiCraft.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

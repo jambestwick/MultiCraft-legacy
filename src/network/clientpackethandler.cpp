@@ -1161,43 +1161,34 @@ void Client::handleCommand_HudSetParam(NetworkPacket* pkt)
 
 	LocalPlayer *player = m_env.getLocalPlayer();
 	assert(player != NULL);
+	bool hud_small = g_settings->getBool("hud_small");
 
-	if (param == HUD_PARAM_HOTBAR_ITEMCOUNT && value.size() == 4) {
-		s32 hotbar_itemcount = readS32((u8*) value.c_str());
-		if (hotbar_itemcount > 0 && hotbar_itemcount <= HUD_HOTBAR_ITEMCOUNT_MAX) {
-			// Hotbar over 8 is not supported by touch controls. This is not a hack, but a quick fix
-			#if defined(__ANDROID__) || defined(__IOS__)
-				player->hud_hotbar_itemcount = 8;
-			#else
-				player->hud_hotbar_itemcount = hotbar_itemcount;
-			#endif
+ 	if (param == HUD_PARAM_HOTBAR_ITEMCOUNT /*&& value.size() == 4*/) {
+/*	// ToDo: detect hotbar_itemcount and set 8 or 9 image
+		 s32 hotbar_itemcount = readS32((u8*) value.c_str());
+		 if (hotbar_itemcount > 0 && hotbar_itemcount <= HUD_HOTBAR_ITEMCOUNT_MAX) {
+ 			player->hud_hotbar_itemcount = hotbar_itemcount;
+*/
+		player->hud_hotbar_itemcount = 9;
+		// Hotbar over 8 does not fit on a small screen
+		if (hud_small) {
+			player->hud_hotbar_itemcount = 8;
 		}
 	}
 	else if (param == HUD_PARAM_HOTBAR_IMAGE) {
-		// Set the touch interface to fit the size
-		#if defined(__ANDROID__) || defined(__IOS__)
-			std::string value = "gui_hotbar_touch.png";
-		#endif
-		// If value not empty verify image exists in texture source
+/*		// If value not empty verify image exists in texture source
 		if (value != "" && !getTextureSource()->isKnownSourceImage(value)) {
 			errorstream << "Server sent wrong Hud hotbar image (sent value: '"
 				<< value << "')" << std::endl;
 			return;
+ */
+		player->hotbar_image = "gui_hotbar.png";
+		if (hud_small) {
+			player->hotbar_image = "gui_hotbar_small.png";
 		}
-		player->hotbar_image = value;
 	}
 	else if (param == HUD_PARAM_HOTBAR_SELECTED_IMAGE) {
-		// Selection texture too...
-		#if defined(__ANDROID__) || defined(__IOS__)
-			std::string value = "gui_hotbar_selected.png";
-		#endif
-		// If value not empty verify image exists in texture source
-		if (value != "" && !getTextureSource()->isKnownSourceImage(value)) {
-			errorstream << "Server sent wrong Hud hotbar selected image (sent value: '"
-					<< value << "')" << std::endl;
-			return;
-		}
-		player->hotbar_selected_image = value;
+		player->hotbar_selected_image = "gui_hotbar_selected.png";
 	}
 }
 
