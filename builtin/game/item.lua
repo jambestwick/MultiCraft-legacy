@@ -557,7 +557,7 @@ function core.item_drop(itemstack, dropper, pos)
 end
 
 local enable_damage = minetest.settings:get_bool("enable_damage")
-function core.item_eat(hp_change, replace_with_item)
+function core.item_eat(hp_change, replace_with_item, poison)
 	return function(itemstack, user, pointed_thing)  -- closure
 		if user then
 			local pos = user:get_pos()
@@ -583,7 +583,7 @@ function core.item_eat(hp_change, replace_with_item)
 			})
 			core.sound_play("player_eat", {pos = pos, max_hear_distance = 10, gain = 0.3})
 			if enable_damage then
-				return core.do_item_eat(hp_change, replace_with_item, itemstack, user, pointed_thing)
+				return core.do_item_eat(hp_change, replace_with_item, poison, itemstack, user, pointed_thing)
 			end
 		end
 	end

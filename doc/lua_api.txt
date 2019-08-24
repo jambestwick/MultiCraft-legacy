@@ -2461,7 +2461,7 @@ Call these functions only at load time!
       * The provided function should check that the position is protected by the mod
         calling this function before it prints a message, if it does, to allow for
         multiple protection mods.
-* `minetest.register_on_item_eat(func(hp_change, replace_with_item, itemstack, user, pointed_thing))`
+* `minetest.register_on_item_eat(func(hp_change, replace_with_item, poison, itemstack, user, pointed_thing))`
     * Called when an item is eaten, by `minetest.item_eat`
     * Return `true` or `itemstack` to cancel the default item eat response (i.e.: hp increase)
 
@@ -2766,7 +2766,7 @@ and `minetest.auth_reload` call the authetification handler.
       by default they will be sent to every player (even if not used).
       Note that this parameter is mostly just a workaround and will be removed in future releases.
     * Creates a detached inventory. If it already exists, it is cleared.
-* `minetest.do_item_eat(hp_change, replace_with_item, itemstack, user, pointed_thing)`:
+* `minetest.do_item_eat(hp_change, replace_with_item, poison, itemstack, user, pointed_thing)`:
    returns left over ItemStack
     * See `minetest.item_eat` and `minetest.register_on_item_eat`
 
@@ -2905,11 +2905,12 @@ These functions return the leftover itemstack.
     * returns `itemstack, success`
 * `minetest.item_drop(itemstack, dropper, pos)`
     * Drop the item
-* `minetest.item_eat(hp_change, replace_with_item)`
+* `minetest.item_eat(hp_change, replace_with_item, poison)`
     * Eat the item.
     * `replace_with_item` is the itemstring which is added to the inventory.
       If the player is eating a stack, then replace_with_item goes to a
       different spot. Can be `nil`
+	* `poison` is the value is how much health the player will lose due to poisoning.
     * See `minetest.do_item_eat`
 
 ### Defaults for the `on_punch` and `on_dig` node definition callbacks

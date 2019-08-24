@@ -39,8 +39,8 @@ hunger.settings = {
 	exhaust_dig = get_setting("exhaust_dig", 2),
 	exhaust_place = get_setting("exhaust_place", 1),
 	exhaust_move = get_setting("exhaust_move", 2),
-	exhaust_jump = get_setting("exhaust_jump", 3),
-	exhaust_craft = get_setting("exhaust_craft", 1),
+	exhaust_jump = get_setting("exhaust_jump", 4),
+	exhaust_craft = get_setting("exhaust_craft", 2),
 	exhaust_punch = get_setting("exhaust_punch", 5),
 	exhaust_lvl = get_setting("exhaust_lvl", 192),
 	heal = get_setting("heal", 1),
@@ -48,7 +48,7 @@ hunger.settings = {
 	starve = get_setting("starve", 1),
 	starve_lvl = get_setting("starve_lvl", 3),
 	level_max = get_setting("level_max", 21),
-	visual_max = get_setting("visual_max", 20),
+	visual_max = get_setting("visual_max", 20)
 }
 local settings = hunger.settings
 
@@ -308,9 +308,9 @@ local function hunger_globaltimer(dtime)
 	end
 end
 
-function core.do_item_eat(hp_change, replace_with_item, itemstack, player, pointed_thing)
+function core.do_item_eat(hp_change, replace_with_item, poison, itemstack, player, pointed_thing)
 	for _, callback in ipairs(core.registered_on_item_eats) do
-		local result = callback(hp_change, replace_with_item, itemstack, player, pointed_thing)
+		local result = callback(hp_change, replace_with_item, poison, itemstack, player, pointed_thing)
 		if result then
 			return result
 		end
@@ -320,13 +320,12 @@ function core.do_item_eat(hp_change, replace_with_item, itemstack, player, point
 		return itemstack
 	end
 
-	if hp_change > 0 then
+	if not poison then
 		hunger.change_saturation(player, hp_change)
 		hunger.set_exhaustion(player, 0)
 	else
-		-- assume hp_change < 0.
-		hunger.change_saturation(player, -hp_change)
-		hunger.poison(player, -hp_change, settings.poison_tick)
+		hunger.change_saturation(player, hp_change)
+		hunger.poison(player, -poison, settings.poison_tick)
 	end
 
 	itemstack:take_item()

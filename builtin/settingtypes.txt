@@ -886,8 +886,8 @@ hunger.poison_tick     (time in seconds between poison damage)                  
 hunger.exhaust_dig     (exhaustion for digging a node)                          float 3
 hunger.exhaust_place   (exhaustion for placing a node)                          float 1
 hunger.exhaust_move    (exhaustion for moving)                                  float 2
-hunger.exhaust_jump    (exhaustion for jumping)                                 float 3
-hunger.exhaust_craft   (exhaustion for crafting)                                float 1
+hunger.exhaust_jump    (exhaustion for jumping)                                 float 4
+hunger.exhaust_craft   (exhaustion for crafting)                                float 2
 hunger.exhaust_punch   (exhaustion for punching)                                float 5
 hunger.exhaust_lvl     (exhaustion level at which saturation gets lowered)      float 192
 hunger.heal            (amount of HP a player gains per hunger.health_tick)     int 1 0 20
