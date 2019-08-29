@@ -34,9 +34,15 @@ find $DEST -type f -name '.git*' -delete
 find $DEST -type f -name '.DS_Store' -delete
 
 # remove broken languages
-find $DEST -type d -name 'ja' -print0 | xargs -0 -- rm -r
-find $DEST -type d -name 'ko' -print0 | xargs -0 -- rm -r
-find $DEST -type d -name 'he' -print0 | xargs -0 -- rm -r
+for broken_lang in ja ko he; do
+	find $DEST -type d -name $broken_lang -print0 | xargs -0 -- rm -r
+done
+
+# remove unnecessary mods
+MODS=$DEST/games/default/files
+for mods in compatibility experience; do
+	find $DEST/games/default/files -type d -name $mods -print0 | xargs -0 -- rm -r
+done
 
 echo "Creating assets.zip"
 ZIPDEST=$FOLDER/assets.zip
