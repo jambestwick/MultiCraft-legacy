@@ -11,14 +11,12 @@ target 'MultiCraft' do
 	pod 'libCurlPod',				:git => 'https://github.com/MoNTE48/libCurlPod'
 	pod 'libOggVorbisPod',	:git => 'https://github.com/MoNTE48/libOggVorbisPod'
 
-	pod 'Appodeal/AdColonyAdapter'
 	pod 'Appodeal/AdExchangeAdapter'
 	pod 'Appodeal/AppLovinAdapter'
 	pod 'Appodeal/IronSource'
 	pod 'Appodeal/MintegralAdapter'
 	pod 'Appodeal/TapjoyAdapter'
 	pod 'Appodeal/UnityAdapter'
-	pod 'Appodeal/VungleAdapter'
 	pod 'PersonalizedAdConsent', :git => 'https://github.com/MoNTE48/consent-sdk-ios'
 end
 
