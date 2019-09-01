@@ -38,11 +38,10 @@ end
 
 local function quick_flow_logic(node, pos_testing, direction)
 	local node_testing = core.get_node_or_nil(pos_testing)
-	if not node_testing then
-		node_testing = core.registered_nodes["default:dirt"]
-	end
-	if core.registered_nodes[node_testing.name].liquidtype ~= "flowing"
-	and core.registered_nodes[node_testing.name].liquidtype ~= "source" then
+	if node_testing and
+	core.registered_nodes[node_testing.name] and
+	core.registered_nodes[node_testing.name].liquidtype ~= "flowing" and
+	core.registered_nodes[node_testing.name].liquidtype ~= "source" then
 		return 0
 	end
 	local param2_testing = node_testing.param2
@@ -53,7 +52,6 @@ local function quick_flow_logic(node, pos_testing, direction)
 			return direction
 		end
 	elseif param2_testing > node.param2 then
-
 		if (param2_testing - node.param2) > 6 then
 			return direction
 		else
@@ -68,19 +66,19 @@ local function quick_flow(pos, node)
 		return {x = 0, y = 0, z = 0}
 	end
 	local x, z = 0, 0
-	x = x + quick_flow_logic(node, {x = pos.x - 1, y = pos.y, z = pos.z},-1)
-	x = x + quick_flow_logic(node, {x = pos.x + 1, y = pos.y, z = pos.z}, 1)
-	z = z + quick_flow_logic(node, {x = pos.x, y = pos.y, z = pos.z - 1},-1)
-	z = z + quick_flow_logic(node, {x = pos.x, y = pos.y, z = pos.z + 1}, 1)
+	x = x + quick_flow_logic(node, {x = pos.x - 1, y = pos.y, z = pos.z}, -1)
+	x = x + quick_flow_logic(node, {x = pos.x + 1, y = pos.y, z = pos.z},  1)
+	z = z + quick_flow_logic(node, {x = pos.x, y = pos.y, z = pos.z - 1}, -1)
+	z = z + quick_flow_logic(node, {x = pos.x, y = pos.y, z = pos.z + 1},  1)
 	return to_unit_vector({x = x, y = 0, z = z})
 end
 
 core.register_entity(":__builtin:throwing_item", {
 	physical = false,
 	visual = "wielditem",
-	collisionbox = {0,0,0, 0,0,0},
+	collisionbox = {0, 0, 0, 0, 0, 0},
 	textures = {""},
-	visual_size = {x=0.4, y=0.4},
+	visual_size = {x = 0.4, y = 0.4},
 	is_visible = false,
 	on_activate = function(self, staticdata)
 		if staticdata == "expired" then
@@ -89,7 +87,7 @@ core.register_entity(":__builtin:throwing_item", {
 	end,
 	get_staticdata = function()
 		return "expired"
-	end,
+	end
 })
 
 core.register_entity(":__builtin:item", {
@@ -337,7 +335,7 @@ core.register_entity(":__builtin:item", {
 		end
 		self.itemstring = ""
 		self.object:remove()
-	end,
+	end
 })
 
 -- Item Collection
