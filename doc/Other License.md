@@ -1,10 +1,40 @@
 MultiCraft Open Source Project
 ==============================
 
-LGPLv3.0+, CC-BY-SA 4.0 and a little bit proprietary textures. The list in the file nearby.
-You can use these textures without restriction in the MultiCraft Project.
-You cannot use them in another project.
-They are an integral part of this project and are created or purchased exclusively for it.
+The Engine and the Game source code is licensed under LGPLv3 (or higher), unless otherwise stated.
+
+Textures [/textures/base] **except**:
+
+ignore.png
+
+minimap_mask_.png
+
+minimap_overlay_.png
+
+no_screenshot.png
+
+object_marker_red.png
+
+player_marker.png
+
+sunrisebg.png
+
+unknown_.png
+
+Copyright © MultiCraft Development Team (CC-BY-SA 4.0)
+
+**Be sure to look at the information, and a license in every mods [/games/default/*]**
+
+Game Icons and Logos are the property of Maksim Gamarnik [MoNTE48] and can only be used as part of the official MultiCraft build.
+Allowed to be used in non-official builds ONLY for personal use.
+
+--- --- ---
+
+For any Game mods, textures, models, or any other content [/games/default/../], which **clearly indicates that it is proprietary**, the following conditions apply:
+1) You can use these content without restriction in the official MultiCraft build.
+2) They are an integral part of this project and are created or purchased exclusively for it.
+3) You cannot use them in another game/project.
+4) Allowed to be used in non-official builds ONLY for personal use.
 
 --- --- ---
 
