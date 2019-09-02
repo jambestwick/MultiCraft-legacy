@@ -38,10 +38,7 @@ end
 
 local function quick_flow_logic(node, pos_testing, direction)
 	local node_testing = core.get_node_or_nil(pos_testing)
-	if node_testing and
-	core.registered_nodes[node_testing.name] and
-	core.registered_nodes[node_testing.name].liquidtype ~= "flowing" and
-	core.registered_nodes[node_testing.name].liquidtype ~= "source" then
+	if not node_testing then
 		return 0
 	end
 	local param2_testing = node_testing.param2
@@ -62,9 +59,6 @@ local function quick_flow_logic(node, pos_testing, direction)
 end
 
 local function quick_flow(pos, node)
-	if not core.registered_nodes[node.name].groups.liquid then
-		return {x = 0, y = 0, z = 0}
-	end
 	local x, z = 0, 0
 	x = x + quick_flow_logic(node, {x = pos.x - 1, y = pos.y, z = pos.z}, -1)
 	x = x + quick_flow_logic(node, {x = pos.x + 1, y = pos.y, z = pos.z},  1)
@@ -136,6 +130,7 @@ core.register_entity(":__builtin:item", {
 			selectionbox = {-size, -size, -size, size, size, size},
 			automatic_rotate = math.pi * 0.5 * 0.15 / size,
 			wield_item = self.itemstring,
+			infotext = core.registered_items[itemname].description
 		})
 
 	end,
@@ -212,18 +207,12 @@ core.register_entity(":__builtin:item", {
 		end
 
 		local pos = self.object:get_pos()
-		self.node_inside = core.get_node_or_nil(pos)
-		self.def_inside = self.node_inside
-				and core.registered_nodes[self.node_inside.name]
-		self.node_under = core.get_node_or_nil({
+		local node = core.get_node_or_nil({
 			x = pos.x,
 			y = pos.y + self.object:get_properties().collisionbox[2] - 0.05,
 			z = pos.z
 		})
-		self.def_under = self.node_under
-				and core.registered_nodes[self.node_under.name]
-
-		local node = self.node_inside
+		local node_inside = core.get_node_or_nil(pos)
 		-- Delete in 'ignore' nodes
 		if node and node.name == "ignore" then
 			self.itemstring = ""
@@ -232,7 +221,8 @@ core.register_entity(":__builtin:item", {
 		end
 
 		local vel = self.object:get_velocity()
-		local def = self.def_inside
+		local def = node and core.registered_nodes[node.name]
+		local def_inside = node_inside and core.registered_nodes[node_inside.name]
 		local is_moving = (def and not def.walkable) or
 			vel.x ~= 0 or vel.y ~= 0 or vel.z ~= 0
 		local is_slippery = false
@@ -259,15 +249,24 @@ core.register_entity(":__builtin:item", {
 			return
 		end
 
-		-- Moving items in the water flow
-		if def and def.liquidtype == "flowing" then
-			local vec = quick_flow(pos, node)
+		-- Moving items in the water flow (TenPlus1, MIT)
+		if def_inside and def_inside.liquidtype == "flowing" then
+			local vec = quick_flow(pos, node_inside)
 			self.object:set_velocity({x = vec.x, y = vel.y, z = vec.z})
 			return
 		end
 
-		node = self.node_under
-		def = self.def_under
+		-- Move item inside node to free space (TenPlus1, MIT)
+		if def_inside and not def_inside.liquid and node_inside.name ~= "air" and
+				def_inside.drawtype == "normal" then
+			local npos = minetest.find_node_near(pos, 1, "air")
+			if npos then
+				self.object:move_to(npos)
+			end
+			self.node_inside = nil -- force get_node
+			return
+		end
+
 		if def and def.walkable then
 			local slippery = core.get_item_group(node.name, "slippery")
 			is_slippery = slippery ~= 0
@@ -284,11 +283,12 @@ core.register_entity(":__builtin:item", {
 			end
 		end
 
-		if self.moving_state == is_moving and
+	-- At some events the entity does not stop
+	--[[if self.moving_state == is_moving and
 				self.slippery_state == is_slippery then
 			-- Do not update anything until the moving state changes
 			return
-		end
+		end]]
 
 		self.moving_state = is_moving
 		self.slippery_state = is_slippery
@@ -298,11 +298,6 @@ core.register_entity(":__builtin:item", {
 		else
 			self.object:set_acceleration({x = 0, y = 0, z = 0})
 			self.object:set_velocity({x = 0, y = 0, z = 0})
-		end
-
-		-- Only collect items if not moving
-		if is_moving then
-			return
 		end
 
 		-- Collect the items around to merge with
