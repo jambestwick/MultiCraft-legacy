@@ -804,7 +804,7 @@ void MapblockMeshGenerator::drawSignlikeNode()
 {
 	u8 wall = n.getWallMounted(nodedef);
 	useTile(0, true);
-	static const float offset = BS / 16;
+	static const float offset = BS / 48;
 	float size = BS / 2 * f->visual_scale;
 	// Wall at X+ of node
 	v3f vertices[4] = {
