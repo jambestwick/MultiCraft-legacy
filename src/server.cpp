@@ -1135,14 +1135,13 @@ PlayerSAO* Server::StageTwoClientInit(u16 peer_id)
 	}
 	Address addr = getPeerAddress(player->peer_id);
 	std::string ip_str = addr.serializeString();
-	actionstream<<player->getName() <<" [" << ip_str << "] joins game. " << std::endl;
 	/*
 		Print out action
 	*/
 	{
 		const std::vector<std::string> &names = m_clients.getPlayerNames();
 
-		actionstream << player->getName() << " joins game. List of players: ";
+		actionstream << player->getName() <<" [" << ip_str << "] joins game. List of players: ";
 
 		for (std::vector<std::string>::const_iterator i = names.begin();
 				i != names.end(); ++i) {
