@@ -26,6 +26,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "util/string.h"
 
 #ifdef __IOS__
+#import <UIKit/UIKit.h>
 #import "SDVersion.h"
 #endif
 
@@ -36,7 +37,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("name", "");
 	settings->setDefault("bind_address", "");
 	settings->setDefault("serverlist_url", "servers.multicraft.world");
-	settings->setDefault("serverlist_url_2", "servers.minetest.net");
+	settings->setDefault("serverlist_url_2", "");
 
 	// Client
 	settings->setDefault("address", "");
@@ -246,7 +247,7 @@ void set_default_settings(Settings *settings)
 
 	settings->setDefault("fallback_font_shadow", "1");
 	settings->setDefault("fallback_font_shadow_alpha", "128");
-	
+
 	std::string font_size_str = std::to_string(TTF_DEFAULT_FONT_SIZE);
 
 	settings->setDefault("fallback_font_size", font_size_str);
@@ -448,49 +449,69 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("debug_log_level", "none");
 	settings->setDefault("autosave_screensize", "false");
 
-	// set font_path
+	// Set font_path
 	settings->setDefault("mono_font_path", g_settings->get("font_path"));
 	settings->setDefault("fallback_font_path", g_settings->get("font_path"));
 
-	// set the size of the elements depending on the screen size
-	if ([SDVersion deviceSize] == Screen3Dot5inch) {
-		// 3.5" (old iPhone's)
-		settings->setDefault("hud_scaling", "0.5");
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
 		settings->setDefault("hud_small", "true");
-	} else if ([SDVersion deviceSize] == Screen4inch) {
-		// 4" (iPhone 5)
-		settings->setDefault("hud_scaling", "0.55");
-		settings->setDefault("mouse_sensitivity", "0.33");
-		settings->setDefault("hud_small", "true");
-	} else if ([SDVersion deviceSize] == Screen4Dot7inch) {
-		// 4.7" (iPhone)
-		settings->setDefault("hud_scaling", "0.65");
-		settings->setDefault("mouse_sensitivity", "0.27");
-		settings->setDefault("hud_small", "true");
-	} else if ([SDVersion deviceSize] == Screen5Dot5inch) {
-		// 5.5" (iPhone Plus)
-		settings->setDefault("hud_scaling", "0.75");
-		settings->setDefault("mouse_sensitivity", "0.3");
-		settings->setDefault("hud_small", "true");
-	} else if (([SDVersion deviceSize] == Screen5Dot8inch) || ([SDVersion deviceSize] == Screen6Dot1inch) || ([SDVersion deviceSize] == Screen6Dot5inch)) {
-		// 5.8+" (iPhone X-series)
-		settings->setDefault("hud_scaling", "0.85");
-		settings->setDefault("mouse_sensitivity", "0.35");
-		settings->setDefault("hud_small", "true");
-	} else {
-		// iPad
-		settings->setDefault("hud_scaling", "0.9");
 	}
 
-	// Move the HUD up for the iPhone X-series and new iPad Pro
-	if (([SDVersion deviceVersion] == iPhoneX) || ([SDVersion deviceVersion] == iPhoneXS) || ([SDVersion deviceVersion] == iPhoneXSMax) || ([SDVersion deviceVersion] == iPhoneXR) || ([SDVersion deviceVersion] ==  iPadPro11Inch) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch3Gen)) {
+	// Set the size of the elements depending on the screen size
+	if ([SDVersion deviceVersion] == iPhone4S) {
+		// 3.5" iPhone
+		settings->setDefault("hud_scaling", "0.45");
+	} else if (([SDVersion deviceVersion] == iPhone5) || ([SDVersion deviceVersion] == iPhone5C) || ([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhoneSE) ||
+			   ([SDVersion deviceVersion] == iPodTouch5Gen) || ([SDVersion deviceVersion] == iPodTouch6Gen) || ([SDVersion deviceVersion] == iPodTouch7Gen)) {
+		// 4" iPhone and iPod Touch
+		settings->setDefault("hud_scaling", "0.5");
+		settings->setDefault("mouse_sensitivity", "0.33");
+	} else if (([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone8)) {
+		// 4.7" iPhone
+		settings->setDefault("hud_scaling", "0.6");
+		settings->setDefault("mouse_sensitivity", "0.27");
+	} else if (([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhone7Plus) || ([SDVersion deviceVersion] == iPhone8Plus)) {
+		// 5.5" iPhone Plus
+		settings->setDefault("hud_scaling", "0.7");
+		settings->setDefault("mouse_sensitivity", "0.3");
+	} else if (([SDVersion deviceVersion] == iPhoneX) || ([SDVersion deviceVersion] == iPhoneXS) || ([SDVersion deviceVersion] == iPhoneXSMax) || ([SDVersion deviceVersion] == iPhoneXR)) {
+		// 5.8+" iPhones
+		settings->setDefault("hud_scaling", "0.85");
+		settings->setDefault("mouse_sensitivity", "0.35");
+	} else if (([SDVersion deviceVersion] == iPadMini) || ([SDVersion deviceVersion] == iPadMini2) | ([SDVersion deviceVersion] == iPadMini3) | ([SDVersion deviceVersion] == iPadMini4) | ([SDVersion deviceVersion] == iPadMini5)) {
+		// iPad mini
+		settings->setDefault("hud_scaling", "0.9");
+		settings->setDefault("mouse_sensitivity", "0.25");
+	} else {
+		// iPad
+		settings->setDefault("mouse_sensitivity", "0.3");
+	}
+
+	// Settings for the Rounded Screen and Home Bar
+	if (([SDVersion deviceVersion] == iPhoneX) || ([SDVersion deviceVersion] == iPhoneXS) || ([SDVersion deviceVersion] == iPhoneXSMax) || ([SDVersion deviceVersion] == iPhoneXR) ||
+		([SDVersion deviceVersion] == iPadPro11Inch) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch3Gen)) {
 		settings->setDefault("hud_move_upwards", "10");
 		settings->setDefault("round_screen", "15");
 	}
 
-	// set the optimal settings depending on the model
-	if (([SDVersion deviceVersion] == iPhone4S) || ([SDVersion deviceVersion] == iPhone5) || ([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPodTouch5Gen) || ([SDVersion deviceVersion] == iPodTouch6Gen) || ([SDVersion deviceVersion] == iPad2) || ([SDVersion deviceVersion] == iPad3) || ([SDVersion deviceVersion] == iPadMini) || ([SDVersion deviceVersion] == iPadMini2)) {
-		// minimal settings
+	// Set the optimal settings depending on the model
+#if defined(__arm__)
+		// minimal settings for 32-bit devices
+		settings->setDefault("smooth_lighting", "false");
+		settings->setDefault("viewing_range", "25");
+		settings->setDefault("enable_3d_clouds", "false");
+		settings->setDefault("cloud_radius", "0");
+		settings->setDefault("pause_fps_max", "5");
+		settings->setDefault("chunksize", "3");
+		settings->setDefault("client_mapblock_limit", "100");
+		settings->setDefault("active_block_range", "1");
+		settings->setDefault("max_block_generate_distance", "1");
+		settings->setDefault("dedicated_server_step", "0.2");
+		settings->setDefault("abm_interval", "3.0");
+#endif  
+	if (([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPodTouch6Gen) ||
+		([SDVersion deviceVersion] == iPadMini2) || ([SDVersion deviceVersion] == iPadMini3)) {
+		// low settings
 		settings->setDefault("smooth_lighting", "false");
 		settings->setDefault("viewing_range", "25");
 		settings->setDefault("enable_3d_clouds", "false");
@@ -500,7 +521,9 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("client_mapblock_limit", "200");
 		settings->setDefault("active_block_range", "1");
 		settings->setDefault("max_block_generate_distance", "2");
-	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) || ([SDVersion deviceVersion] == iPad4) || ([SDVersion deviceVersion] == iPadMini3) || ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir))  {
+		settings->setDefault("dedicated_server_step", "0.2");
+	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) ||
+			   ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir)) {
 		// medium settings
 		settings->setDefault("viewing_range", "50");
 		settings->setDefault("chunksize", "3");
