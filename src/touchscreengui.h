@@ -43,27 +43,24 @@ typedef enum {
 	backward_three,
 	left_id,
 	right_id,
+	empty_id,
 	inventory_id,
 	drop_id,
 	jump_id,
 	crunch_id,
-//	noclip_id,
-//	fast_id,
-//	debug_id,
 	escape_id,
 	minimap_id,
 	range_id,
 	chat_id,
-//	camera_id,
-	empty_id,
+/*	noclip_id,
+	fast_id,
+	camera_id,	*/
 	after_last_element_id
 } touch_gui_button_id;
 
 #define SLOW_BUTTON_REPEAT  1.0f
 #define MIN_DIG_TIME        0.5f
 #define BUTTON_REPEAT_DELAY 0.2f
-
-extern const char **touchgui_button_imagenames;
 
 struct button_info {
 	float            repeatcounter;

@@ -35,27 +35,27 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 using namespace irr::core;
 
-const char **touchgui_button_imagenames = (const char *[]) {
-	"up_one_btn.png",
-	"up_two_btn.png",
-	"up_three_btn.png",
-	"down_one_btn.png",
-	"down_two_btn.png",
-	"down_three_btn.png",
-	"left_btn.png",
-	"right_btn.png",
-	"inventory_btn.png",
-	"drop_btn.png",
-	"jump_btn.png",
-	"down_btn.png",
-//	"noclip_btn.png",
-	"escape_btn.png",
-	"minimap_btn.png",
-	"rangeview_btn.png",
-	"chat_btn.png",
-//	"debug_btn.png",
-//	"camera_btn.png",
-	"empty_btn.png"
+const char *touchgui_button_imagenames[][2] = {
+	{"up_one_btn.png", "up_one_press.png"},
+	{"up_two_btn.png","up_two_press.png"},
+	{"up_three_btn.png", "up_three_press.png"},
+	{"down_one_btn.png", "down_one_press.png"},
+	{"down_two_btn.png", "down_two_press.png"},
+	{"down_three_btn.png", "down_three_press.png"},
+	{"left_btn.png", "left_press.png"},
+	{"right_btn.png", "right_press.png"},
+	{"empty_btn.png"},
+	{"inventory_btn.png"},
+	{"drop_btn.png"},
+	{"jump_btn.png"},
+	{"down_btn.png"},
+	{"escape_btn.png"},
+	{"minimap_btn.png"},
+	{"rangeview_btn.png"},
+	{"chat_btn.png"}
+/*	{"noclip_btn.png"},
+	{"fast_btn.png"},
+	{"camera_btn.png"}	*/
 };
 
 static irr::EKEY_CODE id2keycode(touch_gui_button_id id) {
@@ -85,6 +85,9 @@ static irr::EKEY_CODE id2keycode(touch_gui_button_id id) {
 		case right_id:
 			key = "right";
 			break;
+		case empty_id:
+			key = "forward";
+			break;
 		case inventory_id:
 			key = "inventory";
 			break;
@@ -97,15 +100,6 @@ static irr::EKEY_CODE id2keycode(touch_gui_button_id id) {
 		case crunch_id:
 			key = "sneak";
 			break;
-/*		case noclip_id:
-			key = "noclip";
-			break;
-		case fast_id:
-			key = "fast";
-			break;
-		case debug_id:
-			key = "toggle_debug";
-			break;*/
 		case escape_id:
 			return irr::KEY_ESCAPE;
 		case minimap_id:
@@ -117,12 +111,15 @@ static irr::EKEY_CODE id2keycode(touch_gui_button_id id) {
 		case chat_id:
 			key = "chat";
 			break;
-/*		case camera_id:
+	/*	case noclip_id:
+			 key = "noclip";
+			 break;
+			 case fast_id:
+			 key = "fast";
+			 break;
+		case camera_id:
 			key = "camera_mode";
-			break;*/
-		case empty_id:
-			key = "forward";
-			break;
+			break;	*/
 		case after_last_element_id:
 			break;
 	}
@@ -132,24 +129,38 @@ static irr::EKEY_CODE id2keycode(touch_gui_button_id id) {
 
 TouchScreenGUI *g_touchscreengui;
 
-static void load_button_texture(button_info *btn, const char *path,
+static void load_button_texture(button_info *btn, touch_gui_button_id id,
 								rect<s32> button_rect, ISimpleTextureSource *tsrc,
 								video::IVideoDriver *driver) {
+
+	const char *path = touchgui_button_imagenames[id][0];
+	const char *path_pressed = (touchgui_button_imagenames[id][1]) ? touchgui_button_imagenames[id][1] : path;
+
 	unsigned int tid;
 	video::ITexture *texture = guiScalingImageButton(driver,
 														tsrc->getTexture(path, &tid),
 														button_rect.getWidth(),
 														button_rect.getHeight());
+
+	video::ITexture *texture_pressed = texture;
+	if (strcmp(path, path_pressed) != 0) {
+		texture_pressed = guiScalingImageButton(driver,
+														tsrc->getTexture(path_pressed, &tid),
+														button_rect.getWidth(),
+														button_rect.getHeight());
+		texture_pressed = (texture_pressed) ? texture_pressed : texture;
+	}
+
 	if (texture) {
 		btn->guibutton->setUseAlphaChannel(true);
 		if (g_settings->getBool("gui_scaling_filter")) {
 			rect<s32> txr_rect = rect<s32>(0, 0, button_rect.getWidth(), button_rect.getHeight());
 			btn->guibutton->setImage(texture, txr_rect);
-			btn->guibutton->setPressedImage(texture, txr_rect);
+			btn->guibutton->setPressedImage(texture_pressed, txr_rect);
 			btn->guibutton->setScaleImage(false);
 		} else {
 			btn->guibutton->setImage(texture);
-			btn->guibutton->setPressedImage(texture);
+			btn->guibutton->setPressedImage(texture_pressed);
 			btn->guibutton->setScaleImage(true);
 		}
 		btn->guibutton->setDrawBorder(false);
@@ -191,7 +202,8 @@ void TouchScreenGUI::initButton(touch_gui_button_id id, rect<s32> button_rect,
 	btn->immediate_release = immediate_release;
 	btn->ids.clear();
 
-	load_button_texture(btn, touchgui_button_imagenames[id], button_rect,
+
+	load_button_texture(btn, id, button_rect,
 						m_texturesource, m_device->getVideoDriver());
 }
 
@@ -299,23 +311,6 @@ void TouchScreenGUI::init(ISimpleTextureSource *tsrc) {
 					  m_screensize.Y - (button_size)),
 			L"x", false, SLOW_BUTTON_REPEAT);
 
-/*
-	// init noclip button
-	initButton(noclip_id,
-			rect<s32>(m_screensize.X - (button_size * 0.75),
-					  m_screensize.Y - (button_size * 4.75),
-					  m_screensize.X,
-					  m_screensize.Y - (button_size * 4)),
-			L"clip", false, SLOW_BUTTON_REPEAT);
-	// init fast button
-	initButton(fast_id,
-			rect<s32>(m_screensize.X - (button_size * 0.75),
-					  m_screensize.Y - (button_size * 4),
-					  m_screensize.X,
-					  m_screensize.Y - (button_size * 3.25)),
-			L"fast", false, SLOW_BUTTON_REPEAT);
-*/
-
 // iOS does not have a physical pause button and have memory leak with minimap
 #ifdef __IOS__
 	// init pause button
@@ -347,11 +342,26 @@ void TouchScreenGUI::init(ISimpleTextureSource *tsrc) {
 					 (button_size * 0.75)),
 			L"Chat", false, SLOW_BUTTON_REPEAT);
 
+	// init noclip button
+/*	initButton(noclip_id,
+			   rect<s32>(m_screensize.X - (button_size * 0.75),
+						 m_screensize.Y - (button_size * 4.75),
+						 m_screensize.X,
+						 m_screensize.Y - (button_size * 4)),
+			   L"clip", false, SLOW_BUTTON_REPEAT);
+	// init fast button
+	initButton(fast_id,
+			   rect<s32>(m_screensize.X - (button_size * 0.75),
+						 m_screensize.Y - (button_size * 4),
+						 m_screensize.X,
+						 m_screensize.Y - (button_size * 3.25)),
+			   L"fast", false, SLOW_BUTTON_REPEAT);
+
 	// init camera button
-/*	initButton(camera_id,
+	initButton(camera_id,
 			rect<s32>(0, 0,
 					button_size * 0.75, button_size * 0.75),
-			L"cam", false, SLOW_BUTTON_REPEAT);*/
+			L"cam", false, SLOW_BUTTON_REPEAT);	*/
 }
 
 touch_gui_button_id TouchScreenGUI::getButtonID(s32 x, s32 y) {
@@ -433,6 +443,7 @@ void TouchScreenGUI::handleButtonEvent(touch_gui_button_id button,
 			return;
 
 		btn->repeatcounter = 0;
+		m_buttons[button].guibutton->setPressed(true);
 		translated->KeyInput.PressedDown = true;
 		translated->KeyInput.Key = btn->keycode;
 		m_receiver->OnEvent(*translated);
@@ -449,13 +460,13 @@ void TouchScreenGUI::handleButtonEvent(touch_gui_button_id button,
 		if (!btn->ids.empty())
 			return;
 
+		m_buttons[button].guibutton->setPressed(false);
 		translated->KeyInput.PressedDown = false;
 		btn->repeatcounter               = -1;
 		m_receiver->OnEvent(*translated);
 	}
 	delete translated;
 }
-
 
 void TouchScreenGUI::handleReleaseEvent(size_t evt_id) {
 	touch_gui_button_id button = getButtonID(evt_id);
@@ -697,20 +708,20 @@ bool TouchScreenGUI::quickTapDetection() {
 
 	u64 delta = porting::getDeltaMs(m_key_events[0].down_time, porting::getTimeMs());
 	if (delta > 400)
-		return false;*/
+		return false;	*/
 
 	// ignore the occasional touch
 	u64 delta = porting::getDeltaMs(m_move_downtime, porting::getTimeMs());
 	if (delta < 50)
 		return false;
 
-	/*double distance = sqrt(
+/*	double distance = sqrt(
 			(m_key_events[0].x - m_key_events[1].x) * (m_key_events[0].x - m_key_events[1].x) +
 			(m_key_events[0].y - m_key_events[1].y) * (m_key_events[0].y - m_key_events[1].y));
 
 
 	if (distance > (20 + g_settings->getU16("touchscreen_threshold")))
-		return false;*/
+		return false;	*/
 
 	SEvent* translated = new SEvent();
 	memset(translated, 0, sizeof(SEvent));
@@ -727,7 +738,7 @@ bool TouchScreenGUI::quickTapDetection() {
 			->getSceneCollisionManager()
 			->getRayFromScreenCoordinates(v2s32(m_key_events[0].x, m_key_events[0].y));
 
-	translated->MouseInput.Event = EMIE_RMOUSE_PRESSED_DOWN;
+	translated->MouseInput.Event        = EMIE_RMOUSE_PRESSED_DOWN;
 	verbosestream << "TouchScreenGUI::translateEvent right click press" << std::endl;
 	m_receiver->OnEvent(*translated);
 
