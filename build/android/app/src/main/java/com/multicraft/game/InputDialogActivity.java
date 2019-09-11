@@ -64,9 +64,6 @@ public class InputDialogActivity extends Activity {
     }
 
     public void pushResult(String text) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP && text.matches(".*[А-я].*")) {
-            text = Transliteration.toLatin(text);
-        }
         Intent resultData = new Intent();
         resultData.putExtra("text", text);
         setResult(Activity.RESULT_OK, resultData);

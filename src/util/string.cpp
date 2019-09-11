@@ -48,8 +48,7 @@ static bool parseNamedColorString(const std::string &value, video::SColor &color
 #ifndef _WIN32
 
 bool convert(const char *to, const char *from, char *outbuf,
-		size_t outbuf_size, char *inbuf, size_t inbuf_size)
-{
+             size_t outbuf_size, char *inbuf, size_t inbuf_size) {
 	iconv_t cd = iconv_open(to, from);
 
 #ifdef BSD_ICONV_USED
@@ -77,8 +76,14 @@ bool convert(const char *to, const char *from, char *outbuf,
 	return true;
 }
 
-std::wstring utf8_to_wide(const std::string &input)
-{
+#if defined(__ANDROID__) || defined(__IOS__)
+// Android and iOS needs manual caring to support the full character set possible with wchar_t
+const char *to = "UTF-32LE";
+#else
+const char *to = "WCHAR_T";
+#endif
+
+std::wstring utf8_to_wide(const std::string &input) {
 	size_t inbuf_size = input.length() + 1;
 	// maximum possible size, every character is sizeof(wchar_t) bytes
 	size_t outbuf_size = (input.length() + 1) * sizeof(wchar_t);
@@ -88,17 +93,14 @@ std::wstring utf8_to_wide(const std::string &input)
 	char *outbuf = new char[outbuf_size];
 	memset(outbuf, 0, outbuf_size);
 
-#ifdef __IOS__
-	// iOS needs manual caring to support the full character set possible with wchar_t
+#if defined(__ANDROID__) || defined(__IOS__)
+	// Android and iOS needs manual caring to support the full character set possible with wchar_t
 	SANITY_CHECK(sizeof(wchar_t) == 4);
-	const char *to = "UTF-32LE";
-#else
-	const char *to = "WCHAR_T";
 #endif
 
 	if (!convert(to, "UTF-8", outbuf, outbuf_size, inbuf, inbuf_size)) {
 		infostream << "Couldn't convert UTF-8 string 0x" << hex_encode(input)
-			<< " into wstring" << std::endl;
+		           << " into wstring" << std::endl;
 		delete[] inbuf;
 		delete[] outbuf;
 		return L"<invalid UTF-8 string>";
@@ -111,15 +113,7 @@ std::wstring utf8_to_wide(const std::string &input)
 	return out;
 }
 
-#ifdef __ANDROID__
-// TODO: this is an ugly fix for wide_to_utf8 somehow not working on android
-std::string wide_to_utf8(const std::wstring &input)
-{
-	return wide_to_narrow(input);
-}
-#else
-std::string wide_to_utf8(const std::wstring &input)
-{
+std::string wide_to_utf8(const std::wstring &input) {
 	size_t inbuf_size = (input.length() + 1) * sizeof(wchar_t);
 	// maximum possible size: utf-8 encodes codepoints using 1 up to 6 bytes
 	size_t outbuf_size = (input.length() + 1) * 6;
@@ -129,7 +123,7 @@ std::string wide_to_utf8(const std::wstring &input)
 	char *outbuf = new char[outbuf_size];
 	memset(outbuf, 0, outbuf_size);
 
-	if (!convert("UTF-8", "WCHAR_T", outbuf, outbuf_size, inbuf, inbuf_size)) {
+	if (!convert("UTF-8", to, outbuf, outbuf_size, inbuf, inbuf_size)) {
 		infostream << "Couldn't convert wstring 0x" << hex_encode(inbuf, inbuf_size)
 			<< " into UTF-8 string" << std::endl;
 		delete[] inbuf;
@@ -144,11 +138,9 @@ std::string wide_to_utf8(const std::wstring &input)
 	return out;
 }
 
-#endif
 #else // _WIN32
 
-std::wstring utf8_to_wide(const std::string &input)
-{
+std::wstring utf8_to_wide(const std::string &input) {
 	size_t outbuf_size = input.size() + 1;
 	wchar_t *outbuf = new wchar_t[outbuf_size];
 	memset(outbuf, 0, outbuf_size * sizeof(wchar_t));
@@ -159,8 +151,7 @@ std::wstring utf8_to_wide(const std::string &input)
 	return out;
 }
 
-std::string wide_to_utf8(const std::wstring &input)
-{
+std::string wide_to_utf8(const std::wstring &input) {
 	size_t outbuf_size = (input.size() + 1) * 6;
 	char *outbuf = new char[outbuf_size];
 	memset(outbuf, 0, outbuf_size);
@@ -173,8 +164,7 @@ std::string wide_to_utf8(const std::wstring &input)
 
 #endif // _WIN32
 
-wchar_t *utf8_to_wide_c(const char *str)
-{
+wchar_t *utf8_to_wide_c(const char *str) {
 	std::wstring ret = utf8_to_wide(std::string(str)).c_str();
 	size_t len = ret.length();
 	wchar_t *ret_c = new wchar_t[len + 1];
@@ -185,9 +175,8 @@ wchar_t *utf8_to_wide_c(const char *str)
 
 // You must free the returned string!
 // The returned string is allocated using new
-wchar_t *narrow_to_wide_c(const char *str)
-{
-	wchar_t *nstr = NULL;
+wchar_t *narrow_to_wide_c(const char *str) {
+	wchar_t *nstr = nullptr;
 #if defined(_WIN32)
 	int nResult = MultiByteToWideChar(CP_UTF8, 0, (LPCSTR) str, -1, 0, 0);
 	if (nResult == 0) {
@@ -204,113 +193,44 @@ wchar_t *narrow_to_wide_c(const char *str)
 	memset(nstr, 0, (len + 1) * sizeof(wchar_t));
 	memcpy(nstr, intermediate.c_str(), len * sizeof(wchar_t));
 #endif
-
 	return nstr;
 }
 
 
-#ifdef __ANDROID__
 
-const wchar_t* wide_chars =
-	L" !\"#$%&'()*+,-./0123456789:;<=>?@"
-	L"ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`"
-	L"abcdefghijklmnopqrstuvwxyz{|}~";
-
-int wctomb(char *s, wchar_t wc)
-{
-	for (unsigned int j = 0; j < (sizeof(wide_chars)/sizeof(wchar_t));j++) {
-		if (wc == wide_chars[j]) {
-			*s = (char) (j+32);
-			return 1;
-		}
-		else if (wc == L'\n') {
-			*s = '\n';
-			return 1;
-		}
-	}
-	return -1;
-}
-
-int mbtowc(wchar_t *pwc, const char *s, size_t n)
-{
-	std::wstring intermediate = narrow_to_wide(s);
-
-	if (intermediate.length() > 0) {
-		*pwc = intermediate[0];
-		return 1;
-	}
-	else {
-		return -1;
-	}
-}
 
 std::wstring narrow_to_wide(const std::string &mbs) {
 	size_t wcl = mbs.size();
+#ifdef __ANDROID__
+	const wchar_t* wide_chars =
+			L" !\"#$%&'()*+,-./0123456789:;<=>?@"
+			L"ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`"
+			L"abcdefghijklmnopqrstuvwxyz{|}~";
 
 	std::wstring retval = L"";
 
 	for (unsigned int i = 0; i < wcl; i++) {
-		if (((unsigned char) mbs[i] >31) &&
-		 ((unsigned char) mbs[i] < 127)) {
-
+		if (((unsigned char) mbs[i] > 31) &&
+		    ((unsigned char) mbs[i] < 127)) {
 			retval += wide_chars[(unsigned char) mbs[i] -32];
-		}
-		//handle newline
-		else if (mbs[i] == '\n') {
+		} else if (mbs[i] == '\n') {
+			// handle newline
 			retval += L'\n';
 		}
 	}
 
 	return retval;
-}
-
 #else // not Android
-
-std::wstring narrow_to_wide(const std::string &mbs)
-{
-	size_t wcl = mbs.size();
 	Buffer<wchar_t> wcs(wcl + 1);
 	size_t len = mbstowcs(*wcs, mbs.c_str(), wcl);
 	if (len == (size_t)(-1))
 		return L"<invalid multibyte string>";
 	wcs[len] = 0;
 	return *wcs;
-}
-
 #endif
-
-#ifdef __ANDROID__
+}
 
 std::string wide_to_narrow(const std::wstring &wcs) {
-	size_t mbl = wcs.size()*4;
-
-	std::string retval = "";
-	for (unsigned int i = 0; i < wcs.size(); i++) {
-		wchar_t char1 = (wchar_t) wcs[i];
-
-		if (char1 == L'\n') {
-			retval += '\n';
-			continue;
-		}
-
-		for (unsigned int j = 0; j < wcslen(wide_chars);j++) {
-			wchar_t char2 = (wchar_t) wide_chars[j];
-
-			if (char1 == char2) {
-				char toadd = (j+32);
-				retval += toadd;
-				break;
-			}
-		}
-	}
-
-	return retval;
-}
-
-#else // not Android
-
-std::string wide_to_narrow(const std::wstring &wcs)
-{
 	size_t mbl = wcs.size() * 4;
 	SharedBuffer<char> mbs(mbl+1);
 	size_t len = wcstombs(*mbs, wcs.c_str(), mbl);
@@ -321,10 +241,8 @@ std::string wide_to_narrow(const std::wstring &wcs)
 	return *mbs;
 }
 
-#endif
 
-std::string urlencode(const std::string &str)
-{
+std::string urlencode(const std::string &str) {
 	// Encodes non-unreserved URI characters by a percent sign
 	// followed by two hex digits. See RFC 3986, section 2.3.
 	static const char url_hex_chars[] = "0123456789ABCDEF";
@@ -335,22 +253,21 @@ std::string urlencode(const std::string &str)
 			oss << c;
 		} else {
 			oss << "%"
-				<< url_hex_chars[(c & 0xf0) >> 4]
-				<< url_hex_chars[c & 0x0f];
+			    << url_hex_chars[(c & 0xf0) >> 4]
+			    << url_hex_chars[c & 0x0f];
 		}
 	}
 	return oss.str();
 }
 
-std::string urldecode(const std::string &str)
-{
+std::string urldecode(const std::string &str) {
 	// Inverse of urlencode
 	std::ostringstream oss(std::ios::binary);
 	for (u32 i = 0; i < str.size(); i++) {
 		unsigned char highvalue, lowvalue;
 		if (str[i] == '%' &&
-				hex_digit_decode(str[i+1], highvalue) &&
-				hex_digit_decode(str[i+2], lowvalue)) {
+		    hex_digit_decode(str[i+1], highvalue) &&
+		    hex_digit_decode(str[i+2], lowvalue)) {
 			oss << (char) ((highvalue << 4) | lowvalue);
 			i += 2;
 		} else {
@@ -360,16 +277,15 @@ std::string urldecode(const std::string &str)
 	return oss.str();
 }
 
-u32 readFlagString(std::string str, const FlagDesc *flagdesc, u32 *flagmask)
-{
+u32 readFlagString(std::string str, const FlagDesc *flagdesc, u32 *flagmask) {
 	u32 result = 0;
 	u32 mask = 0;
 	char *s = &str[0];
 	char *flagstr;
-	char *strpos = NULL;
+	char *strpos = nullptr;
 
 	while ((flagstr = strtok_r(s, ",", &strpos))) {
-		s = NULL;
+		s = nullptr;
 
 		while (*flagstr == ' ' || *flagstr == '\t')
 			flagstr++;
@@ -396,8 +312,7 @@ u32 readFlagString(std::string str, const FlagDesc *flagdesc, u32 *flagmask)
 	return result;
 }
 
-std::string writeFlagString(u32 flags, const FlagDesc *flagdesc, u32 flagmask)
-{
+std::string writeFlagString(u32 flags, const FlagDesc *flagdesc, u32 flagmask) {
 	std::string result;
 
 	for (int i = 0; flagdesc[i].name; i++) {
@@ -417,8 +332,7 @@ std::string writeFlagString(u32 flags, const FlagDesc *flagdesc, u32 flagmask)
 	return result;
 }
 
-size_t mystrlcpy(char *dst, const char *src, size_t size)
-{
+size_t mystrlcpy(char *dst, const char *src, size_t size) {
 	size_t srclen  = strlen(src) + 1;
 	size_t copylen = MYMIN(srclen, size);
 
@@ -430,8 +344,7 @@ size_t mystrlcpy(char *dst, const char *src, size_t size)
 	return srclen;
 }
 
-char *mystrtok_r(char *s, const char *sep, char **lasts)
-{
+char *mystrtok_r(char *s, const char *sep, char **lasts) {
 	char *t;
 
 	if (!s)
@@ -441,7 +354,7 @@ char *mystrtok_r(char *s, const char *sep, char **lasts)
 		s++;
 
 	if (!*s)
-		return NULL;
+		return nullptr;
 
 	t = s;
 	while (*t) {
@@ -456,8 +369,7 @@ char *mystrtok_r(char *s, const char *sep, char **lasts)
 	return s;
 }
 
-u64 read_seed(const char *str)
-{
+u64 read_seed(const char *str) {
 	char *endptr;
 	u64 num;
 
@@ -472,8 +384,7 @@ u64 read_seed(const char *str)
 	return num;
 }
 
-bool parseColorString(const std::string &value, video::SColor &color, bool quiet)
-{
+bool parseColorString(const std::string &value, video::SColor &color, bool quiet) {
 	bool success;
 
 	if (value[0] == '#')
@@ -487,8 +398,7 @@ bool parseColorString(const std::string &value, video::SColor &color, bool quiet
 	return success;
 }
 
-static bool parseHexColorString(const std::string &value, video::SColor &color)
-{
+static bool parseHexColorString(const std::string &value, video::SColor &color) {
 	unsigned char components[] = { 0x00, 0x00, 0x00, 0xff }; // R,G,B,A
 
 	if (value[0] != '#')
@@ -518,7 +428,7 @@ static bool parseHexColorString(const std::string &value, video::SColor &color)
 		} else {
 			unsigned char d1, d2;
 			if (!hex_digit_decode(value[pos], d1) ||
-					!hex_digit_decode(value[pos+1], d2)) {
+			    !hex_digit_decode(value[pos+1], d2)) {
 				success = false;
 				break;
 			}
@@ -542,8 +452,7 @@ struct ColorContainer {
 	std::map<const std::string, u32> colors;
 };
 
-ColorContainer::ColorContainer()
-{
+ColorContainer::ColorContainer() {
 	colors["aliceblue"]              = 0xf0f8ff;
 	colors["antiquewhite"]           = 0xfaebd7;
 	colors["aqua"]                   = 0x00ffff;
@@ -696,8 +605,7 @@ ColorContainer::ColorContainer()
 
 static const ColorContainer named_colors;
 
-static bool parseNamedColorString(const std::string &value, video::SColor &color)
-{
+static bool parseNamedColorString(const std::string &value, video::SColor &color) {
 	std::string color_name;
 	std::string alpha_string;
 
@@ -736,7 +644,7 @@ static bool parseNamedColorString(const std::string &value, video::SColor &color
 
 		unsigned char d1, d2;
 		if (!hex_digit_decode(alpha_string.at(0), d1)
-				|| !hex_digit_decode(alpha_string.at(1), d2))
+		    || !hex_digit_decode(alpha_string.at(1), d2))
 			return false;
 		color_temp |= ((d1 & 0xf) << 4 | (d2 & 0xf)) << 24;
 	} else {
@@ -748,7 +656,6 @@ static bool parseNamedColorString(const std::string &value, video::SColor &color
 	return true;
 }
 
-void str_replace(std::string &str, char from, char to)
-{
+void str_replace(std::string &str, char from, char to) {
 	std::replace(str.begin(), str.end(), from, to);
 }
