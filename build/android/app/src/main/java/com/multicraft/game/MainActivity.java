@@ -217,7 +217,7 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
         int marginTop = pos == 0 ? 48 : 288;
         RelativeLayout rl = findViewById(R.id.activity_main);
         iv = new ImageView(this);
-        iv.setBackgroundResource(R.drawable.logo);
+        iv.setBackgroundResource(R.mipmap.logo);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
         lp.setMargins(0, marginTop, 0, 0);

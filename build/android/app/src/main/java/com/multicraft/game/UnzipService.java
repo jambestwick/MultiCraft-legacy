@@ -74,13 +74,13 @@ public class UnzipService extends IntentService {
             }
             builder = new Notification.Builder(this, channelId);
             builder.setContentTitle(getString(R.string.notification_title))  // required
-                    .setSmallIcon(R.drawable.update) // required
+                    .setSmallIcon(R.mipmap.update) // required
                     .setContentText(getString(R.string.notification_description)); // required
         } else {
             builder = new Notification.Builder(this);
             builder.setContentTitle(getString(R.string.notification_title))
                     .setContentText(getString(R.string.notification_description))
-                    .setSmallIcon(R.drawable.update);
+                    .setSmallIcon(R.mipmap.update);
         }
         mNotifyManager.notify(id, builder.build());
     }
