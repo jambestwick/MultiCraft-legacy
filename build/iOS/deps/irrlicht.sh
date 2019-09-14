@@ -9,7 +9,8 @@ cd irrlicht-src/source/Irrlicht
 xcodebuild build \
 	-project Irrlicht.xcodeproj \
 	-configuration Release \
-	-scheme Irrlicht_iOS
+	-scheme Irrlicht_iOS \
+	-destination generic/platform=iOS
 cd ../..
 
 [ -d ../irrlicht ] && rm -r ../irrlicht

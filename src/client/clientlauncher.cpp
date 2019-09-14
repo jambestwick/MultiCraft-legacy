@@ -236,9 +236,6 @@ bool ClientLauncher::run(GameParams &game_params, const Settings &cmd_args)
 			receiver->m_touchscreengui = new TouchScreenGUI(device, receiver);
 			g_touchscreengui = receiver->m_touchscreengui;
 #endif
-#ifdef ADS
-			ads_enable(true);
-#endif
 
 			the_game(
 				kill,
@@ -262,9 +259,6 @@ bool ClientLauncher::run(GameParams &game_params, const Settings &cmd_args)
 			delete g_touchscreengui;
 			g_touchscreengui = NULL;
 			receiver->m_touchscreengui = NULL;
-#endif
-#ifdef ADS
-			ads_enable(false);
 #endif
 #if defined(__ANDROID__) || defined(__IOS__)
 			porting::notifyExitGame();
@@ -534,17 +528,9 @@ void ClientLauncher::main_menu(MainMenuData *menudata)
 	device->getCursorControl()->setVisible(true);
 #endif
 
-#ifdef ADS
-	ads_enable(true);
-#endif
-
 	/* show main menu */
 	GUIEngine mymenu(device, &input->joystick, guiroot,
 		&g_menumgr, smgr, menudata, *kill);
-
-#ifdef ADS
-	ads_enable(false);
-#endif
 
 	smgr->clear();	/* leave scene manager in a clean state */
 }
