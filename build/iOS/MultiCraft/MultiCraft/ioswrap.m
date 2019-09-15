@@ -126,13 +126,23 @@ void ioswrap_assets()
 		recursive_delete(destpath); // delete assets before updating them
 
 extract:
-		NSLog(@"%s: extract %@ to %@", assets[i].name, zippath, destpath);
+		NSLog(@"%s: extract %@ to %@", assets[i].name, zippath, destpath);
 		[SSZipArchive unzipFileAtPath:zippath toDestination:destpath];
 		write_version(destpath, v_runtime);
 	}
 
 	loading_alert(viewc, nil);
 	win.backgroundColor = [UIColor blackColor];
+}
+
+void ioswrap_asset_refresh(void)
+{
+	char buf[256];
+	ioswrap_paths(PATH_LIBRARY_SUPPORT, buf, sizeof(buf));
+	NSString *destpath = [NSString stringWithUTF8String:buf];
+
+	// set asset version to 0, will be extracted next time
+	write_version(destpath, 0);
 }
 
 void ioswrap_size(unsigned int *dest)

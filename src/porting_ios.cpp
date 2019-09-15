@@ -82,6 +82,10 @@ namespace porting {
 		return std::string(str);
 	}
 
+	void notifyAbortLoading() {
+		ioswrap_asset_refresh();
+	}
+
 	void notifyServerConnect(bool is_multiplayer) {
 #ifdef ADS
 		ads_allow(!is_multiplayer);
