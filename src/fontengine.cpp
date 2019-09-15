@@ -400,14 +400,15 @@ void FontEngine::initFont(unsigned int basesize, FontMode mode)
 		}
 
 		// give up
-		#if defined(__ANDROID__) || defined(__IOS__)
-				porting::notifyAbortLoading();
-		#endif
 		errorstream << "FontEngine: failed to load freetype font: "
 				<< font_path << std::endl;
-		errorstream << "minetest can not continue without a valid font. "
+		errorstream << "MultiCraft can not continue without a valid font. "
 				"Please correct the 'font_path' setting or install the font "
 				"file in the proper location" << std::endl;
+#if defined(__ANDROID__) || defined(__IOS__)
+		porting::notifyAbortLoading();
+		exit(0);
+#endif
 		abort();
 	}
 #endif
