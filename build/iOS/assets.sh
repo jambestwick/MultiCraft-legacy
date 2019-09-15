@@ -44,6 +44,12 @@ for mods in compatibility experience; do
 	find $DEST/games/default/files -type d -name $mods -print0 | xargs -0 -- rm -r
 done
 
+# remove inaccessible text files
+for name in settingtypes LICENSE license README COPYING; do
+	find $DEST -type f -name $name".txt" -exec rm -f {} \;
+	find $DEST -type f -name $name".md" -exec rm -f {} \;
+done
+
 echo "Creating assets.zip"
 ZIPDEST=$FOLDER/assets.zip
 rm -f $ZIPDEST
