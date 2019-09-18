@@ -39,7 +39,6 @@
 		8465A76522A7D4500095B7CA /* libintl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8465A76422A7D4500095B7CA /* libintl.cpp */; };
 		849C4F86209656D3005EB041 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 849C4F85209656D2005EB041 /* ru.lproj */; };
 		EB4367AE23CAD13A43ADF4B1 /* libPods-MultiCraft.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8758CE009FCB7E91F4C84C28 /* libPods-MultiCraft.a */; };
-		F810D7052080E48100D109B8 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = F810D7042080E48000D109B8 /* en.lproj */; };
 		F84D3A951DE79AB400ADE1A0 /* ads.mm in Sources */ = {isa = PBXBuildFile; fileRef = F84D3A941DE79AB400ADE1A0 /* ads.mm */; };
 		F856B5C31F55F7EE00FE9494 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F856B5C21F55F7EE00FE9494 /* bg.png */; };
 		F87DC8BA210887C700393B64 /* mapgen_v7p.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F87DC8B9210887C700393B64 /* mapgen_v7p.cpp */; };
@@ -320,7 +319,6 @@
 		8465A76422A7D4500095B7CA /* libintl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = libintl.cpp; path = ../../../../lib/intl/libintl.cpp; sourceTree = "<group>"; };
 		849C4F85209656D2005EB041 /* ru.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ru.lproj; sourceTree = "<group>"; };
 		8758CE009FCB7E91F4C84C28 /* libPods-MultiCraft.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MultiCraft.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F810D7042080E48000D109B8 /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
 		F84D3A931DE79AB400ADE1A0 /* ads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ads.h; path = ../../Ads/ads.h; sourceTree = "<group>"; };
 		F84D3A941DE79AB400ADE1A0 /* ads.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ads.mm; path = ../../Ads/ads.mm; sourceTree = "<group>"; };
 		F85119A61F4476FC00BFA9AF /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../Pods/libCurlPod/lib/libcurl.a; sourceTree = "<group>"; };
@@ -749,7 +747,6 @@
 		F8E6C79F1DCA428800F64426 /* directiontables.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = directiontables.cpp; path = ../../../../src/util/directiontables.cpp; sourceTree = "<group>"; };
 		F8E6C7A01DCA428800F64426 /* directiontables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = directiontables.h; path = ../../../../src/util/directiontables.h; sourceTree = "<group>"; };
 		F8E6C7A11DCA428800F64426 /* hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hex.h; path = ../../../../src/util/hex.h; sourceTree = "<group>"; };
-		F8E6C7A21DCA428800F64426 /* mathconstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mathconstants.h; path = ../../../../src/util/mathconstants.h; sourceTree = "<group>"; };
 		F8E6C7A31DCA428800F64426 /* md32_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = md32_common.h; path = ../../../../src/util/md32_common.h; sourceTree = "<group>"; };
 		F8E6C7A41DCA428800F64426 /* numeric.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = numeric.cpp; path = ../../../../src/util/numeric.cpp; sourceTree = "<group>"; };
 		F8E6C7A51DCA428800F64426 /* numeric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = numeric.h; path = ../../../../src/util/numeric.h; sourceTree = "<group>"; };
@@ -867,7 +864,6 @@
 			isa = PBXGroup;
 			children = (
 				849C4F85209656D2005EB041 /* ru.lproj */,
-				F810D7042080E48000D109B8 /* en.lproj */,
 				F8E6C4E81DCA3B7900F64426 /* Assets.xcassets */,
 				844B495D228606B200EB60EF /* Main.storyboard */,
 				F8E6C4EA1DCA3B7900F64426 /* LaunchScreen.storyboard */,
@@ -1450,7 +1446,6 @@
 				F8E6C79F1DCA428800F64426 /* directiontables.cpp */,
 				F8E6C7A01DCA428800F64426 /* directiontables.h */,
 				F8E6C7A11DCA428800F64426 /* hex.h */,
-				F8E6C7A21DCA428800F64426 /* mathconstants.h */,
 				F8E6C7A31DCA428800F64426 /* md32_common.h */,
 				F8E6C7A41DCA428800F64426 /* numeric.cpp */,
 				F8E6C7A51DCA428800F64426 /* numeric.h */,
@@ -1560,14 +1555,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F810D7052080E48100D109B8 /* en.lproj in Resources */,
-				F8E6C4EC1DCA3B7900F64426 /* LaunchScreen.storyboard in Resources */,
 				F8E6C4E91DCA3B7900F64426 /* Assets.xcassets in Resources */,
-				844B495F228606B200EB60EF /* Main.storyboard in Resources */,
-				F8E6C7E11DCA4EB300F64426 /* assets.zip in Resources */,
 				849C4F86209656D3005EB041 /* ru.lproj in Resources */,
-				F8E6C7E31DCA511700F64426 /* worlds.zip in Resources */,
+				F8E6C4EC1DCA3B7900F64426 /* LaunchScreen.storyboard in Resources */,
+				844B495F228606B200EB60EF /* Main.storyboard in Resources */,
 				F856B5C31F55F7EE00FE9494 /* bg.png in Resources */,
+				F8E6C7E11DCA4EB300F64426 /* assets.zip in Resources */,
+				F8E6C7E31DCA511700F64426 /* worlds.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
