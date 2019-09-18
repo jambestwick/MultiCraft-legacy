@@ -595,10 +595,10 @@ int ModApiMainMenu::l_get_favorites(lua_State *L)
 			lua_settable(L, top_lvl2);
 		}
 
-		if (servers[i].isMember("ping")) {
-			float ping = servers[i]["ping"].asFloat();
-			lua_pushstring(L, "ping");
-			lua_pushnumber(L, ping);
+		if (servers[i].isMember("lag")) {
+			float lag = servers[i]["lag"].asFloat();
+			lua_pushstring(L, "lag");
+			lua_pushnumber(L, lag);
 			lua_settable(L, top_lvl2);
 		}
 

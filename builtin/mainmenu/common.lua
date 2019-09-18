@@ -110,13 +110,13 @@ function render_serverlist_row(spec, is_favorite, is_approved)
 		end
 	end
 
-	if spec.ping then
-		local ping = spec.ping * 1000
-		if ping <= 50 then
+	if spec.lag then
+		local lag = spec.lag * 1000
+		if lag <= 100 then
 			details = details .. "14,"
-		elseif ping <= 100 then
+		elseif lag <= 150 then
 			details = details .. "13,"
-		elseif ping <= 250 then
+		elseif lag <= 250 then
 			details = details .. "12,"
 		else
 			details = details .. "11,"
@@ -131,12 +131,12 @@ function render_serverlist_row(spec, is_favorite, is_approved)
 
 		-- Choose a color depending on how many clients are connected
 		-- (relatively to clients_max)
-		if     grey_out		      then clients_color = '#aaaaaa'
+		if     grey_out               then clients_color = '#aaaaaa'
 		elseif spec.clients == 0      then clients_color = ''        -- 0 players: default/white
 		elseif clients_percent <= 60  then clients_color = '#a1e587' -- 0-60%: green
 		elseif clients_percent <= 90  then clients_color = '#ffdc97' -- 60-90%: yellow
 		elseif clients_percent == 100 then clients_color = '#dd5b5b' -- full server: red (darker)
-		else				               clients_color = '#ffba97' -- 90-100%: orange
+		else                               clients_color = '#ffba97' -- 90-100%: orange
 		end
 
 		details = details .. clients_color .. ',' ..

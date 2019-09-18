@@ -76,7 +76,7 @@ local function get_formspec(tabview, name, tabdata)
 		"tableoptions[background=#00000000;border=false]" ..
 		"tablecolumns[" ..
 		image_column(fgettext("Favorite"), "favorite") .. ",align=center;" ..
-		image_column(fgettext("Ping")) .. ",padding=0.25;" ..
+		image_column(fgettext("Lag, ms")) .. ",padding=0.25;" ..
 		"color,span=3;" ..
 		"text,align=right;" ..                -- clients
 		"text,align=center,padding=0.25;" ..  -- "/"
