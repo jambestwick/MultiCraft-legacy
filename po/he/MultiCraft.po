@@ -159,15 +159,15 @@ msgid "Game"
 msgstr "משחק"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "מנוע מפות"
+msgid "Mapgen:"
+msgstr "מנוע מפות:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "לא נבחר שם לעולם או שאף מפעיל משחק לא נבחר"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed"
+msgid "Seed:"
 msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua
@@ -175,8 +175,8 @@ msgid "Warning: The minimal development test is meant for developers."
 msgstr "אזהרה: מצב המפתחים נועד למפתחים!."
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name"
-msgstr "שם העולם"
+msgid "World name:"
+msgstr "שם העולם:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."
@@ -200,8 +200,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr ""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World \"$1\"?"
-msgstr "למחוק עולם \"$1\"?"
+msgid "Delete World"
+msgstr "למחוק עולם"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

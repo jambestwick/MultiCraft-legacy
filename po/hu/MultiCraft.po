@@ -161,16 +161,16 @@ msgid "Game"
 msgstr "Játék"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Térkép generátor"
+msgid "Mapgen:"
+msgstr "Térkép generátor:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Nincs megadva a világ neve, vagy nincs kiválasztva játék"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed"
-msgstr "Seed"
+msgid "Seed:"
+msgstr "Seed:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
@@ -178,8 +178,8 @@ msgstr ""
 "Figyelmeztetés: A \"minimal development test\" csak fejlesztőknek ajánlott."
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name"
-msgstr "Világ neve"
+msgid "World name:"
+msgstr "Világ neve:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."
@@ -203,8 +203,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modmgr: érvénytelen mod útvonal: \"$1\""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World \"$1\"?"
-msgstr "\"$1\" világ törlése?"
+msgid "Delete World"
+msgstr "Világ törlése"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

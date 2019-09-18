@@ -161,24 +161,24 @@ msgid "Game"
 msgstr "Joc"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Mapgen"
+msgid "Mapgen:"
+msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Jocul nu are nume, sau nu ai selectat un joc"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed"
-msgstr "Seminţe"
+msgid "Seed:"
+msgstr "Seminţe:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
 msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name"
-msgstr "Numele lumii"
+msgid "World name:"
+msgstr "Numele lumii:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."
@@ -202,8 +202,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modmgr: Pacht de mod invalid \"$1\""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World \"$1\"?"
-msgstr "Ștergi lumea \"$1\"?"
+msgid "Delete World"
+msgstr "Ștergi lumea"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"
@@ -1742,7 +1742,7 @@ msgstr ""
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Cavern threshold"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid "Caves and tunnels form at the intersection of the two noises"
@@ -2589,7 +2589,7 @@ msgstr ""
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Ground level"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
@@ -2653,12 +2653,12 @@ msgstr ""
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Hill steepness"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Hill threshold"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid "Homepage of server, to be displayed in the serverlist."
@@ -3235,12 +3235,12 @@ msgstr ""
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Lake steepness"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Lake threshold"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid "Language"
@@ -3478,67 +3478,67 @@ msgstr ""
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Mapgen Valleys"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Mapgen debug"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Mapgen flags"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Mapgen flat"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Mapgen flat specific flags"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Mapgen fractal"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Mapgen name"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Mapgen v5"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Mapgen v5 specific flags"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Mapgen v6"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Mapgen v6 specific flags"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Mapgen v7"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 #, fuzzy
 msgid "Mapgen v7 specific flags"
-msgstr "Mapgen"
+msgstr ""
 
 #: src/settings_translation_file.cpp
 msgid "Massive cave depth"
@@ -4904,39 +4904,39 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Mapgen flat cave width"
-#~ msgstr "Mapgen"
+#~ msgstr ""
 
 #, fuzzy
 #~ msgid "Mapgen fractal cave width"
-#~ msgstr "Mapgen"
+#~ msgstr ""
 
 #, fuzzy
 #~ msgid "Mapgen fractal fractal"
-#~ msgstr "Mapgen"
+#~ msgstr ""
 
 #, fuzzy
 #~ msgid "Mapgen fractal iterations"
-#~ msgstr "Mapgen"
+#~ msgstr ""
 
 #, fuzzy
 #~ msgid "Mapgen fractal offset"
-#~ msgstr "Mapgen"
+#~ msgstr ""
 
 #, fuzzy
 #~ msgid "Mapgen fractal scale"
-#~ msgstr "Mapgen"
+#~ msgstr ""
 
 #, fuzzy
 #~ msgid "Mapgen fractal slice w"
-#~ msgstr "Mapgen"
+#~ msgstr ""
 
 #, fuzzy
 #~ msgid "Mapgen v5 cave width"
-#~ msgstr "Mapgen"
+#~ msgstr ""
 
 #, fuzzy
 #~ msgid "Mapgen v7 cave width"
-#~ msgstr "Mapgen"
+#~ msgstr ""
 
 #, fuzzy
 #~ msgid "Useful for mod developers."

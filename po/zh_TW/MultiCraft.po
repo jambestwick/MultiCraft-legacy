@@ -159,24 +159,24 @@ msgid "Game"
 msgstr "遊戲"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "地圖產生器"
+msgid "Mapgen:"
+msgstr "地圖產生器:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "未給予世界遊戲或是未選取遊戲"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed"
-msgstr "種子"
+msgid "Seed:"
+msgstr "種子:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
 msgstr "警告：最小化的開發測試僅供開發者使用。"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name"
-msgstr "世界遊戲"
+msgid "World name:"
+msgstr "世界遊戲:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."
@@ -200,8 +200,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Mod 管理員：無效的 mod 路徑「$1」"
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World \"$1\"?"
-msgstr "刪除世界「$1」？"
+msgid "Delete World"
+msgstr "刪除世界"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

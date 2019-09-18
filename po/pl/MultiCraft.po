@@ -162,16 +162,16 @@ msgid "Game"
 msgstr "Gra"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Generator mapy"
+msgid "Mapgen:"
+msgstr "Generator mapy:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Nie podano nazwy świata lub nie wybrano gry"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed"
-msgstr "Ziarno losowości"
+msgid "Seed:"
+msgstr "Ziarno losowości:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
@@ -179,8 +179,8 @@ msgstr ""
 "Uwaga: Minimal development test jest przeznaczony tylko dla developerów."
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name"
-msgstr "Nazwa świata"
+msgid "World name:"
+msgstr "Nazwa świata:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."
@@ -204,8 +204,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modmgr: nieprawidłowy katalog \"$1\""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World \"$1\"?"
-msgstr "Usunąć świat \"$1\"?"
+msgid "Delete World"
+msgstr "Usunąć świat"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

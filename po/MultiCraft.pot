@@ -132,11 +132,11 @@ msgid ""
 msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name"
+msgid "World name:"
 msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed"
+msgid "Seed:"
 msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua
@@ -185,7 +185,7 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr ""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World \"$1\"?"
+msgid "Delete World"
 msgstr ""
 
 #: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua

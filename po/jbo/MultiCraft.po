@@ -159,7 +159,7 @@ msgid "Game"
 msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
+msgid "Mapgen:"
 msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua
@@ -167,15 +167,15 @@ msgid "No worldname given or no game selected"
 msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed"
-msgstr "le munje ke cunso namcu"
+msgid "Seed:"
+msgstr "le munje ke cunso namcu:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
 msgstr ".i .e'unai la'o gy.Minimal Development Test.gy. cu tutci le finti"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name"
+msgid "World name:"
 msgstr "munje cmene"
 
 #: builtin/mainmenu/dlg_create_world.lua
@@ -200,8 +200,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr ""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World \"$1\"?"
-msgstr ".i xu do djica lo nu vimcu lo munje be me'e zoi gy.$1.gy."
+msgid "Delete World"
+msgstr "i xu do djica lo nu vimcu lo munje be me'e zoi"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

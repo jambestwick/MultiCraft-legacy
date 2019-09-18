@@ -161,24 +161,24 @@ msgid "Game"
 msgstr "Mäng"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Kaardi generaator"
+msgid "Mapgen:"
+msgstr "Kaardi generaator:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "No nimi või no mäng valitud"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed"
-msgstr "Seed"
+msgid "Seed:"
+msgstr "Seed:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
 msgstr "Hoiatus: minimaalne arendustest on mõeldud arendajatele."
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name"
-msgstr "Maailma nimi"
+msgid "World name:"
+msgstr "Maailma nimi:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."
@@ -202,8 +202,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr ""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World \"$1\"?"
-msgstr "Kas kustutada maailm \"$1\"?"
+msgid "Delete World"
+msgstr "Kas kustutada maailm"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

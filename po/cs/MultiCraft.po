@@ -161,24 +161,24 @@ msgid "Game"
 msgstr "Hra"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Generátor mapy"
+msgid "Mapgen:"
+msgstr "Generátor mapy:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Nebyla vybrána podhra nebo název"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed"
-msgstr "Seedové číslo"
+msgid "Seed:"
+msgstr "Seedové číslo:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
 msgstr "Varování: \"Minimal development test\" je zamýšlen pouze pro vývojáře."
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name"
-msgstr "Název světa"
+msgid "World name:"
+msgstr "Název světa:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."
@@ -202,8 +202,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modmgr: Neplatná cesta k modu \"$1\""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World \"$1\"?"
-msgstr "Doopravdy chcete smazat svět \"$1\"?"
+msgid "Delete World"
+msgstr "Doopravdy chcete smazat svět"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

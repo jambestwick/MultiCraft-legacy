@@ -165,16 +165,16 @@ msgid "Game"
 msgstr "Ludo"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Mondogenerilo"
+msgid "Mapgen:"
+msgstr "Mondogenerilo:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Neniu mondonomo donitas aŭ neniu ludon elektitas"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed"
-msgstr "Fontnombro"
+msgid "Seed:"
+msgstr "Fontnombro:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
@@ -182,8 +182,8 @@ msgstr ""
 "Averto: La minimuma programista testo estas intencita por programistoj."
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name"
-msgstr "Monda nomo"
+msgid "World name:"
+msgstr "Monda nomo:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."
@@ -207,8 +207,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modmgr: malvalida modifo-dosierindiko \"$1\""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World \"$1\"?"
-msgstr "Ĉu forigi mondon \"$1\"?"
+msgid "Delete World"
+msgstr "Ĉu forigi mondon"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

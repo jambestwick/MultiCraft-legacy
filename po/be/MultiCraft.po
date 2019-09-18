@@ -160,24 +160,24 @@ msgid "Game"
 msgstr "Гульня"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen"
-msgstr "Генератар мапы"
+msgid "Mapgen:"
+msgstr "Генератар мапы:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Дадзены свет без назвы або не абрана гульня"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed"
-msgstr "Лікавы стан"
+msgid "Seed:"
+msgstr "Лікавы стан:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
 msgstr "Увага: мінімальны тэст распрацоўкі прызначаны для распрацоўкі."
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name"
-msgstr "Назва свету"
+msgid "World name:"
+msgstr "Назва свету:"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."
@@ -201,8 +201,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Менеджар модаў: некарэктны шлях да «$1»"
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World \"$1\"?"
-msgstr "Выдаліць свет «$1»?"
+msgid "Delete World"
+msgstr "Выдаліць свет"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"
