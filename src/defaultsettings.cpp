@@ -461,24 +461,23 @@ void set_default_settings(Settings *settings)
 	if ([SDVersion deviceVersion] == iPhone4S) {
 		// 3.5" iPhone
 		settings->setDefault("hud_scaling", "0.45");
-	} else if (([SDVersion deviceVersion] == iPhone5) || ([SDVersion deviceVersion] == iPhone5C) || ([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhoneSE) ||
-			   ([SDVersion deviceVersion] == iPodTouch5Gen) || ([SDVersion deviceVersion] == iPodTouch6Gen) || ([SDVersion deviceVersion] == iPodTouch7Gen)) {
+	} else if SDVersion4Inch {
 		// 4" iPhone and iPod Touch
 		settings->setDefault("hud_scaling", "0.5");
 		settings->setDefault("mouse_sensitivity", "0.33");
-	} else if (([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone8)) {
+	} else if SDVersion4and7Inch {
 		// 4.7" iPhone
 		settings->setDefault("hud_scaling", "0.6");
 		settings->setDefault("mouse_sensitivity", "0.27");
-	} else if (([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhone7Plus) || ([SDVersion deviceVersion] == iPhone8Plus)) {
+	} else if SDVersion5and5Inch {
 		// 5.5" iPhone Plus
 		settings->setDefault("hud_scaling", "0.7");
 		settings->setDefault("mouse_sensitivity", "0.3");
-	} else if (([SDVersion deviceVersion] == iPhoneX) || ([SDVersion deviceVersion] == iPhoneXS) || ([SDVersion deviceVersion] == iPhoneXSMax) || ([SDVersion deviceVersion] == iPhoneXR)) {
+	} else if (SDVersion5and8Inch || SDVersion6and1Inch || SDVersion6and5Inch) {
 		// 5.8+" iPhones
 		settings->setDefault("hud_scaling", "0.85");
 		settings->setDefault("mouse_sensitivity", "0.35");
-	} else if (([SDVersion deviceVersion] == iPadMini) || ([SDVersion deviceVersion] == iPadMini2) | ([SDVersion deviceVersion] == iPadMini3) | ([SDVersion deviceVersion] == iPadMini4) | ([SDVersion deviceVersion] == iPadMini5)) {
+	} else if SDVersion7and9Inch {
 		// iPad mini
 		settings->setDefault("hud_scaling", "0.9");
 		settings->setDefault("mouse_sensitivity", "0.25");
@@ -488,8 +487,7 @@ void set_default_settings(Settings *settings)
 	}
 
 	// Settings for the Rounded Screen and Home Bar
-	if (([SDVersion deviceVersion] == iPhoneX) || ([SDVersion deviceVersion] == iPhoneXS) || ([SDVersion deviceVersion] == iPhoneXSMax) || ([SDVersion deviceVersion] == iPhoneXR) ||
-		([SDVersion deviceVersion] == iPadPro11Inch) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch3Gen)) {
+	if SDVersionHomeBar {
 		settings->setDefault("hud_move_upwards", "10");
 		settings->setDefault("round_screen", "15");
 	}

@@ -312,6 +312,7 @@
 		4B35A9F31EEE017000274961 /* scripting_client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scripting_client.h; path = ../../../../src/script/scripting_client.h; sourceTree = "<group>"; };
 		4B35A9F51EEE018D00274961 /* scripting_server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = scripting_server.cpp; path = ../../../../src/script/scripting_server.cpp; sourceTree = "<group>"; };
 		4B35A9F61EEE018D00274961 /* scripting_server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scripting_server.h; path = ../../../../src/script/scripting_server.h; sourceTree = "<group>"; };
+		840E2F9E233410F90088E7F7 /* SDVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDVersion.h; path = SDVersion/SDVersion.h; sourceTree = "<group>"; };
 		844B495E228606B200EB60EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8465A76122A7D4500095B7CA /* MessageCatalog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MessageCatalog.hpp; path = ../../../../lib/intl/MessageCatalog.hpp; sourceTree = "<group>"; };
 		8465A76222A7D4500095B7CA /* libintl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libintl.h; path = ../../../../lib/intl/libintl.h; sourceTree = "<group>"; };
@@ -880,6 +881,7 @@
 				F84D3A921DE79AA500ADE1A0 /* Ads */,
 				F8E6C4F31DCA3EA400F64426 /* ioswrap.h */,
 				F8E6C4F41DCA3EA400F64426 /* ioswrap.m */,
+				840E2F9E233410F90088E7F7 /* SDVersion.h */,
 				F8E6C7E01DCA4EB300F64426 /* assets.zip */,
 				F8E6C7E21DCA511700F64426 /* worlds.zip */,
 				F856B5C21F55F7EE00FE9494 /* bg.png */,
@@ -1963,7 +1965,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/PersonalizedAdConsent\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDVersion\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SSZipArchive\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/leveldb-library\"",
 					"\"${PODS_ROOT}/libCurlPod/lib\"",
@@ -1973,8 +1974,6 @@
 					"$(inherited)",
 					"-isystem",
 					"\"${PODS_ROOT}/Headers/Public\"",
-					"-isystem",
-					"\"${PODS_ROOT}/Headers/Public/SDVersion\"",
 					"-isystem",
 					"\"${PODS_ROOT}/Headers/Public/SSZipArchive\"",
 					"-fvisibility=hidden",
@@ -2041,7 +2040,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/PersonalizedAdConsent\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDVersion\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SSZipArchive\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/leveldb-library\"",
 					"\"${PODS_ROOT}/libCurlPod/lib\"",
@@ -2051,8 +2049,6 @@
 					"$(inherited)",
 					"-isystem",
 					"\"${PODS_ROOT}/Headers/Public\"",
-					"-isystem",
-					"\"${PODS_ROOT}/Headers/Public/SDVersion\"",
 					"-isystem",
 					"\"${PODS_ROOT}/Headers/Public/SSZipArchive\"",
 					"-fvisibility=hidden",

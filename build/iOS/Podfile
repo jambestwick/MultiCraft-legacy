@@ -7,7 +7,6 @@ target 'MultiCraft' do
 
 	pod 'SSZipArchive'
 	pod 'leveldb-library'
-	pod 'SDVersion',				:git => 'https://github.com/MoNTE48/SDVersion'
 	pod 'libCurlPod',				:git => 'https://github.com/MoNTE48/libCurlPod'
 	pod 'libOggVorbisPod',	:git => 'https://github.com/MoNTE48/libOggVorbisPod'
 
