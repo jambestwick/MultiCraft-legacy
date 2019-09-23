@@ -39,7 +39,7 @@
 		8465A76522A7D4500095B7CA /* libintl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8465A76422A7D4500095B7CA /* libintl.cpp */; };
 		849C4F86209656D3005EB041 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 849C4F85209656D2005EB041 /* ru.lproj */; };
 		EB4367AE23CAD13A43ADF4B1 /* libPods-MultiCraft.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8758CE009FCB7E91F4C84C28 /* libPods-MultiCraft.a */; };
-		F84D3A951DE79AB400ADE1A0 /* ads.mm in Sources */ = {isa = PBXBuildFile; fileRef = F84D3A941DE79AB400ADE1A0 /* ads.mm */; };
+		842A808C2339174C00A89418 /* ads.mm in Sources */ = {isa = PBXBuildFile; fileRef = 842A808B2339174C00A89418 /* ads.mm */; };
 		F856B5C31F55F7EE00FE9494 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F856B5C21F55F7EE00FE9494 /* bg.png */; };
 		F87DC8BA210887C700393B64 /* mapgen_v7p.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F87DC8B9210887C700393B64 /* mapgen_v7p.cpp */; };
 		F8E6C4E91DCA3B7900F64426 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8E6C4E81DCA3B7900F64426 /* Assets.xcassets */; };
@@ -320,8 +320,8 @@
 		8465A76422A7D4500095B7CA /* libintl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = libintl.cpp; path = ../../../../lib/intl/libintl.cpp; sourceTree = "<group>"; };
 		849C4F85209656D2005EB041 /* ru.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ru.lproj; sourceTree = "<group>"; };
 		8758CE009FCB7E91F4C84C28 /* libPods-MultiCraft.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MultiCraft.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F84D3A931DE79AB400ADE1A0 /* ads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ads.h; path = ../../Ads/ads.h; sourceTree = "<group>"; };
-		F84D3A941DE79AB400ADE1A0 /* ads.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ads.mm; path = ../../Ads/ads.mm; sourceTree = "<group>"; };
+		842A808A2339174B00A89418 /* ads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ads.h; path = Ads/ads.h; sourceTree = "<group>"; };
+		842A808B2339174C00A89418 /* ads.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ads.mm; path = Ads/ads.mm; sourceTree = "<group>"; };
 		F85119A61F4476FC00BFA9AF /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../Pods/libCurlPod/lib/libcurl.a; sourceTree = "<group>"; };
 		F856B5C21F55F7EE00FE9494 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg.png; path = ../../../../textures/base/bg.png; sourceTree = "<group>"; };
 		F87DC8B8210887C600393B64 /* mapgen_v7p.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapgen_v7p.h; path = ../../../../src/mapgen_v7p.h; sourceTree = "<group>"; };
@@ -833,15 +833,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		F84D3A921DE79AA500ADE1A0 /* Ads */ = {
-			isa = PBXGroup;
-			children = (
-				F84D3A931DE79AB400ADE1A0 /* ads.h */,
-				F84D3A941DE79AB400ADE1A0 /* ads.mm */,
-			);
-			name = Ads;
-			sourceTree = "<group>";
-		};
 		F8E6C4D01DCA3B7900F64426 = {
 			isa = PBXGroup;
 			children = (
@@ -878,10 +869,11 @@
 		F8E6C4DC1DCA3B7900F64426 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F84D3A921DE79AA500ADE1A0 /* Ads */,
 				F8E6C4F31DCA3EA400F64426 /* ioswrap.h */,
 				F8E6C4F41DCA3EA400F64426 /* ioswrap.m */,
 				840E2F9E233410F90088E7F7 /* SDVersion.h */,
+				842A808A2339174B00A89418 /* ads.h */,
+				842A808B2339174C00A89418 /* ads.mm */,
 				F8E6C7E01DCA4EB300F64426 /* assets.zip */,
 				F8E6C7E21DCA511700F64426 /* worlds.zip */,
 				F856B5C21F55F7EE00FE9494 /* bg.png */,
@@ -1627,7 +1619,7 @@
 				4B35A9B31EEDD16C00274961 /* database-files.cpp in Sources */,
 				F8E6C64E1DCA3F9900F64426 /* rollback_interface.cpp in Sources */,
 				4B35A9F71EEE018D00274961 /* scripting_server.cpp in Sources */,
-				F84D3A951DE79AB400ADE1A0 /* ads.mm in Sources */,
+				842A808C2339174C00A89418 /* ads.mm in Sources */,
 				F8E6C6301DCA3F9900F64426 /* mapgen_fractal.cpp in Sources */,
 				F8E6C6441DCA3F9900F64426 /* noise.cpp in Sources */,
 				F8E6C7BB1DCA428800F64426 /* numeric.cpp in Sources */,
