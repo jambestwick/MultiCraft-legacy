@@ -562,6 +562,9 @@ function core.item_eat(hp_change, replace_with_item, poison)
 		if user then
 			local pos = user:get_pos()
 			pos.y = pos.y + 1.3
+			if not minetest.is_valid_pos(pos) then
+				return
+			end
 			local itemname = itemstack:get_name()
 			local texture = core.registered_items[itemname].inventory_image
 			local dir = user:get_look_dir()
