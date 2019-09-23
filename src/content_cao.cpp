@@ -1741,7 +1741,7 @@ void GenericCAO::processMessage(const std::string &data)
 				// Flashing shall suffice as there is no definition
 				m_reset_textures_timer = 0.05;
 				if(damage >= 2)
-					m_reset_textures_timer += 0.5 * damage;
+					m_reset_textures_timer = 1;
 				updateTextures(m_current_texture_modifier + "^[colorize:#FF000085");
 			}
 		}
@@ -1807,12 +1807,10 @@ bool GenericCAO::directReportPunch(v3f dir, const ItemStack *punchitem,
 		}
 		// TODO: Execute defined fast response
 		// Flashing shall suffice as there is no definition
-		if (m_reset_textures_timer < 0) {
-			m_reset_textures_timer = 0.05;
-			if (result.damage >= 2)
-				m_reset_textures_timer += 1.0 * result.damage;
-			updateTextures(m_current_texture_modifier + "^[colorize:#FF000085");
-		}
+		m_reset_textures_timer = 0.05;
+		if (result.damage >= 2)
+			m_reset_textures_timer = 1;
+		updateTextures(m_current_texture_modifier + "^[colorize:#FF000085");
 	}
 
 	return false;
