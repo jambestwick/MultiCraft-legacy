@@ -46,9 +46,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define HUD_PARAM_HOTBAR_IMAGE 2
 #define HUD_PARAM_HOTBAR_SELECTED_IMAGE 3
 
-#define HUD_HOTBAR_ITEMCOUNT_DEFAULT 9
-#define HUD_HOTBAR_ITEMCOUNT_MAX     23
-
+#define HUD_HOTBAR_ITEMCOUNT_DEFAULT 8
+#define HUD_HOTBAR_ITEMCOUNT_MAX     9
 
 #define HOTBAR_IMAGE_SIZE 48
 

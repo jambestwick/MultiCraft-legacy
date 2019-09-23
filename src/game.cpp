@@ -1408,6 +1408,7 @@ private:
 	GUIFormSpecMenu *current_formspec;
 	//default: "". If other than "", empty show_formspec packets will only close the formspec when the formname matches
 	std::string cur_formname;
+	std::string wield_name;
 
 	EventManager *eventmgr;
 	QuicktuneShortcutter *quicktune;
@@ -4273,6 +4274,14 @@ void Game::updateFrame(ProfilerGraph *graph, RunStats *stats, f32 dtime,
 					item = hlist->getItem(0);
 			}
 			camera->wield(item);
+			
+			// Show item description as statustext
+			std::string item_desc = item.getDefinition(itemdef_manager).description;
+			if (wield_name != item_desc) {
+				m_statustext = utf8_to_wide(item_desc);
+				runData.statustext_time = 0;
+				wield_name = item_desc;
+			}
 		}
 
 		runData.update_wielded_item_trigger = false;
@@ -4465,7 +4474,7 @@ void Game::updateGui(const RunStats &stats, f32 dtime, const CameraOrientation &
 	setStaticText(guitext_info, infotext.c_str());
 	guitext_info->setVisible(flags.show_hud && g_menumgr.menuCount() == 0);
 
-	float statustext_time_max = 1.5;
+	float statustext_time_max = 2.0f;
 
 	if (!m_statustext.empty()) {
 		runData.statustext_time += dtime;
@@ -4482,14 +4491,16 @@ void Game::updateGui(const RunStats &stats, f32 dtime, const CameraOrientation &
 	if (!m_statustext.empty()) {
 		s32 status_width  = guitext_status->getTextWidth();
 		s32 status_height = guitext_status->getTextHeight();
-#ifdef __ANDROID__
-		s32 status_y = screensize.Y - 350;
+#if defined(__ANDROID__) || defined(__IOS__)
+		s32 status_y = screensize.Y / 1.25;
+		if (g_settings->getBool("hud_small"))
+			status_y = (screensize.Y) / 1.5;
 #else
 		s32 status_y = screensize.Y - 150 * g_settings->getFloat("hud_scaling");
 #endif
 		s32 status_x = (screensize.X - status_width) / 2;
 		core::rect<s32> rect(
-				status_x , status_y - status_height,
+				status_x,  status_y - status_height,
 				status_x + status_width, status_y
 		);
 		guitext_status->setRelativePosition(rect);
@@ -4735,7 +4746,7 @@ void Game::showPauseMenu()
 #endif
 
 #ifdef __IOS__
-	float ypos = 1.5;
+	float ypos = 1.5f;
 #else
 	float ypos = simple_singleplayer_mode ? 0.5f : 0.1f;
 #endif
@@ -4766,8 +4777,8 @@ void Game::showPauseMenu()
 /*		<< "textarea[7.5,0.25;3.9,6.25;;" << control_text << ";]
 		<< "textarea[0.4,0.25;3.9,6.25;;" << PROJECT_NAME_C " " VERSION_STRING "\n"
 		<< "\n"
-		<<  strgettext("Game info:") << "\n"*/;
-/*	const std::string &address = client->getAddressName();
+		<<  strgettext("Game info:") << "\n";
+	const std::string &address = client->getAddressName();
 	static const std::string mode = strgettext("- Mode: ");
 	if (!simple_singleplayer_mode) {
 		Address serverAddress = client->getServerAddress();
@@ -4799,8 +4810,8 @@ void Game::showPauseMenu()
 				os << strgettext("- Server Name: ") << server_name;
 
 		}
-	}*/
-	os << ";]";
+	}
+	os << ";]";*/
 
 	/* Create menu */
 	/* Note: FormspecFormSource and LocalFormspecHandler  *
