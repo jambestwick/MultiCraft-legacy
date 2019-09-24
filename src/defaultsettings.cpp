@@ -460,10 +460,10 @@ void set_default_settings(Settings *settings)
 	// Set the size of the elements depending on the screen size
 	if ([SDVersion deviceVersion] == iPhone4S) {
 		// 3.5" iPhone
-		settings->setDefault("hud_scaling", "0.45");
+		settings->setDefault("hud_scaling", "0.5");
 	} else if SDVersion4Inch {
 		// 4" iPhone and iPod Touch
-		settings->setDefault("hud_scaling", "0.5");
+		settings->setDefault("hud_scaling", "0.55");
 		settings->setDefault("mouse_sensitivity", "0.33");
 	} else if SDVersion4and7Inch {
 		// 4.7" iPhone

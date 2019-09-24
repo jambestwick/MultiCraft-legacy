@@ -65,7 +65,7 @@ bool MyEventReceiver::OnEvent(const SEvent &event)
 
 #ifdef __IOS__
 	if (event.EventType == irr::EET_APPLICATION_EVENT) {
-		if (event.ApplicationEvent.EventType == irr::EAET_WILL_PAUSE) {
+		if (event.ApplicationEvent.EventType == irr::EAET_DID_PAUSE) {
 			external_pause_game();
 		#ifdef ADS
 			ads_set_paused(true);
