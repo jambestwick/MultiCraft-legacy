@@ -10,6 +10,7 @@ target 'MultiCraft' do
 	pod 'libCurlPod',				:git => 'https://github.com/MoNTE48/libCurlPod'
 	pod 'libOggVorbisPod',	:git => 'https://github.com/MoNTE48/libOggVorbisPod'
 
+	pod 'Appodeal/AdColonyAdapter'
 	pod 'Appodeal/AdExchangeAdapter'
 	pod 'Appodeal/AppLovinAdapter'
 	pod 'Appodeal/IronSource'
