@@ -1,6 +1,13 @@
 #ifndef ioswrap_h
 #define ioswrap_h
 
+#if 0
+#define ADS
+#include "ads.h"
+#else
+#define ZIPPWD @"" // zip password
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif

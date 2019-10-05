@@ -26,10 +26,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #error This file should only be included on iOS
 #endif
 
-#if 0 // toggle to 1 for ads
-#define ADS
-#include "ads.h"
-#endif
+#include "ioswrap.h"
 
 namespace porting {
 	void initializePathsiOS();

@@ -54,7 +54,7 @@ echo "Creating assets.zip"
 ZIPDEST=$FOLDER/assets.zip
 rm -f $ZIPDEST
 
-cd $DEST; zip -1r $ZIPDEST -- *
+cd $DEST; zip -1er $ZIPDEST -- *
 cd $FOLDER; rm -rf $DEST
 
 ###########
@@ -63,4 +63,4 @@ echo "Creating worlds.zip"
 ZIPDEST=$FOLDER/worlds.zip
 rm -f $ZIPDEST
 
-cd ../..; zip -0r $ZIPDEST -- worlds
+cd ../..; zip -r $ZIPDEST -- worlds

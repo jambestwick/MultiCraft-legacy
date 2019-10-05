@@ -8,10 +8,10 @@ static uint32_t parse_version()
 {
 	NSString *revstr = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 	uint8_t revision = [revstr intValue];
-	
+
 	// compatibility with old versions, DON'T CHANGE
 	uint32_t ret = revision | (2 << 24);
-	
+
 	NSLog(@"App revision %@  ->  %u", revstr, ret);
 	return ret;
 }
@@ -108,6 +108,7 @@ void ioswrap_assets()
 		ioswrap_paths(assets[i].path, buf, sizeof(buf));
 		NSString *destpath = [NSString stringWithUTF8String:buf];
 		NSString *zippath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:assets[i].name] ofType:@"zip"];
+		NSString *password = ZIPPWD;
 
 #ifdef DEBUG
 		// always replace assets in debug mode
@@ -127,7 +128,7 @@ void ioswrap_assets()
 
 extract:
 		NSLog(@"%s: extract %@ to %@", assets[i].name, zippath, destpath);
-		[SSZipArchive unzipFileAtPath:zippath toDestination:destpath];
+		[SSZipArchive unzipFileAtPath:zippath toDestination:destpath overwrite:YES password:password error:nil];
 		write_version(destpath, v_runtime);
 	}
 
