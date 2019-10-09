@@ -1057,8 +1057,7 @@ core.register_chatcommand("setspawn", {
 		local y = pos.y
 		local z = pos.z
 		local pos_to_string = x .. "," .. y .. "," .. z
-		core.setting_set("static_spawnpoint", pos_to_string)
-		core.setting_save()
+		core.settings:set("static_spawnpoint", pos_to_string)
 		return true, "Setting spawn point to (" .. pos_to_string .. ")"
 	end
 })

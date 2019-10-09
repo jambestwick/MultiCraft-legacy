@@ -118,7 +118,7 @@ core.builtin_auth_handler = {
 		}
 	end,
 	create_auth = function(name, password)
-		core.log("action", "[AUTH] Adding password entry for player " .. name)
+		core.log("action", "[AUTH] Adding entry for new player " .. name)
 		assert(type(name) == "string")
 		assert(type(password) == "string")
 		core.auth_table[name] = {
