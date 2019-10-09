@@ -30,6 +30,7 @@ local clientpath = scriptdir .. "client" .. DIR_DELIM
 local commonpath = scriptdir .. "common" .. DIR_DELIM
 local asyncpath = scriptdir .. "async" .. DIR_DELIM
 local intlpath = scriptdir .. "intllib" .. DIR_DELIM
+local utf8path = scriptdir .. "utf8lib" .. DIR_DELIM
 
 dofile(commonpath .. "strict.lua")
 dofile(commonpath .. "serialize.lua")
@@ -37,6 +38,7 @@ dofile(commonpath .. "misc_helpers.lua")
 
 if INIT == "game" then
 	dofile(intlpath .. "init.lua")
+	dofile(utf8path .. "init.lua")
 	dofile(gamepath .. "init.lua")
 elseif INIT == "mainmenu" then
 	local mm_script = core.settings:get("main_menu_script")
