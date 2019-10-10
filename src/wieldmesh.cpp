@@ -340,6 +340,10 @@ void WieldMeshSceneNode::setItem(const ItemStack &item, Client *client)
 			setExtruded(tsrc->getTextureName(f.tiles[0].layers[0].texture_id),
 				def.wield_scale, tsrc,
 				f.tiles[0].layers[0].animation_frame_count);
+		} else if (f.drawtype == NDT_PLANTLIKE_ROOTED) {
+			setExtruded(tsrc->getTextureName(f.special_tiles[0].layers[0].texture_id),
+				def.wield_scale, tsrc,
+				f.special_tiles[0].layers[0].animation_frame_count);
 		} else if (f.drawtype == NDT_NORMAL || f.drawtype == NDT_ALLFACES) {
 			setCube(f, def.wield_scale, tsrc);
 		} else {
@@ -456,6 +460,9 @@ void getItemMesh(Client *client, const ItemStack &item, ItemMesh *result)
 		} else if (f.drawtype == NDT_PLANTLIKE) {
 			mesh = getExtrudedMesh(tsrc,
 				tsrc->getTextureName(f.tiles[0].layers[0].texture_id));
+		} else if (f.drawtype == NDT_PLANTLIKE_ROOTED) {
+			mesh = getExtrudedMesh(tsrc,
+				tsrc->getTextureName(f.special_tiles[0].layers[0].texture_id));
 		} else if (f.drawtype == NDT_NORMAL || f.drawtype == NDT_ALLFACES
 			|| f.drawtype == NDT_LIQUID || f.drawtype == NDT_FLOWINGLIQUID) {
 			scene::IMesh *cube = g_extrusion_mesh_cache->createCube();

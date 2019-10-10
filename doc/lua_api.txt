@@ -945,8 +945,9 @@ Look for examples in `games/minimal` or `games/minetest_game`.
 * `firelike`
 * `fencelike`
 * `raillike`
-* `nodebox` -- See below. (**Experimental!**)
+* `nodebox` -- See below
 * `mesh` -- use models for nodes
+* `plantlike_rooted`
 
 `*_optional` drawtypes need less rendering time if deactivated (always client side).
 
