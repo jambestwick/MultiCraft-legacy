@@ -606,7 +606,7 @@ void Server::AsyncRunStep(bool initial_step)
 	// send masterserver announce
 	{
 		float &counter = m_masterserver_timer;
-		if (!isSingleplayer() && (!counter || counter >= 300.0) &&
+		if (!isSingleplayer() && (!counter || counter >= 60.0) &&
 				g_settings->getBool("server_announce")) {
 			ServerList::sendAnnounce(counter ? ServerList::AA_UPDATE :
 						ServerList::AA_START,
@@ -1420,7 +1420,7 @@ bool Server::getClientInfo(
 	*major = client->getMajor();
 	*minor = client->getMinor();
 	*patch = client->getPatch();
-	*vers_string = client->getPatch();
+	*vers_string = std::to_string(static_cast<int>(*major)) + "." + std::to_string(static_cast<int>(*minor)) + "." + std::to_string(static_cast<int>(*patch));
 
 	m_clients.unlock();
 
@@ -2909,8 +2909,10 @@ std::wstring Server::handleChat(const std::string &name, const std::wstring &wna
 	}
 
 	// Run script hook, exit if script ate the chat message
-	if (m_script->on_chat_message(name, wide_to_utf8(wmessage)))
+	if (m_script->on_chat_message(name, wide_to_utf8(wmessage))) {
+		actionstream << name << " issued command: " << wide_to_utf8(wmessage) << std::endl;
 		return L"";
+	}
 
 	// Line to send
 	std::wstring line;
