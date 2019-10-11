@@ -130,7 +130,7 @@ int ModApiServer::l_get_player_ip(lua_State *L)
 		lua_pushstring(L, ip_str.c_str());
 		return 1;
 	}
-	catch(con::PeerNotFoundException) // unlikely
+	catch(const con::PeerNotFoundException &e) // unlikely
 	{
 		dstream << FUNCTION_NAME << ": peer was not found" << std::endl;
 		lua_pushnil(L); // error
@@ -155,7 +155,7 @@ int ModApiServer::l_get_player_information(lua_State *L)
 	{
 		addr = getServer(L)->getPeerAddress(player->peer_id);
 	}
-	catch(con::PeerNotFoundException) // unlikely
+	catch(const con::PeerNotFoundException &e) // unlikely
 	{
 		dstream << FUNCTION_NAME << ": peer was not found" << std::endl;
 		lua_pushnil(L); // error
@@ -297,7 +297,7 @@ int ModApiServer::l_ban_player(lua_State *L)
 		std::string ip_str = addr.serializeString();
 		getServer(L)->setIpBanned(ip_str, name);
 	}
-	catch(con::PeerNotFoundException) // unlikely
+	catch(const con::PeerNotFoundException &e) // unlikely
 	{
 		dstream << FUNCTION_NAME << ": peer was not found" << std::endl;
 		lua_pushboolean(L, false); // error

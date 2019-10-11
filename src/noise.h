@@ -123,7 +123,7 @@ struct NoiseParams {
 		flags      = NOISE_FLAG_DEFAULTS;
 	}
 
-	NoiseParams(float offset_, float scale_, v3f spread_, s32 seed_,
+	NoiseParams(float offset_, float scale_, const v3f &spread_, s32 seed_,
 		u16 octaves_, float persist_, float lacunarity_,
 		u32 flags_=NOISE_FLAG_DEFAULTS)
 	{

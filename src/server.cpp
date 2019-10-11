@@ -1043,7 +1043,7 @@ void Server::Receive()
 {
 	DSTACK(FUNCTION_NAME);
 	SharedBuffer<u8> data;
-	u16 peer_id;
+	u16 peer_id = 0;
 	try {
 		NetworkPacket pkt;
 		m_con.Receive(&pkt);

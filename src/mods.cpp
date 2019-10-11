@@ -373,7 +373,7 @@ Json::Value getModstoreUrl(const std::string &url)
 
 	try {
 		special_http_header = g_settings->getBool("modstore_disable_special_http_header");
-	} catch (SettingNotFoundException) {}
+	} catch (SettingNotFoundException&) {}
 
 	if (special_http_header) {
 		extra_headers.push_back("Accept: application/vnd.minetest.mmdb-v1+json");
