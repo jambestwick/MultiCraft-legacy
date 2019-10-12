@@ -107,8 +107,13 @@ void *ServerThread::run()
 		} catch (con::ConnectionBindFailed &e) {
 			m_server->setAsyncFatalError(e.what());
 		} catch (LuaError &e) {
-			m_server->setAsyncFatalError(
-					"ServerThread::run Lua: " + std::string(e.what()));
+			if (!g_settings->getBool("kamikaze")) {
+				m_server->setAsyncFatalError(
+						"ServerThread::run Lua: " + std::string(e.what()));
+			} else {
+				errorstream << "[KAMIKAZE SURVIVED] ServerError: AsyncErr: " <<
+						"ServerThread::run Lua: " + std::string(e.what()) << std::endl;
+			}
 		}
 	}
 
@@ -413,7 +418,6 @@ void Server::start(Address bind_addr)
 	// Start thread
 	m_thread->start();
 
-	// ASCII art for the win!
 	actionstream<<"World at ["<<m_path_world<<"]"<<std::endl;
 	actionstream<<"Server for gameid=\""<<m_gamespec.id
 			<<"\" listening on "<<bind_addr.serializeString()<<":"
