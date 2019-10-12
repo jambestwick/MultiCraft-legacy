@@ -374,6 +374,10 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("high_precision_fpu", "true");
 	settings->setDefault("enable_console", "false");
 
+	// Weather
+	settings->setDefault("weather", "true");
+	settings->setDefault("weather_snow_covers", "false");
+
 	settings->setDefault("mainmenu_last_selected_world", "1");
 
 	// Mobile Platform
@@ -407,6 +411,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("max_block_generate_distance", "3");
 	settings->setDefault("client_mapblock_limit", "250");
 	settings->setDefault("debug_log_level", "error");
+	settings->setDefault("weather", "false");
 
 	// Set font_path
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
@@ -499,6 +504,7 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("abm_interval", "3.0");
 		settings->setDefault("chunksize", "3");
 		settings->setDefault("max_block_generate_distance", "1");
+		settings->setDefault("weather", "false");
 #endif
 	if (([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPodTouch6Gen) ||
 		([SDVersion deviceVersion] == iPadMini2) || ([SDVersion deviceVersion] == iPadMini3)) {
@@ -513,6 +519,7 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("dedicated_server_step", "0.2");
 		settings->setDefault("chunksize", "3");
 		settings->setDefault("max_block_generate_distance", "2");
+		settings->setDefault("weather", "false");
 	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) ||
 			   ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir)) {
 		// medium settings

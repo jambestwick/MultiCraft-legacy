@@ -1061,3 +1061,21 @@ core.register_chatcommand("setspawn", {
 		return true, "Setting spawn point to (" .. pos_to_string .. ")"
 	end
 })
+
+core.register_chatcommand("weather", {
+	params = "<weather>",
+	description = "Set weather type",
+	privs = {weather = true},
+	func = function(name, param)
+		if param and (weather_type.registered[param] or param == "none") then
+			weather.type = param
+			core.chat_send_player(name, "Set weather type: " .. param)
+		else
+			local types = "none"
+			for w, _ in pairs(weather_type.registered) do
+				types = types .. ", " .. w
+			end
+			core.chat_send_player(name, "Avalible weather types: " .. types)
+		end
+	end
+})

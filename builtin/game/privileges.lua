@@ -95,3 +95,7 @@ core.register_privilege("debug", {
 	description = "Allows enabling various debug options that may affect gameplay",
 	give_to_singleplayer = false
 })
+core.register_privilege("weather", {
+	description = "Allows changing the weather",
+	give_to_singleplayer = creative
+})
