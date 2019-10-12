@@ -22,7 +22,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "filesys.h"
 #include "config.h"
 #include "constants.h"
-#include "porting.h"
 #include "util/string.h"
 
 #ifdef __IOS__
@@ -392,25 +391,13 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("emergequeue_limit_generate", "16");
 	settings->setDefault("curl_verify_cert", "false");
 	settings->setDefault("gui_scaling_filter_txr2img", "false");
-
-	// FIXME: this code should be in init_gettext() ideally
 	char lang[3] = {0};
-	#ifdef __ANDROID__
-		// Auto-detect language on Android
-		AConfiguration_getLanguage(porting::app_global->config, lang);
-	#elif __IOS__
-		// Auto-detect language on iOS
-		NSString *syslang = [[NSLocale preferredLanguages] objectAtIndex:0];
-		[syslang getBytes:lang maxLength:2 usedLength:nil encoding:NSASCIIStringEncoding options:0 range:NSMakeRange(0, 2) remainingRange:nil];
-	#endif
-	if (!lang[0])
-		errorstream << "Language auto-detection failed!" << std::endl;
-	settings->setDefault("language", lang);
-#endif
 
 	// Android Settings
 #ifdef __ANDROID__
 	settings->setDefault("viewing_range", "35");
+	settings->setDefault("enable_3d_clouds", "false");
+	settings->setDefault("cloud_radius", "6");
 	settings->setDefault("pause_fps_max", "10");
 	settings->setDefault("smooth_lighting", "false");
 	settings->setDefault("selectionbox_width", "6");
@@ -418,15 +405,17 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("active_block_range", "1");
 	settings->setDefault("max_block_generate_distance", "3");
 	settings->setDefault("client_mapblock_limit", "250");
-	settings->setDefault("enable_3d_clouds", "false");
 	settings->setDefault("debug_log_level", "error");
-	settings->setDefault("cloud_radius", "6");
-	// set font_path
+
+	// Set font_path
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");
 
-	// check screen size
-	float x_inches = ((double) porting::getDisplaySize().X /
+	// Auto-detect language on Android
+	AConfiguration_getLanguage(porting::app_global->config, lang);
+
+	// Check screen size
+	double x_inches = ((double) porting::getDisplaySize().X /
 					  (160 * porting::getDisplayDensity()));
 	if (x_inches <= 3.7) {
 		// small 4" phones
@@ -442,7 +431,7 @@ void set_default_settings(Settings *settings)
 		// tablets
 		settings->setDefault("hud_scaling", "0.9");
 	}
-#endif
+#endif // Android
 
 	// iOS Settings
 #ifdef __IOS__
@@ -452,6 +441,10 @@ void set_default_settings(Settings *settings)
 	// Set font_path
 	settings->setDefault("mono_font_path", g_settings->get("font_path"));
 	settings->setDefault("fallback_font_path", g_settings->get("font_path"));
+
+	// Auto-detect language on iOS
+	NSString *syslang = [[NSLocale preferredLanguages] objectAtIndex:0];
+	[syslang getBytes:lang maxLength:2 usedLength:nil encoding:NSASCIIStringEncoding options:0 range:NSMakeRange(0, 2) remainingRange:nil];
 
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
 		settings->setDefault("hud_small", "true");
@@ -495,47 +488,47 @@ void set_default_settings(Settings *settings)
 	// Set the optimal settings depending on the model
 #if defined(__arm__)
 		// minimal settings for 32-bit devices
-		settings->setDefault("smooth_lighting", "false");
-		settings->setDefault("viewing_range", "25");
-		settings->setDefault("enable_3d_clouds", "false");
-		settings->setDefault("cloud_radius", "0");
-		settings->setDefault("pause_fps_max", "5");
-		settings->setDefault("chunksize", "3");
 		settings->setDefault("client_mapblock_limit", "100");
+		settings->setDefault("pause_fps_max", "5");
+		settings->setDefault("viewing_range", "25");
+		settings->setDefault("smooth_lighting", "false");
+		settings->setDefault("enable_clouds", "false");
 		settings->setDefault("active_block_range", "1");
-		settings->setDefault("max_block_generate_distance", "1");
 		settings->setDefault("dedicated_server_step", "0.2");
 		settings->setDefault("abm_interval", "3.0");
-#endif  
+		settings->setDefault("chunksize", "3");
+		settings->setDefault("max_block_generate_distance", "1");
+#endif
 	if (([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPodTouch6Gen) ||
 		([SDVersion deviceVersion] == iPadMini2) || ([SDVersion deviceVersion] == iPadMini3)) {
 		// low settings
-		settings->setDefault("smooth_lighting", "false");
+		settings->setDefault("client_mapblock_limit", "200");
+		settings->setDefault("pause_fps_max", "5");
 		settings->setDefault("viewing_range", "25");
+		settings->setDefault("smooth_lighting", "false");
 		settings->setDefault("enable_3d_clouds", "false");
 		settings->setDefault("cloud_radius", "6");
-		settings->setDefault("pause_fps_max", "5");
-		settings->setDefault("chunksize", "3");
-		settings->setDefault("client_mapblock_limit", "200");
 		settings->setDefault("active_block_range", "1");
-		settings->setDefault("max_block_generate_distance", "2");
 		settings->setDefault("dedicated_server_step", "0.2");
+		settings->setDefault("chunksize", "3");
+		settings->setDefault("max_block_generate_distance", "2");
 	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) ||
 			   ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir)) {
 		// medium settings
-		settings->setDefault("viewing_range", "50");
-		settings->setDefault("chunksize", "3");
-		settings->setDefault("cloud_radius", "6");
-		settings->setDefault("pause_fps_max", "10");
 		settings->setDefault("client_mapblock_limit", "500");
+		settings->setDefault("pause_fps_max", "10");
+		settings->setDefault("viewing_range", "50");
+		settings->setDefault("cloud_radius", "6");
 		settings->setDefault("active_block_range", "2");
 		settings->setDefault("max_block_generate_distance", "3");
 	} else {
 		// high settings
-		settings->setDefault("viewing_range", "75");
 		settings->setDefault("client_mapblock_limit", "1000");
+		settings->setDefault("viewing_range", "75");
 		settings->setDefault("max_block_generate_distance", "5");
 	}
+#endif // iOS
+	settings->setDefault("language", lang);
 #endif
 }
 

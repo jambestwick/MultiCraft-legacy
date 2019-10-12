@@ -107,15 +107,14 @@ timestamp
 .externalNativeBuild
 
 ## iOS build files
-build/iOS/MultiCraft/MultiCraft.xcodeproj/xcuserdata
-build/iOS/MultiCraft/MultiCraft.xcodeproj/project.xcworkspace
-build/iOS/MultiCraft.xcworkspace
+xcuserdata
+*.xcworkspace
+*.xcscheme
 build/iOS/Pods
 build/iOS/Podfile.lock
 build/iOS/deps/*
 !build/iOS/deps/*.sh
 build/iOS/*.zip
-build/iOS/Ads
 
 ## WindowsApp files
 build/WindowsApp/*.zip
