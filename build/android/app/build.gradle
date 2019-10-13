@@ -7,7 +7,7 @@ android {
 		applicationId 'com.multicraft.game'
 		minSdkVersion 16
 		targetSdkVersion 29
-		versionCode 6
+		versionCode 7
 	}
 	Properties props = new Properties()
 	props.load(new FileInputStream(file('../local.properties')))
@@ -31,6 +31,10 @@ android {
 		}
 	}
 
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
 // for multiple APKs
 	splits {
 		abi {
@@ -57,7 +61,6 @@ dependencies {
 	// MultiCraft Native
 	implementation project(':native')
 	// Analytics libraries
-	implementation 'androidx.appcompat:appcompat:1.1.0'
 	implementation 'com.google.firebase:firebase-core:17.2.0'
 	implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 	// Third-party libraries

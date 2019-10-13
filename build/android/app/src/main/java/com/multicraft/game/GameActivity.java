@@ -63,8 +63,8 @@ public class GameActivity extends NativeActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-		/*stopAd();
-		startAd(this, false);*/
+      /*stopAd();
+    	startAd(this, false);*/
     }
 
     @Override
@@ -93,9 +93,6 @@ public class GameActivity extends NativeActivity {
                 messageReturnCode = 1;
             }
         }
-    }
-
-    public void copyAssets() {
     }
 
     public void showDialog(String acceptButton, String hint, String current, int editType) {
@@ -137,7 +134,7 @@ public class GameActivity extends NativeActivity {
         ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
         if (actManager != null) {
             actManager.getMemoryInfo(memInfo);
-            return (int) Math.floor(memInfo.totalMem / 1024 * 1024 * 1024 * 1.0);
+            return (int) Math.floor(memInfo.totalMem * 1.0 / 1024 * 1024 * 1024);
         } else {
             Crashlytics.log(1, "RAM", "Cannot get RAM");
             return 1;

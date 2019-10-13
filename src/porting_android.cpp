@@ -76,8 +76,6 @@ JNIEXPORT void JNICALL Java_com_multicraft_game_GameActivity_putMessageBoxResult
 }
 
 namespace porting {
-
-	std::string path_storage = DIR_DELIM "sdcard" DIR_DELIM;
 	int device_memory_max = 0;
 
 	android_app *app_global;
@@ -154,7 +152,7 @@ namespace porting {
 		return str;
 	}
 
-// Calls static method if obj is NULL
+	// Calls static method if obj is NULL
 	std::string
 	getAndroidPath(jclass cls, jobject obj, jmethodID mt_getAbsPath, const char *getter);
 
@@ -191,13 +189,13 @@ namespace porting {
 		jmethodID mt_getAbsPath = jnienv->GetMethodID(cls_File,
 		                                              "getAbsolutePath", "()Ljava/lang/String;");
 
+		path_share = getAndroidPath(nativeActivity, app_global->activity->clazz, mt_getAbsPath,
+		                            "getFilesDir");
+		path_user = getAndroidPath(cls_Env, nullptr, mt_getAbsPath,
+		                           "getExternalStorageDirectory") + DIR_DELIM + "Android/data/com.multicraft.game/files";
+		path_locale = path_share + DIR_DELIM + "locale";
 		path_cache = getAndroidPath(nativeActivity, app_global->activity->clazz, mt_getAbsPath,
 		                            "getCacheDir");
-		path_storage = getAndroidPath(cls_Env, nullptr, mt_getAbsPath,
-		                              "getExternalStorageDirectory");
-		path_user = path_storage + DIR_DELIM + "Android/data/com.multicraft.game/files";
-		path_share = path_user;
-		path_locale = path_user + DIR_DELIM + "locale";
 	}
 
 	void showInputDialog(const std::string &acceptButton, const std::string &hint,

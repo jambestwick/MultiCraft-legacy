@@ -26,11 +26,15 @@ public class InputDialogActivity extends Activity {
         super.onCreate(savedInstanceState);
         Bundle b = getIntent().getExtras();
         int editType = b.getInt("editType");
+        String hint = b.getString("hint");
+        String current = b.getString("current");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.input_dialog, null);
         builder.setView(dialogView);
         final EditText editText = dialogView.findViewById(R.id.editText);
+        editText.setHint(hint);
+        editText.setText(current);
         final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
         if (editType == 3) {

@@ -8,5 +8,5 @@
         path="RateMe.xml" />
     <exclude
         domain="sharedpref"
-        path="mobi.MultiCraft_preferences.xml" />
+        path="com.multicraft.game_preferences.xml" />
 </full-backup-content>

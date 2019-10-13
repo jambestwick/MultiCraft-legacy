@@ -63,11 +63,11 @@ class PreferencesHelper {
     }
 
     int getAdsDelay() {
-        return sharedPreferences.getInt(ADS_DELAY, 10);
+        return sharedPreferences.getInt(ADS_DELAY, 300);
     }
 
     int getAdsRepeat() {
-        return sharedPreferences.getInt(ADS_REPEAT, 300);
+        return sharedPreferences.getInt(ADS_REPEAT, 600);
     }
 
     void saveSettings(String tag, boolean bool) {

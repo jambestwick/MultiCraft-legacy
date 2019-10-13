@@ -16,8 +16,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 
-import static com.multicraft.game.MainActivity.unzipLocation;
-
 public class CopyZipTask extends AsyncTask<String, Void, String[]> implements DialogsCallback {
 
     private WeakReference<Context> contextRef;
@@ -103,7 +101,6 @@ public class CopyZipTask extends AsyncTask<String, Void, String[]> implements Di
         // Start MyIntentService
         Intent intentMyIntentService = new Intent(contextRef.get(), UnzipService.class);
         intentMyIntentService.putExtra(UnzipService.EXTRA_KEY_IN_FILE, file);
-        intentMyIntentService.putExtra(UnzipService.EXTRA_KEY_IN_LOCATION, unzipLocation);
         contextRef.get().startService(intentMyIntentService);
 
     }
@@ -114,7 +111,9 @@ public class CopyZipTask extends AsyncTask<String, Void, String[]> implements Di
         int mPendingIntentId = 1337;
         PendingIntent mPendingIntent = PendingIntent.getActivity(context, mPendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager mgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        mgr.set(AlarmManager.RTC, System.currentTimeMillis(), mPendingIntent);
+        if (mgr != null) {
+            mgr.set(AlarmManager.RTC, System.currentTimeMillis(), mPendingIntent);
+        }
         System.exit(0);
     }
 

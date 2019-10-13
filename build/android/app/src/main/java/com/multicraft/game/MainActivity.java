@@ -45,7 +45,9 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -57,23 +59,22 @@ import static com.multicraft.game.PreferencesHelper.TAG_SHORTCUT_CREATED;
 
 public class MainActivity extends Activity implements WVersionManager.ActivityListener, CallBackListener, DialogsCallback {
     public final static int REQUEST_CODE = 104;
+    public final static Map<String, String> zipLocations = new HashMap<>();
     private final static String CREATE_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
     private final static String EXTERNAL_STORAGE = Environment.getExternalStorageDirectory().toString();
     private final static String FILES = EXTERNAL_STORAGE + "/Files.zip";
     private final static String WORLDS = EXTERNAL_STORAGE + "/worlds.zip";
     private final static String GAMES = EXTERNAL_STORAGE + "/games.zip";
     private final static String CACHE = EXTERNAL_STORAGE + "/cache.zip";
-    private final static String NOMEDIA = ".nomedia";
-    private static final String UPDATE_LINK = "https://raw.githubusercontent.com/MoNTE48/MultiCraft-links/master/Android.json";
+    private static final String UPDATE_LINK = "http://updates.multicraft.world/Android.json";
     private static final String[] EU_COUNTRIES = new String[]{
             "AT", "BE", "BG", "HR", "CY", "CZ",
             "DK", "EE", "FI", "FR", "DE", "GR",
             "HU", "IE", "IT", "LV", "LT", "LU",
             "MT", "NL", "PL", "PT", "RO", "SK",
             "SI", "ES", "SE", "GB", "IS", "LI", "NO"};
-    private static String dataFolder = "/Android/data/com.multicraft.game/files/";
-    public static String unzipLocation = EXTERNAL_STORAGE + dataFolder;
     private static String worldPath = EXTERNAL_STORAGE + "/Android/data/mobi.MultiCraft/files/worlds";
+    private String unzipLocation;
     private int height, width;
     private boolean consent;
     private ProgressBar mProgressBar;
@@ -104,7 +105,6 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,6 +134,15 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
     }
 
     //helpful utilities
+    private void initZipLocations() {
+        unzipLocation = getExternalFilesDir(null) + "/";
+        String appData = getFilesDir() + "/";
+        zipLocations.put(FILES, appData);
+        zipLocations.put(GAMES, appData);
+        zipLocations.put(WORLDS, unzipLocation);
+        zipLocations.put(CACHE, unzipLocation);
+    }
+
     private boolean isArm64() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return TextUtils.join(", ", Build.SUPPORTED_ABIS).contains("64");
@@ -174,7 +183,7 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
     }
 
     private void createNomedia() {
-        File myFile = new File(unzipLocation, NOMEDIA);
+        File myFile = new File(unzipLocation, ".nomedia");
         if (!myFile.exists())
             try {
                 myFile.createNewFile();
@@ -270,6 +279,7 @@ public class MainActivity extends Activity implements WVersionManager.ActivityLi
     }
 
     private void init() {
+        initZipLocations();
         mProgressBar = findViewById(R.id.PB1);
         mProgressBarIndeterminate = findViewById(R.id.PB2);
         mLoading = findViewById(R.id.tv_progress_circle);
