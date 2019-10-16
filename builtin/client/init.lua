@@ -16,7 +16,7 @@ core.register_on_death(function()
 	core.show_formspec("bultin:death", formspec)
 end)
 
-core.register_on_formspec_input(function(formname, fields)
+core.register_on_formspec_input(function(formname)
 	if formname == "bultin:death" then
 		core.send_respawn()
 	end

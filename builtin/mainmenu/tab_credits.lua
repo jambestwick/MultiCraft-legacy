@@ -94,7 +94,7 @@ end
 return {
 	name = "credits",
 	caption = fgettext("Credits"),
-	cbf_formspec = function(tabview, name, tabdata)
+	cbf_formspec = function()
 	local version = core.get_version()
 		return "label[0.1,-0.1;MultiCraft Open Source Project, ver. " .. version.string .. "]" ..
 			"label[0.1,0.3;Copyright (C) 2014-2019 MultiCraft Development Team]" ..

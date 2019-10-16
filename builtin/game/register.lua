@@ -419,7 +419,7 @@ function core.run_callbacks(callbacks, mode, ...)
 			return false
 		end
 	end
-	local ret = nil
+	local ret
 	for i = 1, cb_len do
 		local origin = core.callback_origins[callbacks[i]]
 		if origin then
@@ -579,9 +579,9 @@ core.registered_on_punchplayers, core.register_on_punchplayer = make_registratio
 players_per_step = core.settings:get("players_per_globalstep")
 players_per_step = players_per_step and tonumber(players_per_step) or 20
 
-local player_iter = nil
-local player_iter_forced = nil
-local playerstep_iter = nil
+local player_iter
+local player_iter_forced
+local playerstep_iter
 local playerstep_funcs = {}
 local playerstep_funcs_forced = {}
 local playernames = {}

@@ -16,7 +16,7 @@
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 --------------------------------------------------------------------------------
-local function get_formspec(tabview, name, tabdata)
+local function get_formspec(_, _, tabdata)
 
 	if modmgr.global_mods == nil then
 		modmgr.refresh_globals()
@@ -42,18 +42,18 @@ local function get_formspec(tabview, name, tabdata)
 --		"button[0,4.85;5.25,0.5;btn_modstore;".. fgettext("Online mod repository") .. "]"
 		""
 
-	local selected_mod = nil
+	local selected_mod
 
 	if filterlist.size(modmgr.global_mods) >= tabdata.selected_mod then
 		selected_mod = modmgr.global_mods:get_list()[tabdata.selected_mod]
 	end
 
 	if selected_mod ~= nil then
-		local modscreenshot = nil
+		local modscreenshot
 
 		--check for screenshot beeing available
 		local screenshotfilename = selected_mod.path .. DIR_DELIM .. "screenshot.png"
-		local error = nil
+		local error
 		local screenshotfile,error = io.open(screenshotfilename,"r")
 		if error == nil then
 			screenshotfile:close()
@@ -68,7 +68,7 @@ local function get_formspec(tabview, name, tabdata)
 				.. "image[5.5,0;3,2;" .. core.formspec_escape(modscreenshot) .. "]"
 				.. "label[8.25,0.6;" .. selected_mod.name .. "]"
 
-		local descriptionlines = nil
+		local descriptionlines
 		error = nil
 		local descriptionfilename = selected_mod.path .. "description.txt"
 		local descriptionfile,error = io.open(descriptionfilename,"r")
@@ -126,7 +126,7 @@ local function get_formspec(tabview, name, tabdata)
 end
 
 --------------------------------------------------------------------------------
-local function handle_buttons(tabview, fields, tabname, tabdata)
+local function handle_buttons(tabview, fields, _, tabdata)
 	if fields["modlist"] ~= nil then
 		local event = core.explode_table_event(fields["modlist"])
 		tabdata.selected_mod = event.row

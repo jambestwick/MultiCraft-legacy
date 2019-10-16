@@ -160,7 +160,7 @@ local function handle_buttons(this, fields)
 		local rawlist = this.data.list:get_raw_list()
 
 		local i,mod
-		for i,mod in ipairs(rawlist) do
+		for _, mod in ipairs(rawlist) do
 			if not mod.is_modpack and
 					not mod.is_game_content then
 				if modname_valid(mod.name) then
@@ -175,7 +175,7 @@ local function handle_buttons(this, fields)
 		end
 
 		-- Remove mods that are not present anymore
-		for key,value in pairs(mods) do
+		for key, _ in pairs(mods) do
 			if key:sub(1,9) == "load_mod_" then
 				worldfile:remove(key)
 			end

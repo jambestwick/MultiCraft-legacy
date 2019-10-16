@@ -25,7 +25,7 @@ function core.check_player_privs(name, ...)
 		end
 	else
 		-- Only a list, we can process it directly.
-		for key, priv in pairs(requested_privs) do
+		for _, priv in pairs(requested_privs) do
 			if not player_privs[priv] then
 				missing_privileges[#missing_privileges + 1] = priv
 			end
@@ -61,7 +61,7 @@ end)
 
 function core.get_connected_players()
 	local temp_table = {}
-	for index, value in pairs(player_list) do
+	for _, value in pairs(player_list) do
 		if value:is_player_connected() then
 			temp_table[#temp_table + 1] = value
 		end
@@ -150,12 +150,12 @@ function core.setting_get_pos(name)
 end
 
 -- To be overriden by protection mods
-function core.is_protected(pos, name)
+function core.is_protected()
 	return false
 end
 
 -- To be overriden by protection mods
-function core.is_protected_action(pos, name)
+function core.is_protected_action()
 	return false
 end
 

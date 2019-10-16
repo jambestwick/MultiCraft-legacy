@@ -35,7 +35,7 @@ end
 local function render_texture_pack_list(list)
 	local retval = ""
 
-	for i, v in ipairs(list) do
+	for _, v in ipairs(list) do
 		if v:sub(1, 1) ~= "." then
 			if retval ~= "" then
 				retval = retval .. ","
@@ -49,7 +49,7 @@ local function render_texture_pack_list(list)
 end
 
 --------------------------------------------------------------------------------
-local function get_formspec(tabview, name, tabdata)
+local function get_formspec()
 
 	local retval = "label[4,-0.25;" .. fgettext("Select texture pack:") .. "]" ..
 			"textlist[4,0.25;7.5,5.0;TPs;"
@@ -101,7 +101,7 @@ local function get_formspec(tabview, name, tabdata)
 end
 
 --------------------------------------------------------------------------------
-local function main_button_handler(tabview, fields, name, tabdata)
+local function main_button_handler(_, fields)
 	if fields["TPs"] then
 		local event = core.explode_textlist_event(fields["TPs"])
 		if event.type == "CHG" or event.type == "DCL" then

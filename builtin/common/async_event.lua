@@ -9,7 +9,7 @@ end
 
 if core.register_globalstep then
 	core.register_globalstep(function(dtime)
-		for i, job in ipairs(core.get_finished_jobs()) do
+		for _, job in ipairs(core.get_finished_jobs()) do
 			handle_job(job.jobid, job.retval)
 		end
 	end)

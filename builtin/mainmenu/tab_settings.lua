@@ -122,7 +122,7 @@ local function antialiasing_fname_to_name(fname)
 	return 0
 end
 
-local function formspec(tabview, name, tabdata)
+local function formspec()
 	local tab_string =
 		"box[0,0;3.75,4.5;#999999]" ..
 		"checkbox[0.25,0;cb_smooth_lighting;" .. fgettext("Smooth Lighting") .. ";"
@@ -208,14 +208,13 @@ local function formspec(tabview, name, tabdata)
 end
 
 --------------------------------------------------------------------------------
-local function handle_settings_buttons(this, fields, tabname, tabdata)
+local function handle_settings_buttons(this, fields)
 
 	if fields["btn_advanced_settings"] ~= nil then
 		local adv_settings_dlg = create_adv_settings_dlg()
 		adv_settings_dlg:set_parent(this)
 		this:hide()
 		adv_settings_dlg:show()
-		--mm_texture.update("singleplayer", current_game())
 		return true
 	end
 	if fields["cb_smooth_lighting"] then

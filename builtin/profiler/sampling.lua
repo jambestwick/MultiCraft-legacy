@@ -140,7 +140,7 @@ end
 -- Like any globalstep function, this should not be too heavy,
 -- but does not add to the instrumentation overhead.
 --
-local function sample(dtime)
+local function sample()
 	-- Rare, but happens and is currently of no informational value.
 	if logged_time == 0 then
 		return

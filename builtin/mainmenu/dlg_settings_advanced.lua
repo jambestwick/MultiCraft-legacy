@@ -358,7 +358,7 @@ local function filter_settings(settings, searchstring)
 	local result = {}
 	local category_stack = {}
 	local current_level = 0
-	local best_setting = nil
+	local best_setting
 	for _, entry in pairs(settings) do
 		if entry.type == "category" then
 			-- Remove all settingless categories

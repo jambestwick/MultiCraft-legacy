@@ -318,17 +318,17 @@ end
 -- Global callbacks
 --
 
-local function on_placenode(p, node)
+local function on_placenode(p)
 	core.check_for_falling(p)
 end
 core.register_on_placenode(on_placenode)
 
-local function on_dignode(p, node)
+local function on_dignode(p)
 	core.check_for_falling(p)
 end
 core.register_on_dignode(on_dignode)
 
-local function on_punchnode(p, node)
+local function on_punchnode(p)
 	core.check_for_falling(p)
 end
 core.register_on_punchnode(on_punchnode)

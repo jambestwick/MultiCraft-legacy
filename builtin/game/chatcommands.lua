@@ -340,7 +340,7 @@ core.register_chatcommand("teleport", {
 			return pos, false
 		end
 
-		local teleportee = nil
+		local teleportee
 		local p = {}
 		p.x, p.y, p.z = string.match(param, "^([%d.-]+)[, ] *([%d.-]+)[, ] *([%d.-]+)$")
 		p.x = tonumber(p.x)
@@ -358,9 +358,9 @@ core.register_chatcommand("teleport", {
 			end
 		end
 
-		local teleportee = nil
-		local p = nil
-		local target_name = nil
+		local teleportee
+		local p
+		local target_name
 		target_name = param:match("^([^ ]+)$")
 		teleportee = core.get_player_by_name(name)
 		if target_name then
@@ -380,9 +380,9 @@ core.register_chatcommand("teleport", {
 			return false, "You don't have permission to teleport other players (missing bring privilege)"
 		end
 
-		local teleportee = nil
+		local teleportee
 		local p = {}
-		local teleportee_name = nil
+		local teleportee_name
 		teleportee_name, p.x, p.y, p.z = param:match(
 				"^([^ ]+) +([%d.-]+)[, ] *([%d.-]+)[, ] *([%d.-]+)$")
 		p.x, p.y, p.z = tonumber(p.x), tonumber(p.y), tonumber(p.z)
@@ -395,10 +395,10 @@ core.register_chatcommand("teleport", {
 					.. " to " .. core.pos_to_string(vector.round(p))
 		end
 
-		local teleportee = nil
-		local p = nil
-		local teleportee_name = nil
-		local target_name = nil
+		local teleportee
+		local p
+		local teleportee_name
+		local target_name
 		teleportee_name, target_name = string.match(param, "^([^ ]+) +([^ ]+)$")
 		if teleportee_name then
 			teleportee = core.get_player_by_name(teleportee_name)
@@ -749,7 +749,7 @@ core.register_chatcommand("rollback", {
 		end
 		local target_name, seconds = string.match(param, ":([^ ]+) *(%d*)")
 		if not target_name then
-			local player_name = nil
+			local player_name
 			player_name, seconds = string.match(param, "([^ ]+) *(%d*)")
 			if not player_name then
 				return false, "Invalid parameters. See /help rollback"

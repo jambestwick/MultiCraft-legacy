@@ -15,22 +15,11 @@
 --with this program; if not, write to the Free Software Foundation, Inc.,
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-local function current_game()
-	local last_game_id = core.settings:get("menu_last_game")
-	local game, index = gamemgr.find_by_gameid(last_game_id)
-
-	return game
-end
-
-
-local function get_formspec(tabview, name, tabdata)
-	local retval = ""
-
+local function get_formspec()
 	local index = filterlist.get_current_index(menudata.worldlist,
-				tonumber(core.settings:get("mainmenu_last_selected_world"))
-				)
+				tonumber(core.settings:get("mainmenu_last_selected_world")))
 
-		retval = retval ..
+	local retval =
 			"image_button[0,4.84;3.31,0.92;" ..
 				core.formspec_escape(defaulttexturedir ..
 					"blank.png") .. ";world_delete;;true;false]" ..
@@ -53,7 +42,7 @@ local function get_formspec(tabview, name, tabdata)
 	return retval
 end
 
-local function main_button_handler(this, fields, name, tabdata)
+local function main_button_handler(this, fields, name)
 	assert(name == "local")
 
 	local world_doubleclick = false
@@ -122,7 +111,7 @@ local function main_button_handler(this, fields, name, tabdata)
 				--update last game
 				local world = menudata.worldlist:get_raw_element(gamedata.selected_world)
 				if world then
-					local game, index = gamemgr.find_by_gameid(world.gameid)
+					local game = gamemgr.find_by_gameid(world.gameid)
 					core.settings:set("menu_last_game", game.id)
 				end
 
@@ -190,14 +179,10 @@ local function main_button_handler(this, fields, name, tabdata)
 	end
 end
 
-local function on_change(type, old_tab, new_tab)
-end
-
 --------------------------------------------------------------------------------
 return {
 	name = "local",
 	caption = fgettext("Singleplayer"),
 	cbf_formspec = get_formspec,
 	cbf_button_handler = main_button_handler,
-	on_change = on_change
 }

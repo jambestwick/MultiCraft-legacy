@@ -16,11 +16,10 @@
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 --------------------------------------------------------------------------------
-local function get_formspec(tabview, name, tabdata)
+local function get_formspec()
 
 	local index = menudata.worldlist:get_current_index(
-				tonumber(core.setting_get("mainmenu_last_selected_world"))
-				)
+				tonumber(core.setting_get("mainmenu_last_selected_world")))
 
 	local retval =
 		"button[4,4.15;2.6,0.5;world_delete;" .. fgettext("Delete") .. "]" ..
@@ -66,7 +65,7 @@ local function get_formspec(tabview, name, tabdata)
 end
 
 --------------------------------------------------------------------------------
-local function main_button_handler(this, fields, name, tabdata)
+local function main_button_handler(this, fields)
 
 	local world_doubleclick = false
 
@@ -133,7 +132,7 @@ local function main_button_handler(this, fields, name, tabdata)
 			--update last game
 			local world = menudata.worldlist:get_raw_element(gamedata.selected_world)
 			if world then
-				local game, index = gamemgr.find_by_gameid(world.gameid)
+				local game = gamemgr.find_by_gameid(world.gameid)
 				core.settings:set("menu_last_game", game.id)
 			end
 

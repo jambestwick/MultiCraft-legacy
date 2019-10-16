@@ -128,7 +128,7 @@ function ui.update()
 				restart_btn
 	else
 		local active_toplevel_ui_elements = 0
-		for key,value in pairs(ui.childlist) do
+		for _, value in pairs(ui.childlist) do
 			if (value.type == "toplevel") then
 				local retval = value:get_formspec()
 
@@ -141,7 +141,7 @@ function ui.update()
 
 		-- no need to show addons if there ain't a toplevel element
 		if (active_toplevel_ui_elements > 0) then
-			for key,value in pairs(ui.childlist) do
+			for _, value in pairs(ui.childlist) do
 				if (value.type == "addon") then
 					local retval = value:get_formspec()
 
@@ -169,8 +169,7 @@ end
 
 --------------------------------------------------------------------------------
 function ui.handle_buttons(fields)
-	for key,value in pairs(ui.childlist) do
-
+	for _, value in pairs(ui.childlist) do
 		local retval = value:handle_buttons(fields)
 
 		if retval then
@@ -184,8 +183,7 @@ end
 --------------------------------------------------------------------------------
 function ui.handle_events(event)
 
-	for key,value in pairs(ui.childlist) do
-
+	for _, value in pairs(ui.childlist) do
 		if value.handle_events ~= nil then
 			local retval = value:handle_events(event)
 

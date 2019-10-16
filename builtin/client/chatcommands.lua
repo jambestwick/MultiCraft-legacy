@@ -39,7 +39,7 @@ end)
 
 core.register_chatcommand("list_players", {
 	description = core.gettext("List online players"),
-	func = function(param)
+	func = function()
 		local players = table.concat(core.get_player_names(), ", ")
 		core.display_chat_message(core.gettext("Online players: ") .. players)
 	end
@@ -47,14 +47,14 @@ core.register_chatcommand("list_players", {
 
 core.register_chatcommand("disconnect", {
 	description = core.gettext("Exit to main menu"),
-	func = function(param)
+	func = function()
 		core.disconnect()
 	end,
 })
 
 core.register_chatcommand("clear_chat_queue", {
 	description = core.gettext("Clear the out chat queue"),
-	func = function(param)
+	func = function()
 		core.clear_out_chat_queue()
 		return true, core.gettext("The out chat queue is now empty")
 	end,

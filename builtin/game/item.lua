@@ -347,7 +347,7 @@ function core.item_place_node(itemstack, placer, pointed_thing, param2,
 
 	-- Transfer color information
 	if metatable.palette_index and not def.place_param2 then
-		local color_divisor = nil
+		local color_divisor
 		if def.paramtype2 == "color" then
 			color_divisor = 1
 		elseif def.paramtype2 == "colorwallmounted" then
@@ -449,7 +449,7 @@ local function item_throw_step(entity, dtime)
 		entity.object:remove()
 		return
 	end
-	local hit_object = nil
+	local hit_object
 	local dir = vector.normalize(entity.object:get_velocity())
 	local pos2 = vector.add(pos, vector.multiply(dir, 3))
 	local _, node_pos = minetest.line_of_sight(pos, pos2)
@@ -490,7 +490,7 @@ function core.item_throw(name, thrower, speed, accel, on_impact)
 		return
 	end
 	pos.y = pos.y + 1.5
-	local obj = nil
+	local obj
 	local properties = {is_visible=true}
 	if core.registered_entities[name] then
 		obj = core.add_entity(pos, name)
@@ -674,7 +674,7 @@ function core.node_dig(pos, node, digger)
 	-- Handle drops
 	core.handle_node_drops(pos, drops, digger)
 
-	local oldmetadata = nil
+	local oldmetadata
 	if def and def.after_dig_node then
 		oldmetadata = core.get_meta(pos):to_table()
 	end

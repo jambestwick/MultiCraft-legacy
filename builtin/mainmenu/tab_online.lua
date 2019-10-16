@@ -16,11 +16,11 @@
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 --------------------------------------------------------------------------------
-local function get_formspec(tabview, name, tabdata)
+local function get_formspec(_, _, tabdata)
 	-- Update the cached supported proto info,
 	-- it may have changed after a change by the settings menu.
 	common_update_cached_supp_proto()
-	local fav_selected = nil
+	local fav_selected
 	if menudata.search_result then
 		fav_selected = menudata.search_result[tabdata.fav_selected]
 	else
@@ -139,7 +139,7 @@ local function get_formspec(tabview, name, tabdata)
 end
 
 --------------------------------------------------------------------------------
-local function main_button_handler(tabview, fields, name, tabdata)
+local function main_button_handler(_, fields, _, tabdata)
 	local serverlist = menudata.search_result or menudata.favorites
 
 	if fields.te_name then
@@ -360,7 +360,7 @@ local function main_button_handler(tabview, fields, name, tabdata)
 	return false
 end
 
-local function on_change(type, old_tab, new_tab)
+local function on_change(type)
 	if type == "LEAVE" then return end
 	asyncOnlineFavourites()
 end

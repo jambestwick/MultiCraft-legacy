@@ -15,7 +15,7 @@
 --with this program; if not, write to the Free Software Foundation, Inc.,
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-local function create_world_formspec(dialogdata)
+local function create_world_formspec()
 	local mapgens = core.get_mapgen_names()
 	local current_seed = core.settings:get("fixed_map_seed") or ""
 	local current_mg   = core.settings:get("mg_name")
@@ -23,7 +23,7 @@ local function create_world_formspec(dialogdata)
 	local mglist = ""
 	local selindex = 1
 	local i = 1
-	for k,v in pairs(mapgens) do
+	for _, v in pairs(mapgens) do
 		if current_mg == v then
 			selindex = i
 		end
@@ -34,9 +34,8 @@ local function create_world_formspec(dialogdata)
 
 	local gameid = core.settings:get("menu_last_game")
 
-	local game, gameidx = nil , 0
 	if gameid ~= nil then
-		game, gameidx = gamemgr.find_by_gameid(gameid)
+		local gameidx = gamemgr.find_by_gameid(gameid)
 
 		if gameidx == nil then
 			gameidx = 0
@@ -87,7 +86,7 @@ local function create_world_buttonhandler(this, fields)
 		if gameindex ~= nil and
 			worldname ~= "" then
 
-			local message = nil
+			local message
 
 			core.settings:set("fixed_map_seed", fields["te_seed"])
 

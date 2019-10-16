@@ -61,7 +61,7 @@ if not use_simple_menu then
 end
 
 --------------------------------------------------------------------------------
-local function main_event_handler(tabview, event)
+local function main_event_handler(_, event)
 	if event == "MenuQuit" then
 		core.close()
 	end

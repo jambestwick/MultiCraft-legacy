@@ -142,7 +142,7 @@ end
 --------------------------------------------------------------------------------
 function modmgr.parse_register_line(line)
 	local pos1 = line:find("\"")
-	local pos2 = nil
+	local pos2
 	if pos1 ~= nil then
 		pos2 = line:find("\"",pos1+1)
 	end
@@ -169,7 +169,7 @@ end
 --------------------------------------------------------------------------------
 function modmgr.parse_dofile_line(modpath,line)
 	local pos1 = line:find("\"")
-	local pos2 = nil
+	local pos2
 	if pos1 ~= nil then
 		pos2 = line:find("\"",pos1+1)
 	end
@@ -193,7 +193,7 @@ function modmgr.identify_modname(modpath,filename)
 		local line = testfile:read()
 
 		while line~= nil do
-			local modname = nil
+			local modname
 
 			if line:find("minetest.register_tool") then
 				modname = modmgr.parse_register_line(line)
@@ -226,8 +226,6 @@ function modmgr.identify_modname(modpath,filename)
 end
 --------------------------------------------------------------------------------
 function modmgr.render_modlist(render_list)
-	local retval = ""
-
 	if render_list == nil then
 		if modmgr.global_mods == nil then
 			modmgr.refresh_globals()
@@ -236,7 +234,7 @@ function modmgr.render_modlist(render_list)
 	end
 
 	local list = render_list:get_list()
-	local last_modpack = nil
+	local last_modpack
 	local retval = {}
 	for i, v in ipairs(list) do
 		local color = ""
@@ -343,7 +341,7 @@ function modmgr.installmod(modfilename,basename)
 	local basefolder = modmgr.getbasefolder(modpath)
 
 	if basefolder.type == "modpack" then
-		local clean_path = nil
+		local clean_path
 
 		if basename ~= nil then
 			clean_path = "mp_" .. basename
@@ -441,7 +439,7 @@ function modmgr.preparemodlist(data)
 	for key,value in pairs(worldfile:to_table()) do
 		if key:sub(1, 9) == "load_mod_" then
 			key = key:sub(10)
-			local element = nil
+			local element
 			for i=1,#retval,1 do
 				if retval[i].name == key and
 					not retval[i].is_modpack then

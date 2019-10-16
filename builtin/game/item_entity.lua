@@ -306,7 +306,7 @@ core.register_entity(":__builtin:item", {
 			return
 		end
 		local objects = core.get_objects_inside_radius(pos, 0.25)
-		for k, obj in pairs(objects) do
+		for _, obj in pairs(objects) do
 			local entity = obj:get_luaentity()
 			if entity and entity.name == "__builtin:item" then
 				if self:try_merge_with(own_stack, obj, entity) then
@@ -342,7 +342,7 @@ local function collect_items(player)
 	-- Detect
 	local col_pos = vector.add(pos, {x = 0, y = 1.3, z = 0})
 	local objects = core.get_objects_inside_radius(col_pos, 2)
-	for k, obj in pairs(objects) do
+	for _, obj in pairs(objects) do
 		local entity = obj:get_luaentity()
 		if entity and entity.name == "__builtin:item" and
 				not entity.collectioner and entity.age > 0.5 then

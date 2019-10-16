@@ -51,7 +51,7 @@ local function configure_selected_world_params(idx)
 end
 
 --------------------------------------------------------------------------------
-function image_column(tooltip, flagname)
+function image_column(tooltip)
 	return "image,tooltip=" .. core.formspec_escape(tooltip) .. "," ..
 		"0=" .. core.formspec_escape(defaulttexturedir .. "blank.png") .. "," ..
 		"1=" .. core.formspec_escape(defaulttexturedir .. "server_flags_favorite.png") .. "," ..
@@ -189,7 +189,7 @@ function menu_render_worldlist()
 	local retval = ""
 	local current_worldlist = menudata.worldlist:get_list()
 
-	for i, v in ipairs(current_worldlist) do
+	for _, v in ipairs(current_worldlist) do
 		if retval ~= "" then retval = retval .. "," end
 		retval = retval .. core.formspec_escape(v.name) .. ""
 	end
@@ -232,7 +232,7 @@ function asyncOnlineFavourites()
 	end
 
 	core.handle_async(
-		function(param)
+		function()
 			return core.get_favorites("online")
 		end,
 		nil,

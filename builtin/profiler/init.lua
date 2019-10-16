@@ -45,7 +45,7 @@ function profiler.init_chatcommand()
 		description = "handle the profiler and profiling data",
 		params = param_usage,
 		privs = { server=true },
-		func = function(name, param)
+		func = function(_, param)
 			local command, arg0 = string.match(param, "([^ ]+) ?(.*)")
 			local args = arg0 and string.split(arg0, " ")
 
