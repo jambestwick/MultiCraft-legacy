@@ -267,9 +267,11 @@ void GUIEngine::run()
 {
 	// Always create clouds because they may or may not be
 	// needed based on the game selected
+	// NO!!!
 	video::IVideoDriver* driver = m_device->getVideoDriver();
 
-	cloudInit();
+	if (m_clouds_enabled)
+		cloudInit();
 
 	unsigned int text_height = g_fontengine->getTextHeight();
 
@@ -314,10 +316,18 @@ void GUIEngine::run()
 
 		driver->endScene();
 
+		u32 frametime_min = 2000 / (!m_device->isWindowFocused()
+ 				? g_settings->getFloat("pause_fps_max")
+ 				: g_settings->getFloat("fps_max") / 2);
+
+#if defined(__ANDROID__) || defined(__IOS__)
+		if (!m_device->isWindowFocused())
+			frametime_min = 1000;
+#endif
 		if (m_clouds_enabled)
 			cloudPostProcess();
 		else
-			sleep_ms(25);
+			sleep_ms(frametime_min);
 
 		m_script->step();
 
