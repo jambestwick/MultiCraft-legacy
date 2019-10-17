@@ -92,7 +92,7 @@ function hunger.register_on_update_saturation(fun)
 end
 
 function hunger.update_saturation(player, level)
-	for _, callback in ipairs(hunger.registered_on_update_saturations) do
+	for _, callback in pairs(hunger.registered_on_update_saturations) do
 		local result = callback(player, level)
 		if result then
 			return result
@@ -101,7 +101,7 @@ function hunger.update_saturation(player, level)
 
 	local old = hunger.get_saturation(player)
 
-	if level == old then  -- To suppress HUD update
+	if not old or old == level then  -- To suppress HUD update
 		return
 	end
 
@@ -162,7 +162,7 @@ function hunger.register_on_poison(fun)
 end
 
 function hunger.poison(player, ticks, interval)
-	for _, fun in ipairs(hunger.registered_on_poisons) do
+	for _, fun in pairs(hunger.registered_on_poisons) do
 		local rv = fun(player, ticks, interval)
 		if rv == true then
 			return
@@ -201,7 +201,7 @@ function hunger.register_on_exhaust_player(fun)
 end
 
 function hunger.exhaust_player(player, change, cause)
-	for _, callback in ipairs(hunger.registered_on_exhaust_players) do
+	for _, callback in pairs(hunger.registered_on_exhaust_players) do
 		local result = callback(player, change, cause)
 		if result then
 			return result
@@ -227,7 +227,7 @@ end
 
 -- Time based hunger functions
 local function move_tick()
-	for _, player in ipairs(core.get_connected_players()) do
+	for _, player in pairs(core.get_connected_players()) do
 		local controls = player:get_player_control()
 		local is_moving = controls.up or controls.down or controls.left or controls.right
 		local velocity = player:get_player_velocity()
@@ -246,7 +246,7 @@ end
 
 local function hunger_tick()
 	-- lower saturation by 1 point after settings.tick second(s)
-	for _, player in ipairs(core.get_connected_players()) do
+	for _, player in pairs(core.get_connected_players()) do
 		local saturation = hunger.get_saturation(player) or 0
 		if saturation > settings.tick_min then
 			hunger.update_saturation(player, saturation - 1)
@@ -256,7 +256,7 @@ end
 
 local function health_tick()
 	-- heal or damage player, depending on saturation
-	for _, player in ipairs(core.get_connected_players()) do
+	for _, player in pairs(core.get_connected_players()) do
 		local air = player:get_breath() or 0
 		local hp = player:get_hp() or 0
 		local saturation = hunger.get_saturation(player) or 0
@@ -309,7 +309,7 @@ local function hunger_globaltimer(dtime)
 end
 
 function core.do_item_eat(hp_change, replace_with_item, poison, itemstack, player, pointed_thing)
-	for _, callback in ipairs(core.registered_on_item_eats) do
+	for _, callback in pairs(core.registered_on_item_eats) do
 		local result = callback(hp_change, replace_with_item, poison, itemstack, player, pointed_thing)
 		if result then
 			return result
@@ -362,10 +362,9 @@ hud.register("hunger", {
 core.register_on_joinplayer(function(player)
 	core.after(0.5, function()
 		local level = hunger.get_saturation(player) or settings.level_max
-		hud.change_item(player, "hunger", {number = math.min(settings.visual_max, level)})
 		hunger.set_saturation(player, level)
 		-- reset poisoned
-		hunger.set_poisoned(player, false)
+		player:set_attribute(attribute.poisoned, "no")
 	end)
 end)
 
