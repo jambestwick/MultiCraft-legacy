@@ -12,9 +12,9 @@ target 'MultiCraft' do
 	pod 'libvorbis'
 
 	pod 'Appodeal/AdColonyAdapter'
-	pod 'Appodeal/AdExchangeAdapter'
+	pod 'Appodeal/AppodealAdExchangeAdapter'
 	pod 'Appodeal/AppLovinAdapter'
-	pod 'Appodeal/IronSource'
+	pod 'Appodeal/IronSourceAdapter'
 	pod 'Appodeal/MintegralAdapter'
 	pod 'Appodeal/TapjoyAdapter'
 	pod 'Appodeal/UnityAdapter'
