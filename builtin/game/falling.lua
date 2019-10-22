@@ -242,6 +242,35 @@ function core.check_single_for_falling(p)
 			return true
 		end
 	end
+	
+	--	Attached, but not wallmounted. Yes, no one thought about it.
+	--	This is an alternative to function 'check_attached_node', so it seems too complicated.
+	local check_connected = {
+		{x = -1, y = 0, z = 0},
+		{x = 1, y = 0, z = 0},
+		{x = 0, y = 0, z = 1},
+		{x = 0, y = 0, z = -1}
+	}
+
+	for i = 1, 4 do
+		local pa = vector.add(p, check_connected[i])
+		local nc = core.get_node(pa)
+		if core.get_item_group(nc.name, "attached_node2") ~= 0 then
+			local connected
+			for i = 1, 4 do
+				local ptwo = vector.add(pa, check_connected[i])
+				local ntwo = core.get_node(ptwo)
+				if core.registered_nodes[ntwo.name].walkable then
+					connected = true
+					return false
+				end
+			end
+			if not connected then
+				drop_attached_node(pa)
+				return true
+			end
+		end
+	end
 
 	return false
 end
