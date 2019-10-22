@@ -193,12 +193,14 @@ Mapgen *Mapgen::createMapgen(MapgenType mgtype, int mgid,
 	switch (mgtype) {
 	case MAPGEN_FLAT:
 		return new MapgenFlat(mgid, (MapgenFlatParams *)params, emerge);
+#if !defined(__ANDROID__) && !defined(__IOS__)
 	case MAPGEN_FRACTAL:
 		return new MapgenFractal(mgid, (MapgenFractalParams *)params, emerge);
 	case MAPGEN_SINGLENODE:
 		return new MapgenSinglenode(mgid, (MapgenSinglenodeParams *)params, emerge);
 	case MAPGEN_V5:
 		return new MapgenV5(mgid, (MapgenV5Params *)params, emerge);
+#endif
 	case MAPGEN_V6:
 		return new MapgenV6(mgid, (MapgenV6Params *)params, emerge);
 	case MAPGEN_V7:
@@ -218,12 +220,14 @@ MapgenParams *Mapgen::createMapgenParams(MapgenType mgtype)
 	switch (mgtype) {
 	case MAPGEN_FLAT:
 		return new MapgenFlatParams;
+#if !defined(__ANDROID__) && !defined(__IOS__)
 	case MAPGEN_FRACTAL:
 		return new MapgenFractalParams;
 	case MAPGEN_SINGLENODE:
 		return new MapgenSinglenodeParams;
 	case MAPGEN_V5:
 		return new MapgenV5Params;
+#endif
 	case MAPGEN_V6:
 		return new MapgenV6Params;
 	case MAPGEN_V7:

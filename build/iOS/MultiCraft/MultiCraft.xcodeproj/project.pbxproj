@@ -104,9 +104,6 @@
 		F8E6C62D1DCA3F9900F64426 /* mapblock_mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8E6C5801DCA3F9900F64426 /* mapblock_mesh.cpp */; };
 		F8E6C62E1DCA3F9900F64426 /* mapblock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8E6C5821DCA3F9900F64426 /* mapblock.cpp */; };
 		F8E6C62F1DCA3F9900F64426 /* mapgen_flat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8E6C5851DCA3F9900F64426 /* mapgen_flat.cpp */; };
-		F8E6C6301DCA3F9900F64426 /* mapgen_fractal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8E6C5871DCA3F9900F64426 /* mapgen_fractal.cpp */; };
-		F8E6C6311DCA3F9900F64426 /* mapgen_singlenode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8E6C5891DCA3F9900F64426 /* mapgen_singlenode.cpp */; };
-		F8E6C6321DCA3F9900F64426 /* mapgen_v5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8E6C58B1DCA3F9900F64426 /* mapgen_v5.cpp */; };
 		F8E6C6331DCA3F9900F64426 /* mapgen_v6.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8E6C58D1DCA3F9900F64426 /* mapgen_v6.cpp */; };
 		F8E6C6341DCA3F9900F64426 /* mapgen_v7.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8E6C58F1DCA3F9900F64426 /* mapgen_v7.cpp */; };
 		F8E6C6351DCA3F9900F64426 /* mapgen_valleys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8E6C5911DCA3F9900F64426 /* mapgen_valleys.cpp */; };
@@ -472,12 +469,6 @@
 		F8E6C5841DCA3F9900F64426 /* mapchunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapchunk.h; path = ../../../../src/mapchunk.h; sourceTree = "<group>"; };
 		F8E6C5851DCA3F9900F64426 /* mapgen_flat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapgen_flat.cpp; path = ../../../../src/mapgen_flat.cpp; sourceTree = "<group>"; };
 		F8E6C5861DCA3F9900F64426 /* mapgen_flat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapgen_flat.h; path = ../../../../src/mapgen_flat.h; sourceTree = "<group>"; };
-		F8E6C5871DCA3F9900F64426 /* mapgen_fractal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapgen_fractal.cpp; path = ../../../../src/mapgen_fractal.cpp; sourceTree = "<group>"; };
-		F8E6C5881DCA3F9900F64426 /* mapgen_fractal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapgen_fractal.h; path = ../../../../src/mapgen_fractal.h; sourceTree = "<group>"; };
-		F8E6C5891DCA3F9900F64426 /* mapgen_singlenode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapgen_singlenode.cpp; path = ../../../../src/mapgen_singlenode.cpp; sourceTree = "<group>"; };
-		F8E6C58A1DCA3F9900F64426 /* mapgen_singlenode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapgen_singlenode.h; path = ../../../../src/mapgen_singlenode.h; sourceTree = "<group>"; };
-		F8E6C58B1DCA3F9900F64426 /* mapgen_v5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapgen_v5.cpp; path = ../../../../src/mapgen_v5.cpp; sourceTree = "<group>"; };
-		F8E6C58C1DCA3F9900F64426 /* mapgen_v5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapgen_v5.h; path = ../../../../src/mapgen_v5.h; sourceTree = "<group>"; };
 		F8E6C58D1DCA3F9900F64426 /* mapgen_v6.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapgen_v6.cpp; path = ../../../../src/mapgen_v6.cpp; sourceTree = "<group>"; };
 		F8E6C58E1DCA3F9900F64426 /* mapgen_v6.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapgen_v6.h; path = ../../../../src/mapgen_v6.h; sourceTree = "<group>"; };
 		F8E6C58F1DCA3F9900F64426 /* mapgen_v7.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapgen_v7.cpp; path = ../../../../src/mapgen_v7.cpp; sourceTree = "<group>"; };
@@ -1038,12 +1029,6 @@
 				F8E6C5841DCA3F9900F64426 /* mapchunk.h */,
 				F8E6C5851DCA3F9900F64426 /* mapgen_flat.cpp */,
 				F8E6C5861DCA3F9900F64426 /* mapgen_flat.h */,
-				F8E6C5871DCA3F9900F64426 /* mapgen_fractal.cpp */,
-				F8E6C5881DCA3F9900F64426 /* mapgen_fractal.h */,
-				F8E6C5891DCA3F9900F64426 /* mapgen_singlenode.cpp */,
-				F8E6C58A1DCA3F9900F64426 /* mapgen_singlenode.h */,
-				F8E6C58B1DCA3F9900F64426 /* mapgen_v5.cpp */,
-				F8E6C58C1DCA3F9900F64426 /* mapgen_v5.h */,
 				F8E6C58D1DCA3F9900F64426 /* mapgen_v6.cpp */,
 				F8E6C58E1DCA3F9900F64426 /* mapgen_v6.h */,
 				F8E6C58F1DCA3F9900F64426 /* mapgen_v7.cpp */,
@@ -1620,12 +1605,10 @@
 				F8E6C64E1DCA3F9900F64426 /* rollback_interface.cpp in Sources */,
 				4B35A9F71EEE018D00274961 /* scripting_server.cpp in Sources */,
 				842A808C2339174C00A89418 /* ads.mm in Sources */,
-				F8E6C6301DCA3F9900F64426 /* mapgen_fractal.cpp in Sources */,
 				F8E6C6441DCA3F9900F64426 /* noise.cpp in Sources */,
 				F8E6C7BB1DCA428800F64426 /* numeric.cpp in Sources */,
 				4B35A9B91EEDD1AC00274961 /* itemstackmetadata.cpp in Sources */,
 				F8E6C6061DCA3F9900F64426 /* database-dummy.cpp in Sources */,
-				F8E6C6311DCA3F9900F64426 /* mapgen_singlenode.cpp in Sources */,
 				F8E6C6341DCA3F9900F64426 /* mapgen_v7.cpp in Sources */,
 				F8E6C7151DCA41EF00F64426 /* s_entity.cpp in Sources */,
 				F8E6C7BD1DCA428800F64426 /* serialize.cpp in Sources */,
@@ -1650,7 +1633,6 @@
 				F8E6C7191DCA41EF00F64426 /* s_mainmenu.cpp in Sources */,
 				F8E6C6331DCA3F9900F64426 /* mapgen_v6.cpp in Sources */,
 				F8E6C6681DCA3FE200F64426 /* xCGUITTFont.cpp in Sources */,
-				F8E6C6321DCA3F9900F64426 /* mapgen_v5.cpp in Sources */,
 				F8E6C6581DCA3F9900F64426 /* sound_openal.cpp in Sources */,
 				F8E6C6401DCA3F9900F64426 /* nameidmapping.cpp in Sources */,
 				F8E6C6571DCA3F9900F64426 /* socket.cpp in Sources */,

@@ -147,9 +147,6 @@ LOCAL_SRC_FILES := \
 	../../../src/mapblock_mesh.cpp                 \
 	../../../src/mapgen.cpp                        \
 	../../../src/mapgen_flat.cpp                   \
-	../../../src/mapgen_fractal.cpp                \
-	../../../src/mapgen_singlenode.cpp             \
-	../../../src/mapgen_v5.cpp                     \
 	../../../src/mapgen_v6.cpp                     \
 	../../../src/mapgen_v7.cpp                     \
 	../../../src/mapgen_v7p.cpp                    \
@@ -224,7 +221,7 @@ LOCAL_SRC_FILES := \
 	../../../src/client/joystick_controller.cpp    \
 	../../../src/irrlicht_changes/static_text.cpp
 
-LOCAL_CFLAGS += #-Werror=shorten-64-to-32
+#LOCAL_CFLAGS += -Werror=shorten-64-to-32
 # Network
 LOCAL_SRC_FILES += \
 	../../../src/network/connection.cpp            \

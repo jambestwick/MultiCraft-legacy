@@ -8,7 +8,7 @@ android {
 		targetSdkVersion 29
 		externalNativeBuild {
 			ndkBuild {
-				arguments '-j12',
+				arguments '-j',
 						'APP_STL=c++_shared',
 						'COMPILER_VERSION=clang',
 						'APP_SHORT_COMMANDS=true'
