@@ -81,7 +81,10 @@ bool ScriptApiItem::item_OnPlace(ItemStack &item,
 		try {
 			item = read_item(L, -1, getServer()->idef());
 		} catch (LuaError &e) {
-			throw LuaError(std::string(e.what()) + ". item=" + item.name);
+		//	throw LuaError(std::string(e.what()) + ". item=" + item.name);
+			errorstream << "ServerError: AsyncErr: ServerThread::run Lua: Expecting itemstack, itemstring, table or nil. item_OnPlace item="
+				    << item.name << std::endl;
+			return false;
 		}
 	}
 	lua_pop(L, 2);  // Pop item and error handler

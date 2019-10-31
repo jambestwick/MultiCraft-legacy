@@ -318,7 +318,7 @@ void GUIEngine::run()
 
 		u32 frametime_min = 2000 / (!m_device->isWindowFocused()
  				? g_settings->getFloat("pause_fps_max")
- 				: g_settings->getFloat("fps_max") / 2);
+ 				: g_settings->getFloat("fps_max"));
 
 #if defined(__ANDROID__) || defined(__IOS__)
 		if (!m_device->isWindowFocused())

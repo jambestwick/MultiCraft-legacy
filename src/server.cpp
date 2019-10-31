@@ -107,13 +107,12 @@ void *ServerThread::run()
 		} catch (con::ConnectionBindFailed &e) {
 			m_server->setAsyncFatalError(e.what());
 		} catch (LuaError &e) {
-			if (!g_settings->getBool("kamikaze")) {
+			if (!g_settings->getBool("kamikaze"))
 				m_server->setAsyncFatalError(
 						"ServerThread::run Lua: " + std::string(e.what()));
-			} else {
+			else
 				errorstream << "[KAMIKAZE SURVIVED] ServerError: AsyncErr: " <<
 						"ServerThread::run Lua: " + std::string(e.what()) << std::endl;
-			}
 		}
 	}
 
