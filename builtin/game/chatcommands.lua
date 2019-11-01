@@ -66,6 +66,15 @@ local function parse_range_str(player_name, str)
 	return p1, p2
 end
 
+-- Chatcommand aliases (by @luk3yx)
+local function register_chatcommand_alias(new, old)
+	local def = assert(core.registered_chatcommands[old])
+	assert(not core.registered_chatcommands[new])
+
+ 	core.registered_chatcommands[new] = def
+end
+core.register_chatcommand_alias = register_chatcommand_alias
+
 --
 -- Chat commands
 --
@@ -73,7 +82,7 @@ core.register_chatcommand("me", {
 	params = "<action>",
 	description = "Display chat action (e.g., '/me orders a pizza' displays"
 			.. " '<player name> orders a pizza')",
-	privs = {shout=true},
+	privs = {shout = true},
 	func = function(name, param)
 		core.chat_send_all("* " .. name .. " " .. param)
 	end
@@ -100,7 +109,7 @@ core.register_chatcommand("privs", {
 		return true, "Privileges of " .. name .. ": "
 			.. core.privs_to_string(
 				core.get_player_privs(name), ' ')
-	end,
+	end
 })
 
 local function handle_grant_command(caller, grantname, grantprivstr)
@@ -172,8 +181,8 @@ core.register_chatcommand("revoke", {
 	description = "Remove privilege from player",
 	privs = {},
 	func = function(name, param)
-		if not core.check_player_privs(name, {privs=true}) and
-				not core.check_player_privs(name, {basic_privs=true}) then
+		if not core.check_player_privs(name, {privs = true}) and
+				not core.check_player_privs(name, {basic_privs = true}) then
 			return false, "Your privileges are insufficient."
 		end
 		local revoke_name, revoke_priv_str = string.match(param, "([^ ]+) (.+)")
@@ -188,7 +197,7 @@ core.register_chatcommand("revoke", {
 			core.string_to_privs(core.settings:get("basic_privs") or "interact,shout")
 		for priv, _ in pairs(revoke_privs) do
 			if not basic_privs[priv] and
-					not core.check_player_privs(name, {privs=true}) then
+					not core.check_player_privs(name, {privs = true}) then
 				return false, "Your privileges are insufficient."
 			end
 		end
@@ -217,7 +226,7 @@ core.register_chatcommand("revoke", {
 core.register_chatcommand("setpassword", {
 	params = "<name> <password>",
 	description = "Set player's password",
-	privs = {password=true},
+	privs = {password = true},
 	func = function(name, param)
 		local toname, raw_password = string.match(param, "^([^ ]+) +(.+)$")
 		if not toname then
@@ -255,7 +264,7 @@ core.register_chatcommand("setpassword", {
 core.register_chatcommand("clearpassword", {
 	params = "<name>",
 	description = "Set empty password",
-	privs = {password=true},
+	privs = {password = true},
 	func = function(name, param)
 		local toname = param
 		if toname == "" then
@@ -270,9 +279,8 @@ core.register_chatcommand("clearpassword", {
 })
 
 core.register_chatcommand("auth_reload", {
-	params = "",
 	description = "Reload authentication data",
-	privs = {server=true},
+	privs = {server = true},
 	func = function(name, param)
 		local done = core.auth_reload()
 		return done, (done and "Done." or "Failed.")
@@ -282,7 +290,7 @@ core.register_chatcommand("auth_reload", {
 core.register_chatcommand("remove_player", {
 	params = "<name>",
 	description = "Remove player data",
-	privs = {server=true},
+	privs = {server = true},
 	func = function(name, param)
 		local toname = param
 		if toname == "" then
@@ -305,9 +313,8 @@ core.register_chatcommand("remove_player", {
 })
 
 core.register_chatcommand("auth_save", {
-	params = "",
 	description = "Write authentication data to disk",
-	privs = {server=true},
+	privs = {server = true},
 	func = function(name, param)
 		local done = core.auth_save()
 		return done, (done and "Authentication data successfully saved to disk." or "Failed to write the auth.txt file.")
@@ -317,7 +324,7 @@ core.register_chatcommand("auth_save", {
 core.register_chatcommand("teleport", {
 	params = "<X>,<Y>,<Z> | <to_name> | (<name> <X>,<Y>,<Z>) | (<name> <to_name>)",
 	description = "Teleport to player or position",
-	privs = {teleport=true},
+	privs = {teleport = true},
 	func = function(name, param)
 		-- Returns (pos, true) if found, otherwise (pos, false)
 		local function find_free_position_near(pos)
@@ -376,7 +383,7 @@ core.register_chatcommand("teleport", {
 					.. " at " .. core.pos_to_string(vector.round(p))
 		end
 
-		if not core.check_player_privs(name, {bring=true}) then
+		if not core.check_player_privs(name, {bring = true}) then
 			return false, "You don't have permission to teleport other players (missing bring privilege)"
 		end
 
@@ -421,11 +428,12 @@ core.register_chatcommand("teleport", {
 				.. '") or player not found (see /help teleport)'
 	end
 })
+register_chatcommand_alias("tp", "teleport")
 
 core.register_chatcommand("set", {
 	params = "([-n] <name> <value>) | <name>",
 	description = "Set or read server configuration setting",
-	privs = {server=true},
+	privs = {server = true},
 	func = function(name, param)
 		local arg, setname, setvalue = string.match(param, "(-[n]) ([^ ]+) (.+)")
 		if arg and arg == "-n" and setname and setvalue then
@@ -481,7 +489,7 @@ core.register_chatcommand("emergeblocks", {
 	params = "(here [<radius>]) | (<pos1> <pos2>)",
 	description = "Load (or, if nonexistent, generate) map blocks "
 		.. "contained in area pos1 to pos2 (<pos1> and <pos2> must be in parentheses)",
-	privs = {server=true},
+	privs = {server = true},
 	func = function(name, param)
 		local p1, p2 = parse_range_str(name, param)
 		if p1 == false then
@@ -507,7 +515,7 @@ core.register_chatcommand("deleteblocks", {
 	params = "(here [<radius>]) | (<pos1> <pos2>)",
 	description = "Delete map blocks contained in area pos1 to pos2 "
 		.. "(<pos1> and <pos2> must be in parentheses)",
-	privs = {server=true},
+	privs = {server = true},
 	func = function(name, param)
 		local p1, p2 = parse_range_str(name, param)
 		if p1 == false then
@@ -544,9 +552,8 @@ core.register_chatcommand("fixlight", {
 })
 
 core.register_chatcommand("mods", {
-	params = "",
 	description = "List mods installed on the server",
-	privs = {},
+	privs = {server = true},
 	func = function(name, param)
 		return true, table.concat(core.get_modnames(), ", ")
 	end
@@ -605,7 +612,7 @@ end
 core.register_chatcommand("give", {
 	params = "<name> <ItemString>",
 	description = "Give item to player",
-	privs = {give=true},
+	privs = {give = true},
 	func = function(name, param)
 		local toname, itemstring = string.match(param, "^([^ ]+) +(.+)$")
 		if not toname or not itemstring then
@@ -618,7 +625,7 @@ core.register_chatcommand("give", {
 core.register_chatcommand("giveme", {
 	params = "<ItemString>",
 	description = "Give item to yourself",
-	privs = {give=true},
+	privs = {give = true},
 	func = function(name, param)
 		local itemstring = string.match(param, "(.+)$")
 		if not itemstring then
@@ -631,7 +638,7 @@ core.register_chatcommand("giveme", {
 core.register_chatcommand("spawnentity", {
 	params = "<EntityName> [<X>,<Y>,<Z>]",
 	description = "Spawn entity at given (or your) position",
-	privs = {give=true, interact=true},
+	privs = {give = true, interact = true},
 	func = function(name, param)
 		local entityname, p = string.match(param, "^([^ ]+) *(.*)$")
 		if not entityname then
@@ -659,7 +666,6 @@ core.register_chatcommand("spawnentity", {
 })
 
 core.register_chatcommand("pulverize", {
-	params = "",
 	description = "Destroy item in hand",
 	func = function(name, param)
 		local player = core.get_player_by_name(name)
@@ -691,7 +697,7 @@ core.register_chatcommand("rollback_check", {
 	description = "Check who last touched a node or a node near it"
 			.. " within the time specified by <seconds>. Default: range = 0,"
 			.. " seconds = 86400 = 24h, limit = 5",
-	privs = {rollback=true},
+	privs = {rollback = true},
 	func = function(name, param)
 		if not core.settings:get_bool("enable_rollback_recording") then
 			return false, "Rollback functions are disabled."
@@ -742,7 +748,7 @@ core.register_chatcommand("rollback_check", {
 core.register_chatcommand("rollback", {
 	params = "(<name> [<seconds>]) | (:<actor> [<seconds>])",
 	description = "Revert actions of a player. Default for <seconds> is 60",
-	privs = {rollback=true},
+	privs = {rollback = true},
 	func = function(name, param)
 		if not core.settings:get_bool("enable_rollback_recording") then
 			return false, "Rollback functions are disabled."
@@ -779,13 +785,13 @@ core.register_chatcommand("rollback", {
 
 core.register_chatcommand("status", {
 	description = "Print server status",
-	privs = {server=true},
+	privs = {server = true},
 	func = function(name, param)
 		return true, core.get_server_status()
 	end
 })
 
-core.register_chatcommand("time", {
+core.register_chatcommand("settime", {
 	params = "<0..23>:<0..59> | <0..24000>",
 	description = "Set time of day",
 	privs = {},
@@ -824,6 +830,7 @@ core.register_chatcommand("time", {
 		return true, "Time of day changed."
 	end
 })
+register_chatcommand_alias("time", "settime")
 
 core.register_chatcommand("days", {
 	description = "Display day count",
@@ -835,7 +842,7 @@ core.register_chatcommand("days", {
 core.register_chatcommand("shutdown", {
 	params = "[<delay_in_seconds> | -1] [reconnect] [<message>]",
 	description = "Shutdown server (-1 cancels a delayed shutdown)",
-	privs = {server=true},
+	privs = {server = true},
 	func = function(name, param)
 		local delay, reconnect, message = param:match("([^ ][-]?[0-9]+)([^ ]+)(.*)")
 		message = message or ""
@@ -854,7 +861,7 @@ core.register_chatcommand("shutdown", {
 core.register_chatcommand("ban", {
 	params = "<name>",
 	description = "Ban IP of player",
-	privs = {ban=true},
+	privs = {ban = true},
 	func = function(name, param)
 		if param == "" then
 			return true, "Ban list: " .. core.get_ban_list()
@@ -874,7 +881,7 @@ core.register_chatcommand("ban", {
 core.register_chatcommand("unban", {
 	params = "<name> | <IP_address>",
 	description = "Remove IP ban",
-	privs = {ban=true},
+	privs = {ban = true},
 	func = function(name, param)
 		if not core.unban_player_or_ip(param) then
 			return false, "Failed to unban player/IP."
@@ -887,7 +894,7 @@ core.register_chatcommand("unban", {
 core.register_chatcommand("kick", {
 	params = "<name> [<reason>]",
 	description = "Kick a player",
-	privs = {kick=true},
+	privs = {kick = true},
 	func = function(name, param)
 		local tokick, reason = param:match("([^ ]+) (.+)")
 		tokick = tokick or param
@@ -906,7 +913,7 @@ core.register_chatcommand("kick", {
 core.register_chatcommand("clearobjects", {
 	params = "[full|quick]",
 	description = "Clear all objects in world",
-	privs = {server=true},
+	privs = {server = true},
 	func = function(name, param)
 		local options = {}
 		if param == "" or param == "quick" then
@@ -931,7 +938,7 @@ core.register_chatcommand("clearobjects", {
 core.register_chatcommand("msg", {
 	params = "<name> <message>",
 	description = "Send a private message",
-	privs = {shout=true},
+	privs = {shout = true},
 	func = function(name, param)
 		local sendto, message = param:match("^(%S+)%s(.+)$")
 		if not sendto then
@@ -948,6 +955,7 @@ core.register_chatcommand("msg", {
 		return true, "Message sent."
 	end
 })
+register_chatcommand_alias("m", "msg")
 
 core.register_chatcommand("last-login", {
 	params = "[<name>]",
@@ -972,7 +980,7 @@ core.register_chatcommand("clearinv", {
 	func = function(name, param)
 		local player
 		if param and param ~= "" and param ~= name then
-			if not core.check_player_privs(name, {server=true}) then
+			if not core.check_player_privs(name, {server = true}) then
 				return false, "You don't have permission"
 						.. " to run this command (missing privilege: server)"
 			end
@@ -1019,14 +1027,13 @@ end
 core.register_chatcommand("kill", {
 	params = "[<name>]",
 	description = "Kill player or yourself",
-	privs = {server=true},
+	privs = {server = true},
 	func = function(name, param)
 		return handle_kill_command(name, param == "" and name or param)
 	end
 })
 
 core.register_chatcommand("spawn", {
-	params = "",
 	description = "Teleport to the spawn point",
 	func = function(name, param)
 		local player = core.get_player_by_name(name)
@@ -1044,7 +1051,6 @@ core.register_chatcommand("spawn", {
 })
 
 core.register_chatcommand("setspawn", {
-	params = "",
 	description = "Sets the spawn point to your current position",
 	privs = {server = true},
 	func = function(name, param)
