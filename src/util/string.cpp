@@ -23,7 +23,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "log.h"
 
 #include "hex.h"
-#include "../porting.h"
+#include "porting.h"
 
 #include <algorithm>
 #include <sstream>
@@ -164,8 +164,10 @@ std::string wide_to_utf8(const std::wstring &input) {
 
 #endif // _WIN32
 
+// You must free the returned string!
+// The returned string is allocated using new
 wchar_t *utf8_to_wide_c(const char *str) {
-	std::wstring ret = utf8_to_wide(std::string(str)).c_str();
+	std::wstring ret = utf8_to_wide(std::string(str));
 	size_t len = ret.length();
 	wchar_t *ret_c = new wchar_t[len + 1];
 	memset(ret_c, 0, (len + 1) * sizeof(wchar_t));
@@ -193,32 +195,22 @@ wchar_t *narrow_to_wide_c(const char *str) {
 	memset(nstr, 0, (len + 1) * sizeof(wchar_t));
 	memcpy(nstr, intermediate.c_str(), len * sizeof(wchar_t));
 #endif
+
 	return nstr;
 }
-
-
-
 
 std::wstring narrow_to_wide(const std::string &mbs) {
 	size_t wcl = mbs.size();
 #ifdef __ANDROID__
-	const wchar_t* wide_chars =
-			L" !\"#$%&'()*+,-./0123456789:;<=>?@"
-			L"ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`"
-			L"abcdefghijklmnopqrstuvwxyz{|}~";
-
 	std::wstring retval = L"";
-
 	for (unsigned int i = 0; i < wcl; i++) {
 		if (((unsigned char) mbs[i] > 31) &&
-		    ((unsigned char) mbs[i] < 127)) {
-			retval += wide_chars[(unsigned char) mbs[i] -32];
-		} else if (mbs[i] == '\n') {
+		    ((unsigned char) mbs[i] < 127))
+			retval += (unsigned char) mbs[i];
+		else if (mbs[i] == '\n')
 			// handle newline
 			retval += L'\n';
-		}
 	}
-
 	return retval;
 #else // not Android
 	Buffer<wchar_t> wcs(wcl + 1);
@@ -230,14 +222,15 @@ std::wstring narrow_to_wide(const std::string &mbs) {
 #endif
 }
 
+
 std::string wide_to_narrow(const std::wstring &wcs) {
 	size_t mbl = wcs.size() * 4;
 	SharedBuffer<char> mbs(mbl+1);
 	size_t len = wcstombs(*mbs, wcs.c_str(), mbl);
 	if (len == (size_t)(-1))
 		return "Character conversion failed!";
-	else
-		mbs[len] = 0;
+
+	mbs[len] = 0;
 	return *mbs;
 }
 
@@ -247,8 +240,7 @@ std::string urlencode(const std::string &str) {
 	// followed by two hex digits. See RFC 3986, section 2.3.
 	static const char url_hex_chars[] = "0123456789ABCDEF";
 	std::ostringstream oss(std::ios::binary);
-	for (u32 i = 0; i < str.size(); i++) {
-		unsigned char c = str[i];
+	for (unsigned char c : str) {
 		if (isalnum(c) || c == '-' || c == '.' || c == '_' || c == '~') {
 			oss << c;
 		} else {
