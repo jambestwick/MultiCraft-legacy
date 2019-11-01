@@ -29,8 +29,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #import "SDVersion.h"
 #endif
 
-void set_default_settings(Settings *settings)
-{
+void set_default_settings(Settings *settings) {
 	// Client and server
 	settings->setDefault("language", "");
 	settings->setDefault("name", "");
@@ -54,7 +53,7 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("screenshot_quality", "0");
 	settings->setDefault("client_unload_unused_data_timeout", "600");
 	settings->setDefault("client_mapblock_limit", "5000");
-	settings->setDefault("enable_build_where_you_stand", "false" );
+	settings->setDefault("enable_build_where_you_stand", "false");
 	settings->setDefault("send_pre_v25_init", "false");
 	settings->setDefault("curl_timeout", "5000");
 	settings->setDefault("curl_parallel_limit", "8");
@@ -241,8 +240,10 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("font_path", porting::getDataPath("fonts" DIR_DELIM "Retron2000.ttf"));
 	settings->setDefault("font_shadow", "1");
 	settings->setDefault("font_shadow_alpha", "127");
-	settings->setDefault("mono_font_path", porting::getDataPath("fonts" DIR_DELIM "Cousine-Regular.ttf"));
-	settings->setDefault("fallback_font_path", porting::getDataPath("fonts" DIR_DELIM "DroidSansFallback.ttf"));
+	settings->setDefault("mono_font_path",
+	                     porting::getDataPath("fonts" DIR_DELIM "Cousine-Regular.ttf"));
+	settings->setDefault("fallback_font_path",
+	                     porting::getDataPath("fonts" DIR_DELIM "DroidSansFallback.ttf"));
 
 	settings->setDefault("fallback_font_shadow", "1");
 	settings->setDefault("fallback_font_shadow_alpha", "128");
@@ -296,7 +297,8 @@ void set_default_settings(Settings *settings)
 #endif
 
 	settings->setDefault("kick_msg_shutdown", "Server shutting down.");
-	settings->setDefault("kick_msg_crash", "This server has experienced an internal error. You will now be disconnected.");
+	settings->setDefault("kick_msg_crash",
+	                     "This server has experienced an internal error. You will now be disconnected.");
 	settings->setDefault("ask_reconnect_on_crash", "false");
 	settings->setDefault("kamikaze", "false");
 
@@ -396,22 +398,77 @@ void set_default_settings(Settings *settings)
 	settings->setDefault("emergequeue_limit_generate", "16");
 	settings->setDefault("curl_verify_cert", "false");
 	settings->setDefault("gui_scaling_filter_txr2img", "false");
+	settings->setDefault("autosave_screensize", "false");
 	char lang[3] = {0};
+
+
+	// Set the optimal settings depending on the memory size [Android] | model [iOS]
+#ifdef __ANDROID__
+	// minimal settings for less than 2GB RAM
+	if (porting::getMemoryMax() < 2) {
+#elif __IOS__
+		// minimal settings for 32-bit devices
+	bool arm = false;
+#if defined(__arm__)
+	arm = true;
+#endif
+	if (arm) {
+#endif
+		settings->setDefault("client_mapblock_limit", "100");
+		settings->setDefault("pause_fps_max", "5");
+		settings->setDefault("viewing_range", "25");
+		settings->setDefault("smooth_lighting", "false");
+		settings->setDefault("enable_clouds", "false");
+		settings->setDefault("active_block_range", "1");
+		settings->setDefault("dedicated_server_step", "0.2");
+		settings->setDefault("abm_interval", "3.0");
+		settings->setDefault("chunksize", "3");
+		settings->setDefault("max_block_generate_distance", "1");
+		settings->setDefault("weather", "false");
+#ifdef __ANDROID__
+		// low settings for 2-4GB RAM
+	} else if (porting::getMemoryMax() >= 2 && porting::getMemoryMax() < 4) {
+#elif __IOS__
+		// low settings
+	} else if (([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPodTouch6Gen) ||
+			   ([SDVersion deviceVersion] == iPadMini2) || ([SDVersion deviceVersion] == iPadMini3)) {
+#endif
+		settings->setDefault("client_mapblock_limit", "200");
+		settings->setDefault("pause_fps_max", "5");
+		settings->setDefault("viewing_range", "25");
+		settings->setDefault("smooth_lighting", "false");
+		settings->setDefault("enable_3d_clouds", "false");
+		settings->setDefault("cloud_radius", "6");
+		settings->setDefault("active_block_range", "1");
+		settings->setDefault("dedicated_server_step", "0.2");
+		settings->setDefault("chunksize", "3");
+		settings->setDefault("max_block_generate_distance", "2");
+		settings->setDefault("weather", "false");
+#ifdef __ANDROID__
+		// medium settings for 4.1-6GB RAM
+	} else if (porting::getMemoryMax() >= 4 && porting::getMemoryMax() < 6) {
+#elif __IOS__
+		// medium settings
+	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) ||
+			   ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir)) {
+#endif
+		settings->setDefault("client_mapblock_limit", "500");
+		settings->setDefault("pause_fps_max", "10");
+		settings->setDefault("viewing_range", "50");
+		settings->setDefault("cloud_radius", "6");
+		settings->setDefault("active_block_range", "2");
+		settings->setDefault("max_block_generate_distance", "3");
+	} else {
+		// high settings
+		settings->setDefault("client_mapblock_limit", "1000");
+		settings->setDefault("viewing_range", "75");
+		settings->setDefault("max_block_generate_distance", "5");
+	}
 
 	// Android Settings
 #ifdef __ANDROID__
-	settings->setDefault("viewing_range", "35");
-	settings->setDefault("enable_3d_clouds", "false");
-	settings->setDefault("cloud_radius", "6");
-	settings->setDefault("pause_fps_max", "10");
-	settings->setDefault("smooth_lighting", "false");
 	settings->setDefault("selectionbox_width", "6");
-	settings->setDefault("chunksize", "3");
-	settings->setDefault("active_block_range", "1");
-	settings->setDefault("max_block_generate_distance", "3");
-	settings->setDefault("client_mapblock_limit", "250");
 	settings->setDefault("debug_log_level", "error");
-	settings->setDefault("weather", "false");
 
 	// Set font_path
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
@@ -422,27 +479,32 @@ void set_default_settings(Settings *settings)
 
 	// Check screen size
 	double x_inches = ((double) porting::getDisplaySize().X /
-					  (160 * porting::getDisplayDensity()));
+	                   (160 * porting::getDisplayDensity()));
 	if (x_inches <= 3.7) {
 		// small 4" phones
 		settings->setDefault("hud_scaling", "0.55");
+		settings->setDefault("mouse_sensitivity", "0.3");
+		settings->setDefault("hud_small", "true");
+	} else if (x_inches > 3.7 && x_inches <= 4.5) {
+		// medium phones
+		settings->setDefault("hud_scaling", "0.6");
 		settings->setDefault("mouse_sensitivity", "0.25");
 		settings->setDefault("hud_small", "true");
-	} else if (x_inches > 3.7 && x_inches < 5) {
-		// all phones
+	} else if (x_inches > 4.5 && x_inches <= 5) {
+		// large 6" phones
 		settings->setDefault("hud_scaling", "0.7");
 		settings->setDefault("mouse_sensitivity", "0.15");
 		settings->setDefault("hud_small", "true");
-	} else if (x_inches >= 5) {
-		// tablets
+	} else if (x_inches > 5 && x_inches <= 6) {
+		// 7" tablets
 		settings->setDefault("hud_scaling", "0.9");
+		settings->setDefault("hud_small", "true");
 	}
 #endif // Android
 
 	// iOS Settings
 #ifdef __IOS__
 	settings->setDefault("debug_log_level", "none");
-	settings->setDefault("autosave_screensize", "false");
 
 	// Set font_path
 	settings->setDefault("mono_font_path", g_settings->get("font_path"));
@@ -452,9 +514,8 @@ void set_default_settings(Settings *settings)
 	NSString *syslang = [[NSLocale preferredLanguages] objectAtIndex:0];
 	[syslang getBytes:lang maxLength:2 usedLength:nil encoding:NSASCIIStringEncoding options:0 range:NSMakeRange(0, 2) remainingRange:nil];
 
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 		settings->setDefault("hud_small", "true");
-	}
 
 	// Set the size of the elements depending on the screen size
 	if ([SDVersion deviceVersion] == iPhone4S) {
@@ -490,58 +551,13 @@ void set_default_settings(Settings *settings)
 		settings->setDefault("hud_move_upwards", "10");
 		settings->setDefault("round_screen", "15");
 	}
-
-	// Set the optimal settings depending on the model
-#if defined(__arm__)
-		// minimal settings for 32-bit devices
-		settings->setDefault("client_mapblock_limit", "100");
-		settings->setDefault("pause_fps_max", "5");
-		settings->setDefault("viewing_range", "25");
-		settings->setDefault("smooth_lighting", "false");
-		settings->setDefault("enable_clouds", "false");
-		settings->setDefault("active_block_range", "1");
-		settings->setDefault("dedicated_server_step", "0.2");
-		settings->setDefault("abm_interval", "3.0");
-		settings->setDefault("chunksize", "3");
-		settings->setDefault("max_block_generate_distance", "1");
-		settings->setDefault("weather", "false");
-#endif
-	if (([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPodTouch6Gen) ||
-		([SDVersion deviceVersion] == iPadMini2) || ([SDVersion deviceVersion] == iPadMini3)) {
-		// low settings
-		settings->setDefault("client_mapblock_limit", "200");
-		settings->setDefault("pause_fps_max", "5");
-		settings->setDefault("viewing_range", "25");
-		settings->setDefault("smooth_lighting", "false");
-		settings->setDefault("enable_3d_clouds", "false");
-		settings->setDefault("cloud_radius", "6");
-		settings->setDefault("active_block_range", "1");
-		settings->setDefault("dedicated_server_step", "0.2");
-		settings->setDefault("chunksize", "3");
-		settings->setDefault("max_block_generate_distance", "2");
-		settings->setDefault("weather", "false");
-	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) ||
-			   ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir)) {
-		// medium settings
-		settings->setDefault("client_mapblock_limit", "500");
-		settings->setDefault("pause_fps_max", "10");
-		settings->setDefault("viewing_range", "50");
-		settings->setDefault("cloud_radius", "6");
-		settings->setDefault("active_block_range", "2");
-		settings->setDefault("max_block_generate_distance", "3");
-	} else {
-		// high settings
-		settings->setDefault("client_mapblock_limit", "1000");
-		settings->setDefault("viewing_range", "75");
-		settings->setDefault("max_block_generate_distance", "5");
-	}
 #endif // iOS
+
 	settings->setDefault("language", lang);
 #endif
 }
 
-void override_default_settings(Settings *settings, Settings *from)
-{
+void override_default_settings(Settings *settings, Settings *from) {
 	std::vector<std::string> names = from->getNames();
 	for (size_t i = 0; i < names.size(); i++) {
 		const std::string &name = names[i];
