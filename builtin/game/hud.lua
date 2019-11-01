@@ -17,14 +17,10 @@
 
 hud, hud_id = {}, {}
 
--- keep id handling internal
-local sb_bg = {} -- statbar background ids
-
--- localize often used table
-local items = {}
+local items, sb_bg = {}, {}
 
 local function throw_error(msg)
-	core.log("error", "HUD[error]: " .. msg)
+	core.log("error", "HUD: " .. msg)
 end
 
 --
@@ -37,14 +33,14 @@ function hud.register(name, def)
 		return false
 	end
 
-	if items[name] ~= nil then
+	if items[name] then
 		throw_error("A statbar with name " .. name .. " already exists")
 		return false
 	end
 
 	-- actually register
 	-- add background first since draworder is based on id
-	if def.hud_elem_type == "statbar" and def.background ~= nil then
+	if def.hud_elem_type == "statbar" and def.background then
 		sb_bg[name] = table.copy(def)
 		sb_bg[name].text = def.background
 		if not def.autohide_bg and def.max then
@@ -58,46 +54,48 @@ function hud.register(name, def)
 end
 
 function hud.change_item(player, name, def)
-	if not player or not player:is_player() or not name or not def then
-		throw_error("Not enough parameters given to change HUD item")
+	if not player or not player:is_player() then
+		return false
+	end
+
+	if not name or not def then
+		throw_error("Not enough parameters given")
 		return false
 	end
 
 	local i_name = player:get_player_name() .. "_" .. name
 	local elem = hud_id[i_name]
+	local item = items[name]
 
 	if not elem then
-		throw_error("Given HUD element " .. dump(name) .. " does not exist")
+	--	throw_error("Given HUD element " .. dump(name) .. " does not exist")
 		return false
 	end
 
 	if def.number then
-		if not def.hud_elem_type == "statbar" then
+		if item.hud_elem_type ~= "statbar" then
 			throw_error("Attempted to change an statbar HUD parameter for text HUD element " .. dump(name))
 			return false
 		end
 
-		if elem.max and def.number > elem.max then
-			def.number = elem.max
+		if item.max and def.number > item.max then
+			def.number = item.max
 		end
 		player:hud_change(elem.id, "number", def.number)
 
 		-- hide background when set
-		if elem.autohide_bg then
+		if item.autohide_bg then
 			local bg = hud_id[i_name .. "_bg"]
 			if not bg then
 				throw_error("Given HUD element " .. dump(name) .. "_bg does not exist")
 				return false
 			end
 
-			local num = bg.max or bg.number
-			if def.number == 0 then
-				num = 0
-			end
+			local num = def.number ~= 0 and (item.max or item.number) or 0
 			player:hud_change(bg.id, "number", num)
 		end
 	elseif def.text then
-			player:hud_change(elem.id, "text", def.text)
+		player:hud_change(elem.id, "text", def.text)
 	elseif def.offset then
 		player:hud_change(elem.id, "offset", def.offset)
 	end
@@ -106,19 +104,25 @@ function hud.change_item(player, name, def)
 end
 
 function hud.remove_item(player, name)
-	if not player or not name then
+	if not player or not player:is_player() then
+		return false
+	end
+
+	if not name then
 		throw_error("Not enough parameters given")
 		return false
 	end
 
+	local elem = hud_id[i_name]
+
 	local i_name = player:get_player_name() .. "_" .. name
-	if hud_id[i_name] == nil then
+	if not elem then
 		throw_error("Given HUD element " .. dump(name) .. " does not exist")
 		return false
 	end
 
-	player:hud_remove(hud_id[i_name].id)
-	hud_id[i_name] = nil
+	player:hud_remove(elem.id)
+	elem = nil
 
 	return true
 end
@@ -135,17 +139,27 @@ local function add_hud_item(player, name, def)
 	end
 
 	local i_name = player:get_player_name() .. "_" .. name
-	hud_id[i_name] = def
+	hud_id[i_name] = {}
 	hud_id[i_name].id = player:hud_add(def)
 end
 
 core.register_on_joinplayer(function(player)
 	-- add the backgrounds for statbars
-	for _, item in pairs(sb_bg) do
-		add_hud_item(player, _ .. "_bg", item)
+	for name, item in pairs(sb_bg) do
+		add_hud_item(player, name .. "_bg", item)
 	end
 	-- and finally the actual HUD items
-	for _, item in pairs(items) do
-		add_hud_item(player, _, item)
+	for name, item in pairs(items) do
+		add_hud_item(player, name, item)
+	end
+end)
+
+minetest.register_on_leaveplayer(function(player)
+	local player = player:get_player_name()
+	for name, _ in pairs(sb_bg) do
+		sb_bg[player .. "_" .. name] = nil
+	end
+	for name, _ in pairs(items) do
+		hud_id[player .. "_" .. name] = nil
 	end
 end)
