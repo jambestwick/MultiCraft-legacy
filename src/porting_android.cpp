@@ -29,10 +29,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "filesys.h"
 #include "log.h"
 
-#include <sstream>
-#include <exception>
-#include <cstdlib>
-
 #ifdef GPROF
 #include "prof.h"
 #endif
@@ -76,16 +72,14 @@ JNIEXPORT void JNICALL Java_com_multicraft_game_GameActivity_putMessageBoxResult
 }
 
 namespace porting {
-	int device_memory_max = 0;
-
+	static float device_memory_max = 0;
 	android_app *app_global;
 	JNIEnv *jnienv;
 	jclass nativeActivity;
 
 	jclass findClass(const std::string &classname) {
-		if (jnienv == nullptr) {
+		if (jnienv == nullptr)
 			return nullptr;
-		}
 
 		jclass nativeactivity = jnienv->FindClass("android/app/NativeActivity");
 		jmethodID getClassLoader =
@@ -242,17 +236,18 @@ namespace porting {
 		return text;
 	}
 
-	int getMemoryMax() {
+	float getMemoryMax() {
 		if (device_memory_max == 0) {
 			jmethodID getMemory = jnienv->GetMethodID(nativeActivity,
-			                                          "getMemoryMax", "()I");
+			                                          "getMemoryMax", "()F");
 
 			if (getMemory == nullptr)
 				assert("porting::getMemoryMax unable to find java method" == nullptr);
 
-			device_memory_max = jnienv->CallIntMethod(
+			device_memory_max = jnienv->CallFloatMethod(
 					app_global->activity->clazz, getMemory);
 		}
+
 		return device_memory_max;
 	}
 
@@ -302,6 +297,7 @@ namespace porting {
 			value = jnienv->CallFloatMethod(app_global->activity->clazz, getDensity);
 			firstrun = false;
 		}
+
 		return value;
 	}
 
@@ -316,8 +312,8 @@ namespace porting {
 			if (getDisplayWidth == nullptr)
 				assert("porting::getDisplayWidth unable to find java getDisplayWidth method" == nullptr);
 
-			retval.X = jnienv->CallIntMethod(app_global->activity->clazz,
-			                                 getDisplayWidth);
+			retval.X = static_cast<u32>(jnienv->CallIntMethod(app_global->activity->clazz,
+			                                                  getDisplayWidth));
 
 			jmethodID getDisplayHeight = jnienv->GetMethodID(nativeActivity,
 			                                                 "getDisplayHeight", "()I");
@@ -325,11 +321,12 @@ namespace porting {
 			if (getDisplayHeight == nullptr)
 				assert("porting::getDisplayHeight unable to find java getDisplayHeight method" == nullptr);
 
-			retval.Y = jnienv->CallIntMethod(app_global->activity->clazz,
-			                                 getDisplayHeight);
+			retval.Y = static_cast<u32>(jnienv->CallIntMethod(app_global->activity->clazz,
+			                                                  getDisplayHeight));
 
 			firstrun = false;
 		}
+
 		return retval;
 	}
 }

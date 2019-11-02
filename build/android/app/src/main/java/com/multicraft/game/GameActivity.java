@@ -18,6 +18,9 @@ import static com.multicraft.game.AdManager.setAdsCallback;
 import static com.multicraft.game.AdManager.startAd;
 import static com.multicraft.game.AdManager.stopAd;*/
 
+import static com.multicraft.game.PreferencesHelper.TAG_BUILD_NUMBER;
+import static com.multicraft.game.PreferencesHelper.getInstance;
+
 public class GameActivity extends NativeActivity {
     static {
         System.loadLibrary("c++_shared");
@@ -28,6 +31,7 @@ public class GameActivity extends NativeActivity {
     private String messageReturnValue;
     private int height, width;
     private boolean consent;
+    private boolean isMultiPlayer;
 
     public static native void putMessageBoxResult(String text);
 
@@ -44,39 +48,23 @@ public class GameActivity extends NativeActivity {
         new AdInitTask().execute();
     }
 
-    public void makeFullScreen() {
-        if (Build.VERSION.SDK_INT >= 19) {
+    private void makeFullScreen() {
+        if (Build.VERSION.SDK_INT >= 19)
             this.getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            );
-        }
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
+        if (hasFocus)
             makeFullScreen();
-        }
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-      /*stopAd();
-    	startAd(this, false);*/
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         makeFullScreen();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        /*stopAd();*/
     }
 
     @Override
@@ -89,9 +77,8 @@ public class GameActivity extends NativeActivity {
                 String text = data.getStringExtra("text");
                 messageReturnCode = 0;
                 messageReturnValue = text;
-            } else {
+            } else
                 messageReturnCode = 1;
-            }
         }
     }
 
@@ -129,27 +116,32 @@ public class GameActivity extends NativeActivity {
         return width;
     }
 
-    public int getMemoryMax() {
+    public float getMemoryMax() {
         ActivityManager actManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
         if (actManager != null) {
             actManager.getMemoryInfo(memInfo);
-            return (int) Math.floor(memInfo.totalMem * 1.0 / 1024 * 1024 * 1024);
+            double memory = memInfo.totalMem * 1.0f / (1024 * 1024 * 1024);
+            return (Math.round(memory * 100) / 100.0f);
         } else {
             Crashlytics.log(1, "RAM", "Cannot get RAM");
             return 1;
         }
-
     }
 
     public void notifyServerConnect(boolean isMultiplayer) {
+        /*isMultiPlayer = isMultiplayer;
+        if (isMultiplayer) stopAd();*/
     }
 
     public void notifyAbortLoading() {
-
+        PreferencesHelper pf = getInstance(this);
+        pf.saveSettings(TAG_BUILD_NUMBER, "1");
     }
 
     public void notifyExitGame() {
+        /*if (isMultiPlayer)
+            startAd(this, false, true);*/
     }
 
     @SuppressLint("StaticFieldLeak")

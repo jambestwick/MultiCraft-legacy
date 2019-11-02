@@ -78,7 +78,7 @@ namespace porting {
  * get max device RAM as integer value
  * returns -1 on failure
  */
-	int getMemoryMax();
+	float getMemoryMax();
 
 /**
 * notify java that font loading failded
@@ -94,7 +94,6 @@ namespace porting {
 * notify java on game exit.
 */
 	void notifyExitGame();
-
 }
 
 #endif
