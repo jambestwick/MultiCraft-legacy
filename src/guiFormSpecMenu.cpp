@@ -934,6 +934,7 @@ void GUIFormSpecMenu::parsePwdField(parserData* data, const std::string &element
 		std::vector<std::string> v_geom = split(parts[1],',');
 		std::string name = parts[2];
 		std::string label = parts[3];
+		std::string default_val = parts[4];
 
 		MY_CHECKPOS("pwdfield",0);
 		MY_CHECKGEOM("pwdfield",1);
@@ -951,17 +952,20 @@ void GUIFormSpecMenu::parsePwdField(parserData* data, const std::string &element
 
 		core::rect<s32> rect = core::rect<s32>(pos.X, pos.Y, pos.X+geom.X, pos.Y+geom.Y);
 
+		if(m_form_src)
+			default_val = m_form_src->resolveText(default_val);
+
 		std::wstring wlabel = utf8_to_wide(unescape_string(label));
 
 		FieldSpec spec(
 			name,
 			wlabel,
-			L"",
+			utf8_to_wide(unescape_string(default_val)),
 			258+m_fields.size()
 			);
 
 		spec.send = true;
-		gui::IGUIEditBox * e = Environment->addEditBox(0, rect, true, this, spec.fid);
+		gui::IGUIEditBox * e = Environment->addEditBox(spec.fdefault.c_str(), rect, true, this, spec.fid);
 
 		if (spec.fname == data->focused_fieldname) {
 			Environment->setFocus(e);
@@ -985,13 +989,6 @@ void GUIFormSpecMenu::parsePwdField(parserData* data, const std::string &element
 		evt.KeyInput.Shift       = 0;
 		evt.KeyInput.PressedDown = true;
 		e->OnEvent(evt);
-
-		if (parts.size() >= 5) {
-			// TODO: remove after 2016-11-03
-			warningstream << "pwdfield: use field_close_on_enter[name, enabled]" <<
-					" instead of the 5th param" << std::endl;
-			field_close_on_enter[name] = is_yes(parts[4]);
-		}
 
 		m_fields.push_back(spec);
 		return;
@@ -1078,13 +1075,6 @@ void GUIFormSpecMenu::parseSimpleField(parserData* data,
 		}
 	}
 
-	if (parts.size() >= 4) {
-		// TODO: remove after 2016-11-03
-		warningstream << "field/simple: use field_close_on_enter[name, enabled]" <<
-				" instead of the 4th param" << std::endl;
-		field_close_on_enter[name] = is_yes(parts[3]);
-	}
-
 	m_fields.push_back(spec);
 }
 
@@ -1130,7 +1120,6 @@ void GUIFormSpecMenu::parseTextArea(parserData* data, std::vector<std::string>& 
 
 	if(m_form_src)
 		default_val = m_form_src->resolveText(default_val);
-
 
 	std::wstring wlabel = utf8_to_wide(unescape_string(label));
 
@@ -1192,13 +1181,6 @@ void GUIFormSpecMenu::parseTextArea(parserData* data, std::vector<std::string>& 
 			rect.LowerRightCorner.Y = rect.UpperLeftCorner.Y + font_height;
 			addStaticText(Environment, spec.flabel.c_str(), rect, false, true, this, 0);
 		}
-	}
-
-	if (parts.size() >= 6) {
-		// TODO: remove after 2016-11-03
-		warningstream << "field/textarea: use field_close_on_enter[name, enabled]" <<
-				" instead of the 6th param" << std::endl;
-		field_close_on_enter[name] = is_yes(parts[5]);
 	}
 
 	m_fields.push_back(spec);

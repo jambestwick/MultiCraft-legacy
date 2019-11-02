@@ -1904,6 +1904,10 @@ examples.
 * Position and size units are inventory slots
 * `name` is the name of the field as returned in fields to `on_receive_fields`
 * `label`, if not blank, will be text printed on the top left above the field
+* `default` is the default value of the field
+    * `default` may contain variable references such as `${text}'` which
+      will fill the value from the metadata value `text`
+    * **Note**: no extra text or more than a single variable is supported ATM.
 * See field_close_on_enter to stop enter closing the formspec
 
 #### `field[<X>,<Y>;<W>,<H>;<name>;<label>;<default>]`
