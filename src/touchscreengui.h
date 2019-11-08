@@ -137,7 +137,7 @@ private:
 
 	size_t m_move_id;
 	bool m_move_has_really_moved;
-	s64 m_move_downtime;
+	u64 m_move_downtime;
 	bool m_move_sent_as_mouse_event;
 	v2s32 m_move_downlocation;
 
@@ -178,9 +178,9 @@ private:
 	// handle release event
 	void handleReleaseEvent(size_t evt_id);
 
-	// doubleclick detection variables
+	// long-click detection variables
 	struct key_event {
-		unsigned int down_time;
+		u64 down_time;
 		s32 x;
 		s32 y;
 	};
@@ -188,7 +188,7 @@ private:
 	// array for saving last known position of a pointer
 	std::map<size_t, v2s32> m_pointerpos;
 
-	// array for doubletap detection
+	// array for long-click detection
 	key_event m_key_events[2];
 };
 
