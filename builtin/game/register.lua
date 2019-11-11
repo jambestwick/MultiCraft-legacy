@@ -375,7 +375,12 @@ core.register_node(":ignore", {
 -- The hand (bare definition)
 core.register_item(":", {
 	type = "none",
-	groups = {not_in_creative_inventory=1},
+	wield_image = "blank.png",
+	tool_capabilities = {
+		full_punch_interval = 0.5,
+		damage_groups = {fleshy = core.settings:get_bool("creative_mode") and 5 or 1}
+	},
+	groups = {not_in_creative_inventory = 1}
 })
 
 
