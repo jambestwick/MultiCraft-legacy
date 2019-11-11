@@ -33,6 +33,8 @@ void set_default_settings(Settings *settings) {
 	// Client and server
 	settings->setDefault("language", "");
 	settings->setDefault("name", "");
+	settings->setDefault("password", "");
+	settings->setDefault("password_save", "false");
 	settings->setDefault("bind_address", "");
 	settings->setDefault("serverlist_url", "servers.multicraft.world");
 	settings->setDefault("serverlist_url_2", "");
@@ -505,6 +507,7 @@ void set_default_settings(Settings *settings) {
 	// iOS Settings
 #ifdef __IOS__
 	settings->setDefault("debug_log_level", "none");
+	settings->setDefault("password_save", "true");
 
 	// Set font_path
 	settings->setDefault("mono_font_path", g_settings->get("font_path"));

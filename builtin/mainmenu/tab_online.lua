@@ -16,6 +16,8 @@
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 --------------------------------------------------------------------------------
+local password_save = core.settings:get_bool("password_save")
+
 local function get_formspec(_, _, tabdata)
 	-- Update the cached supported proto info,
 	-- it may have changed after a change by the settings menu.
@@ -40,25 +42,28 @@ local function get_formspec(_, _, tabdata)
 			.. ";btn_mp_refresh;;;true]" ..
 
 		-- Address / Port
-		"label[7.1,-0.3;" .. fgettext("Address:") .. "]" ..
-		"label[10.22,-0.3;" .. fgettext("Port:") .. "]" ..
-		"field[7.4,0.6;3.2,0.5;te_address;;" ..
+		"field[7.4,0.5;3.2,0.5;te_address;" .. fgettext("Address:") .. ";" ..
 			core.formspec_escape(core.settings:get("address")) .. "]" ..
-		"field[10.5,0.6;1.85,0.5;te_port;;" ..
+		"field[10.5,0.5;1.85,0.5;te_port;" .. fgettext("Port:") .. ";" ..
 			core.formspec_escape(core.settings:get("remote_port")) .. "]" ..
 
-		-- Name / Password
-		"label[7.1,0.85;" .. fgettext("Name:") .. "]" ..
-		"label[10.22,0.85;" .. fgettext("Password:") .. "]" ..
-		"field[7.4,1.75;3.2,0.5;te_name;;" ..
+		-- Password
+		"field[7.4,1.6;3.2,0.5;te_name;" .. fgettext("Name:") .. ";" ..
 			core.formspec_escape(core.settings:get("name")) .. "]" ..
-		"pwdfield[10.5,1.8;1.86,0.39;te_pwd;]" ..
 
 		-- Description Background
-		"box[7.1,2.1;4.8,2.65;#999999]"..
+		"box[7.1,2;4.8,2.75;#999999]"..
 
 		-- Connect
 		"button[9.4,5.045;2.7,0.505;btn_mp_connect;" .. fgettext("Connect") .. "]"
+		
+		-- Password
+		if password_save then
+			retval = retval .. "pwdfield[10.5,1.65;1.86,0.39;te_pwd;" .. fgettext("Password:") .. ";" ..
+				core.formspec_escape(core.settings:get("password")) .. "]"
+		else
+			retval = retval .. "pwdfield[10.5,1.6;1.86,0.39;te_pwd;" .. fgettext("Password:") .. "]"
+		end
 
 	if tabdata.fav_selected and fav_selected then
 		if gamedata.fav then
@@ -66,7 +71,7 @@ local function get_formspec(_, _, tabdata)
 				.. ";btn_delete_favorite;;;true]"
 		end
 		if fav_selected.description then
-			retval = retval .. "textarea[7.5,2.3;4.8,2.9;;" ..
+			retval = retval .. "textarea[7.5,2.2;4.8,3;;" ..
 				core.formspec_escape((gamedata.serverdescription or ""), true) .. ";]"
 		end
 	end
@@ -145,6 +150,10 @@ local function main_button_handler(_, fields, _, tabdata)
 	if fields.te_name then
 		gamedata.playername = fields.te_name
 		core.settings:set("name", fields.te_name)
+	end
+
+	if fields.te_pwd and password_save then
+		core.settings:set("password", fields.te_pwd)
 	end
 
 	if fields.favourites then
@@ -244,8 +253,6 @@ local function main_button_handler(_, fields, _, tabdata)
 		asyncOnlineFavourites()
 		tabdata.fav_selected = nil
 
-		core.settings:set("address", "")
-		core.settings:set("remote_port", "30000")
 		return true
 	end
 
@@ -263,6 +270,7 @@ local function main_button_handler(_, fields, _, tabdata)
 		-- setup the keyword list
 		local keywords = {}
 		for word in input:gmatch("%S+") do
+			word = word:gsub("(%W)", "%%%1")
 			table.insert(keywords, word)
 		end
 
@@ -304,6 +312,7 @@ local function main_button_handler(_, fields, _, tabdata)
 			local first_server = search_result[1]
 			core.settings:set("address",     first_server.address)
 			core.settings:set("remote_port", first_server.port)
+			gamedata.serverdescription = first_server.description
 		end
 		return true
 	end
