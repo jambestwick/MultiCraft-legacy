@@ -109,9 +109,7 @@ public:
 
 	void show();
 
-#ifdef __IOS__
 	void handleReleaseAll();
-#endif
 
 private:
 	IrrlichtDevice           *m_device;

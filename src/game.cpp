@@ -1229,8 +1229,11 @@ public:
 
 	void run();
 	void shutdown();
-#ifdef __IOS__
+#if defined(__ANDROID__) || defined(__IOS__)
 	void pauseGame();
+#endif
+
+#ifdef __IOS__
 	void customStatustext(const std::wstring &text, float time);
 #endif
 	void pauseAnimation(bool is_paused);
@@ -1747,12 +1750,16 @@ void Game::run()
 void Game::shutdown()
 {
 #if IRRLICHT_VERSION_MAJOR == 1 && IRRLICHT_VERSION_MINOR <= 8
-	if (g_settings->get("3d_mode") == "pageflip") {
+	if (g_settings->get("3d_mode") == "pageflip")
 		driver->setRenderTarget(irr::video::ERT_STEREO_BOTH_BUFFERS);
-	}
 #endif
+
 	if (current_formspec)
 		current_formspec->quitMenu();
+
+#ifdef HAVE_TOUCHSCREENGUI
+	g_touchscreengui->hide();
+#endif
 
 	showOverlayMessage(wgettext("Shutting down..."), 0, 0, false);
 
@@ -4626,7 +4633,7 @@ void Game::readSettings()
 
 }
 
-#ifdef __IOS__
+#if defined(__ANDROID__) || defined(__IOS__)
 void Game::pauseGame()
 {
 	g_touchscreengui->handleReleaseAll();
@@ -4635,7 +4642,9 @@ void Game::pauseGame()
 	showPauseMenu();
 	runData.pause_game_timer = 0;
 }
+#endif
 
+#ifdef __IOS__
 void Game::customStatustext(const std::wstring &text, float time)
 {
 	m_statustext = text;
@@ -4914,14 +4923,16 @@ void the_game(bool *kill,
 	g_game = NULL;
 }
 
-#ifdef __IOS__
+#if defined(__ANDROID__) || defined(__IOS__)
 void external_pause_game()
 {
 	if (!g_game)
 		return;
 	g_game->pauseGame();
 }
+#endif
 
+#ifdef __IOS__
 void external_statustext(const char *text, float duration)
 {
 	if (!g_game)

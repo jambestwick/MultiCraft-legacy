@@ -22,8 +22,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "inputhandler.h"
 #include "mainmenumanager.h"
 
+#if defined(__ANDROID__)
+#include "porting_android.h"
+#endif
+
 #ifdef __IOS__
 #include "porting_ios.h"
+#endif
+
+#if defined(__ANDROID__) || defined(__IOS__)
 extern void external_pause_game();
 #endif
 
@@ -34,9 +41,8 @@ bool MyEventReceiver::OnEvent(const SEvent &event)
 	*/
 	if (isMenuActive()) {
 #ifdef HAVE_TOUCHSCREENGUI
-		if (m_touchscreengui) {
+		if (m_touchscreengui)
 			m_touchscreengui->Toggle(false);
-		}
 #endif
 		return g_menumgr.preprocessEvent(event);
 	}
@@ -61,6 +67,11 @@ bool MyEventReceiver::OnEvent(const SEvent &event)
 		m_touchscreengui->translateEvent(event);
 		return true;
 	}
+#endif
+
+#if defined(__ANDROID__)
+	if (event.SystemEvent.AndroidCmd.Cmd == APP_CMD_TERM_WINDOW)
+		external_pause_game();
 #endif
 
 #ifdef __IOS__

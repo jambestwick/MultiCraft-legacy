@@ -524,7 +524,6 @@ void TouchScreenGUI::handleReleaseEvent(size_t evt_id) {
 	}
 }
 
-#ifdef __IOS__
 void TouchScreenGUI::handleReleaseAll()
 {
 	m_known_ids.clear();
@@ -533,7 +532,6 @@ void TouchScreenGUI::handleReleaseAll()
 	for(int i = 0; i < after_last_element_id; i++)
 		m_buttons[i].ids.clear();
 }
-#endif
 
 void TouchScreenGUI::translateEvent(const SEvent &event) {
 	if (!m_visible) {
