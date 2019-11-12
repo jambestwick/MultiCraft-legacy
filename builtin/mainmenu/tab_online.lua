@@ -35,40 +35,46 @@ local function get_formspec(_, _, tabdata)
 
 	local retval =
 		-- Search
-		"field[0.2,0.1;5.71,1;te_search;;" .. core.formspec_escape(tabdata.search_for) .. "]" ..
-		"image_button[5.52,-0.13;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "search.png")
-			.. ";btn_mp_search;" .. "]" ..
+		"field[0.2,0.1;5.8,1;te_search;;" .. core.formspec_escape(tabdata.search_for) .. "]" ..
+		"image_button[5.5,-0.13;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "search.png")
+			.. ";btn_mp_search;;true;false]" ..
 		"image_button[6.26,-0.13;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "refresh.png")
-			.. ";btn_mp_refresh;;;true]" ..
+			.. ";btn_mp_refresh;;true;false]" ..
 
 		-- Address / Port
-		"field[7.4,0.5;3.2,0.5;te_address;" .. fgettext("Address:") .. ";" ..
+		"label[7.1,-0.3;" .. fgettext("Address:") .. "]" ..
+		"label[10.15,-0.3;" .. fgettext("Port:") .. "]" ..
+		"field[7.4,0.6;3.2,0.5;te_address;;" ..
 			core.formspec_escape(core.settings:get("address")) .. "]" ..
-		"field[10.5,0.5;1.85,0.5;te_port;" .. fgettext("Port:") .. ";" ..
+		"field[10.45,0.6;1.9,0.5;te_port;;" ..
 			core.formspec_escape(core.settings:get("remote_port")) .. "]" ..
 
-		-- Password
-		"field[7.4,1.6;3.2,0.5;te_name;" .. fgettext("Name:") .. ";" ..
+		-- Name
+		"label[7.1,0.85;" .. fgettext("Name:") .. "]" ..
+		"label[10.15,0.85;" .. fgettext("Password:") .. "]" ..
+		"field[7.4,1.75;3.2,0.5;te_name;;" ..
 			core.formspec_escape(core.settings:get("name")) .. "]" ..
 
 		-- Description Background
-		"box[7.1,2;4.8,2.75;#999999]"..
+		"box[7.1,2.1;4.8,2.65;#999999]"..
 
 		-- Connect
-		"button[9.4,5.045;2.7,0.505;btn_mp_connect;" .. fgettext("Connect") .. "]"
-		
+		"image_button[8.8,4.88;3.3,0.9;" ..
+				core.formspec_escape(defaulttexturedir ..
+					"blank.png") .. ";btn_mp_connect;;true;false]"
+
 		-- Password
 		if password_save then
-			retval = retval .. "pwdfield[10.5,1.65;1.86,0.39;te_pwd;" .. fgettext("Password:") .. ";" ..
+			retval = retval .. "pwdfield[10.45,1.81;1.91,0.39;te_pwd;;" ..
 				core.formspec_escape(core.settings:get("password")) .. "]"
 		else
-			retval = retval .. "pwdfield[10.5,1.6;1.86,0.39;te_pwd;" .. fgettext("Password:") .. "]"
+			retval = retval .. "pwdfield[10.45,1.81;1.91,0.39;te_pwd;;]"
 		end
 
 	if tabdata.fav_selected and fav_selected then
 		if gamedata.fav then
 			retval = retval .. "image_button[7.1,4.91;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "trash.png")
-				.. ";btn_delete_favorite;;;true]"
+				.. ";btn_delete_favorite;;true;false]"
 		end
 		if fav_selected.description then
 			retval = retval .. "textarea[7.5,2.2;4.8,3;;" ..

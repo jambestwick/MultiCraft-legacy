@@ -27,7 +27,7 @@ local function get_formspec()
 				core.formspec_escape(defaulttexturedir ..
 					"blank.png") .. ";world_create;;true;false]"
 
-	local creative_checkbox = core.settings:get_bool("creative_mode") and "local_creative_checkbox.png" or "blank.png"
+	local creative_checkbox = core.settings:get_bool("creative_mode") and "local_creative_checkbox" or "blank"
 	retval = retval ..
 			"image_button[6.72,1.43;4.96,1.41;" ..
 				core.formspec_escape(defaulttexturedir ..
@@ -35,7 +35,7 @@ local function get_formspec()
 			"image_button[7.33,3.09;3.73,0.86;" ..
 				core.formspec_escape(defaulttexturedir ..
 					creative_checkbox) ..
-					";cb_creative_mode;;true;false]" ..
+					".png;cb_creative_mode;;true;false]" ..
 			"textlist[-0.01,0;6.28,4.64;sp_worlds;" ..
 			menu_render_worldlist() ..
 			";" .. index .. ";true]"
@@ -184,5 +184,5 @@ return {
 	name = "local",
 	caption = fgettext("Singleplayer"),
 	cbf_formspec = get_formspec,
-	cbf_button_handler = main_button_handler,
+	cbf_button_handler = main_button_handler
 }

@@ -25,7 +25,7 @@ mt_color_dark_green = "#25C191"
 local menupath = core.get_mainmenu_path()
 local basepath = core.get_builtin_path()
 defaulttexturedir = core.get_texturepath_share() .. DIR_DELIM .. "base" .. DIR_DELIM
-local use_simple_menu = (PLATFORM == "Android" or PLATFORM == "iOS")
+local mobile = (PLATFORM == "Android" or PLATFORM == "iOS")
 
 dofile(basepath .. DIR_DELIM .. "common" .. DIR_DELIM .. "async_event.lua")
 dofile(basepath .. DIR_DELIM .. "common" .. DIR_DELIM .. "filterlist.lua")
@@ -34,17 +34,17 @@ dofile(basepath .. DIR_DELIM .. "fstk" .. DIR_DELIM .. "tabview.lua")
 dofile(basepath .. DIR_DELIM .. "fstk" .. DIR_DELIM .. "ui.lua")
 dofile(menupath .. DIR_DELIM .. "common.lua")
 dofile(menupath .. DIR_DELIM .. "gamemgr.lua")
-dofile(menupath .. DIR_DELIM .. "textures.lua")
+--dofile(menupath .. DIR_DELIM .. "textures.lua")
 
 dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
 --dofile(menupath .. DIR_DELIM .. "dlg_delete_mod.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
 --dofile(menupath .. DIR_DELIM .. "dlg_rename_modpack.lua")
-dofile(menupath .. DIR_DELIM .. "dlg_config_world.lua")
+--dofile(menupath .. DIR_DELIM .. "dlg_config_world.lua")
 
-if not use_simple_menu then
+if not mobile then
 	dofile(menupath .. DIR_DELIM .. "modmgr.lua")
---	dofile(menupath .. DIR_DELIM .. "store.lua")
+	--dofile(menupath .. DIR_DELIM .. "store.lua")
 	dofile(menupath .. DIR_DELIM .. "dlg_settings_advanced.lua")
 end
 
@@ -55,9 +55,10 @@ tabs.credits = dofile(menupath .. DIR_DELIM .. "tab_credits.lua")
 tabs.local_game = dofile(menupath .. DIR_DELIM .. "tab_local.lua")
 tabs.play_online = dofile(menupath .. DIR_DELIM .. "tab_online.lua")
 --tabs.server = dofile(menupath .. DIR_DELIM .. "tab_server.lua")
-if not use_simple_menu then
+
+if not mobile then
 	tabs.settings = dofile(menupath .. DIR_DELIM .. "tab_settings.lua")
-	tabs.texturepacks = dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
+--	tabs.texturepacks = dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
 end
 
 --------------------------------------------------------------------------------
@@ -89,20 +90,20 @@ local function init_globals()
 	menudata.worldlist:add_sort_mechanism("alphabetic", sort_worlds_alphabetic)
 	menudata.worldlist:set_sortmode("alphabetic")
 
-	mm_texture.init()
+--	mm_texture.init()
 
 	-- Create main tabview
 	local tv_main = tabview_create("maintab", {x = 12, y = 5.4}, {x = 0, y = 0})
 
 	tv_main:add(tabs.local_game)
 	tv_main:add(tabs.play_online)
+	
+if not mobile then
+	tv_main:add(tabs.settings)
+--	tv_main:add(tabs.texturepacks)
+end
 
-	if not use_simple_menu then
-		tv_main:add(tabs.settings)
-		tv_main:add(tabs.texturepacks)
-	end
-
-	--tv_main:add(tabs.mods)
+--	tv_main:add(tabs.mods)
 	tv_main:add(tabs.credits)
 
 	tv_main:set_autosave_tab(true)
@@ -117,16 +118,13 @@ local function init_globals()
 	tv_main:show()
 
 	-- Create modstore ui
-	--if use_simple_menu then
-	--	modstore.init({x = 12, y = 6}, 3, 2)
-	--else
-	--	modstore.init({x = 12, y = 8}, 4, 3)
-	--end
+--	modstore.init({x = 12, y = 5.4}, 3, 2)
 
 	ui.update()
 
-	minetest.set_clouds(false)
-	mm_texture.set_dirt_bg()
+	core.set_clouds(false)
+--	mm_texture.set_dirt_bg()
+	core.set_background("background",  defaulttexturedir .. "bg.png", true, 256)
 end
 
 init_globals()

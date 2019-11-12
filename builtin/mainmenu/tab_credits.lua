@@ -24,7 +24,7 @@ local multicraft_developers = {
 	"sfan5 <sfan5@live.de>",
 	"Stuart Jones (stujones11) <stujones111@gmail.com>",
 	"Jean-Patrick Guerrero (kilbith) <jeanpatrick.guerrero@gmail.com>",
-	"And other people who helped make the world better!",
+	"And other people who helped make the world better!"
 }
 
 local core_developers = {
@@ -37,7 +37,7 @@ local core_developers = {
 	"Craig Robbins (Zeno) <craig.d.robbins@gmail.com>",
 	"Auke Kok (sofar) <sofar@foo-projects.org>",
 	"rubenwardy <rw@rubenwardy.com>",
-	"Krock/SmallJoker <mk939@ymail.com>",
+	"Krock/SmallJoker <mk939@ymail.com>"
 }
 
 local active_contributors = {
@@ -50,7 +50,7 @@ local active_contributors = {
 	"bigfoot547 [CSM]",
 	"Rogier <rogier777@gmail.com> [Fixes]",
 	"Wuzzy [Audiovisuals]",
-	"Shara/Ezhh [Settings]",
+	"Shara/Ezhh [Settings]"
 }
 
 local previous_core_developers = {
@@ -63,7 +63,7 @@ local previous_core_developers = {
 	"est31 <MTest31@outlook.com>",
 	"kahrl <kahrl@gmx.net>",
 	"Ryan Kwolek (kwolekr) <kwolekr@minetest.net>",
-	"sapier",
+	"sapier"
 }
 
 local previous_contributors = {
@@ -80,7 +80,7 @@ local previous_contributors = {
 	"Guiseppe Bilotta (Oblomov) <guiseppe.bilotta@gmail.com> [Fixes]",
 	"matttpt <matttpt@gmail.com> [Fixes]",
 	"Nils Dagsson Moskopp (erlehmann) <nils@dieweltistgarnichtso.net> [Minetest Logo]",
-	"Jeija <jeija@mesecons.net> [HTTP, particles]",
+	"Jeija <jeija@mesecons.net> [HTTP, particles]"
 }
 
 local function buildCreditList(source)
