@@ -14,7 +14,6 @@ target 'MultiCraft' do
 	pod 'Appodeal/AdColonyAdapter'
 	pod 'Appodeal/AppodealAdExchangeAdapter'
 	pod 'Appodeal/AppLovinAdapter'
-	pod 'Appodeal/IronSourceAdapter'
 	pod 'Appodeal/MintegralAdapter'
 	pod 'Appodeal/TapjoyAdapter'
 	pod 'Appodeal/UnityAdapter'
