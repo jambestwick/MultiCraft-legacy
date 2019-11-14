@@ -13,15 +13,14 @@ echo "*** Starting build MultiCraft for Android... ***"
 
 echo
 echo "=> Getting precompiled dependencies:"
-if [ ! -d native/deps ]
-then
-  echo
-  git clone --depth 1 https://github.com/MultiCraft/deps native/deps
-  echo
-  echo "* Done!"
+if [ ! -d native/deps ]; then
+	echo
+	git clone --depth 1 https://github.com/MultiCraft/deps native/deps
+	echo
+	echo "* Done!"
 else
-  echo
-  echo "Already available, skipping..."
+	echo
+	echo "Already available, skipping..."
 fi
 
 echo
@@ -54,12 +53,6 @@ for broken_lang in ja ko he; do
 	find $DEST -type d -name $broken_lang -print0 | xargs -0 -- rm -r
 done
 
-# remove unnecessary mods
-MODS=$DEST/games/default/files
-for mods in compatibility experience wieldview; do
-	find $DEST/games/default/files -type d -name $mods -print0 | xargs -0 -- rm -r
-done
-
 mkdir -p $FOLDER
 
 echo
@@ -71,12 +64,16 @@ cd $FOLDER; rm -rf $DEST
 
 ###########
 
-cd ../../../../..;
+cd ../../../../../..
 
 echo "*** Creating games.zip"
-ZIPDEST=$FOLDER/games.zip
-rm -f $ZIPDEST
-zip -0qr $ZIPDEST -- games
+if [ -d games/default/files ]; then
+	ZIPDEST=$FOLDER/games.zip
+	rm -f $ZIPDEST
+	zip -0qr $ZIPDEST -- games
+else
+	echo "You forgot to clone with submodules!"
+fi
 
 echo "**** Creating worlds.zip"
 ZIPDEST=$FOLDER/worlds.zip
