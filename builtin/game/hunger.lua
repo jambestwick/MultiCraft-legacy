@@ -352,7 +352,7 @@ hud.register("hunger", {
 	hud_elem_type = "statbar",
 	position      = {x = 0.5, y = 1},
 	alignment     = {x = -1,  y = -1},
-	offset        = {x = 8,   y = -108},
+	offset        = {x = 8,   y = -94},
 	size          = {x = 24,  y = 24},
 	text          = "hunger_statbar_fg.png",
 	background    = "hunger_statbar_bg.png",
