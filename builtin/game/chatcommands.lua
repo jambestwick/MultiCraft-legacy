@@ -567,11 +567,11 @@ local function handle_give_command(cmd, giver, receiver, stackstring)
 	if not string.match(stackstring, ":") and
 	not ritems[stackstring] and not rnodes[stackstring] then
 		local modslist = core.get_modnames()
-		local namestring = stackstring:match("(%w+)(.+)")
+		local namestring = stackstring:match("(%w+)")
 		table.insert(modslist, 1, "default")
 		for _, modname in pairs(modslist) do
-			namestring = modname .. ":" .. namestring
-			if ritems[namestring] or rnodes[namestring] then
+			local namecheck = modname .. ":" .. namestring
+			if ritems[namecheck] or rnodes[namecheck] then
 				stackstring = modname .. ":" .. stackstring
 				break
 			end
