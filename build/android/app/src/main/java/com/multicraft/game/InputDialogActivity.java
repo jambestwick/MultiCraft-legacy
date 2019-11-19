@@ -2,7 +2,6 @@ package com.multicraft.game;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,13 +33,12 @@ public class InputDialogActivity extends AppCompatActivity {
         editText.requestFocus();
         editText.setHint(hint);
         editText.setText(current);
-        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        final InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         Objects.requireNonNull(imm).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-        if (editType == 3) {
+        if (editType == 3)
             editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        } else {
+        else
             editText.setInputType(InputType.TYPE_CLASS_TEXT);
-        }
         editText.setOnKeyListener((view, KeyCode, event) -> {
             if (KeyCode == KeyEvent.KEYCODE_ENTER) {
                 imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);

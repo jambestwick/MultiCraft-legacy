@@ -24,12 +24,11 @@ import static com.multicraft.game.AdManager.stopAd;*/
 public class GameActivity extends NativeActivity {
     static {
         try {
-            System.loadLibrary("c++_shared");
             System.loadLibrary("MultiCraft");
         } catch (UnsatisfiedLinkError e) {
             Bugsnag.notify(e);
-        } catch (IllegalArgumentException e) {
-            Bugsnag.notify(e);
+        } catch (IllegalArgumentException i) {
+            Bugsnag.notify(i);
         } catch (OutOfMemoryError e) {
             Bugsnag.notify(e);
         } catch (Error | Exception error) {
@@ -51,6 +50,7 @@ public class GameActivity extends NativeActivity {
         Bundle bundle = getIntent().getExtras();
         height = bundle != null ? bundle.getInt("height", 0) : getResources().getDisplayMetrics().heightPixels;
         width = bundle != null ? bundle.getInt("width", 0) : getResources().getDisplayMetrics().widthPixels;
+        /*consent = bundle == null || bundle.getBoolean("consent", true);*/
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         messageReturnCode = -1;
         messageReturnValue = "";
@@ -138,9 +138,9 @@ public class GameActivity extends NativeActivity {
         }
     }
 
-    public void notifyServerConnect(boolean isMultiPlayer) {
-         /*isMultiPlayer = isMultiPlayer;
-        if (isMultiPlayer) stopAd();*/
+    public void notifyServerConnect(boolean isMultiplayer) {
+        /*isMultiPlayer = isMultiplayer;
+        if (isMultiplayer) stopAd();*/
     }
 
     public void notifyAbortLoading() {
@@ -149,22 +149,20 @@ public class GameActivity extends NativeActivity {
     }
 
     public void notifyExitGame() {
-        /*if (isMultiPlayer)
-            startAd(this, false, true);*/
+        /*if (isMultiPlayer) startAd(this, false, true);*/
     }
 
-    @SuppressLint("StaticFieldLeak")
+    /*@SuppressLint("StaticFieldLeak")
     class AdInitTask extends AsyncTask<Void, Void, Void> {
-
         @Override
         protected Void doInBackground(Void... voids) {
-            /*initAd(GameActivity.this, consent);*/
+            initAd(GameActivity.this, consent);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            /*setAdsCallback(GameActivity.this);*/
+            setAdsCallback(GameActivity.this);
         }
-    }
+    }*/
 }

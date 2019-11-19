@@ -9,21 +9,6 @@ FOLDER=$(pwd)/app/src/main/assets
 DEST=$(mktemp -d)
 
 echo
-echo "*** Starting build MultiCraft for Android... ***"
-
-echo
-echo "=> Getting precompiled dependencies:"
-if [ ! -d native/deps ]; then
-	echo
-	git clone --depth 1 https://github.com/MultiCraft/deps native/deps
-	echo
-	echo "* Done!"
-else
-	echo
-	echo "Already available, skipping..."
-fi
-
-echo
 echo "=> Creating Assets:"
 
 for dir in builtin textures; do

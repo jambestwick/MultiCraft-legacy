@@ -232,12 +232,11 @@ class WVersionManager implements DialogsCallback {
             if (result != null) {
                 try {
                     String content;
-                    if (!result.startsWith("{")) { // for response who append with unknown char
+                    if (!result.startsWith("{")) // for response who append with unknown char
                         result = result.substring(1);
-                    }
                     String mResult = result;
                     // json format from server:
-                    JSONObject json = (JSONObject) new JSONTokener(mResult).nextValue();
+                    JSONObject json = new JSONObject(new JSONTokener(mResult));
                     mVersionCode = json.optInt("version_code");
                     String lang = Locale.getDefault().getLanguage();
                     if (lang.equals("ru"))

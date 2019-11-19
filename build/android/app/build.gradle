@@ -7,7 +7,7 @@ android {
 		applicationId 'com.multicraft.game'
 		minSdkVersion 16
 		targetSdkVersion 29
-		versionCode 23
+		versionCode 25
 		/*multiDexEnabled true*/
 	}
 	Properties props = new Properties()

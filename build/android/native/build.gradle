@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+import org.ajoberstar.gradle.git.tasks.*
 
 android {
 	compileSdkVersion 29
@@ -9,7 +10,7 @@ android {
 		externalNativeBuild {
 			ndkBuild {
 				arguments '-j',
-						'APP_STL=c++_shared',
+						'APP_STL=c++_static',
 						'COMPILER_VERSION=clang',
 						'APP_SHORT_COMMANDS=true'
 			}
@@ -41,3 +42,17 @@ android {
 		}
 	}
 }
+
+task cloneGitRepo(type: GitClone) {
+	def destination = file('deps')
+	uri ='https://github.com/MultiCraft/deps'
+	destinationPath = destination
+	bare = false
+	enabled = !destination.exists()
+}
+
+dependencies {
+	implementation 'com.android.support:appcompat-v7'
+}
+
+preBuild.dependsOn cloneGitRepo
