@@ -213,13 +213,13 @@ bool Thread::kill()
 	TerminateThread(m_thread_handle, 0);
 	CloseHandle(m_thread_handle);
 #else
-	// We need to pthread_kill instead on Android since NDKv5's pthread
+	// We need to pthread_kill instead on Android pthread
 	// implementation is incomplete.
-# ifdef __ANDROID__
-	pthread_kill(getThreadHandle(), SIGKILL);
-# else
+#ifdef __ANDROID__
+	pthread_kill(getThreadHandle(), SIGQUIT);
+#else
 	pthread_cancel(getThreadHandle());
-# endif
+#endif
 	wait();
 #endif
 

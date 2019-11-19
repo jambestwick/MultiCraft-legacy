@@ -224,8 +224,9 @@ GUIEngine::GUIEngine(	irr::IrrlichtDevice* dev,
 #if defined(__ANDROID__) || defined(__IOS__)
 			porting::notifyAbortLoading();
 			exit(0);
-#endif
+#else
 			abort();
+#endif
 		}
 
 		run();

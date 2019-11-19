@@ -408,8 +408,9 @@ void FontEngine::initFont(unsigned int basesize, FontMode mode)
 #if defined(__ANDROID__) || defined(__IOS__)
 		porting::notifyAbortLoading();
 		exit(0);
-#endif
+#else
 		abort();
+#endif
 	}
 #endif
 }
