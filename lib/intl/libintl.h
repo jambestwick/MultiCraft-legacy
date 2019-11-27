@@ -31,18 +31,15 @@ DEALINGS IN THE SOFTWARE.
 
 #define LIBINTL_LITE_API
 #if (defined(WIN32) || defined(WINCE)) && defined(LIBINTL_LITE_WIN32_SHARED)
-	#undef LIBINTL_LITE_API
-	#ifdef LIBINTL_LITE_EXPORTS
-		#define LIBINTL_LITE_API __declspec(dllexport)
-	#else
-		#define LIBINTL_LITE_API __declspec(dllimport)
-	#endif
+#undef LIBINTL_LITE_API
+#ifdef LIBINTL_LITE_EXPORTS
+#define LIBINTL_LITE_API __declspec(dllexport)
+#else
+#define LIBINTL_LITE_API __declspec(dllimport)
+#endif
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
+extern "C" {
 
 typedef int libintl_lite_bool_t;
 #define LIBINTL_LITE_BOOL_TRUE 1
@@ -58,19 +55,19 @@ typedef int libintl_lite_bool_t;
  * This function is NOT thread safe!
  * Pay attention to the thread safety remarks of the gettext() function!
  */
-LIBINTL_LITE_API libintl_lite_bool_t loadMessageCatalog(const char* domain, const char* moFilePath);
-LIBINTL_LITE_API libintl_lite_bool_t loadMessageCatalogFile(const char* domain, FILE* moFile);
+LIBINTL_LITE_API libintl_lite_bool_t loadMessageCatalog(const char *domain, const char *moFilePath);
+LIBINTL_LITE_API libintl_lite_bool_t loadMessageCatalogFile(const char *domain, FILE *moFile);
 
-LIBINTL_LITE_API libintl_lite_bool_t bindtextdomain(const char* domain, const char* dirname);
+LIBINTL_LITE_API libintl_lite_bool_t bindtextdomain(const char *domain, const char *dirname);
 
-LIBINTL_LITE_API libintl_lite_bool_t bind_textdomain_codeset(const char* domain, const char* codeset);
+LIBINTL_LITE_API libintl_lite_bool_t bind_textdomain_codeset(const char *domain, const char *codeset);
 
 /**
  * Closes a message catalog for the specified domain and releases its obtained resources.
  * This function is NOT thread safe!
  * Pay attention to the thread safety remarks of the gettext() function!
  */
-LIBINTL_LITE_API void closeLoadedMessageCatalog(const char* domain);
+LIBINTL_LITE_API void closeLoadedMessageCatalog(const char *domain);
 
 /**
  * Closes all loaded message catalogs releases their obtained resources.
@@ -83,7 +80,7 @@ LIBINTL_LITE_API void closeAllLoadedMessageCatalogs();
  * Sets the default text domain for gettext() / ngettext() calls.
  * This function is NOT thread safe!
  */
-LIBINTL_LITE_API const char* textdomain(const char* domain);
+LIBINTL_LITE_API const char *textdomain(const char *domain);
 
 /**
  * Returns a pointer to the NULL-terminated string in the loaded for the default
@@ -97,12 +94,12 @@ LIBINTL_LITE_API const char* textdomain(const char* domain);
  * closeLoadedMessageCatalog() is called for the used domain afterwards!
  * Does not perform any character set conversion!
  */
-LIBINTL_LITE_API const char* gettext(const char* origStr);
+LIBINTL_LITE_API const char *gettext(const char *origStr);
 
 /**
  * Works like the gettext() function, but uses the message catalog for a specified domain.
  */
-LIBINTL_LITE_API const char* dgettext(const char* domain, const char* origStr);
+LIBINTL_LITE_API const char *dgettext(const char *domain, const char *origStr);
 
 /**
  * Works like the gettext() function, but distinguishes between singular
@@ -110,15 +107,12 @@ LIBINTL_LITE_API const char* dgettext(const char* domain, const char* origStr);
  * Always returns the suitable singular string, if n == 1, and the plural string
  * otherwise, regardless of the language.
  */
-LIBINTL_LITE_API const char* ngettext(const char* origStr, const char* origStrPlural, unsigned long n);
+LIBINTL_LITE_API const char *ngettext(const char *origStr, const char *origStrPlural, unsigned long n);
 
 /**
  * Works like the ngettext() function, but uses the message catalog for a specified domain.
  */
-LIBINTL_LITE_API const char* dngettext(const char* domain, const char* origStr, const char* origStrPlural, unsigned long n);
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
+LIBINTL_LITE_API const char *dngettext(const char *domain, const char *origStr, const char *origStrPlural, unsigned long n);
+}
 
 #endif // LIBINTL_HPP_

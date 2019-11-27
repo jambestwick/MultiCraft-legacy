@@ -30,63 +30,55 @@ DEALINGS IN THE SOFTWARE.
 #include <algorithm>
 #include <string>
 
-namespace libintllite
-{
+namespace libintllite {
 
-namespace internal
-{
+	namespace internal {
 
-class MessageCatalog
-{
-private:
-	MessageCatalog(const MessageCatalog&);
-	MessageCatalog& operator=(const MessageCatalog&);
+		class MessageCatalog {
+		private:
+			MessageCatalog(const MessageCatalog &);
 
-	uint32_t numberOfStrings;
-	const std::string* sortedOrigStringsArray;
-	const std::string* translatedStringsArray;
+			MessageCatalog &operator=(const MessageCatalog &);
 
-public:
-	// The ownership of these arrays is transfered to the created message
-	// catalog object!
-	// Does not throw exceptions!
-	MessageCatalog(uint32_t numberOfStrings,
-			const std::string* sortedOrigStringsArray,
-			const std::string* translatedStringsArray) :
+			uint32_t numberOfStrings;
+			const std::string *sortedOrigStringsArray;
+			const std::string *translatedStringsArray;
+
+		public:
+			// The ownership of these arrays is transfered to the created message
+			// catalog object!
+			// Does not throw exceptions!
+			MessageCatalog(uint32_t numberOfStrings,
+						   const std::string *sortedOrigStringsArray,
+						   const std::string *translatedStringsArray) :
 					numberOfStrings(numberOfStrings),
 					sortedOrigStringsArray(sortedOrigStringsArray),
-					translatedStringsArray(translatedStringsArray)
-	{
-	}
+					translatedStringsArray(translatedStringsArray) {
+			}
 
-	~MessageCatalog()
-	{
-		delete[] this->sortedOrigStringsArray;
-		delete[] this->translatedStringsArray;
-	}
+			~MessageCatalog() {
+				delete[] this->sortedOrigStringsArray;
+				delete[] this->translatedStringsArray;
+			}
 
-	// Returns NULL, if the original string was not found.
-	// Does not throw exceptions!
-	const std::string* getTranslatedStrPtr(const std::string& orig) const
-	{
-		const std::string* lastSortedOrigStringEndIter
-				= this->sortedOrigStringsArray + this->numberOfStrings;
-		const std::string* origStrPtr = std::lower_bound(this->sortedOrigStringsArray,
-				lastSortedOrigStringEndIter,
-				orig);
+			// Returns NULL, if the original string was not found.
+			// Does not throw exceptions!
+			const std::string *getTranslatedStrPtr(const std::string &orig) const {
+				const std::string *lastSortedOrigStringEndIter
+						= this->sortedOrigStringsArray + this->numberOfStrings;
+				const std::string *origStrPtr = std::lower_bound(this->sortedOrigStringsArray,
+																 lastSortedOrigStringEndIter,
+																 orig);
 
-		if (!origStrPtr || (origStrPtr == lastSortedOrigStringEndIter) || (*origStrPtr != orig) )
-		{
-			return NULL;
-		}
-		else
-		{
-			return &this->translatedStringsArray[origStrPtr - this->sortedOrigStringsArray];
-		}
-	}
-};
+				if (!origStrPtr || (origStrPtr == lastSortedOrigStringEndIter) ||
+				    (*origStrPtr != orig))
+					return NULL;
+				else
+					return &this->translatedStringsArray[origStrPtr - this->sortedOrigStringsArray];
+			}
+		};
 
-} // namespace internal
+	} // namespace internal
 
 } // namespace libintllite
 

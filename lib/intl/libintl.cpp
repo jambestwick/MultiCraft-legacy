@@ -31,11 +31,10 @@ DEALINGS IN THE SOFTWARE.
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
+
 #if defined(WIN32) || defined(WINCE)
 typedef unsigned int uint32_t;
-#define DIR_DELIM "\\"
 #else
-#define DIR_DELIM "/"
 #include <stdint.h>
 #endif
 
@@ -47,68 +46,35 @@ using namespace std;
 using namespace libintllite;
 using namespace libintllite::internal;
 
-static char* currentDefaultDomain = NULL;
-static map<char*, MessageCatalog*> loadedMessageCatalogPtrsByDomain;
+static char *currentDefaultDomain = NULL;
+static map<char *, MessageCatalog *> loadedMessageCatalogPtrsByDomain;
 
-libintl_lite_bool_t loadMessageCatalog(const char* domain, const char* moFilePath)
-{
+libintl_lite_bool_t loadMessageCatalog(const char *domain, const char *moFilePath) {
 	if (!moFilePath || !domain)
-	{
 		return LIBINTL_LITE_BOOL_FALSE;
-	}
 
-	FILE* moFile = NULL;
+	FILE *moFile = NULL;
 	CloseFileHandleGuard closeFileHandleGuard(moFile);
 
-	// Extend file path to include locale/LC_MESSAGES/domain.po
+	moFile = fopen(moFilePath, "rb");
 
-	std::string current_language;
-	const char *env_lang = getenv("LANGUAGE");
-	if (env_lang)
-		current_language = env_lang;
-	else
-		return LIBINTL_LITE_BOOL_FALSE;
-
-	std::string basePath(moFilePath);
-	std::string newPath = basePath +
-	DIR_DELIM + current_language +
-	DIR_DELIM + "LC_MESSAGES" +
-	DIR_DELIM + "MultiCraft" + ".mo"; // ToDo: fix bindtextdomain definition
-
-	moFile = fopen(newPath.c_str(), "rb");
-
-	if (!moFile)
-	{
-		std::clog << "WARNING: Localisation file not found : " << newPath << std::endl;
+	if (!moFile) {
+		std::clog << "WARNING: Localisation file not found: " << moFilePath << std::endl;
 		return LIBINTL_LITE_BOOL_FALSE;
 	}
 
-	libintl_lite_bool_t ret = loadMessageCatalogFile(domain, moFile);
-	if (ret == LIBINTL_LITE_BOOL_FALSE)
-	{
-		std::clog << "ERROR: Localisation file did not load : " << newPath << std::endl;
-	}
-	std::clog << "INFO: Localisation file loaded : " << newPath << std::endl;
-	return ret;
+	return loadMessageCatalogFile(domain, moFile);
 }
 
-libintl_lite_bool_t loadMessageCatalogFile(const char* domain, FILE* moFile)
-{
-	try
-	{
-		if (sizeof(uint32_t) != 4)
-		{
-			return LIBINTL_LITE_BOOL_FALSE;
-		}
-
+libintl_lite_bool_t loadMessageCatalogFile(const char *domain, FILE *moFile) {
+	try {
 		if (!moFile || !domain)
-		{
 			return LIBINTL_LITE_BOOL_FALSE;
-		}
 
 		uint32_t magicNumber;
 		if (!readUIn32FromFile(moFile, false, magicNumber)) return LIBINTL_LITE_BOOL_FALSE;
-		if ((magicNumber != 0x950412de) && (magicNumber != 0xde120495)) return LIBINTL_LITE_BOOL_FALSE;
+		if ((magicNumber != 0x950412de) && (magicNumber != 0xde120495))
+			return LIBINTL_LITE_BOOL_FALSE;
 
 		uint32_t fileFormatRevision;
 		if (!readUIn32FromFile(moFile, false, fileFormatRevision)) return LIBINTL_LITE_BOOL_FALSE;
@@ -117,89 +83,94 @@ libintl_lite_bool_t loadMessageCatalogFile(const char* domain, FILE* moFile)
 		bool needsBeToLeConversion = isBigEndian();
 
 		uint32_t numberOfStrings;
-		if (!readUIn32FromFile(moFile, needsBeToLeConversion, numberOfStrings)) return false;
+		if (!readUIn32FromFile(moFile, needsBeToLeConversion, numberOfStrings))
+			return false;
 		if (numberOfStrings == 0)
-		{
 			return LIBINTL_LITE_BOOL_TRUE;
-		}
-		std::clog << "INFO: " << numberOfStrings <<" localisation strings loaded for " << domain << std::endl;
 
 		uint32_t offsetOrigTable;
-		if (!readUIn32FromFile(moFile, needsBeToLeConversion, offsetOrigTable)) return LIBINTL_LITE_BOOL_FALSE;
+		if (!readUIn32FromFile(moFile, needsBeToLeConversion, offsetOrigTable))
+			return LIBINTL_LITE_BOOL_FALSE;
 
 		uint32_t offsetTransTable;
-		if (!readUIn32FromFile(moFile, needsBeToLeConversion, offsetTransTable)) return LIBINTL_LITE_BOOL_FALSE;
+		if (!readUIn32FromFile(moFile, needsBeToLeConversion, offsetTransTable))
+			return LIBINTL_LITE_BOOL_FALSE;
 
-		string* sortedOrigStringsArray = NULL;
+		string *sortedOrigStringsArray = NULL;
 		ArrayGurard<string> sortedOrigStringsArrayGuard(sortedOrigStringsArray);
 		sortedOrigStringsArray = new string[numberOfStrings];
 		if (!sortedOrigStringsArray)
-		{
 			return LIBINTL_LITE_BOOL_FALSE;
-		}
 
 		if (!loadMoFileStringsToArray(moFile,
 									  numberOfStrings,
 									  offsetOrigTable,
 									  needsBeToLeConversion,
-									  sortedOrigStringsArray)) return LIBINTL_LITE_BOOL_FALSE;
+									  sortedOrigStringsArray))
+			return LIBINTL_LITE_BOOL_FALSE;
 
-		string* translatedStringsArray = NULL;
+		string *translatedStringsArray = NULL;
 		ArrayGurard<string> translatedStringsArrayGuard(translatedStringsArray);
 		translatedStringsArray = new string[numberOfStrings];
 		if (!translatedStringsArray)
-		{
 			return LIBINTL_LITE_BOOL_FALSE;
-		}
 
 		if (!loadMoFileStringsToArray(moFile,
 									  numberOfStrings,
 									  offsetTransTable,
 									  needsBeToLeConversion,
-									  translatedStringsArray)) return LIBINTL_LITE_BOOL_FALSE;
+									  translatedStringsArray))
+			return LIBINTL_LITE_BOOL_FALSE;
 
-		MessageCatalog* newMessageCatalogPtr = new MessageCatalog(numberOfStrings,
+		MessageCatalog *newMessageCatalogPtr = new MessageCatalog(numberOfStrings,
 																  sortedOrigStringsArray,
 																  translatedStringsArray);
-		if (!newMessageCatalogPtr) return LIBINTL_LITE_BOOL_FALSE;
 		sortedOrigStringsArrayGuard.release();
 		translatedStringsArrayGuard.release();
 
-		char* domainDup = strdup(domain);
-		if (!domainDup) return LIBINTL_LITE_BOOL_FALSE;
+		char *domainDup = strdup(domain);
+		if (!domainDup)
+			return LIBINTL_LITE_BOOL_FALSE;
 		closeLoadedMessageCatalog(domain);
 		loadedMessageCatalogPtrsByDomain[domainDup] = newMessageCatalogPtr;
 
 		return LIBINTL_LITE_BOOL_TRUE;
 	}
-	catch (...)
-	{
+	catch (...) {
 		return LIBINTL_LITE_BOOL_FALSE;
 	}
 }
 
-libintl_lite_bool_t bindtextdomain(const char* domain, const char* moFilePath)
-{
+libintl_lite_bool_t bindtextdomain(const char *domain, const char *dirname) {
+	char moFilePath[1024];
+	char *lang;
 
-	return loadMessageCatalog( domain, moFilePath );
+	lang = getenv("LANGUAGE");
+	if (lang == NULL)
+		return LIBINTL_LITE_BOOL_FALSE;
+
+	memset(moFilePath, 0, 1024);
+
+#if defined(WIN32) || defined(WINCE)
+	snprintf(moFilePath, 1023, "%s\\%s\\LC_MESSAGES\\%s.mo", dirname, lang, domain);
+#else
+	snprintf(moFilePath, 1023, "%s/%s/LC_MESSAGES/%s.mo", dirname, lang, domain);
+#endif
+
+	return loadMessageCatalog(domain, moFilePath);
 }
 
-libintl_lite_bool_t bind_textdomain_codeset(const char* domain, const char* moFilePath)
-{
+libintl_lite_bool_t bind_textdomain_codeset(const char *domain, const char *codeset) {
 	// not implemented yet
 	return LIBINTL_LITE_BOOL_FALSE;
 }
 
-void closeLoadedMessageCatalog(const char* domain)
-{
-	if (domain)
-	{
-		for (map<char*, MessageCatalog*>::iterator i = loadedMessageCatalogPtrsByDomain.begin();
+void closeLoadedMessageCatalog(const char *domain) {
+	if (domain) {
+		for (map<char *, MessageCatalog *>::iterator i = loadedMessageCatalogPtrsByDomain.begin();
 			 i != loadedMessageCatalogPtrsByDomain.end();
-			 i++)
-		{
-			if (strcmp(i->first, domain) == 0)
-			{
+			 i++) {
+			if (strcmp(i->first, domain) == 0) {
 				free(i->first);
 				delete i->second;
 				loadedMessageCatalogPtrsByDomain.erase(i);
@@ -209,110 +180,57 @@ void closeLoadedMessageCatalog(const char* domain)
 	}
 }
 
-void closeAllLoadedMessageCatalogs()
-{
-	for (map<char*, MessageCatalog*>::iterator i = loadedMessageCatalogPtrsByDomain.begin();
-		 i != loadedMessageCatalogPtrsByDomain.end();
-		 i++)
-	{
-		free(i->first);
-		delete i->second;
-	}
-	loadedMessageCatalogPtrsByDomain.clear();
-	free(currentDefaultDomain);
-	currentDefaultDomain = NULL;
-}
-
-const char* textdomain(const char* domain)
-{
-	if (domain)
-	{
-		char* newDefaultDomain = strdup(domain);
+const char *textdomain(const char *domain) {
+	if (domain) {
+		char *newDefaultDomain = strdup(domain);
 		if (!newDefaultDomain)
-		{
 			return NULL;
-		}
 		free(currentDefaultDomain);
 		currentDefaultDomain = newDefaultDomain;
 		return newDefaultDomain;
-	}
-	else
-	{
+	} else
 		return NULL;
-	}
 }
 
-const char* gettext(const char* origStr)
-{
+const char *gettext(const char *origStr) {
 	return dgettext(NULL, origStr);
 }
 
-const char* dgettext(const char* domain, const char* origStr)
-{
+const char *dgettext(const char *domain, const char *origStr) {
 	if (!origStr)
-	{
 		return NULL;
-	}
 
-	if (!domain)
-	{
+	if (!domain) {
 		if (currentDefaultDomain)
-		{
 			domain = currentDefaultDomain;
-		}
 		else
-		{
 			return origStr;
-		}
 	}
 
-	const MessageCatalog* msgCat = NULL;
-	for (map<char*, MessageCatalog*>::iterator i = loadedMessageCatalogPtrsByDomain.begin();
+	const MessageCatalog *msgCat = NULL;
+	for (map<char *, MessageCatalog *>::iterator i = loadedMessageCatalogPtrsByDomain.begin();
 		 !msgCat && (i != loadedMessageCatalogPtrsByDomain.end());
-		 i++)
-	{
+		 i++) {
 		if (strcmp(i->first, domain) == 0)
-		{
 			msgCat = i->second;
-		}
 	}
 
 	if (!msgCat)
-	{
 		return origStr;
-	}
 
-	const string* translatedStrPtr = msgCat->getTranslatedStrPtr(origStr);
-	if (translatedStrPtr)
-	{
-		return translatedStrPtr->c_str();
-	}
-	else
-	{
-		return origStr;
-	}
+	const string *translatedStrPtr = msgCat->getTranslatedStrPtr(origStr);
+	return translatedStrPtr ? translatedStrPtr->c_str() : origStr;
 }
 
-const char* ngettext(const char* origStr, const char* origStrPlural, unsigned long n)
-{
-	if (n == 1)
-	{
-		return gettext(origStr);
-	}
-	else
-	{
-		return gettext(origStrPlural);
-	}
+const char *ngettext(const char *origStr,
+					 const char *origStrPlural,
+					 unsigned long n) {
+	return gettext(n == 1 ? origStr : origStrPlural);
 }
 
-const char* dngettext(const char* domain, const char* origStr, const char* origStrPlural, unsigned long n)
-{
-	if (n == 1)
-	{
-		return dgettext(domain, origStr);
-	}
-	else
-	{
-		return dgettext(domain, origStrPlural);
-	}
+const char *dngettext(const char *domain,
+					  const char *origStr,
+					  const char *origStrPlural,
+					  unsigned long n) {
+	return dgettext(domain, n == 1 ? origStr : origStrPlural);
 }

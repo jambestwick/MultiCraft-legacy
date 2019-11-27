@@ -1,5 +1,5 @@
 libintl lite fork
-https://github.com/eidy/libintl-lite
+https://github.com/j-jorge/libintl-lite
 ====================================
 
 libintl-lite is a simple (but less powerful) GNU gettext libintl replacement originally written by felixhaedicke and released on SourceForge.net: http://sourceforge.net/projects/libintl-lite/
