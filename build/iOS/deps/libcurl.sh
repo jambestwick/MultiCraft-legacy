@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 . sdk.sh
-CURL_VERSION=7.65.3
+CURL_VERSION=7.67.0
 
 if [ ! -d libcurl-src ]; then
 	wget https://curl.haxx.se/download/curl-$CURL_VERSION.tar.gz
@@ -13,9 +13,13 @@ fi
 cd libcurl-src
 
 # build once for armv7, once for arm64
-for x in arm64 armv7; do
-	make distclean >/dev/null || true
-	CC=$IOS_CC CFLAGS=${IOS_FLAGS_LUA/-arch $x/} \
+for x in armv7 arm64; do
+	if [ $x = armv7 ]; then
+		CURL_CFLAGS="-arch armv7 $IOS_FLAGS_LUA"
+	else
+		CURL_CFLAGS="-arch arm64 -arch arm64e $IOS_FLAGS_LUA"
+	fi
+	CC=$IOS_CC CFLAGS=$CURL_CFLAGS \
 	./configure --host=arm-apple-darwin --prefix=/ --disable-shared --enable-static \
 		--disable-debug --disable-verbose --disable-versioned-symbols \
 		--enable-hidden-symbols --disable-dependency-tracking \
@@ -23,15 +27,19 @@ for x in arm64 armv7; do
 		--disable-proxy --disable-unix-sockets --without-libidn --without-librtmp \
 		--without-ssl --disable-ftp --disable-ldap --disable-ldaps --disable-rtsp \
 		--disable-dict --disable-telnet --disable-tftp --disable-pop3 \
-		--disable-imap --disable-smtp --disable-gopher --disable-sspi
-	make -j$(sysctl -n hw.ncpu)
+		--disable-imap --disable-smtp --disable-gopher --disable-sspi \
+		--disable-libcurl-option
+	make -j
 	cp -f lib/.libs/libcurl.a templib_$x.a
+	make clean >/dev/null || true
 done
 
 mkdir -p ../libcurl
-make DESTDIR=$PWD/../libcurl install
+cp -rf include ../libcurl/include
+
 # merge libraries
-rm ../libcurl/lib/libcurl.a
-lipo templib_*.a -create -output ../libcurl/lib/libcurl.a
+mkdir -p ../libcurl/lib
+lipo -create templib_*.a -output ../libcurl/lib/libcurl.a
+rm templib_*.a
 
 echo "libcurl build successful"

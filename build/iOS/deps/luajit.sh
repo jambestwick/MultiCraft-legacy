@@ -1,34 +1,40 @@
 #!/bin/bash -e
 
 . sdk.sh
-LUAJIT_VERSION=2.1
+# MoonJIT
+LUAJIT_VERSION=2.1.2
 
-if [ ! -d luajit-src ]; then
-	wget https://github.com/LuaJIT/LuaJIT/archive/v$LUAJIT_VERSION.zip
-	unzip v$LUAJIT_VERSION.zip
-	mv LuaJIT-$LUAJIT_VERSION luajit-src
-	rm v$LUAJIT_VERSION.zip
+if [ ! -d moonjit-src ]; then
+	wget https://github.com/moonjit/moonjit/archive/$LUAJIT_VERSION.zip
+	unzip $LUAJIT_VERSION.zip
+	mv moonjit-$LUAJIT_VERSION moonjit-src
+	rm $LUAJIT_VERSION.zip
 fi
 
-cd luajit-src
+cd moonjit-src
 
 # 32-bit
-make -j$(sysctl -n hw.ncpu) \
+make amalg -j \
   DEFAULT_CC=clang HOST_CC="clang -m32 -arch i386" CROSS="$(dirname $IOS_CC)/" \
-  TARGET_FLAGS="${IOS_FLAGS_LUA/-arch arm64/}" TARGET_SYS=iOS \
-  -j$(sysctl -n hw.ncpu)
-mv src/libluajit.a tmp32.a
+  TARGET_FLAGS="-DLUAJIT_DISABLE_FFI -arch armv7 ${IOS_FLAGS_LUA}" TARGET_SYS=iOS
+mv src/libluajit.a templib_32.a
 make clean
 # 64-bit
-make -j$(sysctl -n hw.ncpu) \
+make amalg -j \
   DEFAULT_CC=clang HOST_CC=clang CROSS="$(dirname $IOS_CC)/" \
-  TARGET_FLAGS="${IOS_FLAGS_LUA/-arch armv7/}" TARGET_SYS=iOS \
-  -j$(sysctl -n hw.ncpu)
-mv src/libluajit.a tmp64.a
+  TARGET_FLAGS="-DLUAJIT_DISABLE_FFI -arch arm64 ${IOS_FLAGS_LUA}" TARGET_SYS=iOS
+mv src/libluajit.a templib_64.a
 make clean
+# 64-bit [arm64e]
+make amalg -j \
+  DEFAULT_CC=clang HOST_CC=clang CROSS="$(dirname $IOS_CC)/" \
+  TARGET_FLAGS="-DLUAJIT_DISABLE_FFI -arch arm64e ${IOS_FLAGS_LUA}" TARGET_SYS=iOS
+mv src/libluajit.a templib_64e.a
+make clean
+
 # repack into one .a
-lipo tmp32.a tmp64.a -create -output libluajit.a
-rm tmp32.a tmp64.a
+lipo -create templib_*.a -output libluajit.a
+rm templib_*.a
 
 mkdir -p ../luajit/{lib,include}
 cp -v src/*.h ../luajit/include
