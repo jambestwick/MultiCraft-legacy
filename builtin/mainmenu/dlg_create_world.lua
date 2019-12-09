@@ -58,7 +58,7 @@ local function create_world_formspec()
 
 		"dropdown[600.2,6;6.3;games;" .. gamemgr.gamelist() .. ";1]" ..
 
-		"button[3.25,3.4;2.5,0.5;world_create_confirm;" .. fgettext("Create") .. "]" ..
+		"button[3.25,3.4;2.5,0.5;world_create_confirm;" .. mt_green_button .. fgettext("Create") .. "]" ..
 		"button[5.75,3.4;2.5,0.5;world_create_cancel;" .. fgettext("Cancel") .. "]"
 
 	return retval

@@ -20,6 +20,9 @@ mt_color_blue  = "#6389FF"
 mt_color_green = "#72FF63"
 mt_color_dark_green = "#25C191"
 
+mt_red_button = core.get_color_escape_sequence("#FF3333")
+mt_green_button = core.get_color_escape_sequence("#00CC00")
+
 --for all other colors ask sfan5 to complete his work!
 
 local menupath = core.get_mainmenu_path()
