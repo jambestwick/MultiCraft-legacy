@@ -4636,9 +4636,9 @@ void Game::readSettings()
 #if defined(__ANDROID__) || defined(__IOS__)
 void Game::pauseGame()
 {
-	g_touchscreengui->handleReleaseAll();
-	if (g_menumgr.pausesGame())
+	if (g_menumgr.pausesGame() || !hud)
 		return;
+	g_touchscreengui->handleReleaseAll();
 	showPauseMenu();
 	runData.pause_game_timer = 0;
 }

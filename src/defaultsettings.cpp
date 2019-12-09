@@ -395,7 +395,6 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("touchtarget", "true");
 	settings->setDefault("touchscreen_threshold", "20");
 	settings->setDefault("doubletap_jump", "true");
-	settings->setDefault("abm_interval", "2.0");
 	settings->setDefault("emergequeue_limit_diskonly", "16");
 	settings->setDefault("emergequeue_limit_generate", "16");
 	settings->setDefault("curl_verify_cert", "false");
@@ -403,13 +402,12 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("autosave_screensize", "false");
 	char lang[3] = {0};
 
-
 	// Set the optimal settings depending on the memory size [Android] | model [iOS]
 #ifdef __ANDROID__
 	// minimal settings for less than 2GB RAM
 	if (porting::getMemoryMax() < 2) {
 #elif __IOS__
-		// minimal settings for 32-bit devices
+	// minimal settings for 32-bit devices
 	bool arm = false;
 #if defined(__arm__)
 	arm = true;
@@ -428,10 +426,10 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("max_block_generate_distance", "1");
 		settings->setDefault("weather", "false");
 #ifdef __ANDROID__
-		// low settings for 2-4GB RAM
+	// low settings for 2-4GB RAM
 	} else if (porting::getMemoryMax() >= 2 && porting::getMemoryMax() < 4) {
 #elif __IOS__
-		// low settings
+	// low settings
 	} else if (([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPodTouch6Gen) ||
 			   ([SDVersion deviceVersion] == iPadMini2) || ([SDVersion deviceVersion] == iPadMini3)) {
 #endif
@@ -443,14 +441,15 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("cloud_radius", "6");
 		settings->setDefault("active_block_range", "1");
 		settings->setDefault("dedicated_server_step", "0.2");
+		settings->setDefault("abm_interval", "2.0");
 		settings->setDefault("chunksize", "3");
 		settings->setDefault("max_block_generate_distance", "2");
 		settings->setDefault("weather", "false");
 #ifdef __ANDROID__
-		// medium settings for 4.1-6GB RAM
+	// medium settings for 4.1-6GB RAM
 	} else if (porting::getMemoryMax() >= 4 && porting::getMemoryMax() < 6) {
 #elif __IOS__
-		// medium settings
+	// medium settings
 	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) ||
 			   ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir)) {
 #endif
@@ -461,7 +460,7 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("active_block_range", "2");
 		settings->setDefault("max_block_generate_distance", "3");
 	} else {
-		// high settings
+	// high settings
 		settings->setDefault("client_mapblock_limit", "1000");
 		settings->setDefault("viewing_range", "75");
 		settings->setDefault("max_block_generate_distance", "5");
@@ -485,12 +484,14 @@ void set_default_settings(Settings *settings) {
 	if (x_inches <= 3.7) {
 		// small 4" phones
 		settings->setDefault("hud_scaling", "0.55");
+		settings->setDefault("font_size", std::to_string(TTF_DEFAULT_FONT_SIZE - 1));
 		settings->setDefault("mouse_sensitivity", "0.3");
 		settings->setDefault("hud_small", "true");
 	} else if (x_inches > 3.7 && x_inches <= 4.5) {
 		// medium phones
 		settings->setDefault("hud_scaling", "0.6");
-		settings->setDefault("mouse_sensitivity", "0.25");
+		settings->setDefault("font_size", std::to_string(TTF_DEFAULT_FONT_SIZE - 1));
+		settings->setDefault("mouse_sensitivity", "0.2");
 		settings->setDefault("hud_small", "true");
 	} else if (x_inches > 4.5 && x_inches <= 5) {
 		// large 6" phones
@@ -524,13 +525,13 @@ void set_default_settings(Settings *settings) {
 	if ([SDVersion deviceVersion] == iPhone4S) {
 		// 3.5" iPhone
 		settings->setDefault("hud_scaling", "0.5");
-		font_size_str = std::to_string(TTF_DEFAULT_FONT_SIZE - 2);
-		settings->setDefault("fallback_font_size", font_size_str);
+		settings->setDefault("font_size", std::to_string(TTF_DEFAULT_FONT_SIZE - 2));
+		settings->setDefault("font_size", font_size_str);
 	} else if SDVersion4Inch {
 		// 4" iPhone and iPod Touch
 		settings->setDefault("hud_scaling", "0.55");
-		font_size_str = std::to_string(TTF_DEFAULT_FONT_SIZE - 1);
-		settings->setDefault("fallback_font_size", font_size_str);
+		settings->setDefault("font_size", std::to_string(TTF_DEFAULT_FONT_SIZE - 1));
+		settings->setDefault("font_size", font_size_str);
 		settings->setDefault("mouse_sensitivity", "0.33");
 	} else if SDVersion4and7Inch {
 		// 4.7" iPhone
