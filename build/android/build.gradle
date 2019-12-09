@@ -6,7 +6,9 @@ buildscript {
 		jcenter()
 	}
 	dependencies {
-		classpath 'com.android.tools.build:gradle:3.5.2'
+		classpath 'com.android.tools.build:gradle:3.5.3'
+		//noinspection GradleDynamicVersion
+		/*classpath 'com.bugsnag:bugsnag-android-gradle-plugin:4.+'*/
 		//noinspection GradleDependency
 		classpath 'org.ajoberstar:gradle-git:0.6.5'
 		// NOTE: Do not place your application dependencies here; they belong

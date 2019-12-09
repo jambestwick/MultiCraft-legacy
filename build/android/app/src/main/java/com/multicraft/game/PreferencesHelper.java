@@ -8,7 +8,7 @@ class PreferencesHelper {
     static final String TAG_BUILD_NUMBER = "buildNumber";
     static final String TAG_LAUNCH_TIMES = "launchTimes";
     static final String TAG_CONSENT_ASKED = "consentAsked";
-    static final String TAG_COPY_WORLDS = "copyWorlds";
+    static final String TAG_COPY_OLD_WORLDS = "copyOldWorlds";
     static final String IS_LOADED = "interstitialLoaded";
     static final String RV_LOADED = "rewardedVideoLoaded";
     static final String ADS_DELAY = "adsDelay";
@@ -50,7 +50,7 @@ class PreferencesHelper {
     }
 
     boolean isWorldsCopied() {
-        return sharedPreferences.getBoolean(TAG_COPY_WORLDS, false);
+        return sharedPreferences.getBoolean(TAG_COPY_OLD_WORLDS, false);
     }
 
     String getBuildNumber() {

@@ -37,7 +37,7 @@ class CheckConnectionTask extends AsyncTask<Void, Void, Boolean> {
                     (new URL(url)
                             .openConnection());
             urlc.setRequestProperty("Connection", "close");
-            urlc.setConnectTimeout(1500);
+            urlc.setConnectTimeout(2000);
             urlc.connect();
             return urlc.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT || urlc.getResponseCode() == HttpURLConnection.HTTP_OK;
         } catch (IOException e) {

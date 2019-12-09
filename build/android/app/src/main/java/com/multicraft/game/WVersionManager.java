@@ -264,7 +264,6 @@ class WVersionManager implements DialogsCallback {
                     } else
                         al.isShowUpdateDialog(false);
                 } catch (JSONException e) {
-                    Bugsnag.notify(e);
                     al.isShowUpdateDialog(false);
                 } catch (Exception e) {
                     Bugsnag.notify(e);

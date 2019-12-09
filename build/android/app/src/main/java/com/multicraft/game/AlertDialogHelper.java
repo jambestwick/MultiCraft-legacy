@@ -78,11 +78,20 @@ class AlertDialogHelper {
         if (getTitle() != null) builder.setTitle(getTitle());
         if (getMessage() != null) builder.setMessage(getMessage());
         if (getButtonPositive() != null)
-            builder.setPositiveButton(getButtonPositive(), (dialogInterface, i) -> sCallback.onPositive(source));
+            builder.setPositiveButton(getButtonPositive(), (dialogInterface, i) -> {
+                dialogInterface.dismiss();
+                sCallback.onPositive(source);
+            });
         if (getButtonNegative() != null)
-            builder.setNegativeButton(getButtonNegative(), (dialogInterface, i) -> sCallback.onNegative(source));
+            builder.setNegativeButton(getButtonNegative(), (dialogInterface, i) -> {
+                dialogInterface.dismiss();
+                sCallback.onNegative(source);
+            });
         if (getButtonNeutral() != null)
-            builder.setNeutralButton(getButtonNeutral(), (dialogInterface, i) -> sCallback.onNeutral(source));
+            builder.setNeutralButton(getButtonNeutral(), (dialogInterface, i) -> {
+                dialogInterface.dismiss();
+                sCallback.onNeutral(source);
+            });
         builder.setCancelable(false);
         final AlertDialog dialog = builder.create();
         if (!activity.isFinishing())

@@ -9,8 +9,6 @@
     <string name="restart">Произошла ошибка, игра будет перезапущена автоматически</string>
     <string name="no_space">Недостаточно места для записи файлов игры, пожалуйста освободите место в памяти</string>
 
-    <!-- разрешения -->
-
     <!-- диалог оценки -->
     <string name="rta_dialog_title">Оцените MultiCraft!</string>
     <string name="rate_title">Название</string>
@@ -18,13 +16,13 @@
     <string name="rate_submit">ОЦЕНИТЬ</string>
     <string name="sad">Нам жаль, что Вам не понравилась игра!</string>
 
-    <!-- обновление -->
+    <!-- диалог обновления -->
     <string name="available">Доступна Новая Версия!</string>
     <string name="ignore">Игнорировать</string>
     <string name="later">Позже</string>
     <string name="update">Обновить</string>
 
-    <!-- no connection dialog -->
+    <!-- диалог отсутствия подключения -->
     <string name="conn_message">Для полноценной игры, MultiCraft требует подключение к интернету.\nВ противном случае невозможно обновление игры, а так же не доступен мультиплеер!</string>
     <string name="conn_wifi">Wi-Fi</string>
     <string name="conn_mobile">3G/4G</string>

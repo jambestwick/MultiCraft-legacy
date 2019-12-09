@@ -47,7 +47,7 @@ import static com.multicraft.game.PreferencesHelper.TAG_SHORTCUT_CREATED;
 public class MainActivity extends AppCompatActivity implements WVersionManager.ActivityListener, CallBackListener, DialogsCallback {
     public final static Map<String, String> zipLocations = new HashMap<>();
     public static final String UPDATE_LINK = "http://updates.multicraft.world/Android.json";
-    private final static int REQUEST_CODE = 104;
+    private final static int REQUEST_CONNECTION = 104;
     private final static String CREATE_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
     private static final String[] EU_COUNTRIES = new String[]{
             "AT", "BE", "BG", "HR", "CY", "CZ",
@@ -56,7 +56,9 @@ public class MainActivity extends AppCompatActivity implements WVersionManager.A
             "MT", "NL", "PL", "PT", "RO", "SK",
             "SI", "ES", "SE", "GB", "IS", "LI", "NO"};
     private static String FILES, WORLDS, GAMES, CACHE;
+    private final String versionName = BuildConfig.VERSION_NAME;
     private String unzipLocation;
+    private String appData;
     private int height, width;
     private boolean consent;
     private ProgressBar mProgressBar;
@@ -82,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements WVersionManager.A
         }
     };
 
-    //helpful utilities
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements WVersionManager.A
 
     private void initZipLocations() {
         unzipLocation = getExternalFilesDir(null) + "/";
-        String appData = getFilesDir() + "/";
+        appData = getFilesDir() + "/";
         FILES = getCacheDir() + "/Files.zip";
         WORLDS = getCacheDir() + "/worlds.zip";
         GAMES = getCacheDir() + "/games.zip";
@@ -277,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements WVersionManager.A
 
     private void runGame() {
         deleteZip(FILES, WORLDS, GAMES);
-        pf.saveSettings(TAG_BUILD_NUMBER, getString(R.string.ver));
+        pf.saveSettings(TAG_BUILD_NUMBER, versionName);
         final CheckConnectionTask cct = new CheckConnectionTask(this);
         cct.setListener(this);
         cct.execute();
@@ -287,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements WVersionManager.A
                 cct.cancel(true);
                 onEvent("CheckConnectionTask", "false");
             }
-        }, 3000);
+        }, 4000);
     }
 
     private void startNative() {
@@ -321,14 +322,23 @@ public class MainActivity extends AppCompatActivity implements WVersionManager.A
             dt.execute(unzipLocation);
         else {
             if (isArm64())
-                dt.execute(unzipLocation + "cache", unzipLocation + "builtin", unzipLocation + "games", unzipLocation + "debug.txt");
+                dt.execute(
+                        unzipLocation + "cache",
+                        unzipLocation + "builtin", appData + "builtin",
+                        unzipLocation + "games", appData + "games",
+                        unzipLocation + "debug.txt"
+                );
             else
-                dt.execute(unzipLocation + "builtin", unzipLocation + "games", unzipLocation + "debug.txt");
+                dt.execute(
+                        unzipLocation + "builtin", appData + "builtin",
+                        unzipLocation + "games", appData + "games",
+                        unzipLocation + "debug.txt"
+                );
         }
     }
 
     private void checkAppVersion() {
-        if (pf.getBuildNumber().equals(getString(R.string.ver))) {
+        if (pf.getBuildNumber().equals(versionName)) {
             mProgressBarIndeterminate.setVisibility(View.VISIBLE);
             runGame();
         } else if (pf.getBuildNumber().equals("0"))
@@ -419,7 +429,7 @@ public class MainActivity extends AppCompatActivity implements WVersionManager.A
         if ("RateMe".equals(source))
             finish();
         else if ("ConnectionDialog".equals(source))
-            startActivityForResult(new Intent(Settings.ACTION_WIFI_SETTINGS), REQUEST_CODE);
+            startActivityForResult(new Intent(Settings.ACTION_WIFI_SETTINGS), REQUEST_CONNECTION);
         else {
             versionManager.updateNow(versionManager.getUpdateUrl());
             finish();
@@ -432,7 +442,7 @@ public class MainActivity extends AppCompatActivity implements WVersionManager.A
             Toast.makeText(MainActivity.this, R.string.sad, Toast.LENGTH_LONG).show();
             getNativeResolutionAndStart();
         } else if ("ConnectionDialog".equals(source))
-            startActivityForResult(new Intent(Settings.ACTION_WIRELESS_SETTINGS), REQUEST_CODE);
+            startActivityForResult(new Intent(Settings.ACTION_WIRELESS_SETTINGS), REQUEST_CONNECTION);
         else {
             versionManager.ignoreThisVersion();
             checkRateDialog();

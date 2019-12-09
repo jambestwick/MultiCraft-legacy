@@ -36,7 +36,6 @@ public class UnzipService extends IntentService {
 
     private void isDir(String dir, String unzipLocation) {
         File f = new File(unzipLocation + dir);
-
         if (!f.isDirectory())
             f.mkdirs();
     }

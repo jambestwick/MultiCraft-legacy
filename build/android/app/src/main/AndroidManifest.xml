@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.multicraft.game"
-    android:installLocation="auto"
-    android:versionName="@string/ver">
+    android:installLocation="auto">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -48,6 +47,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.multicraft.game.GameActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|navigation|screenSize|smallestScreenSize"
@@ -65,6 +65,7 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.multicraft.game.InputDialogActivity"
             android:maxAspectRatio="2.4"
@@ -74,6 +75,7 @@
             android:name="com.multicraft.game.UnzipService"
             android:enabled="true"
             android:exported="false" />
+
     </application>
 
 </manifest>
