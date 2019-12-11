@@ -35,11 +35,12 @@
 		4B35A9F11EEE014F00274961 /* l_storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B35A9EF1EEE014F00274961 /* l_storage.cpp */; };
 		4B35A9F41EEE017000274961 /* scripting_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B35A9F21EEE017000274961 /* scripting_client.cpp */; };
 		4B35A9F71EEE018D00274961 /* scripting_server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B35A9F51EEE018D00274961 /* scripting_server.cpp */; };
+		5918DF0A9D59B8274C44BE3C /* Pods_MultiCraft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECBC4F6C5822779B3E0399F6 /* Pods_MultiCraft.framework */; };
 		842A808C2339174C00A89418 /* ads.mm in Sources */ = {isa = PBXBuildFile; fileRef = 842A808B2339174C00A89418 /* ads.mm */; };
 		844B495F228606B200EB60EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844B495D228606B200EB60EF /* Main.storyboard */; };
+		845F83F6238F4063009CCCBB /* Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845F83F5238F4063009CCCBB /* Empty.swift */; };
 		8465A76522A7D4500095B7CA /* libintl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8465A76422A7D4500095B7CA /* libintl.cpp */; };
 		849C4F86209656D3005EB041 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 849C4F85209656D2005EB041 /* ru.lproj */; };
-		EB4367AE23CAD13A43ADF4B1 /* libPods-MultiCraft.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8758CE009FCB7E91F4C84C28 /* libPods-MultiCraft.a */; };
 		F856B5C31F55F7EE00FE9494 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F856B5C21F55F7EE00FE9494 /* bg.png */; };
 		F87DC8BA210887C700393B64 /* mapgen_v7p.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F87DC8B9210887C700393B64 /* mapgen_v7p.cpp */; };
 		F8E6C4E91DCA3B7900F64426 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8E6C4E81DCA3B7900F64426 /* Assets.xcassets */; };
@@ -313,12 +314,13 @@
 		842A808A2339174B00A89418 /* ads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ads.h; path = Ads/ads.h; sourceTree = "<group>"; };
 		842A808B2339174C00A89418 /* ads.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ads.mm; path = Ads/ads.mm; sourceTree = "<group>"; };
 		844B495E228606B200EB60EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		845F83F5238F4063009CCCBB /* Empty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Empty.swift; path = Ads/Empty.swift; sourceTree = "<group>"; };
 		8465A76122A7D4500095B7CA /* MessageCatalog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MessageCatalog.hpp; path = ../../../../lib/intl/MessageCatalog.hpp; sourceTree = "<group>"; };
 		8465A76222A7D4500095B7CA /* libintl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libintl.h; path = ../../../../lib/intl/libintl.h; sourceTree = "<group>"; };
 		8465A76322A7D4500095B7CA /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Util.hpp; path = ../../../../lib/intl/Util.hpp; sourceTree = "<group>"; };
 		8465A76422A7D4500095B7CA /* libintl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = libintl.cpp; path = ../../../../lib/intl/libintl.cpp; sourceTree = "<group>"; };
 		849C4F85209656D2005EB041 /* ru.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ru.lproj; sourceTree = "<group>"; };
-		8758CE009FCB7E91F4C84C28 /* libPods-MultiCraft.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MultiCraft.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECBC4F6C5822779B3E0399F6 /* Pods_MultiCraft.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MultiCraft.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F85119A61F4476FC00BFA9AF /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../Pods/libCurlPod/lib/libcurl.a; sourceTree = "<group>"; };
 		F856B5C21F55F7EE00FE9494 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg.png; path = ../../../../textures/base/bg.png; sourceTree = "<group>"; };
 		F87DC8B8210887C600393B64 /* mapgen_v7p.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapgen_v7p.h; path = ../../../../src/mapgen_v7p.h; sourceTree = "<group>"; };
@@ -788,7 +790,7 @@
 				F8E6C7D11DCA433E00F64426 /* libiconv.tbd in Frameworks */,
 				F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */,
 				F8E6C7D71DCA477600F64426 /* libfreetype.a in Frameworks */,
-				EB4367AE23CAD13A43ADF4B1 /* libPods-MultiCraft.a in Frameworks */,
+				5918DF0A9D59B8274C44BE3C /* Pods_MultiCraft.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -865,6 +867,7 @@
 				840E2F9E233410F90088E7F7 /* SDVersion.h */,
 				842A808A2339174B00A89418 /* ads.h */,
 				842A808B2339174C00A89418 /* ads.mm */,
+				845F83F5238F4063009CCCBB /* Empty.swift */,
 				F8E6C7E01DCA4EB300F64426 /* assets.zip */,
 				F8E6C7E21DCA511700F64426 /* worlds.zip */,
 				F856B5C21F55F7EE00FE9494 /* bg.png */,
@@ -1465,7 +1468,7 @@
 				F8E6C7C81DCA430300F64426 /* OpenGLES.framework */,
 				F8E6C7C61DCA42FA00F64426 /* UIKit.framework */,
 				F8E6C7C41DCA42F300F64426 /* QuartzCore.framework */,
-				8758CE009FCB7E91F4C84C28 /* libPods-MultiCraft.a */,
+				ECBC4F6C5822779B3E0399F6 /* Pods_MultiCraft.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1482,6 +1485,7 @@
 				F8E6C4D61DCA3B7900F64426 /* Frameworks */,
 				F8E6C4D71DCA3B7900F64426 /* Resources */,
 				E156912616D2E9233FC1C9F4 /* [CP] Copy Pods Resources */,
+				FE637AFABC1AADE218B52E30 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1498,11 +1502,12 @@
 		F8E6C4D11DCA3B7900F64426 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = MultiCraft;
 				TargetAttributes = {
 					F8E6C4D81DCA3B7900F64426 = {
 						CreatedOnToolsVersion = 8.0;
+						LastSwiftMigration = 1120;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1580,6 +1585,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MultiCraft/Pods-MultiCraft-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE637AFABC1AADE218B52E30 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MultiCraft/Pods-MultiCraft-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MultiCraft/Pods-MultiCraft-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MultiCraft/Pods-MultiCraft-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1698,6 +1720,7 @@
 				F8E6C65A1DCA3F9900F64426 /* staticobject.cpp in Sources */,
 				F8E6C5F81DCA3F9900F64426 /* clientiface.cpp in Sources */,
 				F8E6C6181DCA3F9900F64426 /* guiEngine.cpp in Sources */,
+				845F83F6238F4063009CCCBB /* Empty.swift in Sources */,
 				F8E6C6241DCA3F9900F64426 /* inventory.cpp in Sources */,
 				F8E6C6621DCA3F9900F64426 /* voxelalgorithms.cpp in Sources */,
 				F8E6C6361DCA3F9900F64426 /* mapgen.cpp in Sources */,
@@ -1852,7 +1875,6 @@
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMPRESS_PNG_FILES = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -1867,6 +1889,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1878,7 +1901,6 @@
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
@@ -1891,6 +1913,8 @@
 				LLVM_LTO = YES;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1902,7 +1926,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 75;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = R3RLJ9TW52;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1937,7 +1961,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.6.1;
+				MARKETING_VERSION = 1.7.0;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-isystem",
@@ -1959,6 +1983,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mobi.MultiCraft;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1968,7 +1993,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 75;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = R3RLJ9TW52;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -2004,7 +2029,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.6.1;
+				MARKETING_VERSION = 1.7.0;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-isystem",
@@ -2026,6 +2051,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mobi.MultiCraft;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
