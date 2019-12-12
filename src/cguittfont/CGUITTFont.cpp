@@ -79,7 +79,7 @@ inline void checkFontBitmapSize(const FT_Bitmap &bits)
 #if defined(__ANDROID__) || defined(__IOS__)
 		porting::notifyAbortLoading();
 		exit(0);
-#elif
+#else
 		abort();
 #endif
 	}
