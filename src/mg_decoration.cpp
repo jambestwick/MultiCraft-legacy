@@ -297,6 +297,10 @@ size_t DecoSimple::generate(MMVManip *vm, PcgRandom *pr, v3s16 p)
 	// Don't bother if there aren't any decorations to place
 	if (c_decos.size() == 0)
 		return 0;
+	
+	// Check for a negative place_offset_y causing placement below the voxelmanip
+	if (p.Y + 1 + place_offset_y < vm->m_area.MinEdge.Y)
+		return 0;
 
 	if (!canPlaceDecoration(vm, p))
 		return 0;
@@ -310,6 +314,8 @@ size_t DecoSimple::generate(MMVManip *vm, PcgRandom *pr, v3s16 p)
 
 	v3s16 em = vm->m_area.getExtent();
 	u32 vi = vm->m_area.index(p);
+	vm->m_area.add_y(em, vi, place_offset_y);
+
 	for (int i = 0; i < height; i++) {
 		vm->m_area.add_y(em, vi, 1);
 
@@ -327,7 +333,8 @@ size_t DecoSimple::generate(MMVManip *vm, PcgRandom *pr, v3s16 p)
 
 int DecoSimple::getHeight()
 {
-	return (deco_height_max > 0) ? deco_height_max : deco_height;
+	return ((deco_height_max > 0) ? deco_height_max : deco_height)
+		+ place_offset_y;
 }
 
 
@@ -352,10 +359,16 @@ size_t DecoSchematic::generate(MMVManip *vm, PcgRandom *pr, v3s16 p)
 
 	if (flags & DECO_PLACE_CENTER_X)
 		p.X -= (schematic->size.X - 1) / 2;
-	if (flags & DECO_PLACE_CENTER_Y)
-		p.Y -= (schematic->size.Y - 1) / 2;
 	if (flags & DECO_PLACE_CENTER_Z)
 		p.Z -= (schematic->size.Z - 1) / 2;
+	
+	if (flags & DECO_PLACE_CENTER_Y)
+		p.Y -= (schematic->size.Y - 1) / 2;
+	else
+		p.Y += place_offset_y;
+	// Check shifted schematic base is in voxelmanip
+	if (p.Y < vm->m_area.MinEdge.Y)
+		return 0;
 
 	Rotation rot = (rotation == ROTATE_RAND) ?
 		(Rotation)pr->range(ROTATE_0, ROTATE_270) : rotation;
@@ -371,8 +384,8 @@ size_t DecoSchematic::generate(MMVManip *vm, PcgRandom *pr, v3s16 p)
 int DecoSchematic::getHeight()
 {
 	// Account for a schematic being sunk into the ground by flag.
-	// When placed normally account for how a schematic is placed
-	// sunk 1 node into the ground.
+	// When placed normally account for how a schematic is by default placed
+	// sunk 1 node into the ground or is vertically shifted by 'y_offset'.
 	return (flags & DECO_PLACE_CENTER_Y) ?
-		(schematic->size.Y - 1) / 2 : schematic->size.Y - 1;
+		(schematic->size.Y - 1) / 2 : schematic->size.Y - 1 + place_offset_y;
 }

@@ -911,6 +911,7 @@ int ModApiMapgen::l_register_decoration(lua_State *L)
 	deco->y_min      = getintfield_default(L, index, "y_min", -31000);
 	deco->y_max      = getintfield_default(L, index, "y_max", 31000);
 	deco->nspawnby   = getintfield_default(L, index, "num_spawn_by", -1);
+	deco->place_offset_y = getintfield_default(L, index, "place_offset_y", 0);
 	deco->sidelen    = getintfield_default(L, index, "sidelen", 8);
 	if (deco->sidelen <= 0) {
 		errorstream << "register_decoration: sidelen must be "

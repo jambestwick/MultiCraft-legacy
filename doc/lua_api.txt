@@ -4662,6 +4662,14 @@ The Biome API is still in an experimental phase and subject to change.
         param2 = 0,
     --  ^ Param2 value of placed decoration node.
 
+	    place_offset_y = 0,
+        -- Y offset of the decoration base node relative to the standard base
+        -- node position.
+        -- Can be positive or negative. Default is 0.
+        -- Effect is inverted for "all_ceilings" decorations.
+        -- Ignored by 'y_min', 'y_max' and 'spawn_by' checks, which always refer
+        -- to the 'place_on' node.
+
         ----- Schematic-type parameters
         schematic = "foobar.mts",
     --  ^ If schematic is a string, it is the filepath relative to the current working directory of the
@@ -4691,6 +4699,15 @@ The Biome API is still in an experimental phase and subject to change.
         rotation = "90" -- rotate schematic 90 degrees on placement
     --  ^ Rotation can be "0", "90", "180", "270", or "random".
     }
+
+        place_offset_y = 0,
+        -- If the flag 'place_center_y' is set this parameter is ignored.
+        -- Y offset of the schematic base node layer relative to the 'place_on'
+        -- node.
+        -- Can be positive or negative. Default is 0.
+        -- Effect is inverted for "all_ceilings" decorations.
+        -- Ignored by 'y_min', 'y_max' and 'spawn_by' checks, which always refer
+        -- to the 'place_on' node.
 
 ### Chat command definition (`register_chatcommand`)
 
