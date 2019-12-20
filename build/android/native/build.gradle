@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-import org.ajoberstar.gradle.git.tasks.GitClone
+import org.ajoberstar.grgit.Grgit
 
 android {
 	compileSdkVersion 29
@@ -43,12 +43,15 @@ android {
 	}
 }
 
-task cloneGitRepo(type: GitClone) {
+task cloneGitRepo() {
 	def destination = file('deps')
-	uri = 'https://github.com/MultiCraft/deps'
-	destinationPath = destination
-	bare = false
-	enabled = !destination.exists()
+	if(!destination.exists()) {
+		def grgit = Grgit.clone(
+				dir: destination,
+				uri: 'https://github.com/MultiCraft/deps'
+		)
+		grgit.close()
+	}
 }
 
 preBuild.dependsOn cloneGitRepo
