@@ -108,7 +108,7 @@ core.register_chatcommand("privs", {
 		local name = (param ~= "" and param or caller)
 		return true, "Privileges of " .. name .. ": "
 			.. core.privs_to_string(
-				core.get_player_privs(name), ' ')
+				core.get_player_privs(name), ", ")
 	end
 })
 

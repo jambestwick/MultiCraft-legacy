@@ -65,8 +65,8 @@ local function wordwrap_quickhack(str)
 			if res ~= "" then
 				res = res .. ","
 			end
-			res = res .. core.formspec_escape(string.sub(text, 1, 79))
-			text = string.sub(text, 80, #text)
+			res = res .. core.formspec_escape(text:sub(1, 79))
+			text = text:sub(80, #text)
 		end
 		if res ~= "" then
 			res = res .. ","
@@ -84,8 +84,8 @@ function ui.update()
 	-- attempt auto restart
 	if gamedata ~= nil and gamedata.errormessage ~= nil and
 			core.settings:get_bool("auto_connect") == true and
-			tonumber(core.settings:get("connect_time")) < os.time() - 30 --[[and
-			not string.find(gamedata.errormessage, "Access denied")]] then
+			tonumber(core.settings:get("connect_time")) < os.time() - 30 and
+			not gamedata.errormessage:find("Kicked") then
 		if core.settings:get("maintab_LAST") == "local" then
 			gamedata.singleplayer = true
 			gamedata.selected_world =
@@ -110,7 +110,7 @@ function ui.update()
 	elseif gamedata ~= nil and gamedata.errormessage ~= nil then
 		formspec = wordwrap_quickhack(gamedata.errormessage)
 		local error_title
-		if string.find(gamedata.errormessage, "ModError") then
+		if gamedata.errormessage:find("ModError") then
 			error_title = fgettext("An error occured in a Lua script, such as a mod:")
 		else
 			error_title = fgettext("An error occured:")
