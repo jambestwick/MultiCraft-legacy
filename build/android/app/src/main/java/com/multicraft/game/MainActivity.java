@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements WVersionManager.A
             "HU", "IE", "IT", "LV", "LT", "LU",
             "MT", "NL", "PL", "PT", "RO", "SK",
             "SI", "ES", "SE", "GB", "IS", "LI", "NO"};
-    private static String FILES, WORLDS, GAMES, CACHE;
+    private static String FILES, WORLDS, GAMES;
     private final String versionName = BuildConfig.VERSION_NAME;
     private String unzipLocation;
     private String appData;
@@ -121,18 +121,9 @@ public class MainActivity extends AppCompatActivity implements WVersionManager.A
         FILES = getCacheDir() + "/Files.zip";
         WORLDS = getCacheDir() + "/worlds.zip";
         GAMES = getCacheDir() + "/games.zip";
-        CACHE = getCacheDir() + "/cache.zip";
         zipLocations.put(FILES, appData);
         zipLocations.put(GAMES, appData);
         zipLocations.put(WORLDS, unzipLocation);
-        zipLocations.put(CACHE, unzipLocation);
-    }
-
-    private boolean isArm64() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            return TextUtils.join(", ", Build.SUPPORTED_ABIS).contains("64");
-        else
-            return false;
     }
 
     private void addLaunchTimes() {
@@ -321,18 +312,10 @@ public class MainActivity extends AppCompatActivity implements WVersionManager.A
         if (isAll)
             dt.execute(unzipLocation);
         else {
-            if (isArm64())
-                dt.execute(
-                        unzipLocation + "cache",
-                        unzipLocation + "builtin", appData + "builtin",
-                        unzipLocation + "games", appData + "games",
-                        unzipLocation + "debug.txt"
-                );
-            else
-                dt.execute(
-                        unzipLocation + "builtin", appData + "builtin",
-                        unzipLocation + "games", appData + "games",
-                        unzipLocation + "debug.txt"
+            dt.execute(
+                    unzipLocation + "builtin", appData + "builtin",
+                    unzipLocation + "games", appData + "games",
+                    unzipLocation + "debug.txt"
                 );
         }
     }
@@ -361,17 +344,10 @@ public class MainActivity extends AppCompatActivity implements WVersionManager.A
         if ("DeleteTask".equals(source)) {
             CopyZipTask cpt = new CopyZipTask(this);
             cpt.setListener(this);
-            if (unzipLocation.equals(param)) {
-                if (isArm64())
-                    cpt.execute(FILES, WORLDS, GAMES, CACHE);
-                else
-                    cpt.execute(FILES, WORLDS, GAMES);
-            } else {
-                if (isArm64())
-                    cpt.execute(FILES, GAMES, CACHE);
-                else
-                    cpt.execute(FILES, GAMES);
-            }
+            if (unzipLocation.equals(param))
+                cpt.execute(FILES, WORLDS, GAMES);
+            else
+                cpt.execute(FILES, GAMES);
         } else if ("CheckConnectionTask".equals(source)) {
             if ("true".equals(param))
                 checkUrlVersion();
