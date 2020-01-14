@@ -25,7 +25,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define SKY_HEADER
 
 #define SKY_MATERIAL_COUNT 5
-#define SKY_STAR_COUNT 200
+#define SKY_STAR_COUNT 400
 
 class ITextureSource;
 
