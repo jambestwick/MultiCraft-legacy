@@ -200,19 +200,10 @@ wchar_t *narrow_to_wide_c(const char *str) {
 }
 
 std::wstring narrow_to_wide(const std::string &mbs) {
+#if defined(__ANDROID__) || defined(__IOS__)
+	return utf8_to_wide(mbs);
+#else
 	size_t wcl = mbs.size();
-#ifdef __ANDROID__
-	std::wstring retval = L"";
-	for (unsigned int i = 0; i < wcl; i++) {
-		if (((unsigned char) mbs[i] > 31) &&
-		    ((unsigned char) mbs[i] < 127))
-			retval += (unsigned char) mbs[i];
-		else if (mbs[i] == '\n')
-			// handle newline
-			retval += L'\n';
-	}
-	return retval;
-#else // not Android
 	Buffer<wchar_t> wcs(wcl + 1);
 	size_t len = mbstowcs(*wcs, mbs.c_str(), wcl);
 	if (len == (size_t)(-1))
@@ -224,6 +215,9 @@ std::wstring narrow_to_wide(const std::string &mbs) {
 
 
 std::string wide_to_narrow(const std::wstring &wcs) {
+#if defined(__ANDROID__) || defined(__IOS__)
+	return wide_to_utf8(wcs);
+#else
 	size_t mbl = wcs.size() * 4;
 	SharedBuffer<char> mbs(mbl+1);
 	size_t len = wcstombs(*mbs, wcs.c_str(), mbl);
@@ -232,6 +226,7 @@ std::string wide_to_narrow(const std::wstring &wcs) {
 
 	mbs[len] = 0;
 	return *mbs;
+#endif
 }
 
 
