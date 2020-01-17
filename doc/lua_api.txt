@@ -2175,26 +2175,63 @@ The following functions provide escape sequences:
     * Removes all color escape sequences.
 
 Spatial Vectors
----------------
-* `vector.new(a[, b, c])`: returns a vector:
+----------------
+A spatial vector is similar to a position, but instead using
+absolute world coordinates, it uses *relative* coordinates, relative to
+no particular point.
+
+Internally, it is implemented as a table with the 3 fields
+`x`, `y` and `z`. Example: `{x = 0, y = 1, z = 0}`.
+
+For the following functions, `v`, `v1`, `v2` are vectors,
+`p1`, `p2` are positions:
+
+* `vector.new(a[, b, c])`:
+    * Returns a vector.
     * A copy of `a` if `a` is a vector.
-    * `{x = a, y = b, z = c}`, if all `a, b, c` are defined
-* `vector.direction(p1, p2)`: returns a vector
-* `vector.distance(p1, p2)`: returns a number
-* `vector.length(v)`: returns a number
-* `vector.normalize(v)`: returns a vector
-* `vector.floor(v)`: returns a vector, each dimension rounded down
-* `vector.round(v)`: returns a vector, each dimension rounded to nearest int
-* `vector.apply(v, func)`: returns a vector
-* `vector.equals(v1, v2)`: returns a boolean
-* `vector.sort(v1, v2)`: returns minp, maxp vectors of the cuboid defined by v1 and v2
+    * `{x = a, y = b, z = c}`, if all of `a`, `b`, `c` are defined numbers.
+* `vector.direction(p1, p2)`:
+    * Returns a vector of length 1 with direction `p1` to `p2`.
+    * If `p1` and `p2` are identical, returns `{x = 0, y = 0, z = 0}`.
+* `vector.distance(p1, p2)`:
+    * Returns zero or a positive number, the distance between `p1` and `p2`.
+* `vector.length(v)`:
+    * Returns zero or a positive number, the length of vector `v`.
+* `vector.normalize(v)`:
+    * Returns a vector of length 1 with direction of vector `v`.
+    * If `v` has zero length, returns `{x = 0, y = 0, z = 0}`.
+* `vector.floor(v)`:
+    * Returns a vector, each dimension rounded down.
+* `vector.round(v)`:
+    * Returns a vector, each dimension rounded to nearest integer.
+* `vector.apply(v, func)`:
+    * Returns a vector where the function `func` has been applied to each
+      component.
+* `vector.equals(v1, v2)`:
+    * Returns a boolean, `true` if the vectors are identical.
+* `vector.sort(v1, v2)`:
+    * Returns in order minp, maxp vectors of the cuboid defined by `v1`, `v2`.
+* `vector.angle(v1, v2)`:
+    * Returns the angle between `v1` and `v2` in radians.
+* `vector.dot(v1, v2)`
+    * Returns the dot product of `v1` and `v2`
+* `vector.cross(v1, v2)`
+    * Returns the cross product of `v1` and `v2`
 
 For the following functions `x` can be either a vector or a number:
 
-* `vector.add(v, x)`: returns a vector
-* `vector.subtract(v, x)`: returns a vector
-* `vector.multiply(v, x)`: returns a scaled vector or Schur product
-* `vector.divide(v, x)`: returns a scaled vector or Schur quotient
+* `vector.add(v, x)`:
+    * Returns a vector.
+    * If `x` is a vector: Returns the sum of `v` and `x`.
+    * If `x` is a number: Adds `x` to each component of `v`.
+* `vector.subtract(v, x)`:
+    * Returns a vector.
+    * If `x` is a vector: Returns the difference of `v` subtracted by `x`.
+    * If `x` is a number: Subtracts `x` from each component of `v`.
+* `vector.multiply(v, x)`:
+    * Returns a scaled vector or Schur product.
+* `vector.divide(v, x)`:
+    * Returns a scaled vector or Schur quotient.
 
 Helper functions
 ----------------
