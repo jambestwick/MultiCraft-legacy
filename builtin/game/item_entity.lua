@@ -1,5 +1,8 @@
 -- Minetest: builtin/item_entity.lua
 
+local math_abs, math_min, math_pi = math.abs, math.min, math.pi
+local vector_add, vector_normalize = vector.add, vector.normalize
+
 function core.spawn_item(pos, item)
 	-- Take item in any format
 	local stack = ItemStack(item)
@@ -17,30 +20,17 @@ end
 local time_to_live = tonumber(core.settings:get("item_entity_ttl")) or 600
 local gravity = tonumber(core.settings:get("movement_gravity")) or 9.81
 local collection = core.settings:get_bool("item_collection") or true
+local water_flow = core.settings:get_bool("item_water_flow") or true
 
 -- Water flow functions by QwertyMine3 (WTFPL), and TenPlus1 (MIT)
-local function to_unit_vector(dir_vector)
-	local inv_roots = {
-		[0] = 1,
-		[1] = 1,
-		[2] = 0.70710678118655,
-		[4] = 0.5,
-		[5] = 0.44721359549996,
-		[8] = 0.35355339059327
-	}
-	local sum = dir_vector.x * dir_vector.x + dir_vector.z * dir_vector.z
-	return {
-		x = dir_vector.x * inv_roots[sum],
-		y = dir_vector.y,
-		z = dir_vector.z * inv_roots[sum]
-	}
-end
-
 local function quick_flow_logic(node, pos_testing, direction)
 	local node_testing = core.get_node_or_nil(pos_testing)
-	if not node_testing then
-		return 0
-	end
+
+	if not node_testing
+			or  core.registered_nodes[node_testing.name].liquidtype ~= "flowing"
+			and core.registered_nodes[node_testing.name].liquidtype ~= "source"
+	then return 0 end
+
 	local param2_testing = node_testing.param2
 	if param2_testing < node.param2 then
 		if (node.param2 - param2_testing) > 6 then
@@ -48,23 +38,23 @@ local function quick_flow_logic(node, pos_testing, direction)
 		else
 			return direction
 		end
-	elseif param2_testing > node.param2 then
+	else
 		if (param2_testing - node.param2) > 6 then
 			return direction
 		else
 			return -direction
 		end
 	end
-	return 0
 end
 
 local function quick_flow(pos, node)
 	local x, z = 0, 0
-	x = x + quick_flow_logic(node, {x = pos.x - 1, y = pos.y, z = pos.z}, -1)
-	x = x + quick_flow_logic(node, {x = pos.x + 1, y = pos.y, z = pos.z},  1)
-	z = z + quick_flow_logic(node, {x = pos.x, y = pos.y, z = pos.z - 1}, -1)
-	z = z + quick_flow_logic(node, {x = pos.x, y = pos.y, z = pos.z + 1},  1)
-	return to_unit_vector({x = x, y = 0, z = z})
+
+	x = x + quick_flow_logic(node, {x = pos.x - 1.01, y = pos.y, z = pos.z}, -1)
+	x = x + quick_flow_logic(node, {x = pos.x + 1.01, y = pos.y, z = pos.z},  1)
+	z = z + quick_flow_logic(node, {x = pos.x, y = pos.y, z = pos.z - 1.01}, -1)
+	z = z + quick_flow_logic(node, {x = pos.x, y = pos.y, z = pos.z + 1.01},  1)
+	return vector_normalize({x = x, y = 0, z = z})
 end
 
 core.register_entity(":__builtin:throwing_item", {
@@ -101,6 +91,7 @@ core.register_entity(":__builtin:item", {
 	itemstring = "",
 	moving_state = true,
 	slippery_state = false,
+	stuck = false,
 	age = 0,
 
 	set_item = function(self, item)
@@ -116,7 +107,7 @@ core.register_entity(":__builtin:item", {
 		local itemname = stack:is_known() and stack:get_name() or "unknown"
 
 		local max_count = stack:get_stack_max()
-		local count = math.min(stack:get_count(), max_count)
+		local count = math_min(stack:get_count(), max_count)
 		local size = 0.2 + 0.1 * (count / max_count) ^ (1 / 3)
 		local coll_height = size * 0.75
 
@@ -128,7 +119,7 @@ core.register_entity(":__builtin:item", {
 			collisionbox = {-size, -coll_height, -size,
 				size, coll_height, size},
 			selectionbox = {-size, -size, -size, size, size, size},
-			automatic_rotate = math.pi * 0.5 * 0.15 / size,
+			automatic_rotate = math_pi * 0.5 * 0.15 / size,
 			wield_item = self.itemstring,
 			infotext = core.registered_items[itemname].description
 		})
@@ -144,7 +135,7 @@ core.register_entity(":__builtin:item", {
 	end,
 
 	on_activate = function(self, staticdata, dtime_s)
-		if string.sub(staticdata, 1, string.len("return")) == "return" then
+		if staticdata:sub(1, 6) == "return" then
 			local data = core.deserialize(staticdata)
 			if data and type(data) == "table" then
 				self.itemstring = data.itemstring
@@ -250,27 +241,28 @@ core.register_entity(":__builtin:item", {
 		end
 
 		-- Moving items in the water flow (TenPlus1, MIT)
-		if def_inside and def_inside.liquidtype == "flowing" then
+		if water_flow and def_inside and def_inside.liquidtype == "flowing" then
 			local vec = quick_flow(pos, node_inside)
 			self.object:set_velocity({x = vec.x, y = vel.y, z = vec.z})
 			return
 		end
 
 		-- Move item inside node to free space (TenPlus1, MIT)
-		if def_inside and not def_inside.liquid and node_inside.name ~= "air" and
+		if not self.stuck and def_inside and def_inside.walkable and
+				not def_inside.liquid and node_inside.name ~= "air" and
 				def_inside.drawtype == "normal" then
 			local npos = minetest.find_node_near(pos, 1, "air")
 			if npos then
 				self.object:move_to(npos)
+			else
+				self.stuck = true
 			end
-			self.node_inside = nil -- force get_node
-			return
 		end
 
 		if def and def.walkable then
 			local slippery = core.get_item_group(node.name, "slippery")
 			is_slippery = slippery ~= 0
-			if is_slippery and (math.abs(vel.x) > 0.2 or math.abs(vel.z) > 0.2) then
+			if is_slippery and (math_abs(vel.x) > 0.2 or math_abs(vel.z) > 0.2) then
 				-- Horizontal deceleration
 				local slip_factor = 4.0 / (slippery + 4)
 				self.object:set_acceleration({
@@ -334,45 +326,44 @@ core.register_entity(":__builtin:item", {
 })
 
 -- Item Collection
-local function collect_items(player)
-	local pos = player:get_pos()
-	if not core.is_valid_pos(pos) then
-		return
-	end
-	-- Detect
-	local col_pos = vector.add(pos, {x = 0, y = 1.3, z = 0})
-	local objects = core.get_objects_inside_radius(col_pos, 2)
-	for _, obj in pairs(objects) do
-		local entity = obj:get_luaentity()
-		if entity and entity.name == "__builtin:item" and
-				not entity.collectioner and entity.age > 0.5 then
-			local item = ItemStack(entity.itemstring)
-			local inv = player:get_inventory()
-			if inv and inv:room_for_item("main", item) and
-					item:get_name() ~= "" then
-				-- Magnet
-				obj:move_to(col_pos)
-				entity.collectioner = true
-				-- Collect
-				if entity.collectioner == true then
-					core.after(0.05, function()
-						core.sound_play("item_drop_pickup", {
-							pos = col_pos,
-							max_hear_distance = 10,
-							gain = 0.2
-						})
-						entity.itemstring = ""
-						obj:remove()
-						inv:add_item("main", item)
-					end)
+if collection then
+	local function collect_items(player)
+		local pos = player:get_pos()
+		if not core.is_valid_pos(pos) then
+			return
+		end
+		-- Detect
+		local col_pos = vector_add(pos, {x = 0, y = 1.3, z = 0})
+		local objects = core.get_objects_inside_radius(col_pos, 2)
+		for _, obj in pairs(objects) do
+			local entity = obj:get_luaentity()
+			if entity and entity.name == "__builtin:item" and
+					not entity.collectioner and entity.age > 0.5 then
+				local item = ItemStack(entity.itemstring)
+				local inv = player:get_inventory()
+				if inv and inv:room_for_item("main", item) and
+						item:get_name() ~= "" then
+					-- Magnet
+					obj:move_to(col_pos)
+					entity.collectioner = true
+					-- Collect
+					if entity.collectioner == true then
+						core.after(0.05, function()
+							core.sound_play("item_drop_pickup", {
+								pos = col_pos,
+								max_hear_distance = 10,
+								gain = 0.2
+							})
+							entity.itemstring = ""
+							obj:remove()
+							inv:add_item("main", item)
+						end)
+					end
 				end
 			end
 		end
 	end
-end
 
--- Item collection
-if collection then
 	core.register_playerstep(function(dtime, playernames)
 		for _, name in pairs(playernames) do
 			local player = core.get_player_by_name(name)
