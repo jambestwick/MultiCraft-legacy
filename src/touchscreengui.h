@@ -51,10 +51,10 @@ typedef enum {
 	escape_id,
 	minimap_id,
 	range_id,
+	camera_id,
 	chat_id,
-/*	noclip_id,
-	fast_id,
-	camera_id,	*/
+//	noclip_id,
+//	fast_id,
 	after_last_element_id
 } touch_gui_button_id;
 

@@ -46,10 +46,10 @@ const char *touchgui_button_imagenames[][2] = {
 	{"escape_btn.png"},
 	{"minimap_btn.png"},
 	{"rangeview_btn.png"},
+	{"camera_btn.png"},
 	{"chat_btn.png"}
-/*	{"noclip_btn.png"},
-	{"fast_btn.png"},
-	{"camera_btn.png"}	*/
+//	{"noclip_btn.png"},
+//	{"fast_btn.png"}
 };
 
 static irr::EKEY_CODE id2keycode(touch_gui_button_id id) {
@@ -102,17 +102,17 @@ static irr::EKEY_CODE id2keycode(touch_gui_button_id id) {
 		case range_id:
 			key = "rangeselect";
 			break;
+		case camera_id:
+			key = "camera_mode";
+			break;
 		case chat_id:
 			key = "chat";
 			break;
 	/*	case noclip_id:
-			 key = "noclip";
-			 break;
-			 case fast_id:
-			 key = "fast";
-			 break;
-		case camera_id:
-			key = "camera_mode";
+			key = "noclip";
+			break;
+		case fast_id:
+			key = "fast";
 			break;	*/
 		case after_last_element_id:
 			break;
@@ -196,7 +196,6 @@ void TouchScreenGUI::initButton(touch_gui_button_id id, rect<s32> button_rect,
 	btn->immediate_release = immediate_release;
 	btn->ids.clear();
 
-
 	load_button_texture(btn, id, button_rect,
 						m_texturesource, m_device->getVideoDriver());
 }
@@ -204,15 +203,13 @@ void TouchScreenGUI::initButton(touch_gui_button_id id, rect<s32> button_rect,
 void TouchScreenGUI::init(ISimpleTextureSource *tsrc) {
 	assert(tsrc != nullptr);
 
-	double control_pad_size =
-			MYMIN(m_screensize.Y / 1.5,
-				  porting::getDisplayDensity() * g_settings->getFloat("hud_scaling") * 260);
-
-	s32 button_size      = static_cast<s32>(control_pad_size / 3);
-	m_visible            = true;
-	m_texturesource      = tsrc;
-	m_control_pad_rect   = rect<s32>(0, static_cast<s32>(m_screensize.Y - control_pad_size),
-	                                 static_cast<s32>(control_pad_size), m_screensize.Y);
+	float density      = porting::getDisplayDensity() * g_settings->getFloat("hud_scaling");
+	s32 button_size    = static_cast<s32>(density * 60);
+	s32 ctlpad_size    = static_cast<s32>(density * 85);
+	m_visible          = true;
+	m_texturesource    = tsrc;
+	m_control_pad_rect = rect<s32>(0, (m_screensize.Y - ctlpad_size * 3),
+									(ctlpad_size * 3), m_screensize.Y);
 
 	/*
 	draw control pad
@@ -225,10 +222,10 @@ void TouchScreenGUI::init(ISimpleTextureSource *tsrc) {
 	for (int y = 0; y < 3; ++y)
 		for (int x = 0; x < 3; ++x, ++number) {
 			v2s32 tl;
-			tl.X = button_size * y;
-			tl.Y = m_screensize.Y - button_size * (3 - x);
+			tl.X = ctlpad_size * y;
+			tl.Y = m_screensize.Y - ctlpad_size * (3 - x);
 
-			rect<s32> button_rect(tl.X, tl.Y, tl.X + button_size, tl.Y + button_size);
+			rect<s32> button_rect(tl.X, tl.Y, tl.X + ctlpad_size, tl.Y + ctlpad_size);
 			touch_gui_button_id id = after_last_element_id;
 			std::wstring caption;
 			switch (number) {
@@ -270,77 +267,94 @@ void TouchScreenGUI::init(ISimpleTextureSource *tsrc) {
 				default:
 					break;
 			}
-			if (id != after_last_element_id) {
+			if (id != after_last_element_id)
 				initButton(id, button_rect, caption, false);
-			}
 		}
 
 	// init inventory button
 	initButton(inventory_id,
-			rect<s32>(m_screensize.X - button_size,
-					  m_screensize.Y - button_size,
+			rect<s32>(m_screensize.X - button_size * 1.5,
+					  m_screensize.Y - button_size * 1.5,
 					  m_screensize.X,
 					  m_screensize.Y),
 			L"inv", false, SLOW_BUTTON_REPEAT);
 
-	// init drop button
-	initButton(drop_id,
-			rect<s32>(m_screensize.X - button_size * 0.75,
-					  m_screensize.Y / 2 - button_size * 1.5,
-					  m_screensize.X,
-					  m_screensize.Y / 2 - button_size * 0.75),
-			L"drop", false, SLOW_BUTTON_REPEAT);
-
 	// init crunch button
 	initButton(crunch_id,
-			rect<s32>(m_screensize.X - button_size * 2,
-					  m_screensize.Y - button_size / 2,
-					  m_screensize.X - button_size,
+			rect<s32>(m_screensize.X - button_size * 3,
+					  m_screensize.Y - button_size / 1.5,
+					  m_screensize.X - button_size * 1.5,
 					  m_screensize.Y),
 			L"H", false, SLOW_BUTTON_REPEAT);
 
 	// init jump button
 	initButton(jump_id,
-			rect<s32>(m_screensize.X - button_size * 2,
-					  m_screensize.Y - button_size * 2,
-					  m_screensize.X - button_size,
-					  m_screensize.Y - button_size),
+			rect<s32>(m_screensize.X - button_size * 3,
+					  m_screensize.Y - button_size * 3,
+					  m_screensize.X - button_size * 1.5,
+					  m_screensize.Y - button_size * 1.5),
 			L"x", false, SLOW_BUTTON_REPEAT);
 
-// iOS does not have a physical pause button and have memory leak with minimap
+	// init drop button
+	initButton(drop_id,
+			rect<s32>(m_screensize.X - button_size,
+					  m_screensize.Y / 2 - button_size,
+					  m_screensize.X,
+					  m_screensize.Y / 2),
+			L"drop", false, SLOW_BUTTON_REPEAT);
+
+	//dirty implementation of positions for iOS
+	double button_075 = 1;
+	double button_05 = 1;
+	double button_05b = 0;
 #ifdef __IOS__
-	// init pause button
+	button_075 = 0.75;
+	button_05 = 2;
+	button_05b = button_size / 2;
+#endif
+
+	// init pause button [1]
 	initButton(escape_id,
-			rect<s32>(m_screensize.X / 2 - button_size * 1.125,
+			rect<s32>(m_screensize.X / 2 - button_size * 2 * button_075,
 					  0,
-					  m_screensize.X / 2 - button_size * 0.375,
-					  button_size * 0.75),
+					  m_screensize.X / 2 - button_size / button_05,
+					  button_size),
 		L"Exit", false, SLOW_BUTTON_REPEAT);
 
-#else
-	// init minimap button
+	// init minimap button [2]
+#ifndef __IOS__
+	// iOS have memory leak with enabled minimap
 	initButton(minimap_id,
-			rect<s32>(m_screensize.X / 2 - button_size * 1.125,
+			rect<s32>(m_screensize.X / 2 - button_size,
 					  0,
-					  m_screensize.X / 2 - button_size * 0.375,
-					  button_size * 0.75),
+					  m_screensize.X / 2,
+					  button_size),
 			L"minimap", false, SLOW_BUTTON_REPEAT);
 #endif
-	// init rangeselect button
+
+	// init rangeselect button [3]
 	initButton(range_id,
-			rect<s32>(m_screensize.X / 2 - (button_size * 0.375),
-	           		  0,
-	           		  m_screensize.X / 2 + (button_size * 0.375),
-	           		  button_size * 0.75),
+			rect<s32>(m_screensize.X / 2 - button_05b,
+					  0,
+					  m_screensize.X / 2 + button_size / button_05,
+					  button_size),
 			L"far", false, SLOW_BUTTON_REPEAT);
+
+	// init camera button [4]
+	initButton(camera_id,
+			rect<s32>(m_screensize.X / 2 + button_size / button_05,
+	           		  0,
+	           		  m_screensize.X / 2 + button_size * 2 * button_075,
+	           		  button_size),
+			L"cam", false, SLOW_BUTTON_REPEAT);
 
 	// init chat button
 	initButton(chat_id,
-			rect<s32>(m_screensize.X / 2 + (button_size * 0.375),
+			rect<s32>(m_screensize.X - button_size * 1.25,
 					  0,
-					  m_screensize.X / 2 + (button_size * 1.125),
-					  button_size * 0.75),
-			L"Chat", false, SLOW_BUTTON_REPEAT);
+					  m_screensize.X,
+					  button_size),
+			L"far", false, SLOW_BUTTON_REPEAT);
 
 	// init noclip button
 /*	initButton(noclip_id,
@@ -355,15 +369,7 @@ void TouchScreenGUI::init(ISimpleTextureSource *tsrc) {
 					  m_screensize.Y - button_size * 4,
 					  m_screensize.X,
 					  m_screensize.Y - button_size * 3.25),
-			   L"fast", false, SLOW_BUTTON_REPEAT);
-
-	// init camera button
-	initButton(camera_id,
-			rect<s32>(0,
-					  0,
-					  button_size * 0.75,
-					  button_size * 0.75),
-			L"cam", false, SLOW_BUTTON_REPEAT); */
+			   L"fast", false, SLOW_BUTTON_REPEAT); */
 }
 
 touch_gui_button_id TouchScreenGUI::getButtonID(s32 x, s32 y) {
@@ -375,9 +381,8 @@ touch_gui_button_id TouchScreenGUI::getButtonID(s32 x, s32 y) {
 
 		if (element) {
 			for (unsigned int i = 0; i < after_last_element_id; i++) {
-				if (element == m_buttons[i].guibutton) {
+				if (element == m_buttons[i].guibutton)
 					return (touch_gui_button_id) i;
-				}
 			}
 		}
 	}
@@ -451,8 +456,7 @@ void TouchScreenGUI::handleButtonEvent(touch_gui_button_id button,
 		m_receiver->OnEvent(*translated);
 	}
 	// remove event
-	if ((!action) || (btn->immediate_release)) {
-
+	if (!action || btn->immediate_release) {
 		std::vector<size_t>::iterator pos =
 				std::find(btn->ids.begin(),btn->ids.end(), eventID);
 		// has to be in touch list
@@ -474,11 +478,11 @@ void TouchScreenGUI::handleReleaseEvent(size_t evt_id) {
 	touch_gui_button_id button = getButtonID(evt_id);
 
 	// handle button events
-	if (button != after_last_element_id) {
+	if (button != after_last_element_id)
 		handleButtonEvent(button, evt_id, false);
-	}
+
 	// handle the point used for moving view
-	else if (evt_id == m_move_id) {
+	if (evt_id == m_move_id) {
 		m_move_id = -1;
 
 		// if this pointer issued a mouse event issue symmetric release here
@@ -527,9 +531,9 @@ void TouchScreenGUI::handleReleaseEvent(size_t evt_id) {
 void TouchScreenGUI::handleReleaseAll()
 {
 	m_known_ids.clear();
-	if(m_move_id != -1)
+	if (m_move_id != -1)
 		handleReleaseEvent(m_move_id);
-	for(int i = 0; i < after_last_element_id; i++)
+	for (int i = 0; i < after_last_element_id; i++)
 		m_buttons[i].ids.clear();
 }
 
@@ -543,7 +547,6 @@ void TouchScreenGUI::translateEvent(const SEvent &event) {
 		return;
 
 	if (event.TouchInput.Event == ETIE_PRESSED_DOWN) {
-
 		/* add to own copy of eventlist ...
 		 * android would provide this information but irrlicht guys don't
 		 * wanna design a efficient interface */
@@ -561,9 +564,8 @@ void TouchScreenGUI::translateEvent(const SEvent &event) {
 		// handle button events
 		if (button != after_last_element_id) {
 			handleButtonEvent(button, eventID, true);
-		} else if (m_control_pad_rect.isPointInside(v2s32(toadd.X, toadd.Y)) || (isHUDButton(event))) {
-			// ignore events inside the control pad not already handled
-		} else {
+		// ignore events inside the control pad and HUD if not already handled
+		} else if (!(m_control_pad_rect.isPointInside(v2s32(toadd.X, toadd.Y)) || isHUDButton(event))) {
 			// handle non button events
 			// if we don't already have a moving point make this the moving one
 			if (m_move_id == -1) {
@@ -614,7 +616,7 @@ void TouchScreenGUI::translateEvent(const SEvent &event) {
 						(m_pointerpos[event.TouchInput.ID].Y - event.TouchInput.Y) *
 						(m_pointerpos[event.TouchInput.ID].Y - event.TouchInput.Y));
 
-				if ((distance > g_settings->getU16("touchscreen_threshold")) ||
+				if (distance > g_settings->getU16("touchscreen_threshold") ||
 				    (m_move_has_really_moved)) {
 					m_move_has_really_moved = true;
 					s32 X = event.TouchInput.X;
@@ -653,15 +655,12 @@ void TouchScreenGUI::translateEvent(const SEvent &event) {
 
 void TouchScreenGUI::handleChangedButton(const SEvent &event) {
 	for (unsigned int i = 0; i < after_last_element_id; i++) {
-
 		if (m_buttons[i].ids.empty())
 			continue;
 
 		for (std::vector<size_t>::iterator iter = m_buttons[i].ids.begin();
 				  iter != m_buttons[i].ids.end(); ++iter) {
-
 			if (event.TouchInput.ID == *iter) {
-
 				int current_button_id =
 						getButtonID(event.TouchInput.X, event.TouchInput.Y);
 
@@ -676,7 +675,6 @@ void TouchScreenGUI::handleChangedButton(const SEvent &event) {
 
 				handleButtonEvent((touch_gui_button_id) current_button_id, *iter, true);
 				return;
-
 			}
 		}
 	}
@@ -688,10 +686,9 @@ void TouchScreenGUI::handleChangedButton(const SEvent &event) {
 
 	button_info *btn = &m_buttons[current_button_id];
 	if (std::find(btn->ids.begin(), btn->ids.end(), event.TouchInput.ID)
-	    == btn->ids.end()) {
+	    == btn->ids.end())
 		handleButtonEvent((touch_gui_button_id) current_button_id,
 							event.TouchInput.ID, true);
-	}
 }
 
 // Punch or left click
@@ -769,7 +766,6 @@ void TouchScreenGUI::step(float dtime) {
 	if ((m_move_id != -1) &&
 			(!m_move_has_really_moved) &&
 			(!m_move_sent_as_mouse_event)) {
-
 		u64 delta = porting::getDeltaMs(m_move_downtime, porting::getTimeMs());
 
 		if (delta > (MIN_DIG_TIME * 1000.F)) {
@@ -807,9 +803,8 @@ void TouchScreenGUI::Toggle(bool visible) {
 	m_visible = visible;
 	for (unsigned int i = 0; i < after_last_element_id; i++) {
 		button_info *btn = &m_buttons[i];
-		if (btn->guibutton != nullptr) {
+		if (btn->guibutton != nullptr)
 			btn->guibutton->setVisible(visible);
-		}
 	}
 
 	// clear all active buttons

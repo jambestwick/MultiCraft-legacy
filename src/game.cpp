@@ -2013,11 +2013,6 @@ bool Game::createClient(const std::string &playername,
 		return false;
 	}
 
-//#ifdef __IOS__
-//	mapper->setMinimapMode(MINIMAP_MODE_SURFACE);
-//#else
-//	mapper->setMinimapMode(MINIMAP_MODE_OFF);
-//#endif
 	mapper = client->getMinimap();
 	if (mapper)
 		mapper->setMinimapMode(MINIMAP_MODE_OFF);
@@ -2083,10 +2078,8 @@ bool Game::initGui()
 	guitext_profiler->setWordWrap(true);
 
 #ifdef HAVE_TOUCHSCREENGUI
-
 	if (g_touchscreengui)
 		g_touchscreengui->init(texture_src);
-
 #endif
 
 	return true;
