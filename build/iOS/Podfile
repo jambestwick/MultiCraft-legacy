@@ -14,13 +14,13 @@ def appodeal
 end
 
 target 'MultiCraft' do
-	source 'https://github.com/CocoaPods/Specs.git'
-	source 'https://github.com/appodeal/CocoaPods.git'
+	source 'https://cdn.cocoapods.org/'
 	source 'https://github.com/MoNTE48/VorbisOgg-Specs.git'
 
 	pod 'SSZipArchive'
 	pod 'leveldb-library'
 	pod 'libCurlPod', :git => 'https://github.com/MoNTE48/libCurlPod'
+	pod 'LuaJITPod',  :git => 'https://github.com/MoNTE48/LuaJITPod'
 	pod 'libvorbis'
 
 	appodeal
