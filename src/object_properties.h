@@ -48,6 +48,7 @@ struct ObjectProperties
 	bool automatic_face_movement_dir;
 	f32 automatic_face_movement_dir_offset;
 	bool backface_culling;
+	s8 glow = 0;
 	std::string nametag;
 	video::SColor nametag_color;
 	f32 automatic_face_movement_max_rotation_per_sec;

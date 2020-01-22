@@ -132,7 +132,7 @@ void push_item_definition(lua_State *L, const ItemDefinition &i)
 void push_item_definition_full(lua_State *L, const ItemDefinition &i)
 {
 	std::string type(es_ItemType[(int)i.type].str);
-	
+
 	lua_newtable(L);
 	lua_pushstring(L, i.name.c_str());
 	lua_setfield(L, -2, "name");
@@ -258,6 +258,7 @@ void read_object_properties(lua_State *L, int index,
 	}
 	lua_pop(L, 1);
 	getboolfield(L, -1, "backface_culling", prop->backface_culling);
+	getintfield(L, -1, "glow", prop->glow);
 
 	getstringfield(L, -1, "nametag", prop->nametag);
 	lua_getfield(L, -1, "nametag_color");
@@ -338,6 +339,8 @@ void push_object_properties(lua_State *L, ObjectProperties *prop)
 	lua_setfield(L, -2, "automatic_face_movement_dir");
 	lua_pushboolean(L, prop->backface_culling);
 	lua_setfield(L, -2, "backface_culling");
+	lua_pushnumber(L, prop->glow);
+	lua_setfield(L, -2, "glow");
 	lua_pushlstring(L, prop->nametag.c_str(), prop->nametag.size());
 	lua_setfield(L, -2, "nametag");
 	push_ARGB8(L, prop->nametag_color);
@@ -722,9 +725,9 @@ void push_content_features(lua_State *L, const ContentFeatures &c)
 	std::string paramtype2(ScriptApiNode::es_ContentParamType2[(int)c.param_type_2].str);
 	std::string drawtype(ScriptApiNode::es_DrawType[(int)c.drawtype].str);
 	std::string liquid_type(ScriptApiNode::es_LiquidType[(int)c.liquid_type].str);
-	
+
 	/* Missing "tiles" because I don't see a usecase (at least not yet). */
-	
+
 	lua_newtable(L);
 	lua_pushboolean(L, c.has_on_construct);
 	lua_setfield(L, -2, "has_on_construct");
@@ -757,10 +760,10 @@ void push_content_features(lua_State *L, const ContentFeatures &c)
 	if (!c.palette_name.empty()) {
 		push_ARGB8(L, c.color);
 		lua_setfield(L, -2, "color");
-		
+
 		lua_pushstring(L, c.palette_name.c_str());
 		lua_setfield(L, -2, "palette_name");
-		
+
 		push_palette(L, c.palette);
 		lua_setfield(L, -2, "palette");
 	}
@@ -768,7 +771,7 @@ void push_content_features(lua_State *L, const ContentFeatures &c)
 	lua_setfield(L, -2, "waving");
 	lua_pushnumber(L, c.connect_sides);
 	lua_setfield(L, -2, "connect_sides");
-	
+
 	lua_newtable(L);
 	u16 i = 1;
 	for (std::vector<std::string>::const_iterator it = c.connects_to.begin();
@@ -777,7 +780,7 @@ void push_content_features(lua_State *L, const ContentFeatures &c)
 		lua_rawseti(L, -2, i);
 	}
 	lua_setfield(L, -2, "connects_to");
-	
+
 	push_ARGB8(L, c.post_effect_color);
 	lua_setfield(L, -2, "post_effect_color");
 	lua_pushnumber(L, c.leveled);
