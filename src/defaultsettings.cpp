@@ -414,7 +414,8 @@ void set_default_settings(Settings *settings) {
 #endif
 	if (arm) {
 #endif
-		settings->setDefault("client_mapblock_limit", "100");
+		settings->setDefault("client_unload_unused_data_timeout", "60");
+		settings->setDefault("client_mapblock_limit", "50");
 		settings->setDefault("pause_fps_max", "5");
 		settings->setDefault("viewing_range", "25");
 		settings->setDefault("smooth_lighting", "false");
@@ -433,6 +434,7 @@ void set_default_settings(Settings *settings) {
 	} else if (([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPodTouch6Gen) ||
 			   ([SDVersion deviceVersion] == iPadMini2) || ([SDVersion deviceVersion] == iPadMini3)) {
 #endif
+		settings->setDefault("client_unload_unused_data_timeout", "120");
 		settings->setDefault("client_mapblock_limit", "200");
 		settings->setDefault("pause_fps_max", "5");
 		settings->setDefault("viewing_range", "25");
@@ -453,7 +455,8 @@ void set_default_settings(Settings *settings) {
 	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) ||
 			   ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir)) {
 #endif
-		settings->setDefault("client_mapblock_limit", "500");
+		settings->setDefault("client_unload_unused_data_timeout", "300");
+		settings->setDefault("client_mapblock_limit", "300");
 		settings->setDefault("pause_fps_max", "10");
 		settings->setDefault("viewing_range", "50");
 		settings->setDefault("cloud_radius", "6");
@@ -461,7 +464,7 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("max_block_generate_distance", "3");
 	} else {
 	// high settings
-		settings->setDefault("client_mapblock_limit", "1000");
+		settings->setDefault("client_mapblock_limit", "500");
 		settings->setDefault("viewing_range", "75");
 		settings->setDefault("max_block_generate_distance", "5");
 	}
@@ -507,6 +510,7 @@ void set_default_settings(Settings *settings) {
 
 	// iOS Settings
 #ifdef __IOS__
+	settings->setDefault("enable_minimap", "false");
 	settings->setDefault("debug_log_level", "none");
 	settings->setDefault("password_save", "true");
 
