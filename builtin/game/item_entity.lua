@@ -1,7 +1,7 @@
 -- Minetest: builtin/item_entity.lua
 
-local math_abs, math_min, math_pi = math.abs, math.min, math.pi
-local vector_add, vector_normalize = vector.add, vector.normalize
+local abs, min, pi = math.abs, math.min, math.pi
+local vadd, vnormalize = vector.add, vector.normalize
 
 function core.spawn_item(pos, item)
 	-- Take item in any format
@@ -22,29 +22,18 @@ local gravity = tonumber(core.settings:get("movement_gravity")) or 9.81
 local collection = core.settings:get_bool("item_collection") or true
 local water_flow = core.settings:get_bool("item_water_flow") or true
 
--- Water flow functions by QwertyMine3 (WTFPL), and TenPlus1 (MIT)
-local function quick_flow_logic(node, pos_testing, direction)
+-- Water flow functions, based on QwertyMine3 (WTFPL), and TenPlus1 (MIT) mods
+local function quick_flow_logic(node, pos_testing, dir)
 	local node_testing = core.get_node_or_nil(pos_testing)
+	local liquid = node_testing and core.registered_nodes[node_testing.name].liquidtype
 
-	if not node_testing
-			or  core.registered_nodes[node_testing.name].liquidtype ~= "flowing"
-			and core.registered_nodes[node_testing.name].liquidtype ~= "source"
-	then return 0 end
-
-	local param2_testing = node_testing.param2
-	if param2_testing < node.param2 then
-		if (node.param2 - param2_testing) > 6 then
-			return -direction
-		else
-			return direction
-		end
-	else
-		if (param2_testing - node.param2) > 6 then
-			return direction
-		else
-			return -direction
-		end
+	if not liquid or liquid ~= "flowing" and liquid ~= "source" then
+		return 0
 	end
+
+	local sum = node.param2 - node_testing.param2
+
+	return (sum < -6 or (sum < 6 and sum > 0) or sum == 0) and dir or -dir
 end
 
 local function quick_flow(pos, node)
@@ -54,7 +43,7 @@ local function quick_flow(pos, node)
 	x = x + quick_flow_logic(node, {x = pos.x + 1.01, y = pos.y, z = pos.z},  1)
 	z = z + quick_flow_logic(node, {x = pos.x, y = pos.y, z = pos.z - 1.01}, -1)
 	z = z + quick_flow_logic(node, {x = pos.x, y = pos.y, z = pos.z + 1.01},  1)
-	return vector_normalize({x = x, y = 0, z = z})
+	return vnormalize({x = x, y = 0, z = z})
 end
 
 core.register_entity(":__builtin:throwing_item", {
@@ -107,7 +96,7 @@ core.register_entity(":__builtin:item", {
 		local itemname = stack:is_known() and stack:get_name() or "unknown"
 
 		local max_count = stack:get_stack_max()
-		local count = math_min(stack:get_count(), max_count)
+		local count = min(stack:get_count(), max_count)
 		local size = 0.2 + 0.1 * (count / max_count) ^ (1 / 3)
 		local coll_height = size * 0.75
 		local def = core.registered_nodes[itemname]
@@ -120,7 +109,7 @@ core.register_entity(":__builtin:item", {
 			collisionbox = {-size, -coll_height, -size,
 				size, coll_height, size},
 			selectionbox = {-size, -size, -size, size, size, size},
-			automatic_rotate = math_pi * 0.5 * 0.15 / size,
+			automatic_rotate = pi * 0.5 * 0.15 / size,
 			wield_item = self.itemstring,
 			glow = def and def.light_source,
 			infotext = core.registered_items[itemname].description
@@ -264,7 +253,7 @@ core.register_entity(":__builtin:item", {
 		if def and def.walkable then
 			local slippery = core.get_item_group(node.name, "slippery")
 			is_slippery = slippery ~= 0
-			if is_slippery and (math_abs(vel.x) > 0.2 or math_abs(vel.z) > 0.2) then
+			if is_slippery and (abs(vel.x) > 0.2 or abs(vel.z) > 0.2) then
 				-- Horizontal deceleration
 				local slip_factor = 4.0 / (slippery + 4)
 				self.object:set_acceleration({
@@ -335,7 +324,7 @@ if collection then
 			return
 		end
 		-- Detect
-		local col_pos = vector_add(pos, {x = 0, y = 1.3, z = 0})
+		local col_pos = vadd(pos, {x = 0, y = 1.3, z = 0})
 		local objects = core.get_objects_inside_radius(col_pos, 2)
 		for _, obj in pairs(objects) do
 			local entity = obj:get_luaentity()

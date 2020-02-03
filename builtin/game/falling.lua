@@ -2,6 +2,10 @@
 
 local builtin_shared = ...
 
+local gravity = tonumber(core.settings:get("movement_gravity")) or 9.81
+local singleplayer = core.is_singleplayer()
+local vequals, vround, vadd = vector.equals, vector.round, vector.add
+
 --
 -- Falling stuff
 --
@@ -23,7 +27,18 @@ core.register_entity(":__builtin:falling_node", {
 
 	set_node = function(self, node, meta)
 		self.node = node
-		self.meta = meta or {}
+		meta = meta or {}
+		if type(meta.to_table) == "function" then
+			meta = meta:to_table()
+		end
+		for _, list in pairs(meta.inventory or {}) do
+			for i, stack in pairs(list) do
+				if type(stack) == "userdata" then
+					list[i] = stack:to_string()
+				end
+			end
+		end
+		self.meta = meta
 		self.object:set_properties({
 			is_visible = true,
 			textures = {node.name},
@@ -54,9 +69,8 @@ core.register_entity(":__builtin:falling_node", {
 	on_step = function(self, dtime)
 		-- Set gravity
 		local acceleration = self.object:get_acceleration()
-		local gravity = tonumber(core.settings:get("movement_gravity")) or 9.81
-		if not vector.equals(acceleration, {x = 0, y = -gravity, z = 0}) then
-			self.object:setacceleration({x = 0, y = -gravity, z = 0})
+		if not vequals(acceleration, {x = 0, y = -gravity, z = 0}) then
+			self.object:set_acceleration({x = 0, y = -gravity, z = 0})
 		end
 		-- Turn to actual node when colliding with ground, or continue to move
 		local pos = self.object:get_pos()
@@ -118,7 +132,7 @@ core.register_entity(":__builtin:falling_node", {
 					local meta = core.get_meta(np)
 					meta:from_table(self.meta)
 				end
-				if def.sounds and def.sounds.place and def.sounds.place.name then
+				if def.sounds and def.sounds.place then
 					core.sound_play(def.sounds.place, {pos = np})
 				end
 			end
@@ -127,9 +141,9 @@ core.register_entity(":__builtin:falling_node", {
 			return
 		end
 		local vel = self.object:get_velocity()
-		if vector.equals(vel, {x = 0, y = 0, z = 0}) then
+		if vequals(vel, {x = 0, y = 0, z = 0}) then
 			local npos = self.object:get_pos()
-			self.object:set_pos(vector.round(npos))
+			self.object:set_pos(vround(npos))
 		end
 		-- Drop node if does not fall within 5 seconds
 		self.timer = self.timer + dtime
@@ -140,11 +154,23 @@ core.register_entity(":__builtin:falling_node", {
 	end
 })
 
-local function spawn_falling_node(p, node, meta)
-	local obj = core.add_entity(p, "__builtin:falling_node")
-	if obj then
-		obj:get_luaentity():set_node(node, meta)
+local function convert_to_falling_node(pos, node)
+	local obj = core.add_entity(pos, "__builtin:falling_node")
+	if not obj then
+		return false
 	end
+	node.level = core.get_node_level(pos)
+	local meta = core.get_meta(pos)
+	local metatable = meta and meta:to_table() or {}
+
+	local def = core.registered_nodes[node.name]
+	if def and def.sounds and def.sounds.fall then
+		core.sound_play(def.sounds.fall, {pos = pos})
+	end
+
+	obj:get_luaentity():set_node(node, metatable)
+	core.remove_node(pos)
+	return true
 end
 
 function core.spawn_falling_node(pos)
@@ -152,23 +178,35 @@ function core.spawn_falling_node(pos)
 	if node.name == "air" or node.name == "ignore" then
 		return false
 	end
-	local obj = core.add_entity(pos, "__builtin:falling_node")
-	if obj then
-		obj:get_luaentity():set_node(node)
-		core.remove_node(pos)
-		return true
-	end
-	return false
+	return convert_to_falling_node(pos, node)
 end
 
+local random = math.random
 local function drop_attached_node(p)
 	local n = core.get_node(p)
+	local drops = core.get_node_drops(n, "")
+	local def = core.registered_items[n.name]
+	if def and def.preserve_metadata then
+		local oldmeta = core.get_meta(p):to_table().fields
+		-- Copy pos and node because the callback can modify them.
+		local pos_copy = {x=p.x, y=p.y, z=p.z}
+		local node_copy = {name=n.name, param1=n.param1, param2=n.param2}
+		local drop_stacks = {}
+		for k, v in pairs(drops) do
+			drop_stacks[k] = ItemStack(v)
+		end
+		drops = drop_stacks
+		def.preserve_metadata(pos_copy, node_copy, oldmeta, drops)
+	end
+	if def and def.sounds and def.sounds.fall then
+		core.sound_play(def.sounds.fall, {pos = p})
+	end
 	core.remove_node(p)
-	for _, item in pairs(core.get_node_drops(n, "")) do
+	for _, item in pairs(drops) do
 		local pos = {
-			x = p.x + math.random()/2 - 0.25,
-			y = p.y + math.random()/2 - 0.25,
-			z = p.z + math.random()/2 - 0.25,
+			x = p.x + random()/2 - 0.25,
+			y = p.y + random()/2 - 0.25,
+			z = p.z + random()/2 - 0.25,
 		}
 		core.add_item(pos, item)
 	end
@@ -187,7 +225,7 @@ function builtin_shared.check_attached_node(p, n)
 	else
 		d.y = -1
 	end
-	local p2 = vector.add(p, d)
+	local p2 = vadd(p, d)
 	local nn = core.get_node(p2).name
 	local def2 = core.registered_nodes[nn]
 	if def2 and not def2.walkable then
@@ -202,7 +240,7 @@ end
 
 function core.check_single_for_falling(p)
 	local n = core.get_node(p)
-	if core.get_item_group(n.name, "falling_node") ~= 0 and core.is_singleplayer() then
+	if core.get_item_group(n.name, "falling_node") ~= 0 and singleplayer then
 		local p_bottom = {x = p.x, y = p.y - 1, z = p.z}
 		-- Only spawn falling node if node below is loaded
 		local n_bottom = core.get_node_or_nil(p_bottom)
@@ -217,32 +255,19 @@ function core.check_single_for_falling(p)
 				core.get_node_max_level(p_bottom))) and
 
 				(not d_bottom.walkable or d_bottom.buildable_to) then
-			n.level = core.get_node_level(p)
-			local meta = core.get_meta(p)
-			local metatable = {}
-			if meta ~= nil then
-				metatable = meta:to_table()
-			end
-			core.remove_node(p)
-			spawn_falling_node(p, n, metatable)
+			convert_to_falling_node(p, n)
 			return true
 		end
 	end
 
-	if core.get_item_group(n.name, "falling_node") ~= 0 and not core.is_singleplayer() then
+	if core.get_item_group(n.name, "attached_node") ~= 0
+	or core.get_item_group(n.name, "falling_node")  ~= 0 and not singleplayer then
 		if not builtin_shared.check_attached_node(p, n) then
 			drop_attached_node(p)
 			return true
 		end
 	end
 
-	if core.get_item_group(n.name, "attached_node") ~= 0 then
-		if not builtin_shared.check_attached_node(p, n) then
-			drop_attached_node(p)
-			return true
-		end
-	end
-	
 	--	Attached, but not wallmounted. Yes, no one thought about it.
 	--	This is an alternative to function 'check_attached_node', so it seems too complicated.
 	local check_connected = {
@@ -253,12 +278,12 @@ function core.check_single_for_falling(p)
 	}
 
 	for i = 1, 4 do
-		local pa = vector.add(p, check_connected[i])
+		local pa = vadd(p, check_connected[i])
 		local nc = core.get_node(pa)
 		if core.get_item_group(nc.name, "attached_node2") ~= 0 then
 			local connected
 			for i = 1, 4 do
-				local ptwo = vector.add(pa, check_connected[i])
+				local ptwo = vadd(pa, check_connected[i])
 				local ntwo = core.get_node(ptwo)
 				if core.registered_nodes[ntwo.name].walkable then
 					connected = true
@@ -295,7 +320,7 @@ local check_for_falling_neighbors = {
 
 function core.check_for_falling(p)
 	-- Round p to prevent falling entities to get stuck.
-	p = vector.round(p)
+	p = vround(p)
 
 	-- We make a stack, and manually maintain size for performance.
 	-- Stored in the stack, we will maintain tables with pos, and
@@ -312,7 +337,7 @@ function core.check_for_falling(p)
 		n = n + 1
 		s[n] = {p = p, v = v}
 		-- Select next node from neighbor list.
-		p = vector.add(p, check_for_falling_neighbors[v])
+		p = vadd(p, check_for_falling_neighbors[v])
 		-- Now we check out the node. If it is in need of an update,
 		-- it will let us know in the return value (true = updated).
 		if not core.check_single_for_falling(p) then
