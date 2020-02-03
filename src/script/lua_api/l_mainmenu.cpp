@@ -953,7 +953,7 @@ bool ModApiMainMenu::isMinetestPath(std::string path)
 		return true;
 
 	/* mods */
-	if (fs::PathStartsWith(path,fs::RemoveRelativePathComponents(porting::path_user + DIR_DELIM + "files")))
+	if (fs::PathStartsWith(path,fs::RemoveRelativePathComponents(porting::path_user + DIR_DELIM + "mods")))
 		return true;
 
 	/* worlds */

@@ -112,9 +112,9 @@ SubgameSpec findSubgame(const std::string &id)
 	// Find mod directories
 	std::set<std::string> mods_paths;
 	if(!user_game)
-		mods_paths.insert(share + DIR_DELIM + "files");
+		mods_paths.insert(share + DIR_DELIM + "mods");
 	if(user != share || user_game)
-		mods_paths.insert(user + DIR_DELIM + "files");
+		mods_paths.insert(user + DIR_DELIM + "mods");
 	std::string game_name = getGameName(game_path);
 	if(game_name == "")
 		game_name = id;
@@ -135,7 +135,7 @@ SubgameSpec findWorldSubgame(const std::string &world_path)
 		SubgameSpec gamespec;
 		gamespec.id = world_gameid;
 		gamespec.path = world_gamepath;
-		gamespec.gamemods_path= world_gamepath + DIR_DELIM + "files";
+		gamespec.gamemods_path= world_gamepath + DIR_DELIM + "mods";
 		gamespec.name = getGameName(world_gamepath);
 		if(gamespec.name == "")
 			gamespec.name = "unknown";
