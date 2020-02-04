@@ -241,15 +241,14 @@ function create_configure_world_dlg(worldidx)
 
 	if dlg.data.worldconfig == nil or dlg.data.worldconfig.id == nil or
 			dlg.data.worldconfig.id == "" then
-
 		dlg:delete()
-		return nil
+		return
 	end
 
 	dlg.data.list = filterlist.create(
-			modmgr.preparemodlist, --refresh
-			modmgr.comparemod, --compare
-			function(element,uid) --uid match
+			modmgr.preparemodlist,
+			modmgr.comparemod,
+			function(element,uid)
 					if element.name == uid then
 						return true
 					end
@@ -265,9 +264,11 @@ function create_configure_world_dlg(worldidx)
 						return false
 					end
 					return true
-				end, --filter
-				{ worldpath= dlg.data.worldspec.path,
-				  gameid = dlg.data.worldspec.gameid }
+				end,
+				{
+					worldpat h= dlg.data.worldspec.path,
+					gameid = dlg.data.worldspec.gameid
+				}
 			)
 
 
@@ -275,8 +276,7 @@ function create_configure_world_dlg(worldidx)
 		dlg.data.selected_mod = 0
 	end
 
-	dlg.data.list:set_filtercriteria(
-		{
+	dlg.data.list:set_filtercriteria({
 			hide_game=dlg.data.hide_gamemods,
 			hide_modpackcontents= dlg.data.hide_modpackcontents
 		})

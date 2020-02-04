@@ -42,26 +42,26 @@ local function get_formspec(_, _, tabdata)
 			.. ";btn_mp_refresh;;true;false]" ..
 
 		-- Address / Port
-		"label[7.1,-0.3;" .. fgettext("Address:") .. "]" ..
-		"label[10.15,-0.3;" .. fgettext("Port:") .. "]" ..
+		"label[7.1,-0.3;" .. fgettext("Address") .. ":" .. "]" ..
+		"label[10.15,-0.3;" .. fgettext("Port") .. ":" .. "]" ..
 		"field[7.4,0.6;3.2,0.5;te_address;;" ..
 			core.formspec_escape(core.settings:get("address")) .. "]" ..
 		"field[10.45,0.6;1.9,0.5;te_port;;" ..
 			core.formspec_escape(core.settings:get("remote_port")) .. "]" ..
 
 		-- Name
-		"label[7.1,0.85;" .. fgettext("Name:") .. "]" ..
-		"label[10.15,0.85;" .. fgettext("Password:") .. "]" ..
+		"label[7.1,0.85;" .. fgettext("Name") .. ":" .. "]" ..
+		"label[10.15,0.85;" .. fgettext("Password") .. ":" .. "]" ..
 		"field[7.4,1.75;3.2,0.5;te_name;;" ..
 			core.formspec_escape(core.settings:get("name")) .. "]" ..
 
 		-- Description Background
-		"box[7.1,2.1;4.8,2.65;#999999]"..
+		"box[7.1,2.1;4.8,2.65;#999999]" ..
 
 		-- Connect
 		"image_button[8.8,4.88;3.3,0.9;" ..
-				core.formspec_escape(defaulttexturedir ..
-					"blank.png") .. ";btn_mp_connect;;true;false]"
+			core.formspec_escape(defaulttexturedir .. "blank.png")
+			.. ";btn_mp_connect;;true;false]"
 
 		-- Password
 		if password_save then

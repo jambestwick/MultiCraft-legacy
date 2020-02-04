@@ -17,8 +17,10 @@
 
 local function create_world_formspec()
 	local mapgens = core.get_mapgen_names()
+
 	local current_seed = core.settings:get("fixed_map_seed") or ""
 	local current_mg   = core.settings:get("mg_name")
+	local gameid = core.settings:get("menu_last_game")
 
 	local mglist = ""
 	local selindex = 1
@@ -31,16 +33,6 @@ local function create_world_formspec()
 		mglist = mglist .. v .. ","
 	end
 	mglist = mglist:sub(1, -2)
-
-	local gameid = core.settings:get("menu_last_game")
-
-	if gameid ~= nil then
-		local gameidx = gamemgr.find_by_gameid(gameid)
-
-		if gameidx == nil then
-			gameidx = 0
-		end
-	end
 
 	current_seed = core.formspec_escape(current_seed)
 	local retval =
@@ -56,8 +48,6 @@ local function create_world_formspec()
 		"label[1.5,2;" .. fgettext("Mapgen:") .. "]"..
 		"dropdown[4.2,2;6.3;dd_mapgen;" .. mglist .. ";" .. selindex .. "]" ..
 
-		"dropdown[600.2,6;6.3;games;" .. gamemgr.gamelist() .. ";1]" ..
-
 		"button[3.25,3.4;2.5,0.5;world_create_confirm;" .. mt_green_button .. fgettext("Create") .. "]" ..
 		"button[5.75,3.4;2.5,0.5;world_create_cancel;" .. fgettext("Cancel") .. "]"
 
@@ -66,30 +56,20 @@ local function create_world_formspec()
 end
 
 local function create_world_buttonhandler(this, fields)
-
-	if fields["world_create_cancel"] then
-		this:delete()
-		return true
-	end
-
 	if fields["world_create_confirm"] or
 		fields["key_enter"] then
 
 		local worldname = fields["te_world_name"]
-		local gameindex
-			for i, item in ipairs(gamemgr.games) do
-				if item.name == fields["games"] then
-					gameindex = i
-				end
+		local gameindex = 1
+
+		if gameindex ~= nil then
+			if worldname == "" then
+				worldname = "World " .. math.random(1000, 9999)
 			end
-
-		if gameindex ~= nil and
-			worldname ~= "" then
-
-			local message
 
 			core.settings:set("fixed_map_seed", fields["te_seed"])
 
+			local message
 			if not menudata.worldlist:uid_exists_raw(worldname) then
 				core.settings:set("mg_name",fields["dd_mapgen"])
 				message = core.create_world(worldname,gameindex)
@@ -109,19 +89,27 @@ local function create_world_buttonhandler(this, fields)
 									menudata.worldlist:raw_index_by_uid(worldname))
 			end
 		else
-			gamedata.errormessage =
-				fgettext("No worldname given or no game selected")
+			gamedata.errormessage = fgettext("No game selected")
 		end
+
 		this:delete()
 		return true
 	end
 
 	if fields["games"] then
+		local gameindex = 1
+		core.settings:set("menu_last_game", gamemgr.games[gameindex].id)
+		return true
+	end
+	
+	if fields["world_create_cancel"] then
+		this:delete()
 		return true
 	end
 
 	return false
 end
+
 
 function create_create_world_dlg(update_worldlistfilter)
 	local retval = dialog_create("sp_create_world",

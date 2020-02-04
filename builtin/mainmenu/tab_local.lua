@@ -39,6 +39,26 @@ local function get_formspec()
 			"textlist[-0.01,0;6.28,4.64;sp_worlds;" ..
 			menu_render_worldlist() ..
 			";" .. index .. ";true]"
+
+
+	if PLATFORM ~= "Android" and PLATFORM ~= "iOS" then
+		retval = retval ..
+				"checkbox[6.6,5;cb_server;".. fgettext("Create Server") ..";" ..
+					dump(core.settings:get_bool("enable_server")) .. "]"
+	end
+
+	if core.settings:get_bool("enable_server") then
+		retval = retval ..
+				"checkbox[6.6,0.65;cb_server_announce;" .. fgettext("Announce Server") .. ";" ..
+					dump(core.settings:get_bool("server_announce")) .. "]" ..
+
+				-- Name / Password
+				"label[6.6,-0.3;" .. fgettext("Name") .. ":" .. "]" ..
+				"label[9.3,-0.3;" .. fgettext("Password") .. ":" .. "]" ..
+				"field[6.9,0.6;2.8,0.5;te_playername;;" ..
+					core.formspec_escape(core.settings:get("name")) .. "]" ..
+				"pwdfield[9.6,0.6;2.8,0.5;te_passwd;;]"
+	end
 	return retval
 end
 
@@ -68,9 +88,9 @@ local function main_button_handler(this, fields, name)
 		return true
 	end
 
-	if fields.cb_creative_mode then
+	if fields["cb_creative_mode"] then
 		local creative_mode = core.settings:get_bool("creative_mode")
-		core.settings:set("creative_mode", tostring((not creative_mode)))
+		core.settings:set("creative_mode", tostring(not creative_mode))
 		core.settings:set("enable_damage", tostring(creative_mode))
 
 		return true
@@ -103,7 +123,9 @@ local function main_button_handler(this, fields, name)
 				gamedata.address        = ""
 
 				core.settings:set_bool("auto_connect", false)
-				core.settings:set("port",gamedata.port)
+				if fields["port"] ~= nil then
+					core.settings:set("port",fields["port"])
+				end
 				if fields["te_serveraddr"] ~= nil then
 					core.settings:set("bind_address",fields["te_serveraddr"])
 				end

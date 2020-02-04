@@ -44,7 +44,7 @@ end
 
 --------------------------------------------------------------------------------
 function mm_texture.reset()
-	mm_texture.gameid  = nil
+	mm_texture.gameid = nil
 	local have_bg      = false
 	local have_overlay = mm_texture.set_generic("overlay")
 
@@ -142,7 +142,7 @@ function mm_texture.set_game(identifier, gamedetails)
 		end
 	end
 
-	-- Find out how many randomized textures the subgame provides
+	-- Find out how many randomized textures the game provides
 	local n = 0
 	local filename
 	local menu_files = core.get_dir_list(gamedetails.path .. DIR_DELIM .. "menu", false)

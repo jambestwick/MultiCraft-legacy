@@ -23,18 +23,16 @@ mt_color_dark_green = "#25C191"
 mt_red_button = core.get_color_escape_sequence("#FF3333")
 mt_green_button = core.get_color_escape_sequence("#00CC00")
 
---for all other colors ask sfan5 to complete his work!
-
 local menupath = core.get_mainmenu_path()
 local basepath = core.get_builtin_path()
 defaulttexturedir = core.get_texturepath_share() .. DIR_DELIM .. "base" .. DIR_DELIM
-local mobile = (PLATFORM == "Android" or PLATFORM == "iOS")
+local mobile = PLATFORM == "Android" or PLATFORM == "iOS"
 
-dofile(basepath .. DIR_DELIM .. "common" .. DIR_DELIM .. "async_event.lua")
-dofile(basepath .. DIR_DELIM .. "common" .. DIR_DELIM .. "filterlist.lua")
-dofile(basepath .. DIR_DELIM .. "fstk" .. DIR_DELIM .. "dialog.lua")
-dofile(basepath .. DIR_DELIM .. "fstk" .. DIR_DELIM .. "tabview.lua")
-dofile(basepath .. DIR_DELIM .. "fstk" .. DIR_DELIM .. "ui.lua")
+dofile(basepath .. "common" .. DIR_DELIM .. "async_event.lua")
+dofile(basepath .. "common" .. DIR_DELIM .. "filterlist.lua")
+dofile(basepath .. "fstk" .. DIR_DELIM .. "dialog.lua")
+dofile(basepath .. "fstk" .. DIR_DELIM .. "tabview.lua")
+dofile(basepath .. "fstk" .. DIR_DELIM .. "ui.lua")
 dofile(menupath .. DIR_DELIM .. "common.lua")
 dofile(menupath .. DIR_DELIM .. "gamemgr.lua")
 --dofile(menupath .. DIR_DELIM .. "textures.lua")
@@ -53,16 +51,16 @@ end
 
 local tabs = {}
 
---tabs.mods = dofile(menupath .. DIR_DELIM .. "tab_mods.lua")
+if not mobile then
+	tabs.settings = dofile(menupath .. DIR_DELIM .. "tab_settings.lua")
+--	tabs.mods = dofile(menupath .. DIR_DELIM .. "tab_mods.lua")
+--	tabs.texturepacks = dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
+end
+
+
 tabs.credits = dofile(menupath .. DIR_DELIM .. "tab_credits.lua")
 tabs.local_game = dofile(menupath .. DIR_DELIM .. "tab_local.lua")
 tabs.play_online = dofile(menupath .. DIR_DELIM .. "tab_online.lua")
---tabs.server = dofile(menupath .. DIR_DELIM .. "tab_server.lua")
-
-if not mobile then
-	tabs.settings = dofile(menupath .. DIR_DELIM .. "tab_settings.lua")
---	tabs.texturepacks = dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
-end
 
 --------------------------------------------------------------------------------
 local function main_event_handler(_, event)
@@ -100,7 +98,7 @@ local function init_globals()
 
 	tv_main:add(tabs.local_game)
 	tv_main:add(tabs.play_online)
-	
+
 if not mobile then
 	tv_main:add(tabs.settings)
 --	tv_main:add(tabs.texturepacks)
@@ -120,14 +118,12 @@ end
 	ui.set_default("maintab")
 	tv_main:show()
 
-	-- Create modstore ui
---	modstore.init({x = 12, y = 5.4}, 3, 2)
-
 	ui.update()
 
 	core.set_clouds(false)
 --	mm_texture.set_dirt_bg()
 	core.set_background("background",  defaulttexturedir .. "bg.png", true, 256)
+--	core.sound_play("main_menu", true)
 end
 
 init_globals()
