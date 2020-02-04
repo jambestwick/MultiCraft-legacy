@@ -97,9 +97,9 @@ function render_serverlist_row(spec, is_favorite, is_approved)
 		end
 	end
 
-	local details = ""
 	local grey_out = not is_server_protocol_compat(spec.proto_min, spec.proto_max)
 
+	local details
 	if is_favorite then
 		details = "1,"
 	else
@@ -126,11 +126,11 @@ function render_serverlist_row(spec, is_favorite, is_approved)
 	end
 
 	if spec.clients and spec.clients_max then
-		local clients_color = ''
 		local clients_percent = 100 * spec.clients / spec.clients_max
 
 		-- Choose a color depending on how many clients are connected
 		-- (relatively to clients_max)
+		local clients_color
 		if     grey_out               then clients_color = '#aaaaaa'
 		elseif spec.clients == 0      then clients_color = ''        -- 0 players: default/white
 		elseif clients_percent <= 60  then clients_color = '#a1e587' -- 0-60%: green
@@ -173,15 +173,28 @@ os.tempfolder = function()
 	local filetocheck = os.tmpname()
 	os.remove(filetocheck)
 
-	local randname = "MTTempModFolder_" .. math.random(0,10000)
-	if DIR_DELIM == "\\" then
+	-- luacheck: ignore
+	-- https://blogs.msdn.microsoft.com/vcblog/2014/06/18/c-runtime-crt-features-fixes-and-breaking-changes-in-visual-studio-14-ctp1/
+	--   The C runtime (CRT) function called by os.tmpname is tmpnam.
+	--   Microsofts tmpnam implementation in older CRT / MSVC releases is defective.
+	--   tmpnam return values starting with a backslash characterize this behavior.
+	-- https://sourceforge.net/p/mingw-w64/bugs/555/
+	--   MinGW tmpnam implementation is forwarded to the CRT directly.
+	-- https://sourceforge.net/p/mingw-w64/discussion/723797/thread/55520785/
+	--   MinGW links to an older CRT release (msvcrt.dll).
+	--   Due to legal concerns MinGW will never use a newer CRT.
+	--
+	--   Make use of TEMP to compose the temporary filename if an old
+	--   style tmpnam return value is detected.
+	if filetocheck:sub(1, 1) == "\\" then
 		local tempfolder = os.getenv("TEMP")
 		return tempfolder .. filetocheck
-	else
-		local backstring = filetocheck:reverse()
-		return filetocheck:sub(0,filetocheck:len()-backstring:find(DIR_DELIM)+1) ..randname
 	end
 
+	local randname = "MTTempModFolder_" .. math.random(0,10000)
+	local backstring = filetocheck:reverse()
+	return filetocheck:sub(0, filetocheck:len() - backstring:find(DIR_DELIM) + 1) ..
+		randname
 end
 
 --------------------------------------------------------------------------------
@@ -191,7 +204,7 @@ function menu_render_worldlist()
 
 	for _, v in ipairs(current_worldlist) do
 		if retval ~= "" then retval = retval .. "," end
-		retval = retval .. core.formspec_escape(v.name) .. ""
+		retval = retval .. core.formspec_escape(v.name)
 	end
 
 	return retval

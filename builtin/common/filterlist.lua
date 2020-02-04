@@ -250,7 +250,6 @@ end
 
 --------------------------------------------------------------------------------
 function compare_worlds(world1,world2)
-
 	if world1.path ~= world2.path then
 		return false
 	end
@@ -268,7 +267,6 @@ end
 
 --------------------------------------------------------------------------------
 function sort_worlds_alphabetic(self)
-
 	table.sort(self.m_processed_list, function(a, b)
 		--fixes issue #857 (crash due to sorting nil in worldlist)
 		if a == nil or b == nil then
@@ -285,7 +283,6 @@ end
 
 --------------------------------------------------------------------------------
 function sort_mod_list(self)
-
 	table.sort(self.m_processed_list, function(a, b)
 		-- Show game mods at bottom
 		if a.typ ~= b.typ then

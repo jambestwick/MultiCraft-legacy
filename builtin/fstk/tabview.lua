@@ -66,24 +66,26 @@ end
 --------------------------------------------------------------------------------
 local function get_formspec(self)
 	local formspec = ""
-	local name = self.tablist[self.last_tab_index].name
-	local tabname = name == "local" and name or name == "online" and name or nil
 
 	if not self.hidden and (self.parent == nil or not self.parent.hidden) then
+		local name = self.tablist[self.last_tab_index].name
+		local tabname = (name == "local" or name == "online") and name or nil
+
 		if self.parent == nil then
 			local tsize = self.tablist[self.last_tab_index].tabsize or
 					{width=self.width, height=self.height}
 
 			formspec = formspec ..
-				string.format("size[%f,%f,%s]",tsize.width,tsize.height,
-					dump(self.fixed_size))
+					string.format("size[%f,%f,%s]",tsize.width,tsize.height,
+						dump(self.fixed_size)) ..
+						get_bg(tsize, tabname)
 
-			formspec = formspec .. get_bg(tsize, tabname)
 		end
 		formspec = formspec .. self:tab_header()
 		formspec = formspec ..
 				self.tablist[self.last_tab_index].get_formspec(
-					self, name,
+					self,
+					name,
 					self.tablist[self.last_tab_index].tabdata,
 					self.tablist[self.last_tab_index].tabsize
 					)
