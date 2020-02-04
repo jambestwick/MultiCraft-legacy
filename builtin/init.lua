@@ -23,8 +23,14 @@ end
 math.randomseed(os.time())
 minetest = core
 
+-- For compatibility with builtin from MT5
+local get_builtin_path = core.get_builtin_path
+function core.get_builtin_path()
+	return get_builtin_path() .. DIR_DELIM
+end
+
 -- Load other files
-local scriptdir = core.get_builtin_path() .. DIR_DELIM
+local scriptdir = core.get_builtin_path()
 local gamepath = scriptdir .. "game" .. DIR_DELIM
 local clientpath = scriptdir .. "client" .. DIR_DELIM
 local commonpath = scriptdir .. "common" .. DIR_DELIM
