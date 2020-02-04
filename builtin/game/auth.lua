@@ -82,18 +82,15 @@ end
 core.builtin_auth_handler = {
 	get_auth = function(name)
 		assert(type(name) == "string")
-		-- Figure out what password to use for a new player (singleplayer
-		-- always has an empty password, otherwise use default, which is
-		-- usually empty too)
-		local new_password_hash = ""
-		-- If not in authentication table, return nil
-		if not core.auth_table[name] then
+		local auth_entry = core.auth_table[name]
+		-- If no such auth found, return nil
+		if not auth_entry then
 			return nil
 		end
 		-- Figure out what privileges the player should have.
 		-- Take a copy of the privilege table
 		local privileges = {}
-		for priv, _ in pairs(core.auth_table[name].privileges) do
+		for priv, _ in pairs(auth_entry.privileges) do
 			privileges[priv] = true
 		end
 		-- If singleplayer, give all privileges except those marked as give_to_singleplayer = false
@@ -106,15 +103,17 @@ core.builtin_auth_handler = {
 		-- For the admin, give everything
 		elseif name == core.settings:get("name") then
 			for priv, def in pairs(core.registered_privileges) do
-				privileges[priv] = true
+				if def.give_to_admin then
+					privileges[priv] = true
+				end
 			end
 		end
 		-- All done
 		return {
-			password = core.auth_table[name].password,
+			password = auth_entry.password,
 			privileges = privileges,
 			-- Is set to nil if unknown
-			last_login = core.auth_table[name].last_login,
+			last_login = auth_entry.last_login,
 		}
 	end,
 	create_auth = function(name, password)
@@ -130,12 +129,13 @@ core.builtin_auth_handler = {
 	set_password = function(name, password)
 		assert(type(name) == "string")
 		assert(type(password) == "string")
-		if not core.auth_table[name] then
+		local auth_entry = core.auth_table[name]
+		if not auth_entry then
 			core.log("action", "[AUTH] Setting password for new player " .. name)
 			core.builtin_auth_handler.create_auth(name, password)
 		else
 			core.log("action", "[AUTH] Setting password for existing player " .. name)
-			core.auth_table[name].password = password
+			auth_entry.password = password
 		end
 		return true
 	end,
@@ -143,12 +143,28 @@ core.builtin_auth_handler = {
 		core.log("action", "[AUTH] Setting privileges for player " .. name)
 		assert(type(name) == "string")
 		assert(type(privileges) == "table")
-		if not core.auth_table[name] then
-			core.builtin_auth_handler.create_auth(name,
+		local auth_entry = core.auth_table[name]
+		if not auth_entry then
+			auth_entry = core.builtin_auth_handler.create_auth(name,
 				core.get_password_hash(name,
 					core.settings:get("default_password")))
 		end
-		core.auth_table[name].privileges = privileges
+
+		-- Run grant callbacks
+		for priv, _ in pairs(privileges) do
+			if not auth_entry.privileges[priv] then
+				core.run_priv_callbacks(name, priv, nil, "grant")
+			end
+		end
+
+		-- Run revoke callbacks
+		for priv, _ in pairs(auth_entry.privileges) do
+			if not privileges[priv] then
+				core.run_priv_callbacks(name, priv, nil, "revoke")
+			end
+		end
+
+		auth_entry.privileges = privileges
 		core.notify_authentication_modified(name)
 	end,
 	reload = function()
@@ -163,9 +179,35 @@ core.builtin_auth_handler = {
 	end,
 	record_login = function(name)
 		assert(type(name) == "string")
-		assert(core.auth_table[name]).last_login = os.time()
+		local auth_entry = core.auth_table[name]
+		assert(auth_entry)
+		auth_entry.last_login = os.time()
 	end,
 }
+
+core.register_on_prejoinplayer(function(name, ip)
+	if core.registered_auth_handler ~= nil then
+		return -- Don't do anything if custom auth handler registered
+	end
+	local auth_entry = core.auth_table
+	if auth_entry[name] ~= nil then
+		return
+	end
+
+	local name_lower = name:lower()
+	for k in pairs(auth_entry) do
+		if k:lower() == name_lower then
+			return string.format("\nYou can not register as '%s'! "..
+					"Another player called '%s' is already registered. "..
+					"Please check the spelling if it's your account "..
+					"or use a different name.", name, k)
+		end
+	end
+end)
+
+--
+-- Authentication API
+--
 
 function core.register_authentication_handler(handler)
 	if core.registered_auth_handler then
@@ -198,30 +240,12 @@ core.auth_commit         = auth_pass("commit")
 core.auth_reload()
 
 local record_login = auth_pass("record_login")
-
 core.register_on_joinplayer(function(player)
 	record_login(player:get_player_name())
 end)
 
 core.register_on_shutdown(function()
 	core.auth_commit()
-end)
-
-core.register_on_prejoinplayer(function(name, ip)
-	local auth = core.auth_table
-	if auth[name] ~= nil then
-		return
-	end
-
-	local name_lower = name:lower()
-	for k in pairs(auth) do
-		if k:lower() == name_lower then
-			return string.format("\nYou can not register as '%s'! "..
-					"Another player called '%s' is already registered. "..
-					"Please check the spelling if it's your account "..
-					"or use a different name.", name, k)
-		end
-	end
 end)
 
 -- Autosave

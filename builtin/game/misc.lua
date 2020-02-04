@@ -39,25 +39,40 @@ function core.check_player_privs(name, ...)
 	return true, ""
 end
 
+
 local player_list = {}
 
-core.register_on_joinplayer(function(player)
-	local player_name = player:get_player_name()
-	player_list[player_name] = player
-	if not core.is_singleplayer() then
-		core.chat_send_all("=> " .. player_name .. " has joined the server")
-	end
-end)
 
-core.register_on_leaveplayer(function(player, timed_out)
-	local player_name = player:get_player_name()
-	player_list[player_name] = nil
+function core.send_join_message(player_name)
+	core.chat_send_all("=> " .. player_name .. " has joined the server")
+end
+
+
+function core.send_leave_message(player_name, timed_out)
 	local announcement = "<= " ..  player_name .. " left the server"
 	if timed_out then
 		announcement = announcement .. " (timed out)"
 	end
 	core.chat_send_all(announcement)
+end
+
+
+core.register_on_joinplayer(function(player)
+	local player_name = player:get_player_name()
+	player_list[player_name] = player
+	if not core.is_singleplayer() then
+		core.send_join_message(player_name)
+	end
+	
 end)
+
+
+core.register_on_leaveplayer(function(player, timed_out)
+	local player_name = player:get_player_name()
+	player_list[player_name] = nil
+	core.send_leave_message(player_name, timed_out)
+end)
+
 
 function core.get_connected_players()
 	local temp_table = {}
@@ -83,8 +98,10 @@ function core.player_exists(name)
 	return core.get_auth_handler().get_auth(name) ~= nil
 end
 
+
 -- Returns two position vectors representing a box of `radius` in each
 -- direction centered around the player corresponding to `player_name`
+
 function core.get_player_radius_area(player_name, radius)
 	local player = core.get_player_by_name(player_name)
 	if player == nil then
@@ -115,18 +132,22 @@ function core.is_valid_pos(pos)
 end
 
 function core.hash_node_position(pos)
-	return (pos.z+32768)*65536*65536 + (pos.y+32768)*65536 + pos.x+32768
+	return (pos.z + 32768) * 65536 * 65536
+		 + (pos.y + 32768) * 65536
+		 +  pos.x + 32768
 end
+
 
 function core.get_position_from_hash(hash)
 	local pos = {}
-	pos.x = (hash%65536) - 32768
-	hash = math.floor(hash/65536)
-	pos.y = (hash%65536) - 32768
-	hash = math.floor(hash/65536)
-	pos.z = (hash%65536) - 32768
+	pos.x = (hash % 65536) - 32768
+	hash  = math.floor(hash / 65536)
+	pos.y = (hash % 65536) - 32768
+	hash  = math.floor(hash / 65536)
+	pos.z = (hash % 65536) - 32768
 	return pos
 end
+
 
 function core.get_item_group(name, group)
 	if not core.registered_items[name] or not
@@ -136,10 +157,12 @@ function core.get_item_group(name, group)
 	return core.registered_items[name].groups[group]
 end
 
+
 function core.get_node_group(name, group)
 	core.log("deprecated", "Deprecated usage of get_node_group, use get_item_group instead")
 	return core.get_item_group(name, group)
 end
+
 
 function core.setting_get_pos(name)
 	local value = core.settings:get(name)
@@ -150,11 +173,11 @@ function core.setting_get_pos(name)
 end
 
 -- To be overriden by protection mods
+
 function core.is_protected()
 	return false
 end
 
--- To be overriden by protection mods
 function core.is_protected_action()
 	return false
 end
@@ -165,8 +188,8 @@ function core.record_protection_violation(pos, name)
 	end
 end
 
+
 -- Checks if specified volume intersects a protected volume
--- Backport from Minetest 5.0
 
 function core.is_area_protected(minp, maxp, player_name, interval)
 	-- 'interval' is the largest allowed interval for the 3D lattice of checks.

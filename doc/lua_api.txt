@@ -2234,45 +2234,101 @@ For the following functions `x` can be either a vector or a number:
     * Returns a scaled vector or Schur quotient.
 
 Helper functions
-----------------
-* `dump2(obj, name="_", dumped={})`
-     * Return object serialized as a string, handles reference loops
-* `dump(obj, dumped={})`
-    * Return object serialized as a string
+-----------------
+* `dump2(obj, name, dumped)`: returns a string which makes `obj`
+  human-readable, handles reference loops.
+    * `obj`: arbitrary variable
+    * `name`: string, default: `"_"`
+    * `dumped`: table, default: `{}`
+* `dump(obj, dumped)`: returns a string which makes `obj` human-readable
+    * `obj`: arbitrary variable
+    * `dumped`: table, default: `{}`
 * `math.hypot(x, y)`
     * Get the hypotenuse of a triangle with legs x and y.
       Useful for distance calculation.
-* `math.sign(x, tolerance)`
+* `math.sign(x, tolerance)`: returns `-1`, `0` or `1`
     * Get the sign of a number.
-      Optional: Also returns `0` when the absolute value is within the tolerance (default: `0`)
-* `string.split(str, separator=",", include_empty=false, max_splits=-1, sep_is_pattern=false)`
-    * If `max_splits` is negative, do not limit splits.
-    * `sep_is_pattern` specifies if separator is a plain string or a pattern (regex).
-    * e.g. `string:split("a,b", ",") == {"a","b"}`
-* `string:trim()`
-    * e.g. `string.trim("\n \t\tfoo bar\t ") == "foo bar"`
-* `minetest.wrap_text(str, limit, [as_table])`: returns a string or table
-    * Adds newlines to the string to keep it within the specified character limit
-      Note that returned lines may be longer than the limit since it only splits at word borders.
-    * limit: Maximal amount of characters in one line
-    * as_table: optional, if true return table of lines instead of string
-* `minetest.pos_to_string({x=X,y=Y,z=Z}, decimal_places))`: returns string `"(X,Y,Z)"`
-    * Convert position to a printable string
-      Optional: 'decimal_places' will round the x, y and z of the pos to the given decimal place.
-* `minetest.string_to_pos(string)`: returns a position
-    * Same but in reverse. Returns `nil` if the string can't be parsed to a position.
+    * tolerance: number, default: `0.0`
+    * If the absolute value of `x` is within the `tolerance` or `x` is NaN,
+      `0` is returned.
+* `math.factorial(x)`: returns the factorial of `x`
+* `string.split(str, separator, include_empty, max_splits, sep_is_pattern)`
+    * `separator`: string, default: `","`
+    * `include_empty`: boolean, default: `false`
+    * `max_splits`: number, if it's negative, splits aren't limited,
+      default: `-1`
+    * `sep_is_pattern`: boolean, it specifies whether separator is a plain
+      string or a pattern (regex), default: `false`
+    * e.g. `"a,b":split","` returns `{"a","b"}`
+* `string:trim()`: returns the string without whitespace pre- and suffixes
+    * e.g. `"\n \t\tfoo bar\t ":trim()` returns `"foo bar"`
+* `minetest.wrap_text(str, limit, as_table)`: returns a string or table
+    * Adds newlines to the string to keep it within the specified character
+      limit
+    * Note that the returned lines may be longer than the limit since it only
+      splits at word borders.
+    * `limit`: number, maximal amount of characters in one line
+    * `as_table`: boolean, if set to true, a table of lines instead of a string
+      is returned, default: `false`
+* `minetest.pos_to_string(pos, decimal_places)`: returns string `"(X,Y,Z)"`
+    * `pos`: table {x=X, y=Y, z=Z}
+    * Converts the position `pos` to a human-readable, printable string
+    * `decimal_places`: number, if specified, the x, y and z values of
+      the position are rounded to the given decimal place.
+* `minetest.string_to_pos(string)`: returns a position or `nil`
+    * Same but in reverse.
+    * If the string can't be parsed to a position, nothing is returned.
 * `minetest.string_to_area("(X1, Y1, Z1) (X2, Y2, Z2)")`: returns two positions
     * Converts a string representing an area box into two positions
 * `minetest.formspec_escape(string)`: returns a string
-    * escapes the characters "[", "]", "\", "," and ";", which can not be used in formspecs
+    * escapes the characters "[", "]", "\", "," and ";", which can not be used
+      in formspecs.
 * `minetest.is_yes(arg)`
     * returns true if passed 'y', 'yes', 'true' or a number that isn't zero.
+* `minetest.is_nan(arg)`
+    * returns true when the passed number represents NaN.
 * `minetest.get_us_time()`
     * returns time with microsecond precision. May not return wall time.
 * `table.copy(table)`: returns a table
     * returns a deep copy of `table`
-* `minetest.pointed_thing_to_face_pos(placer, pointed_thing)`: returns a position
+* `table.indexof(list, val)`: returns the smallest numerical index containing
+      the value `val` in the table `list`. Non-numerical indices are ignored.
+      If `val` could not be found, `-1` is returned. `list` must not have
+      negative indices.
+* `table.insert_all(table, other_table)`:
+    * Appends all values in `other_table` to `table` - uses `#table + 1` to
+      find new indices.
+* `table.key_value_swap(t)`: returns a table with keys and values swapped
+    * If multiple keys in `t` map to the same value, the result is undefined.
+* `table.shuffle(table, [from], [to], [random_func])`:
+    * Shuffles elements `from` to `to` in `table` in place
+    * `from` defaults to `1`
+    * `to` defaults to `#table`
+    * `random_func` defaults to `math.random`. This function receives two
+      integers as arguments and should return a random integer inclusively
+      between them.
+* `minetest.pointed_thing_to_face_pos(placer, pointed_thing)`: returns a
+  position.
     * returns the exact position on the surface of a pointed node
+* `minetest.get_dig_params(groups, tool_capabilities)`: Simulates a tool
+    that digs a node.
+    Returns a table with the following fields:
+    * `diggable`: `true` if node can be dug, `false` otherwise.
+    * `time`: Time it would take to dig the node.
+    * `wear`: How much wear would be added to the tool.
+    `time` and `wear` are meaningless if node's not diggable
+    Parameters:
+    * `groups`: Table of the node groups of the node that would be dug
+    * `tool_capabilities`: Tool capabilities table of the tool
+* `minetest.get_hit_params(groups, tool_capabilities [, time_from_last_punch])`:
+    Simulates an item that punches an object.
+    Returns a table with the following fields:
+    * `hp`: How much damage the punch would cause.
+    * `wear`: How much wear would be added to the tool.
+    Parameters:
+    * `groups`: Damage groups of the object
+    * `tool_capabilities`: Tool capabilities table of the item
+    * `time_from_last_punch`: time in seconds since last punch action
 
 `minetest` namespace reference
 ------------------------------
@@ -2800,12 +2856,17 @@ and `minetest.auth_reload` call the authetification handler.
     * `{type="player", name="celeron55"}`
     * `{type="node", pos={x=, y=, z=}}`
     * `{type="detached", name="creative"}`
-* `minetest.create_detached_inventory(name, callbacks, [player_name])`: returns an `InvRef`
-    * callbacks: See "Detached inventory callbacks"
-    * `player_name`: Make detached inventory available to one player exclusively,
-      by default they will be sent to every player (even if not used).
-      Note that this parameter is mostly just a workaround and will be removed in future releases.
+* `minetest.create_detached_inventory(name, callbacks, [player_name])`: returns
+  an `InvRef`.
+    * `callbacks`: See [Detached inventory callbacks]
+    * `player_name`: Make detached inventory available to one player
+      exclusively, by default they will be sent to every player (even if not
+      used).
+      Note that this parameter is mostly just a workaround and will be removed
+      in future releases.
     * Creates a detached inventory. If it already exists, it is cleared.
+* `minetest.remove_detached_inventory(name)`
+    * Returns a `boolean` indicating whether the removal succeeded.
 * `minetest.do_item_eat(hp_change, replace_with_item, poison, itemstack, user, pointed_thing)`:
    returns left over ItemStack
     * See `minetest.item_eat` and `minetest.register_on_item_eat`
@@ -2912,8 +2973,8 @@ and `minetest.auth_reload` call the authetification handler.
             }
 * `minetest.handle_node_drops(pos, drops, digger)`
     * `drops`: list of itemstrings
-    * Handles drops from nodes after digging: Default action is to put them into
-      digger's inventory
+    * Handles drops from nodes after digging: Default action is to put them
+      into digger's inventory.
     * Can be overridden to get different functionality (e.g. dropping items on
       ground)
 * `minetest.itemstring_with_palette(item, palette_index)`: returns an item
@@ -3166,6 +3227,10 @@ These functions return the leftover itemstack.
     * See documentation on `minetest.compress()` for supported compression methods.
     * currently supported.
     * `...` indicates method-specific arguments. Currently, no methods use this.
+* `minetest.rgba(red, green, blue[, alpha])`: returns a string
+    * Each argument is a 8 Bit unsigned integer
+    * Returns the ColorString from rgb or rgba values
+    * Example: `minetest.rgba(10, 20, 30, 40)`, returns `"#0A141E28"`
 * `minetest.encode_base64(string)`: returns string encoded in base64
     * Encodes a string in base64.
 * `minetest.decode_base64(string)`: returns string

@@ -79,6 +79,7 @@ end
 
 function core.register_abm(spec)
 	-- Add to core.registered_abms
+	assert(type(spec.action) == "function", "Required field 'action' of type function")
 	core.registered_abms[#core.registered_abms + 1] = spec
 	spec.mod_origin = core.get_current_modname() or "??"
 end
@@ -86,6 +87,7 @@ end
 function core.register_lbm(spec)
 	-- Add to core.registered_lbms
 	check_modname_prefix(spec.name)
+	assert(type(spec.action) == "function", "Required field 'action' of type function")
 	core.registered_lbms[#core.registered_lbms + 1] = spec
 	spec.mod_origin = core.get_current_modname() or "??"
 end
@@ -106,7 +108,7 @@ function core.register_entity(name, prototype)
 end
 
 -- Intllib
-Sl = intllib.make_gettext_pair("locales");
+Sl = intllib.make_gettext_pair("locales")
 
 function core.register_item(name, itemdef)
 	-- Check name
@@ -185,7 +187,7 @@ function core.register_item(name, itemdef)
 	--core.log("Registering item: " .. itemdef.name)
 	core.registered_items[itemdef.name] = itemdef
 	core.registered_aliases[itemdef.name] = nil
-		register_item_raw(itemdef)
+	register_item_raw(itemdef)
 end
 
 function core.unregister_item(name)
@@ -309,18 +311,17 @@ end
 
 -- Alias the forbidden item names to "" so they can't be
 -- created via itemstrings (e.g. /give)
-local name
 for name in pairs(forbidden_item_names) do
 	core.registered_aliases[name] = ""
 	register_alias_raw(name, "")
 end
 
 
--- Deprecated:
+-- Obsolete:
 -- Aliases for core.register_alias (how ironic...)
---core.alias_node = core.register_alias
---core.alias_tool = core.register_alias
---core.alias_craftitem = core.register_alias
+-- core.alias_node = core.register_alias
+-- core.alias_tool = core.register_alias
+-- core.alias_craftitem = core.register_alias
 
 --
 -- Built-in node definitions. Also defined in C.
@@ -429,10 +430,6 @@ function core.run_callbacks(callbacks, mode, ...)
 		local origin = core.callback_origins[callbacks[i]]
 		if origin then
 			core.set_last_run_mod(origin.mod)
-			--print("Running " .. tostring(callbacks[i]) ..
-			--	" (a " .. origin.name .. " callback in " .. origin.mod .. ")")
-		else
-			--print("No data associated with callback")
 		end
 		local cb_ret = callbacks[i](...)
 
@@ -458,6 +455,18 @@ function core.run_callbacks(callbacks, mode, ...)
 		end
 	end
 	return ret
+end
+
+function core.run_priv_callbacks(name, priv, caller, method)
+	local def = core.registered_privileges[priv]
+	if not def or not def["on_" .. method] or
+			not def["on_" .. method](name, caller) then
+		for _, func in ipairs(core["registered_on_priv_" .. method]) do
+			if not func(name, caller, priv) then
+				break
+			end
+		end
+	end
 end
 
 --
@@ -521,11 +530,11 @@ end
 
 core.registered_on_player_hpchanges = { modifiers = { }, loggers = { } }
 
-function core.registered_on_player_hpchange(player, hp_change)
-	local last = false
+function core.registered_on_player_hpchange(player, hp_change, reason)
+	local last
 	for i = #core.registered_on_player_hpchanges.modifiers, 1, -1 do
 		local func = core.registered_on_player_hpchanges.modifiers[i]
-		hp_change, last = func(player, hp_change)
+		hp_change, last = func(player, hp_change, reason)
 		if type(hp_change) ~= "number" then
 			local debuginfo = debug.getinfo(func)
 			error("The register_on_hp_changes function has to return a number at " ..
@@ -536,7 +545,7 @@ function core.registered_on_player_hpchange(player, hp_change)
 		end
 	end
 	for i, func in ipairs(core.registered_on_player_hpchanges.loggers) do
-		func(player, hp_change)
+		func(player, hp_change, reason)
 	end
 	return hp_change
 end
@@ -578,11 +587,12 @@ core.registered_craft_predicts, core.register_craft_predict = make_registration(
 core.registered_on_protection_violation, core.register_on_protection_violation = make_registration()
 core.registered_on_item_eats, core.register_on_item_eat = make_registration()
 core.registered_on_punchplayers, core.register_on_punchplayer = make_registration()
+core.registered_on_priv_grant, core.register_on_priv_grant = make_registration()
+core.registered_on_priv_revoke, core.register_on_priv_revoke = make_registration()
 
 -- Player step iteration
 
-players_per_step = core.settings:get("players_per_globalstep")
-players_per_step = players_per_step and tonumber(players_per_step) or 20
+players_per_step = tonumber(core.settings:get("players_per_globalstep")) or 20
 
 local player_iter
 local player_iter_forced

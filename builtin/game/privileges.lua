@@ -11,11 +11,14 @@ function core.register_privilege(name, param)
 		if def.give_to_singleplayer == nil then
 			def.give_to_singleplayer = true
 		end
+		if def.give_to_admin == nil then
+			def.give_to_admin = def.give_to_singleplayer
+		end
 		if def.description == nil then
 			def.description = "(no description)"
 		end
 	end
-	local def = {}
+	local def
 	if type(param) == "table" then
 		def = param
 	else
@@ -36,7 +39,7 @@ core.register_privilege("basic_privs", "Can modify 'shout' and 'interact' privil
 core.register_privilege("privs", "Can modify privileges")
 
 core.register_privilege("teleport", {
-	description = "Can use /teleport command",
+	description = "Can teleport self",
 	give_to_singleplayer = creative
 })
 core.register_privilege("bring", {
@@ -44,12 +47,13 @@ core.register_privilege("bring", {
 	give_to_singleplayer = false
 })
 core.register_privilege("settime", {
-	description = "Can use /time",
+	description = "Can set the time of day using /time",
 	give_to_singleplayer = creative
 })
 core.register_privilege("server", {
 	description = "Can do server maintenance stuff",
-	give_to_singleplayer = false
+	give_to_singleplayer = false,
+	give_to_admin = true
 })
 core.register_privilege("protection_bypass", {
 	description = "Can bypass node protection in the world",
@@ -57,11 +61,13 @@ core.register_privilege("protection_bypass", {
 })
 core.register_privilege("ban", {
 	description = "Can ban and unban players",
-	give_to_singleplayer = false
+	give_to_singleplayer = false,
+	give_to_admin = true
 })
 core.register_privilege("kick", {
 	description = "Can kick players",
-	give_to_singleplayer = false
+	give_to_singleplayer = false,
+	give_to_admin = true
 })
 core.register_privilege("give", {
 	description = "Can use /give and /giveme",
@@ -72,15 +78,15 @@ core.register_privilege("password", {
 	give_to_singleplayer = false
 })
 core.register_privilege("fly", {
-	description = "Can fly using the free_move mode",
+	description = "Can use fly mode",
 	give_to_singleplayer = creative
 })
 core.register_privilege("fast", {
-	description = "Can walk fast using the fast_move mode",
+	description = "Can use fast mode",
 	give_to_singleplayer = creative
 })
 core.register_privilege("noclip", {
-	description = "Can fly through walls",
+	description = "Can fly through solid nodes using noclip mode",
 	give_to_singleplayer = false
 })
 core.register_privilege("rollback", {
@@ -93,7 +99,8 @@ core.register_privilege("zoom", {
 })
 core.register_privilege("debug", {
 	description = "Allows enabling various debug options that may affect gameplay",
-	give_to_singleplayer = false
+	give_to_singleplayer = false,
+	give_to_admin = true
 })
 core.register_privilege("weather", {
 	description = "Allows changing the weather",

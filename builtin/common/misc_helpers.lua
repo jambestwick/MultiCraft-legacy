@@ -200,9 +200,6 @@ function table.indexof(list, val)
 	return -1
 end
 
-assert(table.indexof({"foo", "bar"}, "foo") == 1)
-assert(table.indexof({"foo", "bar"}, "baz") == -1)
-
 --------------------------------------------------------------------------------
 if INIT ~= "client" then
 	function file_exists(filename)
@@ -219,8 +216,6 @@ end
 function string:trim()
 	return (self:gsub("^%s*(.-)%s*$", "%1"))
 end
-
-assert(string.trim("\n \t\tfoo bar\t ") == "foo bar")
 
 --------------------------------------------------------------------------------
 function math.hypot(x, y)
@@ -243,6 +238,20 @@ function math.sign(x, tolerance)
 		return -1
 	end
 	return 0
+end
+
+--------------------------------------------------------------------------------
+function math.factorial(x)
+	assert(x % 1 == 0 and x >= 0, "factorial expects a non-negative integer")
+	if x >= 171 then
+		-- 171! is greater than the biggest double, no need to calculate
+		return math.huge
+	end
+	local v = 1
+	for k = 2, x do
+		v = v * k
+	end
+	return v
 end
 
 --------------------------------------------------------------------------------
@@ -463,6 +472,12 @@ function core.explode_scrollbar_event(evt)
 end
 
 --------------------------------------------------------------------------------
+function core.rgba(r, g, b, a)
+	return a and string.format("#%02X%02X%02X%02X", r, g, b, a) or
+			string.format("#%02X%02X%02X", r, g, b)
+end
+
+--------------------------------------------------------------------------------
 function core.pos_to_string(pos, decimal_places)
 	local x = pos.x
 	local y = pos.y
@@ -499,10 +514,6 @@ function core.string_to_pos(value)
 	end
 	return nil
 end
-
-assert(core.string_to_pos("10.0, 5, -2").x == 10)
-assert(core.string_to_pos("( 10.0, 5, -2)").z == -2)
-assert(core.string_to_pos("asd, 5, -2)") == nil)
 
 --------------------------------------------------------------------------------
 function core.string_to_area(value)
@@ -545,6 +556,39 @@ function table.copy(t, seen)
 	end
 	return n
 end
+
+
+function table.insert_all(t, other)
+	for i=1, #other do
+		t[#t + 1] = other[i]
+	end
+	return t
+end
+
+
+function table.key_value_swap(t)
+	local ti = {}
+	for k,v in pairs(t) do
+		ti[v] = k
+	end
+	return ti
+end
+
+
+function table.shuffle(t, from, to, random)
+	from = from or 1
+	to = to or #t
+	random = random or math.random
+	local n = to - from + 1
+	while n > 1 do
+		local r = from + n-1
+		local l = from + random(0, n-1)
+		t[l], t[r] = t[r], t[l]
+		n = n-1
+	end
+end
+
+
 --------------------------------------------------------------------------------
 -- mainmenu only functions
 --------------------------------------------------------------------------------
@@ -629,6 +673,13 @@ end
 -- Returns the exact coordinate of a pointed surface
 --------------------------------------------------------------------------------
 function core.pointed_thing_to_face_pos(placer, pointed_thing)
+	-- Avoid crash in some situations when player is inside a node, causing
+	-- 'above' to equal 'under'.
+	if vector.equals(pointed_thing.above, pointed_thing.under) then
+		return pointed_thing.under
+	end
+
+	local eye_height = placer:get_properties().eye_height
 	local eye_offset_first = placer:get_eye_offset()
 	local node_pos = pointed_thing.under
 	local camera_pos = placer:get_pos()
@@ -648,11 +699,33 @@ function core.pointed_thing_to_face_pos(placer, pointed_thing)
 	end
 
 	local fine_pos = {[nc] = node_pos[nc] + offset}
-	camera_pos.y = camera_pos.y + 1.625 + eye_offset_first.y / 10
+	camera_pos.y = camera_pos.y + eye_height + eye_offset_first.y / 10
 	local f = (node_pos[nc] + offset - camera_pos[nc]) / look_dir[nc]
 
 	for i = 1, #oc do
 		fine_pos[oc[i]] = camera_pos[oc[i]] + look_dir[oc[i]] * f
 	end
 	return fine_pos
+end
+
+function core.string_to_privs(str, delim)
+	assert(type(str) == "string")
+	delim = delim or ','
+	local privs = {}
+	for _, priv in pairs(string.split(str, delim)) do
+		privs[priv:trim()] = true
+	end
+	return privs
+end
+
+function core.privs_to_string(privs, delim)
+	assert(type(privs) == "table")
+	delim = delim or ','
+	local list = {}
+	for priv, bool in pairs(privs) do
+		if bool then
+			list[#list + 1] = priv
+		end
+	end
+	return table.concat(list, delim)
 end
