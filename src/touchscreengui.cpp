@@ -303,14 +303,15 @@ void TouchScreenGUI::init(ISimpleTextureSource *tsrc) {
 					  m_screensize.Y / 2),
 			L"drop", false, SLOW_BUTTON_REPEAT);
 
-	//dirty implementation of positions for iOS
-	double button_075 = 1;
-	double button_05 = 1;
-	double button_05b = 0;
-#ifdef __IOS__
-	button_075 = 0.75;
-	button_05 = 2;
-	button_05b = button_size / 2;
+	// dirty implementation of positions for iOS
+#ifndef __IOS__
+	s32 button_075 = 1;
+	s32 button_05 = 1;
+	s32 button_05b = 0;
+#else
+	double button_075 = 0.75;
+	s32 button_05 = 2;
+	double button_05b = button_size * 0.5;
 #endif
 
 	// init pause button [1]
