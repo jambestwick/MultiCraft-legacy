@@ -40,7 +40,7 @@ done
 
 # remove unnecessary mods
 MODS=$DEST/games/default/files
-for mods in compatibility experience wieldview; do
+for mods in experience; do
 	find $DEST/games/default/files -type d -name $mods -print0 | xargs -0 -- rm -r
 done
 
