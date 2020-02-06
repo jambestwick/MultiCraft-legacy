@@ -519,7 +519,7 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("fallback_font_path", g_settings->get("font_path"));
 
 	// Auto-detect language on iOS
-	NSString *syslang = [[NSLocale preferredLanguages] objectAtIndex:0];
+	NSString *syslang = [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode];
 	[syslang getBytes:lang maxLength:2 usedLength:nil encoding:NSASCIIStringEncoding options:0 range:NSMakeRange(0, 2) remainingRange:nil];
 
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
