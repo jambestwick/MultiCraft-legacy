@@ -36,9 +36,10 @@ local function get_formspec()
 				core.formspec_escape(defaulttexturedir ..
 					creative_checkbox) ..
 					".png;cb_creative_mode;;true;false]" ..
-			"textlist[-0.01,0;6.28,4.64;sp_worlds;" ..
+			"tableoptions[background=#27233F;border=false]" ..
+			"table[-0.01,0;6.28,4.64;sp_worlds;" ..
 			menu_render_worldlist() ..
-			";" .. index .. ";true]"
+			";" .. index .. "]"
 
 
 	if PLATFORM ~= "Android" and PLATFORM ~= "iOS" then

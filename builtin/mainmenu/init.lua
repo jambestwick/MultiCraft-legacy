@@ -45,7 +45,7 @@ dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
 
 if not mobile then
 	dofile(menupath .. DIR_DELIM .. "modmgr.lua")
-	--dofile(menupath .. DIR_DELIM .. "store.lua")
+--	dofile(menupath .. DIR_DELIM .. "store.lua")
 	dofile(menupath .. DIR_DELIM .. "dlg_settings_advanced.lua")
 end
 
@@ -124,6 +124,8 @@ end
 --	mm_texture.set_dirt_bg()
 	core.set_background("background",  defaulttexturedir .. "bg.png", true, 256)
 --	core.sound_play("main_menu", true)
+
+	core.settings:set("connect_time", os.time())
 end
 
 init_globals()

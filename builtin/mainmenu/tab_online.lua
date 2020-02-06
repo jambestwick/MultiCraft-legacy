@@ -84,7 +84,7 @@ local function get_formspec(_, _, tabdata)
 
 	--favourites
 	retval = retval ..
-		"tableoptions[background=#00000000;border=false]" ..
+		"tableoptions[background=#27233F;border=false]" ..
 		"tablecolumns[" ..
 		image_column(fgettext("Favorite"), "favorite") .. ",align=center;" ..
 		image_column(fgettext("Lag, ms")) .. ",padding=0.25;" ..

@@ -83,7 +83,7 @@ function ui.update()
 	-- attempt auto restart
 	if gamedata ~= nil and gamedata.errormessage ~= nil and
 			core.settings:get_bool("auto_connect") == true and
-			core.settings:get("connect_time") and tonumber(core.settings:get("connect_time")) < os.time() - 30 and
+			tonumber(core.settings:get("connect_time")) < os.time() - 30 and
 			not gamedata.errormessage:find("Kicked") then
 		if core.settings:get("maintab_LAST") == "local" then
 			gamedata.singleplayer = true
@@ -116,7 +116,7 @@ function ui.update()
 		end
 		local restart_btn
 		if core.settings:get("maintab_LAST") == "local" and
-				core.settings:get("connect_time") and tonumber(core.settings:get("connect_time")) < os.time() - 30 then
+				tonumber(core.settings:get("connect_time")) < os.time() - 30 then
 			restart_btn = "]button[6,4.6;3,0.5;btn_reconnect_no;" .. fgettext("Close") .. "]" ..
 				"button[3,4.6;3,0.5;btn_reconnect_yes;" .. fgettext("Restart") .. "]"
 		else

@@ -37,6 +37,7 @@ local function create_world_formspec()
 	current_seed = core.formspec_escape(current_seed)
 	local retval =
 		"size[11.5,3.75,false]" ..
+		"bgcolor[#8FB9DE]" ..
 		"background[0,0;11.5,3;" .. core.formspec_escape(defaulttexturedir ..
 		"bg_dialog.png") .. ";true]" ..
 		"label[1.5,0;" .. fgettext("World name:") .. "]"..
