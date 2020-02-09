@@ -6,8 +6,8 @@ android {
 		applicationId 'com.multicraft.game'
 		minSdkVersion 16
 		targetSdkVersion 29
-		versionCode 37
-		versionName "1.8.0"
+		versionCode 38
+		versionName "1.8.0c"
 		/*multiDexEnabled true
 		useLibrary 'org.apache.http.legacy'*/
 	}
