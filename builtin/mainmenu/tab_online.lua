@@ -17,6 +17,7 @@
 
 --------------------------------------------------------------------------------
 local password_save = core.settings:get_bool("password_save")
+local password_tmp = ""
 
 local function get_formspec(_, _, tabdata)
 	-- Update the cached supported proto info,
@@ -63,13 +64,10 @@ local function get_formspec(_, _, tabdata)
 			core.formspec_escape(defaulttexturedir .. "blank.png")
 			.. ";btn_mp_connect;;true;false]"
 
+
+		local pwd = password_save and core.formspec_escape(core.settings:get("password")) or password_tmp
 		-- Password
-		if password_save then
-			retval = retval .. "pwdfield[10.45,1.81;1.91,0.39;te_pwd;;" ..
-				core.formspec_escape(core.settings:get("password")) .. "]"
-		else
-			retval = retval .. "pwdfield[10.45,1.81;1.91,0.39;te_pwd;;]"
-		end
+		retval = retval .. "pwdfield[10.45,1.81;1.91,0.39;te_pwd;;" .. pwd .. "]"
 
 	if tabdata.fav_selected and fav_selected then
 		if gamedata.fav then
@@ -160,6 +158,8 @@ local function main_button_handler(_, fields, _, tabdata)
 
 	if fields.te_pwd and password_save then
 		core.settings:set("password", fields.te_pwd)
+	else
+		password_tmp = fields.te_pwd
 	end
 
 	if fields.favourites then

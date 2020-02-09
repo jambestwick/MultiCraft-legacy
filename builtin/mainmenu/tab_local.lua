@@ -69,10 +69,8 @@ local function main_button_handler(this, fields, name)
 	local world_doubleclick = false
 
 	if fields["sp_worlds"] ~= nil then
-		local event = core.explode_textlist_event(fields["sp_worlds"])
-		local selected = core.get_textlist_index("sp_worlds")
-
-		menu_worldmt_legacy(selected)
+		local event = core.explode_table_event(fields["sp_worlds"])
+		local selected = core.get_table_index("sp_worlds")
 
 		if event.type == "DCL" then
 			world_doubleclick = true
@@ -105,14 +103,14 @@ local function main_button_handler(this, fields, name)
 
 	if fields["cb_server_announce"] then
 		core.settings:set("server_announce", fields["cb_server_announce"])
-		local selected = core.get_textlist_index("srv_worlds")
+		local selected = core.get_table_index("srv_worlds")
 		menu_worldmt(selected, "server_announce", fields["cb_server_announce"])
 
 		return true
 	end
 
 	if fields["play"] ~= nil or world_doubleclick or fields["key_enter"] then
-		local selected = core.get_textlist_index("sp_worlds")
+		local selected = core.get_table_index("sp_worlds")
 		gamedata.selected_world = menudata.worldlist:get_raw_index(selected)
 		core.settings:set("maintab_LAST", "local")
 
@@ -166,7 +164,7 @@ local function main_button_handler(this, fields, name)
 	end
 
 	if fields["world_delete"] ~= nil then
-		local selected = core.get_textlist_index("sp_worlds")
+		local selected = core.get_table_index("sp_worlds")
 		if selected ~= nil and
 			selected <= menudata.worldlist:size() then
 			local world = menudata.worldlist:get_list()[selected]
@@ -185,7 +183,7 @@ local function main_button_handler(this, fields, name)
 	end
 
 	if fields["world_configure"] ~= nil then
-		local selected = core.get_textlist_index("sp_worlds")
+		local selected = core.get_table_index("sp_worlds")
 		if selected ~= nil then
 			local configdialog =
 				create_configure_world_dlg(
