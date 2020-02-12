@@ -39,7 +39,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "guiscalingfilter.h"
 #include "irrlicht_changes/static_text.h"
 
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__IOS__)
 #include "client/tile.h"
 #endif
 
@@ -103,9 +103,11 @@ video::ITexture* MenuTextureSource::getTexture(const std::string &name, u32 *id)
 	if (!image)
 		return NULL;
 
-	image = Align2Npot2(image, m_driver);
-	retval = m_driver->addTexture(name.c_str(), image);
-	image->drop();
+	// Verified by the profiler - it reduces memory usage!
+	video::IImage *newimage = Align2Npot2(image, m_driver);
+	retval = m_driver->addTexture(name.c_str(), newimage);
+	image = NULL;
+	newimage->drop();
 	return retval;
 #else
 	return m_driver->getTexture(name.c_str());
