@@ -36,21 +36,21 @@ local function create_world_formspec()
 
 	current_seed = core.formspec_escape(current_seed)
 	local retval =
-		"size[11.5,3.75,false]" ..
-		"bgcolor[#8FB9DE]" ..
-		"background[0,0;11.5,3;" .. core.formspec_escape(defaulttexturedir ..
+		"size[12,6,false]" ..
+		"bgcolor[#00000000]" ..
+		"background[0,0;0,0;" .. core.formspec_escape(defaulttexturedir ..
 		"bg_dialog.png") .. ";true]" ..
-		"label[1.5,0;" .. fgettext("World name:") .. "]"..
-		"field[4.5,0.4;6,0.5;te_world_name;;]" ..
+		"label[1.5,1.2;" .. fgettext("World name:") .. "]"..
+		"field[4.5,1.5;6,0.5;te_world_name;;]" ..
 
-		"label[1.5,1;" .. fgettext("Seed:") .. "]"..
-		"field[4.5,1.4;6,0.5;te_seed;;".. current_seed .. "]" ..
+		"label[1.5,2.2;" .. fgettext("Seed:") .. "]"..
+		"field[4.5,2.5;6,0.5;te_seed;;".. current_seed .. "]" ..
 
-		"label[1.5,2;" .. fgettext("Mapgen:") .. "]"..
-		"dropdown[4.2,2;6.3;dd_mapgen;" .. mglist .. ";" .. selindex .. "]" ..
+		"label[1.5,3.2;" .. fgettext("Mapgen:") .. "]"..
+		"dropdown[4.2,3.05;6.3;dd_mapgen;" .. mglist .. ";" .. selindex .. "]" ..
 
-		"button[3.25,3.4;2.5,0.5;world_create_confirm;" .. mt_green_button .. fgettext("Create") .. "]" ..
-		"button[5.75,3.4;2.5,0.5;world_create_cancel;" .. fgettext("Cancel") .. "]"
+		"button[3.5,4.8;2.5,0.5;world_create_confirm;" .. mt_green_button .. fgettext("Create") .. "]" ..
+		"button[6,4.8;2.5,0.5;world_create_cancel;" .. fgettext("Cancel") .. "]"
 
 	return retval
 
@@ -102,7 +102,7 @@ local function create_world_buttonhandler(this, fields)
 		core.settings:set("menu_last_game", gamemgr.games[gameindex].id)
 		return true
 	end
-	
+
 	if fields["world_create_cancel"] then
 		this:delete()
 		return true
