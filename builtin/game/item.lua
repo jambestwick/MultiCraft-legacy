@@ -441,9 +441,9 @@ local function item_throw_step(entity, dtime)
 	local hit_object
 	local dir = vnormalize(entity.object:get_velocity())
 	local pos2 = vadd(pos, vmultiply(dir, 3))
-	local _, node_pos = minetest.line_of_sight(pos, pos2)
+	local _, node_pos = core.line_of_sight(pos, pos2)
 	if node_pos then
-		local def = minetest.get_node(node_pos)
+		local def = core.get_node(node_pos)
 		if def then
 			pos = vsubtract(node_pos, vmultiply(dir, 1.5))
 			entity.object:move_to(pos)
@@ -451,7 +451,7 @@ local function item_throw_step(entity, dtime)
 			node_pos = nil
 		end
 	end
-	local objs = minetest.get_objects_inside_radius(pos, 1.5)
+	local objs = core.get_objects_inside_radius(pos, 1.5)
 	for _, obj in pairs(objs) do
 		if obj:is_player() then
 			local name = obj:get_player_name()
@@ -545,13 +545,13 @@ function core.item_drop(itemstack, dropper, pos)
 	-- environment failed
 end
 
-local enable_damage = minetest.settings:get_bool("enable_damage")
+local enable_damage = core.settings:get_bool("enable_damage")
 function core.item_eat(hp_change, replace_with_item, poison)
 	return function(itemstack, user, pointed_thing)  -- closure
 		if user then
 			local pos = user:get_pos()
 			pos.y = pos.y + 1.3
-			if not minetest.is_valid_pos(pos) then
+			if not core.is_valid_pos(pos) then
 				return
 			end
 			local dir = user:get_look_dir()

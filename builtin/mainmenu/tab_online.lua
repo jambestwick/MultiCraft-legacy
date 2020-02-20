@@ -156,10 +156,12 @@ local function main_button_handler(_, fields, _, tabdata)
 		core.settings:set("name", fields.te_name)
 	end
 
-	if fields.te_pwd and password_save then
-		core.settings:set("password", fields.te_pwd)
-	else
-		password_tmp = fields.te_pwd
+	if fields.te_pwd then
+		if password_save then
+			core.settings:set("password", fields.te_pwd)
+		else
+			password_tmp = fields.te_pwd
+		end
 	end
 
 	if fields.favourites then

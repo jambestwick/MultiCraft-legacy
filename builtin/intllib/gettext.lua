@@ -99,7 +99,7 @@ end
 local M = { }
 
 local function warn(msg)
-	minetest.log("warning", "[intllib] "..msg)
+	core.log("warning", "[intllib] "..msg)
 end
 
 -- hax!

@@ -242,7 +242,7 @@ core.register_entity(":__builtin:item", {
 		if not self.stuck and def_inside and def_inside.walkable and
 				not def_inside.liquid and node_inside.name ~= "air" and
 				def_inside.drawtype == "normal" then
-			local npos = minetest.find_node_near(pos, 1, "air")
+			local npos = core.find_node_near(pos, 1, "air")
 			if npos then
 				self.object:move_to(npos)
 			else

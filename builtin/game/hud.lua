@@ -154,7 +154,7 @@ core.register_on_joinplayer(function(player)
 	end
 end)
 
-minetest.register_on_leaveplayer(function(player)
+core.register_on_leaveplayer(function(player)
 	local player = player:get_player_name()
 	for name, _ in pairs(sb_bg) do
 		sb_bg[player .. "_" .. name] = nil

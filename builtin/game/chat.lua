@@ -1115,7 +1115,7 @@ core.register_chatcommand("setspawn", {
 		if not player then
 			return false
 		end
-		local pos = minetest.pos_to_string(player:get_pos(), 1)
+		local pos = core.pos_to_string(player:get_pos(), 1)
 		core.settings:set("static_spawnpoint", pos)
 		return true, "The spawn point are set to (" .. pos .. ")"
 	end

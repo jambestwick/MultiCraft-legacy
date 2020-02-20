@@ -105,7 +105,7 @@ end
 
 hud.register("health", health_bar_definition)
 core.register_on_joinplayer(function(player)
-	minetest.after(0, function()
+	core.after(0, function()
 		update_builtin_statbars(player)
 	end)
 end)

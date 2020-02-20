@@ -48,7 +48,7 @@ end
 
 
 local function Getter(modname)
-	modname = modname or minetest.get_current_modname()
+	modname = modname or core.get_current_modname()
 	if not intllib.getters[modname] then
 		local msgstr = intllib.get_strings(modname)
 		intllib.getters[modname] = make_getter(msgstr)
@@ -60,7 +60,7 @@ end
 function intllib.Getter(modname)
 	local info = debug and debug.getinfo and debug.getinfo(2)
 	local loc = info and info.short_src..":"..info.currentline
-	minetest.log("deprecated", "intllib.Getter is deprecated."
+	core.log("deprecated", "intllib.Getter is deprecated."
 			.." Please use intllib.make_gettext_pair instead."
 			..(info and " (called from "..loc..")" or ""))
 	return Getter(modname)
@@ -102,7 +102,7 @@ function intllib.get_detected_languages()
 
 	local v
 
-	v = minetest.settings:get("language")
+	v = core.settings:get("language")
 	if v and v~="" then
 		addlang(v)
 	end
@@ -154,11 +154,11 @@ end
 
 local gettext_getters = { }
 function intllib.make_gettext_pair(modname)
-	modname = modname or minetest.get_current_modname()
+	modname = modname or core.get_current_modname()
 	if gettext_getters[modname] then
 		return unpack(gettext_getters[modname])
 	end
-	local localedir = minetest.get_modpath(modname).."/locale"
+	local localedir = core.get_modpath(modname).."/locale"
 	local catalogs = gettext.load_catalogs(localedir)
 	local getter = Getter(modname)
 	local function gettext_func(msgid, ...)
@@ -188,10 +188,10 @@ end
 
 function intllib.get_strings(modname, langcode)
 	langcode = langcode or LANG
-	modname = modname or minetest.get_current_modname()
+	modname = modname or core.get_current_modname()
 	local msgstr = intllib.strings[modname]
 	if not msgstr then
-		local modpath = minetest.get_modpath(modname)
+		local modpath = core.get_modpath(modname)
 		msgstr = { }
 		for _, l in ipairs(get_locales(langcode)) do
 			local t = intllib.load_strings(modpath.."/locale/"..l..".txt") or { }
