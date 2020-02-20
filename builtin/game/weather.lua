@@ -3,7 +3,7 @@
 	Copyright (C) Jeija (2013)
 	Copyright (C) HybridDog (2015)
 	Copyright (C) theFox6 (2018)
-	Copyright (C) MultiCraft Development Team (2019)
+	Copyright (C) MultiCraft Development Team (2019-2020)
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU Lesser General Public License as published by
@@ -24,9 +24,15 @@ if not core.settings:get_bool("weather") then
 	return
 end
 
-weather = {type = "none", wind = vector.new(0, 0, 0)}
+local vmultiply, vadd = vector.multiply, vector.add
+local random = math.random
+local snow_covers = core.settings:get_bool("weather_snow_covers") or true
 local cloud_height = tonumber(core.settings:get("cloud_height"))
 
+weather = {
+	type = "none",
+	wind = {x = 0, y = 0, z = 0}
+}
 
 local file_name = core.get_worldpath() .. "/weather"
 local file = io.open(file_name, "r")
@@ -49,15 +55,14 @@ end)
 -- Registration of weather types
 --
 
-weather_type = {}
-weather_type.registered = {}
-function weather_type.register(id, def)
+weather.registered = {}
+function weather.register(id, def)
 	local ndef = table.copy(def)
-	weather_type.registered[id] = ndef
+	weather.registered[id] = ndef
 end
 
 -- Rain
-weather_type.register("rain", {
+weather.register("rain", {
 	falling_speed = 6,
 	amount = 7,
 	size = 25,
@@ -67,7 +72,7 @@ weather_type.register("rain", {
 })
 
 -- Snow
-weather_type.register("snow", {
+weather.register("snow", {
 	falling_speed = 3,
 	amount = 5,
 	size = 20,
@@ -82,22 +87,25 @@ weather_type.register("snow", {
 
 local function weather_change()
 	if weather.type == "none" then
-		for id, _ in pairs(weather_type.registered) do
-			if math.random(1, 3) == 1 then
-				weather.wind = {}
-				weather.wind.x = math.random(0, 8)
-				weather.wind.y = 0
-				weather.wind.z = math.random(0, 8)
+		for id, _ in pairs(weather.registered) do
+			if random(3) == 1 then
+				weather.wind = {
+					x = random(0, 8),
+					y = 0,
+					z = random(0, 8)
+				}
 				weather.type = id
+
+				break
 			end
 		end
-		core.after(math.random(60, 300), weather_change)
+		core.after(random(60, 3000), weather_change)
 	else
 		weather.type = "none"
-		core.after(math.random(1800, 3600), weather_change)
+		core.after(random(1800, 3600), weather_change)
 	end
 end
-core.after(math.random(600, 1800), weather_change)
+core.after(random(600, 1800), weather_change)
 
 
 --
@@ -105,7 +113,7 @@ core.after(math.random(600, 1800), weather_change)
 --
 
 core.register_globalstep(function()
-	local current_downfall = weather_type.registered[weather.type]
+	local current_downfall = weather.registered[weather.type]
 	if current_downfall == nil then return end
 
 	for _, player in pairs(core.get_connected_players()) do
@@ -114,17 +122,17 @@ core.register_globalstep(function()
 		ppos.y = ppos.y + 1.5
 		-- Higher than clouds
 		if not core.is_valid_pos(ppos) or ppos.y > cloud_height or ppos.y < -8 then return end
-		-- Inside water
+		-- Inside liquid
 		local head_inside = core.get_node_or_nil(ppos)
 		local def_inside = head_inside and core.registered_nodes[head_inside.name]
 		if def_inside and def_inside.drawtype == "liquid" then return end
 		-- Too dark, probably not under the sky
-		local light = minetest.get_node_light(ppos, 0.5)
+		local light = core.get_node_light(ppos, 0.5)
 		if light and light < 12 then return end
 
-		local wind_pos = vector.multiply(weather.wind, -1)
-		local minp = vector.add(vector.add(ppos, {x = -8, y = current_downfall.height, z = -8}), wind_pos)
-		local maxp = vector.add(vector.add(ppos, {x =  8, y = current_downfall.height, z =  8}), wind_pos)
+		local wind_pos = vmultiply(weather.wind, -1)
+		local minp = vadd(vadd(ppos, {x = -8, y = current_downfall.height, z = -8}), wind_pos)
+		local maxp = vadd(vadd(ppos, {x =  8, y = current_downfall.height, z =  8}), wind_pos)
 		local vel = {x = weather.wind.x, y = -current_downfall.falling_speed, z = weather.wind.z}
 		local vert = current_downfall.vertical or false
 
@@ -152,7 +160,7 @@ end)
 -- Snow will cover the blocks and melt after some time
 --
 
-if core.settings:get_bool(("weather_snow_covers")) then
+if snow_covers then
 	-- Temp node to start the node timer
 	core.register_node(":snow_cover", {
 		tiles = {"blank.png"},
@@ -160,7 +168,7 @@ if core.settings:get_bool(("weather_snow_covers")) then
 		buildable_to = true,
 		groups = {not_in_creative_inventory = 1, dig_immediate = 3},
 		on_construct = function(pos)
-			core.get_node_timer(pos):start(math.random(60, 180))
+			core.get_node_timer(pos):start(random(60, 180))
 			core.swap_node(pos, {name = "default:snow"})
 		end
 	})
@@ -173,8 +181,7 @@ if core.settings:get_bool(("weather_snow_covers")) then
 		catch_up = false,
 		action = function(pos, node)
 			if weather.type == "snow" then
-				if pos.y > cloud_height then return end
-				if pos.y < -8 then return end
+				if pos.y < -8 or pos.y > cloud_height then return end
 				if core.registered_nodes[node.name].drawtype == "normal"
 				or core.registered_nodes[node.name].drawtype == "allfaces_optional" then
 					pos.y = pos.y + 1
