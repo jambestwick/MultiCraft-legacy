@@ -18,24 +18,30 @@
 local function get_formspec()
 	local index = filterlist.get_current_index(menudata.worldlist,
 				tonumber(core.settings:get("mainmenu_last_selected_world")))
+	local creative_checkbox = core.settings:get_bool("creative_mode") and
+			"local_creative_checkbox" or "blank"
 
 	local retval =
 			"image_button[0,4.84;3.31,0.92;" ..
 				core.formspec_escape(defaulttexturedir ..
 					"blank.png") .. ";world_delete;;true;false]" ..
+			"tooltip[world_delete;".. fgettext("Delete") .. "]" ..
 			"image_button[3.14,4.84;3.3,0.92;" ..
 				core.formspec_escape(defaulttexturedir ..
-					"blank.png") .. ";world_create;;true;false]"
+					"blank.png") .. ";world_create;;true;false]" ..
+			"tooltip[world_create;".. fgettext("New") .. "]" ..
 
-	local creative_checkbox = core.settings:get_bool("creative_mode") and "local_creative_checkbox" or "blank"
-	retval = retval ..
 			"image_button[6.72,1.43;4.96,1.41;" ..
 				core.formspec_escape(defaulttexturedir ..
 					"blank.png") .. ";play;;true;false]" ..
+			"tooltip[play;".. fgettext("Play Game") .. "]" ..
+
 			"image_button[7.33,3.09;3.73,0.86;" ..
 				core.formspec_escape(defaulttexturedir ..
 					creative_checkbox) ..
 					".png;cb_creative_mode;;true;false]" ..
+			"tooltip[cb_creative_mode;".. fgettext("Creative mode") .. "]" ..
+
 			"tableoptions[background=#27233F;border=false]" ..
 			"table[-0.01,0;6.28,4.64;sp_worlds;" ..
 			menu_render_worldlist() ..
@@ -60,6 +66,7 @@ local function get_formspec()
 					core.formspec_escape(core.settings:get("name")) .. "]" ..
 				"pwdfield[9.6,0.6;2.8,0.5;te_passwd;;]"
 	end
+
 	return retval
 end
 
@@ -182,7 +189,7 @@ local function main_button_handler(this, fields, name)
 		return true
 	end
 
-	if fields["world_configure"] ~= nil then
+--[[if fields["world_configure"] ~= nil then
 		local selected = core.get_table_index("sp_worlds")
 		if selected ~= nil then
 			local configdialog =
@@ -197,7 +204,7 @@ local function main_button_handler(this, fields, name)
 		end
 
 		return true
-	end
+	end]]
 end
 
 --------------------------------------------------------------------------------

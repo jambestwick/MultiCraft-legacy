@@ -18,7 +18,7 @@
 local function create_world_formspec()
 	local mapgens = core.get_mapgen_names()
 
-	local current_seed = core.settings:get("fixed_map_seed") or ""
+	local current_seed = core.formspec_escape(core.settings:get("fixed_map_seed")) or ""
 	local current_mg   = core.settings:get("mg_name")
 	local gameid = core.settings:get("menu_last_game")
 
@@ -34,7 +34,6 @@ local function create_world_formspec()
 	end
 	mglist = mglist:sub(1, -2)
 
-	current_seed = core.formspec_escape(current_seed)
 	local retval =
 		"size[12,6,false]" ..
 		"bgcolor[#00000000]" ..

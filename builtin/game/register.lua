@@ -357,7 +357,7 @@ core.register_node(":air", {
 })
 
 core.register_node(":ignore", {
-	description = "Ignore (you hacker you!)",
+	description = "Ignore",
 	inventory_image = "ignore.png",
 	wield_image = "ignore.png",
 	drawtype = "airlike",
@@ -681,6 +681,7 @@ core.register_globalstep(function(dtime)
 		end
 	end
 end)
+
 
 --
 -- Compatibility for on_mapgen_init()

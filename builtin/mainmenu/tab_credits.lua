@@ -24,6 +24,7 @@ local multicraft_developers = {
 	"sfan5 <sfan5@live.de>",
 	"Stuart Jones (stujones11) <stujones111@gmail.com>",
 	"Jean-Patrick Guerrero (kilbith) <jeanpatrick.guerrero@gmail.com>",
+	"Jake Gustafson (poikilos)",
 	"And other people who helped make the world better!"
 }
 
@@ -96,10 +97,11 @@ return {
 	caption = fgettext("Credits"),
 	cbf_formspec = function()
 	local version = core.get_version()
-		return "label[0.1,-0.1;MultiCraft Open Source Project, ver. " .. version.string .. "]" ..
-			"label[0.1,0.3;Copyright (C) 2014-2019 MultiCraft Development Team]" ..
-			"label[0.1,0.7;Home page: http://multicraft.world]" ..
-			"label[0.1,1.1;Licence: LGPLv3.0+ and CC-BY-SA 4.0]" ..
+		return "label[0.1,-0.1;" ..
+			"MultiCraft Open Source Project, ver. " .. version.string .. "\n" ..
+			"Copyright (C) 2014-2020 MultiCraft Development Team\n" ..
+			"Licence: LGPLv3.0+ and CC-BY-SA 4.0\n" ..
+			"Home page: http://multicraft.world]" ..
 			"tablecolumns[color;text]" ..
 			"tableoptions[background=#999999;highlight=#00000000;border=true]" ..
 			"table[0,1.6;11.8,3.8;list_credits;" ..

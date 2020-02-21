@@ -135,7 +135,7 @@ function utf8charbytes(s, i)
 	end
 end
 
-dofile(core.get_builtin_path() .. DIR_DELIM .. "utf8lib" .. DIR_DELIM .. "utf8data.lua")
+dofile(core.get_builtin_path() .. "utf8lib" .. DIR_DELIM .. "utf8data.lua")
 
 -- replace UTF-8 characters based on a mapping table
 local function utf8replace(s, mapping)

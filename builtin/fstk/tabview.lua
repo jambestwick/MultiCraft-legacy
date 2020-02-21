@@ -86,8 +86,7 @@ local function get_formspec(self)
 
 			formspec = formspec ..
 					string.format("size[%f,%f,%s]",tsize.width,tsize.height,
-						dump(self.fixed_size)) ..
-						get_bg(tsize, tabname)
+						dump(self.fixed_size)) .. get_bg(tsize, tabname)
 
 		end
 		formspec = formspec .. self:tab_header()

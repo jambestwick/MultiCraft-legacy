@@ -62,8 +62,8 @@ local function get_formspec(_, _, tabdata)
 		-- Connect
 		"image_button[8.8,4.88;3.3,0.9;" ..
 			core.formspec_escape(defaulttexturedir .. "blank.png")
-			.. ";btn_mp_connect;;true;false]"
-
+			.. ";btn_mp_connect;;true;false]" ..
+		"tooltip[btn_mp_connect;".. fgettext("Connect") .. "]"
 
 		local pwd = password_save and core.formspec_escape(core.settings:get("password")) or password_tmp
 		-- Password
