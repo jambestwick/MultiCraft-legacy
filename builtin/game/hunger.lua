@@ -2,7 +2,7 @@
 --Copyright (C) BlockMen (2013-2015)
 --Copyright (C) Auke Kok <sofar@foo-projects.org> (2016)
 --Copyright (C) Minetest Mods Team (2016-2019)
---Copyright (C) MultiCraft Development Team (2016-2019)
+--Copyright (C) MultiCraft Development Team (2016-2020)
 
 --This program is free software; you can redistribute it and/or modify
 --it under the terms of the GNU Lesser General Public License as published by
@@ -52,19 +52,19 @@ hunger.settings = {
 }
 local settings = hunger.settings
 
+local min, max = math.min, math.max
+local vlength = vector.length
+
 local attribute = {
 	saturation = "hunger:level",
 	poisoned = "hunger:poisoned",
-	exhaustion = "hunger:exhaustion",
+	exhaustion = "hunger:exhaustion"
 }
 
 local function is_player(player)
 	return (
-		player and
-		not player.is_fake_player and
-		player.get_attribute and  -- check for pipeworks fake player
-		player.is_player and
-		player:is_player())
+		minetest.is_player(player) and
+		not player.is_fake_player)
 end
 
 local function get_int_attribute(player, key)
@@ -83,12 +83,13 @@ end
 
 function hunger.set_saturation(player, level)
 	player:set_attribute(attribute.saturation, level)
-	hud.change_item(player, "hunger", {number = math.min(settings.visual_max, level)})
+	hud.change_item(player, "hunger", {number = min(settings.visual_max, level)})
 end
 
 hunger.registered_on_update_saturations = {}
 function hunger.register_on_update_saturation(fun)
-	table.insert(hunger.registered_on_update_saturations, fun)
+	local saturations = hunger.registered_on_update_saturations
+	saturations[#saturations+1] = fun
 end
 
 function hunger.update_saturation(player, level)
@@ -118,8 +119,8 @@ function hunger.change_saturation(player, change)
 		return false
 	end
 	local level = hunger.get_saturation(player) + change or 0
-	level = math.max(level, 0)
-	level = math.min(level, settings.level_max)
+	level = max(level, 0)
+	level = min(level, settings.level_max)
 	hunger.update_saturation(player, level)
 	return true
 end
@@ -158,7 +159,8 @@ end
 
 hunger.registered_on_poisons = {}
 function hunger.register_on_poison(fun)
-	table.insert(hunger.registered_on_poisons, fun)
+	local poison = hunger.registered_on_poisons
+	poison[#poison+1] = fun
 end
 
 function hunger.poison(player, ticks, interval)
@@ -184,7 +186,7 @@ hunger.exhaustion_reasons = {
 	jump = "jump",
 	move = "move",
 	place = "place",
-	punch = "punch",
+	punch = "punch"
 }
 
 function hunger.get_exhaustion(player)
@@ -197,7 +199,8 @@ end
 
 hunger.registered_on_exhaust_players = {}
 function hunger.register_on_exhaust_player(fun)
-	table.insert(hunger.registered_on_exhaust_players, fun)
+	local exhaust = hunger.registered_on_exhaust_players
+	exhaust[#exhaust+1] = fun
 end
 
 function hunger.exhaust_player(player, change, cause)
@@ -213,7 +216,6 @@ function hunger.exhaust_player(player, change, cause)
 	end
 
 	local exhaustion = hunger.get_exhaustion(player) or 0
-
 	exhaustion = exhaustion + change
 
 	if exhaustion >= settings.exhaust_lvl then
@@ -226,13 +228,15 @@ end
 --- END EXHAUSTION API ---
 
 -- Time based hunger functions
+local connected_players = core.get_connected_players
+
 local function move_tick()
-	for _, player in pairs(core.get_connected_players()) do
+	for _, player in pairs(connected_players()) do
 		local controls = player:get_player_control()
 		local is_moving = controls.up or controls.down or controls.left or controls.right
 		local velocity = player:get_player_velocity()
 		velocity.y = 0
-		local horizontal_speed = vector.length(velocity)
+		local horizontal_speed = vlength(velocity)
 		local has_velocity = horizontal_speed > 0.05
 
 		if controls.jump then
@@ -245,8 +249,8 @@ local function move_tick()
 end
 
 local function hunger_tick()
-	-- lower saturation by 1 point after settings.tick second(s)
-	for _, player in pairs(core.get_connected_players()) do
+	-- lower saturation by 1 point after settings.tick seconds
+	for _, player in pairs(connected_players()) do
 		local saturation = hunger.get_saturation(player) or 0
 		if saturation > settings.tick_min then
 			hunger.update_saturation(player, saturation - 1)
@@ -256,7 +260,7 @@ end
 
 local function health_tick()
 	-- heal or damage player, depending on saturation
-	for _, player in pairs(core.get_connected_players()) do
+	for _, player in pairs(connected_players()) do
 		local air = player:get_breath() or 0
 		local hp = player:get_hp() or 0
 		local saturation = hunger.get_saturation(player) or 0
@@ -348,6 +352,8 @@ function core.do_item_eat(hp_change, replace_with_item, poison, itemstack, playe
 	return itemstack
 end
 
+local visual_max, level_max = settings.visual_max, settings.level_max
+
 hud.register("hunger", {
 	hud_elem_type = "statbar",
 	position      = {x = 0.5, y = 1},
@@ -356,32 +362,38 @@ hud.register("hunger", {
 	size          = {x = 24,  y = 24},
 	text          = "hunger_statbar_fg.png",
 	background    = "hunger_statbar_bg.png",
-	number        = 20
+	number        = visual_max
 })
 
 core.register_on_joinplayer(function(player)
-	core.after(0.5, function()
-		local level = hunger.get_saturation(player) or settings.level_max
-		hunger.set_saturation(player, level)
-		-- reset poisoned
-		player:set_attribute(attribute.poisoned, "no")
-	end)
+	local level = hunger.get_saturation(player) or level_max
+
+	-- reset poisoned
+	player:set_attribute(attribute.poisoned, "no")
+	player:set_attribute(attribute.saturation, level)
+
+	if level and (level < visual_max) then
+		core.after(1, function()
+			hud.change_item(player, "hunger", {number = min(visual_max, level)})
+		end)
+	end
 end)
 
 core.register_globalstep(hunger_globaltimer)
 
+local exhaust = hunger.exhaust_player
 core.register_on_placenode(function(_, _, player)
-	hunger.exhaust_player(player, settings.exhaust_place, hunger.exhaustion_reasons.place)
+	exhaust(player, settings.exhaust_place, hunger.exhaustion_reasons.place)
 end)
 core.register_on_dignode(function(_, _, player)
-	hunger.exhaust_player(player, settings.exhaust_dig, hunger.exhaustion_reasons.dig)
+	exhaust(player, settings.exhaust_dig, hunger.exhaustion_reasons.dig)
 end)
 core.register_on_craft(function(_, player)
-	hunger.exhaust_player(player, settings.exhaust_craft, hunger.exhaustion_reasons.craft)
+	exhaust(player, settings.exhaust_craft, hunger.exhaustion_reasons.craft)
 end)
 core.register_on_punchplayer(function(_, hitter)
-	hunger.exhaust_player(hitter, settings.exhaust_punch, hunger.exhaustion_reasons.punch)
+	exhaust(hitter, settings.exhaust_punch, hunger.exhaustion_reasons.punch)
 end)
 core.register_on_respawnplayer(function(player)
-	hunger.update_saturation(player, settings.level_max)
+	exhaust(player, settings.level_max)
 end)
