@@ -5,6 +5,8 @@ local builtin_shared = ...
 local abs, atan2, cos, floor, max, sin, random = math.abs, math.atan2, math.cos, math.floor, math.max, math.sin, math.random
 local vadd, vnew, vmultiply, vnormalize, vsubtract = vector.add, vector.new, vector.multiply, vector.normalize, vector.subtract
 
+local creative_mode = core.settings:get_bool("creative_mode")
+
 local function copy_pointed_thing(pointed_thing)
 	return {
 		type  = pointed_thing.type,
@@ -308,9 +310,6 @@ function core.item_place_node(itemstack, placer, pointed_thing, param2,
 		return itemstack, nil
 	end
 
-	log("action", playername .. " places node "
-		.. def.name .. " at " .. core.pos_to_string(place_to))
-
 	local oldnode = core.get_node(place_to)
 	local newnode = {name = def.name, param1 = 0, param2 = param2 or 0}
 
@@ -366,6 +365,9 @@ function core.item_place_node(itemstack, placer, pointed_thing, param2,
 			" can not be placed at " .. core.pos_to_string(place_to))
 		return itemstack, nil
 	end
+
+	log("action", playername .. " places node "
+		.. def.name .. " at " .. core.pos_to_string(place_to))
 
 	-- Add node and update
 	core.add_node(place_to, newnode)
@@ -554,6 +556,7 @@ function core.item_eat(hp_change, replace_with_item, poison)
 			if not core.is_valid_pos(pos) then
 				return
 			end
+
 			local dir = user:get_look_dir()
 			core.add_particlespawner({
 				amount = 20,
@@ -594,7 +597,7 @@ function core.handle_node_drops(pos, drops, digger)
 	-- Add dropped items to object's inventory
 	local inv = digger and digger:get_inventory()
 	local give_item
-	if inv then
+	if creative_mode and inv then
 		give_item = function(item)
 			return inv:add_item("main", item)
 		end
@@ -648,7 +651,7 @@ function core.node_dig(pos, node, digger)
 			wielded = wdef.after_use(wielded, digger, node, dp) or wielded
 		else
 			-- Wear out tool
-			if not core.settings:get_bool("creative_mode") then
+			if not creative_mode then
 				wielded:add_wear(dp.wear)
 				if wielded:get_count() == 0 and wdef.sound and wdef.sound.breaks then
 					core.sound_play(wdef.sound.breaks, {

@@ -63,7 +63,7 @@ core.register_on_joinplayer(function(player)
 	if not core.is_singleplayer() then
 		core.send_join_message(player_name)
 	end
-	
+
 end)
 
 
