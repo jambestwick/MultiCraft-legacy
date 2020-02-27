@@ -3,12 +3,42 @@
 local builtin_shared = ...
 
 local gravity = tonumber(core.settings:get("movement_gravity")) or 9.81
-local singleplayer = core.is_singleplayer()
 local vequals, vround, vadd = vector.equals, vector.round, vector.add
 
 --
 -- Falling stuff
 --
+
+local random = math.random
+local function drop_attached_node(p)
+	local n = core.get_node(p)
+	local drops = core.get_node_drops(n, "")
+	local def = core.registered_items[n.name]
+	if def and def.preserve_metadata then
+		local oldmeta = core.get_meta(p):to_table().fields
+		-- Copy pos and node because the callback can modify them.
+		local pos_copy = {x=p.x, y=p.y, z=p.z}
+		local node_copy = {name=n.name, param1=n.param1, param2=n.param2}
+		local drop_stacks = {}
+		for k, v in pairs(drops) do
+			drop_stacks[k] = ItemStack(v)
+		end
+		drops = drop_stacks
+		def.preserve_metadata(pos_copy, node_copy, oldmeta, drops)
+	end
+	if def and def.sounds and def.sounds.fall then
+		core.sound_play(def.sounds.fall, {pos = p})
+	end
+	core.remove_node(p)
+	for _, item in pairs(drops) do
+		local pos = {
+			x = p.x + random()/2 - 0.25,
+			y = p.y + random()/2 - 0.25,
+			z = p.z + random()/2 - 0.25,
+		}
+		core.add_item(pos, item)
+	end
+end
 
 core.register_entity(":__builtin:falling_node", {
 	initial_properties = {
@@ -132,6 +162,12 @@ core.register_entity(":__builtin:falling_node", {
 					local meta = core.get_meta(np)
 					meta:from_table(self.meta)
 				end
+				-- Drop node if falls into a protected area
+				if core.is_protected(np, "") then
+					self.object:remove()
+					drop_attached_node(np)
+					return
+				end
 				if def.sounds and def.sounds.place then
 					core.sound_play(def.sounds.place, {pos = np})
 				end
@@ -181,37 +217,6 @@ function core.spawn_falling_node(pos)
 	return convert_to_falling_node(pos, node)
 end
 
-local random = math.random
-local function drop_attached_node(p)
-	local n = core.get_node(p)
-	local drops = core.get_node_drops(n, "")
-	local def = core.registered_items[n.name]
-	if def and def.preserve_metadata then
-		local oldmeta = core.get_meta(p):to_table().fields
-		-- Copy pos and node because the callback can modify them.
-		local pos_copy = {x=p.x, y=p.y, z=p.z}
-		local node_copy = {name=n.name, param1=n.param1, param2=n.param2}
-		local drop_stacks = {}
-		for k, v in pairs(drops) do
-			drop_stacks[k] = ItemStack(v)
-		end
-		drops = drop_stacks
-		def.preserve_metadata(pos_copy, node_copy, oldmeta, drops)
-	end
-	if def and def.sounds and def.sounds.fall then
-		core.sound_play(def.sounds.fall, {pos = p})
-	end
-	core.remove_node(p)
-	for _, item in pairs(drops) do
-		local pos = {
-			x = p.x + random()/2 - 0.25,
-			y = p.y + random()/2 - 0.25,
-			z = p.z + random()/2 - 0.25,
-		}
-		core.add_item(pos, item)
-	end
-end
-
 function builtin_shared.check_attached_node(p, n)
 	local def = core.registered_nodes[n.name]
 	local d = {x = 0, y = 0, z = 0}
@@ -240,7 +245,7 @@ end
 
 function core.check_single_for_falling(p)
 	local n = core.get_node(p)
-	if core.get_item_group(n.name, "falling_node") ~= 0 and singleplayer then
+	if core.get_item_group(n.name, "falling_node") ~= 0 then
 		local p_bottom = {x = p.x, y = p.y - 1, z = p.z}
 		-- Only spawn falling node if node below is loaded
 		local n_bottom = core.get_node_or_nil(p_bottom)
@@ -260,8 +265,7 @@ function core.check_single_for_falling(p)
 		end
 	end
 
-	if core.get_item_group(n.name, "attached_node") ~= 0
-	or core.get_item_group(n.name, "falling_node")  ~= 0 and not singleplayer then
+	if core.get_item_group(n.name, "attached_node") ~= 0 then
 		if not builtin_shared.check_attached_node(p, n) then
 			drop_attached_node(p)
 			return true
