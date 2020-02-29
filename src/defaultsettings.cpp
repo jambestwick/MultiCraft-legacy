@@ -437,7 +437,7 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("client_unload_unused_data_timeout", "120");
 		settings->setDefault("client_mapblock_limit", "200");
 		settings->setDefault("pause_fps_max", "5");
-		settings->setDefault("viewing_range", "25");
+		settings->setDefault("viewing_range", "30");
 		settings->setDefault("smooth_lighting", "false");
 		settings->setDefault("enable_3d_clouds", "false");
 		settings->setDefault("cloud_radius", "6");
@@ -458,14 +458,14 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("client_unload_unused_data_timeout", "300");
 		settings->setDefault("client_mapblock_limit", "300");
 		settings->setDefault("pause_fps_max", "10");
-		settings->setDefault("viewing_range", "50");
+		settings->setDefault("viewing_range", "60");
 		settings->setDefault("cloud_radius", "6");
 		settings->setDefault("active_block_range", "2");
 		settings->setDefault("max_block_generate_distance", "3");
 	} else {
 	// high settings
 		settings->setDefault("client_mapblock_limit", "500");
-		settings->setDefault("viewing_range", "75");
+		settings->setDefault("viewing_range", "80");
 		settings->setDefault("max_block_generate_distance", "5");
 	}
 
