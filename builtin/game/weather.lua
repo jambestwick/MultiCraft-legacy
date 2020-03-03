@@ -99,7 +99,7 @@ local function weather_change()
 				break
 			end
 		end
-		core.after(random(60, 3000), weather_change)
+		core.after(random(60, 300), weather_change)
 	else
 		weather.type = "none"
 		core.after(random(1800, 3600), weather_change)
