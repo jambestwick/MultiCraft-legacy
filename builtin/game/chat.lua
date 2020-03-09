@@ -604,11 +604,11 @@ local function handle_give_command(cmd, giver, receiver, stackstring)
 	core.log("action", giver .. " invoked " .. cmd
 			.. ', stackstring="' .. stackstring .. '"')
 	local ritems = core.registered_items
-	if not string.match(stackstring, ":") and not ritems[stackstring] then
+	if not stackstring:match(":") and not ritems[stackstring] then
 		local modslist = core.get_modnames()
 		table.insert(modslist, 1, "default")
 		for _, modname in pairs(modslist) do
-			local namecheck = modname .. ":" .. stackstring:match("(%w+)")
+			local namecheck = modname .. ":" .. stackstring:match("%S*")
 			if ritems[namecheck] then
 				stackstring = modname .. ":" .. stackstring
 				break
@@ -721,6 +721,8 @@ core.register_chatcommand("pulverize", {
 		if player:get_wielded_item():is_empty() then
 			return false, "Unable to pulverize, no item in hand."
 		end
+		core.log("action", name .. " pulverized \"" ..
+			wielded_item:get_name() .. " " .. wielded_item:get_count() .. "\"")
 		player:set_wielded_item(nil)
 		return true, "An item was pulverized."
 	end
@@ -1117,7 +1119,7 @@ core.register_chatcommand("setspawn", {
 		end
 		local pos = core.pos_to_string(player:get_pos(), 1)
 		core.settings:set("static_spawnpoint", pos)
-		return true, "The spawn point are set to (" .. pos .. ")"
+		return true, "The spawn point are set to " .. pos
 	end
 })
 
