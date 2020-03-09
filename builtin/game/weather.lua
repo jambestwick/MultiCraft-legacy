@@ -63,7 +63,7 @@ end
 
 -- Rain
 weather.register("rain", {
-	falling_speed = 6,
+	falling_speed = 5,
 	amount = 7,
 	size = 25,
 	height = 3,
@@ -73,9 +73,9 @@ weather.register("rain", {
 
 -- Snow
 weather.register("snow", {
-	falling_speed = 3,
+	falling_speed = 2,
 	amount = 5,
-	size = 20,
+	size = 35,
 	height = 2,
 	texture = "weather_snow.png"
 })
@@ -174,6 +174,7 @@ if snow_covers then
 	})
 
 	core.register_abm({
+		label = "Weather: snow covers",
 		nodenames = {"group:crumbly", "group:snappy", "group:cracky", "group:choppy"},
 		neighbors = {"air"},
 		interval = 15,
