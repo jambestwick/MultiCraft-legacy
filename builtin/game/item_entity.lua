@@ -1,7 +1,7 @@
 -- Minetest: builtin/item_entity.lua
 
-local abs, min, pi = math.abs, math.min, math.pi
-local vadd, vnormalize = vector.add, vector.normalize
+local abs, min, random, pi = math.abs, math.min, math.random, math.pi
+local vnormalize = vector.normalize
 
 function core.spawn_item(pos, item)
 	-- Take item in any format
@@ -266,13 +266,6 @@ core.register_entity(":__builtin:item", {
 			end
 		end
 
-	-- At some events the entity does not stop
-	--[[if self.moving_state == is_moving and
-				self.slippery_state == is_slippery then
-			-- Do not update anything until the moving state changes
-			return
-		end]]
-
 		self.moving_state = is_moving
 		self.slippery_state = is_slippery
 
@@ -319,31 +312,32 @@ core.register_entity(":__builtin:item", {
 -- Item Collection
 if collection then
 	local function collect_items(player)
-		local pos = player:get_pos()
-		if not core.is_valid_pos(pos) then
+		local ppos = player:get_pos()
+		ppos.y = ppos.y + 1.3
+		if not core.is_valid_pos(ppos) then
 			return
 		end
 		-- Detect
-		local col_pos = vadd(pos, {x = 0, y = 1.3, z = 0})
-		local objects = core.get_objects_inside_radius(col_pos, 2)
+		local objects = core.get_objects_inside_radius(ppos, 2)
 		for _, obj in pairs(objects) do
 			local entity = obj:get_luaentity()
 			if entity and entity.name == "__builtin:item" and
 					not entity.collectioner and entity.age > 0.5 then
 				local item = ItemStack(entity.itemstring)
 				local inv = player:get_inventory()
-				if inv and inv:room_for_item("main", item) and
-						item:get_name() ~= "" then
+				if item:get_name() ~= "" and
+						inv and inv:room_for_item("main", item) then
 					-- Magnet
-					obj:move_to(col_pos)
+					obj:move_to(ppos)
 					entity.collectioner = true
 					-- Collect
 					if entity.collectioner == true then
 						core.after(0.05, function()
 							core.sound_play("item_drop_pickup", {
-								pos = col_pos,
+								pos = ppos,
 								max_hear_distance = 10,
-								gain = 0.2
+								gain = 0.2,
+								pitch = random(60,100)/100
 							})
 							entity.itemstring = ""
 							obj:remove()
