@@ -19,6 +19,8 @@ ui = {}
 ui.childlist = {}
 ui.default = nil
 
+local maintab = core.settings:get("maintab_LAST")
+
 --------------------------------------------------------------------------------
 function ui.add(child)
 	--TODO check child
@@ -77,15 +79,17 @@ local function wordwrap_quickhack(str)
 end
 
 --------------------------------------------------------------------------------
+local connect_time = tonumber(core.settings:get("connect_time"))
+
 function ui.update()
 	local formspec = ""
 
 	-- attempt auto restart
 	if gamedata ~= nil and gamedata.errormessage ~= nil and
 			core.settings:get_bool("auto_connect") == true and
-			tonumber(core.settings:get("connect_time")) < os.time() - 30 and
+			connect_time and connect_time < os.time() - 30 and
 			not gamedata.errormessage:find("Kicked") then
-		if core.settings:get("maintab_LAST") == "local" then
+		if maintab == "local" then
 			gamedata.singleplayer = true
 			gamedata.selected_world =
 				tonumber(core.settings:get("mainmenu_last_selected_world"))
@@ -108,6 +112,7 @@ function ui.update()
 				"button[3,4.6;3,0.5;btn_reconnect_yes;" .. fgettext("Reconnect") .. "]"
 	elseif gamedata ~= nil and gamedata.errormessage ~= nil then
 		formspec = wordwrap_quickhack(gamedata.errormessage)
+
 		local error_title
 		if gamedata.errormessage:find("ModError") then
 			error_title = fgettext("An error occurred in a Lua script:")
@@ -115,8 +120,8 @@ function ui.update()
 			error_title = fgettext("An error occurred:")
 		end
 		local restart_btn = "]button[4.5,4.6;3,0.5;btn_reconnect_no;" .. fgettext("Close") .. "]"
-		if core.settings:get("maintab_LAST") == "local" and
-				tonumber(core.settings:get("connect_time")) < os.time() - 30 then
+		if maintab == "local" and
+				connect_time and connect_time < os.time() - 30 then
 			restart_btn = "]button[6,4.6;3,0.5;btn_reconnect_no;" .. fgettext("Close") .. "]" ..
 				"button[3,4.6;3,0.5;btn_reconnect_yes;" .. fgettext("Restart") .. "]"
 		end

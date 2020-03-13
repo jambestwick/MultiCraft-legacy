@@ -154,16 +154,16 @@ msgid "Download one from minetest.net"
 msgstr "Загрузите их с minetest.net"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen:"
-msgstr "Генератор карты:"
+msgid "Mapgen"
+msgstr "Генератор карты"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Не задано имя мира или не выбрана игра"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed:"
-msgstr "Зерно:"
+msgid "Seed"
+msgstr "Зерно"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
@@ -172,8 +172,8 @@ msgstr ""
 "разработчиков."
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name:"
-msgstr "Название мира:"
+msgid "World name"
+msgstr "Название мира"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."

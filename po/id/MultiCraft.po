@@ -159,24 +159,24 @@ msgid "Game"
 msgstr "Permainan"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen:"
-msgstr "Pembuat peta:"
+msgid "Mapgen"
+msgstr "Pembuat peta"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Tidak ada dunia atau permainan yang dipilih"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed:"
-msgstr "Seed:"
+msgid "Seed"
+msgstr "Seed"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
 msgstr "Peringatan: minimal development test ditujukan untuk pengembang."
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name:"
-msgstr "Nama dunia:"
+msgid "World name"
+msgstr "Nama dunia"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."

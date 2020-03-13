@@ -57,7 +57,6 @@ if not mobile then
 --	tabs.texturepacks = dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
 end
 
-
 tabs.credits = dofile(menupath .. DIR_DELIM .. "tab_credits.lua")
 tabs.local_game = dofile(menupath .. DIR_DELIM .. "tab_local.lua")
 tabs.play_online = dofile(menupath .. DIR_DELIM .. "tab_online.lua")
@@ -124,8 +123,6 @@ end
 --	mm_texture.set_dirt_bg()
 	core.set_background("background",  defaulttexturedir .. "bg.png", true, 256)
 --	core.sound_play("main_menu", true)
-
-	core.settings:set("connect_time", os.time())
 end
 
 init_globals()

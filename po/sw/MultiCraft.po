@@ -154,24 +154,24 @@ msgid "Game"
 msgstr "Mchezo"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen:"
-msgstr "Mwandishi ramani:"
+msgid "Mapgen"
+msgstr "Mwandishi ramani"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Hakuna worldname kupewa au mchezo hakuna iliyoteuliwa"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed:"
-msgstr "Mbegu:"
+msgid "Seed"
+msgstr "Mbegu"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
 msgstr "Tahadhari: Mtihani wa maendeleo ndogo ni maana kwa watengenezaji."
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name:"
-msgstr "Jina la ulimwengu:"
+msgid "World name"
+msgstr "Jina la ulimwengu"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."

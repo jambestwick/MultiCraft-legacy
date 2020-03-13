@@ -162,24 +162,24 @@ msgid "Game"
 msgstr "Žaidimas"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen:"
-msgstr "Žemėlapių generavimas:"
+msgid "Mapgen"
+msgstr "Žemėlapių generavimas"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Nepateiktas joks pasaulio pavadinimas, arba nepasirinktas žaidimas"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed:"
-msgstr "Sėkla:"
+msgid "Seed"
+msgstr "Sėkla"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
 msgstr "Dėmesio: Minimalus kūrimo bandymas yra skirtas vystytojams."
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name:"
-msgstr "Pasaulio pavadinimas:"
+msgid "World name"
+msgstr "Pasaulio pavadinimas"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."

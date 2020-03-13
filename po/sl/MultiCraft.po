@@ -140,16 +140,16 @@ msgstr ""
 "znaki so dovoljeni."
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name:"
-msgstr "Ime sveta:"
+msgid "World name"
+msgstr "Ime sveta"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed:"
-msgstr "Seme:"
+msgid "Seed"
+msgstr "Seme"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen:"
-msgstr "Oblika sveta:"
+msgid "Mapgen"
+msgstr "Oblika sveta"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
 msgid "Game"

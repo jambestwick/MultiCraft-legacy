@@ -39,13 +39,13 @@ local function create_world_formspec()
 		"bgcolor[#00000000]" ..
 		"background[0,0;0,0;" .. core.formspec_escape(defaulttexturedir ..
 		"bg_dialog.png") .. ";true]" ..
-		"label[1.5,1.2;" .. fgettext("World name:") .. "]"..
+		"label[1.5,1.2;" .. fgettext("World name") .. ":" .. "]"..
 		"field[4.5,1.5;6,0.5;te_world_name;;]" ..
 
-		"label[1.5,2.2;" .. fgettext("Seed:") .. "]"..
+		"label[1.5,2.2;" .. fgettext("Seed") .. ":" .. "]"..
 		"field[4.5,2.5;6,0.5;te_seed;;".. current_seed .. "]" ..
 
-		"label[1.5,3.2;" .. fgettext("Mapgen:") .. "]"..
+		"label[1.5,3.2;" .. fgettext("Mapgen") .. ":".."]"..
 		"dropdown[4.2,3.05;6.3;dd_mapgen;" .. mglist .. ";" .. selindex .. "]" ..
 
 		"button[3.5,4.8;2.5,0.5;world_create_confirm;" .. mt_green_button .. fgettext("Create") .. "]" ..
@@ -56,9 +56,7 @@ local function create_world_formspec()
 end
 
 local function create_world_buttonhandler(this, fields)
-	if fields["world_create_confirm"] or
-		fields["key_enter"] then
-
+	if fields["world_create_confirm"] or fields["key_enter"] then
 		local worldname = fields["te_world_name"]
 		local gameindex = 1
 
@@ -66,7 +64,6 @@ local function create_world_buttonhandler(this, fields)
 			if worldname == "" then
 				worldname = "World " .. math.random(1000, 9999)
 			end
-
 			core.settings:set("fixed_map_seed", fields["te_seed"])
 
 			local message

@@ -160,24 +160,24 @@ msgid "Game"
 msgstr "Gioco"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
-msgid "Mapgen:"
-msgstr "Generatore della mappa:"
+msgid "Mapgen"
+msgstr "Generatore della mappa"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "No worldname given or no game selected"
 msgstr "Nessun nome per il mondo o nessuna partita selezionata"
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "Seed:"
-msgstr "Seme per il generatore:"
+msgid "Seed"
+msgstr "Seme per il generatore"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
 msgstr "Avviso: il \"minimal development test\" è inteso per gli sviluppatori."
 
 #: builtin/mainmenu/dlg_create_world.lua
-msgid "World name:"
-msgstr "Nome del mondo:"
+msgid "World name"
+msgstr "Nome del mondo"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "You have no subgames installed."
