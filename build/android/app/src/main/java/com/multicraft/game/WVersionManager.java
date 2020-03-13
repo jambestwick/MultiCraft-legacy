@@ -80,8 +80,8 @@ class WVersionManager implements DialogsCallback {
     private void setLaunchTimes() {
         int launchTimes = getLaunchTimes();
         launchTimes++;
-        PreferenceManager.getDefaultSharedPreferences(activity).edit().putInt(PREF_LAUNCH_TIMES, launchTimes)
-                .apply();
+        PreferenceManager.getDefaultSharedPreferences(activity).edit().putInt(
+                PREF_LAUNCH_TIMES, launchTimes).apply();
     }
 
     private String getMessage() {
@@ -122,22 +122,22 @@ class WVersionManager implements DialogsCallback {
     }
 
     private long getReminderTime() {
-        return PreferenceManager.getDefaultSharedPreferences(activity).getLong(PREF_REMINDER_TIME, 0);
+        return PreferenceManager.getDefaultSharedPreferences(activity).getLong
+                (PREF_REMINDER_TIME, 0);
     }
 
     private void setReminderTime(long reminderTimeStamp) {
-        PreferenceManager.getDefaultSharedPreferences(activity).edit().putLong(PREF_REMINDER_TIME, reminderTimeStamp)
-                .apply();
+        PreferenceManager.getDefaultSharedPreferences(activity).edit().putLong(
+                PREF_REMINDER_TIME, reminderTimeStamp).apply();
     }
 
     void ignoreThisVersion() {
-        PreferenceManager.getDefaultSharedPreferences(activity).edit().putInt(PREF_IGNORE_VERSION_CODE, mVersionCode)
-                .apply();
+        PreferenceManager.getDefaultSharedPreferences(activity).edit().putInt(
+                PREF_IGNORE_VERSION_CODE, mVersionCode).apply();
     }
 
     private String getGooglePlayStoreUrl() {
-        String id = activity.getApplicationInfo().packageName; // current google play is using package name as id
-        return "market://details?id=" + id;
+        return "market://details?id=" +  activity.getApplicationInfo().packageName;
     }
 
     private int getLaunchTimes() {
@@ -255,8 +255,8 @@ class WVersionManager implements DialogsCallback {
                             setMessage(content);
                             al.isShowUpdateDialog(true);
                         } else if (mVersionCode == getIgnoreVersionCode() && getLaunchTimes() % 3 == 0) {
-                            PreferenceManager.getDefaultSharedPreferences(activity).edit().putInt(PREF_LAUNCH_TIMES, 0)
-                                    .apply();
+                            PreferenceManager.getDefaultSharedPreferences(activity).edit().putInt(
+                                    PREF_LAUNCH_TIMES, 0).apply();
                             setMessage(content);
                             al.isShowUpdateDialog(true);
                         } else

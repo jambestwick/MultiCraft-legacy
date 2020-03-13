@@ -66,22 +66,18 @@ public class UnzipService extends IntentService {
             if (mChannel == null) {
                 mChannel = new NotificationChannel(channelId, name, importance);
                 mChannel.setDescription(description);
-                //Configure the notification channel, NO SOUND
+                // Configure the notification channel, NO SOUND
                 mChannel.setSound(null, null);
                 mChannel.enableLights(false);
                 mChannel.enableVibration(false);
                 mNotifyManager.createNotificationChannel(mChannel);
             }
             builder = new Notification.Builder(this, channelId);
-            builder.setContentTitle(getString(R.string.notification_title))  // required
-                    .setSmallIcon(R.drawable.update) // required
-                    .setContentText(getString(R.string.notification_description)); // required
-        } else {
+        } else
             builder = new Notification.Builder(this);
-            builder.setContentTitle(getString(R.string.notification_title))
-                    .setContentText(getString(R.string.notification_description))
-                    .setSmallIcon(R.drawable.update);
-        }
+        builder.setContentTitle(getString(R.string.notification_title))
+                .setContentText(getString(R.string.notification_description))
+                .setSmallIcon(R.drawable.update);
         mNotifyManager.notify(id, builder.build());
     }
 

@@ -204,8 +204,8 @@ public class MainActivity extends AppCompatActivity implements WVersionManager.A
 
     private void makeFullScreen() {
         if (Build.VERSION.SDK_INT >= 19)
-            this.getWindow().getDecorView()
-                    .setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+            this.getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
     @Override
