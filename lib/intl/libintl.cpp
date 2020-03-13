@@ -28,14 +28,14 @@ DEALINGS IN THE SOFTWARE.
 #include <map>
 #include <string>
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include <iostream>
 
 #if defined(WIN32) || defined(WINCE)
 typedef unsigned int uint32_t;
 #else
-#include <stdint.h>
+#include <cstdint>
 #endif
 
 #include "MessageCatalog.hpp"
@@ -46,14 +46,14 @@ using namespace std;
 using namespace libintllite;
 using namespace libintllite::internal;
 
-static char *currentDefaultDomain = NULL;
+static char *currentDefaultDomain = nullptr;
 static map<char *, MessageCatalog *> loadedMessageCatalogPtrsByDomain;
 
 libintl_lite_bool_t loadMessageCatalog(const char *domain, const char *moFilePath) {
 	if (!moFilePath || !domain)
 		return LIBINTL_LITE_BOOL_FALSE;
 
-	FILE *moFile = NULL;
+	FILE *moFile = nullptr;
 	CloseFileHandleGuard closeFileHandleGuard(moFile);
 
 	moFile = fopen(moFilePath, "rb");
@@ -96,7 +96,7 @@ libintl_lite_bool_t loadMessageCatalogFile(const char *domain, FILE *moFile) {
 		if (!readUIn32FromFile(moFile, needsBeToLeConversion, offsetTransTable))
 			return LIBINTL_LITE_BOOL_FALSE;
 
-		string *sortedOrigStringsArray = NULL;
+		string *sortedOrigStringsArray = nullptr;
 		ArrayGurard<string> sortedOrigStringsArrayGuard(sortedOrigStringsArray);
 		sortedOrigStringsArray = new string[numberOfStrings];
 		if (!sortedOrigStringsArray)
@@ -109,7 +109,7 @@ libintl_lite_bool_t loadMessageCatalogFile(const char *domain, FILE *moFile) {
 									  sortedOrigStringsArray))
 			return LIBINTL_LITE_BOOL_FALSE;
 
-		string *translatedStringsArray = NULL;
+		string *translatedStringsArray = nullptr;
 		ArrayGurard<string> translatedStringsArrayGuard(translatedStringsArray);
 		translatedStringsArray = new string[numberOfStrings];
 		if (!translatedStringsArray)
@@ -122,7 +122,7 @@ libintl_lite_bool_t loadMessageCatalogFile(const char *domain, FILE *moFile) {
 									  translatedStringsArray))
 			return LIBINTL_LITE_BOOL_FALSE;
 
-		MessageCatalog *newMessageCatalogPtr = new MessageCatalog(numberOfStrings,
+		auto *newMessageCatalogPtr = new MessageCatalog(numberOfStrings,
 																  sortedOrigStringsArray,
 																  translatedStringsArray);
 		sortedOrigStringsArrayGuard.release();
@@ -146,7 +146,7 @@ libintl_lite_bool_t bindtextdomain(const char *domain, const char *dirname) {
 	char *lang;
 
 	lang = getenv("LANGUAGE");
-	if (lang == NULL)
+	if (lang == nullptr)
 		return LIBINTL_LITE_BOOL_FALSE;
 
 	memset(moFilePath, 0, 1024);
@@ -167,7 +167,7 @@ libintl_lite_bool_t bind_textdomain_codeset(const char *domain, const char *code
 
 void closeLoadedMessageCatalog(const char *domain) {
 	if (domain) {
-		for (map<char *, MessageCatalog *>::iterator i = loadedMessageCatalogPtrsByDomain.begin();
+		for (auto i = loadedMessageCatalogPtrsByDomain.begin();
 			 i != loadedMessageCatalogPtrsByDomain.end();
 			 i++) {
 			if (strcmp(i->first, domain) == 0) {
@@ -184,21 +184,21 @@ const char *textdomain(const char *domain) {
 	if (domain) {
 		char *newDefaultDomain = strdup(domain);
 		if (!newDefaultDomain)
-			return NULL;
+			return nullptr;
 		free(currentDefaultDomain);
 		currentDefaultDomain = newDefaultDomain;
 		return newDefaultDomain;
 	} else
-		return NULL;
+		return nullptr;
 }
 
 const char *gettext(const char *origStr) {
-	return dgettext(NULL, origStr);
+	return dgettext(nullptr, origStr);
 }
 
 const char *dgettext(const char *domain, const char *origStr) {
 	if (!origStr)
-		return NULL;
+		return nullptr;
 
 	if (!domain) {
 		if (currentDefaultDomain)
@@ -207,8 +207,8 @@ const char *dgettext(const char *domain, const char *origStr) {
 			return origStr;
 	}
 
-	const MessageCatalog *msgCat = NULL;
-	for (map<char *, MessageCatalog *>::iterator i = loadedMessageCatalogPtrsByDomain.begin();
+	const MessageCatalog *msgCat = nullptr;
+	for (auto i = loadedMessageCatalogPtrsByDomain.begin();
 		 !msgCat && (i != loadedMessageCatalogPtrsByDomain.end());
 		 i++) {
 		if (strcmp(i->first, domain) == 0)

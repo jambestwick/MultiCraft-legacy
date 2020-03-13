@@ -127,7 +127,7 @@ namespace libintllite {
 											 std::string *outStringsFromMoFileArray) {
 			if (fseek(moFile, stringsTableOffsetFromFileBegin, SEEK_SET) != 0) return false;
 
-			uint32_t *stringsLengthsArray = NULL;
+			uint32_t *stringsLengthsArray = nullptr;
 			ArrayGurard<uint32_t> stringsLengthsArrayGuard(stringsLengthsArray);
 			stringsLengthsArray = new uint32_t[numberOfStrings];
 			if (!stringsLengthsArray)
@@ -154,7 +154,7 @@ namespace libintllite {
 			}
 
 			{
-				char *stringCharsArray = NULL;
+				char *stringCharsArray = nullptr;
 				ArrayGurard<char> stringCharsArrayGuard(stringCharsArray);
 
 				uint32_t stringCharsArraySize =
