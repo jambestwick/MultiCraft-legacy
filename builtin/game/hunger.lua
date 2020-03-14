@@ -46,7 +46,7 @@ hunger.settings = {
 	heal = get_setting("heal", 1),
 	heal_lvl = get_setting("heal_lvl", 5),
 	starve = get_setting("starve", 1),
-	starve_lvl = get_setting("starve_lvl", 3),
+	starve_lvl = get_setting("starve_lvl", 2),
 	level_max = get_setting("level_max", 21),
 	visual_max = get_setting("visual_max", 20)
 }
@@ -273,7 +273,7 @@ local function health_tick()
 			air > 0
 			and not hunger.is_poisoned(player)
 		)
-		-- or damage player by 1 hp if saturation is < 2 (of 30)
+		-- or damage player by 1 hp if saturation is < 2 (of 21)
 		local is_starving = (
 			saturation < settings.starve_lvl and
 			hp > 0
