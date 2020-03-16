@@ -59,16 +59,17 @@ end
 --------------------------------------------------------------------------------
 function order_favorite_list(list)
 	local res = {}
-	--orders the favorite list after support
+	-- orders the multicraft list before support
 	for i = 1, #list do
 		local fav = list[i]
-		if is_server_protocol_compat(fav.proto_min, fav.proto_max) then
+		if fav.server_id ~= nil then
 			res[#res + 1] = fav
 		end
 	end
 	for i = 1, #list do
 		local fav = list[i]
-		if not is_server_protocol_compat(fav.proto_min, fav.proto_max) then
+		if is_server_protocol_compat(fav.proto_min, fav.proto_max) and
+				fav.server_id == nil then
 			res[#res + 1] = fav
 		end
 	end
@@ -122,7 +123,7 @@ function render_serverlist_row(spec, is_favorite, is_approved)
 		-- (relatively to clients_max)
 		local clients_color
 		if     grey_out               then clients_color = '#aaaaaa'
-		elseif spec.clients == 0      then clients_color = ''        -- 0 players: default/white
+		elseif spec.clients    == 0   then clients_color = ''        -- 0 players: default/white
 		elseif clients_percent <= 60  then clients_color = '#a1e587' -- 0-60%: green
 		elseif clients_percent <= 90  then clients_color = '#ffdc97' -- 60-90%: yellow
 		elseif clients_percent == 100 then clients_color = '#dd5b5b' -- full server: red (darker)
@@ -139,16 +140,12 @@ function render_serverlist_row(spec, is_favorite, is_approved)
 		details = details .. ',?,/,?,'
 	end
 
-	if spec.damage then
-		details = details .. "4,"
-	else
+	if spec.creative then
 		details = details .. "5,"
-	end
-
-	if spec.pvp then
+	elseif spec.pvp then
 		details = details .. "6,"
-	else
-		details = details .. "0,"
+	else -- damage
+		details = details .. "4,"
 	end
 
 	return details .. (grey_out and '#aaaaaa,' or ',') .. text

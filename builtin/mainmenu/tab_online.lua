@@ -47,7 +47,7 @@ local function get_formspec(_, _, tabdata)
 		"label[10.15,-0.3;" .. fgettext("Port") .. ":" .. "]" ..
 		"field[7.4,0.6;3.2,0.5;te_address;;" ..
 			core.formspec_escape(core.settings:get("address")) .. "]" ..
-		"field[10.45,0.6;1.9,0.5;te_port;;" ..
+		"field[10.45,0.6;1.95,0.5;te_port;;" ..
 			core.formspec_escape(core.settings:get("remote_port")) .. "]" ..
 
 		-- Name
@@ -67,7 +67,7 @@ local function get_formspec(_, _, tabdata)
 
 		local pwd = password_save and core.formspec_escape(core.settings:get("password")) or password_tmp
 		-- Password
-		retval = retval .. "pwdfield[10.45,1.81;1.91,0.39;te_pwd;;" .. pwd .. "]"
+		retval = retval .. "pwdfield[10.45,1.8;1.95,0.39;te_pwd;;" .. pwd .. "]"
 
 	if tabdata.fav_selected and fav_selected then
 		if gamedata.fav then
@@ -84,17 +84,16 @@ local function get_formspec(_, _, tabdata)
 	retval = retval ..
 		"tableoptions[background=#27233F;border=false]" ..
 		"tablecolumns[" ..
-		image_column(fgettext("Favorite"), "favorite") .. ",align=center;" ..
-		image_column(fgettext("Lag, ms")) .. ",padding=0.25;" ..
+		image_column(fgettext("Favorite")) .. ",align=center;" ..
+		image_column(fgettext("Lag")) .. ",padding=0.25;" ..
 		"color,span=3;" ..
-		"text,align=right;" ..                -- clients
-		"text,align=center,padding=0.25;" ..  -- "/"
-		"text,align=right,padding=0.25;" ..   -- clients_max
-		image_column(fgettext("Server mode"), "damage") .. ",padding=0.25;" ..
-		image_column(fgettext("PvP enabled"), "pvp") .. ",padding=0.25;" ..
+		"text,align=right;" ..               -- clients
+		"text,align=center,padding=0.25;" .. -- "/"
+		"text,align=right,padding=0.25;" ..  -- clients_max
+		image_column(fgettext("Server mode")) .. ",padding=0.5;" ..
 		"color,span=1;" ..
-		"text,padding=0.25]" ..
-		"table[-0.09,0.7;7,4.9;favourites;"
+		"text,padding=0.5]" ..
+		"table[-0.09,0.7;6.99,4.93;favourites;"
 
 	if menudata.search_result then
 		for i = 1, #menudata.search_result do
