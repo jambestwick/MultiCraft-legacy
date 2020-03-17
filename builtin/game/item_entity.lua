@@ -210,14 +210,15 @@ core.register_entity(":__builtin:item", {
 		local is_slippery = false
 
 		-- Destroy item when dropped into lava
-		if def and def.groups and def.groups.lava then
-			core.sound_play("default_cool_lava", {pos = pos, max_hear_distance = 10})
+		if def_inside and def_inside.groups and def_inside.groups.lava then
+			core.sound_play("default_cool_lava", {
+				pos = pos, max_hear_distance = 10})
 			self.object:remove()
 			core.add_particlespawner({
 				amount = 3,
 				time = 0.1,
-				minpos = {x = pos.x - 0.1, y = pos.y + 0.1, z = pos.z - 0.1 },
-				maxpos = {x = pos.x + 0.1, y = pos.y + 0.2, z = pos.z + 0.1 },
+				minpos = {x = pos.x - 0.1, y = pos.y + 0.1, z = pos.z - 0.1},
+				maxpos = {x = pos.x + 0.1, y = pos.y + 0.2, z = pos.z + 0.1},
 				minvel = {x = 0, y = 2.5, z = 0},
 				maxvel = {x = 0, y = 2.5, z = 0},
 				minacc = {x = -0.15, y = -0.02, z = -0.15},
