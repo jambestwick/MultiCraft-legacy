@@ -112,7 +112,7 @@ local function get_formspec(_, _, tabdata)
 			end
 
 			retval = retval .. render_serverlist_row(server, server.is_favorite,
-					server.server_id ~= nil)
+					server.server_id == "multicraft")
 		end
 	elseif #menudata.favorites > 0 then
 		local favs = core.get_favorites("local")
@@ -130,10 +130,10 @@ local function get_formspec(_, _, tabdata)
 			end
 		end
 		retval = retval .. render_serverlist_row(menudata.favorites[1], (#favs > 0),
-				menudata.favorites[1].server_id ~= nil)
+				menudata.favorites[1].server_id == "multicraft")
 		for i = 2, #menudata.favorites do
 			retval = retval .. "," .. render_serverlist_row(menudata.favorites[i],
-					(i <= #favs), menudata.favorites[i].server_id ~= nil)
+					(i <= #favs), menudata.favorites[i].server_id == "multicraft")
 		end
 	end
 
@@ -357,7 +357,7 @@ local function main_button_handler(_, fields, _, tabdata)
 
 		local auto_connect = false
 		for _, server in pairs(serverlist) do
-			if server.server_id and server.address == gamedata.address then
+			if server.server_id == "multicraft" and server.address == gamedata.address then
 				auto_connect = true
 				break
 			end

@@ -62,14 +62,14 @@ function order_favorite_list(list)
 	-- orders the multicraft list before support
 	for i = 1, #list do
 		local fav = list[i]
-		if fav.server_id ~= nil then
+		if fav.server_id == "multicraft" then
 			res[#res + 1] = fav
 		end
 	end
 	for i = 1, #list do
 		local fav = list[i]
 		if is_server_protocol_compat(fav.proto_min, fav.proto_max) and
-				fav.server_id == nil then
+				fav.server_id ~= "multicraft" then
 			res[#res + 1] = fav
 		end
 	end
@@ -144,8 +144,10 @@ function render_serverlist_row(spec, is_favorite, is_approved)
 		details = details .. "5,"
 	elseif spec.pvp then
 		details = details .. "6,"
-	else -- damage
+	elseif spec.damage then
 		details = details .. "4,"
+	else
+		details = details .. "0,"
 	end
 
 	return details .. (grey_out and '#aaaaaa,' or ',') .. text
