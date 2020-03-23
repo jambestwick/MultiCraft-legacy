@@ -459,10 +459,13 @@ local function item_throw_step(entity, dtime)
 			local name = obj:get_player_name()
 			if name ~= entity.thrower then
 				hit_object = obj
+				break
 			end
 		elseif obj:get_luaentity() ~= nil and
-				obj:get_luaentity().name ~= entity.name then
+				obj:get_luaentity().name ~= "__builtin:throwing_item" and
+				obj:get_luaentity().name ~= "__builtin:item" then
 			hit_object = obj
+			break
 		end
 	end
 	if hit_object or node_pos then
