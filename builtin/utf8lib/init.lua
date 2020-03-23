@@ -2,6 +2,7 @@
 $Id: utf8.lua 179 2009-04-03 18:10:03Z pasta $
 
 Provides UTF-8 aware string functions implemented in pure lua:
+*	string.len(s)
 *	string.upper(s)
 *	string.lower(s)
 
@@ -35,6 +36,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Based on:	https://github.com/Planimeter/grid-sdk/blob/master/public/utf8.lua
+			https://github.com/Stepets/utf8.lua
 Changed by:	MultiCraft Development Team (2019)
 Note:		Now used very minimal version, with the support of only lower and upper.
 			Only latin and russian letters are supported.
@@ -43,16 +45,16 @@ Note:		Now used very minimal version, with the support of only lower and upper.
 
 -- returns the number of bytes used by the UTF-8 character at byte i in s
 -- also doubles as a UTF-8 character validator
-function utf8charbytes(s, i)
+local function utf8charbytes(s, i)
 	-- argument defaults
 	i = i or 1
 
 	-- argument checking
 	if type(s) ~= "string" then
-		error("bad argument #1 to 'utf8charbytes' (string expected, got ".. type(s).. ")")
+		error("bad argument #1 to 'utf8charbytes' (string expected, got " .. type(s) .. ")")
 	end
 	if type(i) ~= "number" then
-		error("bad argument #2 to 'utf8charbytes' (number expected, got ".. type(i).. ")")
+		error("bad argument #2 to 'utf8charbytes' (number expected, got " .. type(i) .. ")")
 	end
 
 	local c = s:byte(i)
@@ -135,20 +137,40 @@ function utf8charbytes(s, i)
 	end
 end
 
+-- returns the number of characters in a UTF-8 string
+local originlen = string.len
+local function utf8len(s)
+	-- argument checking
+	if type(s) ~= "string" then
+		error("bad argument #1 to 'utf8len' (string expected, got " .. type(s) .. ")")
+	end
+
+	local pos = 1
+	local bytes = originlen(s)
+	local len = 0
+
+	while pos <= bytes do
+		len = len + 1
+		pos = pos + utf8charbytes(s, pos)
+	end
+
+	return len
+end
+
 dofile(core.get_builtin_path() .. "utf8lib" .. DIR_DELIM .. "utf8data.lua")
 
 -- replace UTF-8 characters based on a mapping table
 local function utf8replace(s, mapping)
 	-- argument checking
 	if type(s) ~= "string" then
-		error("bad argument #1 to 'utf8replace' (string expected, got ".. type(s).. ")")
+		error("bad argument #1 to 'utf8replace' (string expected, got " .. type(s) .. ")")
 	end
 	if type(mapping) ~= "table" then
-		error("bad argument #2 to 'utf8replace' (table expected, got ".. type(mapping).. ")")
+		error("bad argument #2 to 'utf8replace' (table expected, got " .. type(mapping) .. ")")
 	end
 
 	local pos = 1
-	local bytes = s:len()
+	local bytes = originlen(s)
 	local charbytes
 	local newstr = ""
 
@@ -162,13 +184,18 @@ local function utf8replace(s, mapping)
 	return newstr
 end
 
--- identical to string.upper except it knows about unicode simple case conversions
+-- identical to string.len with UTF-8 support
+function string.len(s)
+	return utf8len(s)
+end
+
+-- identical to string.upper with UTF-8 support
 local origupper = string.upper
 function string.upper(s)
 	return origupper(utf8replace(s, utf8_lc_uc))
 end
 
--- identical to string.lower except it knows about unicode simple case conversions
+-- identical to string.lower with UTF-8 support
 local origlower = string.lower
 function string.lower(s)
 	return origlower(utf8replace(s, utf8_uc_lc))
