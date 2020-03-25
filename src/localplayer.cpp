@@ -71,6 +71,7 @@ LocalPlayer::LocalPlayer(Client *client, const char *name):
 	m_sneak_node_bb_top(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
 	m_sneak_node_exists(false),
 	m_sneak_ladder_detected(false),
+	m_sneak_offset(false),
 	m_sneak_node_bb_ymax(0.0f),
 	m_need_to_get_new_sneak_node(true),
 	m_old_node_below(32767,32767,32767),
@@ -718,10 +719,21 @@ void LocalPlayer::applyControl(float dtime, ClientEnvironment *env)
 	// The speed of the player (Y is ignored)
 	if(superspeed || (is_climbing && fast_climb) || ((in_liquid || in_liquid_stable) && fast_climb))
 		speedH = speedH.normalize() * movement_speed_fast;
-	else if(control.sneak && !free_move && !in_liquid && !in_liquid_stable)
+	else if(control.sneak && !free_move && !in_liquid && !in_liquid_stable) {
 		speedH = speedH.normalize() * movement_speed_crouch;
-	else
+		if (!m_sneak_offset && !isAttached && (physics_override_speed != 0)) {
+			eye_offset_first += v3f(0,-3,0);
+			eye_offset_third += v3f(0,-3,0);
+			m_sneak_offset = true;
+		}
+	} else {
 		speedH = speedH.normalize() * movement_speed_walk;
+		if (m_sneak_offset && !isAttached && (physics_override_speed != 0)) {
+			eye_offset_first += v3f(0,3,0);
+			eye_offset_third += v3f(0,3,0);
+			m_sneak_offset = false;
+		}
+	}
 
 	// Acceleration increase
 	f32 incH = 0; // Horizontal (X, Z)
