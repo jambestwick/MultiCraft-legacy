@@ -210,6 +210,9 @@ set(CPACK_PACKAGE_VENDOR "MoNTE48")
 set(CPACK_PACKAGE_CONTACT "MoNTE48@mail.ua")
 
 if(WIN32)
+	# Include all dynamically linked runtime libaries such as MSVCRxxx.dll
+	include(InstallRequiredSystemLibraries)
+
 	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 		set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${VERSION_STRING}-win64")
 	else()
