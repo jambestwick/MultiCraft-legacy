@@ -953,7 +953,7 @@ void GenericCAO::addToScene(scene::ISceneManager *smgr,
 		updateTextures(m_current_texture_modifier);
 
 	scene::ISceneNode *node = getSceneNode();
-	if (node && m_prop.nametag != "" && !m_is_local_player) {
+	if (node && m_prop.nametag != "") {
 		// Add nametag
 		m_nametag = m_client->getCamera()->addNametag(node,
 			m_prop.nametag, m_prop.nametag_color);
@@ -1586,7 +1586,7 @@ void GenericCAO::processMessage(const std::string &data)
 			player->makes_footstep_sound = m_prop.makes_footstep_sound;
 		}
 
-		if ((m_is_player && !m_is_local_player) && m_prop.nametag == "")
+		if (m_is_player && m_prop.nametag == "")
 			m_prop.nametag = m_name;
 
 		expireVisuals();
