@@ -1305,7 +1305,7 @@ void GenericCAO::updateTextures(std::string mod)
 	bool use_bilinear_filter = g_settings->getBool("bilinear_filter");
 	bool use_anisotropic_filter = g_settings->getBool("anisotropic_filter");
 
-	m_previous_texture_modifier = m_current_texture_modifier;
+//	m_previous_texture_modifier = m_current_texture_modifier; // otherwise modifiers will overlap due to function design bug
 	m_current_texture_modifier = mod;
 	m_glow = m_prop.glow;
 
@@ -1743,9 +1743,9 @@ void GenericCAO::processMessage(const std::string &data)
 			{
 				// TODO: Execute defined fast response
 				// Flashing shall suffice as there is no definition
-				m_reset_textures_timer = 0.05;
+				m_reset_textures_timer = 0.1;
 				if(damage >= 2)
-					m_reset_textures_timer = 1;
+					m_reset_textures_timer += 0.25 * damage;
 				updateTextures(m_current_texture_modifier + "^[colorize:#FF000085");
 			}
 		}
@@ -1801,19 +1801,21 @@ bool GenericCAO::directReportPunch(v3f dir, const ItemStack *punchitem,
 		spec.gain = 1.0f;
 		m_client->sound()->playSoundAt(spec, false, getPosition());
 	}
-	if(result.did_punch && result.damage != 0)
+
+	s16 damage = result.damage;
+	if(result.did_punch && damage != 0)
 	{
-		if(result.damage < m_hp)
+		if(damage < m_hp)
 		{
-			m_hp -= result.damage;
+			m_hp -= damage;
 		} else {
 			m_hp = 0;
 		}
 		// TODO: Execute defined fast response
 		// Flashing shall suffice as there is no definition
-		m_reset_textures_timer = 0.05;
-		if (result.damage >= 2)
-			m_reset_textures_timer = 1;
+		m_reset_textures_timer = 0.1;
+		if (damage >= 2)
+			m_reset_textures_timer += 0.25 * damage;
 		updateTextures(m_current_texture_modifier + "^[colorize:#FF000085");
 	}
 
