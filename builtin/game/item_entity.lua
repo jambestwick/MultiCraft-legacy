@@ -342,7 +342,10 @@ if collection then
 							})
 							entity.itemstring = ""
 							obj:remove()
-							inv:add_item("main", item)
+							item = inv:add_item("main", item)
+							if not item:is_empty() then
+								core.item_drop(item, player, ppos)
+							end
 						end)
 					end
 				end
