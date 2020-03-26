@@ -642,7 +642,7 @@ function core.string_to_privs(str, delim)
 	assert(type(str) == "string")
 	delim = delim or ','
 	local privs = {}
-	for _, priv in pairs(string.split(str, delim)) do
+	for _, priv in pairs(str:split(delim)) do
 		privs[priv:trim()] = true
 	end
 	return privs
