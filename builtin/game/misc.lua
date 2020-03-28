@@ -121,14 +121,16 @@ end
 
 local mapgen_limit = tonumber(core.settings:get("mapgen_limit"))
 function core.is_valid_pos(pos)
-	if pos then
-		for _, v in pairs({"x", "y", "z"}) do
-			if not pos[v] or pos[v] < -mapgen_limit or pos[v] > mapgen_limit then
-				return
-			end
-		end
-		return true
+	if not pos or type(pos) ~= "table" then
+		return false
 	end
+	for _, v in pairs({"x", "y", "z"}) do
+		if not pos[v] or pos[v] < -mapgen_limit or pos[v] > mapgen_limit then
+			return false
+		end
+	end
+
+	return true
 end
 
 function core.hash_node_position(pos)
