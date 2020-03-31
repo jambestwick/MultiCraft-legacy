@@ -283,6 +283,10 @@ local function health_tick()
 			player:set_hp(hp + settings.heal)
 		elseif is_starving then
 			player:set_hp(hp - settings.starve)
+			hud.change_item(player, "hunger", {number = 0})
+			core.after(0.5, function()
+				hud.change_item(player, "hunger", {number = min(settings.visual_max, saturation)})
+			end)
 		end
 	end
 end
@@ -291,7 +295,7 @@ local hunger_timer = 0
 local health_timer = 0
 local action_timer = 0
 
-local function hunger_globaltimer(dtime)
+core.register_globalstep(function(dtime)
 	hunger_timer = hunger_timer + dtime
 	health_timer = health_timer + dtime
 	action_timer = action_timer + dtime
@@ -310,7 +314,7 @@ local function hunger_globaltimer(dtime)
 		health_timer = 0
 		health_tick()
 	end
-end
+end)
 
 function core.do_item_eat(hp_change, replace_with_item, poison, itemstack, player, pointed_thing)
 	for _, callback in pairs(core.registered_on_item_eats) do
@@ -352,8 +356,6 @@ function core.do_item_eat(hp_change, replace_with_item, poison, itemstack, playe
 	return itemstack
 end
 
-local visual_max, level_max = settings.visual_max, settings.level_max
-
 hud.register("hunger", {
 	hud_elem_type = "statbar",
 	position      = {x = 0.5, y = 1},
@@ -362,24 +364,24 @@ hud.register("hunger", {
 	size          = {x = 24,  y = 24},
 	text          = "hunger_statbar_fg.png",
 	background    = "hunger_statbar_bg.png",
-	number        = visual_max
+	number        = settings.visual_max
 })
 
 core.register_on_joinplayer(function(player)
-	local level = hunger.get_saturation(player) or level_max
+	local level = hunger.get_saturation(player) or settings.level_max
 
 	-- reset poisoned
-	player:set_attribute(attribute.poisoned, "no")
+	hunger.set_poisoned(player, false)
+	-- set saturation
 	player:set_attribute(attribute.saturation, level)
 
-	if level and (level < visual_max) then
+	-- we must manually update the HUD
+	if level and (level < settings.visual_max) then
 		core.after(1, function()
-			hud.change_item(player, "hunger", {number = min(visual_max, level)})
+			hud.change_item(player, "hunger", {number = min(settings.visual_max, level)})
 		end)
 	end
 end)
-
-core.register_globalstep(hunger_globaltimer)
 
 local exhaust = hunger.exhaust_player
 core.register_on_placenode(function(_, _, player)
@@ -395,5 +397,7 @@ core.register_on_punchplayer(function(_, hitter)
 	exhaust(hitter, settings.exhaust_punch, hunger.exhaustion_reasons.punch)
 end)
 core.register_on_respawnplayer(function(player)
-	exhaust(player, settings.level_max)
+	hunger.set_saturation(player, settings.level_max)
+	hunger.set_exhaustion(player, 0)
+	hunger.set_poisoned(player, false)
 end)
