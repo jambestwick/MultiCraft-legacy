@@ -187,7 +187,7 @@ end
 
 core.register_chatcommand("grant", {
 	params = "<name> (<privilege> | all)",
-	description = "Give privilege to player",
+	description = "Give privileges to player",
 	func = function(name, param)
 		local grantname, grantprivstr = string.match(param, "([^ ]+) (.+)")
 		if not grantname or not grantprivstr then
@@ -718,7 +718,8 @@ core.register_chatcommand("pulverize", {
 			core.log("error", "Unable to pulverize, no player.")
 			return false, "Unable to pulverize, no player."
 		end
-		if player:get_wielded_item():is_empty() then
+		local wielded_item = player:get_wielded_item()
+		if wielded_item:is_empty() then
 			return false, "Unable to pulverize, no item in hand."
 		end
 		core.log("action", name .. " pulverized \"" ..
@@ -832,7 +833,6 @@ core.register_chatcommand("rollback", {
 
 core.register_chatcommand("status", {
 	description = "Show server status",
-	privs = {server = true},
 	func = function(name, param)
 		local status = core.get_server_status(name, false)
 		if status and status ~= "" then
@@ -908,6 +908,7 @@ core.register_chatcommand("shutdown", {
 			core.chat_send_all("*** Server shutting down (operator request).")
 		end
 		core.request_shutdown(message:trim(), core.is_yes(reconnect), delay)
+		return true
 	end
 })
 
@@ -995,7 +996,7 @@ core.register_chatcommand("clearobjects", {
 
 core.register_chatcommand("msg", {
 	params = "<name> <message>",
-	description = "Send a private message",
+	description = "Send a private message to a player",
 	privs = {shout = true},
 	func = function(name, param)
 		local sendto, message = param:match("^(%S+)%s(.+)$")
@@ -1094,7 +1095,7 @@ core.register_chatcommand("kill", {
 
 core.register_chatcommand("spawn", {
 	description = "Teleport to the spawn point",
-	func = function(name, param)
+	func = function(name)
 		local player = core.get_player_by_name(name)
 		if not player then
 			return false
@@ -1112,7 +1113,7 @@ core.register_chatcommand("spawn", {
 core.register_chatcommand("setspawn", {
 	description = "Sets the spawn point to your current position",
 	privs = {server = true},
-	func = function(name, param)
+	func = function(name)
 		local player = core.get_player_by_name(name)
 		if not player then
 			return false
