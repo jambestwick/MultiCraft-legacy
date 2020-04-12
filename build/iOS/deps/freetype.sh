@@ -12,12 +12,12 @@ fi
 
 cd freetype-src
 
-CC=$IOS_CC CFLAGS=$IOS_FLAGS \
+CFLAGS=$IOS_FLAGS \
 PKG_CONFIG=/bin/false \
 ./configure --host=arm-apple-darwin --prefix=/ \
 	--disable-shared --enable-static \
-	--with-png=no
-make -j$(sysctl -n hw.ncpu)
+	--with-bzip2=no --with-png=no
+make -j
 
 mkdir -p ../freetype
 make DESTDIR=$PWD/../freetype install

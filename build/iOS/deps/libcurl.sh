@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 . sdk.sh
-CURL_VERSION=7.67.0
+CURL_VERSION=7.69.1
 
 if [ ! -d libcurl-src ]; then
 	wget https://curl.haxx.se/download/curl-$CURL_VERSION.tar.gz
@@ -15,11 +15,11 @@ cd libcurl-src
 # build once for armv7, once for arm64
 for x in armv7 arm64; do
 	if [ $x = armv7 ]; then
-		CURL_CFLAGS="-arch armv7 $IOS_FLAGS_LUA"
+		CURL_CFLAGS="-arch armv7 $IOS_FLAGS_NOARCH"
 	else
-		CURL_CFLAGS="-arch arm64 -arch arm64e $IOS_FLAGS_LUA"
+		CURL_CFLAGS="-arch arm64 -arch arm64e $IOS_FLAGS_NOARCH"
 	fi
-	CC=$IOS_CC CFLAGS=$CURL_CFLAGS \
+	CFLAGS="$CURL_CFLAGS" \
 	./configure --host=arm-apple-darwin --prefix=/ --disable-shared --enable-static \
 		--disable-debug --disable-verbose --disable-versioned-symbols \
 		--enable-hidden-symbols --disable-dependency-tracking \

@@ -1,12 +1,9 @@
 #!/bin/bash -e
 
 ./irrlicht.sh
-#./libogg.sh
-#./libvorbis.sh
-#./leveldb.sh
 ./freetype.sh
-#./luajit.sh
-#./libcurl.sh
+./libcurl.sh
+#./luajit.sh ## requires an older version of macOS (with 32-bit support)
 
 echo
 echo "All libraries were built!"

@@ -17,7 +17,7 @@ cd LuaJIT-src
 # 32-bit
 make amalg -j \
 	DEFAULT_CC=clang HOST_CC="clang -m32 -arch i386" CROSS="$(dirname $IOS_CC)/" TARGET_SYS=iOS \
-	TARGET_FLAGS="-arch armv7 ${IOS_FLAGS_LUA}" \
+	TARGET_FLAGS="-arch armv7 $IOS_FLAGS_NOARCH" \
 	TARGET_CFLAGS+="-Wno-implicit-function-declaration -fno-omit-frame-pointer"
 mv src/libluajit.a templib_32.a
 make clean
@@ -25,7 +25,7 @@ make clean
 # 64-bit
 make amalg -j \
 	DEFAULT_CC=clang HOST_CC=clang CROSS="$(dirname $IOS_CC)/" TARGET_SYS=iOS \
-	TARGET_FLAGS="-arch arm64 ${IOS_FLAGS_LUA}" \
+	TARGET_FLAGS="-arch arm64 $IOS_FLAGS_NOARCH" \
 	TARGET_CFLAGS+="-Wno-implicit-function-declaration"
 mv src/libluajit.a templib_64.a
 make clean
@@ -33,7 +33,7 @@ make clean
 # 64-bit [arm64e]
 make amalg -j \
 	DEFAULT_CC=clang HOST_CC=clang CROSS="$(dirname $IOS_CC)/" TARGET_SYS=iOS \
-	TARGET_FLAGS="-arch arm64e ${IOS_FLAGS_LUA}" \
+	TARGET_FLAGS="-arch arm64e $IOS_FLAGS_NOARCH" \
 	TARGET_CFLAGS+="-Wno-implicit-function-declaration"
 mv src/libluajit.a templib_64e.a
 make clean
