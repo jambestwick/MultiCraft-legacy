@@ -41,7 +41,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #ifdef __ANDROID__
 #include <GLES/gl.h>
 #elif defined(__IOS__)
-#include <OpenGLES/ES1/gl.h>
+#include <OpenGLES/ES2/gl.h>
 #endif
 
 /*
@@ -1024,7 +1024,7 @@ video::IImage * Align2Npot2(video::IImage * image,
 	unsigned int height = npot2(dim.Height);
 	unsigned int width  = npot2(dim.Width);
 
-	if (dim.Height == height && dim.Width == width)
+	if (/*dim.Height == height &&*/ dim.Width == width)
 		return image;
 
 #ifdef __IOS__
