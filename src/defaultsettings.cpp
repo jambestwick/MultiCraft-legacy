@@ -389,7 +389,6 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("screenW", "0");
 	settings->setDefault("screenH", "0");
 	settings->setDefault("fullscreen", "true");
-	settings->setDefault("fps_max", "35");
 	settings->setDefault("enable_shaders", "false");
 	settings->setDefault("video_driver", "ogles1");
 	settings->setDefault("touchtarget", "true");
@@ -416,6 +415,7 @@ void set_default_settings(Settings *settings) {
 #endif
 		settings->setDefault("client_unload_unused_data_timeout", "60");
 		settings->setDefault("client_mapblock_limit", "50");
+		settings->setDefault("fps_max", "30");
 		settings->setDefault("pause_fps_max", "5");
 		settings->setDefault("viewing_range", "25");
 		settings->setDefault("smooth_lighting", "false");
@@ -436,6 +436,7 @@ void set_default_settings(Settings *settings) {
 #endif
 		settings->setDefault("client_unload_unused_data_timeout", "120");
 		settings->setDefault("client_mapblock_limit", "200");
+		settings->setDefault("fps_max", "35");
 		settings->setDefault("pause_fps_max", "5");
 		settings->setDefault("viewing_range", "30");
 		settings->setDefault("smooth_lighting", "false");
@@ -457,6 +458,7 @@ void set_default_settings(Settings *settings) {
 #endif
 		settings->setDefault("client_unload_unused_data_timeout", "300");
 		settings->setDefault("client_mapblock_limit", "300");
+		settings->setDefault("fps_max", "35");
 		settings->setDefault("pause_fps_max", "10");
 		settings->setDefault("viewing_range", "60");
 		settings->setDefault("cloud_radius", "6");
