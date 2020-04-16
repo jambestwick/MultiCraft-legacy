@@ -8,7 +8,7 @@ local function handle_job(jobid, serialized_retval)
 end
 
 if core.register_globalstep then
-	core.register_globalstep(function(dtime)
+	core.register_globalstep(function()
 		for _, job in ipairs(core.get_finished_jobs()) do
 			handle_job(job.jobid, job.retval)
 		end

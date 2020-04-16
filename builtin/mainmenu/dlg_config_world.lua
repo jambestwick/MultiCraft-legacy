@@ -159,7 +159,6 @@ local function handle_buttons(this, fields)
 
 		local rawlist = this.data.list:get_raw_list()
 
-		local i,mod
 		for _, mod in ipairs(rawlist) do
 			if not mod.is_modpack and
 					not mod.is_game_content then
@@ -266,7 +265,7 @@ function create_configure_world_dlg(worldidx)
 					return true
 				end,
 				{
-					worldpat h= dlg.data.worldspec.path,
+					worldpath = dlg.data.worldspec.path,
 					gameid = dlg.data.worldspec.gameid
 				}
 			)

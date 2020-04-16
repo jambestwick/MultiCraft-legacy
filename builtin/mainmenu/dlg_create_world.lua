@@ -20,7 +20,6 @@ local function create_world_formspec()
 
 	local current_seed = core.formspec_escape(core.settings:get("fixed_map_seed")) or ""
 	local current_mg   = core.settings:get("mg_name")
-	local gameid = core.settings:get("menu_last_game")
 
 	local mglist = ""
 	local selindex = 1

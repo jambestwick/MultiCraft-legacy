@@ -162,7 +162,7 @@ core.builtin_auth_handler = {
 	end,
 }
 
-core.register_on_prejoinplayer(function(name, ip)
+core.register_on_prejoinplayer(function(name)
 	if core.registered_auth_handler ~= nil then
 		return -- Don't do anything if custom auth handler registered
 	end

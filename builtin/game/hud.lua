@@ -115,7 +115,6 @@ function hud.remove_item(player, name)
 
 	local elem = hud_id[i_name]
 
-	local i_name = player:get_player_name() .. "_" .. name
 	if not elem then
 		throw_error("Given HUD element " .. dump(name) .. " does not exist")
 		return false
@@ -155,11 +154,11 @@ core.register_on_joinplayer(function(player)
 end)
 
 core.register_on_leaveplayer(function(player)
-	local player = player:get_player_name()
+	local player_name = player:get_player_name()
 	for name, _ in pairs(sb_bg) do
-		sb_bg[player .. "_" .. name] = nil
+		sb_bg[player_name .. "_" .. name] = nil
 	end
 	for name, _ in pairs(items) do
-		hud_id[player .. "_" .. name] = nil
+		hud_id[player_name .. "_" .. name] = nil
 	end
 end)

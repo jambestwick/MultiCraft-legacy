@@ -286,8 +286,8 @@ function core.check_single_for_falling(p)
 		local nc = core.get_node(pa)
 		if core.get_item_group(nc.name, "attached_node2") ~= 0 then
 			local connected
-			for i = 1, 4 do
-				local ptwo = vadd(pa, check_connected[i])
+			for j = 1, 4 do
+				local ptwo = vadd(pa, check_connected[j])
 				local ntwo = core.get_node(ptwo)
 				if core.registered_nodes[ntwo.name].walkable then
 					connected = true

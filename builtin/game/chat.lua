@@ -90,7 +90,7 @@ core.register_chatcommand("me", {
 
 core.register_chatcommand("admin", {
 	description = "Show the name of the server owner",
-	func = function(name)
+	func = function()
 		local admin = core.settings:get("name")
 		if admin then
 			return true, "The administrator of this server is " .. admin .. "."
@@ -119,7 +119,7 @@ core.register_chatcommand("haspriv", {
 	params = "<privilege>",
 	description = "Return list of all online players with privilege.",
 	privs = {basic_privs = true},
-	func = function(caller, param)
+	func = function(_, param)
 		param = param:trim()
 		if param == "" then
 			return false, "Invalid parameters (see /help haspriv)"
@@ -322,7 +322,7 @@ core.register_chatcommand("clearpassword", {
 core.register_chatcommand("auth_reload", {
 	description = "Reload authentication data",
 	privs = {server = true},
-	func = function(name, param)
+	func = function()
 		local done = core.auth_reload()
 		return done, (done and "Done." or "Failed.")
 	end
@@ -356,7 +356,7 @@ core.register_chatcommand("remove_player", {
 core.register_chatcommand("auth_save", {
 	description = "Write authentication data to disk",
 	privs = {server = true},
-	func = function(name, param)
+	func = function()
 		local done = core.auth_save()
 		return done, (done and "Authentication data successfully saved to disk." or "Failed to write the auth.txt file.")
 	end
@@ -472,7 +472,7 @@ core.register_chatcommand("set", {
 	params = "([-n] <name> <value>) | <name>",
 	description = "Set or read server configuration setting",
 	privs = {server = true},
-	func = function(name, param)
+	func = function(_, param)
 		local arg, setname, setvalue = string.match(param, "(-[n]) ([^ ]+) (.+)")
 		if arg and arg == "-n" and setname and setvalue then
 			core.settings:set(setname, setvalue)
@@ -885,7 +885,7 @@ register_chatcommand_alias("settime", "time")
 
 core.register_chatcommand("days", {
 	description = "Show day count since world creation",
-	func = function(name, param)
+	func = function()
 		return true, "Current day is " .. core.get_day_count()
 	end
 })

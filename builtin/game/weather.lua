@@ -35,12 +35,14 @@ weather = {
 }
 
 local file_name = core.get_worldpath() .. "/weather"
-local file = io.open(file_name, "r")
-if file ~= nil then
-	local saved_weather = core.deserialize(file:read("*a"))
-	io.close(file)
-	if type(saved_weather) == "table" then
-		weather = saved_weather
+do
+	local file = io.open(file_name, "r")
+	if file ~= nil then
+		local saved_weather = core.deserialize(file:read("*a"))
+		io.close(file)
+		if type(saved_weather) == "table" then
+			weather = saved_weather
+		end
 	end
 end
 
