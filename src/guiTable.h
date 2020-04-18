@@ -209,6 +209,8 @@ protected:
 	gui::IGUIFont *m_font;
 	gui::IGUIScrollBar *m_scrollbar;
 
+	float scale;
+
 	// Allocated strings and images
 	std::vector<core::stringw> m_strings;
 	std::vector<video::ITexture*> m_images;
