@@ -114,7 +114,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #elif defined(__ANDROID__)
 #define TTF_DEFAULT_FONT_SIZE (15)
 #elif defined(__IOS__)
-#define TTF_DEFAULT_FONT_SIZE (14)
+#define TTF_DEFAULT_FONT_SIZE (13)
 #else
 #define TTF_DEFAULT_FONT_SIZE (20)
 #endif

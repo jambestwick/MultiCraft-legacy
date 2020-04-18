@@ -630,13 +630,13 @@ void draw_load_screen(const std::wstring &text, IrrlichtDevice* device,
 
 		if (progress_img && progress_img_bg) {
 			const core::dimension2d<u32> &img_size = progress_img_bg->getSize();
-#ifndef __ANDROID__
+#if !defined(__ANDROID__) && !defined(__IOS__)
 			u32 imgW = rangelim(img_size.Width, 256, 1024);
 			u32 imgH = rangelim(img_size.Height, 32, 128);
 			float imgR = 1.0f;
 #else
 			float imgRatio = (float) img_size.Height / img_size.Width;
-			u32 imgW = screensize.X / 2.2f;
+			u32 imgW = screensize.X / 2.0f;
 			u32 imgH = floor(imgW * imgRatio);
 			float imgR = (float) (imgW) / img_size.Width;
 #endif

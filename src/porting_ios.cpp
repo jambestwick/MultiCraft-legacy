@@ -44,11 +44,14 @@ namespace porting {
 	}
 
 	float getDisplayDensity() {
-		return 1;
+		unsigned int values[3];
+		ioswrap_size(values);
+
+		return values[2];
 	}
 
 	v2u32 getDisplaySize() {
-		static bool firstrun = true;
+	/*	static bool firstrun = true;
 		static v2u32 retval;
 
 		if (firstrun) {
@@ -59,7 +62,7 @@ namespace porting {
 			firstrun = false;
 		}
 
-		return retval;
+		return retval;	*/
 	}
 
 	void setViewController(void *v) {

@@ -537,7 +537,7 @@ void ClientLauncher::main_menu(MainMenuData *menudata)
 
 bool ClientLauncher::create_engine_device()
 {
-	#if defined(__ANDROID__) || defined(__IOS__)
+	#ifdef __ANDROID__
 		// set correct resolution
 		g_settings->setU16("screenW", porting::getDisplaySize().X);
 		g_settings->setU16("screenH", porting::getDisplaySize().Y);

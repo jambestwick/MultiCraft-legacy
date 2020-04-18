@@ -531,13 +531,9 @@ void set_default_settings(Settings *settings) {
 	if ([SDVersion deviceVersion] == iPhone4S) {
 		// 3.5" iPhone
 		settings->setDefault("hud_scaling", "0.5");
-		settings->setDefault("font_size", std::to_string(TTF_DEFAULT_FONT_SIZE - 2));
-		settings->setDefault("font_size", font_size_str);
 	} else if SDVersion4Inch {
 		// 4" iPhone and iPod Touch
 		settings->setDefault("hud_scaling", "0.55");
-		settings->setDefault("font_size", std::to_string(TTF_DEFAULT_FONT_SIZE - 1));
-		settings->setDefault("font_size", font_size_str);
 		settings->setDefault("mouse_sensitivity", "0.33");
 	} else if SDVersion4and7Inch {
 		// 4.7" iPhone
@@ -562,8 +558,8 @@ void set_default_settings(Settings *settings) {
 
 	// Settings for the Rounded Screen and Home Bar
 	if SDVersionHomeBar {
-		settings->setDefault("hud_move_upwards", "10");
-		settings->setDefault("round_screen", "15");
+		settings->setDefault("hud_move_upwards", "20");
+		settings->setDefault("round_screen", "35");
 	}
 #endif // iOS
 

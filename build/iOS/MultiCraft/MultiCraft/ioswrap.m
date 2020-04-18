@@ -152,6 +152,7 @@ void ioswrap_size(unsigned int *dest)
     CGFloat scale = [[UIScreen mainScreen] scale];
     dest[0] = bounds.width * scale;
     dest[1] = bounds.height * scale;
+    dest[2] = scale;
 }
 
 /********/
