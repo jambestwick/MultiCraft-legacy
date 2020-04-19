@@ -24,7 +24,7 @@ local multicraft_developers = {
 	"sfan5 <sfan5@live.de>",
 	"Stuart Jones (stujones11) <stujones111@gmail.com>",
 	"Jean-Patrick Guerrero (kilbith) <jeanpatrick.guerrero@gmail.com>",
-	"Jake Gustafson (poikilos)",
+	"luk3yx",
 	"And other people who helped make the world better!"
 }
 
