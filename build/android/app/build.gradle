@@ -52,7 +52,7 @@ android {
 
 dependencies {
 	/*implementation 'androidx.multidex:multidex:2.0.1'*/
-	implementation 'androidx.preference:preference:1.1.0'
+	implementation 'androidx.preference:preference:1.1.1'
 	// MultiCraft Native
 	implementation project(':native')
 	// Analytics libraries
