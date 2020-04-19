@@ -1,8 +1,10 @@
 //
-//  SDiOSVersion.h + SDiOSVersion.m
-//  SDVersion [https://github.com/sebyddd/SDVersion]
+//	SDiOSVersion.h
+//	SDVersion [https://github.com/sebyddd/SDVersion]
 //
-//  Copyright (c) 2016 Sebastian Dobrincu. All rights reserved.
+//	The MIT License (MIT)
+//	Copyright (c) 2014-2017 Sebastian Dobrincu
+//	Copyright (c) 2019-2020 MultiCraft Development Team
 //
 
 #import <sys/utsname.h>
@@ -31,6 +33,7 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 	iPhone11              = 118,
 	iPhone11Pro           = 119,
 	iPhone11ProMax        = 120,
+	iPhoneSE2Gen          = 121,
 
 	// iPad
 	iPad2                 = 201,
@@ -53,6 +56,8 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 	iPadMini5             = 218,
 	iPadAir3              = 219,
 	iPad7                 = 220,
+	iPadPro11Inch2Gen     = 216,
+	iPadPro12Dot9Inch4Gen = 217,
 
 	// iPod Touch
 	iPodTouch5Gen         = 301,
@@ -91,6 +96,7 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 			@"iPhone8,1"  : @(iPhone6S),
 			@"iPhone8,2"  : @(iPhone6SPlus),
 			@"iPhone8,4"  : @(iPhoneSE),
+			@"iPhone12,8" : @(iPhoneSE2Gen),
 			@"iPhone9,1"  : @(iPhone7),
 			@"iPhone9,3"  : @(iPhone7),
 			@"iPhone9,2"  : @(iPhone7Plus),
@@ -114,18 +120,30 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 			@"iPad2,2"  : @(iPad2),
 			@"iPad2,3"  : @(iPad2),
 			@"iPad2,4"  : @(iPad2),
-			@"iPad2,5"  : @(iPadMini),
-			@"iPad2,6"  : @(iPadMini),
-			@"iPad2,7"  : @(iPadMini),
 			@"iPad3,1"  : @(iPad3),
 			@"iPad3,2"  : @(iPad3),
 			@"iPad3,3"  : @(iPad3),
 			@"iPad3,4"  : @(iPad4),
 			@"iPad3,5"  : @(iPad4),
 			@"iPad3,6"  : @(iPad4),
+			@"iPad6,11" : @(iPad5),
+			@"iPad6,12" : @(iPad5),
+			@"iPad7,5"  : @(iPad6),
+			@"iPad7,6"  : @(iPad6),
+			@"iPad7,11" : @(iPad7),
+			@"iPad7,12" : @(iPad7),
+
 			@"iPad4,1"  : @(iPadAir),
 			@"iPad4,2"  : @(iPadAir),
 			@"iPad4,3"  : @(iPadAir),
+			@"iPad5,3"  : @(iPadAir2),
+			@"iPad5,4"  : @(iPadAir2),
+			@"iPad11,3" : @(iPadAir3),
+			@"iPad11,4" : @(iPadAir3),
+
+			@"iPad2,5"  : @(iPadMini),
+			@"iPad2,6"  : @(iPadMini),
+			@"iPad2,7"  : @(iPadMini),
 			@"iPad4,4"  : @(iPadMini2),
 			@"iPad4,5"  : @(iPadMini2),
 			@"iPad4,6"  : @(iPadMini2),
@@ -134,34 +152,29 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 			@"iPad4,9"  : @(iPadMini3),
 			@"iPad5,1"  : @(iPadMini4),
 			@"iPad5,2"  : @(iPadMini4),
-			@"iPad5,3"  : @(iPadAir2),
-			@"iPad5,4"  : @(iPadAir2),
+			@"iPad11,1" : @(iPadMini5),
+			@"iPad11,2" : @(iPadMini5),
+	
 			@"iPad6,3"  : @(iPadPro9Dot7Inch),
 			@"iPad6,4"  : @(iPadPro9Dot7Inch),
-			@"iPad6,7"  : @(iPadPro12Dot9Inch),
-			@"iPad6,8"  : @(iPadPro12Dot9Inch),
-			@"iPad6,11" : @(iPad5),
-			@"iPad6,12" : @(iPad5),
-			@"iPad7,1"  : @(iPadPro12Dot9Inch2Gen),
-			@"iPad7,2"  : @(iPadPro12Dot9Inch2Gen),
 			@"iPad7,3"  : @(iPadPro10Dot5Inch),
 			@"iPad7,4"  : @(iPadPro10Dot5Inch),
-			@"iPad7,5"  : @(iPad6),
-			@"iPad7,6"  : @(iPad6),
-			@"iPad7,11" : @(iPad7),
-			@"iPad7,12" : @(iPad7),
 			@"iPad8,1"  : @(iPadPro11Inch),
 			@"iPad8,2"  : @(iPadPro11Inch),
 			@"iPad8,3"  : @(iPadPro11Inch),
 			@"iPad8,4"  : @(iPadPro11Inch),
+			@"iPad8,9"  : @(iPadPro11Inch2Gen),
+			@"iPad8,10" : @(iPadPro11Inch2Gen),
+			@"iPad6,7"  : @(iPadPro12Dot9Inch),
+			@"iPad6,8"  : @(iPadPro12Dot9Inch),
+			@"iPad7,1"  : @(iPadPro12Dot9Inch2Gen),
+			@"iPad7,2"  : @(iPadPro12Dot9Inch2Gen),
 			@"iPad8,5"  : @(iPadPro12Dot9Inch3Gen),
 			@"iPad8,6"  : @(iPadPro12Dot9Inch3Gen),
 			@"iPad8,7"  : @(iPadPro12Dot9Inch3Gen),
 			@"iPad8,8"  : @(iPadPro12Dot9Inch3Gen),
-			@"iPad11,1" : @(iPadMini5),
-			@"iPad11,2" : @(iPadMini5),
-			@"iPad11,3" : @(iPadAir3),
-			@"iPad11,4" : @(iPadAir3),
+			@"iPad8,11" : @(iPadPro12Dot9Inch4Gen),
+			@"iPad8,12" : @(iPadPro12Dot9Inch4Gen),
 
 			// iPod
 			@"iPod5,1" : @(iPodTouch5Gen),
@@ -181,13 +194,24 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 }
 @end
 
-#define SDVersion4Inch		(([SDVersion deviceVersion] == iPhone5) || ([SDVersion deviceVersion] == iPhone5C) || ([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhoneSE)\
-						  || ([SDVersion deviceVersion] == iPodTouch5Gen) || ([SDVersion deviceVersion] == iPodTouch6Gen) || ([SDVersion deviceVersion] == iPodTouch7Gen))
-#define SDVersion4and7Inch	(([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone8))
+#define SDVersion4Inch		(([SDVersion deviceVersion] == iPhone5) || ([SDVersion deviceVersion] == iPhone5C) || ([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhoneSE) || \
+							([SDVersion deviceVersion] == iPodTouch5Gen) || ([SDVersion deviceVersion] == iPodTouch6Gen) || ([SDVersion deviceVersion] == iPodTouch7Gen))
+
+#define SDVersion4and7Inch	(([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone8) || ([SDVersion deviceVersion] == iPhoneSE2Gen))
+
 #define SDVersion5and5Inch	(([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhone7Plus) || ([SDVersion deviceVersion] == iPhone8Plus))
+
 #define SDVersion5and8Inch	(([SDVersion deviceVersion] == iPhoneX) || ([SDVersion deviceVersion] == iPhoneXS) || ([SDVersion deviceVersion] == iPhone11Pro))
+
 #define SDVersion6and1Inch	(([SDVersion deviceVersion] == iPhoneXR) || ([SDVersion deviceVersion] == iPhone11))
-#define SDVersion6and5Inch	(([SDVersion deviceVersion] == iPhoneXSMax) || ([SDVersion deviceVersion] == iPhoneXS) || ([SDVersion deviceVersion] == iPhone11ProMax))
+
+#define SDVersion6and5Inch	(([SDVersion deviceVersion] == iPhoneXSMax) || ([SDVersion deviceVersion] == iPhone11ProMax))
+
 #define SDVersion7and9Inch	(([SDVersion deviceVersion] == iPadMini) || ([SDVersion deviceVersion] == iPadMini2) | ([SDVersion deviceVersion] == iPadMini3) | ([SDVersion deviceVersion] == iPadMini4) | ([SDVersion deviceVersion] == iPadMini5))
-#define SDVersionHomeBar	  (SDVersion5and8Inch || SDVersion6and1Inch || SDVersion6and5Inch\
-						  || ([SDVersion deviceVersion] == iPadPro11Inch) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch3Gen))
+
+#define SDVersion11Inch		(([SDVersion deviceVersion] == iPadPro11Inch) || ([SDVersion deviceVersion] == iPadPro11Inch2Gen))
+
+#define SDVersion12and9Inch	(([SDVersion deviceVersion] == iPadPro12Dot9Inch) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch2Gen) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch3Gen) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch4Gen))
+
+#define SDVersionHomeBar	(SDVersion5and8Inch || SDVersion6and1Inch || SDVersion6and5Inch || \
+							SDVersion11Inch || SDVersion12and9Inch)
