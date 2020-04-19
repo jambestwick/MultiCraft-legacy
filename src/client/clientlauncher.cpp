@@ -582,10 +582,12 @@ bool ClientLauncher::create_engine_device()
 	params.EventReceiver = receiver;
 	params.HighPrecisionFPU = g_settings->getBool("high_precision_fpu");
 	params.ZBufferBits   = 24;
+#if defined(__ANDROID__) || defined(__IOS__)
 #ifdef __ANDROID__
 	params.PrivateData = porting::app_global;
-	params.OGLES2ShaderPath = std::string(porting::path_user + DIR_DELIM +
-			"media" + DIR_DELIM + "Shaders" + DIR_DELIM).c_str();
+#endif
+	params.OGLES2ShaderPath = std::string(porting::path_share + DIR_DELIM +
+			"media" + DIR_DELIM + "shaders" + DIR_DELIM).c_str();
 #endif
 
 	device = createDeviceEx(params);

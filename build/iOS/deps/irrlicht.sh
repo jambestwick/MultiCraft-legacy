@@ -17,5 +17,6 @@ cd ../..
 mkdir -p ../irrlicht
 cp lib/iOS/libIrrlicht.a ../irrlicht/
 cp -r include ../irrlicht/include
+cp -r media/Shaders ../irrlicht/shaders
 
 echo "Irrlicht build successful"

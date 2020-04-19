@@ -18,6 +18,9 @@ done
 mkdir -p $DEST/fonts
 cp ../../fonts/Retron2000.ttf $DEST/fonts/ # no PNG fonts because freetype
 
+#mkdir -p $DEST/media
+#cp -r native/deps/Android/Irrlicht/shaders $DEST/media/shaders
+
 echo
 echo "* Converting locale files:"
 pushd ../../po

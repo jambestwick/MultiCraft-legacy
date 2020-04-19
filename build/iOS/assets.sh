@@ -11,6 +11,10 @@ DEST=$(mktemp -d)
 for dir in builtin textures; do
 	cp -r ../../$dir $DEST/$dir
 done
+
+#mkdir -p $DEST/media
+#cp -r deps/irrlicht/shaders $DEST/media/shaders
+
 mkdir -p $DEST/fonts
 cp ../../fonts/Retron2000.ttf $DEST/fonts/ # no PNG fonts because freetype
 mkdir -p $DEST/games
