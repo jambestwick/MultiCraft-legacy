@@ -125,7 +125,8 @@ function core.is_valid_pos(pos)
 		return false
 	end
 	for _, v in pairs({"x", "y", "z"}) do
-		if not pos[v] or pos[v] < -mapgen_limit or pos[v] > mapgen_limit then
+		if not pos[v] or pos[v] ~= pos[v] or
+				pos[v] < -mapgen_limit or pos[v] > mapgen_limit then
 			return false
 		end
 	end
