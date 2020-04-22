@@ -51,6 +51,8 @@ Hud::Hud(video::IVideoDriver *driver, scene::ISceneManager* smgr,
 	this->inventory   = inventory;
 
 	m_hud_scaling      = g_settings->getFloat("hud_scaling");
+	hud_move_upwards   = g_settings->getU16("hud_move_upwards");
+	size_factor        = m_hud_scaling * porting::getDisplayDensity();
 	m_screensize       = v2u32(0, 0);
 	m_displaycenter    = v2s32(0, 0);
 	m_hotbar_imagesize = floor(HOTBAR_IMAGE_SIZE * porting::getDisplayDensity() + 0.5);
@@ -222,8 +224,8 @@ void Hud::drawItems(v2s32 upperleftpos, v2s32 screen_offset, s32 itemcount,
 
 	// Position of upper left corner of bar
 	v2s32 pos = screen_offset;
-	pos.X *= m_hud_scaling * porting::getDisplayDensity();
-	pos.Y *= m_hud_scaling * porting::getDisplayDensity();
+	pos.X *= size_factor;
+	pos.Y *= size_factor;
 	pos += upperleftpos;
 
 	// Store hotbar_image in member variable, used by drawItem()
@@ -307,16 +309,18 @@ void Hud::drawLuaElements(const v3s16 &camera_offset)
 				const video::SColor color(255, 255, 255, 255);
 				const video::SColor colors[] = {color, color, color, color};
 				core::dimension2di imgsize(texture->getOriginalSize());
-				v2s32 dstsize(imgsize.Width * e->scale.X,
-				              imgsize.Height * e->scale.Y);
+				v2s32 dstsize(imgsize.Width * e->scale.X * size_factor,
+				              imgsize.Height * e->scale.Y * size_factor);
 				if (e->scale.X < 0)
 					dstsize.X = m_screensize.X * (e->scale.X * -0.01);
 				if (e->scale.Y < 0)
 					dstsize.Y = m_screensize.Y * (e->scale.Y * -0.01);
 				v2s32 offset((e->align.X - 1.0) * dstsize.X / 2,
 				             (e->align.Y - 1.0) * dstsize.Y / 2);
+				if (e->offset.Y < -10)
+					offset.Y = (e->align.Y - 1.0) * dstsize.Y / 2 - hud_move_upwards;
 				core::rect<s32> rect(0, 0, dstsize.X, dstsize.Y);
-				rect += pos + offset + v2s32(e->offset.X, e->offset.Y);
+				rect += pos + offset + v2s32(e->offset.X * size_factor, e->offset.Y * size_factor);
 				draw2DImageFilterScaled(driver, texture, rect,
 					core::rect<s32>(core::position2d<s32>(0,0), imgsize),
 					NULL, colors, true);
@@ -325,12 +329,19 @@ void Hud::drawLuaElements(const v3s16 &camera_offset)
 				video::SColor color(255, (e->number >> 16) & 0xFF,
 										 (e->number >> 8)  & 0xFF,
 										 (e->number >> 0)  & 0xFF);
-				core::rect<s32> size(0, 0, e->scale.X, text_height * e->scale.Y);
+				core::rect<s32> size(0, 0, e->scale.X * size_factor, text_height * e->scale.Y * size_factor);
 				std::wstring text = unescape_enriched(utf8_to_wide(e->text));
 				core::dimension2d<u32> textsize = font->getDimension(text.c_str());
 				v2s32 offset((e->align.X - 1.0) * (textsize.Width / 2),
 							 (e->align.Y - 1.0) * (textsize.Height / 2));
-				v2s32 offs(e->offset.X, e->offset.Y);
+				if (e->offset.Y < -10) {
+#if defined(__ANDROID__) || defined(__IOS__)
+					offset.Y = (e->align.Y - 1.0) * (textsize.Height / 2) - hud_move_upwards - 5;
+#else
+					offset.Y = (e->align.Y - 1.0) * (textsize.Height / 2) - hud_move_upwards;
+#endif
+				}
+				v2s32 offs(e->offset.X * size_factor, e->offset.Y * size_factor);
 				font->draw(text.c_str(), size + pos + offset + offs, color);
 				break; }
 			case HUD_ELEM_STATBAR: {
@@ -392,8 +403,11 @@ void Hud::drawStatbar(v2s32 pos, u16 corner, u16 drawdir, std::string texture,
 	core::dimension2di dstd;
 	if (size == v2s32()) {
 		dstd = srcd;
+		dstd.Height *= size_factor;
+		dstd.Width  *= size_factor;
+		offset.X *= size_factor;
+		offset.Y *= size_factor;
 	} else {
-		float size_factor = m_hud_scaling * porting::getDisplayDensity();
 		dstd.Height = size.Y * size_factor;
 		dstd.Width  = size.X * size_factor;
 		offset.X *= size_factor;
@@ -406,7 +420,7 @@ void Hud::drawStatbar(v2s32 pos, u16 corner, u16 drawdir, std::string texture,
 
 	p += offset;
 
-	p.Y -= g_settings->getU16("hud_move_upwards");
+	p.Y -= hud_move_upwards;
 
 	v2s32 steppos;
 	core::rect<s32> srchalfrect, dsthalfrect;
@@ -464,9 +478,9 @@ void Hud::drawHotbar(u16 playeritem) {
 	s32 width = hotbar_itemcount * (m_hotbar_imagesize + m_padding * 2);
 	v2s32 pos = centerlowerpos - v2s32(width / 2, m_hotbar_imagesize + m_padding * 2.4);
 
-	pos.Y -= g_settings->getU16("hud_move_upwards");
+	pos.Y -= hud_move_upwards;
 
-	if ( (float) width / (float) porting::getWindowSize().X <=
+	if ((float) width / (float) porting::getWindowSize().X <=
 			g_settings->getFloat("hud_hotbar_max_width")) {
 		if (player->hud_flags & HUD_FLAG_HOTBAR_VISIBLE) {
 			drawItems(pos, v2s32(0, 0), hotbar_itemcount, 0, mainlist, playeritem + 1, 0);

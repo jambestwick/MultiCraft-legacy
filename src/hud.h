@@ -157,6 +157,8 @@ private:
 		bool selected);
 
 	float m_hud_scaling; // cached minetest setting
+	s32 hud_move_upwards;
+	float size_factor;
 	v3s16 m_camera_offset;
 	v2u32 m_screensize;
 	v2s32 m_displaycenter;
