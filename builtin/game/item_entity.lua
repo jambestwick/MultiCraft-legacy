@@ -323,7 +323,8 @@ if collection then
 		for _, obj in pairs(objects) do
 			local entity = obj:get_luaentity()
 			if entity and entity.name == "__builtin:item" and
-					not entity.collectioner and entity.age > 0.5 then
+					not entity.collectioner and
+					entity.age and entity.age > 0.5 then
 				local item = ItemStack(entity.itemstring)
 				local inv = player:get_inventory()
 				if item:get_name() ~= "" and
