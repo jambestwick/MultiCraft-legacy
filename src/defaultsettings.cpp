@@ -484,19 +484,20 @@ void set_default_settings(Settings *settings) {
 	AConfiguration_getLanguage(porting::app_global->config, lang);
 
 	// Check screen size
-	double x_inches = ((double) porting::getDisplaySize().X /
-	                   (160 * porting::getDisplayDensity()));
+	double x_inches = (double) porting::getDisplaySize().X /
+	                   (160 * porting::getDisplayDensity());
+	std::string font_size_str_small = std::to_string(TTF_DEFAULT_FONT_SIZE - 1);
+
 	if (x_inches <= 3.7) {
 		// small 4" phones
 		settings->setDefault("hud_scaling", "0.55");
-		settings->setDefault("font_size", std::to_string(TTF_DEFAULT_FONT_SIZE - 1));
+		settings->setDefault("font_size", font_size_str_small);
 		settings->setDefault("mouse_sensitivity", "0.3");
 		settings->setDefault("hud_small", "true");
 	} else if (x_inches > 3.7 && x_inches <= 4.5) {
 		// medium phones
 		settings->setDefault("hud_scaling", "0.6");
-		settings->setDefault("font_size", std::to_string(TTF_DEFAULT_FONT_SIZE - 1));
-		settings->setDefault("mouse_sensitivity", "0.2");
+		settings->setDefault("font_size", font_size_str_small);
 		settings->setDefault("hud_small", "true");
 	} else if (x_inches > 4.5 && x_inches <= 5) {
 		// large 6" phones
@@ -537,7 +538,7 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("mouse_sensitivity", "0.33");
 	} else if SDVersion4and7Inch {
 		// 4.7" iPhone
-		settings->setDefault("hud_scaling", "0.6");
+		settings->setDefault("hud_scaling", "0.65");
 		settings->setDefault("mouse_sensitivity", "0.27");
 	} else if SDVersion5and5Inch {
 		// 5.5" iPhone Plus
@@ -569,8 +570,6 @@ void set_default_settings(Settings *settings) {
 
 void override_default_settings(Settings *settings, Settings *from) {
 	std::vector<std::string> names = from->getNames();
-	for (size_t i = 0; i < names.size(); i++) {
-		const std::string &name = names[i];
+	for (const auto & name : names)
 		settings->setDefault(name, from->get(name));
-	}
 }
