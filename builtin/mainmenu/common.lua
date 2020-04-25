@@ -57,18 +57,20 @@ function image_column(tooltip)
 end
 
 --------------------------------------------------------------------------------
-function order_favorite_list(list)
+function order_favorite_list(list, mobile)
 	local res = {}
 	-- orders the multicraft list before support
 	for i = 1, #list do
 		local fav = list[i]
-		if fav.server_id == "multicraft" then
+		if (mobile and fav.mobile_friendly or not mobile) and
+				fav.server_id == "multicraft" then
 			res[#res + 1] = fav
 		end
 	end
 	for i = 1, #list do
 		local fav = list[i]
-		if is_server_protocol_compat(fav.proto_min, fav.proto_max) and
+		if (mobile and fav.mobile_friendly or not mobile) and
+				is_server_protocol_compat(fav.proto_min, fav.proto_max) and
 				fav.server_id ~= "multicraft" then
 			res[#res + 1] = fav
 		end
@@ -216,7 +218,7 @@ function menu_handle_key_up_down(fields, textlist, settingname)
 end
 
 --------------------------------------------------------------------------------
-function asyncOnlineFavourites()
+function asyncOnlineFavourites(mobile)
 	if not menudata.public_known then
 		menudata.public_known = {{
 			name = fgettext("Loading..."),
@@ -239,7 +241,7 @@ function asyncOnlineFavourites()
 		nil,
 		function(result)
 			menudata.public_downloading = nil
-			local favs = order_favorite_list(result)
+			local favs = order_favorite_list(result, mobile)
 			if favs[1] then
 				menudata.public_known = favs
 				menudata.favorites = menudata.public_known

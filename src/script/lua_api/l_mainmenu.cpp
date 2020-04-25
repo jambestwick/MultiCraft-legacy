@@ -531,6 +531,13 @@ int ModApiMainMenu::l_get_favorites(lua_State *L)
 			lua_settable(L, top_lvl2);
 		}
 
+		if (servers[i]["mobile_friendly"].asString().size()) {
+			lua_pushstring(L,"mobile_friendly");
+			std::string topush = servers[i]["mobile_friendly"].asString();
+			lua_pushstring(L,topush.c_str());
+			lua_settable(L, top_lvl2);
+		}
+
 		if (servers[i]["proto_min"].asString().size()) {
 			lua_pushstring(L,"proto_min");
 			lua_pushinteger(L,servers[i]["proto_min"].asInt());

@@ -18,6 +18,7 @@
 --------------------------------------------------------------------------------
 local password_save = core.settings:get_bool("password_save")
 local password_tmp = ""
+local mobile_only = PLATFORM == "Android" or PLATFORM == "iOS"
 
 local function get_formspec(_, _, tabdata)
 	-- Update the cached supported proto info,
@@ -34,49 +35,67 @@ local function get_formspec(_, _, tabdata)
 		tabdata.search_for = ""
 	end
 
+	local esc = core.formspec_escape
+
+	local search_panel
+	if PLATFORM == "Android" or PLATFORM == "iOS" then
+		search_panel =
+			"field[0.2,0.1;5.19,1;te_search;;" .. esc(tabdata.search_for) .. "]" ..
+			"image_button[4.89,-0.13;0.83,0.83;" .. esc(defaulttexturedir .. "search.png")
+				.. ";btn_mp_search;;true;false]" ..
+			"image_button[5.59,-0.13;0.83,0.83;" .. esc(defaulttexturedir .. "refresh.png")
+				.. ";btn_mp_refresh;;true;false]" ..
+			"image_button[6.29,-0.13;0.83,0.83;" .. esc(defaulttexturedir ..
+				(not mobile_only and "online_pc" or "online_mobile") .. ".png")
+				.. ";btn_mp_mobile;;true;false]"
+	else
+		search_panel =
+			"field[0.2,0.1;5.8,1;te_search;;" .. core.formspec_escape(tabdata.search_for) .. "]" ..
+			"image_button[5.5,-0.13;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "search.png")
+				.. ";btn_mp_search;;true;false]" ..
+			"image_button[6.26,-0.13;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "refresh.png")
+				.. ";btn_mp_refresh;;true;false]"
+	end
+
 	local retval =
 		-- Search
-		"field[0.2,0.1;5.8,1;te_search;;" .. core.formspec_escape(tabdata.search_for) .. "]" ..
-		"image_button[5.5,-0.13;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "search.png")
-			.. ";btn_mp_search;;true;false]" ..
-		"image_button[6.26,-0.13;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "refresh.png")
-			.. ";btn_mp_refresh;;true;false]" ..
+		search_panel ..
 
 		-- Address / Port
 		"label[7.1,-0.3;" .. fgettext("Address") .. ":" .. "]" ..
 		"label[10.15,-0.3;" .. fgettext("Port") .. ":" .. "]" ..
 		"field[7.4,0.6;3.2,0.5;te_address;;" ..
-			core.formspec_escape(core.settings:get("address")) .. "]" ..
+			esc(core.settings:get("address")) .. "]" ..
 		"field[10.45,0.6;1.95,0.5;te_port;;" ..
-			core.formspec_escape(core.settings:get("remote_port")) .. "]" ..
+			esc(core.settings:get("remote_port")) .. "]" ..
 
 		-- Name
 		"label[7.1,0.85;" .. fgettext("Name") .. ":" .. "]" ..
 		"label[10.15,0.85;" .. fgettext("Password") .. ":" .. "]" ..
 		"field[7.4,1.75;3.2,0.5;te_name;;" ..
-			core.formspec_escape(core.settings:get("name")) .. "]" ..
+			esc(core.settings:get("name")) .. "]" ..
 
 		-- Description Background
 		"box[7.1,2.1;4.8,2.65;#999999]" ..
 
 		-- Connect
 		"image_button[8.8,4.88;3.3,0.9;" ..
-			core.formspec_escape(defaulttexturedir .. "blank.png")
+			esc(defaulttexturedir .. "blank.png")
 			.. ";btn_mp_connect;;true;false]" ..
 		"tooltip[btn_mp_connect;".. fgettext("Connect") .. "]"
 
-		local pwd = password_save and core.formspec_escape(core.settings:get("password")) or password_tmp
+		local pwd = password_save and esc(core.settings:get("password")) or password_tmp
 		-- Password
 		retval = retval .. "pwdfield[10.45,1.8;1.95,0.39;te_pwd;;" .. pwd .. "]"
 
 	if tabdata.fav_selected and fav_selected then
 		if gamedata.fav then
-			retval = retval .. "image_button[7.1,4.91;0.83,0.83;" .. core.formspec_escape(defaulttexturedir .. "trash.png")
+			retval = retval .. "image_button[7.1,4.91;0.83,0.83;" .. esc(defaulttexturedir .. "trash.png")
 				.. ";btn_delete_favorite;;true;false]"
 		end
 		if fav_selected.description then
 			retval = retval .. "textarea[7.5,2.2;4.8,3;;" ..
-				core.formspec_escape((gamedata.serverdescription or ""), true) .. ";]"
+				esc((gamedata.serverdescription or ""), true) .. ";]"
 		end
 	end
 
@@ -257,7 +276,7 @@ local function main_button_handler(_, fields, _, tabdata)
 		if not current_favourite then return end
 
 		core.delete_favorite(current_favourite)
-		asyncOnlineFavourites()
+		asyncOnlineFavourites(mobile_only)
 		tabdata.fav_selected = nil
 
 		return true
@@ -324,7 +343,13 @@ local function main_button_handler(_, fields, _, tabdata)
 	end
 
 	if fields.btn_mp_refresh then
-		asyncOnlineFavourites()
+		asyncOnlineFavourites(mobile_only)
+		return true
+	end
+
+	if fields.btn_mp_mobile then
+		mobile_only = not mobile_only
+		asyncOnlineFavourites(mobile_only)
 		return true
 	end
 
@@ -377,7 +402,7 @@ end
 
 local function on_change(type)
 	if type == "LEAVE" then return end
-	asyncOnlineFavourites()
+	asyncOnlineFavourites(mobile_only)
 end
 
 --------------------------------------------------------------------------------
