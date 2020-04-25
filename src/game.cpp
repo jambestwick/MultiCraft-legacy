@@ -2764,24 +2764,10 @@ void Game::toggleFreeMove()
 
 void Game::toggleFreeMoveAlt()
 {
-	bool free_move = !g_settings->getBool("free_move");
-	bool creative = !g_settings->getBool("creative_mode");
+	if (m_cache_doubletap_jump && runData.jump_timer < 0.15f
+			&& client->checkPrivilege("fly"))
+		toggleFreeMove();
 
-	if (simple_singleplayer_mode) {
-		if (m_cache_doubletap_jump && runData.jump_timer < 0.15f) {
-			if (!free_move || !creative)
-				toggleFreeMove();
-		}
-	} else {
-		if (client->checkPrivilege("fly") && runData.jump_timer < 0.15f) {
-#if defined(__ANDROID__) || defined(__IOS__)
-			toggleFreeMove();
-#else
-		if (m_cache_doubletap_jump)
-			toggleFreeMove();
-#endif
-		}
-	}
 	runData.reset_jump_timer = true;
 }
 
@@ -3157,7 +3143,7 @@ inline void Game::step(f32 *dtime)
 #if defined(__ANDROID__) || defined(__IOS__)
 	if (g_menumgr.pausesGame()) {
 		runData.pause_game_timer += *dtime;
-		if (runData.pause_game_timer > 120.f) {
+		if (runData.pause_game_timer > 120.0f) {
 			g_gamecallback->disconnect();
 			return;
 		}
@@ -4138,9 +4124,10 @@ void Game::updateFrame(ProfilerGraph *graph, RunStats *stats, f32 dtime,
 	*/
 
 	if (draw_control->range_all) {
-		runData.fog_range = 100000 * BS;
 		#if defined(__ANDROID__) || defined(__IOS__)
-			runData.fog_range = draw_control->wanted_range * BS * 4;
+			runData.fog_range = draw_control->wanted_range * 4 * BS;
+		#else
+			runData.fog_range = 100000 * BS;
 		#endif
 	} else {
 		runData.fog_range = draw_control->wanted_range * BS;
@@ -4273,7 +4260,7 @@ void Game::updateFrame(ProfilerGraph *graph, RunStats *stats, f32 dtime,
 					item = hlist->getItem(0);
 			}
 			camera->wield(item);
-			
+
 			// Show item description as statustext
 			std::string item_desc = item.getDefinition(itemdef_manager).description;
 			if (wield_name != item_desc) {
@@ -4652,11 +4639,9 @@ void Game::pauseAnimation(bool is_paused)
 	core::list<scene::ISceneNode *> nodes = (is_paused) ?
 			smgr->getRootSceneNode()->getChildren() : m_anim_nodes;
 
-	for (core::list<scene::ISceneNode *>::ConstIterator it = nodes.begin();
-			it != nodes.end(); ++it) {
-		if ((*it) && (*it)->getType() == scene::ESNT_ANIMATED_MESH) {
-			scene::IAnimatedMeshSceneNode *node =
-					(scene::IAnimatedMeshSceneNode*)(*it);
+	for (auto it : nodes) {
+		if (it && it->getType() == scene::ESNT_ANIMATED_MESH) {
+			auto *node = (scene::IAnimatedMeshSceneNode*)it;
 			if (is_paused) {
 				if (node->getLoopMode()) {
 					m_anim_nodes.push_back(node);
@@ -4896,7 +4881,6 @@ void the_game(bool *kill,
 				reconnect_requested, &chat_backend, gamespec,
 				simple_singleplayer_mode)) {
 			game.run();
-			game.shutdown();
 		}
 
 	} catch (SerializationError &e) {
@@ -4911,7 +4895,7 @@ void the_game(bool *kill,
 		error_message = e.what() + strgettext("\nCheck debug.txt for details.");
 		errorstream << "ModError: " << error_message << std::endl;
 	}
-
+	game.shutdown();
 	g_game = NULL;
 }
 
