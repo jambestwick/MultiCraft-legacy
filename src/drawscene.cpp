@@ -619,8 +619,9 @@ void draw_load_screen(const std::wstring &text, IrrlichtDevice* device,
 		driver->beginScene(true, true, video::SColor(255, 0, 0, 0));
 		video::ITexture *background_image = tsrc->getTexture("bg.png");
 		driver->draw2DImage(background_image,
-			irr::core::rect<s32>(0, 0, screensize.X * 3, screensize.Y * 3),
-			irr::core::rect<s32>(0, 0, screensize.X, screensize.Y), 0, 0, false);
+				irr::core::rect<s32>(0, 0, screensize.X * 4, screensize.Y * 4),
+				irr::core::rect<s32>(0, 0, screensize.X, screensize.Y),
+				nullptr, nullptr, false);
 	}
 
 	// draw progress bar
@@ -636,28 +637,51 @@ void draw_load_screen(const std::wstring &text, IrrlichtDevice* device,
 			float imgR = 1.0f;
 #else
 			float imgRatio = (float) img_size.Height / img_size.Width;
-			u32 imgW = screensize.X / 2.0f;
-			u32 imgH = floor(imgW * imgRatio);
+			u32 imgW = npot2(screensize.X / 2);
+			u32 imgH = imgW * imgRatio;
 			float imgR = (float) (imgW) / img_size.Width;
 #endif
 			v2s32 img_pos((screensize.X - imgW) / 2, (screensize.Y - imgH) / 2);
 
-			draw2DImageFilterScaled(
-				driver, progress_img_bg,
-				core::rect<s32>(img_pos.X,
-						img_pos.Y,
-						img_pos.X + imgW,
-						img_pos.Y + imgH),
-				core::rect<s32>(0, 0,
-						img_size.Width,
-						img_size.Height),
-				0, 0, true);
+			draw2DImageFilterScaled(driver, progress_img_bg,
+					core::rect<s32>(img_pos.X, img_pos.Y,
+							img_pos.X + imgW, img_pos.Y + imgH),
+					core::rect<s32>(0, 0, img_size.Width, img_size.Height),
+					nullptr, nullptr, true);
 
-			// rects to be painted with the bar color
+			// rects for drawing a color progress bar
 			const static core::rect<s32> rects[] = {
-					core::rect<s32>(  8, 11,  16, 53),
-					core::rect<s32>( 16,  5, 496, 59),
-					core::rect<s32>(496, 11, 504, 53),
+					core::rect<s32>(  4, 24,   5, 40),
+					core::rect<s32>(  5, 21,   6, 43),
+					core::rect<s32>(  6, 19,   7, 45),
+					core::rect<s32>(  7, 17,   8, 47),
+					core::rect<s32>(  8, 15,   9, 49),
+					core::rect<s32>(  9, 14,  10, 50),
+					core::rect<s32>( 10, 13,  11, 51),
+					core::rect<s32>( 11, 12,  12, 52),
+					core::rect<s32>( 12, 11,  13, 53),
+					core::rect<s32>( 13, 10,  14, 54),
+					core::rect<s32>( 14,  9,  15, 55),
+					core::rect<s32>( 15,  8,  17, 56),
+					core::rect<s32>( 17,  7,  19, 57),
+					core::rect<s32>( 19,  6,  21, 58),
+					core::rect<s32>( 21,  5,  24, 59),
+					core::rect<s32>( 24,  4, 488, 60),
+					core::rect<s32>(488,  5, 491, 59),
+					core::rect<s32>(491,  6, 493, 58),
+					core::rect<s32>(493,  7, 495, 57),
+					core::rect<s32>(495,  8, 497, 56),
+					core::rect<s32>(497,  9, 498, 55),
+					core::rect<s32>(498, 10, 499, 54),
+					core::rect<s32>(499, 11, 500, 53),
+					core::rect<s32>(500, 12, 501, 52),
+					core::rect<s32>(501, 13, 502, 51),
+					core::rect<s32>(502, 14, 503, 50),
+					core::rect<s32>(503, 15, 504, 49),
+					core::rect<s32>(504, 17, 505, 47),
+					core::rect<s32>(505, 19, 506, 45),
+					core::rect<s32>(506, 21, 507, 43),
+					core::rect<s32>(507, 24, 508, 40)
 			};
 
 			for (const auto & i : rects) {
@@ -667,22 +691,18 @@ void draw_load_screen(const std::wstring &text, IrrlichtDevice* device,
 					MYMIN(i.LowerRightCorner.X * imgR, clipx), i.LowerRightCorner.Y * imgR
 				);
 				if (r.getArea() <= 0)
-					continue;
+					break;
 				driver->draw2DRectangle(
-					video::SColor(255, 255 - percent * 2, percent * 2, 48),
+					video::SColor(255, 255 - percent * 2, percent * 2, 25),
 					r + img_pos, nullptr);
 			}
 
-			draw2DImageFilterScaled(
-				driver, progress_img,
-				core::rect<s32>(img_pos.X,
-						img_pos.Y,
-							img_pos.X + (percent * imgW) / 100,
-							img_pos.Y + imgH),
+			draw2DImageFilterScaled(driver, progress_img,
+					core::rect<s32>(img_pos.X, img_pos.Y,
+							img_pos.X + percent * imgW / 100, img_pos.Y + imgH),
 					core::rect<s32>(0, 0,
-							(percent * img_size.Width) / 100,
-							img_size.Height),
-					0, 0, true);
+							percent * img_size.Width / 100, img_size.Height),
+					nullptr, nullptr, true);
 		}
 	}
 
