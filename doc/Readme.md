@@ -181,7 +181,7 @@ General options:
     VERSION_EXTRA          - Text to append to version (e.g. VERSION_EXTRA=foobar -> MultiCraft 0.4.9-foobar)
 
 Library specific options:
-    
+
     BZIP2_INCLUDE_DIR               - Linux only; directory where bzlib.h is located
     BZIP2_LIBRARY                   - Linux only; path to libbz2.a/libbz2.so
     CURL_DLL                        - Only if building with cURL on Windows; path to libcurl.dll
@@ -238,7 +238,7 @@ Library specific options:
 
 * This section is outdated. In addition to what is described here:
   * If you wish to have sound support, you need libogg, libvorbis and libopenal
-  
+
 * You need:
 	* CMake:
 		http://www.cmake.org/cmake/resources/software.html
@@ -317,7 +317,7 @@ Library specific options:
 	* It will warn about missing stuff, ignore that at this point. (later don't)
 	* Make sure the configuration is as follows
 	  (note that the versions may differ for you):
-	  
+
                 BUILD_CLIENT             [X]
                 BUILD_SERVER             [ ]
                 CMAKE_BUILD_TYPE         Release
@@ -332,7 +332,7 @@ Library specific options:
                 GETTEXT_INCLUDE_DIR      DIR/gettext/include
                 GETTEXT_LIBRARIES        DIR/gettext/lib/intl.lib
                 GETTEXT_MSGFMT           DIR/gettext/bin/msgfmt
-	
+
 	* If CMake complains it couldn't find SQLITE3, choose "Advanced" box on the
 	  right top corner, then specify the location of SQLITE3_INCLUDE_DIR and
 	  SQLITE3_LIBRARY manually.
@@ -368,7 +368,7 @@ This is how we build Windows releases.
     set sourcedir=%CD%
     set installpath="C:\tmp\MultiCraft_install"
     set irrlichtpath="C:\tmp\irrlicht-1.7.2"
-    
+
     set builddir=%sourcedir%\bvc10
     mkdir %builddir%
     pushd %builddir%
@@ -383,7 +383,7 @@ This is how we build Windows releases.
     popd
     echo Finished.
     exit /b 0
-    
+
     :fail
     popd
     echo Failed.

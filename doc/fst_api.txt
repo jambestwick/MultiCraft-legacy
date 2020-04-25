@@ -113,13 +113,13 @@ methods:
   ^ hide dialog
 - delete()
   ^ delete dialog from ui
-  
+
 members:
 - data
   ^ variable data attached to this dialog
 - parent
   ^ parent component to return to on exit
-  
+
 File: fst/buttonbar.lua
 -----------------------
 

@@ -17,6 +17,8 @@ object_marker_red.png
 
 player_marker.png
 
+smoke_puff.png
+
 sunrisebg.png
 
 unknown_.png
