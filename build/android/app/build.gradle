@@ -7,8 +7,8 @@ android {
 		applicationId 'com.multicraft.game'
 		minSdkVersion 16
 		targetSdkVersion 29
-		versionCode 41
-		versionName "1.9.1"
+		versionCode 43
+		versionName "1.9.3"
 		/*multiDexEnabled true
 		useLibrary 'org.apache.http.legacy'*/
 	}
@@ -61,7 +61,7 @@ dependencies {
 		exclude group: 'com.bugsnag', module: 'bugsnag-plugin-android-ndk'
 	}*/
 	// Third-party libraries
-	/*implementation 'gun0912.ted:tedpermission:2.2.2'*/
+	/*implementation 'gun0912.ted:tedpermission:2.2.3'*/
 	//noinspection GradleDependency
 	implementation 'commons-io:commons-io:2.5'
 }
