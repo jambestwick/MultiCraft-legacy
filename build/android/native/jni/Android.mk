@@ -72,8 +72,7 @@ LOCAL_C_INCLUDES := \
 	deps/Android/Freetype/include                  \
 	deps/Android/Irrlicht/include                  \
 	deps/Android/LevelDB/include                   \
-	deps/Android/libiconv/include                  \
-    deps/Android/libiconv/libcharset/include       \
+	deps/Android/ndk_iconv                         \
 	deps/Android/LuaJIT/src                        \
 	deps/Android/OpenAL-Soft/include               \
 	deps/Android/Vorbis/include
@@ -197,29 +196,29 @@ LOCAL_SRC_FILES := \
 	../../../src/touchscreengui.cpp                \
 	../../../src/treegen.cpp                       \
 	../../../src/version.cpp                       \
-    ../../../src/voxel.cpp                         \
-    ../../../src/voxelalgorithms.cpp               \
+	../../../src/voxel.cpp                         \
+	../../../src/voxelalgorithms.cpp               \
 	../../../src/wieldmesh.cpp
 
 # Client
-LOCAL_SRC_FILES += $(wildcard  ../../../src/client/*.cpp)
+LOCAL_SRC_FILES += $(wildcard ../../../src/client/*.cpp)
 
 # Network
-LOCAL_SRC_FILES += $(wildcard  ../../../src/network/*.cpp)
+LOCAL_SRC_FILES += $(wildcard ../../../src/network/*.cpp)
 
 # Lua API
-LOCAL_SRC_FILES += $(wildcard  ../../../src/script/*.cpp)
-LOCAL_SRC_FILES += $(wildcard  ../../../src/script/*/*.cpp)
+LOCAL_SRC_FILES += $(wildcard ../../../src/script/*.cpp)
+LOCAL_SRC_FILES += $(wildcard ../../../src/script/*/*.cpp)
 
 # Threading
-LOCAL_SRC_FILES += $(wildcard  ../../../src/threading/*.cpp)
+LOCAL_SRC_FILES += $(wildcard ../../../src/threading/*.cpp)
 
 # Util
-LOCAL_SRC_FILES += $(wildcard  ../../../src/util/*.c)
-LOCAL_SRC_FILES += $(wildcard  ../../../src/util/*.cpp)
+LOCAL_SRC_FILES += $(wildcard ../../../src/util/*.c)
+LOCAL_SRC_FILES += $(wildcard ../../../src/util/*.cpp)
 
 # GMP
-LOCAL_SRC_FILES  += ../../../lib/gmp/mini-gmp.c
+LOCAL_SRC_FILES += ../../../lib/gmp/mini-gmp.c
 
 # libIntl
 LOCAL_SRC_FILES += ../../../lib/intl/libintl.cpp
@@ -227,9 +226,7 @@ LOCAL_SRC_FILES += ../../../lib/intl/libintl.cpp
 # JSONCPP
 LOCAL_SRC_FILES += ../../../lib/jsoncpp/jsoncpp.cpp
 
-LOCAL_SRC_FILES += \
-	deps/Android/libiconv/lib/iconv.c              \
-	deps/Android/libiconv/libcharset/lib/localcharset.c
+LOCAL_SRC_FILES += deps/Android/ndk_iconv/iconv.c
 
 LOCAL_STATIC_LIBRARIES += Irrlicht LevelDB Curl Freetype OpenAL Vorbis LuaJIT android_native_app_glue $(PROFILER_LIBS)
 

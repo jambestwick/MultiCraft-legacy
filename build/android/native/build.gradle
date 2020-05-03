@@ -52,4 +52,16 @@ task cloneGitRepo() {
 	}
 }
 
+task clonelibiconv() {
+	def destination = file('deps/Android/ndk_iconv')
+	if(!destination.exists()) {
+		def grgit = Grgit.clone(
+				dir: destination,
+				uri: 'https://github.com/MoNTE48/ndk_iconv'
+		)
+		grgit.close()
+	}
+}
+
 preBuild.dependsOn cloneGitRepo
+preBuild.dependsOn clonelibiconv
