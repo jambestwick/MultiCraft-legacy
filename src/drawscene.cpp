@@ -638,8 +638,10 @@ void draw_load_screen(const std::wstring &text, IrrlichtDevice* device,
 #else
 			float imgRatio = (float) img_size.Height / img_size.Width;
 			u32 imgW = npot2(screensize.X / 2);
+			if (imgW > (screensize.X * 0.6))
+				imgW /= 2;
 			u32 imgH = imgW * imgRatio;
-			float imgR = (float) (imgW) / img_size.Width;
+			float imgR = (float) imgW / img_size.Width;
 #endif
 			v2s32 img_pos((screensize.X - imgW) / 2, (screensize.Y - imgH) / 2);
 
