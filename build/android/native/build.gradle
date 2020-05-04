@@ -57,7 +57,8 @@ task clonelibiconv() {
 	if(!destination.exists()) {
 		def grgit = Grgit.clone(
 				dir: destination,
-				uri: 'https://github.com/MoNTE48/ndk_iconv'
+				uri: 'https://github.com/MoNTE48/ndk_iconv',
+				refToCheckout: 'mc'
 		)
 		grgit.close()
 	}
