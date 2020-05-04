@@ -40,7 +40,6 @@
 		844E20202454737E00CD5A35 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844E201F2454737E00CD5A35 /* dummy.swift */; };
 		8465A76522A7D4500095B7CA /* libintl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8465A76422A7D4500095B7CA /* libintl.cpp */; };
 		849C4F86209656D3005EB041 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 849C4F85209656D2005EB041 /* ru.lproj */; };
-		84AA10F323D20C070056F125 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AA10F223D20BE50056F125 /* libluajit.a */; };
 		84FE40E224439C2F008E29DB /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FE40E124439C2F008E29DB /* libcurl.a */; };
 		8E0FFE3234B35EC9603EC82A /* Pods_MultiCraft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B0001862274A8FCC7614F0 /* Pods_MultiCraft.framework */; };
 		F856B5C31F55F7EE00FE9494 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F856B5C21F55F7EE00FE9494 /* bg.png */; };
@@ -222,7 +221,6 @@
 		F8E6C7C91DCA430300F64426 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7C81DCA430300F64426 /* OpenGLES.framework */; };
 		F8E6C7CB1DCA430B00F64426 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7CA1DCA430B00F64426 /* OpenAL.framework */; };
 		F8E6C7CD1DCA431B00F64426 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7CC1DCA431B00F64426 /* Foundation.framework */; };
-		F8E6C7D11DCA433E00F64426 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D01DCA433E00F64426 /* libiconv.tbd */; };
 		F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D41DCA476800F64426 /* libIrrlicht.a */; };
 		F8E6C7D71DCA477600F64426 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D61DCA477600F64426 /* libfreetype.a */; };
 		F8E6C7E11DCA4EB300F64426 /* assets.zip in Resources */ = {isa = PBXBuildFile; fileRef = F8E6C7E01DCA4EB300F64426 /* assets.zip */; };
@@ -293,7 +291,6 @@
 		8465A76322A7D4500095B7CA /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Util.hpp; path = ../../../../lib/intl/Util.hpp; sourceTree = "<group>"; };
 		8465A76422A7D4500095B7CA /* libintl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = libintl.cpp; path = ../../../../lib/intl/libintl.cpp; sourceTree = "<group>"; };
 		849C4F85209656D2005EB041 /* ru.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ru.lproj; sourceTree = "<group>"; };
-		84AA10F223D20BE50056F125 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../Pods/LuaJITPod/lib/libluajit.a; sourceTree = "<group>"; };
 		84FE40E124439C2F008E29DB /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../deps/libcurl/lib/libcurl.a; sourceTree = "<group>"; };
 		F856B5C21F55F7EE00FE9494 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg.png; path = ../../../../textures/base/bg.png; sourceTree = "<group>"; };
 		F87DC8B8210887C600393B64 /* mapgen_v7p.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapgen_v7p.h; path = ../../../../src/mapgen_v7p.h; sourceTree = "<group>"; };
@@ -687,12 +684,8 @@
 		F8E6C7CA1DCA430B00F64426 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		F8E6C7CC1DCA431B00F64426 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F8E6C7CE1DCA432200F64426 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		F8E6C7D01DCA433E00F64426 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		F8E6C7D41DCA476800F64426 /* libIrrlicht.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrlicht.a; path = ../deps/irrlicht/libIrrlicht.a; sourceTree = "<group>"; };
 		F8E6C7D61DCA477600F64426 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../deps/freetype/lib/libfreetype.a; sourceTree = "<group>"; };
-		F8E6C7DA1DCA479200F64426 /* libogg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libogg.a; path = ../Pods/libOggVorbisPod/lib/libogg.a; sourceTree = "<group>"; };
-		F8E6C7DC1DCA47A300F64426 /* libvorbis.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbis.a; path = ../Pods/libOggVorbisPod/lib/libvorbis.a; sourceTree = "<group>"; };
-		F8E6C7DE1DCA47AF00F64426 /* libvorbisfile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbisfile.a; path = ../Pods/libOggVorbisPod/lib/libvorbisfile.a; sourceTree = "<group>"; };
 		F8E6C7E01DCA4EB300F64426 /* assets.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = assets.zip; path = ../../assets.zip; sourceTree = "<group>"; };
 		F8E6C7E21DCA511700F64426 /* worlds.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = worlds.zip; path = ../../worlds.zip; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -702,13 +695,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84AA10F323D20C070056F125 /* libluajit.a in Frameworks */,
 				F8E6C7C51DCA42F300F64426 /* QuartzCore.framework in Frameworks */,
 				F8E6C7C71DCA42FA00F64426 /* UIKit.framework in Frameworks */,
 				F8E6C7C91DCA430300F64426 /* OpenGLES.framework in Frameworks */,
 				F8E6C7CB1DCA430B00F64426 /* OpenAL.framework in Frameworks */,
 				F8E6C7CD1DCA431B00F64426 /* Foundation.framework in Frameworks */,
-				F8E6C7D11DCA433E00F64426 /* libiconv.tbd in Frameworks */,
 				F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */,
 				F8E6C7D71DCA477600F64426 /* libfreetype.a in Frameworks */,
 				84FE40E224439C2F008E29DB /* libcurl.a in Frameworks */,
@@ -1317,13 +1308,8 @@
 			isa = PBXGroup;
 			children = (
 				84FE40E124439C2F008E29DB /* libcurl.a */,
-				F8E6C7DE1DCA47AF00F64426 /* libvorbisfile.a */,
-				F8E6C7DC1DCA47A300F64426 /* libvorbis.a */,
-				F8E6C7DA1DCA479200F64426 /* libogg.a */,
 				F8E6C7D61DCA477600F64426 /* libfreetype.a */,
 				F8E6C7D41DCA476800F64426 /* libIrrlicht.a */,
-				F8E6C7D01DCA433E00F64426 /* libiconv.tbd */,
-				84AA10F223D20BE50056F125 /* libluajit.a */,
 				F8E6C7CE1DCA432200F64426 /* CoreMotion.framework */,
 				F8E6C7CC1DCA431B00F64426 /* Foundation.framework */,
 				F8E6C7CA1DCA430B00F64426 /* OpenAL.framework */,
@@ -1769,25 +1755,20 @@
 					"USE_CURL=1",
 					"USE_SOUND=1",
 					"USE_FREETYPE=1",
-					"USE_CURSES=0",
 					"USE_LEVELDB=1",
-					"USE_LUAJIT=0",
-					"USE_SPATIAL=0",
+					"USE_LUAJIT=1",
 					"USE_SYSTEM_GMP=0",
-					"USE_REDIS=0",
 					"HAVE_TOUCHSCREENGUI=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"${SRCROOT}/../../../src",
 					"${SRCROOT}/../../../src/script",
-					"${SRCROOT}/../../../lib/lua/src",
 					"${SRCROOT}/../../../lib/jsoncpp",
 					"${SRCROOT}/../../../lib/intl",
 					"${SRCROOT}/../deps/irrlicht/include",
 					"${SRCROOT}/../deps/freetype/include/freetype2",
 					"${SRCROOT}/../deps/libcurl/include",
-					"${SRCROOT}/../Pods/LuaJITPod/include",
 				);
 				INFOPLIST_FILE = MultiCraft/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1814,7 +1795,6 @@
 					"-L${SRCROOT}/../deps/irrlicht",
 					"-L${SRCROOT}/../deps/freetype/lib",
 					"-L${SRCROOT}/../deps/libcurl/lib",
-					"-L${SRCROOT}/../Pods/LuaJITPod/lib",
 					"-Wl,-dead_strip",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mobi.MultiCraft;
@@ -1839,25 +1819,20 @@
 					"USE_CURL=1",
 					"USE_SOUND=1",
 					"USE_FREETYPE=1",
-					"USE_CURSES=0",
 					"USE_LEVELDB=1",
-					"USE_LUAJIT=0",
-					"USE_SPATIAL=0",
+					"USE_LUAJIT=1",
 					"USE_SYSTEM_GMP=0",
-					"USE_REDIS=0",
 					"HAVE_TOUCHSCREENGUI=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"${SRCROOT}/../../../src",
 					"${SRCROOT}/../../../src/script",
-					"${SRCROOT}/../../../lib/lua/src",
 					"${SRCROOT}/../../../lib/jsoncpp",
 					"${SRCROOT}/../../../lib/intl",
 					"${SRCROOT}/../deps/irrlicht/include",
 					"${SRCROOT}/../deps/freetype/include/freetype2",
 					"${SRCROOT}/../deps/libcurl/include",
-					"${SRCROOT}/../Pods/LuaJITPod/include",
 				);
 				INFOPLIST_FILE = MultiCraft/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1884,7 +1859,6 @@
 					"-L${SRCROOT}/../deps/irrlicht",
 					"-L${SRCROOT}/../deps/freetype/lib",
 					"-L${SRCROOT}/../deps/libcurl/lib",
-					"-L${SRCROOT}/../Pods/LuaJITPod/lib",
 					"-Wl,-dead_strip",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mobi.MultiCraft;
