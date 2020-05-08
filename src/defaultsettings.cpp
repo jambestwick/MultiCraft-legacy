@@ -473,7 +473,6 @@ void set_default_settings(Settings *settings) {
 
 	// Android Settings
 #ifdef __ANDROID__
-	settings->setDefault("selectionbox_width", "6");
 	settings->setDefault("debug_log_level", "error");
 
 	// Set font_path
@@ -499,15 +498,18 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("hud_scaling", "0.6");
 		settings->setDefault("font_size", font_size_str_small);
 		settings->setDefault("hud_small", "true");
+		settings->setDefault("selectionbox_width", "6");
 	} else if (x_inches > 4.5 && x_inches <= 5) {
 		// large 6" phones
 		settings->setDefault("hud_scaling", "0.7");
 		settings->setDefault("mouse_sensitivity", "0.15");
 		settings->setDefault("hud_small", "true");
+		settings->setDefault("selectionbox_width", "6");
 	} else if (x_inches > 5 && x_inches <= 6) {
 		// 7" tablets
 		settings->setDefault("hud_scaling", "0.9");
 		settings->setDefault("hud_small", "true");
+		settings->setDefault("selectionbox_width", "6");
 	}
 #endif // Android
 
@@ -548,13 +550,16 @@ void set_default_settings(Settings *settings) {
 		// 5.8+" iPhones
 		settings->setDefault("hud_scaling", "0.85");
 		settings->setDefault("mouse_sensitivity", "0.35");
+		settings->setDefault("selectionbox_width", "6");
 	} else if SDVersion7and9Inch {
 		// iPad mini
 		settings->setDefault("hud_scaling", "0.9");
 		settings->setDefault("mouse_sensitivity", "0.25");
+		settings->setDefault("selectionbox_width", "6");
 	} else {
 		// iPad
 		settings->setDefault("mouse_sensitivity", "0.3");
+		settings->setDefault("selectionbox_width", "6");
 	}
 
 	// Settings for the Rounded Screen and Home Bar
