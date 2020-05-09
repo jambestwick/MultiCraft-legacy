@@ -59,8 +59,8 @@ Hud::Hud(video::IVideoDriver *driver, scene::ISceneManager* smgr,
 	m_hotbar_imagesize *= m_hud_scaling;
 	m_padding = m_hotbar_imagesize / 12;
 
-	for (unsigned int i = 0; i < 4; i++)
-		hbar_colors[i] = video::SColor(255, 255, 255, 255);
+	for (auto & hbar_color : hbar_colors)
+		hbar_color = video::SColor(255, 255, 255, 255);
 
 	tsrc = client->getTextureSource();
 
@@ -332,17 +332,25 @@ void Hud::drawLuaElements(const v3s16 &camera_offset)
 				core::rect<s32> size(0, 0, e->scale.X * size_factor, text_height * e->scale.Y * size_factor);
 				std::wstring text = unescape_enriched(utf8_to_wide(e->text));
 				core::dimension2d<u32> textsize = font->getDimension(text.c_str());
+#ifdef __ANDROID__
+				// The text size on Android is not proportional with the actual scaling
+				irr::gui::IGUIFont *font_scaled = g_fontengine->getFont(
+						g_fontengine->getDefaultFontSize() - 5);
+				if (e->offset.X < -20)
+					textsize = font_scaled->getDimension(text.c_str());
+#endif
 				v2s32 offset((e->align.X - 1.0) * (textsize.Width / 2),
 							 (e->align.Y - 1.0) * (textsize.Height / 2));
-				if (e->offset.Y < -10) {
-#if defined(__ANDROID__) || defined(__IOS__)
-					offset.Y = (e->align.Y - 1.0) * (textsize.Height / 2) - hud_move_upwards - 5;
-#else
-					offset.Y = (e->align.Y - 1.0) * (textsize.Height / 2) - hud_move_upwards;
-#endif
-				}
+				offset.Y = (e->align.Y - 1.0) * (textsize.Height / 2) - hud_move_upwards;
 				v2s32 offs(e->offset.X * size_factor, e->offset.Y * size_factor);
+#ifdef __ANDROID__
+				if (e->offset.X < -20)
+					font_scaled->draw(text.c_str(), size + pos + offset + offs, color);
+				else
+					font->draw(text.c_str(), size + pos + offset + offs, color);
+#else
 				font->draw(text.c_str(), size + pos + offset + offs, color);
+#endif
 				break; }
 			case HUD_ELEM_STATBAR: {
 				v2s32 offs(e->offset.X, e->offset.Y);
@@ -539,12 +547,10 @@ void Hud::drawSelectionMesh()
 		// Draw 3D selection boxes
 		video::SMaterial oldmaterial = driver->getMaterial2D();
 		driver->setMaterial(m_selection_material);
-		for (std::vector<aabb3f>::const_iterator
-				i = m_selection_boxes.begin();
-				i != m_selection_boxes.end(); ++i) {
+		for (auto & selection_box : m_selection_boxes) {
 			aabb3f box = aabb3f(
-				i->MinEdge + m_selection_pos_with_offset,
-				i->MaxEdge + m_selection_pos_with_offset);
+				selection_box.MinEdge + m_selection_pos_with_offset,
+				selection_box.MaxEdge + m_selection_pos_with_offset);
 
 			u32 r = (selectionbox_argb.getRed());
 			u32 g = (selectionbox_argb.getGreen());
@@ -586,7 +592,7 @@ void Hud::updateSelectionMesh(const v3s16 &camera_offset)
 		m_selection_mesh = NULL;
 	}
 
-	if (!m_selection_boxes.size()) {
+	if (m_selection_boxes.empty()) {
 		// No pointed object
 		return;
 	}
@@ -611,10 +617,8 @@ void Hud::updateSelectionMesh(const v3s16 &camera_offset)
 	aabb3f halo_box(100.0, 100.0, 100.0, -100.0, -100.0, -100.0);
 	m_halo_boxes.clear();
 
-	for (std::vector<aabb3f>::iterator
-			i = m_selection_boxes.begin();
-			i != m_selection_boxes.end(); ++i) {
-		halo_box.addInternalBox(*i);
+	for (auto & selection_box : m_selection_boxes) {
+		halo_box.addInternalBox(selection_box);
 	}
 
 	m_halo_boxes.push_back(halo_box);
