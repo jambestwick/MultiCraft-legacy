@@ -12,7 +12,7 @@ static uint32_t parse_version()
 	// compatibility with old versions, DON'T CHANGE
 	uint32_t ret = revision | (2 << 24);
 
-	NSLog(@"App revision %@  ->  %u", revstr, ret);
+	NSLog(@"App revision %@ -> %u", revstr, ret);
 	return ret;
 }
 
@@ -21,7 +21,7 @@ static uint32_t read_version(NSString *path)
 	NSString *filename = [path stringByAppendingPathComponent:@"_version"];
 	NSError *error;
 	NSString *content = [NSString stringWithContentsOfFile:filename encoding:NSASCIIStringEncoding error:&error];
-	if(error)
+	if (error)
 		return 0;
 	return [content intValue];
 }
@@ -36,13 +36,13 @@ static inline void write_version(NSString *path, uint32_t ver)
 static void recursive_delete(NSString *path)
 {
 	NSFileManager *fm = [NSFileManager defaultManager];
-	for(NSString* file in [fm contentsOfDirectoryAtPath:path error:nil])
+	for (NSString* file in [fm contentsOfDirectoryAtPath:path error:nil])
 		[fm removeItemAtPath:[path stringByAppendingPathComponent:file] error:nil];
 }
 
 static void loading_alert(UIViewController *viewc, NSString *text)
 {
-	if(text == nil) {
+	if (text == nil) {
 		[viewc dismissViewControllerAnimated:NO completion:nil];
 		return;
 	}
@@ -61,29 +61,29 @@ static void loading_alert(UIViewController *viewc, NSString *text)
 
 void ioswrap_log(const char *message)
 {
-    NSLog(@"%s", message);
+	NSLog(@"%s", message);
 }
 
 void ioswrap_paths(int type, char *dest, size_t destlen)
 {
-    NSArray *paths;
+	NSArray *paths;
 
-    if (type == PATH_DOCUMENTS)
-        paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    else if (type == PATH_LIBRARY_SUPPORT || type == PATH_LIBRARY_CACHE)
-        paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-    else
-        return;
+	if (type == PATH_DOCUMENTS)
+		paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	else if (type == PATH_LIBRARY_SUPPORT || type == PATH_LIBRARY_CACHE)
+		paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+	else
+		return;
 
-    NSString *path = paths.firstObject;
-    const char *path_c = path.UTF8String;
+	NSString *path = paths.firstObject;
+	const char *path_c = path.UTF8String;
 
-    if (type == PATH_DOCUMENTS)
-        snprintf(dest, destlen, "%s", path_c);
-    else if (type == PATH_LIBRARY_SUPPORT)
-        snprintf(dest, destlen, "%s/Application Support", path_c);
-    else // type == PATH_LIBRARY_CACHE
-        snprintf(dest, destlen, "%s/Caches", path_c);
+	if (type == PATH_DOCUMENTS)
+		snprintf(dest, destlen, "%s", path_c);
+	else if (type == PATH_LIBRARY_SUPPORT)
+		snprintf(dest, destlen, "%s/Application Support", path_c);
+	else // type == PATH_LIBRARY_CACHE
+		snprintf(dest, destlen, "%s/Caches", path_c);
 }
 
 void ioswrap_assets()
@@ -104,7 +104,7 @@ void ioswrap_assets()
 	[win makeKeyAndVisible];
 
 	loading_alert(viewc, NSLocalizedString(@"Loading...", @""));
-	for(int i = 0; assets[i].name != NULL; i++) {
+	for (int i = 0; assets[i].name != NULL; i++) {
 		ioswrap_paths(assets[i].path, buf, sizeof(buf));
 		NSString *destpath = [NSString stringWithUTF8String:buf];
 		NSString *zippath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:assets[i].name] ofType:@"zip"];
@@ -115,11 +115,11 @@ void ioswrap_assets()
 		recursive_delete(destpath);
 		goto extract;
 #else
-		if(!assets[i].versioned)
+		if (!assets[i].versioned)
 			goto extract;
 #endif
 		uint32_t v_disk = read_version(destpath);
-		if(v_runtime == v_disk) {
+		if (v_runtime == v_disk) {
 			NSLog(@"%s: skipping update (%d)", assets[i].name, v_disk);
 			continue;
 		}
@@ -148,11 +148,11 @@ void ioswrap_asset_refresh(void)
 
 void ioswrap_size(unsigned int *dest)
 {
-    CGSize bounds = [[UIScreen mainScreen] bounds].size;
-    CGFloat scale = [[UIScreen mainScreen] scale];
-    dest[0] = bounds.width * scale;
-    dest[1] = bounds.height * scale;
-    dest[2] = scale;
+	CGSize bounds = [[UIScreen mainScreen] bounds].size;
+	CGFloat scale = [[UIScreen mainScreen] scale];
+	dest[0] = bounds.width * scale;
+	dest[1] = bounds.height * scale;
+	dest[2] = scale;
 }
 
 /********/
@@ -173,7 +173,7 @@ void ioswrap_show_dialog(void *uiviewcontroller, const char *accept, const char 
 	UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Text Input" message:nil preferredStyle:UIAlertControllerStyleAlert];
 	[alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
 		textField.text = [NSString stringWithUTF8String:current];
-		if(type == DIALOG_PASSWORD)
+		if (type == DIALOG_PASSWORD)
 			textField.secureTextEntry = YES;
 	}];
 	[alert addAction:[UIAlertAction actionWithTitle:accept_ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -189,7 +189,7 @@ void ioswrap_show_dialog(void *uiviewcontroller, const char *accept, const char 
 int ioswrap_get_dialog(const char **text)
 {
 	int ret = dialog_state;
-	if(text) {
+	if (text) {
 		*text = dialog_text;
 		dialog_state = -1; // reset
 	}

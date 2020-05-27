@@ -1,11 +1,10 @@
-#ifndef ioswrap_h
-#define ioswrap_h
+#pragma once
 
 #if 0
 #define ADS
 #include "ads.h"
 #else
-#define ZIPPWD @"" // zip password
+#define ZIPPWD @"1" // zip password
 #endif
 
 #ifdef __cplusplus
@@ -13,9 +12,9 @@ extern "C" {
 #endif
 
 enum {
-    PATH_DOCUMENTS,
-    PATH_LIBRARY_SUPPORT,
-    PATH_LIBRARY_CACHE,
+	PATH_DOCUMENTS,
+	PATH_LIBRARY_SUPPORT,
+	PATH_LIBRARY_CACHE,
 };
 
 void ioswrap_log(const char *message);
@@ -24,10 +23,8 @@ void ioswrap_assets(void); // extracts assets.zip to PATH_LIBRARY_SUPPORT
 void ioswrap_asset_refresh(void);
 void ioswrap_size(unsigned int *dest);
 void ioswrap_show_dialog(void *uiviewcontroller, const char *accept, const char *hint, const char *current, int type);
-int ioswrap_get_dialog(const char **text);
+int  ioswrap_get_dialog(const char **text);
 
 #ifdef __cplusplus
 }
 #endif
-
-#endif /* ioswrap_h */
