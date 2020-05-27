@@ -18,7 +18,8 @@
 local function get_formspec()
 	local index = filterlist.get_current_index(menudata.worldlist,
 				tonumber(core.settings:get("mainmenu_last_selected_world")))
-	local creative_mode = core.settings:get_bool("creative_mode")
+	local creative_checkbox = core.settings:get_bool("creative_mode") and
+			"local_creative_checkbox" or "blank"
 
 	local retval =
 			"image_button[0,4.84;3.31,0.92;" ..
@@ -35,13 +36,10 @@ local function get_formspec()
 					"blank.png") .. ";play;;true;false]" ..
 			"tooltip[play;".. fgettext("Play Game") .. "]" ..
 
-			"image_button[6.725,3;4.95,0.87;" ..
+			"image_button[7.33,3.09;3.73,0.86;" ..
 				core.formspec_escape(defaulttexturedir ..
-					"local_creative_" .. tostring(creative_mode) .. ".png") ..
-					";cb_creative_mode;;true;false;" ..
-				core.formspec_escape(defaulttexturedir ..
-					"local_creative_" .. tostring(not creative_mode) .. ".png") ..
-					"]" ..
+					creative_checkbox) ..
+					".png;cb_creative_mode;;true;false]" ..
 			"tooltip[cb_creative_mode;".. fgettext("Creative mode") .. "]" ..
 
 			"tableoptions[background=#27233F;border=false]" ..
