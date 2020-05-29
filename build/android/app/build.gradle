@@ -2,19 +2,21 @@ apply plugin: 'com.android.application'
 android {
 	compileSdkVersion 29
 	buildToolsVersion '29.0.3'
-	ndkVersion '21.1.6352462'
+	ndkVersion '21.2.6472646'
 	defaultConfig {
 		applicationId 'com.multicraft.game'
 		minSdkVersion 16
 		targetSdkVersion 29
-		versionCode 43
-		versionName "1.9.3"
-		/*multiDexEnabled true
-		useLibrary 'org.apache.http.legacy'*/
+		versionCode 61
+		versionName "1.9.4"
+		/*multiDexEnabled true*/
 	}
 
+	// load properties
 	Properties props = new Properties()
-	props.load(new FileInputStream(file('../local.properties')))
+	def propfile = file('../local.properties')
+	if (propfile.exists())
+		props.load(new FileInputStream(propfile))
 
 	if (props.getProperty('keystore') != null) {
 		signingConfigs {
@@ -51,17 +53,20 @@ android {
 }
 
 dependencies {
+	/* MultiCraft Native */
+	implementation project(':native')
+
+	/* Third-party libraries */
 	/*implementation 'androidx.multidex:multidex:2.0.1'*/
 	implementation 'androidx.preference:preference:1.1.1'
-	// MultiCraft Native
-	implementation project(':native')
-	// Analytics libraries
-	//noinspection GradleDynamicVersion
-	/*implementation('com.bugsnag:bugsnag-android:4.+') {
-		exclude group: 'com.bugsnag', module: 'bugsnag-plugin-android-ndk'
-	}*/
-	// Third-party libraries
-	/*implementation 'gun0912.ted:tedpermission:2.2.3'*/
 	//noinspection GradleDependency
 	implementation 'commons-io:commons-io:2.5'
+	/*implementation 'gun0912.ted:tedpermission:2.2.3'*/
+
+	/* Analytics libraries */
+	//noinspection GradleDynamicVersion
+	/*implementation('com.bugsnag:bugsnag-android:5.+') {
+		exclude group: 'com.bugsnag', module: 'bugsnag-plugin-android-anr'
+		exclude group: 'com.bugsnag', module: 'bugsnag-plugin-android-ndk'
+	}*/
 }
