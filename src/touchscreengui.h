@@ -1,6 +1,6 @@
 /*
 Copyright (C) 2014 sapier
-Copyright (C) 2014-2019 Maksim Gamarnik [MoNTE48] MoNTE48@mail.ua
+Copyright (C) 2014-2020 Maksim Gamarnik [MoNTE48] MoNTE48@mail.ua
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -17,8 +17,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifndef TOUCHSCREENGUI_HEADER
-#define TOUCHSCREENGUI_HEADER
+#pragma once
 
 #include <IEventReceiver.h>
 #include <IGUIButton.h>
@@ -34,7 +33,8 @@ using namespace irr;
 using namespace irr::core;
 using namespace irr::gui;
 
-typedef enum {
+typedef enum
+{
 	forward_one,
 	forward_two,
 	forward_three,
@@ -58,11 +58,12 @@ typedef enum {
 	after_last_element_id
 } touch_gui_button_id;
 
-#define SLOW_BUTTON_REPEAT  1.0f
-#define MIN_DIG_TIME        0.5f
+#define MIN_DIG_TIME        500
 #define BUTTON_REPEAT_DELAY 0.2f
+#define SLOW_BUTTON_REPEAT  1.0f
 
-struct button_info {
+struct button_info
+{
 	float            repeatcounter;
 	float            repeatdelay;
 	irr::EKEY_CODE   keycode;
@@ -71,7 +72,8 @@ struct button_info {
 	bool             immediate_release;
 };
 
-class TouchScreenGUI {
+class TouchScreenGUI
+{
 public:
 	TouchScreenGUI(IrrlichtDevice *device, IEventReceiver *receiver);
 
@@ -81,7 +83,8 @@ public:
 
 	void init(ISimpleTextureSource *tsrc);
 
-	double getYawChange() {
+	double getYawChange()
+	{
 		double res = m_camera_yaw_change;
 		m_camera_yaw_change = 0;
 		return res;
@@ -117,6 +120,7 @@ private:
 	IEventReceiver           *m_receiver;
 	ISimpleTextureSource     *m_texturesource;
 	v2u32 m_screensize;
+	double m_touchscreen_threshold;
 	std::map<int, rect<s32> > m_hud_rects;
 	std::map<size_t, irr::EKEY_CODE> m_hud_ids;
 	bool                      m_visible; // is the gui visible
@@ -151,11 +155,12 @@ private:
 	void handleChangedButton(const SEvent &event);
 
 	// initialize a button
-	void initButton(touch_gui_button_id id, rect<s32> button_rect,
-					std::wstring caption, bool immediate_release,
+	void initButton(touch_gui_button_id id, const rect<s32> &button_rect,
+					const std::wstring &caption, bool immediate_release,
 					float repeat_delay = BUTTON_REPEAT_DELAY);
 
-	struct id_status {
+	struct id_status
+	{
 		size_t id;
 		int X;
 		int Y;
@@ -177,7 +182,8 @@ private:
 	void handleReleaseEvent(size_t evt_id);
 
 	// long-click detection variables
-	struct key_event {
+	struct key_event
+	{
 		u64 down_time;
 		s32 x;
 		s32 y;
@@ -191,4 +197,3 @@ private:
 };
 
 extern TouchScreenGUI *g_touchscreengui;
-#endif
