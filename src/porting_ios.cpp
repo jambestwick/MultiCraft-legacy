@@ -37,6 +37,7 @@ namespace porting {
 		path_locale = std::string(buf) + "/locale";
 		ioswrap_paths(PATH_LIBRARY_CACHE, buf, sizeof(buf));
 		path_cache = std::string(buf);
+		init_IOS_Settings();
 	}
 
 	void copyAssets() {

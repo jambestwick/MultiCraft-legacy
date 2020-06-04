@@ -154,7 +154,7 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 			@"iPad5,2"  : @(iPadMini4),
 			@"iPad11,1" : @(iPadMini5),
 			@"iPad11,2" : @(iPadMini5),
-	
+
 			@"iPad6,3"  : @(iPadPro9Dot7Inch),
 			@"iPad6,4"  : @(iPadPro9Dot7Inch),
 			@"iPad7,3"  : @(iPadPro10Dot5Inch),
@@ -189,7 +189,7 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 	struct utsname systemInfo;
 	uname(&systemInfo);
 	NSString *code = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-	DeviceVersion version = (DeviceVersion)[[self.deviceNamesByCode objectForKey:code] integerValue];
+	DeviceVersion version = (DeviceVersion)[self.deviceNamesByCode[code] integerValue];
 	return version;
 }
 @end

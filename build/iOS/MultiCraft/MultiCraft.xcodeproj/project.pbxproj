@@ -37,12 +37,18 @@
 		4B35A9F71EEE018D00274961 /* scripting_server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B35A9F51EEE018D00274961 /* scripting_server.cpp */; };
 		842A808C2339174C00A89418 /* ads.mm in Sources */ = {isa = PBXBuildFile; fileRef = 842A808B2339174C00A89418 /* ads.mm */; };
 		844B495F228606B200EB60EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844B495D228606B200EB60EF /* Main.storyboard */; };
-		844E20202454737E00CD5A35 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844E201F2454737E00CD5A35 /* dummy.swift */; };
 		8465A76522A7D4500095B7CA /* libintl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8465A76422A7D4500095B7CA /* libintl.cpp */; };
 		849C4F86209656D3005EB041 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 849C4F85209656D2005EB041 /* ru.lproj */; };
+		84CD4A4D24877FA20019B81D /* VersionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A4C24877FA20019B81D /* VersionManager.m */; };
+		84CD4A64248782720019B81D /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A59248782720019B81D /* MainWindow.swift */; };
+		84CD4A65248782720019B81D /* ProgressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CD4A5B248782720019B81D /* ProgressViewController.xib */; };
+		84CD4A66248782720019B81D /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CD4A5C248782720019B81D /* MessageViewController.xib */; };
+		84CD4A67248782720019B81D /* BasePresentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A5D248782720019B81D /* BasePresentViewController.swift */; };
+		84CD4A68248782720019B81D /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A5E248782720019B81D /* MessageViewController.swift */; };
+		84CD4A69248782720019B81D /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A5F248782720019B81D /* ProgressViewController.swift */; };
+		84CD4A6C2487A0180019B81D /* ZipManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A6B2487A0170019B81D /* ZipManager.swift */; };
 		84FE40E224439C2F008E29DB /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FE40E124439C2F008E29DB /* libcurl.a */; };
 		8E0FFE3234B35EC9603EC82A /* Pods_MultiCraft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B0001862274A8FCC7614F0 /* Pods_MultiCraft.framework */; };
-		F856B5C31F55F7EE00FE9494 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F856B5C21F55F7EE00FE9494 /* bg.png */; };
 		F87DC8BA210887C700393B64 /* mapgen_v7p.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F87DC8B9210887C700393B64 /* mapgen_v7p.cpp */; };
 		F8E6C4E91DCA3B7900F64426 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8E6C4E81DCA3B7900F64426 /* Assets.xcassets */; };
 		F8E6C4EC1DCA3B7900F64426 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8E6C4EA1DCA3B7900F64426 /* LaunchScreen.storyboard */; };
@@ -285,14 +291,22 @@
 		842A808A2339174B00A89418 /* ads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ads.h; path = Ads/ads.h; sourceTree = "<group>"; };
 		842A808B2339174C00A89418 /* ads.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ads.mm; path = Ads/ads.mm; sourceTree = "<group>"; };
 		844B495E228606B200EB60EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		844E201F2454737E00CD5A35 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
 		8465A76122A7D4500095B7CA /* MessageCatalog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MessageCatalog.hpp; path = ../../../../lib/intl/MessageCatalog.hpp; sourceTree = "<group>"; };
 		8465A76222A7D4500095B7CA /* libintl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libintl.h; path = ../../../../lib/intl/libintl.h; sourceTree = "<group>"; };
 		8465A76322A7D4500095B7CA /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Util.hpp; path = ../../../../lib/intl/Util.hpp; sourceTree = "<group>"; };
 		8465A76422A7D4500095B7CA /* libintl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = libintl.cpp; path = ../../../../lib/intl/libintl.cpp; sourceTree = "<group>"; };
 		849C4F85209656D2005EB041 /* ru.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ru.lproj; sourceTree = "<group>"; };
+		84CD4A4B24877FA20019B81D /* VersionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionManager.h; sourceTree = "<group>"; };
+		84CD4A4C24877FA20019B81D /* VersionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionManager.m; sourceTree = "<group>"; };
+		84CD4A55248781420019B81D /* Bridge-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridge-Header.h"; sourceTree = "<group>"; };
+		84CD4A59248782720019B81D /* MainWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
+		84CD4A5B248782720019B81D /* ProgressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressViewController.xib; sourceTree = "<group>"; };
+		84CD4A5C248782720019B81D /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
+		84CD4A5D248782720019B81D /* BasePresentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasePresentViewController.swift; sourceTree = "<group>"; };
+		84CD4A5E248782720019B81D /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		84CD4A5F248782720019B81D /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
+		84CD4A6B2487A0170019B81D /* ZipManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZipManager.swift; sourceTree = "<group>"; };
 		84FE40E124439C2F008E29DB /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../deps/libcurl/lib/libcurl.a; sourceTree = "<group>"; };
-		F856B5C21F55F7EE00FE9494 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg.png; path = ../../../../textures/base/bg.png; sourceTree = "<group>"; };
 		F87DC8B8210887C600393B64 /* mapgen_v7p.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapgen_v7p.h; path = ../../../../src/mapgen_v7p.h; sourceTree = "<group>"; };
 		F87DC8B9210887C700393B64 /* mapgen_v7p.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapgen_v7p.cpp; path = ../../../../src/mapgen_v7p.cpp; sourceTree = "<group>"; };
 		F8E6C4D91DCA3B7900F64426 /* MultiCraft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiCraft.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -304,7 +318,6 @@
 		F8E6C4F71DCA3F9900F64426 /* activeobject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = activeobject.h; path = ../../../../src/activeobject.h; sourceTree = "<group>"; };
 		F8E6C4F81DCA3F9900F64426 /* ban.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ban.cpp; path = ../../../../src/ban.cpp; sourceTree = "<group>"; };
 		F8E6C4F91DCA3F9900F64426 /* ban.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ban.h; path = ../../../../src/ban.h; sourceTree = "<group>"; };
-		F8E6C4FA1DCA3F9900F64426 /* basicmacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = basicmacros.h; path = ../../../../src/basicmacros.h; sourceTree = "<group>"; };
 		F8E6C4FB1DCA3F9900F64426 /* camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = camera.cpp; path = ../../../../src/camera.cpp; sourceTree = "<group>"; };
 		F8E6C4FC1DCA3F9900F64426 /* camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = camera.h; path = ../../../../src/camera.h; sourceTree = "<group>"; };
 		F8E6C4FD1DCA3F9900F64426 /* cavegen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cavegen.cpp; path = ../../../../src/cavegen.cpp; sourceTree = "<group>"; };
@@ -438,7 +451,6 @@
 		F8E6C5811DCA3F9900F64426 /* mapblock_mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapblock_mesh.h; path = ../../../../src/mapblock_mesh.h; sourceTree = "<group>"; };
 		F8E6C5821DCA3F9900F64426 /* mapblock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapblock.cpp; path = ../../../../src/mapblock.cpp; sourceTree = "<group>"; };
 		F8E6C5831DCA3F9900F64426 /* mapblock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapblock.h; path = ../../../../src/mapblock.h; sourceTree = "<group>"; };
-		F8E6C5841DCA3F9900F64426 /* mapchunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapchunk.h; path = ../../../../src/mapchunk.h; sourceTree = "<group>"; };
 		F8E6C5851DCA3F9900F64426 /* mapgen_flat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapgen_flat.cpp; path = ../../../../src/mapgen_flat.cpp; sourceTree = "<group>"; };
 		F8E6C5861DCA3F9900F64426 /* mapgen_flat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapgen_flat.h; path = ../../../../src/mapgen_flat.h; sourceTree = "<group>"; };
 		F8E6C58D1DCA3F9900F64426 /* mapgen_v6.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapgen_v6.cpp; path = ../../../../src/mapgen_v6.cpp; sourceTree = "<group>"; };
@@ -730,6 +742,27 @@
 			name = intl;
 			sourceTree = "<group>";
 		};
+		84CD4A56248782720019B81D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				84CD4A59248782720019B81D /* MainWindow.swift */,
+				84CD4A6B2487A0170019B81D /* ZipManager.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		84CD4A5A248782720019B81D /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				84CD4A5B248782720019B81D /* ProgressViewController.xib */,
+				84CD4A5C248782720019B81D /* MessageViewController.xib */,
+				84CD4A5D248782720019B81D /* BasePresentViewController.swift */,
+				84CD4A5E248782720019B81D /* MessageViewController.swift */,
+				84CD4A5F248782720019B81D /* ProgressViewController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		87D06CD2CC310BE5E73639F4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -775,15 +808,18 @@
 		F8E6C4DC1DCA3B7900F64426 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84CD4A56248782720019B81D /* Main */,
+				84CD4A5A248782720019B81D /* UI */,
+				84CD4A55248781420019B81D /* Bridge-Header.h */,
 				F8E6C4F31DCA3EA400F64426 /* ioswrap.h */,
 				F8E6C4F41DCA3EA400F64426 /* ioswrap.m */,
+				84CD4A4B24877FA20019B81D /* VersionManager.h */,
+				84CD4A4C24877FA20019B81D /* VersionManager.m */,
 				840E2F9E233410F90088E7F7 /* SDVersion.h */,
 				842A808A2339174B00A89418 /* ads.h */,
 				842A808B2339174C00A89418 /* ads.mm */,
 				F8E6C7E01DCA4EB300F64426 /* assets.zip */,
 				F8E6C7E21DCA511700F64426 /* worlds.zip */,
-				F856B5C21F55F7EE00FE9494 /* bg.png */,
-				844E201F2454737E00CD5A35 /* dummy.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -794,7 +830,6 @@
 				F8E6C4F71DCA3F9900F64426 /* activeobject.h */,
 				F8E6C4F81DCA3F9900F64426 /* ban.cpp */,
 				F8E6C4F91DCA3F9900F64426 /* ban.h */,
-				F8E6C4FA1DCA3F9900F64426 /* basicmacros.h */,
 				F8E6C4FB1DCA3F9900F64426 /* camera.cpp */,
 				F8E6C4FC1DCA3F9900F64426 /* camera.h */,
 				F8E6C4FD1DCA3F9900F64426 /* cavegen.cpp */,
@@ -942,7 +977,6 @@
 				F8E6C5811DCA3F9900F64426 /* mapblock_mesh.h */,
 				F8E6C5821DCA3F9900F64426 /* mapblock.cpp */,
 				F8E6C5831DCA3F9900F64426 /* mapblock.h */,
-				F8E6C5841DCA3F9900F64426 /* mapchunk.h */,
 				F8E6C5851DCA3F9900F64426 /* mapgen_flat.cpp */,
 				F8E6C5861DCA3F9900F64426 /* mapgen_flat.h */,
 				F8E6C58D1DCA3F9900F64426 /* mapgen_v6.cpp */,
@@ -1334,6 +1368,7 @@
 				F8E6C4D71DCA3B7900F64426 /* Resources */,
 				E156912616D2E9233FC1C9F4 /* [CP] Copy Pods Resources */,
 				7055146ABE25F98BDC1A6400 /* [CP] Embed Pods Frameworks */,
+				4EB364AA68EABAF7EBC092CB /* Upload Bugsnag dSYM */,
 			);
 			buildRules = (
 			);
@@ -1391,15 +1426,35 @@
 				849C4F86209656D3005EB041 /* ru.lproj in Resources */,
 				F8E6C4EC1DCA3B7900F64426 /* LaunchScreen.storyboard in Resources */,
 				844B495F228606B200EB60EF /* Main.storyboard in Resources */,
-				F856B5C31F55F7EE00FE9494 /* bg.png in Resources */,
 				F8E6C7E11DCA4EB300F64426 /* assets.zip in Resources */,
 				F8E6C7E31DCA511700F64426 /* worlds.zip in Resources */,
+				84CD4A65248782720019B81D /* ProgressViewController.xib in Resources */,
+				84CD4A66248782720019B81D /* MessageViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4EB364AA68EABAF7EBC092CB /* Upload Bugsnag dSYM */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Bugsnag dSYM";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = "/usr/bin/env ruby";
+			shellScript = "# First, attempt to get the API key from an environment variable\napi_key = ENV[\"BUGSNAG_API_KEY\"]\n\n# If not present, attempt to lookup the value from the Info.plist\nif !api_key\n  default_info_plist_location = Dir.glob(\"./{ios/,}*/Info.plist\").reject {|path| path =~ /build|test/i }\n  plist_buddy_response = `/usr/libexec/PlistBuddy -c \"print :BugsnagAPIKey\" \"#{default_info_plist_location.first}\"`\n  api_key = plist_buddy_response if $?.success?\nend\n\nfork do\n  Process.setsid\n  STDIN.reopen(\"/dev/null\")\n  STDOUT.reopen(\"/dev/null\", \"a\")\n  STDERR.reopen(\"/dev/null\", \"a\")\n\n  require 'shellwords'\n\n  Dir[\"#{ENV[\"DWARF_DSYM_FOLDER_PATH\"]}/*/Contents/Resources/DWARF/*\"].each do |dsym|\n    curl_command = \"curl -F dsym=@#{Shellwords.escape(dsym)} -F projectRoot=#{Shellwords.escape(ENV[\"PROJECT_DIR\"])} \"\n    curl_command += \"-F apiKey=#{Shellwords.escape(api_key)} \" if api_key\n    curl_command += \"https://upload.bugsnag.com/\"\n    system(curl_command)\n  end\nend\n";
+			showEnvVarsInLog = 0;
+		};
 		7055146ABE25F98BDC1A6400 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1506,9 +1561,12 @@
 				F8E6C6581DCA3F9900F64426 /* sound_openal.cpp in Sources */,
 				F8E6C6401DCA3F9900F64426 /* nameidmapping.cpp in Sources */,
 				F8E6C6571DCA3F9900F64426 /* socket.cpp in Sources */,
+				84CD4A64248782720019B81D /* MainWindow.swift in Sources */,
+				84CD4A67248782720019B81D /* BasePresentViewController.swift in Sources */,
 				4B35A9B01EEDD15500274961 /* clientenvironment.cpp in Sources */,
 				F8E6C7C21DCA428800F64426 /* timetaker.cpp in Sources */,
 				F8E6C6211DCA3F9900F64426 /* hud.cpp in Sources */,
+				84CD4A4D24877FA20019B81D /* VersionManager.m in Sources */,
 				F8E6C6DF1DCA413A00F64426 /* clientpackethandler.cpp in Sources */,
 				F8E6C6261DCA3F9900F64426 /* itemdef.cpp in Sources */,
 				F8E6C61B1DCA3F9900F64426 /* guiKeyChangeMenu.cpp in Sources */,
@@ -1610,6 +1668,7 @@
 				F8E6C7501DCA420A00F64426 /* l_nodetimer.cpp in Sources */,
 				F87DC8BA210887C700393B64 /* mapgen_v7p.cpp in Sources */,
 				F8E6C6141DCA3F9900F64426 /* game.cpp in Sources */,
+				84CD4A6C2487A0180019B81D /* ZipManager.swift in Sources */,
 				F8E6C6051DCA3F9900F64426 /* craftdef.cpp in Sources */,
 				4B0F49CF1E424FDF0003953D /* enriched_string.cpp in Sources */,
 				4B0F49D31E42501D0003953D /* static_text.cpp in Sources */,
@@ -1624,6 +1683,7 @@
 				F8E6C6041DCA3F9900F64426 /* convert_json.cpp in Sources */,
 				4B35A9F41EEE017000274961 /* scripting_client.cpp in Sources */,
 				F8E6C6ED1DCA41A600F64426 /* scripting_mainmenu.cpp in Sources */,
+				84CD4A68248782720019B81D /* MessageViewController.swift in Sources */,
 				F8E6C65F1DCA3F9900F64426 /* treegen.cpp in Sources */,
 				F8E6C5F61DCA3F9900F64426 /* chat.cpp in Sources */,
 				F8E6C60B1DCA3F9900F64426 /* debug.cpp in Sources */,
@@ -1654,8 +1714,8 @@
 				F8E6C6591DCA3F9900F64426 /* sound.cpp in Sources */,
 				F8E6C60D1DCA3F9900F64426 /* drawscene.cpp in Sources */,
 				F8E6C71D1DCA41EF00F64426 /* s_security.cpp in Sources */,
+				84CD4A69248782720019B81D /* ProgressViewController.swift in Sources */,
 				F8E6C7641DCA423C00F64426 /* event.cpp in Sources */,
-				844E20202454737E00CD5A35 /* dummy.swift in Sources */,
 				4B35A9E51EEE00F900274961 /* l_localplayer.cpp in Sources */,
 				F8E6C6501DCA3F9900F64426 /* serialization.cpp in Sources */,
 				F8E6C6281DCA3F9900F64426 /* light.cpp in Sources */,
@@ -1694,6 +1754,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMPRESS_PNG_FILES = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -1720,6 +1781,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
@@ -1797,8 +1859,10 @@
 					"-L${SRCROOT}/../deps/libcurl/lib",
 					"-Wl,-dead_strip",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mobi.MultiCraft;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MultiCraft/Bridge-Header.h";
 			};
 			name = Debug;
 		};
@@ -1863,6 +1927,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mobi.MultiCraft;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MultiCraft/Bridge-Header.h";
 			};
 			name = Release;
 		};
