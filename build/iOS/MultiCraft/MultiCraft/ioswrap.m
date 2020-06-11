@@ -62,6 +62,17 @@ void ioswrap_assets()
 	[manager runProcess:^(NSInteger progress) {
 		[progressVC updateProgress:progress];
 		CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, YES);
+	} :^(NSError * error) {
+		UIAlertController *vc = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Unexpected issue, please restart the game!", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Close game", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+			exit(0);
+		}];
+
+		[vc addAction:cancel];
+		[window.rootViewController presentViewController:vc animated:NO completion:nil];
+
+		while (true)
+			CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, YES);
 	}];
 
 	[progressVC dismissView];

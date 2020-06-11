@@ -1,5 +1,6 @@
 import Foundation
 import SSZipArchive
+import Bugsnag
 
 private enum Constants {
 	static let percentProgressIndex: Int = 0
@@ -31,7 +32,7 @@ final class ZipManager: NSObject {
 	private var assets: [Asset] = [.init(name: "assets", path: .library, versioned: true),
 	                               .init(name: "worlds", path: .documents, versioned: false)]
 
-	@objc func runProcess(_ progress: @escaping (_ percent: Int) -> Void) {
+	@objc func runProcess(_ progress: @escaping (_ percent: Int) -> Void, _ errorBlock: @escaping (Error) -> Void) {
 		let versionRuntime = VersionManager.parseVersion()
 
 		for (index, asset) in assets.enumerated() {
@@ -48,17 +49,17 @@ final class ZipManager: NSObject {
 			}
 			#endif
 
-			unzipFile(at: zippath, to: asset.destinationPath, vRuntime: versionRuntime) { (percent) in
+			unzipFile(at: zippath, to: asset.destinationPath, vRuntime: versionRuntime, { (percent) in
 				if index == Constants.percentProgressIndex {
 					progress(percent)
 				}
-			}
+			}, errorBlock)
 		}
 	}
 }
 
 private extension ZipManager {
-	func unzipFile(at path: String, to destination: String, vRuntime: UInt32, _ block: @escaping (_ percent: Int) -> Void) {
+	func unzipFile(at path: String, to destination: String, vRuntime: UInt32, _ block: @escaping (_ percent: Int) -> Void, _ errorBlock :@escaping (Error) -> Void) {
 		let fileManager = FileManager.default
 		let files = (try? fileManager.contentsOfDirectory(atPath: destination)) ?? []
 
@@ -74,7 +75,12 @@ private extension ZipManager {
 			block(progress * 100 / total)
 
 		}) { (path, success, error) in
-			block(100)
+			if let error = error {
+				Bugsnag.notifyError(error)
+				errorBlock(error)
+			} else {
+				block(100)
+			}
 		}
 
 		VersionManager.writeVersion(withPath: destination, ver: vRuntime)
