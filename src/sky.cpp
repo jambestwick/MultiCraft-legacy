@@ -37,7 +37,11 @@ Sky::Sky(scene::ISceneNode* parent, scene::ISceneManager* mgr, s32 id,
 #else
 	mat.ZBuffer = video::ECFN_NEVER;
 #endif
+#if (IRRLICHT_VERSION_MAJOR == 1 && IRRLICHT_VERSION_MINOR < 9)
 	mat.ZWriteEnable = false;
+#else
+	mat.ZWriteEnable = video::EZW_OFF;
+#endif
 	mat.AntiAliasing = 0;
 	mat.TextureLayer[0].TextureWrapU = video::ETC_CLAMP_TO_EDGE;
 	mat.TextureLayer[0].TextureWrapV = video::ETC_CLAMP_TO_EDGE;
