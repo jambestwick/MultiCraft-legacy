@@ -1,3 +1,23 @@
+/*
+MultiCraft
+Copyright (C) 2014-2020 MoNTE48, Maksim Gamarnik <MoNTE48@mail.ua>
+Copyright (C) 2014-2020 ubulem,  Bektur Mambetov <berkut87@gmail.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation; either version 3.0 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
+
 package com.multicraft.game;
 
 import android.app.IntentService;
@@ -6,9 +26,12 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 
 import com.bugsnag.android.Bugsnag;
+
+import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.io.inputstream.ZipInputStream;
+import net.lingala.zip4j.model.LocalFileHeader;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,11 +40,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 
 import static com.multicraft.game.MainActivity.zipLocations;
+import static com.multicraft.game.helpers.ApiLevelHelper.isGreaterOrEqualOreo;
 
 public class UnzipService extends IntentService {
     public static final String ACTION_UPDATE = "com.multicraft.game.UPDATE";
@@ -36,8 +57,8 @@ public class UnzipService extends IntentService {
 
     private void isDir(String dir, String unzipLocation) {
         File f = new File(unzipLocation + dir);
-        if (!f.isDirectory())
-            f.mkdirs();
+        if (!f.mkdirs() && !f.isDirectory())
+            Bugsnag.leaveBreadcrumb(f + " (destination) folder was not created");
     }
 
     @Override
@@ -58,7 +79,7 @@ public class UnzipService extends IntentService {
         Notification.Builder builder;
         if (mNotifyManager == null)
             mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (isGreaterOrEqualOreo()) {
             int importance = NotificationManager.IMPORTANCE_LOW;
             NotificationChannel mChannel = null;
             if (mNotifyManager != null)
@@ -87,18 +108,20 @@ public class UnzipService extends IntentService {
         int size = getSummarySize(Objects.requireNonNull(zips));
         for (String zip : zips) {
             File zipFile = new File(zip);
+            LocalFileHeader localFileHeader;
             int readLen;
             byte[] readBuffer = new byte[8192];
             try (FileInputStream fileInputStream = new FileInputStream(zipFile);
                  ZipInputStream zipInputStream = new ZipInputStream(fileInputStream)) {
-                ZipEntry ze;
-                while ((ze = zipInputStream.getNextEntry()) != null) {
-                    if (ze.isDirectory()) {
+                while ((localFileHeader = zipInputStream.getNextEntry()) != null) {
+                    String fileName = localFileHeader.getFileName();
+                    if (localFileHeader.isDirectory()) {
                         ++per;
-                        isDir(ze.getName(), zipLocations.get(zip));
+                        isDir(fileName, zipLocations.get(zip));
                     } else {
+                        File extractedFile = new File(fileName);
                         publishProgress(100 * ++per / size);
-                        try (OutputStream outputStream = new FileOutputStream(zipLocations.get(zip) + ze.getName())) {
+                        try (OutputStream outputStream = new FileOutputStream(zipLocations.get(zip) + extractedFile)) {
                             while ((readLen = zipInputStream.read(readBuffer)) != -1) {
                                 outputStream.write(readBuffer, 0, readLen);
                             }
@@ -123,8 +146,8 @@ public class UnzipService extends IntentService {
         int size = 0;
         for (String z : zips) {
             try {
-                ZipFile zipSize = new ZipFile(z);
-                size += zipSize.size();
+                ZipFile zipFile = new ZipFile(z);
+                size += zipFile.getFileHeaders().size();
             } catch (IOException e) {
                 Bugsnag.notify(e);
             }

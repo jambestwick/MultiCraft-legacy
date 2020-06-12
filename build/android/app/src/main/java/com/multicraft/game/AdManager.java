@@ -20,14 +20,23 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 package com.multicraft.game;
 
-import androidx.multidex.MultiDexApplication;
+import android.app.Activity;
 
-import com.bugsnag.android.Bugsnag;
+class AdManager {
 
-public class MyApplication extends MultiDexApplication {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Bugsnag.start(this);
+    static void initAd(final Activity activity, boolean consent) {
+        // NDA code here
+    }
+
+    static void setAdsCallback(final Activity activity) {
+        // NDA code here
+    }
+
+    static void startAd(final Activity activity, boolean isFirstTime, boolean isShowNow) {
+        // NDA code here
+    }
+
+    static void stopAd() {
+        // NDA code here
     }
 }

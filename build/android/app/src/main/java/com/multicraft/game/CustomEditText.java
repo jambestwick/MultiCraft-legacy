@@ -20,14 +20,25 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 package com.multicraft.game;
 
-import androidx.multidex.MultiDexApplication;
+import android.content.Context;
+import android.view.KeyEvent;
+import android.view.inputmethod.InputMethodManager;
 
-import com.bugsnag.android.Bugsnag;
+import java.util.Objects;
 
-public class MyApplication extends MultiDexApplication {
+public class CustomEditText extends androidx.appcompat.widget.AppCompatEditText {
+
+    public CustomEditText(Context context) {
+        super(context);
+    }
+
     @Override
-    public void onCreate() {
-        super.onCreate();
-        Bugsnag.start(this);
+    public boolean onKeyPreIme(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            InputMethodManager mgr = (InputMethodManager)
+                    getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            Objects.requireNonNull(mgr).hideSoftInputFromWindow(this.getWindowToken(), 0);
+        }
+        return false;
     }
 }

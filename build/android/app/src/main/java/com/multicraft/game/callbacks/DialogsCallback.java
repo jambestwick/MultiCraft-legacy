@@ -18,16 +18,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-package com.multicraft.game;
+package com.multicraft.game.callbacks;
 
-import androidx.multidex.MultiDexApplication;
+public interface DialogsCallback {
+    void onPositive(String source);
 
-import com.bugsnag.android.Bugsnag;
+    void onNegative(String source);
 
-public class MyApplication extends MultiDexApplication {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Bugsnag.start(this);
-    }
+    void onNeutral(String source);
 }
