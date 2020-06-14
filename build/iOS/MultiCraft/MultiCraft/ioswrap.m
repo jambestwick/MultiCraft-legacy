@@ -89,13 +89,9 @@ void ioswrap_asset_refresh(void)
 	[VersionManager writeVersionWithPath:destpath ver:1];
 }
 
-void ioswrap_size(unsigned int *dest)
+float ioswrap_scale()
 {
-	CGSize bounds = [[UIScreen mainScreen] bounds].size;
-	CGFloat scale = [[UIScreen mainScreen] scale];
-	dest[0] = (unsigned int) (bounds.width * scale);
-	dest[1] = (unsigned int) (bounds.height * scale);
-	dest[2] = (unsigned int) scale;
+	return (float) [[UIScreen mainScreen] scale];
 }
 
 /********/

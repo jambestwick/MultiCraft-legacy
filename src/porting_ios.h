@@ -1,7 +1,7 @@
 /*
 MultiCraft
 
-Copyright (C) 2014-2019 Maksim Gamarnik [MoNTE48] MoNTE48@mail.ua
+Copyright (C) 2014-2020 Maksim Gamarnik [MoNTE48] MoNTE48@mail.ua
 Copyright (C) 2016-2019 sfan5
 
 This program is free software; you can redistribute it and/or modify
@@ -19,8 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifndef __PORTING__IOS_H__
-#define __PORTING__IOS_H__
+#pragma once
 
 #ifndef __IOS__
 #error This file should only be included on iOS
@@ -48,5 +47,3 @@ namespace porting {
 
 	void notifyExitGame();
 }
-
-#endif

@@ -1,7 +1,7 @@
 /*
 MultiCraft
 
-Copyright (C) 2014-2019 Maksim Gamarnik [MoNTE48] MoNTE48@mail.ua
+Copyright (C) 2014-2020 Maksim Gamarnik [MoNTE48] MoNTE48@mail.ua
 Copyright (C) 2016-2019 sfan5
 
 This program is free software; you can redistribute it and/or modify
@@ -37,7 +37,6 @@ namespace porting {
 		path_locale = std::string(buf) + "/locale";
 		ioswrap_paths(PATH_LIBRARY_CACHE, buf, sizeof(buf));
 		path_cache = std::string(buf);
-		init_IOS_Settings();
 	}
 
 	void copyAssets() {
@@ -45,25 +44,19 @@ namespace porting {
 	}
 
 	float getDisplayDensity() {
-		unsigned int values[3];
-		ioswrap_size(values);
-
-		return values[2];
-	}
-
-	v2u32 getDisplaySize() {
-	/*	static bool firstrun = true;
-		static v2u32 retval;
+		static bool firstrun = true;
+		static float scale;
 
 		if (firstrun) {
-			unsigned int values[2];
-			ioswrap_size(values);
-			retval.X = values[0];
-			retval.Y = values[1];
+			scale = ioswrap_scale();
 			firstrun = false;
 		}
 
-		return retval;	*/
+		return scale;
+	}
+
+	v2u32 getDisplaySize() {
+		return v2u32(0,0);
 	}
 
 	void setViewController(void *v) {
@@ -105,6 +98,7 @@ namespace porting {
 extern int real_main(int argc, char *argv[]);
 
 void irrlicht_main() {
+	init_IOS_Settings();
 	static const char *args[] = {
 			PROJECT_NAME,
 	};
