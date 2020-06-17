@@ -1,10 +1,21 @@
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#import <MultiCraft-Swift.h>
 #import "VersionManager.h"
-#import <Bugsnag/Bugsnag.h>
-#include "ioswrap.h"
+#import "ioswrap.h"
 
+#import <AVFoundation/AVFoundation.h>
+#import <Bugsnag/Bugsnag.h>
+#import <Foundation/Foundation.h>
+#import <MultiCraft-Swift.h>
+#import <UIKit/UIKit.h>
+#import "VersionManager.h"
+
+/* Initialization iOS Specific Things */
+void init_IOS_Settings()
+{
+	[Bugsnag startBugsnagWithApiKey:CrashliticsApiKey]; // crash analytics
+	[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil]; // don't stop background music
+}
+
+/* Handle Debug Logs */
 void ioswrap_log(const char *message)
 {
 #if !NDEBUG
@@ -12,11 +23,7 @@ void ioswrap_log(const char *message)
 #endif
 }
 
-void init_IOS_Settings()
-{
-	[Bugsnag startBugsnagWithApiKey:CrashliticsApiKey];
-}
-
+/* Get Path for Assets */
 void ioswrap_paths(int type, char *dest, size_t destlen)
 {
 	NSArray *paths;
@@ -40,14 +47,7 @@ void ioswrap_paths(int type, char *dest, size_t destlen)
 }
 
 
-static void recursive_delete(NSString *path)
-{
-	NSFileManager *fm = [NSFileManager defaultManager];
-	for (NSString *file in [fm contentsOfDirectoryAtPath:path error:nil])
-		[fm removeItemAtPath:[path stringByAppendingPathComponent:file] error:nil];
-}
-
-
+/* Unzip Assets */
 void ioswrap_assets()
 {
 	MainWindow *window = [[MainWindow alloc] init];
@@ -89,13 +89,13 @@ void ioswrap_asset_refresh(void)
 	[VersionManager writeVersionWithPath:destpath ver:1];
 }
 
+/* Get Scale Factor */
 float ioswrap_scale()
 {
 	return (float) [[UIScreen mainScreen] scale];
 }
 
-/********/
-
+/* Input Dialog */
 static int dialog_state;
 static char dialog_text[512];
 
