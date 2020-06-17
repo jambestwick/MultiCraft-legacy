@@ -595,6 +595,11 @@ void draw_load_screen(const std::wstring &text, IrrlichtDevice* device,
 		gui::IGUIEnvironment* guienv, ITextureSource *tsrc,
 		float dtime, int percent, bool clouds)
 {
+#ifdef __IOS__
+	if (device->isWindowMinimized())
+		return;
+#endif
+
 	video::IVideoDriver* driver    = device->getVideoDriver();
 	v2u32 screensize               = porting::getWindowSize();
 

@@ -4171,6 +4171,11 @@ void Game::updateFrame(ProfilerGraph *graph, RunStats *stats, f32 dtime,
 		time_of_day_smooth = time_of_day_smooth * (1.0 - todsm)
 				+ time_of_day * todsm;
 
+#ifdef __IOS__
+	if (device->isWindowMinimized())
+		return;
+#endif
+
 	runData.time_of_day = time_of_day;
 	runData.time_of_day_smooth = time_of_day_smooth;
 

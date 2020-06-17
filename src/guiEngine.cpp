@@ -268,6 +268,11 @@ bool GUIEngine::loadMainMenuScript()
 /******************************************************************************/
 void GUIEngine::run()
 {
+#ifdef __IOS__
+	if (m_device->isWindowMinimized())
+		return;
+#endif
+
 	// Always create clouds because they may or may not be
 	// needed based on the game selected
 	// NO!!!
