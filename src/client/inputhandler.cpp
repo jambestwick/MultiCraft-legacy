@@ -69,21 +69,17 @@ bool MyEventReceiver::OnEvent(const SEvent &event)
 	}
 #endif
 
-#if defined(__ANDROID__)
-	if (event.SystemEvent.AndroidCmd.Cmd == APP_CMD_TERM_WINDOW)
-		external_pause_game();
-#endif
-
 #ifdef __IOS__
 	if (event.EventType == irr::EET_APPLICATION_EVENT) {
-		if (event.ApplicationEvent.EventType == irr::EAET_DID_PAUSE) {
+		int AppEvent = event.ApplicationEvent.EventType;
+		if (AppEvent == irr::EAET_DID_PAUSE) {
 			external_pause_game();
 		#ifdef ADS
 			ads_set_paused(true);
 		#endif
 		}
 		#ifdef ADS
-		if (event.ApplicationEvent.EventType == irr::EAET_DID_RESUME)
+		if (AppEvent == irr::EAET_DID_RESUME)
 			ads_set_paused(false);
 		#endif
 		return true;

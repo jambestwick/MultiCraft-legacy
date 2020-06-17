@@ -117,6 +117,12 @@ public class GameActivity extends NativeActivity {
         adInitSub.dispose();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        pauseGame();
+    }
+
     public void showDialog(String acceptButton, String hint, String current, int editType) {
         runOnUiThread(() -> showDialogUI(hint, current, editType));
     }
