@@ -340,7 +340,8 @@ void GUIEngine::run()
 		m_script->step();
 
 #if defined(__ANDROID__) || defined(__IOS__)
-		m_menu->getAndroidUIInput();
+		if (!porting::hasRealKeyboard())
+			m_menu->getAndroidUIInput();
 #endif
 	}
 }

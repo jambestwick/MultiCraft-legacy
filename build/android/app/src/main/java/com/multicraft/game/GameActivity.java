@@ -23,6 +23,7 @@ package com.multicraft.game;
 import android.app.ActivityManager;
 import android.app.NativeActivity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.KeyEvent;
@@ -42,6 +43,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static android.content.res.Configuration.KEYBOARD_QWERTY;
 import static com.multicraft.game.AdManager.initAd;
 import static com.multicraft.game.AdManager.setAdsCallback;
 import static com.multicraft.game.AdManager.startAd;
@@ -72,10 +74,13 @@ public class GameActivity extends NativeActivity {
     private boolean consent, isMultiPlayer;
     private PreferencesHelper pf;
     private Disposable adInitSub;
+    private boolean hasKeyboard;
 
     public static native void putMessageBoxResult(String text);
 
     public static native void pauseGame();
+
+    public static native void keyboardEvent(boolean keyboard);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,6 +90,8 @@ public class GameActivity extends NativeActivity {
         width = bundle != null ? bundle.getInt("width", 0) : getResources().getDisplayMetrics().widthPixels;
         consent = bundle == null || bundle.getBoolean("consent", true);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        hasKeyboard = !(getResources().getConfiguration().hardKeyboardHidden == KEYBOARD_QWERTY);
+        keyboardEvent(hasKeyboard);
         pf = getInstance(this);
         if (pf.isAdsEnable()) {
             adInitSub = Completable.fromAction(() -> initAd(this, consent))
@@ -121,6 +128,16 @@ public class GameActivity extends NativeActivity {
     protected void onPause() {
         super.onPause();
         pauseGame();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        boolean statusKeyboard = !(getResources().getConfiguration().hardKeyboardHidden == KEYBOARD_QWERTY);
+        if (hasKeyboard != statusKeyboard) {
+            hasKeyboard = statusKeyboard;
+            keyboardEvent(hasKeyboard);
+        }
     }
 
     public void showDialog(String acceptButton, String hint, String current, int editType) {

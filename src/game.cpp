@@ -1488,7 +1488,6 @@ private:
 	bool m_camera_offset_changed;
 
 #if defined(__ANDROID__) || defined(__IOS__)
-	bool show_minimap;
 	bool m_cache_hold_aux1;
 	bool m_android_chat_open;
 #endif
@@ -2513,10 +2512,12 @@ void Game::processUserInput(f32 dtime)
 	input->step(dtime);
 
 #if defined(__ANDROID__) || defined(__IOS__)
-	if (current_formspec != NULL)
-		current_formspec->getAndroidUIInput();
-	else
-		handleAndroidChatInput();
+	if (!porting::hasRealKeyboard()) {
+		if (current_formspec != NULL)
+			current_formspec->getAndroidUIInput();
+		else
+			handleAndroidChatInput();
+	}
 #endif
 
 	// Increase timer for double tap of "keymap_jump"
@@ -2724,15 +2725,19 @@ void Game::openConsole(float scale, const wchar_t *line)
 	assert(scale > 0.0f && scale <= 1.0f);
 
 #if defined(__ANDROID__) || defined(__IOS__)
-	porting::showInputDialog(gettext("ok"), "", "", 2);
-	m_android_chat_open = true;
-#else
+	if (!porting::hasRealKeyboard()) {
+		porting::showInputDialog(gettext("OK"), "", "", 2);
+		m_android_chat_open = true;
+	} else {
+#endif
 	if (gui_chat_console->isOpenInhibited())
 		return;
 	gui_chat_console->openConsole(scale);
 	if (line) {
 		gui_chat_console->setCloseOnEnter(true);
 		gui_chat_console->replaceAndAddToHistory(line);
+	}
+#if defined(__ANDROID__) || defined(__IOS__)
 	}
 #endif
 }
@@ -3124,7 +3129,7 @@ void Game::updatePlayerControl(const CameraOrientation &cam)
 	 * Android then its meaning is inverted (i.e. holding aux1 means walk and
 	 * not fast)
 	 */
-	if (m_cache_hold_aux1) {
+	if (m_cache_hold_aux1 && !porting::hasRealKeyboard()) {
 		control.aux1 = control.aux1 ^ true;
 		keypress_bits ^= ((u32)(1U << 5));
 	}

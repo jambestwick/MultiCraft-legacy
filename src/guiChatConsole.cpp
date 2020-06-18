@@ -150,6 +150,10 @@ void GUIChatConsole::closeConsoleAtOnce()
 	closeConsole();
 	m_height = 0;
 	recalculateConsolePosition();
+#ifdef HAVE_TOUCHSCREENGUI
+	if (g_touchscreengui)
+		g_touchscreengui->show();
+#endif
 }
 
 f32 GUIChatConsole::getDesiredHeight() const
@@ -438,7 +442,7 @@ bool GUIChatConsole::OnEvent(const SEvent& event)
 			m_close_on_enter = false;
 			return true;
 		}
-		else if(event.KeyInput.Key == KEY_ESCAPE)
+		else if(event.KeyInput.Key == KEY_ESCAPE || event.KeyInput.Key == KEY_CANCEL)
 		{
 			closeConsoleAtOnce();
 			m_close_on_enter = false;

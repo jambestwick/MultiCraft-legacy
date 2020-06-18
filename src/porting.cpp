@@ -878,6 +878,13 @@ v2u32 getDisplaySize()
 #	endif // __ANDROID__/__IOS__
 #endif // SERVER
 
+#ifndef __ANDROID__
+// Dummy for other OS with a touchscreen
+bool hasRealKeyboard()
+{
+	return false;
+}
+#endif
 
 ////
 //// OS-specific Secure Random

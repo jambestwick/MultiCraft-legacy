@@ -3068,7 +3068,7 @@ bool GUIFormSpecMenu::preprocessEvent(const SEvent& event)
 
 			std::string field_name = getNameByID(hovered->getID());
 			// read-only field
-			if (field_name.empty())
+			if (field_name.empty() || porting::hasRealKeyboard())
 				return retval;
 
 			m_JavaDialogFieldName = getNameByID(hovered->getID());
@@ -3089,8 +3089,8 @@ bool GUIFormSpecMenu::preprocessEvent(const SEvent& event)
 			if (((gui::IGUIEditBox *)hovered)->isPasswordBox())
 				type = 3;
 
-			porting::showInputDialog(gettext("ok"), "",
-									 wide_to_utf8(((gui::IGUIEditBox *)hovered)->getText()),	type);
+			porting::showInputDialog(gettext("OK"), "",
+									 wide_to_utf8(((gui::IGUIEditBox *)hovered)->getText()), type);
 			return retval;
 		}
 	}

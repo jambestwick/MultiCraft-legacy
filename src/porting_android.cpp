@@ -61,7 +61,7 @@ void android_main(android_app *app) {
 
 /* handler for finished message box input */
 /* Intentionally NOT in namespace porting */
-/* TODO this doesn't work as expected, no idea why but there's a workaround   */
+/* TODO this doesn't work as expected, no idea why but there's a workaround */
 /* for it right now */
 extern "C" {
 JNIEXPORT void JNICALL
@@ -74,6 +74,12 @@ Java_com_multicraft_game_GameActivity_putMessageBoxResult(
 JNIEXPORT void JNICALL
 Java_com_multicraft_game_GameActivity_pauseGame(JNIEnv *env, jclass clazz) {
 	external_pause_game();
+}
+bool device_has_keyboard = false;
+JNIEXPORT void JNICALL
+Java_com_multicraft_game_GameActivity_keyboardEvent(JNIEnv *env, jclass clazz,
+		jboolean hasKeyboard) {
+	device_has_keyboard = hasKeyboard;
 }
 }
 
@@ -255,6 +261,10 @@ namespace porting {
 		}
 
 		return device_memory_max;
+	}
+
+	bool hasRealKeyboard() {
+		return device_has_keyboard;
 	}
 
 	void notifyAbortLoading() {

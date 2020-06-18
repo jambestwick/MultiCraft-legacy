@@ -334,6 +334,9 @@ inline const char *getPlatformName()
 	;
 }
 
+// Touchscreen device specific function
+bool hasRealKeyboard();
+
 void setXorgClassHint(const video::SExposedVideoData &video_data,
 	const std::string &name);
 
