@@ -86,6 +86,24 @@ void ModApiHttp::push_http_fetch_result(lua_State *L, HTTPFetchResult &res, bool
 	setstringfield(L, -1, "data", res.data.c_str());
 }
 
+// http_api.fetch_sync(HTTPRequest definition)
+int ModApiHttp::l_http_fetch_sync(lua_State *L)
+{
+	NO_MAP_LOCK_REQUIRED;
+
+	HTTPFetchRequest req;
+	read_http_fetch_request(L, req);
+
+	infostream << "Mod performs HTTP request with URL " << req.url << std::endl;
+
+	HTTPFetchResult res;
+	httpfetch_sync(req, res);
+
+	push_http_fetch_result(L, res, true);
+
+	return 1;
+}
+
 // http_api.fetch_async(HTTPRequest definition)
 int ModApiHttp::l_http_fetch_async(lua_State *L)
 {
@@ -185,9 +203,32 @@ int ModApiHttp::l_request_http_api(lua_State *L)
 }
 #endif
 
+int ModApiHttp::l_get_http_api(lua_State *L)
+{
+	NO_MAP_LOCK_REQUIRED;
+
+	lua_newtable(L);
+	HTTP_API(fetch_async);
+	HTTP_API(fetch_async_get);
+	HTTP_API(fetch_sync);
+
+	return 1;
+}
+
 void ModApiHttp::Initialize(lua_State *L, int top)
 {
 #if USE_CURL
-	API_FCT(request_http_api);
+
+	bool isMainmenu = false;
+#ifndef SERVER
+	isMainmenu = ModApiBase::getGuiEngine(L) != nullptr;
+#endif
+
+	if (isMainmenu) {
+		API_FCT(get_http_api);
+	} else {
+		API_FCT(request_http_api);
+	}
+
 #endif
 }
