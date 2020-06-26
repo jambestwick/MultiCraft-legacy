@@ -11,7 +11,7 @@
 /* Initialization iOS Specific Things */
 void init_IOS_Settings()
 {
-	[Bugsnag startBugsnagWithApiKey:CrashliticsApiKey]; // crash analytics
+	[Bugsnag startWithApiKey:CrashliticsApiKey]; // crash analytics
 	[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil]; // don't stop background music
 }
 

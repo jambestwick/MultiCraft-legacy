@@ -39,6 +39,8 @@
 		844B495F228606B200EB60EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844B495D228606B200EB60EF /* Main.storyboard */; };
 		8465A76522A7D4500095B7CA /* libintl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8465A76422A7D4500095B7CA /* libintl.cpp */; };
 		849C4F86209656D3005EB041 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 849C4F85209656D2005EB041 /* ru.lproj */; };
+		84B9C11724A4D82400016BCE /* ConsentAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */; };
+		84B9C11824A4D82400016BCE /* ConsentAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B9C11624A4D82400016BCE /* ConsentAlertViewController.xib */; };
 		84CD4A4D24877FA20019B81D /* VersionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A4C24877FA20019B81D /* VersionManager.m */; };
 		84CD4A64248782720019B81D /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A59248782720019B81D /* MainWindow.swift */; };
 		84CD4A65248782720019B81D /* ProgressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CD4A5B248782720019B81D /* ProgressViewController.xib */; };
@@ -296,6 +298,8 @@
 		8465A76322A7D4500095B7CA /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Util.hpp; path = ../../../../lib/intl/Util.hpp; sourceTree = "<group>"; };
 		8465A76422A7D4500095B7CA /* libintl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = libintl.cpp; path = ../../../../lib/intl/libintl.cpp; sourceTree = "<group>"; };
 		849C4F85209656D2005EB041 /* ru.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ru.lproj; sourceTree = "<group>"; };
+		84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentAlertViewController.swift; sourceTree = "<group>"; };
+		84B9C11624A4D82400016BCE /* ConsentAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConsentAlertViewController.xib; sourceTree = "<group>"; };
 		84CD4A4B24877FA20019B81D /* VersionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionManager.h; sourceTree = "<group>"; };
 		84CD4A4C24877FA20019B81D /* VersionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionManager.m; sourceTree = "<group>"; };
 		84CD4A55248781420019B81D /* Bridge-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridge-Header.h"; sourceTree = "<group>"; };
@@ -753,9 +757,11 @@
 		84CD4A5A248782720019B81D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				84B9C11624A4D82400016BCE /* ConsentAlertViewController.xib */,
 				84CD4A5B248782720019B81D /* ProgressViewController.xib */,
 				84CD4A5C248782720019B81D /* MessageViewController.xib */,
 				84CD4A5D248782720019B81D /* BasePresentViewController.swift */,
+				84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */,
 				84CD4A5E248782720019B81D /* MessageViewController.swift */,
 				84CD4A5F248782720019B81D /* ProgressViewController.swift */,
 			);
@@ -1426,6 +1432,7 @@
 				844B495F228606B200EB60EF /* Main.storyboard in Resources */,
 				F8E6C7E11DCA4EB300F64426 /* assets.zip in Resources */,
 				F8E6C7E31DCA511700F64426 /* worlds.zip in Resources */,
+				84B9C11824A4D82400016BCE /* ConsentAlertViewController.xib in Resources */,
 				84CD4A65248782720019B81D /* ProgressViewController.xib in Resources */,
 				84CD4A66248782720019B81D /* MessageViewController.xib in Resources */,
 			);
@@ -1600,6 +1607,7 @@
 				F8E6C6271DCA3F9900F64426 /* keycode.cpp in Sources */,
 				F8E6C62B1DCA3F9900F64426 /* main.cpp in Sources */,
 				F8E6C6191DCA3F9900F64426 /* guiFileSelectMenu.cpp in Sources */,
+				84B9C11724A4D82400016BCE /* ConsentAlertViewController.swift in Sources */,
 				4B35A9C51EEDD21500274961 /* serverenvironment.cpp in Sources */,
 				F8E6C6151DCA3F9900F64426 /* genericobject.cpp in Sources */,
 				F8E6C5FD1DCA3F9900F64426 /* collision.cpp in Sources */,
@@ -1759,7 +1767,7 @@
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_UNROLL_LOOPS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
@@ -1783,7 +1791,7 @@
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_UNROLL_LOOPS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LLVM_LTO = YES;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;

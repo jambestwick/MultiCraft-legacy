@@ -6,6 +6,9 @@ class BasePresentViewController: UIViewController {
 		didMove(toParent: viewController)
 		view.frame = viewController.view.bounds
 		viewController.view.addSubview(view)
+
+		guard let window = UIApplication.shared.keyWindow else { return }
+		window.addSubview(view)
 	}
 
 	@objc func dismissView() {

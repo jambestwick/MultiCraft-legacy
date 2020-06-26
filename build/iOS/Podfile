@@ -1,5 +1,5 @@
 project 'MultiCraft/MultiCraft.xcodeproj'
-platform :ios, '9.0'
+platform :ios, '9.3'
 use_frameworks!
 
 def appodeal
@@ -11,16 +11,16 @@ def appodeal
 	pod 'APDMintegralAdapter', '2.7.1.1-Beta'
 	pod 'APDTapjoyAdapter', '2.7.1.1-Beta'
 	pod 'APDUnityAdapter', '2.7.1.1-Beta'
-	pod 'PersonalizedAdConsent', :git => 'https://github.com/MoNTE48/consent-sdk-ios'
 end
 
 target 'MultiCraft' do
 	source 'https://cdn.cocoapods.org/'
 
-	pod 'Bugsnag', '5.23.3'
+	pod 'Bugsnag'
 	pod 'leveldb-library'
 	pod 'libvorbis'
 	pod 'LuaJITPod', :git => 'https://github.com/MoNTE48/LuaJITPod'
+	pod 'Nantes'
 	pod 'SSZipArchive'
 	pod 'UITextView+Placeholder'
 
