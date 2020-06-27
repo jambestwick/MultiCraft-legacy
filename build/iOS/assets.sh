@@ -58,7 +58,11 @@ echo "Creating assets.zip"
 ZIPDEST=$FOLDER/assets.zip
 rm -f $ZIPDEST
 
-cd $DEST; zip -1er $ZIPDEST -- *
+PASSWORD=$1
+if [[ -z "$PASSWORD" ]]; then
+    PASSWORD="1"
+fi
+cd $DEST; zip -P $PASSWORD -1r $ZIPDEST -- *
 cd $FOLDER; rm -rf $DEST
 
 ###########
