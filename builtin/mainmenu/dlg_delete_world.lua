@@ -31,6 +31,12 @@ end
 
 local function delete_world_buttonhandler(this, fields)
 	if fields["world_delete_confirm"] then
+		if this.data.callback then
+			this:delete()
+			this.data.callback()
+			return true
+		end
+
 		if this.data.delete_index > 0 and
 				this.data.delete_index <= #menudata.worldlist:get_raw_list() then
 			core.delete_world(this.data.delete_index)
@@ -59,6 +65,16 @@ function create_delete_world_dlg(name_to_del, index_to_del)
 					nil)
 	retval.data.delete_name  = name_to_del
 	retval.data.delete_index = index_to_del
+
+	return retval
+end
+
+function create_custom_delete_dlg(name_to_del, callback)
+	assert(name_to_del ~= nil and type(name_to_del) == "string" and name_to_del ~= "")
+	assert(type(callback) == "function")
+
+	local retval = create_delete_world_dlg(name_to_del, -1, nil)
+	retval.data.callback = callback
 
 	return retval
 end

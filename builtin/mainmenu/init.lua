@@ -58,6 +58,12 @@ if not mobile then
 end
 
 tabs.credits = dofile(menupath .. DIR_DELIM .. "tab_credits.lua")
+local hpath = menupath .. DIR_DELIM .. "tab_hosting.lua"
+local hosting = io.open(hpath, "r")
+if hosting then
+	tabs.hosting = dofile(hpath)
+	io.close(hosting)
+end
 tabs.local_game = dofile(menupath .. DIR_DELIM .. "tab_local.lua")
 tabs.play_online = dofile(menupath .. DIR_DELIM .. "tab_online.lua")
 
@@ -97,6 +103,9 @@ local function init_globals()
 
 	tv_main:add(tabs.local_game)
 	tv_main:add(tabs.play_online)
+	if tabs.hosting then
+		tv_main:add(tabs.hosting)
+	end
 
 if not mobile then
 	tv_main:add(tabs.settings)
@@ -121,7 +130,7 @@ end
 
 	core.set_clouds(false)
 --	mm_texture.set_dirt_bg()
-	core.set_background("background",  defaulttexturedir .. "bg.png", true, 256)
+	core.set_background("background", defaulttexturedir .. "bg.png", true, 256)
 --	core.sound_play("main_menu", true)
 end
 
