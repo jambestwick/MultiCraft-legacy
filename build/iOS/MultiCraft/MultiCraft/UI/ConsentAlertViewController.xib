@@ -15,6 +15,8 @@
                 <outlet property="containerHeight" destination="mdm-AS-So4" id="dVy-Df-6N4"/>
                 <outlet property="imageAppIcon" destination="ju7-3g-6gQ" id="AW9-2J-l6P"/>
                 <outlet property="labelPrivacy" destination="qle-ba-Sha" id="Q17-98-lxH"/>
+                <outlet property="leftPadding" destination="Ryb-ju-2gI" id="YfH-nI-hcr"/>
+                <outlet property="rightPadding" destination="ima-Vy-JsH" id="KoJ-yU-zSl"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewContainer" destination="jN6-lz-Z5i" id="b4F-U0-QNA"/>
                 <outlet property="viewFirst" destination="no2-jY-28I" id="a62-Vq-hlY"/>
@@ -27,10 +29,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jN6-lz-Z5i">
-                    <rect key="frame" x="80" y="59.5" width="736" height="295"/>
+                    <rect key="frame" x="80" y="67" width="736" height="280"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bbD-X9-thg">
-                            <rect key="frame" x="300.5" y="15" width="135.5" height="50"/>
+                            <rect key="frame" x="300.5" y="10" width="135.5" height="50"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ju7-3g-6gQ">
                                     <rect key="frame" x="0.0" y="5" width="40" height="40"/>
@@ -57,10 +59,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FVI-kf-H4t">
-                            <rect key="frame" x="0.0" y="80" width="736" height="200"/>
+                            <rect key="frame" x="0.0" y="70" width="736" height="200"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="no2-jY-28I" userLabel="first">
-                                    <rect key="frame" x="0.0" y="10" width="736" height="180.5"/>
+                                    <rect key="frame" x="0.0" y="9.5" width="736" height="181"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We care about your privacy and data security. We keep this app free by showing ads." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="reR-NS-ZXk">
                                             <rect key="frame" x="50" y="0.0" width="636" height="38.5"/>
@@ -68,21 +70,21 @@
                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Can we continue to use your data to tailor ads for you?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rbf-k7-ND1">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Can we continue to use your data to tailor ads for you?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rbf-k7-ND1">
                                             <rect key="frame" x="30" y="53.5" width="676" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qle-ba-Sha" customClass="NantesLabel" customModule="Nantes">
-                                            <rect key="frame" x="20" y="89" width="696" height="26.5"/>
+                                            <rect key="frame" x="20" y="89" width="696" height="27"/>
                                             <string key="text">Our partners will collect data and use a unique identifier on your device to show you ads. By agreeing, you confirm that you are 16 years old. You can learn how we and our partners collect and use data on Privacy Policy</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rxj-Jo-vAL">
-                                            <rect key="frame" x="375.5" y="130.5" width="345.5" height="50"/>
+                                            <rect key="frame" x="375.5" y="131" width="345.5" height="50"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                             <state key="normal" title="No, see ads that are less releant"/>
                                             <connections>
@@ -90,7 +92,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qsc-Xi-g92">
-                                            <rect key="frame" x="15" y="130.5" width="345.5" height="50"/>
+                                            <rect key="frame" x="15" y="131" width="345.5" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="UQv-WK-cC3"/>
                                             </constraints>
@@ -213,11 +215,11 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="FVI-kf-H4t" secondAttribute="trailing" id="4N6-BZ-cOD"/>
-                        <constraint firstItem="FVI-kf-H4t" firstAttribute="top" secondItem="bbD-X9-thg" secondAttribute="bottom" constant="15" id="8Bm-96-SC4"/>
+                        <constraint firstItem="FVI-kf-H4t" firstAttribute="top" secondItem="bbD-X9-thg" secondAttribute="bottom" constant="10" id="8Bm-96-SC4"/>
                         <constraint firstItem="FVI-kf-H4t" firstAttribute="leading" secondItem="jN6-lz-Z5i" secondAttribute="leading" id="8nw-im-9KR"/>
                         <constraint firstItem="bbD-X9-thg" firstAttribute="centerX" secondItem="jN6-lz-Z5i" secondAttribute="centerX" id="QPO-Da-62o"/>
-                        <constraint firstAttribute="bottom" secondItem="FVI-kf-H4t" secondAttribute="bottom" constant="15" id="k7t-2T-9nU"/>
-                        <constraint firstItem="bbD-X9-thg" firstAttribute="top" secondItem="jN6-lz-Z5i" secondAttribute="top" constant="15" id="vLi-PS-GDR"/>
+                        <constraint firstAttribute="bottom" secondItem="FVI-kf-H4t" secondAttribute="bottom" constant="10" id="k7t-2T-9nU"/>
+                        <constraint firstItem="bbD-X9-thg" firstAttribute="top" secondItem="jN6-lz-Z5i" secondAttribute="top" constant="10" id="vLi-PS-GDR"/>
                     </constraints>
                 </view>
             </subviews>

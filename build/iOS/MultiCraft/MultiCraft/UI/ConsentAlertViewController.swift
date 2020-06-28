@@ -7,6 +7,10 @@ private enum Constants {
 }
 
 final class ConsentAlertViewController: BasePresentViewController, NantesLabelDelegate {
+	private enum Device {
+		static let isSmallScreen = UIScreen.main.bounds.size.width <= 667
+	}
+
 	@IBOutlet private weak var buttonRelevant: UIButton!
 	@IBOutlet private weak var buttonAllow: UIButton!
 	@IBOutlet private weak var viewContainer: UIView!
@@ -17,6 +21,8 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 	@IBOutlet private weak var containerHeight: NSLayoutConstraint!
 	@IBOutlet private weak var buttonBack: UIButton!
 	@IBOutlet private weak var imageAppIcon: UIImageView!
+	@IBOutlet private weak var rightPadding: NSLayoutConstraint!
+	@IBOutlet private weak var leftPadding: NSLayoutConstraint!
 
 	private let privacyURL = URL(string: "https://www.appodeal.com/privacy-policy")!
 
@@ -58,6 +64,11 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 	}
 
 	private func setupUI() {
+		if Device.isSmallScreen {
+			leftPadding.constant = 30
+			rightPadding.constant = 30
+		}
+
 		imageAppIcon.image = Bundle.main.icon
 
 		buttonAgree.layer.cornerRadius = 6
@@ -97,6 +108,11 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 		labelPrivacy.addLink(to: privacyURL, withRange: (text as NSString).range(of: "Privacy Policy"))
 	}
 
+	@IBAction private func showMulticraftUses(_ sender: Any) {
+		if UIApplication.shared.canOpenURL(privacyURL) {
+			UIApplication.shared.openURL(privacyURL)
+		}
+	}
 
 	@IBAction private func relevantTapped(_ sender: Any) {
 		isShowFirstPage = false
@@ -108,7 +124,7 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 		}
 	}
 
-	@IBAction func showPrivacy(_ sender: Any) {
+	@IBAction private func showPrivacy(_ sender: Any) {
 		if UIApplication.shared.canOpenURL(privacyURL) {
 			UIApplication.shared.openURL(privacyURL)
 		}
@@ -177,7 +193,6 @@ extension ConsentAlertViewController {
 					do {
 						let res = try JSONDecoder().decode(Response.self, from: data)
 						if res.is_request_in_eea_or_unknown {
-
 							DispatchQueue.main.async {
 								let vc = ConsentAlertViewController(nibName: "ConsentAlertViewController", bundle: nil)
 								vc.finishTapped = {
@@ -186,7 +201,7 @@ extension ConsentAlertViewController {
 								vc.present(in: viewController)
 							}
 						} else {
-							// if not europe, we set .personalized status
+							// if not EU, set .personalized status
 							let status = Status.personalized
 							setPersonalizedConsentStatus(status)
 							complete(status.isConsent)
@@ -205,11 +220,11 @@ extension ConsentAlertViewController {
 extension Bundle {
 	var icon: UIImage? {
 		if let icons = infoDictionary?["CFBundleIcons"] as? [String: Any],
-		   let primaryIcon = icons["CFBundlePrimaryIcon"] as? [String: Any],
-		   let iconFiles = primaryIcon["CFBundleIconFiles"] as? [String],
-		   let lastIcon = iconFiles.last {
-			return UIImage(named: lastIcon)
-		}
+			let primaryIcon = icons["CFBundlePrimaryIcon"] as? [String: Any],
+			let iconFiles = primaryIcon["CFBundleIconFiles"] as? [String],
+			let lastIcon = iconFiles.last {
+				return UIImage(named: lastIcon)
+			}
 		return nil
 	}
 }
