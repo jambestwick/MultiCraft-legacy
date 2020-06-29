@@ -268,11 +268,6 @@ bool GUIEngine::loadMainMenuScript()
 /******************************************************************************/
 void GUIEngine::run()
 {
-#ifdef __IOS__
-	if (m_device->isWindowMinimized())
-		return;
-#endif
-
 	// Always create clouds because they may or may not be
 	// needed based on the game selected
 	// NO!!!
@@ -287,6 +282,10 @@ void GUIEngine::run()
 		g_settings->getU16("screenH"));
 
 	while (m_device->run() && (!m_startgame) && (!m_kill)) {
+#ifdef __IOS__
+		if (m_device->isWindowMinimized())
+			continue;
+#endif
 
 		const irr::core::dimension2d<u32> &current_screen_size =
 			m_device->getVideoDriver()->getScreenSize();

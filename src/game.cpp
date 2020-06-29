@@ -1691,6 +1691,10 @@ void Game::run()
 	while (device->run()
 			&& !(*kill || g_gamecallback->shutdown_requested
 			|| (server && server->getShutdownRequested()))) {
+#ifdef __IOS__
+		if (device->isWindowMinimized())
+			continue;
+#endif
 
 		const irr::core::dimension2d<u32> &current_screen_size =
 			device->getVideoDriver()->getScreenSize();
@@ -4175,11 +4179,6 @@ void Game::updateFrame(ProfilerGraph *graph, RunStats *stats, f32 dtime,
 	else
 		time_of_day_smooth = time_of_day_smooth * (1.0 - todsm)
 				+ time_of_day * todsm;
-
-#ifdef __IOS__
-	if (device->isWindowMinimized())
-		return;
-#endif
 
 	runData.time_of_day = time_of_day;
 	runData.time_of_day_smooth = time_of_day_smooth;
