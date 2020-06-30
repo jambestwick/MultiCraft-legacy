@@ -69,13 +69,16 @@ function dialog_create(name,get_formspec,buttonhandler,eventhandler)
 end
 
 function messagebox(name, message)
+	local bg = core.formspec_escape(defaulttexturedir .. "bg_dialog.png")
 	return dialog_create(name,
 			function()
 				return ([[
-					size[8,3]
-					label[0.375,0.375;%s]
-					button[3,1.825;2,0.8;ok;%s]
-				]]):format(message, fgettext("OK"))
+					size[12,6,false]
+					bgcolor[#00000000]
+					background[0,0;0,0;%s;true]
+					label[2,2;%s]
+					button[5,4.5;2,0.8;ok;%s]
+				]]):format(bg, message, fgettext("OK"))
 			end,
 			function(this, fields)
 				if fields.ok then
