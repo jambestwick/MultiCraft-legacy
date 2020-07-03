@@ -1,5 +1,4 @@
 import UIKit
-import UITextView_Placeholder
 
 final class MessageViewController: BasePresentViewController {
 	@objc var didSendMessage: ((String) -> Void)?
@@ -12,8 +11,8 @@ final class MessageViewController: BasePresentViewController {
 		super.viewDidLoad()
 
 		textView.text = message
-		textView.placeholder = NSLocalizedString("Text Input", comment: "")
 		textView.font = UIFont.systemFont(ofSize: 16)
+		textView.placeholder = NSLocalizedString("Text Input", comment: "")
 		textView.becomeFirstResponder()
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
 	}

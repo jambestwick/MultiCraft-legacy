@@ -41,6 +41,8 @@
 		849C4F86209656D3005EB041 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 849C4F85209656D2005EB041 /* ru.lproj */; };
 		84B9C11724A4D82400016BCE /* ConsentAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */; };
 		84B9C11824A4D82400016BCE /* ConsentAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B9C11624A4D82400016BCE /* ConsentAlertViewController.xib */; };
+		84C32A3724AF7A4500445E92 /* Nantes in Frameworks */ = {isa = PBXBuildFile; productRef = 84C32A3624AF7A4500445E92 /* Nantes */; };
+		84C32A3924AF7DDE00445E92 /* UITextViewPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C32A3824AF7DDE00445E92 /* UITextViewPlaceholder.swift */; };
 		84CD4A4D24877FA20019B81D /* VersionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A4C24877FA20019B81D /* VersionManager.m */; };
 		84CD4A64248782720019B81D /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A59248782720019B81D /* MainWindow.swift */; };
 		84CD4A65248782720019B81D /* ProgressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CD4A5B248782720019B81D /* ProgressViewController.xib */; };
@@ -300,6 +302,7 @@
 		849C4F85209656D2005EB041 /* ru.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ru.lproj; sourceTree = "<group>"; };
 		84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentAlertViewController.swift; sourceTree = "<group>"; };
 		84B9C11624A4D82400016BCE /* ConsentAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConsentAlertViewController.xib; sourceTree = "<group>"; };
+		84C32A3824AF7DDE00445E92 /* UITextViewPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewPlaceholder.swift; sourceTree = "<group>"; };
 		84CD4A4B24877FA20019B81D /* VersionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionManager.h; sourceTree = "<group>"; };
 		84CD4A4C24877FA20019B81D /* VersionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionManager.m; sourceTree = "<group>"; };
 		84CD4A55248781420019B81D /* Bridge-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridge-Header.h"; sourceTree = "<group>"; };
@@ -712,6 +715,7 @@
 			files = (
 				F8E6C7C51DCA42F300F64426 /* QuartzCore.framework in Frameworks */,
 				F8E6C7C71DCA42FA00F64426 /* UIKit.framework in Frameworks */,
+				84C32A3724AF7A4500445E92 /* Nantes in Frameworks */,
 				F8E6C7C91DCA430300F64426 /* OpenGLES.framework in Frameworks */,
 				F8E6C7CB1DCA430B00F64426 /* OpenAL.framework in Frameworks */,
 				F8E6C7CD1DCA431B00F64426 /* Foundation.framework in Frameworks */,
@@ -764,6 +768,7 @@
 				84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */,
 				84CD4A5E248782720019B81D /* MessageViewController.swift */,
 				84CD4A5F248782720019B81D /* ProgressViewController.swift */,
+				84C32A3824AF7DDE00445E92 /* UITextViewPlaceholder.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1379,6 +1384,9 @@
 			dependencies = (
 			);
 			name = MultiCraft;
+			packageProductDependencies = (
+				84C32A3624AF7A4500445E92 /* Nantes */,
+			);
 			productName = MultiCraft;
 			productReference = F8E6C4D91DCA3B7900F64426 /* MultiCraft.app */;
 			productType = "com.apple.product-type.application";
@@ -1389,6 +1397,7 @@
 		F8E6C4D11DCA3B7900F64426 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = MultiCraft;
 				TargetAttributes = {
@@ -1412,6 +1421,9 @@
 				Base,
 			);
 			mainGroup = F8E6C4D01DCA3B7900F64426;
+			packageReferences = (
+				84C32A3524AF7A4500445E92 /* XCRemoteSwiftPackageReference "Nantes" */,
+			);
 			productRefGroup = F8E6C4DA1DCA3B7900F64426 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1639,6 +1651,7 @@
 				F8E6C62D1DCA3F9900F64426 /* mapblock_mesh.cpp in Sources */,
 				F8E6C6541DCA3F9900F64426 /* settings.cpp in Sources */,
 				4B35A9F11EEE014F00274961 /* l_storage.cpp in Sources */,
+				84C32A3924AF7DDE00445E92 /* UITextViewPlaceholder.swift in Sources */,
 				F8E6C61D1DCA3F9900F64426 /* guiscalingfilter.cpp in Sources */,
 				F8E6C6601DCA3F9900F64426 /* version.cpp in Sources */,
 				F8E6C6631DCA3F9900F64426 /* wieldmesh.cpp in Sources */,
@@ -1808,7 +1821,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 90;
+				CURRENT_PROJECT_VERSION = 94;
 				DEVELOPMENT_TEAM = R3RLJ9TW52;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1839,7 +1852,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.9.5;
+				MARKETING_VERSION = 1.9.7;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-isystem",
@@ -1873,7 +1886,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 90;
+				CURRENT_PROJECT_VERSION = 94;
 				DEVELOPMENT_TEAM = R3RLJ9TW52;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1905,7 +1918,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.9.5;
+				MARKETING_VERSION = 1.9.7;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-isystem",
@@ -1954,6 +1967,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		84C32A3524AF7A4500445E92 /* XCRemoteSwiftPackageReference "Nantes" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/instacart/Nantes";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		84C32A3624AF7A4500445E92 /* Nantes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 84C32A3524AF7A4500445E92 /* XCRemoteSwiftPackageReference "Nantes" */;
+			productName = Nantes;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F8E6C4D11DCA3B7900F64426 /* Project object */;
 }

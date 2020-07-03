@@ -7,10 +7,6 @@ private enum Constants {
 }
 
 final class ConsentAlertViewController: BasePresentViewController, NantesLabelDelegate {
-	private enum Device {
-		static let isSmallScreen = UIScreen.main.bounds.size.width <= 667
-	}
-
 	@IBOutlet private weak var buttonRelevant: UIButton!
 	@IBOutlet private weak var buttonAllow: UIButton!
 	@IBOutlet private weak var viewContainer: UIView!
@@ -64,7 +60,7 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 	}
 
 	private func setupUI() {
-		if Device.isSmallScreen {
+		if UIScreen.main.bounds.size.width <= 667 {
 			leftPadding.constant = 30
 			rightPadding.constant = 30
 		}
@@ -189,24 +185,26 @@ extension ConsentAlertViewController {
 
 		if status == .unknown {
 			URLSession.shared.dataTask(with: URL(string: "http://adservice.google.com/getconfig/pubvendors")!) { data, response, error in
-				if let data = data {
-					do {
-						let res = try JSONDecoder().decode(Response.self, from: data)
-						if res.is_request_in_eea_or_unknown {
-							DispatchQueue.main.async {
+				DispatchQueue.main.async {
+					if let data = data {
+						do {
+							let res = try JSONDecoder().decode(Response.self, from: data)
+							if res.is_request_in_eea_or_unknown {
 								let vc = ConsentAlertViewController(nibName: "ConsentAlertViewController", bundle: nil)
 								vc.finishTapped = {
 									complete(personalizedConsentStatus.isConsent)
 								}
 								vc.present(in: viewController)
+							} else {
+								// if not EU, set .personalized status
+								let status = Status.personalized
+								setPersonalizedConsentStatus(status)
+								complete(status.isConsent)
 							}
-						} else {
-							// if not EU, set .personalized status
-							let status = Status.personalized
-							setPersonalizedConsentStatus(status)
-							complete(status.isConsent)
+						} catch {
+							complete(true)
 						}
-					} catch {
+					} else {
 						complete(true)
 					}
 				}
