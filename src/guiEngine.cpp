@@ -285,6 +285,9 @@ void GUIEngine::run()
 #ifdef __IOS__
 		if (m_device->isWindowMinimized())
 			continue;
+#elif defined(__ANDROID__)
+		if (!m_device->isWindowFocused())
+			continue;
 #endif
 
 		const irr::core::dimension2d<u32> &current_screen_size =
@@ -327,10 +330,6 @@ void GUIEngine::run()
  				? g_settings->getFloat("pause_fps_max")
  				: g_settings->getFloat("fps_max"));
 
-#if defined(__ANDROID__) || defined(__IOS__)
-		if (!m_device->isWindowFocused())
-			frametime_min = 1000;
-#endif
 		if (m_clouds_enabled)
 			cloudPostProcess();
 		else
