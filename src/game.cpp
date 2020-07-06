@@ -1483,6 +1483,10 @@ private:
 	f32  m_cache_cam_smoothing;
 	f32  m_cache_fog_start;
 
+	u16  m_round_screen;
+	f32  m_hud_scaling;
+	bool m_hud_small;
+
 	bool m_invert_mouse;
 	bool m_first_loop_after_window_activation;
 	bool m_camera_offset_changed;
@@ -4425,7 +4429,7 @@ void Game::updateGui(const RunStats &stats, f32 dtime, const CameraOrientation &
 
 	if (guitext->isVisible()) {
 		core::rect<s32> rect(
-				5 + g_settings->getU16("round_screen"), 5,
+				5 + m_round_screen, 5,
 				screensize.X, 5 + g_fontengine->getTextHeight()
 		);
 		guitext->setRelativePosition(rect);
@@ -4488,10 +4492,10 @@ void Game::updateGui(const RunStats &stats, f32 dtime, const CameraOrientation &
 		s32 status_height = guitext_status->getTextHeight();
 #if defined(__ANDROID__) || defined(__IOS__)
 		s32 status_y = screensize.Y / 1.25;
-		if (g_settings->getBool("hud_small"))
+		if (m_hud_small)
 			status_y = (screensize.Y) / 1.5;
 #else
-		s32 status_y = screensize.Y - 150 * g_settings->getFloat("hud_scaling");
+		s32 status_y = screensize.Y - 150 * m_hud_scaling;
 #endif
 		s32 status_x = (screensize.X - status_width) / 2;
 		core::rect<s32> rect(
@@ -4608,6 +4612,10 @@ void Game::readSettings()
 	m_cache_enable_free_move             = g_settings->getBool("free_move");
 
 	m_cache_fog_start                    = g_settings->getFloat("fog_start");
+
+	m_round_screen = g_settings->getU16("round_screen");
+	m_hud_scaling = g_settings->getFloat("hud_scaling");
+	m_hud_small = g_settings->getBool("hud_small");
 
 	m_cache_cam_smoothing = 0;
 	if (g_settings->getBool("cinematic"))
