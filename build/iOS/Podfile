@@ -16,7 +16,6 @@ end
 target 'MultiCraft' do
 	source 'https://cdn.cocoapods.org/'
 
-	pod 'Bugsnag'
 	pod 'leveldb-library'
 	pod 'libvorbis'
 	pod 'LuaJITPod', :git => 'https://github.com/MoNTE48/LuaJITPod'

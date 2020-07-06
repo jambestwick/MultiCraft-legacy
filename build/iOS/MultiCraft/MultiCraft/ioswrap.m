@@ -6,7 +6,6 @@
 #import <Foundation/Foundation.h>
 #import <MultiCraft-Swift.h>
 #import <UIKit/UIKit.h>
-#import "VersionManager.h"
 
 /* Initialization iOS Specific Things */
 void init_IOS_Settings()

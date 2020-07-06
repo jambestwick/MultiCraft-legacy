@@ -41,6 +41,7 @@
 		849C4F86209656D3005EB041 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 849C4F85209656D2005EB041 /* ru.lproj */; };
 		84B9C11724A4D82400016BCE /* ConsentAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */; };
 		84B9C11824A4D82400016BCE /* ConsentAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B9C11624A4D82400016BCE /* ConsentAlertViewController.xib */; };
+		84C0FB1B24B35D9200606FAA /* Bugsnag in Frameworks */ = {isa = PBXBuildFile; productRef = 84C0FB1A24B35D9200606FAA /* Bugsnag */; };
 		84C32A3724AF7A4500445E92 /* Nantes in Frameworks */ = {isa = PBXBuildFile; productRef = 84C32A3624AF7A4500445E92 /* Nantes */; };
 		84C32A3924AF7DDE00445E92 /* UITextViewPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C32A3824AF7DDE00445E92 /* UITextViewPlaceholder.swift */; };
 		84CD4A4D24877FA20019B81D /* VersionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A4C24877FA20019B81D /* VersionManager.m */; };
@@ -722,6 +723,7 @@
 				F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */,
 				F8E6C7D71DCA477600F64426 /* libfreetype.a in Frameworks */,
 				84FE40E224439C2F008E29DB /* libcurl.a in Frameworks */,
+				84C0FB1B24B35D9200606FAA /* Bugsnag in Frameworks */,
 				8E0FFE3234B35EC9603EC82A /* Pods_MultiCraft.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1386,6 +1388,7 @@
 			name = MultiCraft;
 			packageProductDependencies = (
 				84C32A3624AF7A4500445E92 /* Nantes */,
+				84C0FB1A24B35D9200606FAA /* Bugsnag */,
 			);
 			productName = MultiCraft;
 			productReference = F8E6C4D91DCA3B7900F64426 /* MultiCraft.app */;
@@ -1423,6 +1426,7 @@
 			mainGroup = F8E6C4D01DCA3B7900F64426;
 			packageReferences = (
 				84C32A3524AF7A4500445E92 /* XCRemoteSwiftPackageReference "Nantes" */,
+				84C0FB1924B35D9200606FAA /* XCRemoteSwiftPackageReference "bugsnag-cocoa" */,
 			);
 			productRefGroup = F8E6C4DA1DCA3B7900F64426 /* Products */;
 			projectDirPath = "";
@@ -1821,7 +1825,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 94;
+				CURRENT_PROJECT_VERSION = 95;
 				DEVELOPMENT_TEAM = R3RLJ9TW52;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1852,7 +1856,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.9.7;
+				MARKETING_VERSION = 1.10.0;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-isystem",
@@ -1886,7 +1890,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 94;
+				CURRENT_PROJECT_VERSION = 95;
 				DEVELOPMENT_TEAM = R3RLJ9TW52;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1918,7 +1922,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.9.7;
+				MARKETING_VERSION = 1.10.0;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-isystem",
@@ -1969,6 +1973,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		84C0FB1924B35D9200606FAA /* XCRemoteSwiftPackageReference "bugsnag-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bugsnag/bugsnag-cocoa";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 6.1.0;
+			};
+		};
 		84C32A3524AF7A4500445E92 /* XCRemoteSwiftPackageReference "Nantes" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/instacart/Nantes";
@@ -1980,6 +1992,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		84C0FB1A24B35D9200606FAA /* Bugsnag */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 84C0FB1924B35D9200606FAA /* XCRemoteSwiftPackageReference "bugsnag-cocoa" */;
+			productName = Bugsnag;
+		};
 		84C32A3624AF7A4500445E92 /* Nantes */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 84C32A3524AF7A4500445E92 /* XCRemoteSwiftPackageReference "Nantes" */;
