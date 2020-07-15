@@ -1161,35 +1161,22 @@ void Client::handleCommand_HudSetParam(NetworkPacket* pkt)
 
 	LocalPlayer *player = m_env.getLocalPlayer();
 	assert(player != NULL);
+
 	bool hud_small = g_settings->getBool("hud_small");
 
- 	if (param == HUD_PARAM_HOTBAR_ITEMCOUNT /*&& value.size() == 4*/) {
-/*	// ToDo: detect hotbar_itemcount and set 8 or 9 image
-		 s32 hotbar_itemcount = readS32((u8*) value.c_str());
-		 if (hotbar_itemcount > 0 && hotbar_itemcount <= HUD_HOTBAR_ITEMCOUNT_MAX) {
- 			player->hud_hotbar_itemcount = hotbar_itemcount;
-*/
-		player->hud_hotbar_itemcount = 9;
+//	if (param == HUD_PARAM_HOTBAR_ITEMCOUNT && value.size() == 4) {
+//		s32 hotbar_itemcount = readS32((u8*) value.c_str());
+//		if (hotbar_itemcount > 0 && hotbar_itemcount <= HUD_HOTBAR_ITEMCOUNT_MAX)
+
 		// Hotbar over 8 does not fit on a small screen
-		if (hud_small) {
-			player->hud_hotbar_itemcount = 8;
-		}
-	}
-	else if (param == HUD_PARAM_HOTBAR_IMAGE) {
-/*		// If value not empty verify image exists in texture source
-		if (value != "" && !getTextureSource()->isKnownSourceImage(value)) {
-			errorstream << "Server sent wrong Hud hotbar image (sent value: '"
-				<< value << "')" << std::endl;
-			return;
- */
-		player->hotbar_image = "gui_hotbar.png";
-		if (hud_small) {
-			player->hotbar_image = "gui_hotbar_small.png";
-		}
-	}
-	else if (param == HUD_PARAM_HOTBAR_SELECTED_IMAGE) {
+		player->hud_hotbar_itemcount = hud_small ? 8 : 9;
+//	}
+//	else if (param == HUD_PARAM_HOTBAR_IMAGE) {
+		player->hotbar_image = hud_small ? "gui_hotbar_small.png" : "gui_hotbar.png";
+//	}
+//	else if (param == HUD_PARAM_HOTBAR_SELECTED_IMAGE) {
 		player->hotbar_selected_image = "gui_hotbar_selected.png";
-	}
+//	}
 }
 
 void Client::handleCommand_HudSetSky(NetworkPacket* pkt)
