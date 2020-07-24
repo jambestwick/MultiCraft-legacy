@@ -31,6 +31,5 @@ dofile(gamepath .. "forceloading.lua")
 dofile(gamepath .. "hud.lua")
 dofile(gamepath .. "statbars.lua")
 dofile(gamepath .. "hunger.lua")
-dofile(gamepath .. "weather.lua")
 
 profiler = nil

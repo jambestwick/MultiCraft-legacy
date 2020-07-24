@@ -102,7 +102,3 @@ core.register_privilege("debug", {
 	give_to_singleplayer = false,
 	give_to_admin = true
 })
-core.register_privilege("weather", {
-	description = "Allows changing the weather",
-	give_to_singleplayer = creative
-})

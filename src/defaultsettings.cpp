@@ -378,10 +378,6 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("high_precision_fpu", "true");
 	settings->setDefault("enable_console", "false");
 
-	// Weather
-	settings->setDefault("weather", "true");
-	settings->setDefault("weather_snow_covers", "false");
-
 	settings->setDefault("mainmenu_last_selected_world", "1");
 
 	// Mobile Platform
@@ -425,7 +421,7 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("abm_interval", "3.0");
 		settings->setDefault("chunksize", "3");
 		settings->setDefault("max_block_generate_distance", "1");
-		settings->setDefault("weather", "false");
+		settings->setDefault("enable_weather", "false");
 #ifdef __ANDROID__
 	// low settings for 2-4GB RAM
 	} else if (porting::getMemoryMax() >= 2 && porting::getMemoryMax() < 4) {
@@ -447,7 +443,7 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("abm_interval", "2.0");
 		settings->setDefault("chunksize", "3");
 		settings->setDefault("max_block_generate_distance", "2");
-		settings->setDefault("weather", "false");
+		settings->setDefault("enable_weather", "false");
 #ifdef __ANDROID__
 	// medium settings for 4.1-6GB RAM
 	} else if (porting::getMemoryMax() >= 4 && porting::getMemoryMax() < 6) {
