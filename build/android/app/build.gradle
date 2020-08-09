@@ -6,9 +6,10 @@ android {
 	defaultConfig {
 		applicationId 'com.multicraft.game'
 		minSdkVersion 16
+		//noinspection OldTargetApi
 		targetSdkVersion 29
-		versionCode 61
-		versionName "1.9.4"
+		versionCode 86
+		versionName "1.11.0"
 		multiDexEnabled true
 	}
 
