@@ -1,2 +1,2 @@
-#import "VersionManager.h"
+#import <Foundation/Foundation.h>
 #import "ioswrap.h"

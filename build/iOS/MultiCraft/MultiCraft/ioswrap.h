@@ -2,7 +2,7 @@
 
 #if 0
 #define ADS
-#include "ads.h"
+#import "ads.h"
 #else
 #define ZIPPWD @"1" // zip password
 #define CrashliticsApiKey @"1" // crashlitics key

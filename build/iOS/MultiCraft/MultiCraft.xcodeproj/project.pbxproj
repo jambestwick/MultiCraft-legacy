@@ -36,7 +36,6 @@
 		4B35A9F41EEE017000274961 /* scripting_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B35A9F21EEE017000274961 /* scripting_client.cpp */; };
 		4B35A9F71EEE018D00274961 /* scripting_server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B35A9F51EEE018D00274961 /* scripting_server.cpp */; };
 		842A808C2339174C00A89418 /* ads.mm in Sources */ = {isa = PBXBuildFile; fileRef = 842A808B2339174C00A89418 /* ads.mm */; };
-		844B495F228606B200EB60EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844B495D228606B200EB60EF /* Main.storyboard */; };
 		8465A76522A7D4500095B7CA /* libintl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8465A76422A7D4500095B7CA /* libintl.cpp */; };
 		849C4F86209656D3005EB041 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 849C4F85209656D2005EB041 /* ru.lproj */; };
 		84B9C11724A4D82400016BCE /* ConsentAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */; };
@@ -44,7 +43,6 @@
 		84C0FB1B24B35D9200606FAA /* Bugsnag in Frameworks */ = {isa = PBXBuildFile; productRef = 84C0FB1A24B35D9200606FAA /* Bugsnag */; };
 		84C32A3724AF7A4500445E92 /* Nantes in Frameworks */ = {isa = PBXBuildFile; productRef = 84C32A3624AF7A4500445E92 /* Nantes */; };
 		84C32A3924AF7DDE00445E92 /* UITextViewPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C32A3824AF7DDE00445E92 /* UITextViewPlaceholder.swift */; };
-		84CD4A4D24877FA20019B81D /* VersionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A4C24877FA20019B81D /* VersionManager.m */; };
 		84CD4A64248782720019B81D /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A59248782720019B81D /* MainWindow.swift */; };
 		84CD4A65248782720019B81D /* ProgressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CD4A5B248782720019B81D /* ProgressViewController.xib */; };
 		84CD4A66248782720019B81D /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CD4A5C248782720019B81D /* MessageViewController.xib */; };
@@ -295,7 +293,6 @@
 		840E2F9E233410F90088E7F7 /* SDVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDVersion.h; path = SDVersion/SDVersion.h; sourceTree = "<group>"; };
 		842A808A2339174B00A89418 /* ads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ads.h; path = Ads/ads.h; sourceTree = "<group>"; };
 		842A808B2339174C00A89418 /* ads.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ads.mm; path = Ads/ads.mm; sourceTree = "<group>"; };
-		844B495E228606B200EB60EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8465A76122A7D4500095B7CA /* MessageCatalog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MessageCatalog.hpp; path = ../../../../lib/intl/MessageCatalog.hpp; sourceTree = "<group>"; };
 		8465A76222A7D4500095B7CA /* libintl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libintl.h; path = ../../../../lib/intl/libintl.h; sourceTree = "<group>"; };
 		8465A76322A7D4500095B7CA /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Util.hpp; path = ../../../../lib/intl/Util.hpp; sourceTree = "<group>"; };
@@ -304,8 +301,6 @@
 		84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentAlertViewController.swift; sourceTree = "<group>"; };
 		84B9C11624A4D82400016BCE /* ConsentAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConsentAlertViewController.xib; sourceTree = "<group>"; };
 		84C32A3824AF7DDE00445E92 /* UITextViewPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewPlaceholder.swift; sourceTree = "<group>"; };
-		84CD4A4B24877FA20019B81D /* VersionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionManager.h; sourceTree = "<group>"; };
-		84CD4A4C24877FA20019B81D /* VersionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionManager.m; sourceTree = "<group>"; };
 		84CD4A55248781420019B81D /* Bridge-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridge-Header.h"; sourceTree = "<group>"; };
 		84CD4A59248782720019B81D /* MainWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
 		84CD4A5B248782720019B81D /* ProgressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressViewController.xib; sourceTree = "<group>"; };
@@ -808,7 +803,6 @@
 			children = (
 				849C4F85209656D2005EB041 /* ru.lproj */,
 				F8E6C4E81DCA3B7900F64426 /* Assets.xcassets */,
-				844B495D228606B200EB60EF /* Main.storyboard */,
 				F8E6C4EA1DCA3B7900F64426 /* LaunchScreen.storyboard */,
 				F8E6C4ED1DCA3B7900F64426 /* Info.plist */,
 				F8E6C4DC1DCA3B7900F64426 /* Supporting Files */,
@@ -825,8 +819,6 @@
 				84CD4A55248781420019B81D /* Bridge-Header.h */,
 				F8E6C4F31DCA3EA400F64426 /* ioswrap.h */,
 				F8E6C4F41DCA3EA400F64426 /* ioswrap.m */,
-				84CD4A4B24877FA20019B81D /* VersionManager.h */,
-				84CD4A4C24877FA20019B81D /* VersionManager.m */,
 				840E2F9E233410F90088E7F7 /* SDVersion.h */,
 				842A808A2339174B00A89418 /* ads.h */,
 				842A808B2339174C00A89418 /* ads.mm */,
@@ -1445,7 +1437,6 @@
 				F8E6C4E91DCA3B7900F64426 /* Assets.xcassets in Resources */,
 				849C4F86209656D3005EB041 /* ru.lproj in Resources */,
 				F8E6C4EC1DCA3B7900F64426 /* LaunchScreen.storyboard in Resources */,
-				844B495F228606B200EB60EF /* Main.storyboard in Resources */,
 				F8E6C7E11DCA4EB300F64426 /* assets.zip in Resources */,
 				F8E6C7E31DCA511700F64426 /* worlds.zip in Resources */,
 				84B9C11824A4D82400016BCE /* ConsentAlertViewController.xib in Resources */,
@@ -1587,7 +1578,6 @@
 				4B35A9B01EEDD15500274961 /* clientenvironment.cpp in Sources */,
 				F8E6C7C21DCA428800F64426 /* timetaker.cpp in Sources */,
 				F8E6C6211DCA3F9900F64426 /* hud.cpp in Sources */,
-				84CD4A4D24877FA20019B81D /* VersionManager.m in Sources */,
 				F8E6C6DF1DCA413A00F64426 /* clientpackethandler.cpp in Sources */,
 				F8E6C6261DCA3F9900F64426 /* itemdef.cpp in Sources */,
 				F8E6C61B1DCA3F9900F64426 /* guiKeyChangeMenu.cpp in Sources */,
@@ -1750,14 +1740,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		844B495D228606B200EB60EF /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				844B495E228606B200EB60EF /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		F8E6C4EA1DCA3B7900F64426 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

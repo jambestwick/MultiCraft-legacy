@@ -28,6 +28,39 @@ private enum UnzipPath: Int {
 	case library
 }
 
+final class VersionManager {
+	class func readVersion(withPath path: String?) -> UInt32 {
+		let filename = URL(fileURLWithPath: path ?? "").appendingPathComponent("_version").path
+		var content: String? = nil
+		do {
+			content = try String(contentsOfFile: filename, encoding: .ascii)
+		} catch {
+			Bugsnag.notifyError(error)
+			return 0
+		}
+		return UInt32(Int(content ?? "") ?? 0)
+	}
+
+	class func parseVersion() -> UInt32 {
+		let revstr = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+		let revision = UInt8(Int(revstr ?? "") ?? 0)
+		let ret = UInt32(revision | (2 << 24))
+
+		print("App revision \(revstr ?? "") -> \(ret)")
+		return ret
+	}
+
+	class func writeVersion(withPath path: String?, ver: UInt32) {
+		let filename = URL(fileURLWithPath: path ?? "").appendingPathComponent("_version").path
+		let content = "\(ver)"
+		do {
+			try content.write(toFile: filename, atomically: false, encoding: .ascii)
+		} catch {
+			Bugsnag.notifyError(error)
+		}
+	}
+}
+
 final class ZipManager: NSObject {
 	private var assets: [Asset] = [.init(name: "assets", path: .library, versioned: true),
 	                               .init(name: "worlds", path: .documents, versioned: false)]

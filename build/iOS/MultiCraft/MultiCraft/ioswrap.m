@@ -1,11 +1,9 @@
-#import "VersionManager.h"
+#import <Foundation/Foundation.h>
 #import "ioswrap.h"
 
 #import <AVFoundation/AVFoundation.h>
 #import <Bugsnag/Bugsnag.h>
-#import <Foundation/Foundation.h>
 #import <MultiCraft-Swift.h>
-#import <UIKit/UIKit.h>
 
 /* Initialization iOS Specific Things */
 void init_IOS_Settings()
@@ -85,7 +83,9 @@ void ioswrap_asset_refresh(void)
 	NSString *destpath = [NSString stringWithUTF8String:buf];
 
 	// set asset version to 1, will be extracted next time
-	[VersionManager writeVersionWithPath:destpath ver:1];
+	NSString *filename = [destpath stringByAppendingPathComponent:@"_version"];
+	NSString *content = [NSString stringWithFormat:@"%d", 1];
+	[content writeToFile:filename atomically:NO encoding:NSASCIIStringEncoding error:nil];
 }
 
 /* Get Scale Factor */
