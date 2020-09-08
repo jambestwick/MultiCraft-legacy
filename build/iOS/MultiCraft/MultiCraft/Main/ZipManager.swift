@@ -35,7 +35,6 @@ final class VersionManager {
 		do {
 			content = try String(contentsOfFile: filename, encoding: .ascii)
 		} catch {
-			Bugsnag.notifyError(error)
 			return 0
 		}
 		return UInt32(Int(content ?? "") ?? 0)

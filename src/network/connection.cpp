@@ -749,6 +749,7 @@ void Channel::UpdateTimers(float dtime,bool legacy_peer)
 			current_packet_successfull = 0;
 		}
 
+#if !(defined(__ANDROID__) && defined(__aarch64__))
 		/* dynamic window size is only available for non legacy peers */
 		if (!legacy_peer) {
 			float successfull_to_lost_ratio = 0.0;
@@ -801,6 +802,7 @@ void Channel::UpdateTimers(float dtime,bool legacy_peer)
 				}
 			}
 		}
+#endif
 	}
 
 	if (bpm_counter > 10.0)
@@ -1034,11 +1036,13 @@ bool UDPPeer::getAddress(MTProtocols type,Address& toset)
 
 void UDPPeer::setNonLegacyPeer()
 {
+#if !(defined(__ANDROID__) && defined(__aarch64__))
 	m_legacy_peer = false;
 	for(unsigned int i=0; i< CHANNEL_COUNT; i++)
 	{
 		channels->setWindowSize(g_settings->getU16("max_packets_per_iteration"));
 	}
+#endif
 }
 
 void UDPPeer::reportRTT(float rtt)
