@@ -5,12 +5,12 @@ use_frameworks!
 def appodeal
 	source 'https://github.com/appodeal/CocoaPods.git'
 
-	pod 'APDAdColonyAdapter', '2.7.3.1-Beta'
-	pod 'APDAppLovinAdapter', '2.7.3.1-Beta'
-	pod 'APDAppodealAdExchangeAdapter', '2.7.3.1-Beta'
-	pod 'APDMintegralAdapter', '2.7.3.1-Beta'
-	pod 'APDTapjoyAdapter', '2.7.3.1-Beta'
-	pod 'APDUnityAdapter', '2.7.3.1-Beta'
+	pod 'APDAdColonyAdapter', '2.7.4.1-Beta'
+	pod 'APDAppLovinAdapter', '2.7.4.1-Beta'
+	pod 'APDAppodealAdExchangeAdapter', '2.7.4.1-Beta'
+	pod 'APDMintegralAdapter', '2.7.4.1-Beta'
+	pod 'APDTapjoyAdapter', '2.7.4.1-Beta'
+	pod 'APDUnityAdapter', '2.7.4.1-Beta'
 end
 
 target 'MultiCraft' do
