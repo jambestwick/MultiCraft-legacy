@@ -91,7 +91,7 @@ final class ZipManager: NSObject {
 }
 
 private extension ZipManager {
-	func unzipFile(at path: String, to destination: String, vRuntime: UInt32, _ block: @escaping (_ percent: Int) -> Void, _ errorBlock :@escaping (Error) -> Void) {
+	func unzipFile(at path: String, to destination: String, vRuntime: UInt32, _ block: @escaping (_ percent: Int) -> Void, _ errorBlock: @escaping (Error) -> Void) {
 		let fileManager = FileManager.default
 		let files = (try? fileManager.contentsOfDirectory(atPath: destination)) ?? []
 

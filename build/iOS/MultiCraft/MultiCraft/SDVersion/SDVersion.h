@@ -7,7 +7,11 @@
 //	Copyright (c) 2019-2020 MultiCraft Development Team
 //
 
+#pragma once
+
 #import <sys/utsname.h>
+#import <UIKit/UIKit.h>
+
 #define SDVersion SDiOSVersion
 
 typedef NS_ENUM(NSInteger, DeviceVersion){

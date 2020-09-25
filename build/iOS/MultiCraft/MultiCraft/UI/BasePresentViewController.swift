@@ -7,7 +7,9 @@ class BasePresentViewController: UIViewController {
 		view.frame = viewController.view.bounds
 		viewController.view.addSubview(view)
 
-		guard let window = UIApplication.shared.keyWindow else { return }
+		guard let window = UIApplication.shared.keyWindow else {
+			return
+		}
 		window.addSubview(view)
 	}
 
