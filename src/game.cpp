@@ -1485,7 +1485,6 @@ private:
 
 	u16  m_round_screen;
 	f32  m_hud_scaling;
-	bool m_hud_small;
 
 	bool m_invert_mouse;
 	bool m_first_loop_after_window_activation;
@@ -3863,9 +3862,9 @@ void Game::handlePointingAtNode(const PointedThing &pointed,
 	}
 
 	if ((getRightClicked() ||
-				  runData.repeat_rightclick_timer >= m_repeat_right_click_time) &&
-				  !digging && runData.noplace_delay_timer <= 0.0 &&
-		client->checkPrivilege("interact")) {
+			runData.repeat_rightclick_timer >= m_repeat_right_click_time) &&
+			!digging && runData.noplace_delay_timer <= 0.0 &&
+			client->checkPrivilege("interact")) {
 		runData.repeat_rightclick_timer = 0;
 		infostream << "Ground right-clicked" << std::endl;
 
@@ -4493,13 +4492,8 @@ void Game::updateGui(const RunStats &stats, f32 dtime, const CameraOrientation &
 	if (!m_statustext.empty()) {
 		s32 status_width  = guitext_status->getTextWidth();
 		s32 status_height = guitext_status->getTextHeight();
-#if defined(__ANDROID__) || defined(__IOS__)
-		s32 status_y = screensize.Y / 1.25;
-		if (m_hud_small)
-			status_y = (screensize.Y) / 1.5;
-#else
-		s32 status_y = screensize.Y - 150 * m_hud_scaling;
-#endif
+		s32 status_y = screensize.Y -
+			150 * porting::getDisplayDensity() * m_hud_scaling;
 		s32 status_x = (screensize.X - status_width) / 2;
 		core::rect<s32> rect(
 				status_x,  status_y - status_height,
@@ -4618,7 +4612,6 @@ void Game::readSettings()
 
 	m_round_screen = g_settings->getU16("round_screen");
 	m_hud_scaling = g_settings->getFloat("hud_scaling");
-	m_hud_small = g_settings->getBool("hud_small");
 
 	m_cache_cam_smoothing = 0;
 	if (g_settings->getBool("cinematic"))

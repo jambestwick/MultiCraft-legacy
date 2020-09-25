@@ -1162,17 +1162,15 @@ void Client::handleCommand_HudSetParam(NetworkPacket* pkt)
 	LocalPlayer *player = m_env.getLocalPlayer();
 	assert(player != NULL);
 
-	bool hud_small = g_settings->getBool("hud_small");
-
 //	if (param == HUD_PARAM_HOTBAR_ITEMCOUNT && value.size() == 4) {
 //		s32 hotbar_itemcount = readS32((u8*) value.c_str());
 //		if (hotbar_itemcount > 0 && hotbar_itemcount <= HUD_HOTBAR_ITEMCOUNT_MAX)
 
 		// Hotbar over 8 does not fit on a small screen
-		player->hud_hotbar_itemcount = hud_small ? 8 : 9;
+		player->hud_hotbar_itemcount = 9;
 //	}
 //	else if (param == HUD_PARAM_HOTBAR_IMAGE) {
-		player->hotbar_image = hud_small ? "gui_hotbar_small.png" : "gui_hotbar.png";
+		player->hotbar_image = "gui_hotbar.png";
 //	}
 //	else if (param == HUD_PARAM_HOTBAR_SELECTED_IMAGE) {
 		player->hotbar_selected_image = "gui_hotbar_selected.png";

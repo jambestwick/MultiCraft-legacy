@@ -25,7 +25,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "util/string.h"
 
 #ifdef __IOS__
-#import <UIKit/UIKit.h>
 #import "SDVersion.h"
 #endif
 
@@ -173,7 +172,6 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("desynchronize_mapblock_texture_animation", "true");
 	settings->setDefault("hud_hotbar_max_width", "1.0");
 	settings->setDefault("hud_move_upwards", "0");
-	settings->setDefault("hud_small", "false");
 	settings->setDefault("round_screen", "0");
 	settings->setDefault("enable_local_map_saving", "false");
 	settings->setDefault("show_entity_selectionbox", "false");
@@ -488,23 +486,19 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("hud_scaling", "0.55");
 		settings->setDefault("font_size", font_size_str_small);
 		settings->setDefault("mouse_sensitivity", "0.3");
-		settings->setDefault("hud_small", "true");
 	} else if (x_inches > 3.7 && x_inches <= 4.5) {
 		// medium phones
 		settings->setDefault("hud_scaling", "0.6");
 		settings->setDefault("font_size", font_size_str_small);
-		settings->setDefault("hud_small", "true");
 		settings->setDefault("selectionbox_width", "6");
-	} else if (x_inches > 4.5 && x_inches <= 5) {
+	} else if (x_inches > 4.5 && x_inches <= 5.5) {
 		// large 6" phones
 		settings->setDefault("hud_scaling", "0.7");
 		settings->setDefault("mouse_sensitivity", "0.15");
-		settings->setDefault("hud_small", "true");
 		settings->setDefault("selectionbox_width", "6");
-	} else if (x_inches > 5 && x_inches <= 6) {
+	} else if (x_inches > 5.5 && x_inches <= 6.5) {
 		// 7" tablets
 		settings->setDefault("hud_scaling", "0.9");
-		settings->setDefault("hud_small", "true");
 		settings->setDefault("selectionbox_width", "6");
 	}
 #endif // Android
@@ -522,9 +516,6 @@ void set_default_settings(Settings *settings) {
 	// Auto-detect language on iOS
 	NSString *syslang = [[NSLocale preferredLanguages] firstObject];
 	[syslang getBytes:lang maxLength:2 usedLength:nil encoding:NSASCIIStringEncoding options:0 range:NSMakeRange(0, 2) remainingRange:nil];
-
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-		settings->setDefault("hud_small", "true");
 
 	// Set the size of the elements depending on the screen size
 	if ([SDVersion deviceVersion] == iPhone4S) {
