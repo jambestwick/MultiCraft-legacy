@@ -3598,6 +3598,9 @@ void Game::processPlayerInteraction(f32 dtime, bool show_hud, bool show_debug)
 
 	core::line3d<f32> shootline;
 
+	if (camera->getCameraMode() > CAMERA_MODE_FIRST)
+		if (d > 0) d += 1;
+
 	if (camera->getCameraMode() != CAMERA_MODE_THIRD_FRONT) {
 		shootline = core::line3d<f32>(camera_position,
 			camera_position + camera_direction * BS * d);
