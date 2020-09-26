@@ -153,6 +153,8 @@ private:
 
 	rect<s32> m_control_pad_rect;
 
+	bool initialized = false;
+
 	size_t m_move_id = -1;
 	bool m_move_has_really_moved = false;
 	u64 m_move_downtime = 0;

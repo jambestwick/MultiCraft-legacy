@@ -321,6 +321,8 @@ void TouchScreenGUI::init(ISimpleTextureSource *tsrc)
 					  m_screensize.X,
 					  m_screensize.Y - button_size * 3.25),
 			   L"fast", false); */
+
+	initialized = true;
 }
 
 touch_gui_button_id TouchScreenGUI::getButtonID(s32 x, s32 y)
@@ -812,6 +814,9 @@ TouchScreenGUI::~TouchScreenGUI()
 			button.guibutton = nullptr;
 		}
 	}
+
+	if (!initialized)
+		return;
 
 	if (m_joystick_btn_off->guibutton) {
 		m_joystick_btn_off->guibutton->drop();
