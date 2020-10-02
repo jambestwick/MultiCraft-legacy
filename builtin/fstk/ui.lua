@@ -19,8 +19,6 @@ ui = {}
 ui.childlist = {}
 ui.default = nil
 
-local maintab = core.settings:get("maintab_LAST")
-
 --------------------------------------------------------------------------------
 function ui.add(child)
 	--TODO check child
@@ -79,6 +77,7 @@ local function wordwrap_quickhack(str)
 end
 
 --------------------------------------------------------------------------------
+local maintab = core.settings:get("maintab_LAST")
 local connect_time = tonumber(core.settings:get("connect_time"))
 
 function ui.update()
@@ -203,7 +202,7 @@ end
 --------------------------------------------------------------------------------
 core.button_handler = function(fields)
 	if fields["btn_reconnect_yes"] then
-		if core.settings:get("maintab_LAST") == "local" then
+		if maintab == "local" then
 			gamedata.singleplayer = true
 			gamedata.selected_world =
 				tonumber(core.settings:get("mainmenu_last_selected_world"))

@@ -2,10 +2,13 @@
 
 local builtin_shared = ...
 
-local abs, atan2, cos, floor, max, sin, random = math.abs, math.atan2, math.cos, math.floor, math.max, math.sin, math.random
-local vadd, vnew, vmultiply, vnormalize, vsubtract = vector.add, vector.new, vector.multiply, vector.normalize, vector.subtract
+local abs, atan2, cos, floor, max, sin, random =
+	math.abs, math.atan2, math.cos, math.floor, math.max, math.sin, math.random
+local vadd, vnew, vmultiply, vnormalize, vsubtract =
+	vector.add, vector.new, vector.multiply, vector.normalize, vector.subtract
 
 local creative_mode = core.settings:get_bool("creative_mode")
+local node_drop = core.settings:get_bool("node_drop") ~= false
 
 local function copy_pointed_thing(pointed_thing)
 	return {
@@ -550,37 +553,79 @@ function core.item_drop(itemstack, dropper, pos)
 	-- environment failed
 end
 
-local enable_damage = core.settings:get_bool("enable_damage")
+local enable_hunger = core.settings:get_bool("enable_damage") and core.settings:get_bool("enable_hunger")
+function core.do_item_eat(hp_change, replace_with_item, itemstack, user, pointed_thing, poison)
+	for _, callback in pairs(core.registered_on_item_eats) do
+		local result = callback(hp_change, replace_with_item, itemstack, user, pointed_thing)
+		if result then
+			return result
+		end
+	end
+	local def = itemstack:get_definition()
+	if itemstack:take_item() ~= nil then
+		if enable_hunger then
+			hunger.item_eat(hp_change, user, poison)
+		else
+			user:set_hp(user:get_hp() + hp_change)
+		end
+
+		local pos = user:get_pos()
+		if not core.is_valid_pos(pos) then
+			return itemstack
+		end
+
+		if def and def.sound and def.sound.eat then
+			core.sound_play(def.sound.eat, {
+				pos = pos,
+				max_hear_distance = 16})
+		else
+			core.sound_play("player_eat", {
+				pos = pos,
+				max_hear_distance = 10,
+				gain = 0.3})
+		end
+
+		local dir = user:get_look_dir()
+		local ppos = {x = pos.x, y = pos.y + 1.3, z = pos.z}
+		core.add_particlespawner({
+			amount = 20,
+			time = 0.1,
+			minpos = ppos,
+			maxpos = ppos,
+			minvel = {x = dir.x - 1, y = 2, z = dir.z - 1},
+			maxvel = {x = dir.x + 1, y = 2, z = dir.z + 1},
+			minacc = {x = 0, y = -5, z = 0},
+			maxacc = {x = 0, y = -9, z = 0},
+			minexptime = 1,
+			maxexptime = 1,
+			minsize = 1,
+			maxsize = 1,
+			vertical = false,
+			texture = def.inventory_image
+		})
+
+		if replace_with_item then
+			if itemstack:is_empty() then
+				itemstack:add_item(replace_with_item)
+			else
+				local inv = user:get_inventory()
+				-- Check if inv is null, since non-players don't have one
+				if inv and inv:room_for_item("main", {name=replace_with_item}) then
+					inv:add_item("main", replace_with_item)
+				else
+					pos.y = pos.y + 0.5
+					core.add_item(pos, replace_with_item)
+				end
+			end
+		end
+	end
+	return itemstack
+end
+
 function core.item_eat(hp_change, replace_with_item, poison)
 	return function(itemstack, user, pointed_thing)  -- closure
 		if user then
-			local pos = user:get_pos()
-			pos.y = pos.y + 1.3
-			if not core.is_valid_pos(pos) then
-				return
-			end
-
-			local dir = user:get_look_dir()
-			core.add_particlespawner({
-				amount = 20,
-				time = 0.1,
-				minpos = pos,
-				maxpos = pos,
-				minvel = {x = dir.x - 1, y = 2, z = dir.z - 1},
-				maxvel = {x = dir.x + 1, y = 2, z = dir.z + 1},
-				minacc = {x = 0, y = -5, z = 0},
-				maxacc = {x = 0, y = -9, z = 0},
-				minexptime = 1,
-				maxexptime = 1,
-				minsize = 1,
-				maxsize = 1,
-				vertical = false,
-				texture = core.registered_items[itemstack:get_name()].inventory_image
-			})
-			core.sound_play("player_eat", {pos = pos, max_hear_distance = 10, gain = 0.3})
-			if enable_damage then
-				return core.do_item_eat(hp_change, replace_with_item, poison, itemstack, user, pointed_thing)
-			end
+			return core.do_item_eat(hp_change, replace_with_item, itemstack, user, pointed_thing, poison)
 		end
 	end
 end
@@ -600,7 +645,7 @@ function core.handle_node_drops(pos, drops, digger)
 	-- Add dropped items to object's inventory
 	local inv = digger and digger:get_inventory()
 	local give_item
-	if creative_mode and inv then
+	if (not node_drop or creative_mode) and inv then
 		give_item = function(item)
 			return inv:add_item("main", item)
 		end

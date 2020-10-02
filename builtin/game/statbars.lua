@@ -9,7 +9,7 @@ local health_bar_definition = {
 	offset        = {x = -247, y = -94},
 	size          = {x =  24,  y =  24},
 	text          = "heart.png",
-	background    = "heart_bg.png",
+	background    = "heart_gone.png",
 	number        = 20
 }
 

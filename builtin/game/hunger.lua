@@ -1,24 +1,27 @@
---From Stamina mod
---Copyright (C) BlockMen (2013-2015)
---Copyright (C) Auke Kok <sofar@foo-projects.org> (2016)
---Copyright (C) Minetest Mods Team (2016-2019)
---Copyright (C) MultiCraft Development Team (2016-2020)
+--[[
+	From Stamina mod
+	Copyright (C) BlockMen (2013-2015)
+	Copyright (C) Auke Kok <sofar@foo-projects.org> (2016)
+	Copyright (C) Minetest Mods Team (2016-2019)
+	Copyright (C) MultiCraft Development Team (2016-2020)
 
---This program is free software; you can redistribute it and/or modify
---it under the terms of the GNU Lesser General Public License as published by
---the Free Software Foundation; either version 3.0 of the License, or
---(at your option) any later version.
---
---This program is distributed in the hope that it will be useful,
---but WITHOUT ANY WARRANTY; without even the implied warranty of
---MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
---GNU Lesser General Public License for more details.
---
---You should have received a copy of the GNU Lesser General Public License along
---with this program; if not, write to the Free Software Foundation, Inc.,
---51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU Lesser General Public License as published by
+	the Free Software Foundation; either version 3.0 of the License, or
+	(at your option) any later version.
 
-if not core.settings:get_bool("enable_damage") then
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Lesser General Public License for more details.
+
+	You should have received a copy of the GNU Lesser General Public License along
+	with this program; if not, write to the Free Software Foundation, Inc.,
+	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+]]
+
+if not core.settings:get_bool("enable_damage")
+or not core.settings:get_bool("enable_hunger") then
 	return
 end
 
@@ -135,10 +138,10 @@ end
 
 function hunger.set_poisoned(player, poisoned)
 	if poisoned then
-		hud.change_item(player, "hunger", {text = "hunger_statbar_poisen.png"})
+		hud.change_item(player, "hunger", {text = "hunger_poisen.png"})
 		player:set_attribute(attribute.poisoned, "yes")
 	else
-		hud.change_item(player, "hunger", {text = "hunger_statbar_fg.png"})
+		hud.change_item(player, "hunger", {text = "hunger.png"})
 		player:set_attribute(attribute.poisoned, "no")
 	end
 end
@@ -316,44 +319,14 @@ core.register_globalstep(function(dtime)
 	end
 end)
 
-function core.do_item_eat(hp_change, replace_with_item, poison, itemstack, player, pointed_thing)
-	for _, callback in pairs(core.registered_on_item_eats) do
-		local result = callback(hp_change, replace_with_item, poison, itemstack, player, pointed_thing)
-		if result then
-			return result
-		end
-	end
-
-	if not is_player(player) or not itemstack then
-		return itemstack
-	end
-
+function hunger.item_eat(hp_change, user, poison)
 	if not poison then
-		hunger.change_saturation(player, hp_change)
-		hunger.set_exhaustion(player, 0)
+		hunger.change_saturation(user, hp_change)
+		hunger.set_exhaustion(user, 0)
 	else
-		hunger.change_saturation(player, hp_change)
-		hunger.poison(player, -poison, settings.poison_tick)
+		hunger.change_saturation(user, hp_change)
+		hunger.poison(user, -poison, settings.poison_tick)
 	end
-
-	itemstack:take_item()
-
-	if replace_with_item then
-		if itemstack:is_empty() then
-			itemstack:add_item(replace_with_item)
-		else
-			local inv = player:get_inventory()
-			if inv:room_for_item("main", {name=replace_with_item}) then
-				inv:add_item("main", replace_with_item)
-			else
-				local pos = player:getpos()
-				pos.y = math.floor(pos.y - 1.0)
-				core.add_item(pos, replace_with_item)
-			end
-		end
-	end
-
-	return itemstack
 end
 
 hud.register("hunger", {
@@ -362,8 +335,8 @@ hud.register("hunger", {
 	alignment     = {x = -1,  y = -1},
 	offset        = {x = 8,   y = -94},
 	size          = {x = 24,  y = 24},
-	text          = "hunger_statbar_fg.png",
-	background    = "hunger_statbar_bg.png",
+	text          = "hunger.png",
+	background    = "hunger_gone.png",
 	number        = settings.visual_max
 })
 

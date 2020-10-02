@@ -19,13 +19,15 @@ end
 
 local time_to_live = tonumber(core.settings:get("item_entity_ttl")) or 600
 local gravity = tonumber(core.settings:get("movement_gravity")) or 9.81
-local collection = core.settings:get_bool("item_collection") or true
-local water_flow = core.settings:get_bool("item_water_flow") or true
+local collection = core.settings:get_bool("item_collection") ~= false
+local water_flow = core.settings:get_bool("item_water_flow") ~= false
+local lava_destroy = core.settings:get_bool("item_lava_destroy") ~= false
 
 -- Water flow functions, based on QwertyMine3 (WTFPL), and TenPlus1 (MIT) mods
 local function quick_flow_logic(node, pos_testing, dir)
 	local node_testing = core.get_node_or_nil(pos_testing)
-	local liquid = node_testing and core.registered_nodes[node_testing.name].liquidtype
+	if not node_testing then return 0 end
+	local liquid = core.registered_nodes[node_testing.name] and core.registered_nodes[node_testing.name].liquidtype
 
 	if not liquid or liquid ~= "flowing" and liquid ~= "source" then
 		return 0
@@ -210,7 +212,8 @@ core.register_entity(":__builtin:item", {
 		local is_slippery = false
 
 		-- Destroy item when dropped into lava
-		if def_inside and def_inside.groups and def_inside.groups.lava then
+		if lava_destroy and def_inside
+				and def_inside.groups and def_inside.groups.lava then
 			core.sound_play("default_cool_lava", {
 				pos = pos, max_hear_distance = 10})
 			self.object:remove()

@@ -137,6 +137,9 @@ function core.register_item(name, itemdef)
 			core.log("warning", "Node 'light_source' value exceeds maximum," ..
 				" limiting to maximum: " ..name)
 		end
+		if itemdef.light_source == nil then
+			itemdef.light_source = 0
+		end
 		setmetatable(itemdef, {__index = core.nodedef_default})
 		core.registered_nodes[itemdef.name] = itemdef
 	elseif itemdef.type == "craft" then
@@ -404,8 +407,7 @@ end
 
 
 function core.add_group(name, adding)
-	local addgroup = {}
-	addgroup = table.copy(core.registered_items[name].groups)
+	local addgroup = table.copy(core.registered_items[name].groups) or {}
 	for k, v in pairs(adding) do
 		addgroup[k] = v
 	end

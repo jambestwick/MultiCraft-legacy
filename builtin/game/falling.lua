@@ -1,44 +1,18 @@
 -- Minetest: builtin/item.lua
 
+local random = math.random
+local vequals, vround, vadd = vector.equals, vector.round, vector.add
+
 local builtin_shared = ...
 
 local gravity = tonumber(core.settings:get("movement_gravity")) or 9.81
-local vequals, vround, vadd = vector.equals, vector.round, vector.add
+
 
 --
 -- Falling stuff
 --
 
-local random = math.random
-local function drop_attached_node(p)
-	local n = core.get_node(p)
-	local drops = core.get_node_drops(n, "")
-	local def = core.registered_items[n.name]
-	if def and def.preserve_metadata then
-		local oldmeta = core.get_meta(p):to_table().fields
-		-- Copy pos and node because the callback can modify them.
-		local pos_copy = {x=p.x, y=p.y, z=p.z}
-		local node_copy = {name=n.name, param1=n.param1, param2=n.param2}
-		local drop_stacks = {}
-		for k, v in pairs(drops) do
-			drop_stacks[k] = ItemStack(v)
-		end
-		drops = drop_stacks
-		def.preserve_metadata(pos_copy, node_copy, oldmeta, drops)
-	end
-	if def and def.sounds and def.sounds.fall then
-		core.sound_play(def.sounds.fall, {pos = p})
-	end
-	core.remove_node(p)
-	for _, item in pairs(drops) do
-		local pos = {
-			x = p.x + random()/2 - 0.25,
-			y = p.y + random()/2 - 0.25,
-			z = p.z + random()/2 - 0.25,
-		}
-		core.add_item(pos, item)
-	end
-end
+local drop_attached_node
 
 core.register_entity(":__builtin:falling_node", {
 	initial_properties = {
@@ -47,7 +21,7 @@ core.register_entity(":__builtin:falling_node", {
 		textures = {},
 		physical = true,
 		is_visible = false,
-		collide_with_objects = false,
+		collide_with_objects = true,
 		collisionbox = {-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
 	},
 
@@ -159,22 +133,22 @@ core.register_entity(":__builtin:falling_node", {
 			if def then
 				core.add_node(np, self.node)
 				if self.meta then
-					local meta = core.get_meta(np)
-					meta:from_table(self.meta)
+					core.get_meta(np):from_table(self.meta)
 				end
 				-- Drop node if falls into a protected area
 				if core.is_protected(np, "") then
 					self.object:remove()
 					drop_attached_node(np)
-					return
+					return true
 				end
 				if def.sounds and def.sounds.place then
 					core.sound_play(def.sounds.place, {pos = np})
 				end
 			end
 			self.object:remove()
+
 			core.check_for_falling(np)
-			return
+			return true
 		end
 		local vel = self.object:get_velocity()
 		if vequals(vel, {x = 0, y = 0, z = 0}) then
@@ -215,6 +189,36 @@ function core.spawn_falling_node(pos)
 		return false
 	end
 	return convert_to_falling_node(pos, node)
+end
+
+function drop_attached_node(p)
+	local n = core.get_node(p)
+	local drops = core.get_node_drops(n, "")
+	local def = core.registered_items[n.name]
+	if def and def.preserve_metadata then
+		local oldmeta = core.get_meta(p):to_table().fields
+		-- Copy pos and node because the callback can modify them.
+		local pos_copy = {x=p.x, y=p.y, z=p.z}
+		local node_copy = {name=n.name, param1=n.param1, param2=n.param2}
+		local drop_stacks = {}
+		for k, v in pairs(drops) do
+			drop_stacks[k] = ItemStack(v)
+		end
+		drops = drop_stacks
+		def.preserve_metadata(pos_copy, node_copy, oldmeta, drops)
+	end
+	if def and def.sounds and def.sounds.fall then
+		core.sound_play(def.sounds.fall, {pos = p})
+	end
+	core.remove_node(p)
+	for _, item in pairs(drops) do
+		local pos = {
+			x = p.x + random()/2 - 0.25,
+			y = p.y + random()/2 - 0.25,
+			z = p.z + random()/2 - 0.25,
+		}
+		core.add_item(pos, item)
+	end
 end
 
 function builtin_shared.check_attached_node(p, n)
@@ -285,21 +289,18 @@ function core.check_single_for_falling(p)
 		local pa = vadd(p, check_connected[i])
 		local nc = core.get_node(pa)
 		if core.get_item_group(nc.name, "attached_node2") ~= 0 then
-			local connected
 			for j = 1, 4 do
 				local ptwo = vadd(pa, check_connected[j])
 				local ntwo = core.get_node(ptwo)
 				local def = core.registered_nodes[ntwo.name]
 				if def and def.walkable then
-					connected = true
 					return false
 				end
 			end
-			if not connected then
+
 				drop_attached_node(pa)
 				return true
 			end
-		end
 	end
 
 	return false

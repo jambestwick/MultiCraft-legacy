@@ -1,19 +1,22 @@
---From Better HUD mod
---Copyright (C) BlockMen (2013-2016)
+--[[
+	From Better HUD mod
+	Copyright (C) BlockMen (2013-2016)
+	Copyright (C) MultiCraft Development Team (2019-2020)
 
---This program is free software; you can redistribute it and/or modify
---it under the terms of the GNU Lesser General Public License as published by
---the Free Software Foundation; either version 3.0 of the License, or
---(at your option) any later version.
---
---This program is distributed in the hope that it will be useful,
---but WITHOUT ANY WARRANTY; without even the implied warranty of
---MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
---GNU Lesser General Public License for more details.
---
---You should have received a copy of the GNU Lesser General Public License along
---with this program; if not, write to the Free Software Foundation, Inc.,
---51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU Lesser General Public License as published by
+	the Free Software Foundation; either version 3.0 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Lesser General Public License for more details.
+
+	You should have received a copy of the GNU Lesser General Public License along
+	with this program; if not, write to the Free Software Foundation, Inc.,
+	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+]]
 
 hud, hud_id = {}, {}
 
@@ -113,6 +116,7 @@ function hud.remove_item(player, name)
 		return false
 	end
 
+	local i_name = player:get_player_name() .. "_" .. name
 	local elem = hud_id[i_name]
 
 	if not elem then
@@ -121,7 +125,6 @@ function hud.remove_item(player, name)
 	end
 
 	player:hud_remove(elem.id)
-	elem = nil
 
 	return true
 end
