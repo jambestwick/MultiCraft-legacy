@@ -53,155 +53,155 @@ import static com.multicraft.game.MainActivity.UPDATE_LINK;
 import static com.multicraft.game.helpers.Utilities.getStoreUrl;
 
 public class VersionManagerHelper {
-    private static final String JSON_VERSION_CODE = "version_code";
-    private static final String JSON_VERSION_CODE_BAD = "version_code_bad";
-    private static final String JSON_PACKAGE = "package";
-    private static final String JSON_CONTENT_RU = "content_ru";
-    private static final String JSON_CONTENT_EN = "content_en";
-    private static final String JSON_ADS_DELAY = "ads_delay";
-    private static final String JSON_ADS_REPEAT = "ads_repeat";
-    private static final String JSON_ADS_ENABLE = "ads_enable";
-    private final CustomTagHandler customTagHandler;
-    private final String PREF_REMINDER_TIME = "w.reminder.time";
-    private final AppCompatActivity activity;
-    private final int versionCode = BuildConfig.VERSION_CODE;
-    private String message, updateUrl;
+	private static final String JSON_VERSION_CODE = "version_code";
+	private static final String JSON_VERSION_CODE_BAD = "version_code_bad";
+	private static final String JSON_PACKAGE = "package";
+	private static final String JSON_CONTENT_RU = "content_ru";
+	private static final String JSON_CONTENT_EN = "content_en";
+	private static final String JSON_ADS_DELAY = "ads_delay";
+	private static final String JSON_ADS_REPEAT = "ads_repeat";
+	private static final String JSON_ADS_ENABLE = "ads_enable";
+	private final CustomTagHandler customTagHandler;
+	private final String PREF_REMINDER_TIME = "w.reminder.time";
+	private final AppCompatActivity activity;
+	private final int versionCode = BuildConfig.VERSION_CODE;
+	private String message, updateUrl;
 
-    public VersionManagerHelper(AppCompatActivity act) {
-        this.activity = act;
-        this.customTagHandler = new CustomTagHandler();
-    }
+	public VersionManagerHelper(AppCompatActivity act) {
+		this.activity = act;
+		this.customTagHandler = new CustomTagHandler();
+	}
 
-    public boolean isCheckVersion() {
-        long currentTimeStamp = Calendar.getInstance().getTimeInMillis();
-        long reminderTimeStamp = getReminderTime();
-        return currentTimeStamp > reminderTimeStamp;
-    }
+	public boolean isCheckVersion() {
+		long currentTimeStamp = Calendar.getInstance().getTimeInMillis();
+		long reminderTimeStamp = getReminderTime();
+		return currentTimeStamp > reminderTimeStamp;
+	}
 
-    private boolean isBadVersion(List<Integer> badVersions) {
-        return badVersions.contains(versionCode);
-    }
+	private boolean isBadVersion(List<Integer> badVersions) {
+		return badVersions.contains(versionCode);
+	}
 
-    private List<Integer> convertToList(JSONArray badVersions) throws JSONException {
-        List<Integer> badVersionList = new ArrayList<>();
-        if (badVersions != null) {
-            for (int i = 0; i < badVersions.length(); i++)
-                badVersionList.add(badVersions.getInt(i));
-        }
-        return badVersionList;
-    }
+	private List<Integer> convertToList(JSONArray badVersions) throws JSONException {
+		List<Integer> badVersionList = new ArrayList<>();
+		if (badVersions != null) {
+			for (int i = 0; i < badVersions.length(); i++)
+				badVersionList.add(badVersions.getInt(i));
+		}
+		return badVersionList;
+	}
 
-    private RemoteSettings parseJson(String result) throws JSONException {
-        RemoteSettings remoteSettings = new RemoteSettings();
-        PreferencesHelper pf = PreferencesHelper.getInstance(activity);
-        if (!result.startsWith("{")) // for response who append with unknown char
-            result = result.substring(1);
-        String mResult = result;
-        // json format from server:
-        JSONObject json = new JSONObject(new JSONTokener(mResult));
-        remoteSettings.setVersionCode(json.getInt(JSON_VERSION_CODE));
-        remoteSettings.setBadVersionCodes(convertToList(json.getJSONArray(JSON_VERSION_CODE_BAD)));
-        String lang = Locale.getDefault().getLanguage();
-        String content = lang.equals("ru") ? JSON_CONTENT_RU : JSON_CONTENT_EN;
-        remoteSettings.setContent(json.getString(content));
-        setMessage(remoteSettings.getContent());
-        remoteSettings.setPackageName(json.getString(JSON_PACKAGE));
-        setUpdateUrl("market://details?id=" + remoteSettings.getPackageName());
-        remoteSettings.setAdsDelay(json.getInt(JSON_ADS_DELAY));
-        remoteSettings.setAdsRepeat(json.getInt(JSON_ADS_REPEAT));
-        remoteSettings.setAdsEnabled(json.getBoolean(JSON_ADS_ENABLE));
-        pf.saveAdsSettings(remoteSettings);
-        return remoteSettings;
-    }
+	private RemoteSettings parseJson(String result) throws JSONException {
+		RemoteSettings remoteSettings = new RemoteSettings();
+		PreferencesHelper pf = PreferencesHelper.getInstance(activity);
+		if (!result.startsWith("{")) // for response who append with unknown char
+			result = result.substring(1);
+		String mResult = result;
+		// json format from server:
+		JSONObject json = new JSONObject(new JSONTokener(mResult));
+		remoteSettings.setVersionCode(json.getInt(JSON_VERSION_CODE));
+		remoteSettings.setBadVersionCodes(convertToList(json.getJSONArray(JSON_VERSION_CODE_BAD)));
+		String lang = Locale.getDefault().getLanguage();
+		String content = lang.equals("ru") ? JSON_CONTENT_RU : JSON_CONTENT_EN;
+		remoteSettings.setContent(json.getString(content));
+		setMessage(remoteSettings.getContent());
+		remoteSettings.setPackageName(json.getString(JSON_PACKAGE));
+		setUpdateUrl("market://details?id=" + remoteSettings.getPackageName());
+		remoteSettings.setAdsDelay(json.getInt(JSON_ADS_DELAY));
+		remoteSettings.setAdsRepeat(json.getInt(JSON_ADS_REPEAT));
+		remoteSettings.setAdsEnabled(json.getBoolean(JSON_ADS_ENABLE));
+		pf.saveAdsSettings(remoteSettings);
+		return remoteSettings;
+	}
 
-    public boolean isShow(String result) {
-        if (result.equals("{}")) return false;
-        RemoteSettings remoteSettings;
-        try {
-            remoteSettings = parseJson(result);
-        } catch (JSONException e) {
-            return false;
-        }
-        return (versionCode < remoteSettings.getVersionCode()) ||
-                isBadVersion(remoteSettings.getBadVersionCodes());
-    }
+	public boolean isShow(String result) {
+		if (result.equals("{}")) return false;
+		RemoteSettings remoteSettings;
+		try {
+			remoteSettings = parseJson(result);
+		} catch (JSONException e) {
+			return false;
+		}
+		return (versionCode < remoteSettings.getVersionCode()) ||
+				isBadVersion(remoteSettings.getBadVersionCodes());
+	}
 
-    public String getJson() {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .callTimeout(3000, TimeUnit.MILLISECONDS)
-                .build();
-        Request request = new Request.Builder()
-                .url(UPDATE_LINK)
-                .build();
-        try {
-            Response response = client.newCall(request).execute();
-            return response.body().string();
-        } catch (IOException | NullPointerException e) {
-            // nothing
-        }
-        return "{}";
-    }
+	public String getJson() {
+		OkHttpClient client = new OkHttpClient.Builder()
+				.callTimeout(3000, TimeUnit.MILLISECONDS)
+				.build();
+		Request request = new Request.Builder()
+				.url(UPDATE_LINK)
+				.build();
+		try {
+			Response response = client.newCall(request).execute();
+			return response.body().string();
+		} catch (IOException | NullPointerException e) {
+			// nothing
+		}
+		return "{}";
+	}
 
-    public String getMessage() {
-        String defaultMessage = "What's new?";
-        return message != null ? message : defaultMessage;
-    }
+	public String getMessage() {
+		String defaultMessage = "What's new?";
+		return message != null ? message : defaultMessage;
+	}
 
-    private void setMessage(String message) {
-        this.message = message;
-    }
+	private void setMessage(String message) {
+		this.message = message;
+	}
 
-    public String getUpdateUrl() {
-        return updateUrl != null ? updateUrl : getStoreUrl();
-    }
+	public String getUpdateUrl() {
+		return updateUrl != null ? updateUrl : getStoreUrl();
+	}
 
-    private void setUpdateUrl(String updateUrl) {
-        this.updateUrl = updateUrl;
-    }
+	private void setUpdateUrl(String updateUrl) {
+		this.updateUrl = updateUrl;
+	}
 
-    public void updateNow(String url) {
-        if (url != null) {
-            try {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                activity.startActivity(intent);
-            } catch (Exception e) {
-                Bugsnag.notify(e);
-            }
-        }
-    }
+	public void updateNow(String url) {
+		if (url != null) {
+			try {
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+				activity.startActivity(intent);
+			} catch (Exception e) {
+				Bugsnag.notify(e);
+			}
+		}
+	}
 
-    public void remindMeLater() {
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.MINUTE, 1);
-        long reminderTimeStamp = c.getTimeInMillis();
-        setReminderTime(reminderTimeStamp);
-    }
+	public void remindMeLater() {
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.MINUTE, 1);
+		long reminderTimeStamp = c.getTimeInMillis();
+		setReminderTime(reminderTimeStamp);
+	}
 
-    private long getReminderTime() {
-        return PreferenceManager.getDefaultSharedPreferences(activity).getLong(
-                PREF_REMINDER_TIME, 0);
-    }
+	private long getReminderTime() {
+		return PreferenceManager.getDefaultSharedPreferences(activity).getLong(
+				PREF_REMINDER_TIME, 0);
+	}
 
-    private void setReminderTime(long reminderTimeStamp) {
-        PreferenceManager.getDefaultSharedPreferences(activity).edit().putLong(
-                PREF_REMINDER_TIME, reminderTimeStamp).apply();
-    }
+	private void setReminderTime(long reminderTimeStamp) {
+		PreferenceManager.getDefaultSharedPreferences(activity).edit().putLong(
+				PREF_REMINDER_TIME, reminderTimeStamp).apply();
+	}
 
-    public CustomTagHandler getCustomTagHandler() {
-        return customTagHandler;
-    }
+	public CustomTagHandler getCustomTagHandler() {
+		return customTagHandler;
+	}
 
-    private static class CustomTagHandler implements Html.TagHandler {
-        @Override
-        public void handleTag(boolean opening, String tag, Editable output,
-                              XMLReader xmlReader) {
-            // you may add more tag handler which are not supported by android here
-            if ("li".equals(tag)) {
-                if (opening)
-                    output.append(" \u2022 ");
-                else
-                    output.append("\n");
-            }
-        }
-    }
+	private static class CustomTagHandler implements Html.TagHandler {
+		@Override
+		public void handleTag(boolean opening, String tag, Editable output,
+		                      XMLReader xmlReader) {
+			// you may add more tag handler which are not supported by android here
+			if ("li".equals(tag)) {
+				if (opening)
+					output.append(" \u2022 ");
+				else
+					output.append("\n");
+			}
+		}
+	}
 }

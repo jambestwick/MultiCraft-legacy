@@ -21,5 +21,5 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 package com.multicraft.game.callbacks;
 
 public interface CallBackListener {
-    void onEvent(boolean isContinue);
+	void onEvent(boolean isContinue);
 }

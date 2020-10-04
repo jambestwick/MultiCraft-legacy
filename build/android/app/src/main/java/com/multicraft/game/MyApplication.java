@@ -25,9 +25,9 @@ import androidx.multidex.MultiDexApplication;
 import com.bugsnag.android.Bugsnag;
 
 public class MyApplication extends MultiDexApplication {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Bugsnag.start(this);
-    }
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		Bugsnag.start(this);
+	}
 }

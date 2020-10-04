@@ -44,120 +44,120 @@ import static com.multicraft.game.MainActivity.zipLocations;
 import static com.multicraft.game.helpers.ApiLevelHelper.isGreaterOrEqualOreo;
 
 public class UnzipService extends IntentService {
-    public static final String ACTION_UPDATE = "com.multicraft.game.UPDATE";
-    public static final String EXTRA_KEY_IN_FILE = "file";
-    public static final String ACTION_PROGRESS = "progress";
-    private final int id = 1;
-    private NotificationManager mNotifyManager;
+	public static final String ACTION_UPDATE = "com.multicraft.game.UPDATE";
+	public static final String EXTRA_KEY_IN_FILE = "file";
+	public static final String ACTION_PROGRESS = "progress";
+	private final int id = 1;
+	private NotificationManager mNotifyManager;
 
-    public UnzipService() {
-        super("com.multicraft.game.UnzipService");
-    }
+	public UnzipService() {
+		super("com.multicraft.game.UnzipService");
+	}
 
-    private void isDir(String dir, String unzipLocation) {
-        File f = new File(unzipLocation + dir);
-        if (!f.mkdirs() && !f.isDirectory())
-            Bugsnag.leaveBreadcrumb(f + " (destination) folder was not created");
-    }
+	private void isDir(String dir, String unzipLocation) {
+		File f = new File(unzipLocation + dir);
+		if (!f.mkdirs() && !f.isDirectory())
+			Bugsnag.leaveBreadcrumb(f + " (destination) folder was not created");
+	}
 
-    @Override
-    protected void onHandleIntent(Intent intent) {
-        createNotification();
-        unzip(intent);
-    }
+	@Override
+	protected void onHandleIntent(Intent intent) {
+		createNotification();
+		unzip(intent);
+	}
 
-    private String getSettings() {
-        return getString(R.string.gdpr_main_text);
-    }
+	private String getSettings() {
+		return getString(R.string.gdpr_main_text);
+	}
 
-    private void createNotification() {
-        // There are hardcoding only for show it's just strings
-        String name = "com.multicraft.game";
-        String channelId = "MultiCraft channel"; // The user-visible name of the channel.
-        String description = "notifications from MultiCraft"; // The user-visible description of the channel.
-        Notification.Builder builder;
-        if (mNotifyManager == null)
-            mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (isGreaterOrEqualOreo()) {
-            int importance = NotificationManager.IMPORTANCE_LOW;
-            NotificationChannel mChannel = null;
-            if (mNotifyManager != null)
-                mChannel = mNotifyManager.getNotificationChannel(channelId);
-            if (mChannel == null) {
-                mChannel = new NotificationChannel(channelId, name, importance);
-                mChannel.setDescription(description);
-                // Configure the notification channel, NO SOUND
-                mChannel.setSound(null, null);
-                mChannel.enableLights(false);
-                mChannel.enableVibration(false);
-                mNotifyManager.createNotificationChannel(mChannel);
-            }
-            builder = new Notification.Builder(this, channelId);
-        } else
-            builder = new Notification.Builder(this);
-        builder.setContentTitle(getString(R.string.notification_title))
-                .setContentText(getString(R.string.notification_description))
-                .setSmallIcon(R.drawable.update);
-        mNotifyManager.notify(id, builder.build());
-    }
+	private void createNotification() {
+		// There are hardcoding only for show it's just strings
+		String name = "com.multicraft.game";
+		String channelId = "MultiCraft channel"; // The user-visible name of the channel.
+		String description = "notifications from MultiCraft"; // The user-visible description of the channel.
+		Notification.Builder builder;
+		if (mNotifyManager == null)
+			mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		if (isGreaterOrEqualOreo()) {
+			int importance = NotificationManager.IMPORTANCE_LOW;
+			NotificationChannel mChannel = null;
+			if (mNotifyManager != null)
+				mChannel = mNotifyManager.getNotificationChannel(channelId);
+			if (mChannel == null) {
+				mChannel = new NotificationChannel(channelId, name, importance);
+				mChannel.setDescription(description);
+				// Configure the notification channel, NO SOUND
+				mChannel.setSound(null, null);
+				mChannel.enableLights(false);
+				mChannel.enableVibration(false);
+				mNotifyManager.createNotificationChannel(mChannel);
+			}
+			builder = new Notification.Builder(this, channelId);
+		} else
+			builder = new Notification.Builder(this);
+		builder.setContentTitle(getString(R.string.notification_title))
+				.setContentText(getString(R.string.notification_description))
+				.setSmallIcon(R.drawable.update);
+		mNotifyManager.notify(id, builder.build());
+	}
 
-    private void unzip(Intent intent) {
-        String[] zips = intent.getStringArrayExtra(EXTRA_KEY_IN_FILE);
-        int per = 0;
-        int size = getSummarySize(zips);
-        for (String zip : zips) {
-            File zipFile = new File(zip);
-            LocalFileHeader localFileHeader;
-            int readLen;
-            byte[] readBuffer = new byte[8192];
-            try (FileInputStream fileInputStream = new FileInputStream(zipFile);
-                 ZipInputStream zipInputStream = new ZipInputStream(fileInputStream)) {
-                while ((localFileHeader = zipInputStream.getNextEntry()) != null) {
-                    String fileName = localFileHeader.getFileName();
-                    if (localFileHeader.isDirectory()) {
-                        ++per;
-                        isDir(fileName, zipLocations.get(zip));
-                    } else {
-                        File extractedFile = new File(fileName);
-                        publishProgress(100 * ++per / size);
-                        try (OutputStream outputStream = new FileOutputStream(zipLocations.get(zip) + extractedFile)) {
-                            while ((readLen = zipInputStream.read(readBuffer)) != -1) {
-                                outputStream.write(readBuffer, 0, readLen);
-                            }
-                        }
-                    }
-                }
-            } catch (FileNotFoundException e) {
-                Bugsnag.notify(e);
-            } catch (IOException e) {
-                Bugsnag.notify(e);
-            }
-        }
-    }
+	private void unzip(Intent intent) {
+		String[] zips = intent.getStringArrayExtra(EXTRA_KEY_IN_FILE);
+		int per = 0;
+		int size = getSummarySize(zips);
+		for (String zip : zips) {
+			File zipFile = new File(zip);
+			LocalFileHeader localFileHeader;
+			int readLen;
+			byte[] readBuffer = new byte[8192];
+			try (FileInputStream fileInputStream = new FileInputStream(zipFile);
+			     ZipInputStream zipInputStream = new ZipInputStream(fileInputStream)) {
+				while ((localFileHeader = zipInputStream.getNextEntry()) != null) {
+					String fileName = localFileHeader.getFileName();
+					if (localFileHeader.isDirectory()) {
+						++per;
+						isDir(fileName, zipLocations.get(zip));
+					} else {
+						File extractedFile = new File(fileName);
+						publishProgress(100 * ++per / size);
+						try (OutputStream outputStream = new FileOutputStream(zipLocations.get(zip) + extractedFile)) {
+							while ((readLen = zipInputStream.read(readBuffer)) != -1) {
+								outputStream.write(readBuffer, 0, readLen);
+							}
+						}
+					}
+				}
+			} catch (FileNotFoundException e) {
+				Bugsnag.notify(e);
+			} catch (IOException e) {
+				Bugsnag.notify(e);
+			}
+		}
+	}
 
-    private void publishProgress(int progress) {
-        Intent intentUpdate = new Intent(ACTION_UPDATE);
-        intentUpdate.putExtra(ACTION_PROGRESS, progress);
-        sendBroadcast(intentUpdate);
-    }
+	private void publishProgress(int progress) {
+		Intent intentUpdate = new Intent(ACTION_UPDATE);
+		intentUpdate.putExtra(ACTION_PROGRESS, progress);
+		sendBroadcast(intentUpdate);
+	}
 
-    private int getSummarySize(String[] zips) {
-        int size = 0;
-        for (String z : zips) {
-            try {
-                ZipFile zipFile = new ZipFile(z);
-                size += zipFile.getFileHeaders().size();
-            } catch (IOException e) {
-                Bugsnag.notify(e);
-            }
-        }
-        return size;
-    }
+	private int getSummarySize(String[] zips) {
+		int size = 0;
+		for (String z : zips) {
+			try {
+				ZipFile zipFile = new ZipFile(z);
+				size += zipFile.getFileHeaders().size();
+			} catch (IOException e) {
+				Bugsnag.notify(e);
+			}
+		}
+		return size;
+	}
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mNotifyManager.cancel(id);
-        publishProgress(-1);
-    }
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		mNotifyManager.cancel(id);
+		publishProgress(-1);
+	}
 }

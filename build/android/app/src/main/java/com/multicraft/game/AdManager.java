@@ -24,19 +24,19 @@ import android.app.Activity;
 
 class AdManager {
 
-    static void initAd(final Activity activity, boolean consent) {
-        // NDA code here
-    }
+	static void initAd(final Activity activity, boolean consent) {
+		// NDA code here
+	}
 
-    static void setAdsCallback(final Activity activity) {
-        // NDA code here
-    }
+	static void setAdsCallback(final Activity activity) {
+		// NDA code here
+	}
 
-    static void startAd(final Activity activity, boolean isFirstTime, boolean isShowNow) {
-        // NDA code here
-    }
+	static void startAd(final Activity activity, boolean isFirstTime, boolean isShowNow) {
+		// NDA code here
+	}
 
-    static void stopAd() {
-        // NDA code here
-    }
+	static void stopAd() {
+		// NDA code here
+	}
 }

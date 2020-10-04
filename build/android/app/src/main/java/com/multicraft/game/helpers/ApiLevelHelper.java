@@ -27,23 +27,23 @@ import static android.os.Build.VERSION_CODES.O;
 import static android.os.Build.VERSION_CODES.Q;
 
 public class ApiLevelHelper {
-    public static boolean isGreaterOrEqual(int versionCode) {
-        return SDK_INT >= versionCode;
-    }
+	public static boolean isGreaterOrEqual(int versionCode) {
+		return SDK_INT >= versionCode;
+	}
 
-    public static boolean isGreaterOrEqualKitkat() {
-        return isGreaterOrEqual(KITKAT);
-    }
+	public static boolean isGreaterOrEqualKitkat() {
+		return isGreaterOrEqual(KITKAT);
+	}
 
-    public static boolean isGreaterOrEqualLollipop() {
-        return isGreaterOrEqual(LOLLIPOP);
-    }
+	public static boolean isGreaterOrEqualLollipop() {
+		return isGreaterOrEqual(LOLLIPOP);
+	}
 
-    public static boolean isGreaterOrEqualOreo() {
-        return isGreaterOrEqual(O);
-    }
+	public static boolean isGreaterOrEqualOreo() {
+		return isGreaterOrEqual(O);
+	}
 
-    public static boolean isGreaterOrEqualQ() {
-        return isGreaterOrEqual(Q);
-    }
+	public static boolean isGreaterOrEqualQ() {
+		return isGreaterOrEqual(Q);
+	}
 }
