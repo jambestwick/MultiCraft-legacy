@@ -38,7 +38,6 @@ import com.multicraft.game.helpers.PreferencesHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.Date;
-import java.util.Objects;
 
 import static com.multicraft.game.helpers.ApiLevelHelper.isGreaterOrEqualKitkat;
 
@@ -87,7 +86,7 @@ class RateMe {
         final Dialog dialog = new Dialog(activity, R.style.RateMe);
         dialog.setCancelable(false);
         if (isGreaterOrEqualKitkat())
-            Objects.requireNonNull(dialog.getWindow()).getDecorView().setSystemUiVisibility(
+            dialog.getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);

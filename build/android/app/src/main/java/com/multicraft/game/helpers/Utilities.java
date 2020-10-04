@@ -28,7 +28,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.view.View;
 
 import com.bugsnag.android.Bugsnag;
@@ -45,7 +44,6 @@ import java.net.URL;
 import java.util.List;
 
 import static com.multicraft.game.helpers.ApiLevelHelper.isGreaterOrEqualKitkat;
-import static com.multicraft.game.helpers.ApiLevelHelper.isGreaterOrEqualLollipop;
 import static com.multicraft.game.helpers.PreferencesHelper.TAG_SHORTCUT_EXIST;
 
 public class Utilities {

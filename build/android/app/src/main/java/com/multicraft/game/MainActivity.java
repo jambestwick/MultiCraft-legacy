@@ -71,7 +71,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
@@ -399,7 +398,7 @@ public class MainActivity extends AppCompatActivity implements CallBackListener,
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> startUnzipService(zips),
                         throwable -> {
-                            if (Objects.requireNonNull(throwable.getLocalizedMessage()).contains("ENOSPC"))
+                            if (throwable.getLocalizedMessage().contains("ENOSPC"))
                                 showRestartDialog("ENOSPC");
                             else showRestartDialog("UKNWN");
                         });

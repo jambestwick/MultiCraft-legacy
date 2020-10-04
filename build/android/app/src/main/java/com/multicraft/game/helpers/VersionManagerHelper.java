@@ -43,7 +43,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -136,7 +135,7 @@ public class VersionManagerHelper {
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            return Objects.requireNonNull(response.body()).string();
+            return response.body().string();
         } catch (IOException | NullPointerException e) {
             // nothing
         }

@@ -20,26 +20,30 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 package com.multicraft.game.helpers;
 
-import android.os.Build;
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.KITKAT;
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
+import static android.os.Build.VERSION_CODES.O;
+import static android.os.Build.VERSION_CODES.Q;
 
 public class ApiLevelHelper {
     public static boolean isGreaterOrEqual(int versionCode) {
-        return Build.VERSION.SDK_INT >= versionCode;
+        return SDK_INT >= versionCode;
     }
 
     public static boolean isGreaterOrEqualKitkat() {
-        return isGreaterOrEqual(Build.VERSION_CODES.KITKAT);
+        return isGreaterOrEqual(KITKAT);
     }
 
     public static boolean isGreaterOrEqualLollipop() {
-        return isGreaterOrEqual(Build.VERSION_CODES.LOLLIPOP);
+        return isGreaterOrEqual(LOLLIPOP);
     }
 
     public static boolean isGreaterOrEqualOreo() {
-        return isGreaterOrEqual(Build.VERSION_CODES.O);
+        return isGreaterOrEqual(O);
     }
 
     public static boolean isGreaterOrEqualQ() {
-        return isGreaterOrEqual(Build.VERSION_CODES.Q);
+        return isGreaterOrEqual(Q);
     }
 }

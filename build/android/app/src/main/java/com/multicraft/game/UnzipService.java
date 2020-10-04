@@ -39,7 +39,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Objects;
 
 import static com.multicraft.game.MainActivity.zipLocations;
 import static com.multicraft.game.helpers.ApiLevelHelper.isGreaterOrEqualOreo;
@@ -105,7 +104,7 @@ public class UnzipService extends IntentService {
     private void unzip(Intent intent) {
         String[] zips = intent.getStringArrayExtra(EXTRA_KEY_IN_FILE);
         int per = 0;
-        int size = getSummarySize(Objects.requireNonNull(zips));
+        int size = getSummarySize(zips);
         for (String zip : zips) {
             File zipFile = new File(zip);
             LocalFileHeader localFileHeader;
