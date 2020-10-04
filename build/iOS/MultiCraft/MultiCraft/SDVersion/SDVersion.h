@@ -62,6 +62,8 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 	iPad7                 = 220,
 	iPadPro11Inch2Gen     = 216,
 	iPadPro12Dot9Inch4Gen = 217,
+	iPad8                 = 218,
+	iPadAir4              = 219,
 
 	// iPod Touch
 	iPodTouch5Gen         = 301,
@@ -136,6 +138,8 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 			@"iPad7,6"  : @(iPad6),
 			@"iPad7,11" : @(iPad7),
 			@"iPad7,12" : @(iPad7),
+			@"iPad11,6" : @(iPad8),
+			@"iPad11,7" : @(iPad8),
 
 			@"iPad4,1"  : @(iPadAir),
 			@"iPad4,2"  : @(iPadAir),
@@ -144,6 +148,8 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 			@"iPad5,4"  : @(iPadAir2),
 			@"iPad11,3" : @(iPadAir3),
 			@"iPad11,4" : @(iPadAir3),
+			@"iPad13,1" : @(iPadAir4),
+			@"iPad13,2" : @(iPadAir4),
 
 			@"iPad2,5"  : @(iPadMini),
 			@"iPad2,6"  : @(iPadMini),
@@ -213,9 +219,8 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 
 #define SDVersion7and9Inch	(([SDVersion deviceVersion] == iPadMini) || ([SDVersion deviceVersion] == iPadMini2) | ([SDVersion deviceVersion] == iPadMini3) | ([SDVersion deviceVersion] == iPadMini4) | ([SDVersion deviceVersion] == iPadMini5))
 
-#define SDVersion11Inch		(([SDVersion deviceVersion] == iPadPro11Inch) || ([SDVersion deviceVersion] == iPadPro11Inch2Gen))
+#define SDVersion11Inch		(([SDVersion deviceVersion] == iPadPro11Inch) || ([SDVersion deviceVersion] == iPadPro11Inch2Gen) || ([SDVersion deviceVersion] == iPadAir4))
 
 #define SDVersion12and9Inch	(([SDVersion deviceVersion] == iPadPro12Dot9Inch) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch2Gen) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch3Gen) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch4Gen))
 
-#define SDVersionHomeBar	(SDVersion5and8Inch || SDVersion6and1Inch || SDVersion6and5Inch || \
-							SDVersion11Inch || SDVersion12and9Inch)
+#define SDVersionHomeBar		(SDVersion5and8Inch || SDVersion6and1Inch || SDVersion6and5Inch || SDVersion11Inch || SDVersion12and9Inch)

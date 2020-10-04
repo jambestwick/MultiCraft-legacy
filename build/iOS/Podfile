@@ -3,19 +3,15 @@ platform :ios, '9.3'
 use_frameworks!
 
 def appodeal
-	source 'https://github.com/appodeal/CocoaPods.git'
-
 	pod 'APDAdColonyAdapter', '2.7.4.1'
 	pod 'APDAppLovinAdapter', '2.7.4.1'
 	pod 'APDAppodealAdExchangeAdapter', '2.7.4.1'
-	pod 'APDMintegralAdapter', '2.7.4.1'
+	pod 'APDIronSourceAdapter', '2.7.4.1'
 	pod 'APDTapjoyAdapter', '2.7.4.1'
 	pod 'APDUnityAdapter', '2.7.4.1'
 end
 
 target 'MultiCraft' do
-	source 'https://cdn.cocoapods.org/'
-
 	pod 'leveldb-library'
 	pod 'libvorbis'
 	pod 'LuaJITPod', :git => 'https://github.com/MoNTE48/LuaJITPod'
