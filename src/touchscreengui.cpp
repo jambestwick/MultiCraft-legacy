@@ -248,9 +248,9 @@ void TouchScreenGUI::init(ISimpleTextureSource *tsrc)
 	// init drop button
 	initButton(drop_id,
 			rect<s32>(m_screensize.X - button_size,
-					  m_screensize.Y / 2 - button_size,
+					  m_screensize.Y / 2 - button_size * 1.5,
 					  m_screensize.X,
-					  m_screensize.Y / 2),
+					  m_screensize.Y / 2 - button_size / 2),
 			L"drop", false);
 
 	// dirty implementation of positions for iOS
