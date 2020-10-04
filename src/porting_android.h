@@ -16,8 +16,8 @@ You should have received a copy of the GNU Lesser General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#ifndef __PORTING_ANDROID_H__
-#define __PORTING_ANDROID_H__
+
+#pragma once
 
 #ifndef __ANDROID__
 #error this include has to be included on android port only!
@@ -30,25 +30,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <string>
 
 namespace porting {
-/** java app **/
-	extern android_app *app_global;
+// java app
+extern android_app *app_global;
 
-/** java <-> c++ interaction interface **/
-	extern JNIEnv *jnienv;
+// java <-> c++ interaction interface
+extern JNIEnv *jnienv;
 
-/**
- * do initialization required on android only
- */
-	void initAndroid();
+// do initialization required on android only
+void initAndroid();
 
-	void cleanupAndroid();
+void cleanupAndroid();
 
 /**
  * Initializes path_* variables for Android
  * @param env Android JNI environment
  */
-	void initializePathsAndroid();
-
+void initializePathsAndroid();
 
 /**
  * show text input dialog in java
@@ -58,37 +55,33 @@ namespace porting {
  * @param editType type of texfield
  * (1==multiline text input; 2==single line text input; 3=password field)
  */
-	void showInputDialog(const std::string &acceptButton,
-	                     const std::string &hint, const std::string &current, int editType);
+void showInputDialog(const std::string &acceptButton,
+					const std::string &hint, const std::string &current, int editType);
 
 /**
  * WORKAROUND for not working callbacks from java -> c++
  * get current state of input dialog
  */
-	int getInputDialogState();
+int getInputDialogState();
 
 /**
  * WORKAROUND for not working callbacks from java -> c++
  * get text in current input dialog
  */
-	std::string getInputDialogValue();
-
+std::string getInputDialogValue();
 
 /**
  * get max device RAM as integer value
- * returns -1 on failure
  */
 	float getMemoryMax();
 
 /**
-* notify java on server connection
-*/
+ * notify java on server connection
+ */
 	void notifyServerConnect(bool is_multiplayer);
 
 /**
-* notify java on game exit.
-*/
+ * notify java on game exit
+ */
 	void notifyExitGame();
 }
-
-#endif
