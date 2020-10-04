@@ -221,10 +221,6 @@ public class GameActivity extends NativeActivity {
             stopAd();
     }
 
-    public void notifyAbortLoading() {
-        pf.saveSettings(TAG_BUILD_NUMBER, "1");
-    }
-
     public void notifyExitGame() {
         if (isMultiPlayer && pf.isAdsEnable())
             startAd(this, false, true);

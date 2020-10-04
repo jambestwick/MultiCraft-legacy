@@ -41,8 +41,6 @@ namespace porting {
 
 	std::string getInputDialogValue();
 
-	void notifyAbortLoading();
-
 	void notifyServerConnect(bool is_multiplayer);
 
 	void notifyExitGame();

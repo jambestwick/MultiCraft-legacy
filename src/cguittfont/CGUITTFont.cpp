@@ -76,12 +76,7 @@ inline void checkFontBitmapSize(const FT_Bitmap &bits)
 		std::cout << "Insane font glyph size. File: "
 		          << __FILE__ << " Line " << __LINE__
 		          << std::endl;
-#if defined(__ANDROID__) || defined(__IOS__)
-		porting::notifyAbortLoading();
-		exit(0);
-#else
 		abort();
-#endif
 	}
 }
 

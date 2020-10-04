@@ -405,12 +405,7 @@ void FontEngine::initFont(unsigned int basesize, FontMode mode)
 		errorstream << "MultiCraft can not continue without a valid font. "
 				"Please correct the 'font_path' setting or install the font "
 				"file in the proper location" << std::endl;
-#if defined(__ANDROID__) || defined(__IOS__)
-		porting::notifyAbortLoading();
-		exit(0);
-#else
 		abort();
-#endif
 	}
 #endif
 }

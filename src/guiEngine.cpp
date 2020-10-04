@@ -223,12 +223,7 @@ GUIEngine::GUIEngine(	irr::IrrlichtDevice* dev,
 
 		if (!loadMainMenuScript()) {
 			errorstream << "No future without main menu!" << std::endl;
-#if defined(__ANDROID__) || defined(__IOS__)
-			porting::notifyAbortLoading();
-			exit(0);
-#else
 			abort();
-#endif
 		}
 
 		run();

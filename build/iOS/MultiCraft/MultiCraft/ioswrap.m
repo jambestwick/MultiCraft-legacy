@@ -76,18 +76,6 @@ void ioswrap_assets()
 	window.backgroundColor = [UIColor blackColor];
 }
 
-void ioswrap_asset_refresh(void)
-{
-	char buf[256];
-	ioswrap_paths(PATH_LIBRARY_SUPPORT, buf, sizeof(buf));
-	NSString *destpath = [NSString stringWithUTF8String:buf];
-
-	// set asset version to 1, will be extracted next time
-	NSString *filename = [destpath stringByAppendingPathComponent:@"_version"];
-	NSString *content = [NSString stringWithFormat:@"%d", 1];
-	[content writeToFile:filename atomically:NO encoding:NSASCIIStringEncoding error:nil];
-}
-
 /* Get Scale Factor */
 float ioswrap_scale()
 {

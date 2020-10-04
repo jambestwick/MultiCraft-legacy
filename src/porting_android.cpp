@@ -267,16 +267,6 @@ namespace porting {
 		return device_has_keyboard;
 	}
 
-	void notifyAbortLoading() {
-		jmethodID notifyAbort = jnienv->GetMethodID(nativeActivity,
-		                                            "notifyAbortLoading", "()V");
-
-		if (notifyAbort == nullptr)
-			assert("porting::notifyAbortLoading unable to find java method" == nullptr);
-
-		jnienv->CallVoidMethod(app_global->activity->clazz, notifyAbort);
-	}
-
 	void notifyServerConnect(bool is_multiplayer) {
 		jmethodID notifyConnect = jnienv->GetMethodID(nativeActivity,
 		                                              "notifyServerConnect", "(Z)V");

@@ -81,11 +81,6 @@ namespace porting {
 	float getMemoryMax();
 
 /**
-* notify java that font loading failded
-*/
-	void notifyAbortLoading();
-
-/**
 * notify java on server connection
 */
 	void notifyServerConnect(bool is_multiplayer);
