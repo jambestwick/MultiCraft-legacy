@@ -1,0 +1,5 @@
+locale
+Pods
+Podfile.lock
+deps/*
+!deps/*.sh

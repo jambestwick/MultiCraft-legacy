@@ -182,7 +182,11 @@ bool ClientLauncher::run(GameParams &game_params, const Settings &cmd_args)
 		const wchar_t *text = wgettext("Main Menu");
 		device->setWindowCaption((utf8_to_wide(PROJECT_NAME_C) +
 			L" " + utf8_to_wide(g_version_hash) +
+#if defined(__MACH__) && defined(__APPLE__)
+			L"").c_str());
+#else
 			L" [" + text + L"]").c_str());
+#endif
 		delete[] text;
 
 		try {	// This is used for catching disconnects

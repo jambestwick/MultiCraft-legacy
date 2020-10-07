@@ -185,7 +185,7 @@ int main(int argc, char *argv[])
 	if (g_settings->getBool("enable_console"))
 		porting::attachOrCreateConsole();
 
-#if defined(__ANDROID__) || defined(__IOS__) || defined(NDEBUG)
+#if defined(__ANDROID__) || defined(__APPLE__) || defined(NDEBUG)
 	// Disable unit tests
 #else
 	// Run unit tests

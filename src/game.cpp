@@ -1102,6 +1102,9 @@ void KeyCache::populate()
 			= getKeySetting("keymap_camera_mode");
 	key[KeyType::INCREASE_VIEWING_RANGE]
 			= getKeySetting("keymap_increase_viewing_range_min");
+#if defined(__MACH__) && defined(__APPLE__)
+	key[KeyType::INCREASE_VIEWING_RANGE2] = "=";
+#endif
 	key[KeyType::DECREASE_VIEWING_RANGE]
 			= getKeySetting("keymap_decrease_viewing_range_min");
 	key[KeyType::RANGESELECT]
@@ -1696,6 +1699,9 @@ void Game::run()
 			|| (server && server->getShutdownRequested()))) {
 #ifdef __IOS__
 		if (device->isWindowMinimized())
+			continue;
+#elif defined(__MACH__) && defined(__APPLE__)
+		if (!device->isWindowFocused())
 			continue;
 #endif
 
@@ -2606,7 +2612,7 @@ void Game::processKeyInput()
 		toggleDebug();
 	} else if (wasKeyDown(KeyType::TOGGLE_PROFILER)) {
 		toggleProfiler();
-	} else if (wasKeyDown(KeyType::INCREASE_VIEWING_RANGE)) {
+	} else if (wasKeyDown(KeyType::INCREASE_VIEWING_RANGE) || wasKeyDown(KeyType::INCREASE_VIEWING_RANGE2)) {
 		increaseViewRange();
 	} else if (wasKeyDown(KeyType::DECREASE_VIEWING_RANGE)) {
 		decreaseViewRange();
@@ -4765,13 +4771,15 @@ void Game::showPauseMenu()
 		os << "button_exit[3.5," << (ypos++) << ";4,0.5;btn_change_password;"
 			<< strgettext("Change Password") << "]";
 	}
+#if !defined(__MACH__) && !defined(__APPLE__)
 	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_sound;"
 		<< strgettext("Sound Volume") << "]";
+#endif
 	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_key_config;"
 		<< strgettext("Change Keys")  << "]";
 #endif
 	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_exit_menu;"
-		<< strgettext("Save and Exit") << "]";
+		<< strgettext("Exit to Menu") << "]";
 #ifndef __IOS__
 	os		<< "button_exit[3.5," << (ypos++) << ";4,0.5;btn_exit_os;"
 		<< strgettext("Close game")   << "]";
