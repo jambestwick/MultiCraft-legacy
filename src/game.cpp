@@ -1697,12 +1697,16 @@ void Game::run()
 	while (device->run()
 			&& !(*kill || g_gamecallback->shutdown_requested
 			|| (server && server->getShutdownRequested()))) {
-#ifdef __IOS__
-		if (device->isWindowMinimized())
+#if defined(__MACH__) && defined(__APPLE__) && !TARGET_OS_IOS
+		if (!device->isWindowFocused()) {
+			sleep_ms(50);
 			continue;
-#elif defined(__MACH__) && defined(__APPLE__)
-		if (!device->isWindowFocused())
+		}
+#elif defined(__ANDROID__) || defined(__IOS__)
+		if (device->isWindowMinimized()) {
+			sleep_ms(50);
 			continue;
+		}
 #endif
 
 		const irr::core::dimension2d<u32> &current_screen_size =

@@ -279,11 +279,13 @@ void GUIEngine::run()
 	while (m_device->run() && (!m_startgame) && (!m_kill)) {
 #ifdef __IOS__
 		if (m_device->isWindowMinimized())
-			continue;
-#elif defined(__ANDROID__)
+#else
 		if (!m_device->isWindowFocused())
-			continue;
 #endif
+		{
+			sleep_ms(50);
+			continue;
+		}
 
 		const irr::core::dimension2d<u32> &current_screen_size =
 			m_device->getVideoDriver()->getScreenSize();
@@ -321,9 +323,7 @@ void GUIEngine::run()
 
 		driver->endScene();
 
-		u32 frametime_min = 2000 / (!m_device->isWindowFocused()
- 				? g_settings->getFloat("pause_fps_max")
- 				: g_settings->getFloat("fps_max"));
+		u32 frametime_min = 1000 / g_settings->getFloat("pause_fps_max") / 2;
 
 		if (m_clouds_enabled)
 			cloudPostProcess();
