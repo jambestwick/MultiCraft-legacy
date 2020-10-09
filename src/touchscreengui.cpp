@@ -841,10 +841,6 @@ void TouchScreenGUI::step(float dtime)
 		if (!button.ids.empty()) {
 			button.repeatcounter += dtime;
 
-			// in case we're moving around digging does not happen
-			if (m_move_id != -1)
-				m_move_has_really_moved = true;
-
 			if (button.repeatcounter < button.repeatdelay)
 				continue;
 
