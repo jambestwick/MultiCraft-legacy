@@ -226,7 +226,7 @@ LOCAL_SRC_FILES += ../../../lib/intl/libintl.cpp
 # JSONCPP
 LOCAL_SRC_FILES += ../../../lib/jsoncpp/jsoncpp.cpp
 
-LOCAL_STATIC_LIBRARIES += Irrlicht LevelDB Curl Freetype OpenAL Vorbis LuaJIT android_native_app_glue $(PROFILER_LIBS)
+LOCAL_STATIC_LIBRARIES += Curl Freetype Irrlicht LevelDB OpenAL Vorbis LuaJIT android_native_app_glue $(PROFILER_LIBS)
 
 LOCAL_LDLIBS := -lEGL -lGLESv1_CM -lGLESv2 -landroid -lOpenSLES
 

@@ -11,7 +11,8 @@ android {
 		targetSdkVersion 29
 		externalNativeBuild {
 			ndkBuild {
-				arguments '-j' + Runtime.getRuntime().availableProcessors()
+				arguments '-j' + Runtime.getRuntime().availableProcessors(),
+						"--output-sync=none"
 			}
 		}
 	}
