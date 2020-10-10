@@ -4563,6 +4563,10 @@ inline void Game::limitFps(FpsControl *fps_timings, f32 *dtime)
 	if (g_menumgr.pausesGame() && !device->isWindowFocused())
 		frametime_min = 1000;
 #endif
+#if defined(__MACH__) && defined(__APPLE__) && !TARGET_OS_IOS
+	// FPS limiting causes freezes on macOS
+	frametime_min = 0;
+#endif
 
 	if (fps_timings->busy_time < frametime_min) {
 		fps_timings->sleep_time = frametime_min - fps_timings->busy_time;
