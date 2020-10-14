@@ -150,12 +150,6 @@ void ClientMap::updateDrawList(video::IVideoDriver* driver)
 
 	v3f camera_position = m_camera_position;
 	v3f camera_direction = m_camera_direction;
-	f32 camera_fov = m_camera_fov;
-
-	// Use a higher fov to accomodate faster camera movements.
-	// Blocks are cropped better when they are drawn.
-	// Or maybe they aren't? Well whatever.
-	camera_fov *= 1.2;
 
 	v3s16 cam_pos_nodes = floatToInt(camera_position, BS);
 	v3s16 p_blocks_min;
@@ -223,16 +217,16 @@ void ClientMap::updateDrawList(video::IVideoDriver* driver)
 				block->mesh->updateCameraOffset(m_camera_offset);
 
 			float range = 100000 * BS;
-			#if defined(__ANDROID__) || defined(__IOS__)
+#if defined(__ANDROID__) || defined(__IOS__)
 				range = m_control.wanted_range * 4 * BS;	
-			#endif
+#endif
 			
 			if (m_control.range_all == false)
 				range = m_control.wanted_range * BS;
 
 			float d = 0.0;
 			if (!isBlockInSight(block->getPos(), camera_position,
-					camera_direction, camera_fov, range, &d))
+					camera_direction, m_camera_fov, range, &d))
 				continue;
 
 			blocks_in_range++;
