@@ -1493,6 +1493,7 @@ private:
 	bool m_first_loop_after_window_activation;
 	bool m_camera_offset_changed;
 
+	int m_reset_HW_buffer_counter = 0;
 #if defined(__ANDROID__) || defined(__IOS__)
 	bool m_cache_hold_aux1;
 	bool m_android_chat_open;
@@ -4381,6 +4382,27 @@ void Game::updateFrame(ProfilerGraph *graph, RunStats *stats, f32 dtime,
 	/*
 		End scene
 	*/
+	if (++m_reset_HW_buffer_counter > 500) {
+		/*
+		  Periodically remove all mesh HW buffers.
+
+		  Work around for a quirk in Irrlicht where a HW buffer is only
+		  released after 20000 iterations (triggered from endScene()).
+
+		  Without this, all loaded but unused meshes will retain their HW
+		  buffers for at least 5 minutes, at which point looking up the HW buffers
+		  becomes a bottleneck and the framerate drops (as much as 30%).
+
+		  Tests showed that numbers between 50 and 1000 are good, so picked 500.
+		  There are no other public Irrlicht APIs that allow interacting with the
+		  HW buffers without tracking the status of every individual mesh.
+
+		  The HW buffers for _visible_ meshes will be reinitialized in the next frame.
+		*/
+		infostream << "Game::updateFrame(): Removing all HW buffers." << std::endl;
+		driver->removeAllHardwareBuffers();
+		m_reset_HW_buffer_counter = 0;
+	}
 	driver->endScene();
 
 	stats->drawtime = tt_draw.stop(true);
