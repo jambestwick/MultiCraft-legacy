@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 . sdk.sh
-FREETYPE_VERSION=2.10.2
+FREETYPE_VERSION=2.10.3
 
 if [ ! -d freetype-src ]; then
 	wget http://download.savannah.gnu.org/releases/freetype/freetype-$FREETYPE_VERSION.tar.gz
@@ -22,4 +22,4 @@ make -j
 mkdir -p ../freetype
 make DESTDIR=$PWD/../freetype install
 
-echo "freetype build successful"
+echo "FreeType build successful"

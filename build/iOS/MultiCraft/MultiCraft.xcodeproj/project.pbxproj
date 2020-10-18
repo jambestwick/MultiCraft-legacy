@@ -36,7 +36,7 @@
 		4B35A9F41EEE017000274961 /* scripting_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B35A9F21EEE017000274961 /* scripting_client.cpp */; };
 		4B35A9F71EEE018D00274961 /* scripting_server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B35A9F51EEE018D00274961 /* scripting_server.cpp */; };
 		842A808C2339174C00A89418 /* ads.mm in Sources */ = {isa = PBXBuildFile; fileRef = 842A808B2339174C00A89418 /* ads.mm */; };
-		8465A76522A7D4500095B7CA /* libintl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8465A76422A7D4500095B7CA /* libintl.cpp */; };
+		84894C68253A3DFB006726BE /* libintl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84894C67253A3DF3006726BE /* libintl.a */; };
 		849C4F86209656D3005EB041 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 849C4F85209656D2005EB041 /* ru.lproj */; };
 		84B9C11724A4D82400016BCE /* ConsentAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */; };
 		84B9C11824A4D82400016BCE /* ConsentAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B9C11624A4D82400016BCE /* ConsentAlertViewController.xib */; };
@@ -293,10 +293,7 @@
 		840E2F9E233410F90088E7F7 /* SDVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDVersion.h; path = SDVersion/SDVersion.h; sourceTree = "<group>"; };
 		842A808A2339174B00A89418 /* ads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ads.h; path = Ads/ads.h; sourceTree = "<group>"; };
 		842A808B2339174C00A89418 /* ads.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ads.mm; path = Ads/ads.mm; sourceTree = "<group>"; };
-		8465A76122A7D4500095B7CA /* MessageCatalog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MessageCatalog.hpp; path = ../../../../lib/intl/MessageCatalog.hpp; sourceTree = "<group>"; };
-		8465A76222A7D4500095B7CA /* libintl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libintl.h; path = ../../../../lib/intl/libintl.h; sourceTree = "<group>"; };
-		8465A76322A7D4500095B7CA /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Util.hpp; path = ../../../../lib/intl/Util.hpp; sourceTree = "<group>"; };
-		8465A76422A7D4500095B7CA /* libintl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = libintl.cpp; path = ../../../../lib/intl/libintl.cpp; sourceTree = "<group>"; };
+		84894C67253A3DF3006726BE /* libintl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libintl.a; path = ../deps/gettext/lib/libintl.a; sourceTree = "<group>"; };
 		849C4F85209656D2005EB041 /* ru.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ru.lproj; sourceTree = "<group>"; };
 		84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentAlertViewController.swift; sourceTree = "<group>"; };
 		84B9C11624A4D82400016BCE /* ConsentAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConsentAlertViewController.xib; sourceTree = "<group>"; };
@@ -711,9 +708,10 @@
 			files = (
 				84C0FB1B24B35D9200606FAA /* Bugsnag in Frameworks */,
 				F8E6C7CD1DCA431B00F64426 /* Foundation.framework in Frameworks */,
-				F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */,
-				F8E6C7D71DCA477600F64426 /* libfreetype.a in Frameworks */,
 				84FE40E224439C2F008E29DB /* libcurl.a in Frameworks */,
+				F8E6C7D71DCA477600F64426 /* libfreetype.a in Frameworks */,
+				84894C68253A3DFB006726BE /* libintl.a in Frameworks */,
+				F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */,
 				84C32A3724AF7A4500445E92 /* Nantes in Frameworks */,
 				F8E6C7CB1DCA430B00F64426 /* OpenAL.framework in Frameworks */,
 				F8E6C7C91DCA430300F64426 /* OpenGLES.framework in Frameworks */,
@@ -733,17 +731,6 @@
 				4B35A9D41EEDDE1600274961 /* mini-gmp.h */,
 			);
 			name = gmp;
-			sourceTree = "<group>";
-		};
-		8465A76022A7D4500095B7CA /* intl */ = {
-			isa = PBXGroup;
-			children = (
-				8465A76122A7D4500095B7CA /* MessageCatalog.hpp */,
-				8465A76222A7D4500095B7CA /* libintl.h */,
-				8465A76322A7D4500095B7CA /* Util.hpp */,
-				8465A76422A7D4500095B7CA /* libintl.cpp */,
-			);
-			name = intl;
 			sourceTree = "<group>";
 		};
 		84CD4A56248782720019B81D /* Main */ = {
@@ -1104,7 +1091,6 @@
 				F8E6C5F01DCA3F9900F64426 /* voxelalgorithms.h */,
 				F8E6C5F11DCA3F9900F64426 /* wieldmesh.cpp */,
 				F8E6C5F21DCA3F9900F64426 /* wieldmesh.h */,
-				8465A76022A7D4500095B7CA /* intl */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -1344,6 +1330,7 @@
 		F8E6C7C31DCA42F300F64426 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84894C67253A3DF3006726BE /* libintl.a */,
 				84FE40E124439C2F008E29DB /* libcurl.a */,
 				F8E6C7D61DCA477600F64426 /* libfreetype.a */,
 				F8E6C7D41DCA476800F64426 /* libIrrlicht.a */,
@@ -1562,7 +1549,6 @@
 				F8E6C61E1DCA3F9900F64426 /* guiTable.cpp in Sources */,
 				F8E6C6291DCA3F9900F64426 /* localplayer.cpp in Sources */,
 				4B35A9C81EEDD22500274961 /* tileanimation.cpp in Sources */,
-				8465A76522A7D4500095B7CA /* libintl.cpp in Sources */,
 				F8E6C6221DCA3F9900F64426 /* imagefilters.cpp in Sources */,
 				F8E6C74D1DCA420A00F64426 /* l_mainmenu.cpp in Sources */,
 				F8E6C5F71DCA3F9900F64426 /* client.cpp in Sources */,
@@ -1830,9 +1816,9 @@
 					"${SRCROOT}/../../../src",
 					"${SRCROOT}/../../../src/script",
 					"${SRCROOT}/../../../lib/jsoncpp",
-					"${SRCROOT}/../../../lib/intl",
-					"${SRCROOT}/../deps/irrlicht/include",
 					"${SRCROOT}/../deps/freetype/include/freetype2",
+					"${SRCROOT}/../deps/gettext/include",
+					"${SRCROOT}/../deps/irrlicht/include",
 					"${SRCROOT}/../deps/libcurl/include",
 				);
 				INFOPLIST_FILE = MultiCraft/Info.plist;
@@ -1857,8 +1843,9 @@
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-L${SRCROOT}/../deps/irrlicht",
 					"-L${SRCROOT}/../deps/freetype/lib",
+					"-L${SRCROOT}/../deps/gettext/lib",
+					"-L${SRCROOT}/../deps/irrlicht",
 					"-L${SRCROOT}/../deps/libcurl/lib",
 					"-Wl,-dead_strip",
 				);
@@ -1896,9 +1883,9 @@
 					"${SRCROOT}/../../../src",
 					"${SRCROOT}/../../../src/script",
 					"${SRCROOT}/../../../lib/jsoncpp",
-					"${SRCROOT}/../../../lib/intl",
-					"${SRCROOT}/../deps/irrlicht/include",
 					"${SRCROOT}/../deps/freetype/include/freetype2",
+					"${SRCROOT}/../deps/gettext/include",
+					"${SRCROOT}/../deps/irrlicht/include",
 					"${SRCROOT}/../deps/libcurl/include",
 				);
 				INFOPLIST_FILE = MultiCraft/Info.plist;
@@ -1923,8 +1910,9 @@
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-L${SRCROOT}/../deps/irrlicht",
 					"-L${SRCROOT}/../deps/freetype/lib",
+					"-L${SRCROOT}/../deps/gettext/lib",
+					"-L${SRCROOT}/../deps/irrlicht",
 					"-L${SRCROOT}/../deps/libcurl/lib",
 					"-Wl,-dead_strip",
 				);
