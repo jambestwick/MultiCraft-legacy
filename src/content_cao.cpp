@@ -1333,6 +1333,7 @@ void GenericCAO::updateTextures(std::string mod)
 			m_spritenode->getMaterial(0).setFlag(video::EMF_TRILINEAR_FILTER, use_trilinear_filter);
 			m_spritenode->getMaterial(0).setFlag(video::EMF_BILINEAR_FILTER, use_bilinear_filter);
 			m_spritenode->getMaterial(0).setFlag(video::EMF_ANISOTROPIC_FILTER, use_anisotropic_filter);
+			m_spritenode->getMaterial(0).MaterialTypeParam = 0.5f;
 		}
 	}
 	if(m_animated_meshnode)
@@ -1355,6 +1356,7 @@ void GenericCAO::updateTextures(std::string mod)
 
 				// Set material flags and texture
 				video::SMaterial& material = m_animated_meshnode->getMaterial(i);
+				material.MaterialTypeParam = 0.5f;
 				material.TextureLayer[0].Texture = texture;
 				material.setFlag(video::EMF_LIGHTING, false);
 				material.setFlag(video::EMF_BILINEAR_FILTER, false);
@@ -1399,6 +1401,7 @@ void GenericCAO::updateTextures(std::string mod)
 
 				// Set material flags and texture
 				video::SMaterial& material = m_meshnode->getMaterial(i);
+				material.MaterialTypeParam = 0.5f;
 				material.setFlag(video::EMF_LIGHTING, false);
 				material.setFlag(video::EMF_BILINEAR_FILTER, false);
 				material.setTexture(0,
