@@ -64,14 +64,14 @@ dependencies {
 	/* Third-party libraries */
 	implementation 'androidx.multidex:multidex:2.0.1'
 	implementation 'androidx.preference:preference:1.1.1'
-	implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
+	implementation 'io.reactivex.rxjava2:rxjava:2.2.20'
 	implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 	//noinspection GradleDependency
 	implementation 'com.squareup.okhttp3:okhttp:3.12.12'
 	//noinspection GradleDependency
 	implementation 'commons-io:commons-io:2.5'
 	implementation 'gun0912.ted:tedpermission-rx2:2.2.3'
-	implementation 'net.lingala.zip4j:zip4j:2.6.3'
+	implementation 'net.lingala.zip4j:zip4j:2.6.4'
 
 	/* Analytics libraries */
 	//noinspection GradleDynamicVersion

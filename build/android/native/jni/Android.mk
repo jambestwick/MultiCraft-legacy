@@ -33,6 +33,11 @@ LOCAL_SRC_FILES := deps/Android/OpenAL-Soft/${NDK_TOOLCHAIN_VERSION}/$(APP_ABI)/
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := Gettext
+LOCAL_SRC_FILES := deps/Android/Gettext/${NDK_TOOLCHAIN_VERSION}/$(APP_ABI)/libintl.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := Vorbis
 LOCAL_SRC_FILES := deps/Android/Vorbis/${NDK_TOOLCHAIN_VERSION}/$(APP_ABI)/libvorbis.a
 include $(PREBUILT_STATIC_LIBRARY)
@@ -41,14 +46,14 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := MultiCraft
 
 LOCAL_CFLAGS += \
-	-DJSONCPP_NO_LOCALE_SUPPORT      \
-	-DHAVE_TOUCHSCREENGUI            \
-	-DUSE_CURL=1                     \
-	-DUSE_SOUND=1                    \
-	-DUSE_FREETYPE=1                 \
-	-DUSE_GETTEXT=1                  \
-	-DUSE_LEVELDB=1                  \
-	-DUSE_LUAJIT=1                   \
+	-DJSONCPP_NO_LOCALE_SUPPORT     \
+	-DHAVE_TOUCHSCREENGUI           \
+	-DUSE_CURL=1                    \
+	-DUSE_SOUND=1                   \
+	-DUSE_FREETYPE=1                \
+	-DUSE_LEVELDB=1                 \
+	-DUSE_LUAJIT=1                  \
+	-DUSE_GETTEXT=1                 \
 	$(GPROF_DEF)
 
 ifdef NDEBUG
@@ -66,12 +71,12 @@ LOCAL_C_INCLUDES := \
 	../../../src/cguittfont                        \
 	../../../src/script                            \
 	../../../lib/gmp                               \
-	../../../lib/intl                              \
 	../../../lib/jsoncpp                           \
 	deps/Android/Curl/include                      \
 	deps/Android/Freetype/include                  \
 	deps/Android/Irrlicht/include                  \
 	deps/Android/LevelDB/include                   \
+	deps/Android/Gettext/include                   \
 	deps/Android/ndk_iconv                         \
 	deps/Android/LuaJIT/src                        \
 	deps/Android/OpenAL-Soft/include               \
@@ -220,13 +225,10 @@ LOCAL_SRC_FILES += $(wildcard ../../../src/util/*.cpp)
 # GMP
 LOCAL_SRC_FILES += ../../../lib/gmp/mini-gmp.c
 
-# libIntl
-LOCAL_SRC_FILES += ../../../lib/intl/libintl.cpp
-
 # JSONCPP
 LOCAL_SRC_FILES += ../../../lib/jsoncpp/jsoncpp.cpp
 
-LOCAL_STATIC_LIBRARIES += Curl Freetype Irrlicht LevelDB OpenAL Vorbis LuaJIT android_native_app_glue $(PROFILER_LIBS)
+LOCAL_STATIC_LIBRARIES += Curl Gettext Freetype Irrlicht LevelDB OpenAL Vorbis LuaJIT android_native_app_glue $(PROFILER_LIBS)
 
 LOCAL_LDLIBS := -lEGL -lGLESv1_CM -lGLESv2 -landroid -lOpenSLES
 
