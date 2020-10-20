@@ -566,18 +566,11 @@ void set_default_settings(Settings *settings) {
 #endif // iOS
 #endif
 
-#if defined(__ANDROID__) || defined(__APPLE__)
-	char lang[3] = {0};
-
-#ifdef __ANDROID__
-	// Auto-detect language on Android
-	AConfiguration_getLanguage(porting::app_global->config, lang);
-#else
+#if defined(__APPLE__)
 	// Auto-detect language on iOS / macOS
+	char lang[3] = {0};
 	NSString *syslang = [[NSLocale preferredLanguages] firstObject];
 	[syslang getBytes:lang maxLength:2 usedLength:nil encoding:NSASCIIStringEncoding options:0 range:NSMakeRange(0, 2) remainingRange:nil];
-#endif
-
 	settings->setDefault("language", lang);
 #endif
 }
