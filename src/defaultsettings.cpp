@@ -422,6 +422,7 @@ void set_default_settings(Settings *settings) {
 	arm = true;
 #endif
 	if (arm) {
+		settings->setDefault("enable_minimap", "false");
 #endif
 		settings->setDefault("client_unload_unused_data_timeout", "60");
 		settings->setDefault("client_mapblock_limit", "50");
@@ -443,6 +444,7 @@ void set_default_settings(Settings *settings) {
 	// low settings
 	} else if (([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPodTouch6Gen) ||
 			   ([SDVersion deviceVersion] == iPadMini2) || ([SDVersion deviceVersion] == iPadMini3)) {
+		settings->setDefault("enable_minimap", "false");
 #endif
 		settings->setDefault("client_unload_unused_data_timeout", "120");
 		settings->setDefault("client_mapblock_limit", "200");
@@ -465,6 +467,7 @@ void set_default_settings(Settings *settings) {
 	// medium settings
 	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) ||
 			   ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir)) {
+		settings->setDefault("enable_minimap", "false");
 #endif
 		settings->setDefault("client_unload_unused_data_timeout", "300");
 		settings->setDefault("client_mapblock_limit", "300");
@@ -518,7 +521,6 @@ void set_default_settings(Settings *settings) {
 
 	// iOS Settings
 #ifdef __IOS__
-	settings->setDefault("enable_minimap", "false");
 	settings->setDefault("debug_log_level", "none");
 	settings->setDefault("password_save", "true");
 
@@ -559,9 +561,14 @@ void set_default_settings(Settings *settings) {
 	}
 
 	// Settings for the Rounded Screen and Home Bar
-	if SDVersionHomeBar {
-		settings->setDefault("hud_move_upwards", "20");
-		settings->setDefault("round_screen", "35");
+	if (@available(iOS 11.0, *)) {
+		UIWindow *window = UIApplication.sharedApplication.keyWindow;
+		CGFloat bottomPadding = window.safeAreaInsets.bottom;
+
+		if (bottomPadding > 0) {
+			settings->setDefault("hud_move_upwards", "20");
+			settings->setDefault("round_screen", "35");
+		}
 	}
 #endif // iOS
 #endif
