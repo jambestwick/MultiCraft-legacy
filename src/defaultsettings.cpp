@@ -387,8 +387,9 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("keymap_sneak", "KEY_SHIFT");
 	settings->setDefault("keymap_toggle_debug", "KEY_KEY_V");
 	settings->setDefault("keymap_camera_mode", "KEY_KEY_C");
+	settings->setDefault("vsync", "true");
 
-	// Shaders work but may degrade performance on iGPU
+	// Shaders work but may reduce performance on iGPU
 	settings->setDefault("enable_shaders", "false");
 
 	CGFloat ScaleFactor = [[NSScreen mainScreen] backingScaleFactor];
