@@ -78,7 +78,7 @@ local function get_formspec(self)
 
 	if not self.hidden and (self.parent == nil or not self.parent.hidden) then
 		local name = self.tablist[self.last_tab_index].name
-		local tabname = (name == "local" or name == "online" or name == "hosting") and name
+		local tabname = (name == "local" or name == "online") and name
 
 		if self.parent == nil then
 			local tsize = self.tablist[self.last_tab_index].tabsize or

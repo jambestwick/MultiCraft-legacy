@@ -49,6 +49,8 @@ desktop.ini
 /clientmods/*
 !/clientmods/preview/
 /client/mod_storage/
+/textures/base/hosting/
+/builtin/mainmenu/hosting/
 
 ## Configuration/log files
 debug.txt
