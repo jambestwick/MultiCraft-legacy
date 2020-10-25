@@ -12,7 +12,7 @@ fi
 
 cd gettext-src/gettext-runtime
 
-CFLAGS=$IOS_FLAGS \
+CFLAGS="$IOS_FLAGS -Dlocale_charset=intl_locale_charset" \
 PKG_CONFIG=/bin/false \
 ./configure --host=arm-apple-darwin --prefix=/ \
 	--disable-shared --enable-static
