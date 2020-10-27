@@ -15,11 +15,17 @@
 --with this program; if not, write to the Free Software Foundation, Inc.,
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+local lang = core.settings:get("language")
 local function get_formspec()
 	local index = filterlist.get_current_index(menudata.worldlist,
 				tonumber(core.settings:get("mainmenu_last_selected_world")))
 	local creative_checkbox = core.settings:get_bool("creative_mode") and
 			"creative_checkbox" or "blank"
+
+	local creative_bg = "creative_bg.png"
+	if lang and lang == "ru" then
+		creative_bg = "creative_bg_" .. lang .. ".png"
+	end
 
 	local retval =
 			"image_button[0,4.84;3.31,0.92;" ..
@@ -36,11 +42,10 @@ local function get_formspec()
 					"blank.png") .. ";play;;true;false]" ..
 			"tooltip[play;".. fgettext("Play Game") .. "]" ..
 
-			"image_button[7.33,3.09;3.73,0.86;" ..
-				core.formspec_escape(defaulttexturedir) ..  "creative_bg.png" ..
+			"image_button[7.2,3.09;4,0.83;" ..
+				core.formspec_escape(defaulttexturedir) .. creative_bg ..
 				";;;true;false]" ..
-
-			"image_button[7.33,3.09;3.73,0.86;" ..
+			"image_button[7.2,3.09;4,0.83;" ..
 				core.formspec_escape(defaulttexturedir) .. creative_checkbox ..
 				".png;cb_creative_mode;;true;false]" ..
 			"tooltip[cb_creative_mode;".. fgettext("Creative mode") .. "]" ..
