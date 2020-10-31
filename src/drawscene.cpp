@@ -637,7 +637,8 @@ void draw_load_screen(const std::wstring &text, IrrlichtDevice* device,
 		if (progress_img && progress_img_bg) {
 			const core::dimension2d<u32> &img_size = progress_img_bg->getSize();
 #if !defined(__ANDROID__) && !defined(__IOS__)
-			const float scale = porting::getDisplayDensity();
+			float scale = porting::getDisplayDensity();
+			scale = scale >= 1 ? scale : 1;
 			u32 imgW = rangelim(img_size.Width, 256, 1024) * scale;
 			u32 imgH = rangelim(img_size.Height, 32, 128) * scale;
 			float imgR = scale;
