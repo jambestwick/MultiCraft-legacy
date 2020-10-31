@@ -392,7 +392,7 @@
 		F8E6C5461DCA3F9900F64426 /* gameparams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gameparams.h; path = ../../../../src/gameparams.h; sourceTree = "<group>"; };
 		F8E6C5471DCA3F9900F64426 /* genericobject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = genericobject.cpp; path = ../../../../src/genericobject.cpp; sourceTree = "<group>"; };
 		F8E6C5481DCA3F9900F64426 /* genericobject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = genericobject.h; path = ../../../../src/genericobject.h; sourceTree = "<group>"; };
-		F8E6C5491DCA3F9900F64426 /* gettext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gettext.cpp; path = ../../../../src/gettext.cpp; sourceTree = "<group>"; };
+		F8E6C5491DCA3F9900F64426 /* gettext.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = gettext.cpp; path = ../../../../src/gettext.cpp; sourceTree = "<group>"; };
 		F8E6C54A1DCA3F9900F64426 /* gettext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gettext.h; path = ../../../../src/gettext.h; sourceTree = "<group>"; };
 		F8E6C54B1DCA3F9900F64426 /* gettime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gettime.h; path = ../../../../src/gettime.h; sourceTree = "<group>"; };
 		F8E6C54C1DCA3F9900F64426 /* guiChatConsole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = guiChatConsole.cpp; path = ../../../../src/guiChatConsole.cpp; sourceTree = "<group>"; };

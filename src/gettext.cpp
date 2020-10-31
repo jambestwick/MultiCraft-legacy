@@ -26,6 +26,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "log.h"
 #include "porting.h"
 
+#ifdef __APPLE__
+#if TARGET_OS_IOS
+#import <UIKit/UIKit.h>
+#else
+#import <AppKit/AppKit.h>
+#endif
+#endif
+
 #if USE_GETTEXT && defined(_MSC_VER)
 #include <windows.h>
 #include <map>
@@ -212,6 +220,12 @@ void init_gettext(const char *path, const std::string &configured_language,
 		char lang[3] = {0};
 		AConfiguration_getLanguage(porting::app_global->config, lang);
 		setenv("LANG", lang, 1);
+#endif
+#ifdef __APPLE__	
+		char lang[3] = {0};
+		NSString *syslang = [[NSLocale preferredLanguages] firstObject];
+		[syslang getBytes:lang maxLength:2 usedLength:nil encoding:NSASCIIStringEncoding options:0 range:NSMakeRange(0, 2) remainingRange:nil];
+		setenv("LANGUAGE", lang, 1);
 #endif
 		setlocale(LC_ALL, "");
 	}

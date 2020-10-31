@@ -388,12 +388,13 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("keymap_toggle_debug", "KEY_KEY_V");
 	settings->setDefault("keymap_camera_mode", "KEY_KEY_C");
 	settings->setDefault("vsync", "true");
+	
+	float ScaleFactor = [[NSScreen mainScreen] backingScaleFactor];
+	if (ScaleFactor >= 2)
+		settings->setDefault("screen_dpi", "128");
 
 	// Shaders work but may reduce performance on iGPU
 	settings->setDefault("enable_shaders", "false");
-
-	CGFloat ScaleFactor = [[NSScreen mainScreen] backingScaleFactor];
-	settings->setDefault("screen_dpi", std::to_string(72 * ScaleFactor));
 #endif
 
 	// Mobile Platform
@@ -424,6 +425,7 @@ void set_default_settings(Settings *settings) {
 #endif
 	if (arm) {
 		settings->setDefault("enable_minimap", "false");
+		settings->setDefault("enable_clouds", "false");
 #endif
 		settings->setDefault("client_unload_unused_data_timeout", "60");
 		settings->setDefault("client_mapblock_limit", "50");
@@ -431,7 +433,7 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("pause_fps_max", "5");
 		settings->setDefault("viewing_range", "25");
 		settings->setDefault("smooth_lighting", "false");
-		settings->setDefault("enable_clouds", "false");
+		settings->setDefault("enable_3d_clouds", "false");
 		settings->setDefault("active_block_range", "1");
 		settings->setDefault("dedicated_server_step", "0.2");
 		settings->setDefault("abm_interval", "3.0");
@@ -572,14 +574,6 @@ void set_default_settings(Settings *settings) {
 		}
 	}
 #endif // iOS
-#endif
-
-#if defined(__APPLE__)
-	// Auto-detect language on iOS / macOS
-	char lang[3] = {0};
-	NSString *syslang = [[NSLocale preferredLanguages] firstObject];
-	[syslang getBytes:lang maxLength:2 usedLength:nil encoding:NSASCIIStringEncoding options:0 range:NSMakeRange(0, 2) remainingRange:nil];
-	settings->setDefault("language", lang);
 #endif
 }
 

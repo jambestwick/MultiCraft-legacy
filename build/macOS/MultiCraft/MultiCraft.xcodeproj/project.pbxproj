@@ -417,7 +417,7 @@
 		84585D6A24B139210040BA4F /* mg_ore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mg_ore.cpp; path = ../../../../src/mg_ore.cpp; sourceTree = "<group>"; };
 		84585D6B24B139210040BA4F /* raycast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = raycast.h; path = ../../../../src/raycast.h; sourceTree = "<group>"; };
 		84585D6C24B139210040BA4F /* tileanimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tileanimation.cpp; path = ../../../../src/tileanimation.cpp; sourceTree = "<group>"; };
-		84585D6D24B139210040BA4F /* gettext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gettext.cpp; path = ../../../../src/gettext.cpp; sourceTree = "<group>"; };
+		84585D6D24B139210040BA4F /* gettext.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = gettext.cpp; path = ../../../../src/gettext.cpp; sourceTree = "<group>"; };
 		84585D6E24B139210040BA4F /* guiPasswordChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = guiPasswordChange.h; path = ../../../../src/guiPasswordChange.h; sourceTree = "<group>"; };
 		84585D7024B139210040BA4F /* serverenvironment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = serverenvironment.cpp; path = ../../../../src/serverenvironment.cpp; sourceTree = "<group>"; };
 		84585D7224B139210040BA4F /* wieldmesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = wieldmesh.cpp; path = ../../../../src/wieldmesh.cpp; sourceTree = "<group>"; };
