@@ -226,6 +226,7 @@ void init_gettext(const char *path, const std::string &configured_language,
 		NSString *syslang = [[NSLocale preferredLanguages] firstObject];
 		[syslang getBytes:lang maxLength:2 usedLength:nil encoding:NSASCIIStringEncoding options:0 range:NSMakeRange(0, 2) remainingRange:nil];
 		setenv("LANGUAGE", lang, 1);
+		setenv("LANG", lang, 1);
 #endif
 		setlocale(LC_ALL, "");
 	}

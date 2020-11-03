@@ -16,6 +16,8 @@
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 local lang = core.settings:get("language")
+if not (lang and (lang ~= "")) then lang = os.getenv("LANG") end
+
 local function get_formspec()
 	local index = filterlist.get_current_index(menudata.worldlist,
 				tonumber(core.settings:get("mainmenu_last_selected_world")))
