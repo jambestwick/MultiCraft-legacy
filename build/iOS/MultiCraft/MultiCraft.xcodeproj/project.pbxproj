@@ -229,7 +229,6 @@
 		F8E6C7C21DCA428800F64426 /* timetaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8E6C7B51DCA428800F64426 /* timetaker.cpp */; };
 		F8E6C7C51DCA42F300F64426 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7C41DCA42F300F64426 /* QuartzCore.framework */; };
 		F8E6C7C71DCA42FA00F64426 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7C61DCA42FA00F64426 /* UIKit.framework */; };
-		F8E6C7C91DCA430300F64426 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7C81DCA430300F64426 /* OpenGLES.framework */; };
 		F8E6C7CB1DCA430B00F64426 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7CA1DCA430B00F64426 /* OpenAL.framework */; };
 		F8E6C7CD1DCA431B00F64426 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7CC1DCA431B00F64426 /* Foundation.framework */; };
 		F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D41DCA476800F64426 /* libIrrlicht.a */; };
@@ -708,7 +707,6 @@
 		F8E6C7B61DCA428800F64426 /* timetaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = timetaker.h; path = ../../../../src/util/timetaker.h; sourceTree = "<group>"; };
 		F8E6C7C41DCA42F300F64426 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F8E6C7C61DCA42FA00F64426 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		F8E6C7C81DCA430300F64426 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		F8E6C7CA1DCA430B00F64426 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		F8E6C7CC1DCA431B00F64426 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F8E6C7CE1DCA432200F64426 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -732,7 +730,6 @@
 				849487B025530B660029F6CE /* MetalANGLE.framework in Frameworks */,
 				84C32A3724AF7A4500445E92 /* Nantes in Frameworks */,
 				F8E6C7CB1DCA430B00F64426 /* OpenAL.framework in Frameworks */,
-				F8E6C7C91DCA430300F64426 /* OpenGLES.framework in Frameworks */,
 				8E0FFE3234B35EC9603EC82A /* Pods_MultiCraft.framework in Frameworks */,
 				F8E6C7C51DCA42F300F64426 /* QuartzCore.framework in Frameworks */,
 				F8E6C7C71DCA42FA00F64426 /* UIKit.framework in Frameworks */,
@@ -1356,7 +1353,6 @@
 				F8E6C7CE1DCA432200F64426 /* CoreMotion.framework */,
 				F8E6C7CC1DCA431B00F64426 /* Foundation.framework */,
 				F8E6C7CA1DCA430B00F64426 /* OpenAL.framework */,
-				F8E6C7C81DCA430300F64426 /* OpenGLES.framework */,
 				F8E6C7C61DCA42FA00F64426 /* UIKit.framework */,
 				F8E6C7C41DCA42F300F64426 /* QuartzCore.framework */,
 				73B0001862274A8FCC7614F0 /* Pods_MultiCraft.framework */,
