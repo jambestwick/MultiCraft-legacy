@@ -37,6 +37,8 @@
 		4B35A9F71EEE018D00274961 /* scripting_server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B35A9F51EEE018D00274961 /* scripting_server.cpp */; };
 		842A808C2339174C00A89418 /* ads.mm in Sources */ = {isa = PBXBuildFile; fileRef = 842A808B2339174C00A89418 /* ads.mm */; };
 		84894C68253A3DFB006726BE /* libintl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84894C67253A3DF3006726BE /* libintl.a */; };
+		849487B025530B660029F6CE /* MetalANGLE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8429773D2553094800B439E8 /* MetalANGLE.framework */; };
+		849487B125530B660029F6CE /* MetalANGLE.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8429773D2553094800B439E8 /* MetalANGLE.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		849C4F86209656D3005EB041 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 849C4F85209656D2005EB041 /* ru.lproj */; };
 		84B9C11724A4D82400016BCE /* ConsentAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */; };
 		84B9C11824A4D82400016BCE /* ConsentAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B9C11624A4D82400016BCE /* ConsentAlertViewController.xib */; };
@@ -236,6 +238,20 @@
 		F8E6C7E31DCA511700F64426 /* worlds.zip in Resources */ = {isa = PBXBuildFile; fileRef = F8E6C7E21DCA511700F64426 /* worlds.zip */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		849487B225530B670029F6CE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				849487B125530B660029F6CE /* MetalANGLE.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		1E76DCA01B51A98F0CA4C480 /* Pods-MultiCraft.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiCraft.release.xcconfig"; path = "../Pods/Target Support Files/Pods-MultiCraft/Pods-MultiCraft.release.xcconfig"; sourceTree = "<group>"; };
 		32528F14AAB9EA0E9CAB8526 /* Pods-MultiCraft.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiCraft.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-MultiCraft/Pods-MultiCraft.debug.xcconfig"; sourceTree = "<group>"; };
@@ -291,6 +307,7 @@
 		4B35A9F61EEE018D00274961 /* scripting_server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scripting_server.h; path = ../../../../src/script/scripting_server.h; sourceTree = "<group>"; };
 		73B0001862274A8FCC7614F0 /* Pods_MultiCraft.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MultiCraft.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		840E2F9E233410F90088E7F7 /* SDVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDVersion.h; path = SDVersion/SDVersion.h; sourceTree = "<group>"; };
+		8429773D2553094800B439E8 /* MetalANGLE.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalANGLE.framework; path = ../deps/MetalANGLE.framework; sourceTree = "<group>"; };
 		842A808A2339174B00A89418 /* ads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ads.h; path = Ads/ads.h; sourceTree = "<group>"; };
 		842A808B2339174C00A89418 /* ads.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ads.mm; path = Ads/ads.mm; sourceTree = "<group>"; };
 		84894C67253A3DF3006726BE /* libintl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libintl.a; path = ../deps/gettext/lib/libintl.a; sourceTree = "<group>"; };
@@ -712,6 +729,7 @@
 				F8E6C7D71DCA477600F64426 /* libfreetype.a in Frameworks */,
 				84894C68253A3DFB006726BE /* libintl.a in Frameworks */,
 				F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */,
+				849487B025530B660029F6CE /* MetalANGLE.framework in Frameworks */,
 				84C32A3724AF7A4500445E92 /* Nantes in Frameworks */,
 				F8E6C7CB1DCA430B00F64426 /* OpenAL.framework in Frameworks */,
 				F8E6C7C91DCA430300F64426 /* OpenGLES.framework in Frameworks */,
@@ -1330,6 +1348,7 @@
 		F8E6C7C31DCA42F300F64426 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8429773D2553094800B439E8 /* MetalANGLE.framework */,
 				84894C67253A3DF3006726BE /* libintl.a */,
 				84FE40E124439C2F008E29DB /* libcurl.a */,
 				F8E6C7D61DCA477600F64426 /* libfreetype.a */,
@@ -1359,6 +1378,7 @@
 				E156912616D2E9233FC1C9F4 /* [CP] Copy Pods Resources */,
 				7055146ABE25F98BDC1A6400 /* [CP] Embed Pods Frameworks */,
 				4EB364AA68EABAF7EBC092CB /* Upload Bugsnag dSYM */,
+				849487B225530B670029F6CE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1749,6 +1769,10 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_INCREMENTAL_DISTILL = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"${SRCROOT}/../deps",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -1774,6 +1798,10 @@
 				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_INCREMENTAL_DISTILL = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"${SRCROOT}/../deps",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
