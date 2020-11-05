@@ -41,8 +41,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #ifdef __ANDROID__
 #include <GLES/gl.h>
 #elif defined(__IOS__)
-#include <OpenGLES/ES2/gl.h>
-//#include <GLES2/gl2.h>
+#include <MetalANGLE/GLES2/gl2.h>
 #endif
 
 /*
