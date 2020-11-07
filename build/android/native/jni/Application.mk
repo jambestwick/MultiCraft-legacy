@@ -33,6 +33,4 @@ else
 APP_LDFLAGS  :=
 endif
 
-ifeq ($(APP_ABI),arm64-v8a)
-APP_LDFLAGS  += -fuse-ld=gold
-endif
+APP_LDFLAGS  += -fuse-ld=lld
