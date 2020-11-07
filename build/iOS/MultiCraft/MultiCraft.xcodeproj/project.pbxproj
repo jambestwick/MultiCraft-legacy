@@ -1810,6 +1810,7 @@
 					"USE_LUAJIT=1",
 					"USE_SYSTEM_GMP=0",
 					"HAVE_TOUCHSCREENGUI=1",
+					"ENABLE_GLES=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1877,6 +1878,7 @@
 					"USE_LUAJIT=1",
 					"USE_SYSTEM_GMP=0",
 					"HAVE_TOUCHSCREENGUI=1",
+					"ENABLE_GLES=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

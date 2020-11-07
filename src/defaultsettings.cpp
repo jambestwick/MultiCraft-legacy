@@ -388,7 +388,7 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("keymap_toggle_debug", "KEY_KEY_V");
 	settings->setDefault("keymap_camera_mode", "KEY_KEY_C");
 	settings->setDefault("vsync", "true");
-	
+
 	float ScaleFactor = [[NSScreen mainScreen] backingScaleFactor];
 	if (ScaleFactor >= 2)
 		settings->setDefault("screen_dpi", "128");
@@ -452,7 +452,7 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("client_unload_unused_data_timeout", "120");
 		settings->setDefault("client_mapblock_limit", "200");
 		settings->setDefault("fps_max", "35");
-		settings->setDefault("pause_fps_max", "5");
+		settings->setDefault("pause_fps_max", "10");
 		settings->setDefault("viewing_range", "30");
 		settings->setDefault("smooth_lighting", "false");
 		settings->setDefault("enable_3d_clouds", "false");
@@ -475,7 +475,6 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("client_unload_unused_data_timeout", "300");
 		settings->setDefault("client_mapblock_limit", "300");
 		settings->setDefault("fps_max", "35");
-		settings->setDefault("pause_fps_max", "10");
 		settings->setDefault("viewing_range", "60");
 		settings->setDefault("cloud_radius", "6");
 		settings->setDefault("active_block_range", "2");
