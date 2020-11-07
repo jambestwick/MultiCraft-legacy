@@ -591,7 +591,7 @@ bool ClientLauncher::create_engine_device()
 	params.PrivateData = porting::app_global;
 #endif
 	params.OGLES2ShaderPath = std::string(porting::path_share + DIR_DELIM +
-			"media" + DIR_DELIM + "shaders" + DIR_DELIM).c_str();
+			"client" + DIR_DELIM + "shaders" + DIR_DELIM + "Irrlicht" + DIR_DELIM).c_str();
 #endif
 
 	device = createDeviceEx(params);

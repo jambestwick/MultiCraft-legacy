@@ -54,6 +54,7 @@ LOCAL_CFLAGS += \
 	-DUSE_LEVELDB=1                 \
 	-DUSE_LUAJIT=1                  \
 	-DUSE_GETTEXT=1                 \
+	-DENABLE_GLES=1                 \
 	$(GPROF_DEF)
 
 ifdef NDEBUG

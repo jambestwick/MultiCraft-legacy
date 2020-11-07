@@ -511,7 +511,7 @@ display_gamma (Gamma) float 2.2 1.0 3.0
 texture_path (Texture path) path
 
 #    The rendering back-end for Irrlicht.
-video_driver (Video driver) enum opengl null,software,burningsvideo,direct3d8,direct3d9,opengl
+video_driver (Video driver) enum opengl null,software,burningsvideo,direct3d8,direct3d9,opengl,ogles1,ogles2
 
 #    Height on which clouds are appearing.
 cloud_height (Cloud height) int 120

@@ -8,12 +8,11 @@ fi
 FOLDER=$(pwd)
 DEST=$(mktemp -d)
 
-for dir in builtin textures; do
-	cp -r ../../$dir $DEST/$dir
+for dir in builtin textures client; do
+	cp -r ../../$dir $DEST/
 done
 
-#mkdir -p $DEST/media
-#cp -r deps/irrlicht/shaders $DEST/media/shaders
+cp -r deps/irrlicht/shaders $DEST/client/shaders/Irrlicht
 
 mkdir -p $DEST/fonts
 cp ../../fonts/Retron2000.ttf $DEST/fonts/ # no PNG fonts because freetype
