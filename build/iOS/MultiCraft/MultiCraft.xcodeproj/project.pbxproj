@@ -38,6 +38,8 @@
 		842A808C2339174C00A89418 /* ads.mm in Sources */ = {isa = PBXBuildFile; fileRef = 842A808B2339174C00A89418 /* ads.mm */; };
 		84894C68253A3DFB006726BE /* libintl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84894C67253A3DF3006726BE /* libintl.a */; };
 		849C4F86209656D3005EB041 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 849C4F85209656D2005EB041 /* ru.lproj */; };
+		84A4380425535BA5002571D4 /* soft_oal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A4380325535BA5002571D4 /* soft_oal.framework */; };
+		84A4380525535BA5002571D4 /* soft_oal.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84A4380325535BA5002571D4 /* soft_oal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84B9C11724A4D82400016BCE /* ConsentAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */; };
 		84B9C11824A4D82400016BCE /* ConsentAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B9C11624A4D82400016BCE /* ConsentAlertViewController.xib */; };
 		84C0FB1B24B35D9200606FAA /* Bugsnag in Frameworks */ = {isa = PBXBuildFile; productRef = 84C0FB1A24B35D9200606FAA /* Bugsnag */; };
@@ -228,13 +230,26 @@
 		F8E6C7C51DCA42F300F64426 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7C41DCA42F300F64426 /* QuartzCore.framework */; };
 		F8E6C7C71DCA42FA00F64426 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7C61DCA42FA00F64426 /* UIKit.framework */; };
 		F8E6C7C91DCA430300F64426 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7C81DCA430300F64426 /* OpenGLES.framework */; };
-		F8E6C7CB1DCA430B00F64426 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7CA1DCA430B00F64426 /* OpenAL.framework */; };
 		F8E6C7CD1DCA431B00F64426 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7CC1DCA431B00F64426 /* Foundation.framework */; };
 		F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D41DCA476800F64426 /* libIrrlicht.a */; };
 		F8E6C7D71DCA477600F64426 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6C7D61DCA477600F64426 /* libfreetype.a */; };
 		F8E6C7E11DCA4EB300F64426 /* assets.zip in Resources */ = {isa = PBXBuildFile; fileRef = F8E6C7E01DCA4EB300F64426 /* assets.zip */; };
 		F8E6C7E31DCA511700F64426 /* worlds.zip in Resources */ = {isa = PBXBuildFile; fileRef = F8E6C7E21DCA511700F64426 /* worlds.zip */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		84A4380625535BA5002571D4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				84A4380525535BA5002571D4 /* soft_oal.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1E76DCA01B51A98F0CA4C480 /* Pods-MultiCraft.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiCraft.release.xcconfig"; path = "../Pods/Target Support Files/Pods-MultiCraft/Pods-MultiCraft.release.xcconfig"; sourceTree = "<group>"; };
@@ -295,6 +310,7 @@
 		842A808B2339174C00A89418 /* ads.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ads.mm; path = Ads/ads.mm; sourceTree = "<group>"; };
 		84894C67253A3DF3006726BE /* libintl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libintl.a; path = ../deps/gettext/lib/libintl.a; sourceTree = "<group>"; };
 		849C4F85209656D2005EB041 /* ru.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ru.lproj; sourceTree = "<group>"; };
+		84A4380325535BA5002571D4 /* soft_oal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = soft_oal.framework; path = ../deps/soft_oal.framework; sourceTree = "<group>"; };
 		84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentAlertViewController.swift; sourceTree = "<group>"; };
 		84B9C11624A4D82400016BCE /* ConsentAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConsentAlertViewController.xib; sourceTree = "<group>"; };
 		84C32A3824AF7DDE00445E92 /* UITextViewPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewPlaceholder.swift; sourceTree = "<group>"; };
@@ -692,7 +708,6 @@
 		F8E6C7C41DCA42F300F64426 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F8E6C7C61DCA42FA00F64426 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F8E6C7C81DCA430300F64426 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		F8E6C7CA1DCA430B00F64426 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		F8E6C7CC1DCA431B00F64426 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F8E6C7CE1DCA432200F64426 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		F8E6C7D41DCA476800F64426 /* libIrrlicht.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrlicht.a; path = ../deps/irrlicht/libIrrlicht.a; sourceTree = "<group>"; };
@@ -713,10 +728,10 @@
 				84894C68253A3DFB006726BE /* libintl.a in Frameworks */,
 				F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */,
 				84C32A3724AF7A4500445E92 /* Nantes in Frameworks */,
-				F8E6C7CB1DCA430B00F64426 /* OpenAL.framework in Frameworks */,
 				F8E6C7C91DCA430300F64426 /* OpenGLES.framework in Frameworks */,
 				8E0FFE3234B35EC9603EC82A /* Pods_MultiCraft.framework in Frameworks */,
 				F8E6C7C51DCA42F300F64426 /* QuartzCore.framework in Frameworks */,
+				84A4380425535BA5002571D4 /* soft_oal.framework in Frameworks */,
 				F8E6C7C71DCA42FA00F64426 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1336,7 +1351,7 @@
 				F8E6C7D41DCA476800F64426 /* libIrrlicht.a */,
 				F8E6C7CE1DCA432200F64426 /* CoreMotion.framework */,
 				F8E6C7CC1DCA431B00F64426 /* Foundation.framework */,
-				F8E6C7CA1DCA430B00F64426 /* OpenAL.framework */,
+				84A4380325535BA5002571D4 /* soft_oal.framework */,
 				F8E6C7C81DCA430300F64426 /* OpenGLES.framework */,
 				F8E6C7C61DCA42FA00F64426 /* UIKit.framework */,
 				F8E6C7C41DCA42F300F64426 /* QuartzCore.framework */,
@@ -1359,6 +1374,7 @@
 				E156912616D2E9233FC1C9F4 /* [CP] Copy Pods Resources */,
 				7055146ABE25F98BDC1A6400 /* [CP] Embed Pods Frameworks */,
 				4EB364AA68EABAF7EBC092CB /* Upload Bugsnag dSYM */,
+				84A4380625535BA5002571D4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1380,7 +1396,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1210;
 				ORGANIZATIONNAME = MultiCraft;
 				TargetAttributes = {
 					F8E6C4D81DCA3B7900F64426 = {
@@ -1749,6 +1765,10 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_INCREMENTAL_DISTILL = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"${SRCROOT}/../deps",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -1774,6 +1794,10 @@
 				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_INCREMENTAL_DISTILL = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"${SRCROOT}/../deps",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;

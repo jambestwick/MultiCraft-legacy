@@ -4,6 +4,7 @@
 ./freetype.sh
 ./libcurl.sh
 ./gettext.sh
+./openal.sh
 #./luajit.sh ## requires an older version of macOS (with 32-bit support)
 
 echo
