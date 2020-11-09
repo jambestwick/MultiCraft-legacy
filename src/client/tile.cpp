@@ -1029,8 +1029,8 @@ video::IImage * Align2Npot2(video::IImage * image,
 	if (image == NULL)
 		return image;
 
-	if (hasNPotSupport())
-		return image;
+//	if (hasNPotSupport())
+//		return image;
 
 	core::dimension2d<u32> dim = image->getDimension();
 	unsigned int height = npot2(dim.Height);
