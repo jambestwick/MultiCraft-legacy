@@ -460,7 +460,7 @@
 		F8E6C5771DCA3F9900F64426 /* light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = light.h; path = ../../../../src/light.h; sourceTree = "<group>"; };
 		F8E6C5781DCA3F9900F64426 /* localplayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = localplayer.cpp; path = ../../../../src/localplayer.cpp; sourceTree = "<group>"; };
 		F8E6C5791DCA3F9900F64426 /* localplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = localplayer.h; path = ../../../../src/localplayer.h; sourceTree = "<group>"; };
-		F8E6C57A1DCA3F9900F64426 /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = log.cpp; path = ../../../../src/log.cpp; sourceTree = "<group>"; };
+		F8E6C57A1DCA3F9900F64426 /* log.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = log.cpp; path = ../../../../src/log.cpp; sourceTree = "<group>"; };
 		F8E6C57B1DCA3F9900F64426 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = log.h; path = ../../../../src/log.h; sourceTree = "<group>"; };
 		F8E6C57C1DCA3F9900F64426 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../../../src/main.cpp; sourceTree = "<group>"; };
 		F8E6C57D1DCA3F9900F64426 /* mainmenumanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mainmenumanager.h; path = ../../../../src/mainmenumanager.h; sourceTree = "<group>"; };

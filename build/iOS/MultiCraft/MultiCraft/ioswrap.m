@@ -12,14 +12,6 @@ void init_IOS_Settings()
 	[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil]; // don't stop background music
 }
 
-/* Handle Debug Logs */
-void ioswrap_log(const char *message)
-{
-#if !NDEBUG
-	NSLog(@"%s", message);
-#endif
-}
-
 /* Get Path for Assets */
 void ioswrap_paths(int type, char *dest, size_t destlen)
 {
