@@ -24,12 +24,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "constants.h"
 #include "util/string.h"
 
-#if defined(__MACH__) && defined(__APPLE__) && !TARGET_OS_IOS
-#import <AppKit/AppKit.h>
-#endif
-
+#ifdef __APPLE__
 #ifdef __IOS__
 #import "SDVersion.h"
+#else
+#import <AppKit/AppKit.h>
+#endif
 #endif
 
 void set_default_settings(Settings *settings) {
@@ -383,7 +383,7 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("mainmenu_last_selected_world", "1");
 
 	// Altered settings for macOS
-#if defined(__MACH__) && defined(__APPLE__) && !TARGET_OS_IOS
+#if defined(__MACH__) && defined(__APPLE__) && !defined(__IOS__)
 	settings->setDefault("keymap_sneak", "KEY_SHIFT");
 	settings->setDefault("keymap_toggle_debug", "KEY_KEY_V");
 	settings->setDefault("keymap_camera_mode", "KEY_KEY_C");

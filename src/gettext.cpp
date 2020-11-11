@@ -27,7 +27,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "porting.h"
 
 #ifdef __APPLE__
-#if TARGET_OS_IOS
+#ifdef __IOS__
 #import <UIKit/UIKit.h>
 #else
 #import <AppKit/AppKit.h>
