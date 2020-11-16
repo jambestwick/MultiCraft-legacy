@@ -41,7 +41,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #ifdef __ANDROID__
 #include <GLES/gl.h>
 #elif defined(__IOS__)
-#include <OpenGLES/ES2/gl.h>
+#include <MetalANGLE/GLES2/gl2.h>
 #endif
 
 /*
@@ -1029,14 +1029,15 @@ video::IImage * Align2Npot2(video::IImage * image,
 	if (image == NULL)
 		return image;
 
-	if (hasNPotSupport())
-		return image;
+	// gles3 has NPotSupport, but this is using too many resources
+//	if (hasNPotSupport())
+//		return image;
 
 	core::dimension2d<u32> dim = image->getDimension();
 	unsigned int height = npot2(dim.Height);
 	unsigned int width  = npot2(dim.Width);
 
-	if (/*dim.Height == height &&*/ dim.Width == width)
+	if (dim.Width == width)
 		return image;
 
 #ifdef __IOS__
