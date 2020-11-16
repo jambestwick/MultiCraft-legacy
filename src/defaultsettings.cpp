@@ -531,10 +531,7 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("fallback_font_path", g_settings->get("font_path"));
 
 	// Set the size of the elements depending on the screen size
-	if ([SDVersion deviceVersion] == iPhone4S) {
-		// 3.5" iPhone
-		settings->setDefault("hud_scaling", "0.5");
-	} else if SDVersion4Inch {
+	if SDVersion4Inch {
 		// 4" iPhone and iPod Touch
 		settings->setDefault("hud_scaling", "0.55");
 		settings->setDefault("mouse_sensitivity", "0.33");
@@ -578,6 +575,6 @@ void set_default_settings(Settings *settings) {
 
 void override_default_settings(Settings *settings, Settings *from) {
 	std::vector<std::string> names = from->getNames();
-	for (const auto & name : names)
+	for (const auto &name : names)
 		settings->setDefault(name, from->get(name));
 }

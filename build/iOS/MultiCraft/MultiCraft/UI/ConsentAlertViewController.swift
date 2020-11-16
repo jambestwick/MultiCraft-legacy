@@ -106,7 +106,7 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 
 	@IBAction private func showMulticraftUses(_ sender: Any) {
 		if UIApplication.shared.canOpenURL(privacyURL) {
-			UIApplication.shared.openURL(privacyURL)
+			UIApplication.shared.open(privacyURL)
 		}
 	}
 
@@ -122,7 +122,7 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 
 	@IBAction private func showPrivacy(_ sender: Any) {
 		if UIApplication.shared.canOpenURL(privacyURL) {
-			UIApplication.shared.openURL(privacyURL)
+			UIApplication.shared.open(privacyURL)
 		}
 	}
 
@@ -150,7 +150,7 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 
 	func attributedLabel(_ label: NantesLabel, didSelectLink link: URL) {
 		if UIApplication.shared.canOpenURL(link) {
-			UIApplication.shared.openURL(link)
+			UIApplication.shared.open(link)
 		}
 	}
 }
