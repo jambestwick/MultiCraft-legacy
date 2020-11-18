@@ -1,6 +1,7 @@
 // Color of the light emitted by the sun.
 uniform highp mat4 mWorld;
 uniform vec3 dayLight;
+uniform float fogDistance;
 uniform float animationTimer;
 
 varying mediump vec4 varColor;
@@ -74,7 +75,7 @@ float disp_z;
 	gl_Position = mWorldViewProj * inVertexPosition;
 #endif
 
-	eyeVec = -(mWorldView * inVertexPosition).xyz;
+	eyeVec = -(mWorldView * inVertexPosition).xyz / fogDistance;
 
 	// Calculate color.
 	// Red, green and blue components are pre-multiplied with
