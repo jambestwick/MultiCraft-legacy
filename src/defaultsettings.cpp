@@ -414,16 +414,14 @@ void set_default_settings(Settings *settings) {
 	// Set the optimal settings depending on the memory size [Android] | model [iOS]
 #ifdef __ANDROID__
 	if (porting::getMemoryMax() < 2) {
-	// minimal settings for less than 2GB RAM
+		// minimal settings for less than 2GB RAM
 #elif __IOS__
 	bool arm = false;
 #if defined(__arm__)
 	arm = true;
 #endif
 	if (arm) {
-	// minimal settings for 32-bit devices
-		settings->setDefault("video_driver", "ogles1");
-		settings->setDefault("enable_shaders", "false");
+		// minimal settings for 32-bit devices
 		settings->setDefault("enable_minimap", "false");
 		settings->setDefault("enable_clouds", "false");
 #endif
@@ -442,13 +440,11 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("enable_weather", "false");
 #ifdef __ANDROID__
 	} else if (porting::getMemoryMax() >= 2 && porting::getMemoryMax() < 4) {
-	// low settings for 2-4GB RAM
+		// low settings for 2-4GB RAM
 #elif __IOS__
 	} else if (([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPodTouch6Gen) ||
 			   ([SDVersion deviceVersion] == iPadMini2) || ([SDVersion deviceVersion] == iPadMini3)) {
-	// low settings
-		settings->setDefault("video_driver", "ogles1");
-		settings->setDefault("enable_shaders", "false");
+		// low settings
 		settings->setDefault("enable_minimap", "false");
 #endif
 		settings->setDefault("client_unload_unused_data_timeout", "120");
@@ -467,13 +463,11 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("enable_weather", "false");
 #ifdef __ANDROID__
 	} else if (porting::getMemoryMax() >= 4 && porting::getMemoryMax() < 6) {
-	// medium settings for 4.1-6GB RAM
+		// medium settings for 4.1-6GB RAM
 #elif __IOS__
 	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) ||
 			   ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir)) {
 		// medium settings
-		settings->setDefault("video_driver", "ogles2");
-		settings->setDefault("enable_shaders", "true");
 		settings->setDefault("enable_minimap", "false");
 #endif
 		settings->setDefault("client_unload_unused_data_timeout", "300");
@@ -485,8 +479,6 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("max_block_generate_distance", "3");
 	} else {
 		// high settings
-		settings->setDefault("video_driver", "ogles2");
-		settings->setDefault("enable_shaders", "true");
 		settings->setDefault("enable_waving_water", "true");
 		settings->setDefault("enable_waving_leaves", "true");
 		settings->setDefault("enable_waving_plants", "true");
@@ -499,6 +491,7 @@ void set_default_settings(Settings *settings) {
 #ifdef __ANDROID__
 	settings->setDefault("video_driver", "ogles1");
 	settings->setDefault("enable_shaders", "false");
+
 	settings->setDefault("debug_log_level", "error");
 
 	// Set font_path
@@ -534,6 +527,15 @@ void set_default_settings(Settings *settings) {
 
 	// iOS Settings
 #ifdef __IOS__
+	// Switch to olges2 with shaders on the new iOS version
+	if (@available(iOS 13.0, *)) {
+		settings->setDefault("video_driver", "ogles2");
+		settings->setDefault("enable_shaders", "true");
+	} else {
+		settings->setDefault("video_driver", "ogles1");
+		settings->setDefault("enable_shaders", "false");
+	}
+
 	settings->setDefault("debug_log_level", "none");
 	settings->setDefault("password_save", "true");
 
@@ -589,6 +591,6 @@ void set_default_settings(Settings *settings) {
 
 void override_default_settings(Settings *settings, Settings *from) {
 	std::vector<std::string> names = from->getNames();
-	for (const auto & name : names)
+	for (const auto &name : names)
 		settings->setDefault(name, from->get(name));
 }
