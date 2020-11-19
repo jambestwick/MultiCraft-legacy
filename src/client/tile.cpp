@@ -37,13 +37,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "guiscalingfilter.h"
 #include "nodedef.h"
 
-
-#ifdef __ANDROID__
-#include <GLES/gl.h>
-#elif defined(__IOS__)
-#include <OpenGLES/ES2/gl.h>
-#endif
-
 /*
 	A cache from texture name to texture path
 */
@@ -994,7 +987,7 @@ video::IImage* TextureSource::generateImage(const std::string &name)
 	return baseimg;
 }
 
-#if defined(__ANDROID__) || defined(__IOS__)
+#if !defined(__ANDROID__) && !defined(__IOS__)
 static inline u16 get_GL_major_version()
 {
 	const GLubyte *gl_version = glGetString(GL_VERSION);
@@ -1015,7 +1008,9 @@ bool hasNPotSupport()
 		strstr((char *)glGetString(GL_EXTENSIONS), "GL_OES_texture_npot");
 	return supported;
 }
+#endif
 
+#if defined(__ANDROID__) || defined(__IOS__)
 /**
  * Check and align image to npot2 if required by hardware
  * @param image image to check for npot2 alignment
@@ -1029,14 +1024,17 @@ video::IImage * Align2Npot2(video::IImage * image,
 	if (image == NULL)
 		return image;
 
+// gles3 has NPotSupport, but this is using too many resources
+#if !defined(__ANDROID__) && !defined(__IOS__)
 	if (hasNPotSupport())
 		return image;
+#endif
 
 	core::dimension2d<u32> dim = image->getDimension();
 	unsigned int height = npot2(dim.Height);
 	unsigned int width  = npot2(dim.Width);
 
-	if (/*dim.Height == height &&*/ dim.Width == width)
+	if (dim.Width == width)
 		return image;
 
 #ifdef __IOS__
