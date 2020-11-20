@@ -3,12 +3,11 @@ uniform sampler2D normalTexture;
 uniform sampler2D textureFlags;
 
 uniform vec4 skyBgColor;
-uniform float fogDistance;
 uniform vec3 eyePosition;
 
 varying mediump vec4 varColor;
 varying mediump vec2 varTexCoord;
-varying mediump vec3 eyeVec;
+varying mediump vec3 eyeVec; // divided by fogDistance
 
 const float e = 2.718281828459;
 const float BS = 10.0;
@@ -75,7 +74,7 @@ void main(void)
 	// should be more efficient as well.
 	// Note: clarity = (1 - fogginess)
 	float clarity = clamp(fogShadingParameter
-		- fogShadingParameter * length(eyeVec) / fogDistance, 0.0, 1.0);
+		- fogShadingParameter * length(eyeVec), 0.0, 1.0);
 	col = mix(skyBgColor, col, clarity);
 	col = vec4(col.rgb, base.a);
 

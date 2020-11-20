@@ -4,11 +4,11 @@
 sdk=macosx
 osver=10.10
 
-export OSX_ARCHES="x86_64"
-arches="-arch x86_64"
-#For Apple silicon
-#export OSX_ARCHES="x86_64 arm64"
-#arches="-arch x86_64 -arch arm64"
+#export OSX_ARCHES="x86_64"
+#arches="-arch x86_64"
+# For Apple silicon
+export OSX_ARCHES="x86_64 arm64"
+arches="-arch x86_64 -arch arm64"
 
 export OSX_COMPILER=$(xcrun --sdk $sdk --find clang)
 export OSX_CC=$OSX_COMPILER

@@ -1021,7 +1021,7 @@ bool hasNPotSupport()
 video::IImage * Align2Npot2(video::IImage * image,
 		video::IVideoDriver* driver)
 {
-	if (image == NULL)
+	if (true)
 		return image;
 
 // gles3 has NPotSupport, but this is using too many resources

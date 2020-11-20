@@ -245,9 +245,9 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("font_shadow", "1");
 	settings->setDefault("font_shadow_alpha", "127");
 	settings->setDefault("mono_font_path",
-	                     porting::getDataPath("fonts" DIR_DELIM "Cousine-Regular.ttf"));
+						 porting::getDataPath("fonts" DIR_DELIM "Cousine-Regular.ttf"));
 	settings->setDefault("fallback_font_path",
-	                     porting::getDataPath("fonts" DIR_DELIM "DroidSansFallback.ttf"));
+						 porting::getDataPath("fonts" DIR_DELIM "DroidSansFallback.ttf"));
 
 	settings->setDefault("fallback_font_shadow", "1");
 	settings->setDefault("fallback_font_shadow_alpha", "128");
@@ -302,7 +302,7 @@ void set_default_settings(Settings *settings) {
 
 	settings->setDefault("kick_msg_shutdown", "Server shutting down.");
 	settings->setDefault("kick_msg_crash",
-	                     "This server has experienced an internal error. You will now be disconnected.");
+						 "This server has experienced an internal error. You will now be disconnected.");
 	settings->setDefault("ask_reconnect_on_crash", "false");
 	settings->setDefault("kamikaze", "false");
 
@@ -417,7 +417,7 @@ void set_default_settings(Settings *settings) {
 		// minimal settings for less than 2GB RAM
 #elif __IOS__
 	bool arm = false;
-#if defined(__arm__)
+#ifdef __arm__
 	arm = true;
 #endif
 	if (arm) {
@@ -442,7 +442,8 @@ void set_default_settings(Settings *settings) {
 	} else if (porting::getMemoryMax() >= 2 && porting::getMemoryMax() < 4) {
 		// low settings for 2-4GB RAM
 #elif __IOS__
-	} else if (([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) || ([SDVersion deviceVersion] == iPodTouch6Gen) ||
+	} else if (([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) ||
+			   ([SDVersion deviceVersion] == iPodTouch6Gen) ||
 			   ([SDVersion deviceVersion] == iPadMini2) || ([SDVersion deviceVersion] == iPadMini3)) {
 		// low settings
 		settings->setDefault("enable_minimap", "false");
@@ -465,7 +466,8 @@ void set_default_settings(Settings *settings) {
 	} else if (porting::getMemoryMax() >= 4 && porting::getMemoryMax() < 6) {
 		// medium settings for 4.1-6GB RAM
 #elif __IOS__
-	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) ||
+	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) ||
+			   ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) ||
 			   ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir)) {
 		// medium settings
 		settings->setDefault("enable_minimap", "false");
@@ -485,6 +487,13 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("client_mapblock_limit", "500");
 		settings->setDefault("viewing_range", "80");
 		settings->setDefault("max_block_generate_distance", "5");
+
+		if (@available(iOS 13, *)) {
+			// enable visual shader effects
+			settings->setDefault("enable_waving_water", "true");
+			settings->setDefault("enable_waving_leaves", "true");
+			settings->setDefault("enable_waving_plants", "true");
+		}
 	}
 
 	// Android Settings
@@ -498,9 +507,9 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");
 
-	// Check screen size
-	double x_inches = (double) porting::getDisplaySize().X /
-	                   (160 * porting::getDisplayDensity());
+	// Apply settings according to screen size
+	float x_inches = (float) porting::getDisplaySize().X /
+			(160.f * porting::getDisplayDensity());
 	std::string font_size_str_small = std::to_string(TTF_DEFAULT_FONT_SIZE - 1);
 
 	if (x_inches <= 3.7) {
@@ -528,7 +537,7 @@ void set_default_settings(Settings *settings) {
 	// iOS Settings
 #ifdef __IOS__
 	// Switch to olges2 with shaders on the new iOS version
-	if (@available(iOS 13.0, *)) {
+	if (@available(iOS 13, *)) {
 		settings->setDefault("video_driver", "ogles2");
 		settings->setDefault("enable_shaders", "true");
 	} else {
@@ -544,10 +553,7 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("fallback_font_path", g_settings->get("font_path"));
 
 	// Set the size of the elements depending on the screen size
-	if ([SDVersion deviceVersion] == iPhone4S) {
-		// 3.5" iPhone
-		settings->setDefault("hud_scaling", "0.5");
-	} else if SDVersion4Inch {
+	if SDVersion4Inch {
 		// 4" iPhone and iPod Touch
 		settings->setDefault("hud_scaling", "0.55");
 		settings->setDefault("mouse_sensitivity", "0.33");
