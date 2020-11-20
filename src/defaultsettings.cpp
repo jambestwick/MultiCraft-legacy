@@ -481,9 +481,6 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("max_block_generate_distance", "3");
 	} else {
 		// high settings
-		settings->setDefault("enable_waving_water", "true");
-		settings->setDefault("enable_waving_leaves", "true");
-		settings->setDefault("enable_waving_plants", "true");
 		settings->setDefault("client_mapblock_limit", "500");
 		settings->setDefault("viewing_range", "80");
 		settings->setDefault("max_block_generate_distance", "5");
