@@ -209,6 +209,8 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 
 #define SDVersion7and9Inch	(([SDVersion deviceVersion] == iPadMini2) | ([SDVersion deviceVersion] == iPadMini3) | ([SDVersion deviceVersion] == iPadMini4) | ([SDVersion deviceVersion] == iPadMini5))
 
+#define SDVersioniPhone12Series	(([SDVersion deviceVersion] == iPhone12Mini) | ([SDVersion deviceVersion] == iPhone12Mini) | ([SDVersion deviceVersion] == iPhone12Pro) | ([SDVersion deviceVersion] == iPhone12ProMax))
+
 //#define SDVersion11Inch		(([SDVersion deviceVersion] == iPadPro11Inch) || ([SDVersion deviceVersion] == iPadPro11Inch2Gen) || ([SDVersion deviceVersion] == iPadAir4))
 
 //#define SDVersion12and9Inch	(([SDVersion deviceVersion] == iPadPro12Dot9Inch) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch2Gen) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch3Gen) || ([SDVersion deviceVersion] == iPadPro12Dot9Inch4Gen))

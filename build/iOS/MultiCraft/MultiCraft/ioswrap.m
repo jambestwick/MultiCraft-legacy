@@ -8,7 +8,11 @@
 /* Initialization iOS Specific Things */
 void init_IOS_Settings()
 {
-	[Bugsnag startWithApiKey:CrashliticsApiKey]; // crash analytics
+	BugsnagConfiguration *config = [BugsnagConfiguration loadConfig];
+	config.enabledErrorTypes.ooms = NO;
+	config.apiKey = CrashliticsApiKey;
+	[Bugsnag startWithConfiguration:config]; // crash analytics
+
 	[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil]; // don't stop background music
 }
 
