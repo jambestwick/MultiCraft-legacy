@@ -7,7 +7,6 @@ local abs, atan2, cos, floor, max, sin, random =
 local vadd, vnew, vmultiply, vnormalize, vsubtract =
 	vector.add, vector.new, vector.multiply, vector.normalize, vector.subtract
 
-local creative_mode = core.settings:get_bool("creative_mode")
 local node_drop = core.settings:get_bool("node_drop") ~= false
 
 local function copy_pointed_thing(pointed_thing)
@@ -644,8 +643,9 @@ end
 function core.handle_node_drops(pos, drops, digger)
 	-- Add dropped items to object's inventory
 	local inv = digger and digger:get_inventory()
+	local diggername = user_name(digger)
 	local give_item
-	if (not node_drop or creative_mode) and inv then
+	if (not node_drop or core.is_creative_enabled(diggername)) and inv then
 		give_item = function(item)
 			return inv:add_item("main", item)
 		end
@@ -699,7 +699,7 @@ function core.node_dig(pos, node, digger)
 			wielded = wdef.after_use(wielded, digger, node, dp) or wielded
 		else
 			-- Wear out tool
-			if not creative_mode then
+			if not core.is_creative_enabled(diggername) then
 				wielded:add_wear(dp.wear)
 				if wielded:get_count() == 0 and wdef.sound and wdef.sound.breaks then
 					core.sound_play(wdef.sound.breaks, {
