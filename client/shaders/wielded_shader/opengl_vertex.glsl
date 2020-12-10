@@ -12,5 +12,9 @@ void main(void)
 	varTexCoord = inTexCoord0.xy;
 	gl_Position = mWorldViewProj * inVertexPosition;
 	eyeVec = -(mWorldView * inVertexPosition).xyz;
+#if GL_ES
+	varColor = inVertexColor.bgra;
+#else
 	varColor = inVertexColor;
+#endif
 }
