@@ -412,12 +412,14 @@ void set_default_settings(Settings *settings) {
 	settings->setDefault("autosave_screensize", "false");
 
 	// Set the optimal settings depending on the memory size [Android] | model [iOS]
-#ifdef __IOS__
+#ifdef __ANDROID__
+	float memoryMax = porting::getMemoryMax();
+#elif __IOS__
 	float iOS_ver = [[[UIDevice currentDevice] systemVersion] floatValue];
 #endif
 
 #ifdef __ANDROID__
-	if (porting::getMemoryMax() < 2) {
+	if (memoryMax < 2) {
 		// minimal settings for less than 2GB RAM
 #elif __IOS__
 	if (iOS_ver < 11.0) {
@@ -439,7 +441,7 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("max_block_generate_distance", "1");
 		settings->setDefault("enable_weather", "false");
 #ifdef __ANDROID__
-	} else if (porting::getMemoryMax() >= 2 && porting::getMemoryMax() < 4) {
+	} else if (memoryMax >= 2 && memoryMax < 4) {
 		// low settings for 2-4GB RAM
 #elif __IOS__
 	} else if (iOS_ver < 13.0) {
@@ -461,7 +463,7 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("max_block_generate_distance", "2");
 		settings->setDefault("enable_weather", "false");
 #ifdef __ANDROID__
-	} else if (porting::getMemoryMax() >= 4 && porting::getMemoryMax() < 6) {
+	} else if (memoryMax >= 4 && memoryMax < 6) {
 		// medium settings for 4.1-6GB RAM
 #elif __IOS__
 	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) ||
@@ -482,12 +484,17 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("viewing_range", "80");
 		settings->setDefault("max_block_generate_distance", "5");
 
-#ifdef __IOS__
+#ifdef __ANDROID__
+		settings->setDefault("video_driver", "ogles2");
+		settings->setDefault("enable_shaders", "true");
+#elif __IOS__
 		if (@available(iOS 13, *)) {
-			// enable visual shader effects
-			settings->setDefault("enable_waving_water", "true");
-			settings->setDefault("enable_waving_leaves", "true");
-			settings->setDefault("enable_waving_plants", "true");
+#endif
+		// enable visual shader effects
+		settings->setDefault("enable_waving_water", "true");
+		settings->setDefault("enable_waving_leaves", "true");
+		settings->setDefault("enable_waving_plants", "true");
+#ifdef __IOS__
 		}
 #endif
 	}
