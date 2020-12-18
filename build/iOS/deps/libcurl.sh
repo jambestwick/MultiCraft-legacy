@@ -17,7 +17,7 @@ for x in armv7 arm64; do
 	if [ $x = armv7 ]; then
 		CURL_CFLAGS="-arch armv7 $IOS_FLAGS_NOARCH"
 	else
-		CURL_CFLAGS="-arch arm64 -arch arm64e $IOS_FLAGS_NOARCH"
+		CURL_CFLAGS="-arch arm64 $IOS_FLAGS_NOARCH"
 	fi
 	CFLAGS="$CURL_CFLAGS" \
 	./configure --host=arm-apple-darwin --prefix=/ --disable-shared --enable-static \

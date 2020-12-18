@@ -8,8 +8,8 @@ android {
 		minSdkVersion 16
 		//noinspection OldTargetApi
 		targetSdkVersion 29
-		versionCode 108
-		versionName "1.13.0"
+		versionCode 116
+		versionName "1.14.0"
 		multiDexEnabled true
 	}
 
@@ -62,6 +62,8 @@ dependencies {
 	implementation project(':native')
 
 	/* Third-party libraries */
+	implementation 'androidx.appcompat:appcompat:1.2.0'
+	implementation 'androidx.appcompat:appcompat-resources:1.2.0'
 	implementation 'androidx.multidex:multidex:2.0.1'
 	implementation 'androidx.preference:preference:1.1.1'
 	implementation 'io.reactivex.rxjava2:rxjava:2.2.20'
@@ -75,8 +77,5 @@ dependencies {
 
 	/* Analytics libraries */
 	//noinspection GradleDynamicVersion
-	/*implementation('com.bugsnag:bugsnag-android:5.+') {
-		exclude group: 'com.bugsnag', module: 'bugsnag-plugin-android-anr'
-		exclude group: 'com.bugsnag', module: 'bugsnag-plugin-android-ndk'
-	}*/
+	//implementation 'com.bugsnag:bugsnag-android-core:5.+'
 }

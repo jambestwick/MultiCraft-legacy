@@ -492,6 +492,66 @@ void TouchScreenGUI::handleReleaseEvent(size_t evt_id)
 	}
 }
 
+void TouchScreenGUI::moveJoystick(const SEvent &event, float dx, float dy) {
+	m_joystick_has_really_moved = true;
+	double distance = sqrt(dx * dx + dy * dy);
+
+	// angle in degrees
+	double angle = acos(dx / distance) * 180 / M_PI;
+	if (dy < 0)
+		angle *= -1;
+	// rotate to make comparing easier
+	angle = fmod(angle + 180 + 22.5, 360);
+
+	// reset state before applying
+	for (bool & joystick_status : m_joystick_status)
+		joystick_status = false;
+
+	if (distance <= m_touchscreen_threshold) {
+		// do nothing
+	} else if (angle < 45)
+		m_joystick_status[j_left] = true;
+	else if (angle < 90) {
+		m_joystick_status[j_forward] = true;
+		m_joystick_status[j_left] = true;
+	} else if (angle < 135)
+		m_joystick_status[j_forward] = true;
+	else if (angle < 180) {
+		m_joystick_status[j_forward] = true;
+		m_joystick_status[j_right] = true;
+	} else if (angle < 225)
+		m_joystick_status[j_right] = true;
+	else if (angle < 270) {
+		m_joystick_status[j_backward] = true;
+		m_joystick_status[j_right] = true;
+	} else if (angle < 315)
+		m_joystick_status[j_backward] = true;
+	else if (angle <= 360) {
+		m_joystick_status[j_backward] = true;
+		m_joystick_status[j_left] = true;
+	}
+
+	if (distance > button_size * 1.5) {
+		m_joystick_status[j_special1] = true;
+		// move joystick "button"
+		s32 ndx = button_size * dx / distance * 1.5f - button_size / 2.0f * 1.5f;
+		s32 ndy = button_size * dy / distance * 1.5f - button_size / 2.0f * 1.5f;
+		if (m_fixed_joystick) {
+			m_joystick_btn_center->guibutton->setRelativePosition(v2s32(
+				button_size * 5 / 2 + ndx,
+				m_screensize.Y - button_size * 5 / 2 + ndy));
+		} else {
+			m_joystick_btn_center->guibutton->setRelativePosition(v2s32(
+				m_pointerpos[event.TouchInput.ID].X + ndx,
+				m_pointerpos[event.TouchInput.ID].Y + ndy));
+		}
+	} else {
+		m_joystick_btn_center->guibutton->setRelativePosition(v2s32(
+				event.TouchInput.X - button_size / 2.0f * 1.5f,
+				event.TouchInput.Y - button_size / 2.0f * 1.5f));
+	}
+}
+
 void TouchScreenGUI::translateEvent(const SEvent &event)
 {
 	if (!m_visible) {
@@ -534,8 +594,11 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 			/* Select joystick when left 1/3 of screen dragged or
 			 * when joystick tapped (fixed joystick position)
 			 */
-			if ((m_fixed_joystick && dxj * dxj + dyj * dyj <= button_size * button_size * 1.5 * 1.5) ||
-					(!m_fixed_joystick && event.TouchInput.X < m_screensize.X / 3.0f)) {
+			bool inside_joystick =
+				m_fixed_joystick
+					? dxj * dxj + dyj * dyj <= button_size * button_size * 1.5 * 1.5
+					: event.TouchInput.X < m_screensize.X / 3.0f;
+			if (inside_joystick) {
 				// If we don't already have a starting point for joystick make this the one.
 				if (m_joystick_id == -1) {
 					m_joystick_id               = event.TouchInput.ID;
@@ -545,15 +608,16 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 					m_joystick_btn_bg->guibutton->setVisible(true);
 					m_joystick_btn_center->guibutton->setVisible(true);
 
-					// If it's a fixed joystick, don't move the joystick "button".
-					if (!m_fixed_joystick)
+					if (m_fixed_joystick) {
+						moveJoystick(event, dxj, dyj);
+					} else {
 						m_joystick_btn_bg->guibutton->setRelativePosition(v2s32(
 								event.TouchInput.X - button_size * 3.0f / 1.5f,
 								event.TouchInput.Y - button_size * 3.0f / 1.5f));
-
-					m_joystick_btn_center->guibutton->setRelativePosition(v2s32(
-							event.TouchInput.X - button_size / 2.0f * 1.5f,
-							event.TouchInput.Y - button_size / 2.0f * 1.5f));
+						m_joystick_btn_center->guibutton->setRelativePosition(v2s32(
+								event.TouchInput.X - button_size / 2.0f * 1.5f,
+								event.TouchInput.Y - button_size / 2.0f * 1.5f));
+					}
 				}
 			} else {
 				// If we don't already have a moving point make this the moving one.
@@ -634,8 +698,6 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 				dy = Y - m_screensize.Y + button_size * 5 / 2;
 			}
 
-			double distance_sq = dx * dx + dy * dy;
-
 			s32 dxj = event.TouchInput.X - button_size * 5.0f / 2.0f;
 			s32 dyj = event.TouchInput.Y - m_screensize.Y + button_size * 5.0f / 2.0f;
 			bool inside_joystick = (dxj * dxj + dyj * dyj <= button_size * button_size * 1.5 * 1.5);
@@ -643,63 +705,8 @@ void TouchScreenGUI::translateEvent(const SEvent &event)
 			if (m_joystick_has_really_moved ||
 					(!m_joystick_has_really_moved && inside_joystick) ||
 					(!m_fixed_joystick &&
-					distance_sq > m_touchscreen_threshold * m_touchscreen_threshold)) {
-				m_joystick_has_really_moved = true;
-				double distance = sqrt(distance_sq);
-
-				// angle in degrees
-				double angle = acos(dx / distance) * 180 / M_PI;
-				if (dy < 0)
-					angle *= -1;
-				// rotate to make comparing easier
-				angle = fmod(angle + 180 + 22.5, 360);
-
-				// reset state before applying
-				for (bool & joystick_status : m_joystick_status)
-					joystick_status = false;
-
-				if (distance <= m_touchscreen_threshold) {
-					// do nothing
-				} else if (angle < 45)
-					m_joystick_status[j_left] = true;
-				else if (angle < 90) {
-					m_joystick_status[j_forward] = true;
-					m_joystick_status[j_left] = true;
-				} else if (angle < 135)
-					m_joystick_status[j_forward] = true;
-				else if (angle < 180) {
-					m_joystick_status[j_forward] = true;
-					m_joystick_status[j_right] = true;
-				} else if (angle < 225)
-					m_joystick_status[j_right] = true;
-				else if (angle < 270) {
-					m_joystick_status[j_backward] = true;
-					m_joystick_status[j_right] = true;
-				} else if (angle < 315)
-					m_joystick_status[j_backward] = true;
-				else if (angle <= 360) {
-					m_joystick_status[j_backward] = true;
-					m_joystick_status[j_left] = true;
-				}
-
-				if (distance > button_size * 1.5) {
-					m_joystick_status[j_special1] = true;
-					// move joystick "button"
-					s32 ndx = button_size * dx / distance * 1.5f - button_size / 2.0f * 1.5f;
-					s32 ndy = button_size * dy / distance * 1.5f - button_size / 2.0f * 1.5f;
-					if (m_fixed_joystick) {
-						m_joystick_btn_center->guibutton->setRelativePosition(v2s32(
-							button_size * 5 / 2 + ndx,
-							m_screensize.Y - button_size * 5 / 2 + ndy));
-					} else {
-						m_joystick_btn_center->guibutton->setRelativePosition(v2s32(
-							m_pointerpos[event.TouchInput.ID].X + ndx,
-							m_pointerpos[event.TouchInput.ID].Y + ndy));
-					}
-				} else {
-					m_joystick_btn_center->guibutton->setRelativePosition(
-							v2s32(X - button_size / 2 * 1.5, Y - button_size / 2 * 1.5));
-				}
+					dx * dx + dy * dy > m_touchscreen_threshold * m_touchscreen_threshold)) {
+				moveJoystick(event, dx, dy);
 			}
 		}
 
@@ -939,9 +946,8 @@ void TouchScreenGUI::show()
 
 void TouchScreenGUI::handleReleaseAll()
 {
-	m_known_ids.clear();
-	if (m_move_id != -1)
-		handleReleaseEvent(m_move_id);
+	while (!m_known_ids.empty())
+		handleReleaseEvent(m_known_ids.back().id);
 	for (auto &button : m_buttons)
-		button.ids.clear();
+		button.ids.clear(); // should do nothing
 }

@@ -413,15 +413,17 @@ void set_default_settings(Settings *settings) {
 
 	// Set the optimal settings depending on the memory size [Android] | model [iOS]
 #ifdef __ANDROID__
-	if (porting::getMemoryMax() < 2) {
+	float memoryMax = porting::getMemoryMax();
+#elif __IOS__
+	float iOS_ver = [[[UIDevice currentDevice] systemVersion] floatValue];
+#endif
+
+#ifdef __ANDROID__
+	if (memoryMax < 2) {
 		// minimal settings for less than 2GB RAM
 #elif __IOS__
-	bool arm = false;
-#ifdef __arm__
-	arm = true;
-#endif
-	if (arm) {
-		// minimal settings for 32-bit devices
+	if (iOS_ver < 11.0) {
+		// minimal settings for legacy 32-bit devices
 		settings->setDefault("enable_minimap", "false");
 		settings->setDefault("enable_clouds", "false");
 #endif
@@ -439,12 +441,10 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("max_block_generate_distance", "1");
 		settings->setDefault("enable_weather", "false");
 #ifdef __ANDROID__
-	} else if (porting::getMemoryMax() >= 2 && porting::getMemoryMax() < 4) {
+	} else if (memoryMax >= 2 && memoryMax < 4) {
 		// low settings for 2-4GB RAM
 #elif __IOS__
-	} else if (([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6Plus) ||
-			   ([SDVersion deviceVersion] == iPodTouch6Gen) ||
-			   ([SDVersion deviceVersion] == iPadMini2) || ([SDVersion deviceVersion] == iPadMini3)) {
+	} else if (iOS_ver < 13.0) {
 		// low settings
 		settings->setDefault("enable_minimap", "false");
 #endif
@@ -463,14 +463,13 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("max_block_generate_distance", "2");
 		settings->setDefault("enable_weather", "false");
 #ifdef __ANDROID__
-	} else if (porting::getMemoryMax() >= 4 && porting::getMemoryMax() < 6) {
+	} else if (memoryMax >= 4 && memoryMax < 6) {
 		// medium settings for 4.1-6GB RAM
 #elif __IOS__
 	} else if (([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone6SPlus) || ([SDVersion deviceVersion] == iPhoneSE) ||
 			   ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone7Plus) ||
 			   ([SDVersion deviceVersion] == iPadMini4) || ([SDVersion deviceVersion] == iPadAir)) {
 		// medium settings
-		settings->setDefault("enable_minimap", "false");
 #endif
 		settings->setDefault("client_unload_unused_data_timeout", "300");
 		settings->setDefault("client_mapblock_limit", "300");
@@ -485,12 +484,19 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("viewing_range", "80");
 		settings->setDefault("max_block_generate_distance", "5");
 
+#ifdef __ANDROID__
+		settings->setDefault("video_driver", "ogles2");
+		settings->setDefault("enable_shaders", "true");
+#elif __IOS__
 		if (@available(iOS 13, *)) {
-			// enable visual shader effects
-			settings->setDefault("enable_waving_water", "true");
-			settings->setDefault("enable_waving_leaves", "true");
-			settings->setDefault("enable_waving_plants", "true");
+#endif
+		// enable visual shader effects
+		settings->setDefault("enable_waving_water", "true");
+		settings->setDefault("enable_waving_leaves", "true");
+		settings->setDefault("enable_waving_plants", "true");
+#ifdef __IOS__
 		}
+#endif
 	}
 
 	// Android Settings
@@ -579,13 +585,16 @@ void set_default_settings(Settings *settings) {
 	}
 
 	// Settings for the Rounded Screen and Home Bar
-	if (@available(iOS 11.0, *)) {
-		UIWindow *window = UIApplication.sharedApplication.keyWindow;
-		CGFloat bottomPadding = window.safeAreaInsets.bottom;
+	if (@available(iOS 11, *)) {
+		UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
+		int bottomPadding = (int) window.safeAreaInsets.bottom;
 
 		if (bottomPadding > 0) {
 			settings->setDefault("hud_move_upwards", "20");
-			settings->setDefault("round_screen", "35");
+			if (SDVersioniPhone12Series)
+				settings->setDefault("round_screen", "75");
+			else
+				settings->setDefault("round_screen", "35");
 		}
 	}
 #endif // iOS

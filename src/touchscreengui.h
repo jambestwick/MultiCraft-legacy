@@ -189,6 +189,8 @@ private:
 			const rect<s32> &button_rect, int texture_id,
 			bool visible = true);
 
+	void moveJoystick(const SEvent &event, float dx, float dy);
+
 	struct id_status
 	{
 		size_t id;

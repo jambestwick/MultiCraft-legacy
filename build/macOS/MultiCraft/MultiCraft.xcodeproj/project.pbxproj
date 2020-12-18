@@ -11,7 +11,6 @@
 		84463B8C24B258AA0099DFBD /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8458617724B1BF2D0040BA4F /* AppKit.framework */; };
 		84463B9124B258AF0099DFBD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84585C0024B1347B0040BA4F /* Foundation.framework */; };
 		84463B9324B258B00099DFBD /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8458617524B1BF280040BA4F /* IOKit.framework */; };
-		84463B9524B258B10099DFBD /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84585C0224B134810040BA4F /* OpenAL.framework */; };
 		84463B9724B258B20099DFBD /* Pods_MultiCraft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50555C0ED3309AD5F0B15D19 /* Pods_MultiCraft.framework */; };
 		84463B9924B258B50099DFBD /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84585C0424B134850040BA4F /* OpenGL.framework */; };
 		8453A49E24DB22F00087ECF9 /* client in Resources */ = {isa = PBXBuildFile; fileRef = 8453A49D24DB22F00087ECF9 /* client */; };
@@ -254,7 +253,23 @@
 		84A1FA48252E61EA00000717 /* l_settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84A1FA2D252E61EA00000717 /* l_settings.cpp */; };
 		84A1FA49252E61EA00000717 /* l_env.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84A1FA2E252E61EA00000717 /* l_env.cpp */; };
 		84A1FA4D252E635900000717 /* locale in Resources */ = {isa = PBXBuildFile; fileRef = 84A1FA4C252E635900000717 /* locale */; };
+		84C8E20B257804A200C1E5D0 /* libopenal.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C8E20A257804A200C1E5D0 /* libopenal.1.dylib */; };
+		84C8E20C257804A200C1E5D0 /* libopenal.1.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 84C8E20A257804A200C1E5D0 /* libopenal.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		844205482578023D009C3008 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				84C8E20C257804A200C1E5D0 /* libopenal.1.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0035B2B97EE3D0121539493F /* Pods-MultiCraft.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiCraft.debug.xcconfig"; path = "Target Support Files/Pods-MultiCraft/Pods-MultiCraft.debug.xcconfig"; sourceTree = "<group>"; };
@@ -270,7 +285,6 @@
 		845856B724B1322D0040BA4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		845856BA24B1322D0040BA4F /* MultiCraft.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MultiCraft.entitlements; sourceTree = "<group>"; };
 		84585C0024B1347B0040BA4F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		84585C0224B134810040BA4F /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		84585C0424B134850040BA4F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		84585C0624B1348B0040BA4F /* libcurl.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurl.tbd; path = usr/lib/libcurl.tbd; sourceTree = SDKROOT; };
 		84585C0B24B134D90040BA4F /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
@@ -774,6 +788,7 @@
 		84A1FA2D252E61EA00000717 /* l_settings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = l_settings.cpp; path = ../../../../src/script/lua_api/l_settings.cpp; sourceTree = "<group>"; };
 		84A1FA2E252E61EA00000717 /* l_env.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = l_env.cpp; path = ../../../../src/script/lua_api/l_env.cpp; sourceTree = "<group>"; };
 		84A1FA4C252E635900000717 /* locale */ = {isa = PBXFileReference; lastKnownFileType = folder; name = locale; path = ../../locale; sourceTree = "<group>"; };
+		84C8E20A257804A200C1E5D0 /* libopenal.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopenal.1.dylib; path = ../deps/openal/libopenal.1.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -787,7 +802,7 @@
 				84463B9124B258AF0099DFBD /* Foundation.framework in Frameworks */,
 				84463B9724B258B20099DFBD /* Pods_MultiCraft.framework in Frameworks */,
 				8458616924B1B7DC0040BA4F /* libfreetype.a in Frameworks */,
-				84463B9524B258B10099DFBD /* OpenAL.framework in Frameworks */,
+				84C8E20B257804A200C1E5D0 /* libopenal.1.dylib in Frameworks */,
 				84463B9924B258B50099DFBD /* OpenGL.framework in Frameworks */,
 				8458616A24B1B7E20040BA4F /* libIrrlicht.a in Frameworks */,
 				84463B9324B258B00099DFBD /* IOKit.framework in Frameworks */,
@@ -847,6 +862,7 @@
 		84585BFF24B1347B0040BA4F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84C8E20A257804A200C1E5D0 /* libopenal.1.dylib */,
 				8458617724B1BF2D0040BA4F /* AppKit.framework */,
 				8458617524B1BF280040BA4F /* IOKit.framework */,
 				8458616724B1B7990040BA4F /* libIrrlicht.a */,
@@ -854,7 +870,6 @@
 				84585C0B24B134D90040BA4F /* libiconv.tbd */,
 				84585C0624B1348B0040BA4F /* libcurl.tbd */,
 				84585C0424B134850040BA4F /* OpenGL.framework */,
-				84585C0224B134810040BA4F /* OpenAL.framework */,
 				84585C0024B1347B0040BA4F /* Foundation.framework */,
 				50555C0ED3309AD5F0B15D19 /* Pods_MultiCraft.framework */,
 			);
@@ -1487,6 +1502,7 @@
 				845856A624B1322C0040BA4F /* Frameworks */,
 				845856A724B1322C0040BA4F /* Resources */,
 				E04504E72F53EA397272106E /* [CP] Embed Pods Frameworks */,
+				844205482578023D009C3008 /* Embed Libraries */,
 			);
 			buildRules = (
 			);
@@ -1910,7 +1926,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = R3RLJ9TW52;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1940,11 +1956,12 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 1.13.1;
+				MARKETING_VERSION = 1.14;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-L${SRCROOT}/../deps/irrlicht",
 					"-L${SRCROOT}/../deps/freetype/lib",
+					"-L${SRCROOT}/../deps/irrlicht",
+					"-L${SRCROOT}/../deps/openal",
 					"-Wl,-dead_strip",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mobi.MultiCraft;
@@ -1961,7 +1978,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = R3RLJ9TW52;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1993,11 +2010,12 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 1.13.1;
+				MARKETING_VERSION = 1.14;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-L${SRCROOT}/../deps/irrlicht",
 					"-L${SRCROOT}/../deps/freetype/lib",
+					"-L${SRCROOT}/../deps/irrlicht",
+					"-L${SRCROOT}/../deps/openal",
 					"-Wl,-dead_strip",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mobi.MultiCraft;

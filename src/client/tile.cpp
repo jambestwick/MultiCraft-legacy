@@ -987,7 +987,7 @@ video::IImage* TextureSource::generateImage(const std::string &name)
 	return baseimg;
 }
 
-#if !defined(__ANDROID__) && !defined(__IOS__)
+#if 0
 static inline u16 get_GL_major_version()
 {
 	const GLubyte *gl_version = glGetString(GL_VERSION);

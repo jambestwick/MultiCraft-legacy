@@ -1178,6 +1178,9 @@ struct GameRunData {
 	float damage_flash;
 	float update_draw_list_timer;
 	float statustext_time;
+#if defined(__MACH__) && defined(__APPLE__) && !defined(__IOS__)
+	float item_select_timer;
+#endif
 
 	f32 fog_range;
 
@@ -1277,7 +1280,7 @@ protected:
 	// Input related
 	void processUserInput(f32 dtime);
 	void processKeyInput();
-	void processItemSelection(u16 *new_playeritem);
+	void processItemSelection(f32 dtime, GameRunData *run_data);
 
 	void dropSelectedItem();
 	void openInventory();
@@ -2543,7 +2546,7 @@ void Game::processUserInput(f32 dtime)
 		runData.jump_timer += dtime;
 
 	processKeyInput();
-	processItemSelection(&runData.new_playeritem);
+	processItemSelection(dtime, &runData);
 }
 
 
@@ -2652,13 +2655,18 @@ void Game::processKeyInput()
 	}
 }
 
-void Game::processItemSelection(u16 *new_playeritem)
+void Game::processItemSelection(f32 dtime, GameRunData *run_data)
 {
+#if defined(__MACH__) && defined(__APPLE__) && !defined(__IOS__)
+	if (run_data->item_select_timer)
+			run_data->item_select_timer = MYMAX(0.0f, run_data->item_select_timer - dtime);
+#endif
+
 	LocalPlayer *player = client->getEnv().getLocalPlayer();
 
 	/* Item selection using mouse wheel
 	 */
-	*new_playeritem = client->getPlayerItem();
+	run_data->new_playeritem = client->getPlayerItem();
 
 	s32 wheel = input->getMouseWheel();
 	u16 max_item = MYMIN(PLAYER_INVENTORY_SIZE - 1,
@@ -2676,11 +2684,15 @@ void Game::processItemSelection(u16 *new_playeritem)
 		dir = 1;
 	}
 
-	if (dir < 0)
-		*new_playeritem = *new_playeritem < max_item ? *new_playeritem + 1 : 0;
-	else if (dir > 0)
-		*new_playeritem = *new_playeritem > 0 ? *new_playeritem - 1 : max_item;
-	// else dir == 0
+#if defined(__MACH__) && defined(__APPLE__) && !defined(__IOS__)
+	if (dir && !run_data->item_select_timer) {
+		run_data->item_select_timer = 0.05f;
+#else
+	if (dir) {
+#endif
+		run_data->new_playeritem += dir < 0 ? 1 : max_item;
+		run_data->new_playeritem %= max_item + 1;
+	}
 
 	/* Item selection using keyboard
 	 */
@@ -2693,8 +2705,8 @@ void Game::processItemSelection(u16 *new_playeritem)
 
 		if (input->wasKeyDown(*item_keys[i])) {
 			if (i < PLAYER_INVENTORY_SIZE && i < player->hud_hotbar_itemcount) {
-				*new_playeritem = i;
-				infostream << "Selected item: " << new_playeritem << std::endl;
+				run_data->new_playeritem = i;
+				infostream << "Selected item: " << run_data->new_playeritem << std::endl;
 			}
 			break;
 		}
