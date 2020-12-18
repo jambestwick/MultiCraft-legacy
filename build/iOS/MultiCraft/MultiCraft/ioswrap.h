@@ -5,7 +5,6 @@
 #import "ads.h"
 #else
 #define ZIPPWD @"1" // zip password
-#define CrashliticsApiKey @"1" // crashlitics key
 #endif
 
 #ifdef __cplusplus

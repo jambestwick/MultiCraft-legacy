@@ -1,20 +1,25 @@
 project 'MultiCraft/MultiCraft.xcodeproj'
-platform :ios, '9.3'
+platform :ios, '10.3'
 use_frameworks!
+install! 'cocoapods', :warn_for_multiple_pod_sources => false, :warn_for_unused_master_specs_repo => false
+
 
 def appodeal
-	source 'https://github.com/appodeal/CocoaPods.git'
+#	source 'https://github.com/appodeal/CocoaPods.git'
+	ver = '2.8.1.1' # '2.7.5.1'
 
-	pod 'APDAdColonyAdapter', '2.7.5.1'
-	pod 'APDAppLovinAdapter', '2.7.5.1'
-	pod 'APDAppodealAdExchangeAdapter', '2.7.5.1'
-	pod 'APDIronSourceAdapter', '2.7.5.1'
-	pod 'APDTapjoyAdapter', '2.7.5.1'
-	pod 'APDUnityAdapter', '2.7.5.1'
+	pod 'APDAdColonyAdapter', ver
+	pod 'APDAppLovinAdapter', ver
+	# We don't use all of these networks, but they are part of BidMachine and we can't exclude only FB otherwise
+	pod 'APDBidMachineAdapter', ver, :subspecs => ['Tapjoy', 'AdColony', 'Amazon', 'Criteo', 'MyTarget', 'Smaato', 'Vungle', 'AppRoll']
+#	pod 'APDAppodealAdExchangeAdapter', ver
+	pod 'APDIronSourceAdapter', ver
+	pod 'APDTapjoyAdapter', ver
+	pod 'APDUnityAdapter', ver
 end
 
 target 'MultiCraft' do
-	source 'https://cdn.cocoapods.org/'
+#	source 'https://cdn.cocoapods.org/'
 
 	pod 'leveldb-library'
 	pod 'libvorbis'
