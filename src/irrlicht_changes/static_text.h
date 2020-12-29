@@ -86,6 +86,12 @@ namespace gui
 		virtual video::SColor getOverrideColor() const;
 		#endif
 
+        #if IRRLICHT_VERSION_MAJOR == 1 && IRRLICHT_VERSION_MINOR >= 9
+        //! Gets the currently used text color
+        /** Either a skin-color for the current state or the override color */
+        virtual video::SColor getActiveColor() const;
+        #endif
+
 		//! Sets if the static text should use the overide color or the
 		//! color in the gui skin.
 		virtual void enableOverrideColor(bool enable);
