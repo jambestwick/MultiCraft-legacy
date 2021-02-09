@@ -1,13 +1,13 @@
 #!/bin/bash -e
 
 . sdk.sh
-OPENAL_VERSION=1.21.0
+OPENAL_VERSION=1.21.1
 
 if [ ! -d openal-src ]; then
-	wget https://github.com/kcat/openal-soft/archive/openal-soft-$OPENAL_VERSION.tar.gz
-	tar -xzvf openal-soft-$OPENAL_VERSION.tar.gz
-	mv openal-soft-openal-soft-$OPENAL_VERSION openal-src
-	rm openal-soft-$OPENAL_VERSION.tar.gz
+	wget https://github.com/kcat/openal-soft/archive/$OPENAL_VERSION.tar.gz
+	tar -xzvf $OPENAL_VERSION.tar.gz
+	mv openal-soft-$OPENAL_VERSION openal-src
+	rm $OPENAL_VERSION.tar.gz
 fi
 
 cd openal-src

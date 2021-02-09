@@ -6,14 +6,14 @@ install! 'cocoapods', :warn_for_multiple_pod_sources => false, :warn_for_unused_
 
 def appodeal
 #	source 'https://github.com/appodeal/CocoaPods.git'
-	ver = '2.8.1.1' # '2.7.5.1'
+	ver = '2.9.0-Beta'
 
 	pod 'APDAdColonyAdapter', ver
 	pod 'APDAppLovinAdapter', ver
 	# We don't use all of these networks, but they are part of BidMachine and we can't exclude only FB otherwise
-	pod 'APDBidMachineAdapter', ver, :subspecs => ['Tapjoy', 'AdColony', 'Amazon', 'Criteo', 'MyTarget', 'Smaato', 'Vungle', 'AppRoll']
-#	pod 'APDAppodealAdExchangeAdapter', ver
+	pod 'APDBidMachineAdapter', ver, :subspecs => ['Tapjoy', 'AdColony', 'Criteo', 'MyTarget', 'Smaato', 'Vungle', 'AppRoll']
 	pod 'APDIronSourceAdapter', ver
+	pod 'APDMintegralAdapter', ver
 	pod 'APDTapjoyAdapter', ver
 	pod 'APDUnityAdapter', ver
 end
