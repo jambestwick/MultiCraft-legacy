@@ -422,10 +422,8 @@ void set_default_settings(Settings *settings) {
 	if (memoryMax < 2) {
 		// minimal settings for less than 2GB RAM
 #elif __IOS__
-	if (iOS_ver < 11.0) {
-		// minimal settings for legacy 32-bit devices
-		settings->setDefault("enable_minimap", "false");
-		settings->setDefault("enable_clouds", "false");
+	if (false) {
+		// obsolete
 #endif
 		settings->setDefault("client_unload_unused_data_timeout", "60");
 		settings->setDefault("client_mapblock_limit", "50");
@@ -484,10 +482,7 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("viewing_range", "80");
 		settings->setDefault("max_block_generate_distance", "5");
 
-#ifdef __ANDROID__
-		settings->setDefault("video_driver", "ogles2");
-		settings->setDefault("enable_shaders", "true");
-#elif __IOS__
+#ifdef __IOS__
 		if (@available(iOS 13, *)) {
 #endif
 		// enable visual shader effects
@@ -501,8 +496,14 @@ void set_default_settings(Settings *settings) {
 
 	// Android Settings
 #ifdef __ANDROID__
-	settings->setDefault("video_driver", "ogles1");
-	settings->setDefault("enable_shaders", "false");
+    // Switch to olges2 with shaders on powerful Android devices
+    if (memoryMax >= 6) {
+        settings->setDefault("video_driver", "ogles2");
+        settings->setDefault("enable_shaders", "true");
+    } else {
+        settings->setDefault("video_driver", "ogles1");
+        settings->setDefault("enable_shaders", "false");
+    }
 
 	settings->setDefault("debug_log_level", "error");
 

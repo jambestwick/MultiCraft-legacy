@@ -45,7 +45,7 @@
 #if USE_SYSTEM_GMP
 	#include <gmp.h>
 #else
-	#include "mini-gmp.h"
+	#include <mini-gmp.h>
 #endif
 
 #include <util/sha2.h>

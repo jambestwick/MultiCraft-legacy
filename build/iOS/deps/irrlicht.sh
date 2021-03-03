@@ -6,7 +6,7 @@
 	git clone -b ogl-es --depth 1 https://github.com/MoNTE48/Irrlicht irrlicht-src
 
 cd irrlicht-src/source/Irrlicht
-xcodebuild build \
+xcodebuild build ARCHS=arm64 \
 	-project Irrlicht.xcodeproj \
 	-configuration Release \
 	-scheme Irrlicht_iOS \

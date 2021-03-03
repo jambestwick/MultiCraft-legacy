@@ -17,8 +17,8 @@ cmake -S . -GXcode \
 	-DALSOFT_OSX_FRAMEWORK=ON -DALSOFT_EMBED_HRTF_DATA=YES -DALSOFT_UTILS=OFF \
 	-DALSOFT_EXAMPLES=OFF -DALSOFT_INSTALL=OFF -DALSOFT_BACKEND_WAVE=NO \
 	-DCMAKE_C_FLAGS_RELEASE="$IOS_FLAGS" -DCMAKE_CXX_FLAGS_RELEASE="$IOS_FLAGS" \
-	-DCMAKE_OSX_DEPLOYMENT_TARGET=10.3 \
-	-B build_arm "-DCMAKE_OSX_ARCHITECTURES=armv7;arm64"
+	-DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 \
+	-B build_arm
 cmake --build build_arm --config Release --target OpenAL
 
 mv build_arm/Release-iphoneos/soft_oal.framework ../soft_oal.framework

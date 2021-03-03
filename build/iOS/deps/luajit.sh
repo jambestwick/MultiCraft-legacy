@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 . sdk.sh
-export MACOSX_DEPLOYMENT_TARGET=10.13
+export MACOSX_DEPLOYMENT_TARGET=10.15
 
 LUAJIT_VERSION=2.1
 
@@ -14,28 +14,12 @@ fi
 
 cd LuaJIT-src
 
-# 32-bit
-make amalg -j \
-	DEFAULT_CC=clang HOST_CC="clang -m32 -arch i386" CROSS="$(dirname $IOS_CC)/" TARGET_SYS=iOS \
-	TARGET_FLAGS="-arch armv7 $IOS_FLAGS_NOARCH" \
-	TARGET_CFLAGS+="-Wno-implicit-function-declaration -fno-omit-frame-pointer"
-mv src/libluajit.a templib_32.a
-make clean
-
-# 64-bit
 make amalg -j \
 	DEFAULT_CC=clang HOST_CC=clang CROSS="$(dirname $IOS_CC)/" TARGET_SYS=iOS \
-	TARGET_FLAGS="-arch arm64 $IOS_FLAGS_NOARCH" \
-	TARGET_CFLAGS+="-Wno-implicit-function-declaration"
-mv src/libluajit.a templib_64.a
-make clean
-
-# repack into one .a
-lipo -create templib_*.a -output libluajit.a
-rm templib_*.a
+	TARGET_FLAGS="$IOS_FLAGS -fno-fast-math"
 
 mkdir -p ../luajit/{lib,include}
 cp -v src/*.h ../luajit/include
-cp -v libluajit.a ../luajit/lib
+cp -v src/libluajit.a ../luajit/lib
 
 echo "LuaJIT build successful"

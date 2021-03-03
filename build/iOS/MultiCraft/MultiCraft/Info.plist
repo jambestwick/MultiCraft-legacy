@@ -35,12 +35,8 @@
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
 	<string>MultiCraft needs your calendar to provide personalised advertising experience tailored to you</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>MultiCraft needs your location to provide personalised advertising experience tailored to you</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>MultiCraft needs your location to provide personalised advertising experience tailored to you</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>This identifier will be used to deliver personalized ads to you.</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>
@@ -145,6 +141,10 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
+			<string>6g9af3uyq4.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
 			<string>ludvb6z3bs.skadnetwork</string>
 		</dict>
 		<dict>
@@ -161,6 +161,10 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
+			<string>mls7yz5dvl.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
 			<string>w9q455wk68.skadnetwork</string>
 		</dict>
 		<dict>
@@ -173,6 +177,10 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
+			<string>s39g8k73mm.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
 			<string>cj5566h2ga.skadnetwork</string>
 		</dict>
 		<dict>
@@ -181,7 +189,7 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>s39g8k73mm.skadnetwork</string>
+			<string>lr83yxwka7.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
@@ -221,10 +229,6 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>mls7yz5dvl.skadnetwork</string>
-		</dict>
-		<dict>
-			<key>SKAdNetworkIdentifier</key>
 			<string>5a6flpkh64.skadnetwork</string>
 		</dict>
 		<dict>
@@ -261,6 +265,10 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
+			<string>g28c52eehv.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
 			<string>ecpz2srf59.skadnetwork</string>
 		</dict>
 		<dict>
@@ -269,27 +277,7 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>wzmmz9fp6w.skadnetwork</string>
-		</dict>
-		<dict>
-			<key>SKAdNetworkIdentifier</key>
-			<string>lr83yxwka7.skadnetwork</string>
-		</dict>
-		<dict>
-			<key>SKAdNetworkIdentifier</key>
 			<string>238da6jt44.skadnetwork</string>
-		</dict>
-		<dict>
-			<key>SKAdNetworkIdentifier</key>
-			<string>424m5254lk.skadnetwork</string>
-		</dict>
-		<dict>
-			<key>SKAdNetworkIdentifier</key>
-			<string>bvpn9ufa9b.skadnetwork</string>
-		</dict>
-		<dict>
-			<key>SKAdNetworkIdentifier</key>
-			<string>v79kvwwj4g.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
@@ -297,7 +285,11 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>44n7hlldy6.skadnetwork</string>
+			<string>v79kvwwj4g.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>424m5254lk.skadnetwork</string>
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
@@ -305,7 +297,23 @@
 		</dict>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>gta9lk7p23.skadnetwork</string>
+			<string>wzmmz9fp6w.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>44n7hlldy6.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>bvpn9ufa9b.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>3qy4746246.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>gta8lk7p23.skadnetwork</string>
 		</dict>
 	</array>
 	<key>UIBackgroundModes</key>
@@ -316,7 +324,7 @@
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
-		<string>armv7</string>
+		<string>arm64</string>
 	</array>
 	<key>UIRequiresFullScreen</key>
 	<true/>

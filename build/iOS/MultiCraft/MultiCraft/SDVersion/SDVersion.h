@@ -18,8 +18,6 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 	Simulator             = 1,
 
 	// iPhone
-	iPhone5               = 102,
-	iPhone5C              = 103,
 	iPhone5S              = 104,
 	iPhone6               = 105,
 	iPhone6Plus           = 106,
@@ -44,7 +42,6 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 	iPhone12ProMax        = 125,
 
 	// iPad
-	iPad4                 = 204,
 	iPadAir               = 205,
 	iPadMini2             = 206,
 	iPadAir2              = 207,
@@ -88,10 +85,6 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 			@"x86_64"     : @(Simulator),
 
 			// iPhone
-			@"iPhone5,1"  : @(iPhone5),
-			@"iPhone5,2"  : @(iPhone5),
-			@"iPhone5,3"  : @(iPhone5C),
-			@"iPhone5,4"  : @(iPhone5C),
 			@"iPhone6,1"  : @(iPhone5S),
 			@"iPhone6,2"  : @(iPhone5S),
 			@"iPhone7,2"  : @(iPhone6),
@@ -123,9 +116,6 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 			@"iPhone13,4" : @(iPhone12ProMax),
 
 			// iPad
-			@"iPad3,4"  : @(iPad4),
-			@"iPad3,5"  : @(iPad4),
-			@"iPad3,6"  : @(iPad4),
 			@"iPad6,11" : @(iPad5),
 			@"iPad6,12" : @(iPad5),
 			@"iPad7,5"  : @(iPad6),
@@ -194,7 +184,7 @@ typedef NS_ENUM(NSInteger, DeviceVersion){
 }
 @end
 
-#define SDVersion4Inch		(([SDVersion deviceVersion] == iPhone5) || ([SDVersion deviceVersion] == iPhone5C) || ([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhoneSE) || \
+#define SDVersion4Inch		(([SDVersion deviceVersion] == iPhone5S) || ([SDVersion deviceVersion] == iPhoneSE) || \
 							([SDVersion deviceVersion] == iPodTouch6Gen) || ([SDVersion deviceVersion] == iPodTouch7Gen))
 
 #define SDVersion4and7Inch	(([SDVersion deviceVersion] == iPhone6) || ([SDVersion deviceVersion] == iPhone6S) || ([SDVersion deviceVersion] == iPhone7) || ([SDVersion deviceVersion] == iPhone8) || ([SDVersion deviceVersion] == iPhoneSE2Gen))
