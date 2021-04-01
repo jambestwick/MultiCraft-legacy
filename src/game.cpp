@@ -1491,6 +1491,7 @@ private:
 
 	u16  m_round_screen;
 	f32  m_hud_scaling;
+	f32  m_display_density;
 
 	bool m_invert_mouse;
 	bool m_first_loop_after_window_activation;
@@ -2056,9 +2057,11 @@ bool Game::initGui()
 
 	// At the middle of the screen
 	// Object infos are shown in this
+	float scale = m_display_density * m_hud_scaling * 0.5;
 	guitext_info = addStaticText(guienv,
 			L"",
-			core::rect<s32>(0, 0, 400, g_fontengine->getTextHeight() * 5 + 5) + v2s32(100, 200),
+			core::rect<s32>(0, 0, 400, g_fontengine->getTextHeight() * 5 + 5) +
+			v2s32(100 + m_round_screen, g_fontengine->getTextHeight() * (5 + 2)),
 			false, true, guiroot);
 
 	// Status text (displays info when showing and hiding GUI stuff, etc.)
@@ -4537,7 +4540,7 @@ void Game::updateGui(const RunStats &stats, f32 dtime, const CameraOrientation &
 		s32 status_width  = guitext_status->getTextWidth();
 		s32 status_height = guitext_status->getTextHeight();
 		s32 status_y = screensize.Y -
-			150 * porting::getDisplayDensity() * m_hud_scaling;
+			150 * m_display_density * m_hud_scaling;
 		s32 status_x = (screensize.X - status_width) / 2;
 		core::rect<s32> rect(
 				status_x,  status_y - status_height,
@@ -4660,6 +4663,7 @@ void Game::readSettings()
 
 	m_round_screen = g_settings->getU16("round_screen");
 	m_hud_scaling = g_settings->getFloat("hud_scaling");
+	m_display_density = porting::getDisplayDensity();
 
 	m_cache_cam_smoothing = 0;
 	if (g_settings->getBool("cinematic"))
