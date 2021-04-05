@@ -163,22 +163,29 @@ static std::string javaStringToUTF8(jstring js)
 }
 
 // Calls static method if obj is NULL
-static std::string getAndroidPath(
-		jclass cls, jobject obj, jmethodID mt_getAbsPath, const char *getter)
+static std::string getAndroidPath(jclass cls, jobject obj,
+			jmethodID mt_getAbsPath, const char *getter, bool external = false)
 {
-	// Get getter method
-	jmethodID mt_getter;
-	if (obj)
-		mt_getter = jnienv->GetMethodID(cls, getter, "()Ljava/io/File;");
-	else
-		mt_getter = jnienv->GetStaticMethodID(cls, getter, "()Ljava/io/File;");
-
 	// Call getter
 	jobject ob_file;
-	if (obj)
-		ob_file = jnienv->CallObjectMethod(obj, mt_getter);
-	else
-		ob_file = jnienv->CallStaticObjectMethod(cls, mt_getter);
+
+	if (external) {
+		jclass cls_Env = jnienv->FindClass("android/app/NativeActivity");
+		jmethodID mt_getExtPath = jnienv->GetMethodID(cls_Env, getter,
+					"(Ljava/lang/String;)Ljava/io/File;");
+		ob_file = jnienv->CallObjectMethod(obj, mt_getExtPath, nullptr);
+	} else {
+		// Get getter method
+		jmethodID mt_getter;
+		if (obj) {
+			mt_getter = jnienv->GetMethodID(cls, getter, "()Ljava/io/File;");
+			ob_file = jnienv->CallObjectMethod(obj, mt_getter);
+		} else {
+			mt_getter = jnienv->GetStaticMethodID(cls, getter,
+					"()Ljava/io/File;");
+			ob_file = jnienv->CallStaticObjectMethod(cls, mt_getter);
+		}
+	}
 
 	// Call getAbsolutePath
 	auto js_path = (jstring) jnienv->CallObjectMethod(ob_file, mt_getAbsPath);
@@ -188,23 +195,20 @@ static std::string getAndroidPath(
 
 void initializePathsAndroid()
 {
-	// Get Environment class
-	jclass cls_Env = jnienv->FindClass("android/os/Environment");
+	jobject obj = app_global->activity->clazz;
 	// Get File class
 	jclass cls_File = jnienv->FindClass("java/io/File");
 	// Get getAbsolutePath method
 	jmethodID mt_getAbsPath = jnienv->GetMethodID(cls_File,
 				"getAbsolutePath", "()Ljava/lang/String;");
-	std::string path_storage = getAndroidPath(cls_Env, nullptr,
-				mt_getAbsPath, "getExternalStorageDirectory");
-	std::string path_data = getAndroidPath(nativeActivity, app_global->activity->clazz, mt_getAbsPath,
-				"getFilesDir");
 
-	path_user    = path_storage + DIR_DELIM + "Android/data/com.multicraft.game/files";
-	path_share   = path_data;
-	path_locale  = path_data + DIR_DELIM + "locale";
-	path_cache   = getAndroidPath(nativeActivity,
-			app_global->activity->clazz, mt_getAbsPath, "getCacheDir");
+	path_user   = getAndroidPath(nullptr, obj, mt_getAbsPath,
+				"getExternalFilesDir", true);
+	path_share  = getAndroidPath(nativeActivity, obj, mt_getAbsPath,
+				"getFilesDir");
+	path_locale = path_share + DIR_DELIM + "locale";
+	path_cache  = getAndroidPath(nativeActivity, obj, mt_getAbsPath,
+				"getCacheDir");
 }
 
 void showInputDialog(const std::string &acceptButton, const std::string &hint,
