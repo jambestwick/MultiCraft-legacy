@@ -4,7 +4,7 @@ apply plugin: 'de.undercouch.download'
 android {
 	compileSdkVersion 29
 	buildToolsVersion '30.0.3'
-	ndkVersion '22.0.7026061'
+	ndkVersion '22.1.7171670'
 	defaultConfig {
 		minSdkVersion 16
 		//noinspection OldTargetApi

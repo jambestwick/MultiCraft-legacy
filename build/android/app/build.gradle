@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 android {
 	compileSdkVersion 29
 	buildToolsVersion '30.0.3'
-	ndkVersion '22.0.7026061'
+	ndkVersion '22.1.7171670'
 	defaultConfig {
 		applicationId 'com.multicraft.game'
 		minSdkVersion 16
 		//noinspection OldTargetApi
 		targetSdkVersion 29
-		versionCode 135
-		versionName "1.15.1"
+		versionCode 150
+		versionName "1.15.6"
 		multiDexEnabled true
 	}
 
@@ -66,13 +66,14 @@ dependencies {
 	implementation 'androidx.appcompat:appcompat-resources:1.2.0'
 	implementation 'androidx.multidex:multidex:2.0.1'
 	implementation 'androidx.preference:preference:1.1.1'
-	implementation 'io.reactivex.rxjava2:rxjava:2.2.20'
+	implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
 	implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 	//noinspection GradleDependency
 	implementation 'com.squareup.okhttp3:okhttp:3.12.12'
 	//noinspection GradleDependency
 	implementation 'commons-io:commons-io:2.5'
 	implementation 'gun0912.ted:tedpermission-rx2:2.2.3'
+	//noinspection GradleDependency
 	implementation 'net.lingala.zip4j:zip4j:2.6.4'
 
 	/* Analytics libraries */
