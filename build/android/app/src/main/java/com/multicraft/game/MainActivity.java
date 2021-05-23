@@ -30,7 +30,6 @@ import android.content.IntentFilter;
 import android.graphics.BlendMode;
 import android.graphics.BlendModeColorFilter;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -41,7 +40,6 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -105,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements CallBackListener,
 	private static String FILES, WORLDS, GAMES;
 	private final String versionName = BuildConfig.VERSION_NAME;
 	private String unzipLocation, appData;
-	private int height, width;
 	private boolean consent;
 	private ProgressBar mProgressBar, mProgressBarIndeterminate;
 	private TextView mLoading;
@@ -219,18 +216,6 @@ public class MainActivity extends AppCompatActivity implements CallBackListener,
 		}
 	}
 
-	// real screen resolution
-	private void getDefaultResolution() {
-		Display display = getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		if (isGreaterOrEqual(Build.VERSION_CODES.JELLY_BEAN_MR1))
-			display.getRealSize(size);
-		else
-			display.getSize(size);
-		height = Math.min(size.x, size.y);
-		width = Math.max(size.x, size.y);
-	}
-
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
@@ -304,10 +289,7 @@ public class MainActivity extends AppCompatActivity implements CallBackListener,
 	}
 
 	private void startNative() {
-		getDefaultResolution();
 		Intent intent = new Intent(this, GameActivity.class);
-		intent.putExtra("height", height);
-		intent.putExtra("width", width);
 		intent.putExtra("consent", consent);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(intent);

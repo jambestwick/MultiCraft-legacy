@@ -298,7 +298,7 @@ void notifyExitGame()
 			"notifyExitGame", "()V");
 
 	FATAL_ERROR_IF(notifyExit == nullptr,
-		"porting::notifyExit unable to find java getDensity method");
+		"porting::notifyExit unable to find java notifyExitGame method");
 
 	jnienv->CallVoidMethod(app_global->activity->clazz, notifyExit);
 }
@@ -321,32 +321,7 @@ float getDisplayDensity()
 	return value;
 }
 
-v2u32 getDisplaySize()
-{
-	static bool firstrun = true;
-	static v2u32 retval;
-
-	if (firstrun) {
-		jmethodID getDisplayWidth = jnienv->GetMethodID(nativeActivity,
-				"getDisplayWidth", "()I");
-
-		FATAL_ERROR_IF(getDisplayWidth == nullptr,
-			"porting::getDisplayWidth unable to find java getDisplayWidth method");
-
-		retval.X = jnienv->CallIntMethod(app_global->activity->clazz,
-				getDisplayWidth);
-
-		jmethodID getDisplayHeight = jnienv->GetMethodID(nativeActivity,
-				"getDisplayHeight", "()I");
-
-		FATAL_ERROR_IF(getDisplayHeight == nullptr,
-			"porting::getDisplayHeight unable to find java getDisplayHeight method");
-
-		retval.Y = jnienv->CallIntMethod(app_global->activity->clazz,
-				getDisplayHeight);
-
-		firstrun = false;
-	}
-	return retval;
+v2u32 getDisplaySize() {
+	return v2u32(0, 0);
 }
 }

@@ -537,12 +537,6 @@ void ClientLauncher::main_menu(MainMenuData *menudata)
 
 bool ClientLauncher::create_engine_device()
 {
-	#ifdef __ANDROID__
-		// set correct resolution
-		g_settings->setU16("screenW", porting::getDisplaySize().X);
-		g_settings->setU16("screenH", porting::getDisplaySize().Y);
-	#endif
-
 	// Resolution selection
 	bool fullscreen = g_settings->getBool("fullscreen");
 	u16 screenW = g_settings->getU16("screenW");
@@ -592,18 +586,43 @@ bool ClientLauncher::create_engine_device()
 
 	device = createDeviceEx(params);
 
-	if (device)
+	if (device) {
 		porting::initIrrlicht(device);
 
+#ifdef __ANDROID__
+		// Apply settings according to screen size
+		// We can get real screen size only after device initialization finished
+		float x_inches = porting::getWindowSize().X /
+				(160.f * porting::getDisplayDensity());
+		if (x_inches <= 3.7) {
+			// small 4" phones
+			g_settings->setFloat("hud_scaling", 0.55);
+			g_settings->setU16("font_size", TTF_DEFAULT_FONT_SIZE - 1);
+			g_settings->setFloat("mouse_sensitivity", 0.3);
+		} else if (x_inches > 3.7 && x_inches <= 4.5) {
+			// medium phones
+			g_settings->setFloat("hud_scaling", 0.6);
+			g_settings->setU16("font_size", TTF_DEFAULT_FONT_SIZE - 1);
+			g_settings->setS16("selectionbox_width", 6);
+		} else if (x_inches > 4.5 && x_inches <= 5.5) {
+			// large 6" phones
+			g_settings->setFloat("hud_scaling", 0.7);
+			g_settings->setFloat("mouse_sensitivity", 0.15);
+			g_settings->setS16("selectionbox_width", 6);
+		} else if (x_inches > 5.5 && x_inches <= 6.5) {
+			// 7" tablets
+			g_settings->setFloat("hud_scaling", 0.9);
+			g_settings->setS16("selectionbox_width", 6);
+		}
+#endif
 #ifdef __IOS__
-	if (device) {
 		CIrrDeviceiOS* dev = (CIrrDeviceiOS*) device;
 		porting::setViewController(dev->getViewController());
 #ifdef ADS
 		ads_startup(dev->getViewController());
 #endif
-	}
 #endif
+	}
 
 	return device != NULL;
 }

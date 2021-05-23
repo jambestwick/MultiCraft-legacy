@@ -24,7 +24,6 @@ import android.app.ActivityManager;
 import android.app.NativeActivity;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.KeyEvent;
@@ -68,7 +67,6 @@ public class GameActivity extends NativeActivity {
 
 	private int messageReturnCode = -1;
 	private String messageReturnValue = "";
-	private int height, width;
 	private boolean consent, isMultiPlayer;
 	private PreferencesHelper pf;
 	private Disposable adInitSub;
@@ -84,12 +82,9 @@ public class GameActivity extends NativeActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Bundle bundle = getIntent().getExtras();
-		Resources resources = getResources();
-		height = bundle != null ? bundle.getInt("height", 0) : resources.getDisplayMetrics().heightPixels;
-		width = bundle != null ? bundle.getInt("width", 0) : resources.getDisplayMetrics().widthPixels;
-		consent = bundle == null || bundle.getBoolean("consent", true);
+		consent = bundle.getBoolean("consent", true);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		hasKeyboard = !(resources.getConfiguration().hardKeyboardHidden == KEYBOARD_QWERTY);
+		hasKeyboard = !(getResources().getConfiguration().hardKeyboardHidden == KEYBOARD_QWERTY);
 		keyboardEvent(hasKeyboard);
 		pf = getInstance(this);
 		if (pf.isAdsEnable()) {
@@ -192,14 +187,6 @@ public class GameActivity extends NativeActivity {
 
 	public float getDensity() {
 		return getResources().getDisplayMetrics().density;
-	}
-
-	public int getDisplayHeight() {
-		return height;
-	}
-
-	public int getDisplayWidth() {
-		return width;
 	}
 
 	public float getMemoryMax() {
