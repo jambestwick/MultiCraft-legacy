@@ -68,6 +68,9 @@ GUITable::GUITable(gui::IGUIEnvironment *env,
 
 	gui::IGUISkin* skin = Environment->getSkin();
 
+	// 15 is default EGDS_SCROLLBAR_SIZE value
+	skin->setSize(irr::gui::EGDS_SCROLLBAR_SIZE, 15 * scale);
+
 	m_font = skin->getFont();
 	if (m_font) {
 		m_font->grab();
@@ -94,7 +97,7 @@ GUITable::GUITable(gui::IGUIEnvironment *env,
 	updateAbsolutePosition();
 
 	core::rect<s32> relative_rect = m_scrollbar->getRelativePosition();
-	s32 width = (relative_rect.getWidth()/(2.0/3.0)) * scale;
+	s32 width = (relative_rect.getWidth()/(2.0/3.0));
 	m_scrollbar->setRelativePosition(core::rect<s32>(
 			relative_rect.LowerRightCorner.X-width,relative_rect.UpperLeftCorner.Y,
 			relative_rect.LowerRightCorner.X,relative_rect.LowerRightCorner.Y
