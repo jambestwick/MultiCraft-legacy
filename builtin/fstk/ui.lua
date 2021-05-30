@@ -54,6 +54,7 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+local sub8 = utf8.sub
 local function wordwrap_quickhack(str)
 	local res = ""
 	local ar = str:split("\n")
@@ -65,8 +66,8 @@ local function wordwrap_quickhack(str)
 			if res ~= "" then
 				res = res .. ","
 			end
-			res = res .. core.formspec_escape(text:sub(1, 79))
-			text = text:sub(80, #text)
+			res = res .. core.formspec_escape(sub8(text, 1, 79))
+			text = sub8(text, 80, #text)
 		end
 		if res ~= "" then
 			res = res .. ","
