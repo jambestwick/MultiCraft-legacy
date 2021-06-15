@@ -44,7 +44,9 @@ local player_list = {}
 
 
 function core.send_join_message(player_name)
-	core.chat_send_all("=> " .. player_name .. " has joined the server")
+	if not core.is_singleplayer() then
+		core.chat_send_all("=> " .. player_name .. " has joined the server")
+	end
 end
 
 
@@ -60,10 +62,7 @@ end
 core.register_on_joinplayer(function(player)
 	local player_name = player:get_player_name()
 	player_list[player_name] = player
-	if not core.is_singleplayer() then
-		core.send_join_message(player_name)
-	end
-
+	core.send_join_message(player_name)
 end)
 
 
