@@ -694,6 +694,9 @@ struct ActiveABM
 	ActiveBlockModifier *abm;
 	int chance;
 	std::set<content_t> required_neighbors;
+	bool check_required_neighbors; // false if required_neighbors is known to be empty
+	s16 min_y;
+	s16 max_y;
 };
 
 class ABMHandler
@@ -739,6 +742,9 @@ public:
 			} else {
 				aabm.chance = chance;
 			}
+			// y limits
+			aabm.min_y = abm->getMinY();
+			aabm.max_y = abm->getMaxY();
 
 			// Trigger neighbors
 			const std::set<std::string> &required_neighbors_s =
@@ -826,7 +832,10 @@ public:
 			v3s16 p = p0 + block->getPosRelative();
 			for(std::vector<ActiveABM>::iterator
 				i = m_aabms[c]->begin(); i != m_aabms[c]->end(); ++i) {
-				if(myrand() % i->chance != 0)
+				if ((p.Y < i->min_y) || (p.Y > i->max_y))
+					continue;
+
+				if (myrand() % i->chance != 0)
 					continue;
 
 				// Check neighbors
@@ -2169,8 +2178,8 @@ PlayerDatabase *ServerEnvironment::openPlayerDatabase(const std::string &name,
 {
 #ifdef _WIN32
 	if (name == "sqlite3")
-		return new PlayerDatabaseSQLite3(savedir);	
-	else 
+		return new PlayerDatabaseSQLite3(savedir);
+	else
 #endif
 	if (name == "dummy")
 		return new Database_Dummy();

@@ -4238,6 +4238,12 @@ Definition tables
         ^ If left out or empty, any neighbor will do ]]
         interval = 1.0, -- Operation interval in seconds
         chance = 1, -- Chance of trigger per-node per-interval is 1.0 / this
+
+        min_y = -32768,
+        max_y = 32767,
+        -- min and max height levels where ABM will be processed
+        -- can be used to reduce CPU usage
+
         catch_up = true, -- If true, catch-up behaviour is enabled --[[
         ^ The chance value is temporarily reduced when returning to
           an area to simulate time lost by the area being unattended.

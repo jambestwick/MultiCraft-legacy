@@ -151,8 +151,14 @@ void ScriptApiEnv::initializeEnvironment(ServerEnvironment *env)
 		bool simple_catch_up = true;
 		getboolfield(L, current_abm, "catch_up", simple_catch_up);
 
+		int min_y = -32767;
+		getintfield(L, current_abm, "min_y", min_y);
+
+		int max_y = 32767;
+		getintfield(L, current_abm, "max_y", max_y);
+
 		LuaABM *abm = new LuaABM(L, id, trigger_contents, required_neighbors,
-			trigger_interval, trigger_chance, simple_catch_up);
+			trigger_interval, trigger_chance, simple_catch_up, min_y, max_y);
 
 		env->addActiveBlockModifier(abm);
 

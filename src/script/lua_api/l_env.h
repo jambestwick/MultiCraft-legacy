@@ -190,17 +190,21 @@ private:
 	float m_trigger_interval;
 	u32 m_trigger_chance;
 	bool m_simple_catch_up;
+	s16 m_min_y;
+	s16 m_max_y;
 public:
 	LuaABM(lua_State *L, int id,
 			const std::set<std::string> &trigger_contents,
 			const std::set<std::string> &required_neighbors,
-			float trigger_interval, u32 trigger_chance, bool simple_catch_up):
+			float trigger_interval, u32 trigger_chance, bool simple_catch_up, s16 min_y, s16 max_y):
 		m_id(id),
 		m_trigger_contents(trigger_contents),
 		m_required_neighbors(required_neighbors),
 		m_trigger_interval(trigger_interval),
 		m_trigger_chance(trigger_chance),
-		m_simple_catch_up(simple_catch_up)
+		m_simple_catch_up(simple_catch_up),
+		m_min_y(min_y),
+		m_max_y(max_y)
 	{
 	}
 	virtual const std::set<std::string> &getTriggerContents() const
@@ -222,6 +226,14 @@ public:
 	virtual bool getSimpleCatchUp()
 	{
 		return m_simple_catch_up;
+	}
+	virtual s16 getMinY()
+	{
+		return m_min_y;
+	}
+	virtual s16 getMaxY()
+	{
+		return m_max_y;
 	}
 	virtual void trigger(ServerEnvironment *env, v3s16 p, MapNode n,
 			u32 active_object_count, u32 active_object_count_wider);
