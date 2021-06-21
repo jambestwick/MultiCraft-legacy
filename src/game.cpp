@@ -2566,6 +2566,11 @@ void Game::processKeyInput()
 			showPauseMenu();
 		}
 	} else if (wasKeyDown(KeyType::CHAT)) {
+#if defined(__ANDROID__) || defined(__IOS__)
+		if (isKeyDown(KeyType::SNEAK))
+			toggleChat();
+		else
+#endif
 		openConsole(0.2, L"");
 	} else if (wasKeyDown(KeyType::CMD)) {
 		openConsole(0.2, L"/");
@@ -2576,6 +2581,11 @@ void Game::processKeyInput()
 	} else if (wasKeyDown(KeyType::FREEMOVE)) {
 		toggleFreeMove();
 	} else if (wasKeyDown(KeyType::JUMP)) {
+#if defined(__ANDROID__) || defined(__IOS__)
+		if (isKeyDown(KeyType::SNEAK) && client->checkPrivilege("fly"))
+			toggleFast();
+		else
+#endif
 		toggleFreeMoveAlt();
 	} else if (wasKeyDown(KeyType::FASTMOVE)) {
 		toggleFast();
