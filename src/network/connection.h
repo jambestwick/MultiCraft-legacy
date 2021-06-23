@@ -792,7 +792,11 @@ public:
 	void setNonLegacyPeer();
 
 	bool getLegacyPeer()
+#ifdef __IOS__
+	{ return false; }
+#else
 	{ return m_legacy_peer; }
+#endif
 
 	u16 getNextSplitSequenceNumber(u8 channel);
 	void setNextSplitSequenceNumber(u8 channel, u16 seqnum);
