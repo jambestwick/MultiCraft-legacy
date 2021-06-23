@@ -399,8 +399,6 @@ void set_default_settings(Settings *settings) {
 
 	// Mobile Platform
 #if defined(__ANDROID__) || defined(__IOS__)
-	settings->setDefault("screenW", "0");
-	settings->setDefault("screenH", "0");
 	settings->setDefault("fullscreen", "true");
 	settings->setDefault("touchtarget", "true");
 	settings->setDefault("touchscreen_threshold", "20");
@@ -510,6 +508,32 @@ void set_default_settings(Settings *settings) {
 	// Set font_path
 	settings->setDefault("mono_font_path", "/system/fonts/DroidSansMono.ttf");
 	settings->setDefault("fallback_font_path", "/system/fonts/DroidSans.ttf");
+
+	v2u32 window_size = porting::getWindowSize();
+	if (window_size.X > 0) {
+		float x_inches = window_size.X /
+				(160.f * porting::getDisplayDensity());
+		if (x_inches <= 3.7) {
+			// small 4" phones
+			g_settings->setFloat("hud_scaling", 0.55);
+			g_settings->setU16("font_size", TTF_DEFAULT_FONT_SIZE - 1);
+			g_settings->setFloat("mouse_sensitivity", 0.3);
+		} else if (x_inches > 3.7 && x_inches <= 4.5) {
+			// medium phones
+			g_settings->setFloat("hud_scaling", 0.6);
+			g_settings->setU16("font_size", TTF_DEFAULT_FONT_SIZE - 1);
+			g_settings->setS16("selectionbox_width", 6);
+		} else if (x_inches > 4.5 && x_inches <= 5.5) {
+			// large 6" phones
+			g_settings->setFloat("hud_scaling", 0.7);
+			g_settings->setFloat("mouse_sensitivity", 0.15);
+			g_settings->setS16("selectionbox_width", 6);
+		} else if (x_inches > 5.5 && x_inches <= 6.5) {
+			// 7" tablets
+			g_settings->setFloat("hud_scaling", 0.9);
+			g_settings->setS16("selectionbox_width", 6);
+		}
+	}
 #endif // Android
 
 	// iOS Settings

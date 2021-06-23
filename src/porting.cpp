@@ -755,6 +755,8 @@ void initIrrlicht(irr::IrrlichtDevice *device_)
 
 v2u32 getWindowSize()
 {
+	if (device == NULL)
+		return v2u32(0, 0);
 	return device->getVideoDriver()->getScreenSize();
 }
 

@@ -36,6 +36,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "clientlauncher.h"
 #include "version.h"
 
+#ifdef __ANDROID__
+#include "defaultsettings.h"
+#endif
 #ifdef __IOS__
 namespace irr {
 	class CIrrDeviceiOS : public IrrlichtDevice {
@@ -539,8 +542,13 @@ bool ClientLauncher::create_engine_device()
 {
 	// Resolution selection
 	bool fullscreen = g_settings->getBool("fullscreen");
+#if defined(__ANDROID__) || defined(__IOS__)
+	u16 screenW = 0;
+	u16 screenH = 0;
+#else
 	u16 screenW = g_settings->getU16("screenW");
 	u16 screenH = g_settings->getU16("screenH");
+#endif
 
 	// bpp, fsaa, vsync
 	bool vsync = g_settings->getBool("vsync");
@@ -592,28 +600,7 @@ bool ClientLauncher::create_engine_device()
 #ifdef __ANDROID__
 		// Apply settings according to screen size
 		// We can get real screen size only after device initialization finished
-		float x_inches = porting::getWindowSize().X /
-				(160.f * porting::getDisplayDensity());
-		if (x_inches <= 3.7) {
-			// small 4" phones
-			g_settings->setFloat("hud_scaling", 0.55);
-			g_settings->setU16("font_size", TTF_DEFAULT_FONT_SIZE - 1);
-			g_settings->setFloat("mouse_sensitivity", 0.3);
-		} else if (x_inches > 3.7 && x_inches <= 4.5) {
-			// medium phones
-			g_settings->setFloat("hud_scaling", 0.6);
-			g_settings->setU16("font_size", TTF_DEFAULT_FONT_SIZE - 1);
-			g_settings->setS16("selectionbox_width", 6);
-		} else if (x_inches > 4.5 && x_inches <= 5.5) {
-			// large 6" phones
-			g_settings->setFloat("hud_scaling", 0.7);
-			g_settings->setFloat("mouse_sensitivity", 0.15);
-			g_settings->setS16("selectionbox_width", 6);
-		} else if (x_inches > 5.5 && x_inches <= 6.5) {
-			// 7" tablets
-			g_settings->setFloat("hud_scaling", 0.9);
-			g_settings->setS16("selectionbox_width", 6);
-		}
+		set_default_settings(g_settings);
 #endif
 #ifdef __IOS__
 		CIrrDeviceiOS* dev = (CIrrDeviceiOS*) device;

@@ -322,6 +322,6 @@ float getDisplayDensity()
 }
 
 v2u32 getDisplaySize() {
-	return v2u32(0, 0);
+	return porting::getWindowSize();
 }
 }
