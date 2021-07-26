@@ -5,7 +5,7 @@ MultiCraft is an Open Source sandbox game inspired by [Minecraft](https://minecr
 
 MultiCraft is based on the Minetest project, which is developed by a [number of contributors](https://github.com/minetest/minetest/graphs/contributors).
 
-Copyright © 2014-2019 Maksim Gamarnik [MoNTE48] <MoNTE48@mail.ua> & MultiCraft Development Team.
+Copyright © 2014-2021 Maksim Gamarnik [MoNTE48] <MoNTE48@mail.ua> & MultiCraft Development Team.
 
 The engine and the game is licensed under LGPLv3 (or higher). Resources games licensed under CC-BY-SA 4.0, unless otherwise stated.
 

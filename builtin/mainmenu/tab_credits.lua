@@ -21,10 +21,13 @@ local multicraft_developers = {
 	"Maksim Gamarnik (MoNTE48) <MoNTE48@mail.ua>",
 	"Bektur Mambetov (ubulem) <berkut87@gmail.com>",
 	"Alexander Zavrin (Ransom.00)",
+	"luk3yx",
+	"Nathan Salapat (NathanS21) <nathan@nathansalapat.com>",
+	"Vitaliy Lobachevskiy (numberZero) <numzer0@yandex.ru>",
+	"Jean-Patrick Guerrero (kilbith) <jeanpatrick.guerrero@gmail.com>",
+	"An0n3m0us",
 	"sfan5 <sfan5@live.de>",
 	"Stuart Jones (stujones11) <stujones111@gmail.com>",
-	"Jean-Patrick Guerrero (kilbith) <jeanpatrick.guerrero@gmail.com>",
-	"luk3yx",
 	"And other people who helped make the world better!"
 }
 
@@ -98,8 +101,8 @@ return {
 	cbf_formspec = function()
 	local version = core.get_version()
 		return "label[0.1,-0.1;" ..
-			"MultiCraft Open Source Project, ver. " .. version.string .. "\n" ..
-			"Copyright (C) 2014-2020 MultiCraft Development Team\n" ..
+			"MultiCraft Open Source, ver. " .. version.string .. "\n" ..
+			"Copyright (C) 2014-2021 MultiCraft Development Team\n" ..
 			"Licence: LGPLv3.0+ and CC-BY-SA 4.0\n" ..
 			"Home page: http://multicraft.world]" ..
 			"tablecolumns[color;text]" ..

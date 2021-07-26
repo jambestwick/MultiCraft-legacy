@@ -32,4 +32,6 @@ dofile(gamepath .. "hud.lua")
 dofile(gamepath .. "statbars.lua")
 dofile(gamepath .. "hunger.lua")
 
+core.features = {} -- dummy
+
 profiler = nil

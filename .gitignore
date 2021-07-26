@@ -78,8 +78,6 @@ src/cmake_config.h
 src/cmake_config_githash.h
 src/lua/build/
 locale/
-!/games/*/files/*/locale
-!/games/*/files/*/*/locale
 .directory
 .gradle/
 *.cbp

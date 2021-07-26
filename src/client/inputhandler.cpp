@@ -42,7 +42,7 @@ bool MyEventReceiver::OnEvent(const SEvent &event)
 	if (isMenuActive()) {
 #ifdef HAVE_TOUCHSCREENGUI
 		if (m_touchscreengui)
-			m_touchscreengui->Toggle(false);
+			m_touchscreengui->hide();
 #endif
 		return g_menumgr.preprocessEvent(event);
 	}
