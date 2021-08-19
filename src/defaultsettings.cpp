@@ -492,6 +492,8 @@ void set_default_settings(Settings *settings) {
 #endif
 	}
 
+	std::string font_small = std::to_string(TTF_DEFAULT_FONT_SIZE - 1);
+
 	// Android Settings
 #ifdef __ANDROID__
     // Switch to olges2 with shaders on powerful Android devices
@@ -511,27 +513,26 @@ void set_default_settings(Settings *settings) {
 
 	v2u32 window_size = porting::getWindowSize();
 	if (window_size.X > 0) {
-		float x_inches = window_size.X /
-				(160.f * porting::getDisplayDensity());
+		float x_inches = window_size.X / (160.f * porting::getDisplayDensity());
 		if (x_inches <= 3.7) {
 			// small 4" phones
-			g_settings->setFloat("hud_scaling", 0.55);
-			g_settings->setU16("font_size", TTF_DEFAULT_FONT_SIZE - 1);
-			g_settings->setFloat("mouse_sensitivity", 0.3);
+			settings->setDefault("hud_scaling", "0.55");
+			settings->setDefault("font_size", font_small);
+			settings->setDefault("mouse_sensitivity", "0.3");
 		} else if (x_inches > 3.7 && x_inches <= 4.5) {
 			// medium phones
-			g_settings->setFloat("hud_scaling", 0.6);
-			g_settings->setU16("font_size", TTF_DEFAULT_FONT_SIZE - 1);
-			g_settings->setS16("selectionbox_width", 6);
+			settings->setDefault("hud_scaling", "0.6");
+			settings->setDefault("font_size", font_small);
+			settings->setDefault("selectionbox_width", "6");
 		} else if (x_inches > 4.5 && x_inches <= 5.5) {
 			// large 6" phones
-			g_settings->setFloat("hud_scaling", 0.7);
-			g_settings->setFloat("mouse_sensitivity", 0.15);
-			g_settings->setS16("selectionbox_width", 6);
+			settings->setDefault("hud_scaling", "0.7");
+			settings->setDefault("mouse_sensitivity", "0.15");
+			settings->setDefault("selectionbox_width", "6");
 		} else if (x_inches > 5.5 && x_inches <= 6.5) {
 			// 7" tablets
-			g_settings->setFloat("hud_scaling", 0.9);
-			g_settings->setS16("selectionbox_width", 6);
+			settings->setDefault("hud_scaling", "0.9");
+			settings->setDefault("selectionbox_width", "6");
 		}
 	}
 #endif // Android
@@ -559,14 +560,17 @@ void set_default_settings(Settings *settings) {
 		// 4" iPhone and iPod Touch
 		settings->setDefault("hud_scaling", "0.55");
 		settings->setDefault("mouse_sensitivity", "0.33");
+		settings->setDefault("font_size", font_small);
 	} else if SDVersion4and7Inch {
 		// 4.7" iPhone
-		settings->setDefault("hud_scaling", "0.65");
+		settings->setDefault("hud_scaling", "0.6");
 		settings->setDefault("mouse_sensitivity", "0.27");
+		settings->setDefault("font_size", font_small);
 	} else if SDVersion5and5Inch {
 		// 5.5" iPhone Plus
-		settings->setDefault("hud_scaling", "0.7");
+		settings->setDefault("hud_scaling", "0.65");
 		settings->setDefault("mouse_sensitivity", "0.3");
+		settings->setDefault("font_size", font_small);
 	} else if (SDVersion5and8Inch || SDVersion6and1Inch || SDVersion6and5Inch) {
 		// 5.8+" iPhones
 		settings->setDefault("hud_scaling", "0.85");
@@ -584,17 +588,14 @@ void set_default_settings(Settings *settings) {
 	}
 
 	// Settings for the Rounded Screen and Home Bar
-	if (@available(iOS 11, *)) {
-		UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
-		int bottomPadding = (int) window.safeAreaInsets.bottom;
+	UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
 
-		if (bottomPadding > 0) {
-			settings->setDefault("hud_move_upwards", "20");
-			if (SDVersioniPhone12Series)
-				settings->setDefault("round_screen", "75");
-			else
-				settings->setDefault("round_screen", "35");
-		}
+	if (window.safeAreaInsets.bottom > 0) {
+		settings->setDefault("hud_move_upwards", "20");
+		if (SDVersioniPhone12Series)
+			settings->setDefault("round_screen", "75");
+		else
+			settings->setDefault("round_screen", "35");
 	}
 #endif // iOS
 #endif
