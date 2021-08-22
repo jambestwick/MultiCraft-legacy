@@ -16,6 +16,7 @@ if core.settings:get_bool("profiler.load") then
 	profiler = dofile(scriptpath .. "profiler" .. DIR_DELIM .. "init.lua")
 end
 
+dofile(gamepath .. "player_meta.lua")
 dofile(commonpath .. "after.lua")
 dofile(gamepath .. "item_entity.lua")
 dofile(gamepath .. "misc.lua")
