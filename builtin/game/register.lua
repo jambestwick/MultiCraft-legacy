@@ -216,6 +216,26 @@ end
 
 function core.register_node(name, nodedef)
 	nodedef.type = "node"
+
+	-- Reference: https://github.com/minetest/minetest/pull/10819
+	if type(nodedef.use_texture_alpha) == "string" then
+		local drawtype = nodedef.drawtype
+		if not drawtype or drawtype == "normal" then
+			nodedef.use_texture_alpha = nodedef.use_texture_alpha ~= "opaque"
+		elseif drawtype ~= "liquid" then
+			-- All drawtypes other than normal and liquid
+			nodedef.use_texture_alpha = nodedef.use_texture_alpha == "blend"
+		elseif nodedef.alpha == nil then
+			-- Liquids have a separate alpha field,
+			if nodedef.use_texture_alpha == "opaque" then
+				nodedef.alpha = 255
+			else
+				nodedef.alpha = 0
+			end
+			nodedef.use_texture_alpha = nil
+		end
+	end
+
 	core.register_item(name, nodedef)
 end
 
