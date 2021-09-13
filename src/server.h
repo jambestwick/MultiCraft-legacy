@@ -269,6 +269,9 @@ public:
 
 	void deleteParticleSpawner(const std::string &playername, u32 id);
 
+	bool addMediaFile(const std::string &filename, const std::string &filepath,
+			std::string *filedata = nullptr, std::string *digest = NULL);
+
 	// Creates or resets inventory
 	Inventory* createDetachedInventory(const std::string &name, const std::string &player="");
 
@@ -684,4 +687,3 @@ private:
 void dedicated_server_loop(Server &server, bool &kill);
 
 #endif
-

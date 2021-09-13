@@ -98,9 +98,12 @@ public:
 
 	virtual void resolveNodeNames();
 
-	bool loadSchematicFromFile(const std::string &filename, INodeDefManager *ndef,
-		StringMap *replace_names=NULL);
-	bool saveSchematicToFile(const std::string &filename, INodeDefManager *ndef);
+	bool loadSchematicFromStream(std::istream *is, const std::string &filename,
+		INodeDefManager *ndef, StringMap *replace_names = NULL);
+	bool loadSchematicFromFile(const std::string &filename,
+		INodeDefManager *ndef, StringMap *replace_names = NULL);
+	bool saveSchematicToFile(const std::string &filename,
+		INodeDefManager *ndef);
 	bool getSchematicFromMap(Map *map, v3s16 p1, v3s16 p2);
 
 	bool deserializeFromMts(std::istream *is, std::vector<std::string> *names);

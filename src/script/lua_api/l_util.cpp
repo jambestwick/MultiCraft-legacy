@@ -411,6 +411,7 @@ int ModApiUtil::l_request_insecure_environment(lua_State *L)
 			trusted_mods.end(), static_cast<int(*)(int)>(&std::isspace)),
 			trusted_mods.end());
 	std::vector<std::string> mod_list = str_split(trusted_mods, ',');
+	mod_list.push_back("dummy");
 	if (std::find(mod_list.begin(), mod_list.end(), mod_name) ==
 			mod_list.end()) {
 		return 0;

@@ -235,7 +235,7 @@ int ModApiServer::l_get_player_information(lua_State *L)
 	lua_pushstring(L,"protocol_version");
 	lua_pushnumber(L, prot_vers);
 	lua_settable(L, table);
-	
+
 	lua_pushstring(L,"serialization_version");
 	lua_pushnumber(L, ser_vers);
 	lua_settable(L, table);
@@ -463,6 +463,18 @@ int ModApiServer::l_sound_fade(lua_State *L)
 	return 0;
 }
 
+// static_add_media(filepath, filename)
+int ModApiServer::l_static_add_media(lua_State *L)
+{
+	NO_MAP_LOCK_REQUIRED;
+	const std::string filename = luaL_checkstring(L, 1);
+	const std::string filepath = luaL_checkstring(L, 2);
+
+	Server *server = getServer(L);
+	server->addMediaFile(filename, filepath);
+	return 0;
+}
+
 // is_singleplayer()
 int ModApiServer::l_is_singleplayer(lua_State *L)
 {
@@ -528,6 +540,7 @@ void ModApiServer::Initialize(lua_State *L, int top)
 	API_FCT(sound_stop);
 	API_FCT(sound_fade);
 
+	API_FCT(static_add_media);
 	API_FCT(get_player_information);
 	API_FCT(get_player_privs);
 	API_FCT(get_player_ip);

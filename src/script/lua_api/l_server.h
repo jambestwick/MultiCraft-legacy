@@ -71,6 +71,9 @@ private:
 	// sound_fade(handle, step, gain)
 	static int l_sound_fade(lua_State *L);
 
+	// static_add_media(filename, filepath)
+	static int l_static_add_media(lua_State *L);
+
 	// get_player_privs(name, text)
 	static int l_get_player_privs(lua_State *L);
 
