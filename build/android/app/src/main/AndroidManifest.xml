@@ -50,6 +50,7 @@
 		<activity
 			android:name="com.multicraft.game.MainActivity"
 			android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+			android:exported="true"
 			android:maxAspectRatio="3.0"
 			android:screenOrientation="sensorLandscape"
 			android:theme="@style/AppTheme">
@@ -62,6 +63,7 @@
 		<activity
 			android:name="com.multicraft.game.GameActivity"
 			android:configChanges="orientation|keyboard|keyboardHidden|navigation|screenSize|smallestScreenSize"
+			android:exported="true"
 			android:hardwareAccelerated="true"
 			android:launchMode="singleTask"
 			android:maxAspectRatio="3.0"

@@ -103,7 +103,11 @@ local function init_globals()
 	-- Create main tabview
 	local tv_main = tabview_create("maintab", {x = 12, y = 5.4}, {x = 0, y = 0})
 
-	tv_main:add(tabs.local_game)
+	local default_game = core.settings:get("default_game")
+	if gamemgr.find_by_gameid(default_game) then
+		tv_main:add(tabs.local_game)
+	end
+
 	tv_main:add(tabs.play_online)
 
 	for _, page in pairs(htabs) do

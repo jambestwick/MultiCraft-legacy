@@ -304,8 +304,13 @@ void notifyServerConnect(bool is_multiplayer)
 
 void notifyExitGame()
 {
-	jmethodID notifyExit = jnienv->GetMethodID(nativeActivity,
-			"notifyExitGame", "()V");
+	jmethodID notifyExit;
+	try {
+		notifyExit = jnienv->GetMethodID(nativeActivity,
+				"notifyExitGame", "()V");
+	} catch (...) {
+		return;
+	}
 
 	FATAL_ERROR_IF(notifyExit == nullptr,
 		"porting::notifyExit unable to find java notifyExitGame method");

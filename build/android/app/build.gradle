@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-	compileSdkVersion 30
-	buildToolsVersion '30.0.3'
-	ndkVersion '22.1.7171670'
+	compileSdkVersion 31
+	buildToolsVersion '31.0.0'
+	ndkVersion '23.0.7599858'
 	defaultConfig {
 		applicationId 'com.multicraft.game'
 		minSdkVersion 19
-		targetSdkVersion 30
+		targetSdkVersion 31
 		versionCode 170
 		versionName "1.16.0"
 	}
