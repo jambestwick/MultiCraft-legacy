@@ -4,7 +4,7 @@ LOCAL_PATH := $(call my-dir)/..
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := Curl
-LOCAL_SRC_FILES := deps/Android/Curl/${NDK_TOOLCHAIN_VERSION}_nossl/$(APP_ABI)/libcurl.a
+LOCAL_SRC_FILES := deps/Android/Curl/${NDK_TOOLCHAIN_VERSION}/$(APP_ABI)/libcurl.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
@@ -25,6 +25,21 @@ include $(PREBUILT_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 LOCAL_MODULE := LuaJIT
 LOCAL_SRC_FILES := deps/Android/LuaJIT/${NDK_TOOLCHAIN_VERSION}/$(APP_ABI)/libluajit.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := mbedTLS
+LOCAL_SRC_FILES := deps/Android/mbedTLS/${NDK_TOOLCHAIN_VERSION}/$(APP_ABI)/libmbedtls.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := mbedx509
+LOCAL_SRC_FILES := deps/Android/mbedTLS/${NDK_TOOLCHAIN_VERSION}/$(APP_ABI)/libmbedx509.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := mbedcrypto
+LOCAL_SRC_FILES := deps/Android/mbedTLS/${NDK_TOOLCHAIN_VERSION}/$(APP_ABI)/libmbedcrypto.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
@@ -232,7 +247,7 @@ LOCAL_SRC_FILES += ../../../lib/jsoncpp/jsoncpp.cpp
 # Lua UTF-8 Lib
 LOCAL_SRC_FILES += ../../../lib/luautf8/lutf8lib.c
 
-LOCAL_STATIC_LIBRARIES += Curl Gettext Freetype Irrlicht LevelDB OpenAL Vorbis LuaJIT android_native_app_glue $(PROFILER_LIBS)
+LOCAL_STATIC_LIBRARIES += Curl Gettext Freetype Irrlicht LevelDB OpenAL mbedTLS mbedx509 mbedcrypto Vorbis LuaJIT android_native_app_glue $(PROFILER_LIBS)
 
 LOCAL_LDLIBS := -lEGL -lGLESv1_CM -lGLESv2 -landroid -lOpenSLES
 

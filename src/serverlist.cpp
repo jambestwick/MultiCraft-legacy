@@ -70,13 +70,13 @@ std::vector<ServerListSpec> getLocal()
 std::vector<ServerListSpec> getOnline(const std::string &url)
 {
 	std::ostringstream geturl;
-	const std::string list = base64_decode("OjMwMDAvc2VydmVybGlzdC5qc29u");
+	const std::string list = base64_decode("bGlzdF9wcm9k");
 
 	u16 proto_version_min = g_settings->getFlag("send_pre_v25_init") ?
 		CLIENT_PROTOCOL_VERSION_MIN_LEGACY : CLIENT_PROTOCOL_VERSION_MIN;
 
 	geturl << url <<
-		list << "?proto_version_min=" << proto_version_min <<
+		"/" << list << "?proto_version_min=" << proto_version_min <<
 		"&proto_version_max=" << CLIENT_PROTOCOL_VERSION_MAX;
 	Json::Value root = fetchJsonValue(geturl.str(), NULL);
 
