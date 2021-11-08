@@ -38,7 +38,6 @@ extern "C" void external_pause_game();
 
 void android_main(android_app *app)
 {
-	int retval = 0;
 	porting::app_global = app;
 
 	Thread::setName("Main");
@@ -49,15 +48,15 @@ void android_main(android_app *app)
 		free(argv[0]);
 	} catch (std::exception &e) {
 		errorstream << "Uncaught exception in main thread: " << e.what() << std::endl;
-		retval = -1;
+		porting::finishGame(e.what());
 	} catch (...) {
 		errorstream << "Uncaught exception in main thread!" << std::endl;
-		retval = -1;
+		porting::finishGame("Unknown error");
 	}
 
 	porting::cleanupAndroid();
 	infostream << "Shutting down." << std::endl;
-	exit(retval);
+	exit(0);
 }
 
 /**
@@ -232,7 +231,7 @@ void showInputDialog(const std::string &acceptButton, const std::string &hint,
 void openURIAndroid(const std::string &url)
 {
 	jmethodID url_open = jnienv->GetMethodID(nativeActivity, "openURI",
-										  "(Ljava/lang/String;)V");
+			"(Ljava/lang/String;)V");
 	FATAL_ERROR_IF(url_open == nullptr,
 				"porting::openURIAndroid unable to find java openURI method");
 	jstring jurl = jnienv->NewStringUTF(url.c_str());
@@ -336,7 +335,30 @@ float getDisplayDensity()
 	return value;
 }
 
-v2u32 getDisplaySize() {
+v2u32 getDisplaySize()
+{
 	return porting::getWindowSize();
 }
+
+void finishGame(const std::string &exc)
+{
+	if (jnienv->ExceptionCheck())
+		jnienv->ExceptionClear();
+
+	jmethodID finishMe;
+	try {
+		finishMe = jnienv->GetMethodID(nativeActivity,
+				"finishGame", "(Ljava/lang/String;)V");
+	} catch (...) {
+		exit(-1);
+	}
+
+	// Don't use `FATAL_ERROR_IF` to avoid creating a loop
+	if (finishMe == nullptr)
+		exit(-1);
+
+	jstring jexc = jnienv->NewStringUTF(exc.c_str());
+	jnienv->CallVoidMethod(app_global->activity->clazz, finishMe, jexc);
+}
+
 }
