@@ -230,6 +230,9 @@ GUIEngine::GUIEngine(	irr::IrrlichtDevice* dev,
 	} catch (LuaError &e) {
 		errorstream << "Main menu error: " << e.what() << std::endl;
 		m_data->script_data.errormessage = e.what();
+#ifdef __ANDROID__
+		porting::handleError("Main menu error", e.what());
+#endif
 	}
 
 	m_menu->quitMenu();
@@ -255,6 +258,9 @@ bool GUIEngine::loadMainMenuScript()
 	} catch (const ModError &e) {
 		errorstream << "GUIEngine: execution of menu script failed: "
 			<< e.what() << std::endl;
+#ifdef __ANDROID__
+		porting::handleError("Main menu load error", e.what());
+#endif
 	}
 
 	return false;
