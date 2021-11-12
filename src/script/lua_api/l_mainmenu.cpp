@@ -805,7 +805,7 @@ int ModApiMainMenu::l_get_texturepath_share(lua_State *L)
 int ModApiMainMenu::l_create_dir(lua_State *L) {
 	const char *path = luaL_checkstring(L, 1);
 
-	if (ModApiMainMenu::isMinetestPath(path)) {
+	if (ModApiMainMenu::mayModifyPath(path)) {
 		lua_pushboolean(L, fs::CreateAllDirs(path));
 		return 1;
 	}
@@ -821,7 +821,7 @@ int ModApiMainMenu::l_delete_dir(lua_State *L)
 
 	std::string absolute_path = fs::RemoveRelativePathComponents(path);
 
-	if (ModApiMainMenu::isMinetestPath(absolute_path)) {
+	if (ModApiMainMenu::mayModifyPath(absolute_path)) {
 		lua_pushboolean(L, fs::RecursiveDelete(absolute_path));
 		return 1;
 	}
@@ -846,8 +846,8 @@ int ModApiMainMenu::l_copy_dir(lua_State *L)
 	std::string absolute_destination = fs::RemoveRelativePathComponents(destination);
 	std::string absolute_source = fs::RemoveRelativePathComponents(source);
 
-	if ((ModApiMainMenu::isMinetestPath(absolute_source)) &&
-			(ModApiMainMenu::isMinetestPath(absolute_destination))) {
+	if ((ModApiMainMenu::mayModifyPath(absolute_source)) &&
+			(ModApiMainMenu::mayModifyPath(absolute_destination))) {
 		bool retval = fs::CopyDir(absolute_source,absolute_destination);
 
 		if (retval && (!keep_source)) {
@@ -872,7 +872,7 @@ int ModApiMainMenu::l_extract_zip(lua_State *L)
 
 	std::string absolute_destination = fs::RemoveRelativePathComponents(destination);
 
-	if (ModApiMainMenu::isMinetestPath(absolute_destination)) {
+	if (ModApiMainMenu::mayModifyPath(absolute_destination)) {
 		fs::CreateAllDirs(absolute_destination);
 
 		io::IFileSystem* fs = engine->m_device->getFileSystem();
@@ -960,23 +960,28 @@ int ModApiMainMenu::l_get_mainmenu_path(lua_State *L)
 }
 
 /******************************************************************************/
-bool ModApiMainMenu::isMinetestPath(std::string path)
+bool ModApiMainMenu::mayModifyPath(std::string path)
 {
-	if (fs::PathStartsWith(path,fs::TempPath()))
+	path = fs::RemoveRelativePathComponents(path);
+
+	if (fs::PathStartsWith(path, fs::TempPath()))
 		return true;
 
-	/* games */
-	if (fs::PathStartsWith(path,fs::RemoveRelativePathComponents(porting::path_share + DIR_DELIM + "games")))
+	std::string path_user = fs::RemoveRelativePathComponents(porting::path_user);
+
+	if (fs::PathStartsWith(path, path_user + DIR_DELIM "client"))
+		return true;
+	if (fs::PathStartsWith(path, path_user + DIR_DELIM "games"))
+		return true;
+	if (fs::PathStartsWith(path, path_user + DIR_DELIM "mods"))
+		return true;
+	if (fs::PathStartsWith(path, path_user + DIR_DELIM "textures"))
+		return true;
+	if (fs::PathStartsWith(path, path_user + DIR_DELIM "worlds"))
 		return true;
 
-	/* mods */
-	if (fs::PathStartsWith(path,fs::RemoveRelativePathComponents(porting::path_user + DIR_DELIM + "mods")))
+	if (fs::PathStartsWith(path, fs::RemoveRelativePathComponents(porting::path_cache)))
 		return true;
-
-	/* worlds */
-	if (fs::PathStartsWith(path,fs::RemoveRelativePathComponents(porting::path_user + DIR_DELIM + "worlds")))
-		return true;
-
 
 	return false;
 }
@@ -1011,7 +1016,7 @@ int ModApiMainMenu::l_download_file(lua_State *L)
 	//check path
 	std::string absolute_destination = fs::RemoveRelativePathComponents(target);
 
-	if (ModApiMainMenu::isMinetestPath(absolute_destination)) {
+	if (ModApiMainMenu::mayModifyPath(absolute_destination)) {
 		if (GUIEngine::downloadFile(url,absolute_destination)) {
 			lua_pushboolean(L,true);
 			return 1;

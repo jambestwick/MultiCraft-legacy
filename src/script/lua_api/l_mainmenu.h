@@ -58,7 +58,7 @@ private:
 	 * @param path path to check
 	 * @return true/false
 	 */
-	static bool isMinetestPath(std::string path);
+	static bool mayModifyPath(std::string path);
 
 	//api calls
 
