@@ -195,8 +195,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modmgr: batili modpath \"$1\""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "Futa ulimwengu"
+msgid "Delete World \"$1\"?"
+msgstr "Futa ulimwengu \"$1\"?"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

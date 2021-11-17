@@ -203,8 +203,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Papildtvrk: netinkamas papildinio kelias „$1“"
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "Ištrinti pasaulį"
+msgid "Delete World \"$1\"?"
+msgstr "Ištrinti pasaulį „$1“?"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

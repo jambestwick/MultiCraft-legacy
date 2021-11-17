@@ -203,8 +203,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modmgr: локација мода \"$1\" није валидна"
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "Обриши свет"
+msgid "Delete World \"$1\"?"
+msgstr "Обриши свет \"$1\"?"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

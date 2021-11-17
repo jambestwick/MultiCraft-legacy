@@ -207,8 +207,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modmgr: malvalida modifo-dosierindiko \"$1\""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "Ĉu forigi mondon"
+msgid "Delete World \"$1\"?"
+msgstr "Ĉu forigi mondon \"$1\"?"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

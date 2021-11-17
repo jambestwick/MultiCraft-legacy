@@ -201,8 +201,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Менеджар модаў: некарэктны шлях да «$1»"
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "Выдаліць свет"
+msgid "Delete World \"$1\"?"
+msgstr "Выдаліць свет «$1»?"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

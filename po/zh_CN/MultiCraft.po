@@ -197,8 +197,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "MOD管理器：MOD“$1“路径非法"
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "删除世界"
+msgid "Delete World \"$1\"?"
+msgstr "删除世界“$1”？"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

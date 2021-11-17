@@ -206,8 +206,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modmgr: Ruta del mod \"$1\" invàlida"
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "Eliminar el món"
+msgid "Delete World \"$1\"?"
+msgstr "Eliminar el món \"$1\"?"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

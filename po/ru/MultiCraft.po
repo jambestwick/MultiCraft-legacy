@@ -196,9 +196,8 @@ msgstr "Modmgr: невозможно удалить \"$1\""
 msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modmgr: неправильный путь к \"$1\""
 
-#: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "Удалить мир"
+msgid "Delete World \"$1\"?"
+msgstr "Удалить мир \"$1\"?"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

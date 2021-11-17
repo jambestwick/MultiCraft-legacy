@@ -201,8 +201,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modmgr: \"$1\" mod konumu geçersiz"
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "Dünyasını sil"
+msgid "Delete World \"$1\"?"
+msgstr "\"$1\" dünyasını sil?"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

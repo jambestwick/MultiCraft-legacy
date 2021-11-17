@@ -203,8 +203,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modmgr: érvénytelen mod útvonal: \"$1\""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "Világ törlése"
+msgid "Delete World \"$1\"?"
+msgstr "\"$1\" világ törlése?"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

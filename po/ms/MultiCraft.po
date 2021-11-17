@@ -202,8 +202,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Pengurus mods: laluan mods tidak sah - \"$1\""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "Padam Dunia"
+msgid "Delete World \"$1\"?"
+msgstr "Padam Dunia \"$1\"?"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

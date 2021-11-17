@@ -185,7 +185,7 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr ""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
+msgid "Delete World \"$1\"?"
 msgstr ""
 
 #: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/tab_settings.lua

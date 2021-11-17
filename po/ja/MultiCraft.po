@@ -194,8 +194,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modマネージャ: Mod「$1」の場所が無効です"
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "ワールドを削除しますか？"
+msgid "Delete World \"$1\"?"
+msgstr "ワールド「$1」を削除しますか？"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

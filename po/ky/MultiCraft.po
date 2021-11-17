@@ -204,8 +204,8 @@ msgstr ""
 
 #: builtin/mainmenu/dlg_delete_world.lua
 #, fuzzy
-msgid "Delete World"
-msgstr "Дүйнөнү өчүрүү"
+msgid "Delete World \"$1\"?"
+msgstr "Дүйнөнү өчүрүү \"$1\"?"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

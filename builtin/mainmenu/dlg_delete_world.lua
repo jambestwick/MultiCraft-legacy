@@ -21,9 +21,10 @@ local function delete_world_formspec(dialogdata)
 		"size[12,6,false]" ..
 		"bgcolor[#00000000]" ..
 		"background[0,0;0,0;" .. core.formspec_escape(defaulttexturedir ..
-		"bg_dialog.png") .. ";true]" ..
-		"label[5,2.4;" .. fgettext("Delete World") .. "]" ..
-		"label[5,2.8;" .. fgettext("\"$1\"?", dialogdata.delete_name) .. "]" ..
+			"bg_dialog.png") .. ";true]" ..
+		"image_button[2,2;8,2;" .. core.formspec_escape(defaulttexturedir ..
+			"blank.png") .. ";;" .. fgettext("Delete World \"$1\"?", dialogdata.delete_name) ..
+			";true;false;]" ..
 		"button[3.5,4.8;2.5,0.5;world_delete_confirm;" .. mt_red_button .. fgettext("Delete") .. "]" ..
 		"button[6,4.8;2.5,0.5;world_delete_cancel;" .. fgettext("Cancel") .. "]"
 	return retval
@@ -31,12 +32,6 @@ end
 
 local function delete_world_buttonhandler(this, fields)
 	if fields["world_delete_confirm"] then
-		if this.data.callback then
-			this:delete()
-			this.data.callback()
-			return true
-		end
-
 		if this.data.delete_index > 0 and
 				this.data.delete_index <= #menudata.worldlist:get_raw_list() then
 			core.delete_world(this.data.delete_index)
@@ -65,16 +60,6 @@ function create_delete_world_dlg(name_to_del, index_to_del)
 					nil)
 	retval.data.delete_name  = name_to_del
 	retval.data.delete_index = index_to_del
-
-	return retval
-end
-
-function create_custom_delete_dlg(name_to_del, callback)
-	assert(name_to_del ~= nil and type(name_to_del) == "string" and name_to_del ~= "")
-	assert(type(callback) == "function")
-
-	local retval = create_delete_world_dlg(name_to_del, -1, nil)
-	retval.data.callback = callback
 
 	return retval
 end

@@ -198,8 +198,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modmgr: \"$1\" 를(을) 인식할 수 없습니다"
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "를(을) 삭제하겠습니까"
+msgid "Delete World \"$1\"?"
+msgstr "\"$1\"를(을) 삭제하겠습니까?"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

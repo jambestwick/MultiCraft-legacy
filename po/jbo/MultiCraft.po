@@ -168,7 +168,7 @@ msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Seed"
-msgstr "le munje ke cunso namcu:"
+msgstr "le munje ke cunso namcu"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Warning: The minimal development test is meant for developers."
@@ -200,8 +200,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr ""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "i xu do djica lo nu vimcu lo munje be me'e zoi"
+msgid "Delete World \"$1\"?"
+msgstr ".i xu do djica lo nu vimcu lo munje be me'e zoi gy.$1.gy."
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Accept"

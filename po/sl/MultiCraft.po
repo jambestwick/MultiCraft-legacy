@@ -201,8 +201,8 @@ msgid "Modmgr: invalid modpath \"$1\""
 msgstr "Modmgr: napačna pot do \"$1\""
 
 #: builtin/mainmenu/dlg_delete_world.lua
-msgid "Delete World"
-msgstr "Zbriši Svet"
+msgid "Delete World \"$1\"?"
+msgstr "Zbriši Svet \"$1\"?"
 
 #: builtin/mainmenu/dlg_rename_modpack.lua
 msgid "Rename Modpack:"
