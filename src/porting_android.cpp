@@ -373,4 +373,16 @@ void finishGame(const std::string &exc)
 	jnienv->CallVoidMethod(app_global->activity->clazz, finishMe, jexc);
 }
 
+void upgrade(const std::string &item)
+{
+	jmethodID upgradeGame = upgradeGame = jnienv->GetMethodID(nativeActivity,
+			"upgrade","(Ljava/lang/String;)V");
+
+	FATAL_ERROR_IF(upgradeGame == nullptr,
+			"porting::upgradeGame unable to find java upgrade method");
+
+	jstring jitem = jnienv->NewStringUTF(item.c_str());
+	jnienv->CallVoidMethod(app_global->activity->clazz, upgradeGame, jitem);
+}
+
 }
