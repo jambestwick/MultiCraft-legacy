@@ -55,6 +55,8 @@ if not mobile then
 	tabs.settings = dofile(menupath .. DIR_DELIM .. "tab_settings.lua")
 --	tabs.mods = dofile(menupath .. DIR_DELIM .. "tab_mods.lua")
 --	tabs.texturepacks = dofile(menupath .. DIR_DELIM .. "tab_texturepacks.lua")
+else
+	tabs.settings = dofile(menupath .. DIR_DELIM .. "tab_settings_simple.lua")
 end
 
 tabs.credits = dofile(menupath .. DIR_DELIM .. "tab_credits.lua")
@@ -114,8 +116,9 @@ local function init_globals()
 		tv_main:add(page)
 	end
 
+	tv_main:add(tabs.settings)
+
 	if not mobile then
-		tv_main:add(tabs.settings)
 --		tv_main:add(tabs.texturepacks)
 	end
 
