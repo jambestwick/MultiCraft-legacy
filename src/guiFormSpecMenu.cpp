@@ -2118,6 +2118,10 @@ void GUIFormSpecMenu::regenerateGui(v2u32 screensize)
 			// smaller screensize.
 			double prefer_imgsize = mydata.screensize.Y / 10 * gui_scaling;
 
+			// Try to fit 13 coordinates on large tablets.
+			if (g_settings->getBool("device_is_tablet"))
+				prefer_imgsize = padded_screensize.Y / 13 * gui_scaling;
+
 			fitx_imgsize = floor(mydata.screensize.X /
 					(1.5 * (0.5 + mydata.invsize.X)));
 			fity_imgsize = floor(mydata.screensize.Y /
