@@ -189,6 +189,6 @@ void ioswrap_open_url(const char *url)
 void ioswrap_upgrade(const char *item)
 {
 #ifdef OFFICIAL
-	upgradeGame();
+	upgradeGame(item);
 #endif
 }
