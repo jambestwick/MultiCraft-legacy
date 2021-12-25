@@ -98,6 +98,12 @@ local function get_formspec(_, _, tabdata)
 				esc((gamedata.serverdescription or ""), true) .. ";]"
 		end
 	end
+	
+--	if PLATFORM == "Android" then
+		retval = retval .. "image_button[10.6,-0.1;1.5,1.5;" ..
+			core.formspec_escape(defaulttexturedir) .. "gift_btn.png;upgrade;;true;false;" ..
+			core.formspec_escape(defaulttexturedir) .. "gift_btn_pressed.png]"
+--	end
 
 	--favourites
 	retval = retval ..
@@ -168,6 +174,10 @@ end
 --------------------------------------------------------------------------------
 local function main_button_handler(_, fields, _, tabdata)
 	local serverlist = menudata.search_result or menudata.favorites
+	
+	if fields["upgrade"] then
+		core.upgrade("")
+	end
 
 	if fields.te_name then
 		gamedata.playername = fields.te_name
