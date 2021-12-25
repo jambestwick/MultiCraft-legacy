@@ -20,13 +20,13 @@
 
 local labels = {
 	leaves = {
-		fgettext("Opaque"),
-		fgettext("Simple"),
-		fgettext("Fancy")
+		fgettext("Opaque Leaves"),
+		fgettext("Simple Leaves"),
+		fgettext("Fancy Leaves")
 	},
 	node_highlighting = {
-		fgettext("Outlining"),
-		fgettext("Highlighting"),
+		fgettext("Node Outlining"),
+		fgettext("Node Highlighting"),
 		fgettext("None")
 	}
 }
@@ -82,20 +82,20 @@ local function formspec(tabview, name, tabdata)
 				.. dump(core.settings:get_bool("enable_fog")) .. "]" ..
 		"checkbox[0.25,2.3;cb_inventory_items_animations;" .. fgettext("Inv. animations") .. ";"
 				.. dump(core.settings:get_bool("inventory_items_animations")) .. "]" ..
-		"checkbox[0.25,2.9;cb_touchtarget;" .. fgettext("Touchtarget") .. ";"
+		"checkbox[0.25,2.9;cb_touchtarget;" .. fgettext("Touch free target") .. ";"
 				.. dump(touchtarget) .. "]" ..
 		"checkbox[0.25,3.5;cb_sound;" .. fgettext("Sound") .. ";"
 				.. dump(sound) .. "]" ..
-		"label[0.25,4.2;" .. fgettext("Leaves Style:") .. "]" ..
+		"label[0.25,4.2;" .. fgettext("Leaves style") .. ":]" ..
 		"dropdown[0.25,4.65;3.5;dd_leaves_style;" .. dd_options.leaves[1] .. ";"
 				.. getSettingIndex.Leaves() .. "]" ..
 		"box[4,0;3.75,5.5;#999999]" ..
 
-		"label[4.25,0.15;" .. fgettext("Max FPS:") .. "]" ..
+		"label[4.25,0.15;" .. fgettext("Maximum FPS") .. ":]" ..
 		"dropdown[4.25,0.6;3.5;dd_fps_max;30,35,45,60;" ..
 			tonumber(fps <= 30 and 1 or fps == 35 and 2 or fps == 45 and 3 or 4) .. "]" ..
 
-		"label[4.25,1.5;" .. fgettext("View Range:") .. "]" ..
+		"label[4.25,1.5;" .. fgettext("Viewing range") .. ":]" ..
 		"dropdown[4.25,1.95;3.5;dd_viewing_range;25,30,40,60,80,100,125,150,175,200;" ..
 			tonumber(range <= 25 and 1 or range == 30 and 2 or range == 40 and 3 or
 			range == 60 and 4 or range == 80 and 5 or range == 100 and 6 or range == 125 and 7 or
@@ -105,7 +105,7 @@ local function formspec(tabview, name, tabdata)
 		"dropdown[4.25,3.3;3.5;dd_node_highlighting;" .. dd_options.node_highlighting[1] .. ";"
 				.. getSettingIndex.NodeHighlighting() .. "]" ..
 
-		"label[4.25,4.2;" .. fgettext("Touchthreshold: (px)") .. "]" ..
+		"label[4.25,4.2;" .. fgettext("Touchthreshold (px)") .. ":]" ..
 		"dropdown[4.25,4.65;3.5;dd_touchthreshold;0,10,20,30,40,50;" ..
 			(touchthreshold / 10) + 1 .. "]" ..
 
@@ -123,7 +123,7 @@ local function formspec(tabview, name, tabdata)
 		shaders_enabled = false
 		tab_string = tab_string ..
 			"label[8.38,0.15;" .. core.colorize("#888888",
-					fgettext("Shaders (unavailable)")) .. "]"
+					fgettext("Shaders") .. " (unavailable)") .. "]"
 	end
 
 --[[tab_string = tab_string ..
@@ -138,7 +138,7 @@ local function formspec(tabview, name, tabdata)
 		tab_string = tab_string ..
 			"checkbox[8.25,0.55;cb_tonemapping;" .. fgettext("Tone Mapping") .. ";"
 					.. dump(core.settings:get_bool("tone_mapping")) .. "]" ..
-			"checkbox[8.25,1.15;cb_waving_water;" .. fgettext("Waving Liquids") .. ";"
+			"checkbox[8.25,1.15;cb_waving_water;" .. fgettext("Waving Water") .. ";"
 					.. dump(core.settings:get_bool("enable_waving_water")) .. "]" ..
 			"checkbox[8.25,1.75;cb_waving_leaves;" .. fgettext("Waving Leaves") .. ";"
 					.. dump(core.settings:get_bool("enable_waving_leaves")) .. "]" ..
