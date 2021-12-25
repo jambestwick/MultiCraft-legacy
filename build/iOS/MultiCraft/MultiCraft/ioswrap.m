@@ -5,10 +5,6 @@
 #import "ioswrap.h"
 #import <MultiCraft-Swift.h>
 
-#ifdef OFFICIAL
-#import "ads.h"
-#endif
-
 static UIViewController *viewc;
 
 /* Initialization iOS Specific Things */
