@@ -44,4 +44,6 @@ namespace porting {
 	void notifyServerConnect(bool is_multiplayer);
 
 	void notifyExitGame();
+
+	void upgrade(const std::string &item);
 }

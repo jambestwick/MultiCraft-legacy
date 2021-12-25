@@ -185,3 +185,10 @@ void ioswrap_open_url(const char *url)
 	if ([application canOpenURL:appStoreURL])
 		[application openURL:appStoreURL options:@{} completionHandler:nil];
 }
+
+void ioswrap_upgrade(const char *item)
+{
+#ifdef OFFICIAL
+	upgradeGame();
+#endif
+}

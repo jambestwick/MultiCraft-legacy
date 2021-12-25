@@ -86,6 +86,10 @@ namespace porting {
 	void notifyExitGame() {
 		ioswrap_exit_game();
 	}
+
+	void upgrade(const std::string &item) {
+		ioswrap_upgrade(item.c_str());
+	}
 }
 
 extern int real_main(int argc, char *argv[]);
