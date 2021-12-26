@@ -19,23 +19,14 @@
 --------------------------------------------------------------------------------
 
 local labels = {
-	leaves = {
-		fgettext("Opaque"),
-		fgettext("Simple"),
-		fgettext("Fancy")
-	},
 	node_highlighting = {
-		fgettext("Outlining"),
-		fgettext("Highlighting"),
+		fgettext("Node Outlining"),
+		fgettext("Node Highlighting"),
 		fgettext("None")
 	}
 }
 
 local dd_options = {
-	leaves = {
-		table.concat(labels.leaves, ","),
-		{"opaque", "simple", "fancy"}
-	},
 	node_highlighting = {
 		table.concat(labels.node_highlighting, ","),
 		{"box", "halo", "none"}
@@ -43,13 +34,6 @@ local dd_options = {
 }
 
 local getSettingIndex = {
-	Leaves = function()
-		local style = core.settings:get("leaves_style")
-		for idx, name in pairs(dd_options.leaves[2]) do
-			if style == name then return idx end
-		end
-		return 1
-	end,
 	NodeHighlighting = function()
 		local style = core.settings:get("node_highlighting")
 		for idx, name in pairs(dd_options.node_highlighting[2]) do
@@ -82,30 +66,29 @@ local function formspec(tabview, name, tabdata)
 				.. dump(core.settings:get_bool("enable_fog")) .. "]" ..
 		"checkbox[0.25,2.3;cb_inventory_items_animations;" .. fgettext("Inv. animations") .. ";"
 				.. dump(core.settings:get_bool("inventory_items_animations")) .. "]" ..
-		"checkbox[0.25,2.9;cb_touchtarget;" .. fgettext("Touchtarget") .. ";"
-				.. dump(touchtarget) .. "]" ..
-		"checkbox[0.25,3.5;cb_sound;" .. fgettext("Sound") .. ";"
+		"checkbox[0.25,2.9;cb_fancy_leaves;" .. fgettext("Fancy Leaves") .. ";"
 				.. dump(sound) .. "]" ..
-		"label[0.25,4.2;" .. fgettext("Leaves Style:") .. "]" ..
-		"dropdown[0.25,4.65;3.5;dd_leaves_style;" .. dd_options.leaves[1] .. ";"
-				.. getSettingIndex.Leaves() .. "]" ..
+		"checkbox[0.25,3.5;cb_touchtarget;" .. fgettext("Touchtarget") .. ";"
+				.. dump(touchtarget) .. "]" ..
+		"checkbox[0.25,4.1;cb_sound;" .. fgettext("Sound") .. ";"
+				.. dump(sound) .. "]" ..
 		"box[4,0;3.75,5.5;#999999]" ..
 
-		"label[4.25,0.15;" .. fgettext("Max FPS:") .. "]" ..
+		"label[4.25,0.15;" .. fgettext("Maximum FPS") .. ":]" ..
 		"dropdown[4.25,0.6;3.5;dd_fps_max;30,35,45,60;" ..
 			tonumber(fps <= 30 and 1 or fps == 35 and 2 or fps == 45 and 3 or 4) .. "]" ..
 
-		"label[4.25,1.5;" .. fgettext("View Range:") .. "]" ..
+		"label[4.25,1.5;" .. fgettext("Viewing range") .. ":]" ..
 		"dropdown[4.25,1.95;3.5;dd_viewing_range;25,30,40,60,80,100,125,150,175,200;" ..
 			tonumber(range <= 25 and 1 or range == 30 and 2 or range == 40 and 3 or
 			range == 60 and 4 or range == 80 and 5 or range == 100 and 6 or range == 125 and 7 or
 			range == 150 and 8 or range == 175 and 9 or 10) .. "]" ..
 
-		"label[4.25,2.85;" .. fgettext("Node Selection:") .. "]" ..
+		"label[4.25,2.85;" .. fgettext("Node highlighting") .. ":]" ..
 		"dropdown[4.25,3.3;3.5;dd_node_highlighting;" .. dd_options.node_highlighting[1] .. ";"
 				.. getSettingIndex.NodeHighlighting() .. "]" ..
 
-		"label[4.25,4.2;" .. fgettext("Touchthreshold: (px)") .. "]" ..
+		"label[4.25,4.2;" .. fgettext("Touchthreshold (px)") .. ":]" ..
 		"dropdown[4.25,4.65;3.5;dd_touchthreshold;0,10,20,30,40,50;" ..
 			(touchthreshold / 10) + 1 .. "]" ..
 
@@ -123,7 +106,7 @@ local function formspec(tabview, name, tabdata)
 		shaders_enabled = false
 		tab_string = tab_string ..
 			"label[8.38,0.15;" .. core.colorize("#888888",
-					fgettext("Shaders (unavailable)")) .. "]"
+					fgettext("Shaders") .. " " .. fgettext("(unavailable)")) .. "]"
 	end
 
 --[[tab_string = tab_string ..
@@ -138,7 +121,7 @@ local function formspec(tabview, name, tabdata)
 		tab_string = tab_string ..
 			"checkbox[8.25,0.55;cb_tonemapping;" .. fgettext("Tone Mapping") .. ";"
 					.. dump(core.settings:get_bool("tone_mapping")) .. "]" ..
-			"checkbox[8.25,1.15;cb_waving_water;" .. fgettext("Waving Liquids") .. ";"
+			"checkbox[8.25,1.15;cb_waving_water;" .. fgettext("Waving Water") .. ";"
 					.. dump(core.settings:get_bool("enable_waving_water")) .. "]" ..
 			"checkbox[8.25,1.75;cb_waving_leaves;" .. fgettext("Waving Leaves") .. ";"
 					.. dump(core.settings:get_bool("enable_waving_leaves")) .. "]" ..
@@ -149,7 +132,7 @@ local function formspec(tabview, name, tabdata)
 			"label[8.38,0.75;" .. core.colorize("#888888",
 					fgettext("Tone Mapping")) .. "]" ..
 			"label[8.38,1.35;" .. core.colorize("#888888",
-					fgettext("Waving Liquids")) .. "]" ..
+					fgettext("Waving Water")) .. "]" ..
 			"label[8.38,1.95;" .. core.colorize("#888888",
 					fgettext("Waving Leaves")) .. "]" ..
 			"label[8.38,2.55;" .. core.colorize("#888888",
@@ -196,6 +179,10 @@ local function handle_settings_buttons(this, fields, tabname, tabdata)
 		core.settings:set("inventory_items_animations", fields["cb_inventory_items_animations"])
 		return true
 	end
+	if fields["cb_fancy_leaves"] then
+		core.settings:set("dd_leaves_style", fields["dd_touchthreshold"] and "fancy" or "opaque")
+		ddhandled = true
+	end
 	if fields["cb_touchtarget"] then
 		core.settings:set("touchtarget", fields["cb_touchtarget"])
 		return true
@@ -231,12 +218,6 @@ local function handle_settings_buttons(this, fields, tabname, tabdata)
 	-- Note dropdowns have to be handled LAST!
 	local ddhandled = false
 
-	for i = 1, #labels.leaves do
-		if fields["dd_leaves_style"] == labels.leaves[i] then
-			core.settings:set("leaves_style", dd_options.leaves[2][i])
-			ddhandled = true
-		end
-	end
 	if fields["cb_touchscreen_target"] then
 		core.settings:set("touchtarget", fields["cb_touchscreen_target"])
 		ddhandled = true
