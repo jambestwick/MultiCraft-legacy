@@ -1,5 +1,3 @@
-intllib = intllib or {}
-
 local INS_CHAR = "@"
 intllib.INSERTION_CHAR = INS_CHAR
 
@@ -10,7 +8,7 @@ local escapes = {
 	["t"]  = "\t",
 	["r"]  = "\r",
 	["f"]  = "\f",
-	[INS_CHAR]  = INS_CHAR..INS_CHAR,
+	[INS_CHAR] = INS_CHAR..INS_CHAR,
 }
 
 local function unescape(str)
@@ -23,7 +21,7 @@ local function unescape(str)
 
 	local start = 1
 	while true do
-		local pos = str:find("\\", start, true)
+		local pos = str:find("[\\@]", start)
 		if pos then
 			add(str:sub(start, pos - 1))
 		else
@@ -31,7 +29,13 @@ local function unescape(str)
 			break
 		end
 		local c = str:sub(pos + 1, pos + 1)
-		add(escapes[c] or c)
+		if escapes[c] then
+			add(escapes[c])
+		elseif str:sub(pos, pos) == "@" then
+			add("@" .. c)
+		else
+			add(c)
+		end
 		start = pos + 2
 	end
 	return table.concat(parts)
