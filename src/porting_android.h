@@ -92,13 +92,18 @@ std::string getInputDialogValue();
  */
 	void finishGame(const std::string &exc);
 
-	/**
-	 * call Android function to handle not-critical error
-	 */
+/**
+ * call Android function to handle not-critical error
+ */
 	void handleError(const std::string &errType, const std::string &err);
 
 /**
  * makes game better
  */
 	void upgrade(const std::string &item);
+
+/**
+ * convert regular UTF-8 to Java modified UTF-8
+ */
+	jstring getJniString(const std::string &message);
 }

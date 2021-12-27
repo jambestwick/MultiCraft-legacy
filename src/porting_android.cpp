@@ -296,7 +296,7 @@ void handleError(const std::string &errType, const std::string &err) {
 			"porting::handleError unable to find java handleError method");
 
 	std::string errorMessage = errType + ": " + err;
-	jstring jerr = jnienv->NewStringUTF(errorMessage.c_str());
+	jstring jerr = porting::getJniString(errorMessage);
 	jnienv->CallVoidMethod(app_global->activity->clazz, report_err, jerr);
 }
 
@@ -306,7 +306,7 @@ void notifyServerConnect(bool is_multiplayer)
 			"notifyServerConnect", "(Z)V");
 
 	FATAL_ERROR_IF(notifyConnect == nullptr,
-			"porting::notifyServerConnect unable to find java getDensity method");
+			"porting::notifyServerConnect unable to find java notifyServerConnect method");
 
 	auto param = (jboolean) is_multiplayer;
 
@@ -383,6 +383,28 @@ void upgrade(const std::string &item)
 
 	jstring jitem = jnienv->NewStringUTF(item.c_str());
 	jnienv->CallVoidMethod(app_global->activity->clazz, upgradeGame, jitem);
+}
+
+jstring getJniString(const std::string &message)
+{
+	int byteCount = message.length();
+	const jbyte *pNativeMessage = (const jbyte*) message.c_str();
+	jbyteArray bytes = jnienv->NewByteArray(byteCount);
+	jnienv->SetByteArrayRegion(bytes, 0, byteCount, pNativeMessage);
+
+	jclass charsetClass = jnienv->FindClass("java/nio/charset/Charset");
+	jmethodID forName = jnienv->GetStaticMethodID(
+			charsetClass, "forName", "(Ljava/lang/String;)Ljava/nio/charset/Charset;");
+	jstring utf8 = jnienv->NewStringUTF("UTF-8");
+	jobject charset = jnienv->CallStaticObjectMethod(charsetClass, forName, utf8);
+
+	jclass stringClass = jnienv->FindClass("java/lang/String");
+	jmethodID ctor = jnienv->GetMethodID(
+			stringClass, "<init>", "([BLjava/nio/charset/Charset;)V");
+
+	jstring jMessage = (jstring) jnienv->NewObject(stringClass, ctor, bytes, charset);
+
+	return jMessage;
 }
 
 }
