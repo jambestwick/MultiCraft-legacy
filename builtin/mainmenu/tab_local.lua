@@ -103,6 +103,11 @@ local function get_formspec()
 			menu_render_worldlist() ..
 			";" .. index .. "]"
 
+if PLATFORM == "Android" then
+	retval = retval .. "image_button[10.6,-0.1;1.5,1.5;" ..
+		core.formspec_escape(defaulttexturedir) .. "gift_btn.png;upgrade;;true;false;" ..
+		core.formspec_escape(defaulttexturedir) .. "gift_btn_pressed.png]"
+end
 
 	if PLATFORM ~= "Android" and PLATFORM ~= "iOS" then
 		retval = retval ..
@@ -243,6 +248,10 @@ local function main_button_handler(this, fields, name)
 		end
 
 		return true
+	end
+
+	if fields["upgrade"] then
+		core.upgrade("")
 	end
 
 --[[if fields["world_configure"] ~= nil then

@@ -109,12 +109,6 @@ bool MyEventReceiver::OnEvent(const SEvent &event)
 			if (event.MouseInput.Event == EMIE_RMOUSE_LEFT_UP) {
 				rightreleased = true;
 			}
-#if defined(__MACH__) && defined(__APPLE__) && !defined(__IOS__)
-			if (event.MouseInput.Event == EMIE_MOUSE_WHEEL_X) {
-				mouse_wheel -= event.MouseInput.Wheel;
-				return true;
-			}
-#endif
 			if (event.MouseInput.Event == EMIE_MOUSE_WHEEL) {
 				mouse_wheel += event.MouseInput.Wheel;
 			}
