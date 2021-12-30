@@ -536,6 +536,11 @@ public:
 		return m_address_name;
 	}
 
+	const bool getInvItemAnimEnabled()
+	{
+		return m_inv_item_anim_enabled;
+	}
+
 private:
 
 	// Virtual methods from con::PeerHandler
@@ -687,6 +692,8 @@ private:
 
 	bool m_shutdown;
 	DISABLE_CLASS_COPY(Client);
+
+	bool m_inv_item_anim_enabled;
 };
 
 #endif // !CLIENT_HEADER

@@ -136,6 +136,7 @@ Client::Client(
 		m_minimap = new Minimap(device, this);
 	}
 	m_cache_save_interval = g_settings->getU16("server_map_save_interval");
+	m_inv_item_anim_enabled = g_settings->getBool("inventory_items_animations");
 
 #ifdef DISABLE_CSM
 	m_modding_enabled = false;
