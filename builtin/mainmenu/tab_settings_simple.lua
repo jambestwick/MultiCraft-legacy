@@ -96,16 +96,14 @@ local function formspec(tabview, name, tabdata)
 		"box[8,0;3.75,5.5;#999999]"
 
 	local video_driver = core.settings:get("video_driver")
-	local shaders_enabled = core.settings:get_bool("enable_shaders")
-	if video_driver == "opengl" or video_driver == "ogles2" then
+	local shaders_enabled = video_driver == "opengl" or video_driver == "ogles2"
+	core.settings:set_bool("enable_shaders", shaders_enabled)
+	if shaders_enabled then
 		tab_string = tab_string ..
-			"checkbox[8.25,-0.05;cb_shaders;" .. fgettext("Shaders") .. ";"
-					.. tostring(shaders_enabled) .. "]"
+			"label[8.25,0.15;" .. fgettext("Shaders") .. "]"
 	else
-		core.settings:set_bool("enable_shaders", false)
-		shaders_enabled = false
 		tab_string = tab_string ..
-			"label[8.38,0.15;" .. core.colorize("#888888",
+			"label[8.25,0.15;" .. core.colorize("#888888",
 					fgettext("Shaders") .. " " .. fgettext("(unavailable)")) .. "]"
 	end
 
