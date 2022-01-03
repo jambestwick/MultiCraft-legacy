@@ -1,13 +1,16 @@
 MultiCraft Open Source
 ======================
 
-MultiCraft is an Open Source sandbox game inspired by [Minecraft](https://minecraft.net/).
+[![License](https://img.shields.io/badge/license-LGPLv3.0%2B-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0.en.html)
+[![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC_BY--SA_4.0-orange.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
-MultiCraft is based on the Minetest project, which is developed by a [number of contributors](https://github.com/minetest/minetest/graphs/contributors).
+MultiCraft is an Open Source sandbox game.
 
-Copyright © 2014-2021 Maksim Gamarnik [MoNTE48] <MoNTE48@mail.ua> & MultiCraft Development Team.
+MultiCraft is based on the Minetest Engine, which is developed by a [number of contributors](https://github.com/minetest/minetest/graphs/contributors).
 
-The engine and the game is licensed under LGPLv3 (or higher). Resources games licensed under CC-BY-SA 4.0, unless otherwise stated.
+Copyright © 2014-2022 Maksim Gamarnik [MoNTE48] <MoNTE48@mail.ua> & MultiCraft Development Team.
+
+The engine and the game is licensed under LGPLv3 (or higher). Resources games licensed under CC BY-SA 4.0, unless otherwise stated.
 
 You can help in the development. But you should always publish your source code after any changes.
 Before any use of the MultiCraft source code or any part of it, you should be familiar with [LGPL-3.0](doc/LGPL-3.0.md) and [Other License.md](doc/Other%20License.md)

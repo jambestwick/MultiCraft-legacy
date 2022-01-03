@@ -102,7 +102,7 @@ return {
 	local version = core.get_version()
 		return "label[0.1,0;" ..
 			"MultiCraft Open Source, ver. " .. version.string .. "\n" ..
-			"Copyright (C) 2014-2021 MultiCraft Development Team\n" ..
+			"Copyright (C) 2014-2022 MultiCraft Development Team\n" ..
 			"License: GNU LGPLv3.0+ and CC BY-SA 4.0]" ..
 			"button[9.5,0;2.5,0.5;homepage;Home Page]" ..
 			"button[9.5,0.8;2.5,0.5;privacy;Privacy Policy]" ..
