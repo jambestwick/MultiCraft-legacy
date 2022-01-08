@@ -39,6 +39,7 @@ extern "C" {
 	#include "luajit.h"
 #endif
 LUALIB_API int luaopen_utf8(lua_State *L);
+LUALIB_API int luaopen_chacha(lua_State *L);
 }
 
 #include <stdio.h>
@@ -89,6 +90,10 @@ ScriptApiBase::ScriptApiBase() :
 
 	lua_pushcfunction(m_luastack, luaopen_utf8);
 	lua_call(m_luastack, 0, 0);
+
+	lua_pushcfunction(m_luastack, luaopen_chacha);
+	lua_call(m_luastack, 0, 1);
+	lua_setglobal(m_luastack, "chacha");
 
 	// Make the ScriptApiBase* accessible to ModApiBase
 	lua_pushlightuserdata(m_luastack, this);

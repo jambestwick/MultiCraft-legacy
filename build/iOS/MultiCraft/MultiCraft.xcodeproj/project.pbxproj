@@ -57,6 +57,8 @@
 		84CD4A6C2487A0180019B81D /* ZipManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A6B2487A0170019B81D /* ZipManager.swift */; };
 		84E2968925E29004000C495A /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E2968825E28FF6000C495A /* libluajit.a */; };
 		84E2968C25E2A10F000C495A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84E2968E25E2A10F000C495A /* InfoPlist.strings */; };
+		84E8B35E2789E71A004738F3 /* chacha.c in Sources */ = {isa = PBXBuildFile; fileRef = 84E8B3582789E71A004738F3 /* chacha.c */; };
+		84E8B35F2789E71A004738F3 /* lchacha.c in Sources */ = {isa = PBXBuildFile; fileRef = 84E8B35D2789E71A004738F3 /* lchacha.c */; };
 		84FE40E224439C2F008E29DB /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FE40E124439C2F008E29DB /* libcurl.a */; };
 		8E0FFE3234B35EC9603EC82A /* Pods_MultiCraft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B0001862274A8FCC7614F0 /* Pods_MultiCraft.framework */; };
 		F87DC8BA210887C700393B64 /* mapgen_v7p.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F87DC8B9210887C700393B64 /* mapgen_v7p.cpp */; };
@@ -336,6 +338,12 @@
 		84E2968825E28FF6000C495A /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../deps/luajit/lib/libluajit.a; sourceTree = "<group>"; };
 		84E2968D25E2A10F000C495A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		84E2968F25E2A164000C495A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		84E8B3582789E71A004738F3 /* chacha.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = chacha.c; path = ../../../../lib/luachacha/chacha.c; sourceTree = "<group>"; };
+		84E8B3592789E71A004738F3 /* ecrypt-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ecrypt-config.h"; path = "../../../../lib/luachacha/ecrypt-config.h"; sourceTree = "<group>"; };
+		84E8B35A2789E71A004738F3 /* ecrypt-machine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ecrypt-machine.h"; path = "../../../../lib/luachacha/ecrypt-machine.h"; sourceTree = "<group>"; };
+		84E8B35B2789E71A004738F3 /* ecrypt-sync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ecrypt-sync.h"; path = "../../../../lib/luachacha/ecrypt-sync.h"; sourceTree = "<group>"; };
+		84E8B35C2789E71A004738F3 /* ecrypt-portable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ecrypt-portable.h"; path = "../../../../lib/luachacha/ecrypt-portable.h"; sourceTree = "<group>"; };
+		84E8B35D2789E71A004738F3 /* lchacha.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lchacha.c; path = ../../../../lib/luachacha/lchacha.c; sourceTree = "<group>"; };
 		84FE40E124439C2F008E29DB /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../deps/libcurl/lib/libcurl.a; sourceTree = "<group>"; };
 		F87DC8B8210887C600393B64 /* mapgen_v7p.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mapgen_v7p.h; path = ../../../../src/mapgen_v7p.h; sourceTree = "<group>"; };
 		F87DC8B9210887C700393B64 /* mapgen_v7p.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mapgen_v7p.cpp; path = ../../../../src/mapgen_v7p.cpp; sourceTree = "<group>"; };
@@ -816,6 +824,19 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		84E8B3572789E6F3004738F3 /* luachacha */ = {
+			isa = PBXGroup;
+			children = (
+				84E8B3582789E71A004738F3 /* chacha.c */,
+				84E8B3592789E71A004738F3 /* ecrypt-config.h */,
+				84E8B35A2789E71A004738F3 /* ecrypt-machine.h */,
+				84E8B35C2789E71A004738F3 /* ecrypt-portable.h */,
+				84E8B35B2789E71A004738F3 /* ecrypt-sync.h */,
+				84E8B35D2789E71A004738F3 /* lchacha.c */,
+			);
+			name = luachacha;
+			sourceTree = "<group>";
+		};
 		87D06CD2CC310BE5E73639F4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -887,6 +908,7 @@
 				F8E6C6E41DCA415800F64426 /* script */,
 				F8E6C7591DCA421700F64426 /* threading */,
 				F8E6C7961DCA426900F64426 /* util */,
+				84E8B3572789E6F3004738F3 /* luachacha */,
 				8473ED7D25C055AF0053293B /* luautf8 */,
 				F8E6C4F71DCA3F9900F64426 /* activeobject.h */,
 				F8E6C4F81DCA3F9900F64426 /* ban.cpp */,
@@ -1680,6 +1702,7 @@
 				F8E6C7141DCA41EF00F64426 /* s_base.cpp in Sources */,
 				F8E6C74B1DCA420A00F64426 /* l_inventory.cpp in Sources */,
 				F8E6C6491DCA3F9900F64426 /* player.cpp in Sources */,
+				84E8B35E2789E71A004738F3 /* chacha.c in Sources */,
 				F8E6C6031DCA3F9900F64426 /* content_sao.cpp in Sources */,
 				F8E6C7531DCA420A00F64426 /* l_particles.cpp in Sources */,
 				F8E6C6DE1DCA413A00F64426 /* clientopcodes.cpp in Sources */,
@@ -1748,6 +1771,7 @@
 				84CD4A68248782720019B81D /* MessageViewController.swift in Sources */,
 				F8E6C65F1DCA3F9900F64426 /* treegen.cpp in Sources */,
 				F8E6C5F61DCA3F9900F64426 /* chat.cpp in Sources */,
+				84E8B35F2789E71A004738F3 /* lchacha.c in Sources */,
 				F8E6C60B1DCA3F9900F64426 /* debug.cpp in Sources */,
 				4B35A9B61EEDD18400274961 /* face_position_cache.cpp in Sources */,
 				F8E6C6251DCA3F9900F64426 /* inventorymanager.cpp in Sources */,

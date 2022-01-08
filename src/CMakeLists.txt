@@ -592,6 +592,7 @@ if(BUILD_CLIENT)
 		${PLATFORM_LIBS}
 		${CLIENT_PLATFORM_LIBS}
 		luautf8
+		luachacha
 	)
 	if(WIN32)
 		target_link_libraries(
@@ -675,6 +676,7 @@ if(BUILD_SERVER)
 		${GMP_LIBRARY}
 		${PLATFORM_LIBS}
 		luautf8
+		luachacha
 	)
 	set_target_properties(${PROJECT_NAME}server PROPERTIES
 			COMPILE_DEFINITIONS "SERVER")
