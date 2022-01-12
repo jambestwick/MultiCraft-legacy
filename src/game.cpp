@@ -4221,12 +4221,10 @@ void Game::updateFrame(ProfilerGraph *graph, RunStats *stats, f32 dtime,
 		Update clouds
 	*/
 	if (clouds) {
-		v3f player_position = player->getPosition();
 		if (sky->getCloudsVisible()) {
 			clouds->setVisible(true);
 			clouds->step(dtime);
-			clouds->update(v2f(player_position.X, player_position.Z),
-				       sky->getCloudColor());
+			clouds->update(camera->getPosition(), sky->getCloudColor());
 		} else {
 			clouds->setVisible(false);
 		}

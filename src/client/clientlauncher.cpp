@@ -156,7 +156,7 @@ bool ClientLauncher::run(GameParams &game_params, const Settings &cmd_args)
 	if (!g_menuclouds)
 		g_menuclouds = new Clouds(g_menucloudsmgr->getRootSceneNode(),
 				g_menucloudsmgr, -1, rand(), 100);
-	g_menuclouds->update(v2f(0, 0), video::SColor(255, 200, 200, 255));
+	g_menuclouds->update({0, 0, 0}, video::SColor(255, 200, 200, 255));
 	scene::ICameraSceneNode* camera;
 	camera = g_menucloudsmgr->addCameraSceneNode(0,
 				v3f(0, 0, 0), v3f(0, 60, 100));

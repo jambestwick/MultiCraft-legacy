@@ -75,7 +75,7 @@ public:
 
 	void step(float dtime);
 
-	void update(v2f camera_p, video::SColorf color);
+	void update(v3f camera_p, video::SColorf color);
 	
 	void updateCameraOffset(v3s16 camera_offset)
 	{
@@ -133,7 +133,7 @@ private:
 	u16 m_cloud_radius_i;
 	bool m_enable_3d;
 	u32 m_seed;
-	v2f m_camera_pos;
+	v3f m_camera_pos;
 	v2f m_origin;
 	v2f m_speed;
 	v3s16 m_camera_offset;
