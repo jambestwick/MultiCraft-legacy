@@ -241,7 +241,7 @@ void set_default_settings(Settings *settings) {
 
 #if USE_FREETYPE
 	settings->setDefault("freetype", "true");
-	settings->setDefault("font_path", porting::getDataPath("fonts" DIR_DELIM "Retron2000.ttf"));
+	settings->setDefault("font_path", porting::getDataPath("fonts" DIR_DELIM "MultiCraftFont.ttf"));
 	settings->setDefault("font_shadow", "1");
 	settings->setDefault("font_shadow_alpha", "127");
 	settings->setDefault("mono_font_path",
@@ -567,11 +567,13 @@ void set_default_settings(Settings *settings) {
 		settings->setDefault("hud_scaling", "0.55");
 		settings->setDefault("mouse_sensitivity", "0.33");
 		settings->setDefault("font_size", font_small);
+		settings->setDefault("fallback_font_size", font_small);
 	} else if SDVersion4and7Inch {
 		// 4.7" iPhone
 		settings->setDefault("hud_scaling", "0.6");
 		settings->setDefault("mouse_sensitivity", "0.27");
 		settings->setDefault("font_size", font_small);
+		settings->setDefault("fallback_font_size", font_small);
 	} else if SDVersion5and5Inch {
 		// 5.5" iPhone Plus
 		settings->setDefault("hud_scaling", "0.65");

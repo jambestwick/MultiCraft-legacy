@@ -289,9 +289,3 @@ DroidSansFallBack:
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-
-Retron2000:
-
-  1001Fonts Free For Commercial Use License (FFC)
-
-  Full copy of license you can find in source code: doc/Font Licenses/1001fonts-retron2000-eula.txt
