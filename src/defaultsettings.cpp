@@ -443,7 +443,6 @@ void set_default_settings(Settings *settings) {
 #elif __IOS__
 	} else if (iOS_ver < 13.0) {
 		// low settings
-		settings->setDefault("enable_minimap", "false");
 #endif
 		settings->setDefault("client_unload_unused_data_timeout", "120");
 		settings->setDefault("client_mapblock_limit", "200");

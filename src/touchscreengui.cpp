@@ -253,16 +253,9 @@ void TouchScreenGUI::init(ISimpleTextureSource *tsrc)
 					  m_screensize.Y / 2 - button_size / 2),
 			L"drop", false);
 
-	const bool minimap = g_settings->getBool("enable_minimap");
-
 	double button_075 = 1;
 	s32 button_05 = 1;
 	double button_05b = 0;
-	if (!minimap) {
-		button_075 = 0.75;
-		button_05 = 2;
-		button_05b = button_size * 0.5;
-	}
 
 	// init pause button [1]
 	initButton(escape_id,
@@ -273,14 +266,12 @@ void TouchScreenGUI::init(ISimpleTextureSource *tsrc)
 			L"Exit", false);
 
 	// init minimap button [2]
-	if (minimap) {
-		initButton(minimap_id,
-				rect<s32>(m_screensize.X / 2 - button_size,
-						  0,
-						  m_screensize.X / 2,
-						  button_size),
-				L"minimap", false);
-	}
+	initButton(minimap_id,
+			rect<s32>(m_screensize.X / 2 - button_size,
+					  0,
+					  m_screensize.X / 2,
+					  button_size),
+			L"minimap", false);
 
 	// init rangeselect button [3]
 	initButton(range_id,
