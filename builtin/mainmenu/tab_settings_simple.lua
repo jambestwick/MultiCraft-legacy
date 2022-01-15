@@ -46,7 +46,7 @@ local getSettingIndex = {
 local function formspec(tabview, name, tabdata)
 	local fps = tonumber(core.settings:get("fps_max"))
 	local range = tonumber(core.settings:get("viewing_range"))
-	local touchthreshold = tonumber(core.settings:get("touchscreen_threshold")) or 0
+	local sensitivity = tonumber(core.settings:get("mouse_sensitivity")) * 2000
 	local touchtarget = core.settings:get_bool("touchtarget") or false
 	local sound = tonumber(core.settings:get("sound_volume")) ~= 0 and true or false
 
@@ -88,9 +88,8 @@ local function formspec(tabview, name, tabdata)
 		"dropdown[4.25,3.3;3.5;dd_node_highlighting;" .. dd_options.node_highlighting[1] .. ";"
 				.. getSettingIndex.NodeHighlighting() .. "]" ..
 
-		"label[4.25,4.2;" .. fgettext("Touchthreshold (px)") .. ":]" ..
-		"dropdown[4.25,4.65;3.5;dd_touchthreshold;0,10,20,30,40,50;" ..
-			(touchthreshold / 10) + 1 .. "]" ..
+		"label[4.25,4.2;" .. fgettext("Mouse sensitivity") .. ":]" ..
+		"scrollbar[4.25,4.65;3.22,0.5;horizontal;sb_sensitivity;" .. sensitivity .. "]" ..
 
 	--	"box[8,0;3.75,4.5;#999999]"
 		"box[8,0;3.75,5.5;#999999]"
@@ -178,7 +177,7 @@ local function handle_settings_buttons(this, fields, tabname, tabdata)
 		return true
 	end
 	if fields["cb_fancy_leaves"] then
-		core.settings:set("dd_leaves_style", fields["dd_touchthreshold"] and "fancy" or "opaque")
+		core.settings:set("dd_leaves_style", fields["cb_fancy_leaves"] and "fancy" or "opaque")
 		ddhandled = true
 	end
 	if fields["cb_touchtarget"] then
@@ -234,9 +233,18 @@ local function handle_settings_buttons(this, fields, tabname, tabdata)
 		core.settings:set("viewing_range", fields["dd_viewing_range"])
 		ddhandled = true
 	end
-	if fields["dd_touchthreshold"] then
-		core.settings:set("touchscreen_threshold", fields["dd_touchthreshold"])
-		ddhandled = true
+	if fields["sb_sensitivity"] then
+		-- reset old setting
+		core.settings:remove("touchscreen_threshold")
+
+		local event = core.explode_scrollbar_event(fields["sb_sensitivity"])
+		if event.type == "CHG" then
+			core.settings:set("mouse_sensitivity", event.value / 2000)
+
+			-- The formspec cannot be updated or the scrollbar movement will
+			-- break.
+			ddhandled = false
+		end
 	end
 
 	return ddhandled

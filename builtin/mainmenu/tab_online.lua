@@ -76,7 +76,7 @@ local function get_formspec(_, _, tabdata)
 			esc(core.settings:get("name")) .. "]" ..
 
 		-- Description Background
-		"box[7.1,2.1;4.8,2.65;#999999]" ..
+		"box[7.1,2.1;4.8,2.65;#33314B99]" ..
 
 		-- Connect
 		"image_button[8.8,4.88;3.3,0.9;" ..
@@ -143,7 +143,8 @@ local function get_formspec(_, _, tabdata)
 					table.insert(menudata.favorites, i, table.remove(menudata.favorites, j))
 				end
 			end
-				if favs[i].address ~= menudata.favorites[i].address then
+				if favs[i] and menudata.favorites[i] and
+						favs[i].address ~= menudata.favorites[i].address then
 					table.insert(menudata.favorites, i, favs[i])
 				end
 			end
