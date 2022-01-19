@@ -1,16 +1,15 @@
 import UIKit
-import Nantes
 
 private enum Constants {
 	static let oldInfoStatusKey = "personalized_ad_status"
 	static let newInfoStatusKey = "new_personalized_ad_status"
 }
 
-final class ConsentAlertViewController: BasePresentViewController, NantesLabelDelegate {
+final class ConsentAlertViewController: BasePresentViewController {
 	@IBOutlet private weak var buttonRelevant: UIButton!
 	@IBOutlet private weak var buttonAllow: UIButton!
 	@IBOutlet private weak var viewContainer: UIView!
-	@IBOutlet private weak var labelPrivacy: NantesLabel!
+	@IBOutlet private weak var privacyTextView: UITextView!
 	@IBOutlet private weak var viewFirst: UIView!
 	@IBOutlet private weak var viewSecond: UIView!
 	@IBOutlet private weak var buttonAgree: UIButton!
@@ -25,6 +24,8 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 	private var isShowFirstPage = true
 
 	var finishTapped: (() -> Void)?
+
+	let screenWidth = UIScreen.main.bounds.size.width
 
 	private enum Status: String, Codable {
 		case unknown
@@ -50,8 +51,13 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-
+		imageAppIcon.layer.cornerRadius = imageAppIcon.frame.size.height * 0.22
 		setupContentHeight()
+
+		if (isShowFirstPage && screenWidth <= 568.0) {
+  			buttonAllow.titleLabel?.font = .boldSystemFont(ofSize: 15)
+  			buttonRelevant.titleLabel?.font = .boldSystemFont(ofSize: 15)
+  		}
 	}
 
 	private func setupContentHeight() {
@@ -60,12 +66,16 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 	}
 
 	private func setupUI() {
-		if UIScreen.main.bounds.size.width <= 667 {
-			leftPadding.constant = 30
-			rightPadding.constant = 30
+		var widthMultiplierValue: CGFloat = 0.7
+		if screenWidth <= 568.0 {
+			widthMultiplierValue = 0.95
+		} else if screenWidth <= 667.0 {
+			widthMultiplierValue = 0.91
 		}
 
-		imageAppIcon.image = Bundle.main.icon
+		viewContainer.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: widthMultiplierValue).isActive = true
+
+		imageAppIcon.image = Bundle.main.appIcon
 
 		buttonAgree.layer.cornerRadius = 6
 		buttonBack.layer.borderWidth = 1
@@ -75,12 +85,10 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 		buttonAllow.layer.cornerRadius = 8
 		buttonAllow.layer.borderWidth = 3
 		buttonAllow.layer.borderColor = UIColor(220, 220, 220).cgColor
-		buttonAllow.titleLabel?.numberOfLines = 2
 
 		buttonRelevant.layer.cornerRadius = 8
 		buttonRelevant.layer.borderWidth = 3
 		buttonRelevant.layer.borderColor = UIColor(220, 220, 220).cgColor
-		buttonRelevant.titleLabel?.numberOfLines = 2
 
 		viewContainer.layer.shadowColor = UIColor.black.cgColor
 		viewContainer.layer.shadowRadius = 6
@@ -88,20 +96,27 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 		viewContainer.layer.shadowOffset = .init(width: 0, height: 3)
 		viewContainer.layer.cornerRadius = 8
 
-		labelPrivacy.delegate = self
-		let text = "Our partners will collect data and use a unique identifier on your device to show you ads. By agreeing, you confirm that you are 16 years old. You can learn how we and our partners collect and use data on Privacy Policy."
-		labelPrivacy.text = text
+		setupTextView()
+	}
 
-		labelPrivacy.linkAttributes = [NSAttributedString.Key.underlineColor: NSUnderlineStyle.single.rawValue,
-		                               NSAttributedString.Key.foregroundColor: UIColor(0, 98, 232)]
+	private func setupTextView() {
+		privacyTextView.delegate = self
+		privacyTextView.backgroundColor = .clear
+		privacyTextView.textContainerInset = UIEdgeInsets(top: 0.0, left: privacyTextView.textContainerInset.left, bottom: 0.0, right: privacyTextView.textContainerInset.right)
+		privacyTextView.textContainer.lineFragmentPadding = 0
 
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.alignment = .center
+		privacyTextView.linkTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.blue]
 
-		labelPrivacy.activeLinkAttributes = [NSAttributedString.Key.backgroundColor: UIColor(white: 0.5, alpha: 0.5),
-		                                     NSAttributedString.Key.underlineColor: NSUnderlineStyle.single.rawValue]
+		let attributedString = NSMutableAttributedString(string: "Our partners will collect data and use a unique identifier on your device to show you ads. By agreeing, you confirm that you are 16 years old. You can learn how we and our partners collect and use data on ", attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle, NSAttributedString.Key.foregroundColor : UIColor.darkGray])
 
-		labelPrivacy.lineSpacing = 3
-		labelPrivacy.textColor = .lightGray
-		labelPrivacy.addLink(to: privacyURL, withRange: (text as NSString).range(of: "Privacy Policy"))
+		let linkAttrString = NSMutableAttributedString(string: "Privacy Policy", attributes: [NSAttributedString.Key.link : privacyURL.absoluteString])
+
+		attributedString.append(linkAttrString)
+		attributedString.append(NSMutableAttributedString(string: "."))
+
+		privacyTextView.attributedText = attributedString
 	}
 
 	@IBAction private func showMulticraftUses(_ sender: Any) {
@@ -117,12 +132,6 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 			self.viewFirst.alpha = 0
 			self.viewSecond.alpha = 1
 			self.view.layoutIfNeeded()
-		}
-	}
-
-	@IBAction private func showPrivacy(_ sender: Any) {
-		if UIApplication.shared.canOpenURL(privacyURL) {
-			UIApplication.shared.open(privacyURL)
 		}
 	}
 
@@ -145,12 +154,6 @@ final class ConsentAlertViewController: BasePresentViewController, NantesLabelDe
 			self.viewFirst.alpha = 1
 			self.viewSecond.alpha = 0
 			self.view.layoutIfNeeded()
-		}
-	}
-
-	func attributedLabel(_ label: NantesLabel, didSelectLink link: URL) {
-		if UIApplication.shared.canOpenURL(link) {
-			UIApplication.shared.open(link)
 		}
 	}
 }
@@ -215,14 +218,8 @@ extension ConsentAlertViewController {
 	}
 }
 
-extension Bundle {
-	var icon: UIImage? {
-		if let icons = infoDictionary?["CFBundleIcons"] as? [String: Any],
-			let primaryIcon = icons["CFBundlePrimaryIcon"] as? [String: Any],
-			let iconFiles = primaryIcon["CFBundleIconFiles"] as? [String],
-			let lastIcon = iconFiles.last {
-				return UIImage(named: lastIcon)
-			}
-		return nil
+extension ConsentAlertViewController: UITextViewDelegate {
+	func textViewDidChangeSelection(_ textView: UITextView) {
+		textView.selectedTextRange = nil
 	}
 }

@@ -43,9 +43,9 @@
 		84A4380425535BA5002571D4 /* soft_oal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A4380325535BA5002571D4 /* soft_oal.framework */; };
 		84A4380525535BA5002571D4 /* soft_oal.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84A4380325535BA5002571D4 /* soft_oal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84A608A425F0A02900D79FCD /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 84A608A325F0A02900D79FCD /* Sentry */; };
+		84B1647F27988B92002A670A /* Bundle+AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B1647E27988B92002A670A /* Bundle+AppIcon.swift */; };
 		84B9C11724A4D82400016BCE /* ConsentAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */; };
 		84B9C11824A4D82400016BCE /* ConsentAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B9C11624A4D82400016BCE /* ConsentAlertViewController.xib */; };
-		84C32A3724AF7A4500445E92 /* Nantes in Frameworks */ = {isa = PBXBuildFile; productRef = 84C32A3624AF7A4500445E92 /* Nantes */; };
 		84C32A3924AF7DDE00445E92 /* UITextViewPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C32A3824AF7DDE00445E92 /* UITextViewPlaceholder.swift */; };
 		84C67B1E25D5E06B002E2735 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C67B1D25D5E06B002E2735 /* AppTrackingTransparency.framework */; };
 		84CD4A64248782720019B81D /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD4A59248782720019B81D /* MainWindow.swift */; };
@@ -323,6 +323,7 @@
 		8473ED8325C0562C0053293B /* unidata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unidata.h; path = ../../../../lib/luautf8/unidata.h; sourceTree = "<group>"; };
 		849C4F85209656D2005EB041 /* ru.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ru.lproj; sourceTree = "<group>"; };
 		84A4380325535BA5002571D4 /* soft_oal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = soft_oal.framework; path = ../deps/soft_oal.framework; sourceTree = "<group>"; };
+		84B1647E27988B92002A670A /* Bundle+AppIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+AppIcon.swift"; sourceTree = "<group>"; };
 		84B9C11524A4D82400016BCE /* ConsentAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentAlertViewController.swift; sourceTree = "<group>"; };
 		84B9C11624A4D82400016BCE /* ConsentAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConsentAlertViewController.xib; sourceTree = "<group>"; };
 		84C32A3824AF7DDE00445E92 /* UITextViewPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewPlaceholder.swift; sourceTree = "<group>"; };
@@ -748,7 +749,6 @@
 				F8E6C7D51DCA476800F64426 /* libIrrlicht.a in Frameworks */,
 				84A608A425F0A02900D79FCD /* Sentry in Frameworks */,
 				843F4C3126617D0D005277FA /* ZipArchive in Frameworks */,
-				84C32A3724AF7A4500445E92 /* Nantes in Frameworks */,
 				F8E6C7C91DCA430300F64426 /* OpenGLES.framework in Frameworks */,
 				8E0FFE3234B35EC9603EC82A /* Pods_MultiCraft.framework in Frameworks */,
 				F8E6C7C51DCA42F300F64426 /* QuartzCore.framework in Frameworks */,
@@ -798,6 +798,22 @@
 				8473ED8025C055F80053293B /* static_text.h */,
 			);
 			name = irrlicht_changes;
+			sourceTree = "<group>";
+		};
+		84B1647C27988B92002A670A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				84B1647D27988B92002A670A /* Bundle */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		84B1647D27988B92002A670A /* Bundle */ = {
+			isa = PBXGroup;
+			children = (
+				84B1647E27988B92002A670A /* Bundle+AppIcon.swift */,
+			);
+			path = Bundle;
 			sourceTree = "<group>";
 		};
 		84CD4A56248782720019B81D /* Main */ = {
@@ -882,6 +898,7 @@
 		F8E6C4DC1DCA3B7900F64426 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84B1647C27988B92002A670A /* Extensions */,
 				84CD4A56248782720019B81D /* Main */,
 				84CD4A5A248782720019B81D /* UI */,
 				84CD4A55248781420019B81D /* Bridge-Header.h */,
@@ -1451,7 +1468,6 @@
 			);
 			name = MultiCraft;
 			packageProductDependencies = (
-				84C32A3624AF7A4500445E92 /* Nantes */,
 				84A608A325F0A02900D79FCD /* Sentry */,
 				843F4C3026617D0D005277FA /* ZipArchive */,
 			);
@@ -1491,7 +1507,6 @@
 			);
 			mainGroup = F8E6C4D01DCA3B7900F64426;
 			packageReferences = (
-				84C32A3524AF7A4500445E92 /* XCRemoteSwiftPackageReference "Nantes" */,
 				84A608A225F0A02900D79FCD /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				843F4C2F26617D0D005277FA /* XCRemoteSwiftPackageReference "ZipArchive" */,
 			);
@@ -1663,6 +1678,7 @@
 				F8E6C6F61DCA41DB00F64426 /* c_content.cpp in Sources */,
 				4B35A9EA1EEE010D00274961 /* l_metadata.cpp in Sources */,
 				F8E6C6551DCA3F9900F64426 /* shader.cpp in Sources */,
+				84B1647F27988B92002A670A /* Bundle+AppIcon.swift in Sources */,
 				F8E6C7491DCA420A00F64426 /* l_env.cpp in Sources */,
 				F8E6C6381DCA3F9900F64426 /* mapsector.cpp in Sources */,
 				F8E6C7B81DCA428800F64426 /* auth.cpp in Sources */,
@@ -2073,14 +2089,6 @@
 				minimumVersion = 7.5.0;
 			};
 		};
-		84C32A3524AF7A4500445E92 /* XCRemoteSwiftPackageReference "Nantes" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/instacart/Nantes";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.1.2;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2093,11 +2101,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 84A608A225F0A02900D79FCD /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
-		};
-		84C32A3624AF7A4500445E92 /* Nantes */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 84C32A3524AF7A4500445E92 /* XCRemoteSwiftPackageReference "Nantes" */;
-			productName = Nantes;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
