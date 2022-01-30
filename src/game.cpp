@@ -1291,6 +1291,7 @@ protected:
 
 	void increaseViewRange();
 	void decreaseViewRange();
+	void toggleExtendedViewRange();
 	void toggleFullViewRange();
 
 	void updateCameraDirection(CameraOrientation *cam, float dtime);
@@ -2624,7 +2625,11 @@ void Game::processKeyInput()
 	} else if (wasKeyDown(KeyType::DECREASE_VIEWING_RANGE)) {
 		decreaseViewRange();
 	} else if (wasKeyDown(KeyType::RANGESELECT)) {
+#if defined(__ANDROID__) || defined(__IOS__)
+		toggleExtendedViewRange();
+#else
 		toggleFullViewRange();
+#endif
 	} else if (wasKeyDown(KeyType::QUICKTUNE_NEXT)) {
 		quicktune->next();
 	} else if (wasKeyDown(KeyType::QUICKTUNE_PREV)) {
@@ -3028,19 +3033,26 @@ void Game::decreaseViewRange()
 }
 
 
-void Game::toggleFullViewRange()
+void Game::toggleExtendedViewRange()
 {
-#if defined(__ANDROID__) || defined(__IOS__)
 	static const wchar_t *msg[] = {
 		L"Disabled far viewing range",
 		L"Enabled far viewing range"
 	};
-#else
+
+	draw_control->extended_range = !draw_control->extended_range;
+	infostream << msg[draw_control->extended_range] << std::endl;
+	m_statustext = msg[draw_control->extended_range];
+	runData.statustext_time = 0;
+}
+
+
+void Game::toggleFullViewRange()
+{
 	static const wchar_t *msg[] = {
 		L"Normal view range",
 		L"Infinite view range"
 	};
-#endif
 
 	draw_control->range_all = !draw_control->range_all;
 	infostream << msg[draw_control->range_all] << std::endl;
