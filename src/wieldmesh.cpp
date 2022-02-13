@@ -200,7 +200,8 @@ WieldMeshSceneNode::WieldMeshSceneNode(
 ):
 	scene::ISceneNode(parent, mgr, id),
 	m_meshnode(NULL),
-	m_material_type(video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF),
+	m_material_type_solid(video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF),
+	m_material_type_translucent(video::EMT_TRANSPARENT_ALPHA_CHANNEL),
 	m_lighting(lighting),
 	m_bounding_box(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
 {
@@ -236,12 +237,12 @@ WieldMeshSceneNode::~WieldMeshSceneNode()
 }
 
 void WieldMeshSceneNode::setCube(const ContentFeatures &f,
-			v3f wield_scale, ITextureSource *tsrc)
+			v3f wield_scale, ITextureSource *tsrc, video::E_MATERIAL_TYPE material_type)
 {
 	scene::IMesh *cubemesh = g_extrusion_mesh_cache->createCube();
 	scene::SMesh *copy = cloneMesh(cubemesh);
 	cubemesh->drop();
-	postProcessNodeMesh(copy, f, false, true, &m_material_type, &m_colors);
+	postProcessNodeMesh(copy, f, false, true, &material_type, &m_colors);
 	changeToMesh(copy);
 	copy->drop();
 	m_meshnode->setScale(wield_scale * WIELD_SCALE_FACTOR);
@@ -275,7 +276,7 @@ void WieldMeshSceneNode::setExtruded(const std::string &imagename,
 	material.setTexture(0, tsrc->getTextureForMesh(imagename));
 	material.TextureLayer[0].TextureWrapU = video::ETC_CLAMP_TO_EDGE;
 	material.TextureLayer[0].TextureWrapV = video::ETC_CLAMP_TO_EDGE;
-	material.MaterialType = m_material_type;
+	material.MaterialType = m_material_type_solid;
 	material.MaterialTypeParam = 0.5f;
 	material.setFlag(video::EMF_BACK_FACE_CULLING, true);
 	// Enable bi/trilinear filtering only for high resolution textures
@@ -308,7 +309,9 @@ void WieldMeshSceneNode::setItem(const ItemStack &item, Client *client)
 
 	if (m_enable_shaders) {
 		u32 shader_id = shdrsrc->getShader("wielded_shader", TILE_MATERIAL_BASIC, NDT_NORMAL);
-		m_material_type = shdrsrc->getShaderInfo(shader_id).material;
+		m_material_type_solid = shdrsrc->getShaderInfo(shader_id).material;
+		shader_id = shdrsrc->getShader("wielded_shader", TILE_MATERIAL_ALPHA, NDT_NORMAL);
+		m_material_type_translucent = shdrsrc->getShaderInfo(shader_id).material;
 	}
 
 	// Color-related
@@ -328,7 +331,7 @@ void WieldMeshSceneNode::setItem(const ItemStack &item, Client *client)
 			// e.g. mesh nodes and nodeboxes
 			scene::SMesh *mesh = cloneMesh(f.mesh_ptr[0]);
 			postProcessNodeMesh(mesh, f, m_enable_shaders, true,
-				&m_material_type, &m_colors);
+				&m_material_type_solid, &m_colors);
 			changeToMesh(mesh);
 			mesh->drop();
 			// mesh is pre-scaled by BS * f->visual_scale
@@ -345,8 +348,10 @@ void WieldMeshSceneNode::setItem(const ItemStack &item, Client *client)
 			setExtruded(tsrc->getTextureName(f.special_tiles[0].layers[0].texture_id),
 				def.wield_scale, tsrc,
 				f.special_tiles[0].layers[0].animation_frame_count);
-		} else if (f.drawtype == NDT_NORMAL || f.drawtype == NDT_ALLFACES) {
-			setCube(f, def.wield_scale, tsrc);
+		} else if (f.drawtype == NDT_NORMAL) {
+			setCube(f, def.wield_scale, tsrc, m_material_type_solid);
+		} else if (f.drawtype == NDT_ALLFACES) {
+			setCube(f, def.wield_scale, tsrc, m_material_type_translucent);
 		} else {
 			MeshMakeData mesh_make_data(client, false);
 			MapNode mesh_make_node(id, 255, 0);
@@ -355,7 +360,7 @@ void WieldMeshSceneNode::setItem(const ItemStack &item, Client *client)
 			scene::SMesh *mesh = cloneMesh(mapblock_mesh.getMesh());
 			translateMesh(mesh, v3f(-BS, -BS, -BS));
 			postProcessNodeMesh(mesh, f, m_enable_shaders, true,
-				&m_material_type, &m_colors);
+				&m_material_type_translucent, &m_colors);
 			changeToMesh(mesh);
 			mesh->drop();
 			m_meshnode->setScale(

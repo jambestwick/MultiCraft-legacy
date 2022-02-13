@@ -78,7 +78,7 @@ public:
 			s32 id = -1, bool lighting = false);
 	virtual ~WieldMeshSceneNode();
 
-	void setCube(const ContentFeatures &f, v3f wield_scale, ITextureSource *tsrc);
+	void setCube(const ContentFeatures& f, v3f wield_scale, ITextureSource* tsrc, irr::video::E_MATERIAL_TYPE material_type);
 	void setExtruded(const std::string &imagename, v3f wield_scale,
 			ITextureSource *tsrc, u8 num_frames);
 	void setItem(const ItemStack &item, Client *client);
@@ -98,7 +98,8 @@ private:
 
 	// Child scene node with the current wield mesh
 	scene::IMeshSceneNode *m_meshnode;
-	video::E_MATERIAL_TYPE m_material_type;
+	video::E_MATERIAL_TYPE m_material_type_solid;
+	video::E_MATERIAL_TYPE m_material_type_translucent;
 
 	// True if EMF_LIGHTING should be enabled.
 	bool m_lighting;
