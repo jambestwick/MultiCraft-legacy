@@ -12,7 +12,7 @@ final class MessageViewController: BasePresentViewController {
 
 		textView.text = message
 		textView.font = UIFont.systemFont(ofSize: 16)
-		textView.placeholder = NSLocalizedString("Text Input", comment: "")
+		textView.placeholder = NSLocalizedString("text_input", comment: "")
 		textView.becomeFirstResponder()
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
 	}

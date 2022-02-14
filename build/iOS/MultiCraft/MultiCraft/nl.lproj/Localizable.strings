@@ -1,0 +1,11 @@
+"loading" = "Indlæser...";
+"unexpected_issue_please_restart" = "Onverwacht probleem, herstart het spel a.u.b.!";
+"close_game" = "Spel sluiten";
+
+"text_input" = "Tekstinvoer";
+
+// WhatsNew
+"new_version_available" = "Nieuwe versie beschikbaar";
+"update_now" = "Update Nu!";
+"remind_later" = "Herinner Later";
+"loading_recommendation" = "Aanbeveling voor u aan het laden: %d sec.";

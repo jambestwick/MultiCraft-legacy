@@ -1,0 +1,11 @@
+"loading" = "Loading...";
+"unexpected_issue_please_restart" = "Unexpected issue, please restart the game!";
+"close_game" = "Close game";
+
+"text_input" = "Text Input";
+
+// WhatsNew
+"new_version_available" = "New version available";
+"update_now" = "Update Now!";
+"remind_later" = "Remind Later";
+"loading_recommendation" = "Loading recommendation for you: %d sec.";

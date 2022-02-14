@@ -1,0 +1,11 @@
+"loading" = "Încărcare...";
+"unexpected_issue_please_restart" = "Problemă neașteptată, vă rugăm să reporniți jocul!";
+"close_game" = "Închide jocul";
+
+"text_input" = "Introducerea textului";
+
+// WhatsNew
+"new_version_available" = "Noua versiune disponibilă";
+"update_now" = "Actualizează acum!";
+"remind_later" = "Reamintiți mai târziu";
+"loading_recommendation" = "Încărcare recomandare pentru tine: %d sec.";

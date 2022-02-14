@@ -1,0 +1,11 @@
+"loading" = "Indlæser...";
+"unexpected_issue_please_restart" = "Uventet problem, genstart venligst spillet!";
+"close_game" = "Luk spillet";
+
+"text_input" = "Tekstindtastning";
+
+// WhatsNew
+"new_version_available" = "Ny version tilgængelig";
+"update_now" = "Opdater nu!";
+"remind_later" = "Mind senere";
+"loading_recommendation" = "Loading anbefaling til dig: %d sek.";

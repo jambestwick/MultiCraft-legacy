@@ -36,7 +36,7 @@ final class ProgressViewController: BasePresentViewController {
 		if viewProgress.isHidden {
 			viewProgress.isHidden = false
 		}
-		labelProgress.text = "\(NSLocalizedString("Loading...", comment: "")) \(progress)%"
+		labelProgress.text = "\(NSLocalizedString("loading", comment: "")) \(progress)%"
 		progressSize.constant = CGFloat(progress) * viewProgress.frame.size.width / 100
 
 		let color = UIColor(255 - progress * 2, progress * 2, 25)

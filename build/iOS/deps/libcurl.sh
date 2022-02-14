@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 . sdk.sh
-CURL_VERSION=7.80.0
+CURL_VERSION=7.81.0
 
 if [ ! -d libcurl-src ]; then
 	wget https://curl.haxx.se/download/curl-$CURL_VERSION.tar.gz

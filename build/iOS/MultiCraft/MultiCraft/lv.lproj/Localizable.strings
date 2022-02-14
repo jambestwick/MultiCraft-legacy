@@ -1,0 +1,11 @@
+"loading" = "Iekraušana...";
+"unexpected_issue_please_restart" = "Negaidīta problēma, lūdzu, restartējiet spēli!";
+"close_game" = "Aizvērt spēli";
+
+"text_input" = "Teksta ievade";
+
+// WhatsNew
+"new_version_available" = "Pieejama jauna versija";
+"update_now" = "Atjaunināt tagad!";
+"remind_later" = "Atgādināt vēlāk";
+"loading_recommendation" = "Ieteikuma ielāde jums: %d sec.";

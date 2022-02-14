@@ -1,0 +1,11 @@
+"loading" = "Laden...";
+"unexpected_issue_please_restart" = "Unerwartetes Problem, bitte das Spiel neu starten!";
+"close_game" = "Spiel schließen";
+
+"text_input" = "Texteingabe";
+
+// WhatsNew
+"new_version_available" = "Neue Version verfügbar";
+"update_now" = "Jetzt aktualisieren!";
+"remind_later" = "Später erinnern";
+"loading_recommendation" = "Ladeempfehlung für Sie: %d sec.";

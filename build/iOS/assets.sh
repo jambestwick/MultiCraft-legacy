@@ -32,18 +32,17 @@ for lang in *; do
 done
 popd
 
-find $DEST -type d -name '.git' -print0 | xargs -0 -- rm -r
-find $DEST -type f -name '.*' -delete
+find $DEST -type d -name ".git" -print0 | xargs -0 -- rm -rf
+find $DEST -type f -name ".*" -delete
 
 # remove broken languages
 for broken_lang in ja ko he; do
-	find $DEST -type d -name $broken_lang -print0 | xargs -0 -- rm -r
+	find $DEST/locale -type d -name $broken_lang -print0 | xargs -0 -- rm -r
 done
 
 # remove inaccessible text files
-for name in settingtypes LICENSE license README COPYING; do
-	find $DEST -type f -name $name".txt" -exec rm -f {} \;
-	find $DEST -type f -name $name".md" -exec rm -f {} \;
+for name in settingtypes license readme copying; do
+	find $DEST -type f -iname $name"*" -exec rm -f {} \;
 done
 
 echo "Creating assets.zip"

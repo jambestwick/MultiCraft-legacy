@@ -1,0 +1,11 @@
+"loading" = "Φόρτωση...";
+"unexpected_issue_please_restart" = "Αναπάντεχο πρόβλημα, παρακαλώ κάντε επανεκκίνηση του παιχνιδιού!";
+"close_game" = "Κλείσιμο παιχνιδιού";
+
+"text_input" = "Εισαγωγή κειμένου";
+
+// WhatsNew
+"new_version_available" = "Νέα έκδοση διαθέσιμη";
+"update_now" = "Ενημέρωση τώρα!";
+"remind_later" = "Υπενθύμιση αργότερα";
+"loading_recommendation" = "Σύσταση φόρτωσης για εσάς: %d δευτ.";

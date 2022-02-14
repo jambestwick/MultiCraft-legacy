@@ -3,7 +3,7 @@
 ./irrlicht.sh
 ./freetype.sh
 ./libcurl.sh
-#./gettext.sh ## doesn't work with older iOS versions
+./gettext.sh
 ./openal.sh
 ./luajit.sh
 

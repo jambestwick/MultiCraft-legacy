@@ -1,0 +1,11 @@
+"loading" = "Betöltés...";
+"unexpected_issue_please_restart" = "Váratlan probléma, kérjük, indítsa újra a játékot!";
+"close_game" = "Játék bezárása";
+
+"text_input" = "Szövegbevitel";
+
+// WhatsNew
+"new_version_available" = "Új verzió elérhető";
+"update_now" = "Frissítés most!";
+"remind_later" = "Emlékeztetés később";
+"loading_recommendation" = "Ajánlás betöltése az Ön számára: %d sec.";

@@ -1,0 +1,11 @@
+"loading" = "Ladataan...";
+"unexpected_issue_please_restart" = "Odottamaton ongelma, käynnistä peli uudelleen!";
+"close_game" = "Sulje peli";
+
+"text_input" = "Tekstinsyöttö";
+
+// WhatsNew
+"new_version_available" = "Uusi versio saatavilla";
+"update_now" = "Päivitä nyt!";
+"remind_later" = "Muistuta myöhemmin";
+"loading_recommendation" = "Suosituksen lataaminen sinulle: %d sec.";

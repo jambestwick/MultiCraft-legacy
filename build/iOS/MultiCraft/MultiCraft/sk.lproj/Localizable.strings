@@ -1,0 +1,11 @@
+"loading" = "Načítanie...";
+"unexpected_issue_please_restart" = "Neočakávaný problém, reštartujte hru!";
+"close_game" = "Zatvorte hru";
+
+"text_input" = "Zadávanie textu";
+
+// WhatsNew
+"new_version_available" = "Nová verzia k dispozícii";
+"update_now" = "Aktualizovať teraz!";
+"remind_later" = "Pripomenúť neskôr";
+"loading_recommendation" = "Načítava sa odporúčanie pre vás: %d sec.";

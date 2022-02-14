@@ -1,0 +1,11 @@
+"loading" = "Зареждане...";
+"unexpected_issue_please_restart" = "Неочакван проблем, моля, рестартирайте играта!";
+"close_game" = "Затвори играта";
+
+"text_input" = "Въвеждане на текст";
+
+// WhatsNew
+"new_version_available" = "Налична е нова версия";
+"update_now" = "Актуализирай сега!";
+"remind_later" = "Напомняне по-късно";
+"loading_recommendation" = "Зареждане на препоръка за вас: %d sec.";

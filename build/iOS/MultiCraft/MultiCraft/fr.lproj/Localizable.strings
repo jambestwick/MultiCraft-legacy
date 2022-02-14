@@ -1,0 +1,11 @@
+"loading" = "Chargement...";
+"unexpected_issue_please_restart" = "Problème inattendu, veuillez redémarrer le jeu!";
+"close_game" = "Match serré";
+
+"text_input" = "text_input";
+
+// WhatsNew
+"new_version_available" = "Nouvelle version disponible";
+"update_now" = "Actualisez maintenant!";
+"remind_later" = "Rappeler plus tard";
+"loading_recommendation" = "Recommandation de chargement pour vous: %d sec.";

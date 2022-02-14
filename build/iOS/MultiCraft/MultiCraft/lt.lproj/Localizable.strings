@@ -1,0 +1,11 @@
+"loading" = "Pakraunama...";
+"unexpected_issue_please_restart" = "Netikėta problema, prašome paleisti žaidimą iš naujo!";
+"close_game" = "Uždaryti žaidimą";
+
+"text_input" = "Teksto įvedimas";
+
+// WhatsNew
+"new_version_available" = "Nauja versija prieinama";
+"update_now" = "Atnaujinti dabar!";
+"remind_later" = "Priminti vėliau";
+"loading_recommendation" = "Įkeliama rekomendacija jums: %d sec.";

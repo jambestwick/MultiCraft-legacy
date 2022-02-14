@@ -1,0 +1,11 @@
+"loading" = "Laddar...";
+"unexpected_issue_please_restart" = "Oväntat problem, vänligen starta om spelet!";
+"close_game" = "Stäng spelet";
+
+"text_input" = "Textinmatning";
+
+// WhatsNew
+"new_version_available" = "Ny version finns tillgänglig";
+"update_now" = "Uppdatera nu!";
+"remind_later" = "Påminn senare";
+"loading_recommendation" = "Laddar rekommendation för dig: %d sek.";

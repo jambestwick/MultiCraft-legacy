@@ -62,8 +62,8 @@ void ioswrap_assets()
 		[progressVC updateProgress:progress];
 		CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, YES);
 	} :^(NSError * error) {
-		UIAlertController *vc = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Unexpected issue, please restart the game!", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-		UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Close game", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+		UIAlertController *vc = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"unexpected_issue_please_restart", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"close_game", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
 			exit(0);
 		}];
 
@@ -108,7 +108,7 @@ void ioswrap_show_dialog(void *uiviewcontroller, const char *accept, const char 
 		dialog_state = -1;
 		dialog_text[0] = 0;
 	} else {
-		UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Text Input", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"text_input", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
 
 		[alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
 			textField.text = [NSString stringWithUTF8String:current];
